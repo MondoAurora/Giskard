@@ -11,6 +11,9 @@ public interface DustConsts extends MindConsts {
 	String FORMAT_TIMESTAMP_DEFAULT = "YYYYMMdd_HHmmss_SSS";
 
 	
+	interface DustToken extends MiNDToken {
+	}
+	
 	interface DustCreator<Key, Val> {
 		Val create(Key key, Object... hints);
 	}
@@ -27,7 +30,7 @@ public interface DustConsts extends MindConsts {
 			try {
 				return cVal.newInstance();
 			} catch (Throwable e) {
-				return Mind.throwException(e);
+				return Mind.wrapException(e);
 			}
 		}
 	}

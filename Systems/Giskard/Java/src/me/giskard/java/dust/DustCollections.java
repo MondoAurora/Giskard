@@ -12,10 +12,6 @@ public interface DustCollections extends DustConsts {
 			this.map = sorted ? new TreeMap<>() : new HashMap<>();
 		}
 		
-		public DustMap() {
-			this(false);
-		}
-		
 		@Override
 		public Val get(Key key) {
 			return map.get(key);
@@ -23,9 +19,18 @@ public interface DustCollections extends DustConsts {
 	}	
 	
 	public class DustFactory<Key, Val> extends DustMap<Key, Val> {
-		DustCreator<Key, Val> creator;
+		DustCreator<Key, ? extends Val> creator;
 		
-		public DustFactory(DustCreator<Key, Val> creator, boolean sorted) {
+		public DustFactory(boolean sorted) {
+			super(sorted);
+		}
+		
+		public DustFactory(boolean sorted, DustCreator<Key, ? extends Val> creator) {
+			this(sorted);
+			setCreator(creator);
+		}
+		
+		public void setCreator(DustCreator<Key, ? extends Val> creator) {
 			this.creator = creator;
 		}
 		

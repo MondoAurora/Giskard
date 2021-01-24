@@ -1,9 +1,11 @@
-package me.giskard.java.dust;
+package me.giskard.java;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DustUtils implements DustConsts {
+import me.giskard.java.dust.DustConsts;
+
+public class MindUtilsJava implements DustConsts {
 	
 	public static String strTimestamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_TIMESTAMP_DEFAULT);

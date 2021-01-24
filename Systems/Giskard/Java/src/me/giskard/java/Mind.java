@@ -1,43 +1,57 @@
 package me.giskard.java;
 
-public class Mind implements MindConsts {
-	protected static MiNDLog LOG;
-	protected static MiNDTokenSource TOKEN_SOURCE;
-	
-	protected static MiNDRuntime RUNTIME;
-	protected static MiNDToken LOGLEVEL_CRITICAL;
+public abstract class Mind implements MindConsts {
+
+	protected static Mind THE_MIND;
+	protected static MiNDToken LOGLEVEL_EXCEPTION;
+
+	public static void main(String[] args) throws Exception {
+		setMind((Mind) Class.forName("me.giskard.java.dust.mind.DustMind").newInstance());
+		THE_MIND.init(args);
+	}
+
+	public static void setMind(Mind mind) {
+		if ( (null != THE_MIND) && (THE_MIND != mind) ) {
+			wrapException(null, "Multiple initialization!");
+		}
+
+		THE_MIND = mind;
+	}
 
 	public static void log(MiNDToken lvl, Object... obs) {
-		LOG.log(lvl, obs);
+		THE_MIND.log_(lvl, obs);
 	}
 
 	public static MiNDToken getToken(String dslId, String termId) {
-		return (MiNDToken) TOKEN_SOURCE.resolve(dslId, termId);
+		return THE_MIND.getToken_(dslId, termId);
 	}
 
 	public static void select(MiNDToken target, MiNDToken... path) {
-		RUNTIME.select(target, path);
+		THE_MIND.select_(target, path);
 	}
 
 	public static <RetType> RetType access(MiNDToken cmd, MiNDToken target, MiNDToken tMember, RetType val, Object key) {
-		return RUNTIME.access(cmd, target, tMember, val, key);
+		return THE_MIND.access_(cmd, target, tMember, val, key);
 	}
 
-	public static final class MindException extends RuntimeException implements MindConsts {
-		private static final long serialVersionUID = 1L;
-
-		MindException(Throwable src) {
-			super(src);
-		}
-	}
-	
-	public static <FakeRet> FakeRet throwException(Throwable src, Object... params) {
-		if ( src instanceof MindException ) {
-			throw (MindException) src;
+	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {
+		if ( src instanceof MiNDException ) {
+			throw (MiNDException) src;
 		}
 
-		log(LOGLEVEL_CRITICAL, params);
-		throw new MindException(src);
+		log(LOGLEVEL_EXCEPTION, src, params);
+		throw new MiNDException(src);
 	}
+
+	protected abstract void log_(MiNDToken lvl, Object... obs);
+
+	protected abstract MiNDToken getToken_(String dslId, String termId);
+
+	protected abstract void select_(MiNDToken target, MiNDToken... path);
+
+	protected abstract <RetType> RetType access_(MiNDToken cmd, MiNDToken target, MiNDToken tMember, RetType val,
+			Object key);
+
+	protected abstract void init(String[] args);
 
 }

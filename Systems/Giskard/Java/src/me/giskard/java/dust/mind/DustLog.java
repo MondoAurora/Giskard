@@ -1,23 +1,23 @@
-package me.giskard.java.dust;
+package me.giskard.java.dust.mind;
 
 import java.io.PrintStream;
 
-import me.giskard.java.MindConsts;
+import me.giskard.java.MindUtilsJava;
+import me.giskard.java.dust.DustConsts;
 
-public class DustLog implements DustConsts, MindConsts.MiNDLog {
+public class DustLog implements DustConsts {
   static PrintStream psLog = System.out;
 
-	@Override
 	public void log(MiNDToken lvl, Object... obs) {
     long ts = 0;
     StringBuilder sb = null;
 
     for (Object o : obs) {
-        String s = DustUtils.toString(o);
+        String s = MindUtilsJava.toString(o);
 
         if ((0 == ts) && !s.trim().isEmpty()) {
             ts = System.currentTimeMillis();
-            psLog.print(DustUtils.strTimestamp(ts));
+            psLog.print(MindUtilsJava.strTimestamp(ts));
             psLog.print(" ");
             psLog.print(lvl);
             psLog.print(" ");
@@ -25,7 +25,7 @@ public class DustLog implements DustConsts, MindConsts.MiNDLog {
         psLog.print(s);
         psLog.print(" ");
         
-        sb = DustUtils.sbAppend(sb, " ", true, s);
+        sb = MindUtilsJava.sbAppend(sb, " ", true, s);
     }
 	}
 
