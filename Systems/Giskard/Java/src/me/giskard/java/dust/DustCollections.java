@@ -34,10 +34,10 @@ public interface DustCollections extends DustConsts {
 			this.creator = creator;
 		}
 		
-		public synchronized Val get(Key key, Object... hints) {
+		public synchronized Val get(Key key) {
 			Val ret = super.get(key);
 			if ( null == ret ) {
-				ret = creator.create(key, hints);
+				ret = creator.create(key);
 				map.put(key, ret);
 			}
 			return ret;

@@ -3,7 +3,9 @@ package me.giskard.java;
 public abstract class Mind implements MindConsts {
 
 	protected static Mind THE_MIND;
-	protected static MiNDToken LOGLEVEL_EXCEPTION;
+	protected static MiNDEntity LOGLEVEL_EXCEPTION;
+
+	// should handle binary modules here, including Dust
 
 	public static void main(String[] args) throws Exception {
 		setMind((Mind) Class.forName("me.giskard.java.dust.mind.DustMind").newInstance());
@@ -18,19 +20,20 @@ public abstract class Mind implements MindConsts {
 		THE_MIND = mind;
 	}
 
-	public static void log(MiNDToken lvl, Object... obs) {
+	public static void log(MiNDEntity lvl, Object... obs) {
 		THE_MIND.log_(lvl, obs);
 	}
 
-	public static MiNDToken getToken(String dslId, String termId) {
-		return THE_MIND.getToken_(dslId, termId);
+	public static MiNDEntity getEntity(Object unitName, Object entityId) {
+		return THE_MIND.getEntity_(unitName, entityId);
 	}
 
-	public static void select(MiNDToken target, MiNDToken... path) {
+	public static void select(MiNDEntity target, Object... path) {
 		THE_MIND.select_(target, path);
 	}
 
-	public static <RetType> RetType access(MiNDToken cmd, MiNDToken target, MiNDToken tMember, RetType val, Object key) {
+	public static <RetType> RetType access(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val,
+			Object key) {
 		return THE_MIND.access_(cmd, target, tMember, val, key);
 	}
 
@@ -43,13 +46,13 @@ public abstract class Mind implements MindConsts {
 		throw new MiNDException(src);
 	}
 
-	protected abstract void log_(MiNDToken lvl, Object... obs);
+	protected abstract void log_(MiNDEntity lvl, Object... obs);
 
-	protected abstract MiNDToken getToken_(String dslId, String termId);
+	protected abstract MiNDEntity getEntity_(Object unitName, Object entityId);
 
-	protected abstract void select_(MiNDToken target, MiNDToken... path);
+	protected abstract void select_(MiNDEntity target, Object... path);
 
-	protected abstract <RetType> RetType access_(MiNDToken cmd, MiNDToken target, MiNDToken tMember, RetType val,
+	protected abstract <RetType> RetType access_(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val,
 			Object key);
 
 	protected abstract void init(String[] args);

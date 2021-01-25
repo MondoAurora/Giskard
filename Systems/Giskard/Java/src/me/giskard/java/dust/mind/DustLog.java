@@ -8,7 +8,7 @@ import me.giskard.java.dust.DustConsts;
 public class DustLog implements DustConsts {
   static PrintStream psLog = System.out;
 
-	public void log(MiNDToken lvl, Object... obs) {
+	public void log(MiNDEntity lvl, Object... obs) {
     long ts = 0;
     StringBuilder sb = null;
 

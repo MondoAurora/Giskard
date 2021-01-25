@@ -2,7 +2,7 @@ package me.giskard.java;
 
 public interface MindConsts {
 	
-	public interface MiNDToken {
+	public interface MiNDEntity {
 	}
 	
 	public interface MiNDAgent {
