@@ -12,24 +12,6 @@ public interface DustConsts extends MindConsts {
 	
 	String FMT_ENTITY_ID = "de_{0}_{1}";
 
-	class DustEntity implements MiNDEntity {
-		public final String token;
-
-		public DustEntity(String token) {
-			this.token = token;
-		}
-		
-		@Override
-		public String toString() {
-			return token;
-		}
-	}
-
-	interface DustContext {
-		void select_(MiNDEntity target, MiNDEntity... path);
-		<RetType> RetType access_(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val, Object key);
-	}
-
 	interface DustCreator<Key, Val> {
 		Val create(Key key);
 	}
@@ -75,11 +57,4 @@ public interface DustConsts extends MindConsts {
 	interface DustCollMap<Key, Val> {
 		Val get(Key key);
 	}
-	
-	DustCreator<String, DustEntity> ENTITY_CREATOR = new DustCreator<String, DustEntity>() {
-		@Override
-		public DustEntity create(String key) {
-			return new DustEntity(key);
-		}
-	};
 }

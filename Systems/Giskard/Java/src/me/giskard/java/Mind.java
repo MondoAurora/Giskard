@@ -29,12 +29,12 @@ public abstract class Mind implements MindConsts {
 	}
 
 	public static void select(MiNDEntity target, Object... path) {
-		THE_MIND.select_(target, path);
+		THE_MIND.getContext().select(target, path);
 	}
 
 	public static <RetType> RetType access(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val,
 			Object key) {
-		return THE_MIND.access_(cmd, target, tMember, val, key);
+		return THE_MIND.getContext().access(cmd, target, tMember, val, key);
 	}
 
 	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {
@@ -50,10 +50,7 @@ public abstract class Mind implements MindConsts {
 
 	protected abstract MiNDEntity getEntity_(Object unitName, Object entityId);
 
-	protected abstract void select_(MiNDEntity target, Object... path);
-
-	protected abstract <RetType> RetType access_(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val,
-			Object key);
+	protected abstract MiNDContext getContext();
 
 	protected abstract void init(String[] args);
 
