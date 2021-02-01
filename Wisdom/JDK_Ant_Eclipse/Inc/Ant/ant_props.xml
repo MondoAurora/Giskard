@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." name="AntProps">
+	<property name="GISKARD_SRC_MOD" value="${GISKARD_DEV_ROOT}/Inc/Mod/src" />
+	<property name="GISKARD_SRC_APP" value="${GISKARD_DEV_ROOT}/Inc/App/src" />
+
+	<property name="GISKARD_DEV_MOD" value="${GISKARD_DEV_ROOT}/Mod" />
+	<property name="GISKARD_DEV_APP" value="${GISKARD_DEV_ROOT}/App" />
+
+	<property name="GISKARD_ROOT" value="${GISKARD_DEV_ROOT}/../../Intelligence/JRE" />
+	<property name="GISKARD_MOD" value="${GISKARD_ROOT}/Mod" />
+	<property name="GISKARD_APP" value="${GISKARD_ROOT}/App" />
+
+	<property name="javac.debuglevel" value="source,lines,vars" />
+	<property name="javac.target" value="1.8" />
+	<property name="javac.source" value="1.8" />
+</project>
