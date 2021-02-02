@@ -12,8 +12,7 @@ public class GiskardApplication extends RuntimeConnector {
 		
 		app.addModule(MODNAME_MIND, "DustRuntime");
 		
-		Mind m = app.createObject(MODNAME_MIND, "me.giskard.java.dust.mind.DustMind");
-		Mind.initMind(m, args);
+		app.initMind(MODNAME_MIND, "me.giskard.java.dust.mind.DustMind", args);
 	}
 
 }

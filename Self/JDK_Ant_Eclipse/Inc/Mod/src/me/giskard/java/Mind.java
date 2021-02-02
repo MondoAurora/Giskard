@@ -7,11 +7,6 @@ public abstract class Mind implements MindConsts {
 
 	// should handle binary modules here, including Dust
 
-	public static void initMind(Mind mind, String... args) throws Exception {
-		setMind(mind);
-		THE_MIND.init(args);
-	}
-
 	public static void setMind(Mind mind) {
 		if ( (null != THE_MIND) && (THE_MIND != mind) ) {
 			wrapException(null, "Multiple initialization!");
@@ -21,7 +16,14 @@ public abstract class Mind implements MindConsts {
 	}
 
 	public static void log(MiNDEntity lvl, Object... obs) {
-		THE_MIND.log_(lvl, obs);
+		if ( null != THE_MIND ) {
+			THE_MIND.log_(lvl, obs);
+		} else {
+			StringBuilder sb = MindUtils.sbAppend(null, " ", false, obs);
+			if ( null != sb ) {
+				System.out.println(sb);				
+			}
+		}
 	}
 
 	public static MiNDEntity getEntity(Object unitName, Object entityId) {

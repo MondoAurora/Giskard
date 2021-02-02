@@ -1,16 +1,14 @@
 package me.giskard.java;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManager {	
-	File modRoot;
-	File extRoot;
-	Map<String, Module> modules = new TreeMap<>();
+public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManager {
 
 	static URL optGetUrl(File root, String name) {
 		File f = MindUtils.isEmpty(name) ? root : new File(root, name);
@@ -21,6 +19,12 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 			return Mind.wrapException(t, "Missing library", f.getAbsolutePath());
 		}
 	}
+
+	private Mind mind;
+
+	private File modRoot;
+	private File extRoot;
+	private Map<String, Module> modules = new TreeMap<>();
 
 	class Module {
 		String libMod;
@@ -43,13 +47,38 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 				URL[] uu = new URL[urls.size()];
 				uu = urls.toArray(uu);
 				modLoader = new URLClassLoader(uu);
+
+				if ( null != mind ) {
+					initModule();
+				}
 			} catch (Throwable e) {
 				Mind.wrapException(e, libMod, currLib);
 			}
 		}
 
+		void initModule() throws Exception {
+			Class<?> c = modLoader.loadClass(Mind.class.getCanonicalName());
+			Method method = c.getMethod("setMind", c);
+			method.invoke(null, mind);
+			String extInit = ", no custom init";
+			
+			try {
+				String rootPkg = c.getPackage().getName();
+				Class<?> cMod = modLoader.loadClass(rootPkg + "." + libMod);
+				Method mInit = cMod.getMethod("initModule");
+				mInit.invoke(null);
+				extInit = ", " + mInit.toString() + " called";
+			} catch (ClassNotFoundException e1) {
+				// no problem
+			} catch (NoSuchMethodException e2) {
+				// no problem
+			}
+			
+			Mind.log(null, "Module", libMod, "initialized" + extInit + ".");
+		}
+
 		@SuppressWarnings("unchecked")
-		public <RetType> RetType  createNative(String binTypeId, Object... params) {
+		public <RetType> RetType createNative(String binTypeId, Object... params) {
 			try {
 				Class<?> c = modLoader.loadClass(binTypeId);
 				return (RetType) c.newInstance();
@@ -58,10 +87,12 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 			}
 		}
 	}
-	
+
 	protected RuntimeConnector(String[] args) {
+		Mind.log(null, "GISKARD boot started...");
+
 		String root = System.getenv("GISKARD");
-		
+
 		if ( !MindUtils.isEmpty(root) ) {
 			String gr = root + "/Brain/JRE/";
 			modRoot = new File(gr + "Mod");
@@ -71,11 +102,25 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		}
 	}
 
+	protected void initMind(String modName, String binTypeId, String[] args) throws Exception {
+		Module mod = modules.get(modName);
+		mind = mod.createNative(binTypeId);
+		Mind.setMind(mind);
+
+		for (Module m : modules.values()) {
+			m.initModule();
+		}
+		
+		Mind.log(null, "GISKARD boot complete.");
+
+		mind.init(args);
+	}
+
 	@Override
 	public void addModule(String modName, String mainLib, String... extLibs) {
 		modules.put(modName, new Module(mainLib, extLibs));
 	}
-	
+
 	@Override
 	public <RetType> RetType createObject(String modName, String binTypeId, Object... params) {
 		return modules.get(modName).createNative(binTypeId, params);
