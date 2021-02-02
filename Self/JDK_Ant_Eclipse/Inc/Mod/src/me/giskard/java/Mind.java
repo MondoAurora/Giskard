@@ -7,8 +7,8 @@ public abstract class Mind implements MindConsts {
 
 	// should handle binary modules here, including Dust
 
-	public static void initMind(String mindClassName, String... args) throws Exception {
-		setMind((Mind) Class.forName(mindClassName).newInstance());
+	public static void initMind(Mind mind, String... args) throws Exception {
+		setMind(mind);
 		THE_MIND.init(args);
 	}
 

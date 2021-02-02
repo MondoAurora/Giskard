@@ -28,6 +28,10 @@ public class DustLog implements DustConsts {
         
         sb = MindUtilsJava.sbAppend(sb, " ", true, s);
     }
+    
+    if ( 0 != ts ) {
+    	psLog.println();
+    }
 	}
 
 }

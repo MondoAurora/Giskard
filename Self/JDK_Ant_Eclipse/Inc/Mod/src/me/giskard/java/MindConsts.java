@@ -10,6 +10,12 @@ public interface MindConsts {
 		<RetType> RetType access(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val, Object key);
 	}
 
+	public interface MiNDModuleManager {
+		void addModule(String modName, String mainLib, String... extLibs);
+		<RetType> RetType createObject(String modName, String binTypeId, Object... params);
+		void deleteObject(String modName, String binTypeId, Object object);
+	}
+
 	public interface MiNDAgent {
 		void process() throws Exception;
 	}
