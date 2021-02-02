@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_jar" name="MontruTest01">
+
+	<property name="GISKARD_SELF" value="../../.." />
+	<include file="${GISKARD_SELF}/Inc/Ant/ant_props.xml" />
+
+	<target name="create_jar">
+		<javac debug="true"
+		       debuglevel="${javac.debuglevel}"
+		       destdir="bin"
+		       includeantruntime="false"
+		       source="${javac.source}"
+		       target="${javac.target}">
+			<src path="${GISKARD_INC_MOD}" />
+			<src path="${GISKARD_INC_APP}" />
+			<src path="./src" />
+		</javac>
+
+		<jar destfile="${GISKARD_BRAIN}/App/MontruTest01.jar">
+			<manifest>
+				<attribute name="Main-Class" value="me.giskard.java.GiskardApplication" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+
+			<fileset dir="./bin" />
+		</jar>
+	</target>
+</project>
