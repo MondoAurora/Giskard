@@ -11,6 +11,7 @@ public class MindUtils extends MindUtilsJava {
 	};
 	
 	public static String getRoot() {
-		return System.getenv("GISKARD");
+		String root = System.getenv("GISKARD");
+		return isEmpty(root) ? System.getenv("GISKARD_ECLIPSE") : root;
 	}
 }

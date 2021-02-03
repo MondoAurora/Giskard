@@ -95,7 +95,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 	protected RuntimeConnector(String[] args) {
 		Mind.log(MiNDEventLevel.TRACE, "GISKARD boot started...");
 
-		String root = System.getenv("GISKARD");
+		String root = MindUtils.getRoot();
 
 		if ( !MindUtils.isEmpty(root) ) {
 			String gr = root + "/Brain/JRE/";
