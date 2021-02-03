@@ -1,7 +1,7 @@
-package me.giskard.java.tokens;
+package me.giskard.tokens;
 
-import me.giskard.java.Mind;
-import me.giskard.java.MindConsts;
+import me.giskard.Mind;
+import me.giskard.MindConsts;
 
 public interface DustTokensMind extends MindConsts {
 	MiNDEntity MT_EVENT_LEVEL_CRITICAL = Mind.getEntity("Event", "EventLvlCritical");

@@ -1,7 +1,7 @@
-package me.giskard.java.dust.data;
+package me.giskard.dust.data;
 
-import me.giskard.java.MindConsts;
-import me.giskard.java.dust.DustCollections.DustFactory;
+import me.giskard.MindConsts;
+import me.giskard.dust.DustCollections.DustFactory;
 
 public class DustDataContext implements DustDataConsts, MindConsts.MiNDContext {
 	DustDataContext parent;

@@ -1,9 +1,9 @@
-package me.giskard.java.dust;
+package me.giskard.dust;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import me.giskard.java.MindUtils;
+import me.giskard.MindUtils;
 
 public class DustUtils extends MindUtils implements DustConsts {
 	

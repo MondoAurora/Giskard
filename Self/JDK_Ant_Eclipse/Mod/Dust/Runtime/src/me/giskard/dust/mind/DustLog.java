@@ -1,15 +1,15 @@
-package me.giskard.java.dust.mind;
+package me.giskard.dust.mind;
 
 import java.io.PrintStream;
 
-import me.giskard.java.MindUtilsJava;
-import me.giskard.java.dust.DustConsts;
-import me.giskard.java.dust.DustUtils;
+import me.giskard.MindUtilsJava;
+import me.giskard.dust.DustConsts;
+import me.giskard.dust.DustUtils;
 
 public class DustLog implements DustConsts {
 	static PrintStream psLog = System.out;
 
-	public void log(MiNDEntity lvl, Object... obs) {
+	public void log(MiNDEventLevel lvl, Object... obs) {
 		long ts = 0;
 		StringBuilder sb = null;
 
@@ -19,10 +19,8 @@ public class DustLog implements DustConsts {
 			if ( (0 == ts) && !s.trim().isEmpty() ) {
 				ts = System.currentTimeMillis();
 				psLog.print(DustUtils.strTimestamp(ts));
-				if ( null != lvl ) {
-					psLog.print(" ");
-					psLog.print(lvl);
-				}
+				psLog.print(" ");
+				psLog.print(lvl);
 				psLog.print(" ");
 			}
 			psLog.print(s);

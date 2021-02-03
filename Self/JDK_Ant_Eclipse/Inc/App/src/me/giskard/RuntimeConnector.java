@@ -1,4 +1,4 @@
-package me.giskard.java;
+package me.giskard;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -25,6 +25,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 	private File modRoot;
 	private File extRoot;
 	private Map<String, Module> modules = new TreeMap<>();
+	private ArrayList<Module> boot = new ArrayList<>();
 
 	class Module {
 		String libMod;
@@ -39,8 +40,9 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 				ArrayList<URL> urls = new ArrayList<>();
 
 				urls.add(optGetUrl(modRoot, libMod + ".jar"));
+				
 				for (String ln : libExt) {
-					currLib = ln + ".jar";
+					currLib = libMod + "/" + ln;
 					urls.add(optGetUrl(extRoot, currLib));
 				}
 
@@ -50,6 +52,8 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 
 				if ( null != mind ) {
 					initModule();
+				} else {
+					boot.add(this);
 				}
 			} catch (Throwable e) {
 				Mind.wrapException(e, libMod, currLib);
@@ -74,7 +78,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 				// no problem
 			}
 			
-			Mind.log(null, "Module", libMod, "initialized" + extInit + ".");
+			Mind.log(MiNDEventLevel.TRACE, "Module", libMod, "initialized" + extInit + ".");
 		}
 
 		@SuppressWarnings("unchecked")
@@ -89,7 +93,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 	}
 
 	protected RuntimeConnector(String[] args) {
-		Mind.log(null, "GISKARD boot started...");
+		Mind.log(MiNDEventLevel.TRACE, "GISKARD boot started...");
 
 		String root = System.getenv("GISKARD");
 
@@ -107,11 +111,11 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		mind = mod.createNative(binTypeId);
 		Mind.setMind(mind);
 
-		for (Module m : modules.values()) {
+		for (Module m : boot) {
 			m.initModule();
 		}
 		
-		Mind.log(null, "GISKARD boot complete.");
+		Mind.log(MiNDEventLevel.INFO, "GISKARD boot complete.");
 
 		mind.init(args);
 	}

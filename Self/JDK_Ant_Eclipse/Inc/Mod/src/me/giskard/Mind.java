@@ -1,9 +1,8 @@
-package me.giskard.java;
+package me.giskard;
 
 public abstract class Mind implements MindConsts {
 
 	protected static Mind THE_MIND;
-	protected static MiNDEntity LOGLEVEL_EXCEPTION;
 
 	// should handle binary modules here, including Dust
 
@@ -15,13 +14,13 @@ public abstract class Mind implements MindConsts {
 		THE_MIND = mind;
 	}
 
-	public static void log(MiNDEntity lvl, Object... obs) {
+	public static void log(MiNDEventLevel lvl, Object... obs) {
 		if ( null != THE_MIND ) {
 			THE_MIND.log_(lvl, obs);
 		} else {
 			StringBuilder sb = MindUtils.sbAppend(null, " ", false, obs);
 			if ( null != sb ) {
-				System.out.println(sb);				
+				System.out.println(lvl + " " + sb);				
 			}
 		}
 	}
@@ -44,11 +43,11 @@ public abstract class Mind implements MindConsts {
 			throw (MiNDException) src;
 		}
 
-		log(LOGLEVEL_EXCEPTION, src, params);
+		log(MiNDEventLevel.CRITICAL, src, params);
 		throw new MiNDException(src);
 	}
 
-	protected abstract void log_(MiNDEntity lvl, Object... obs);
+	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
 
 	protected abstract MiNDEntity getEntity_(Object unitName, Object entityId);
 

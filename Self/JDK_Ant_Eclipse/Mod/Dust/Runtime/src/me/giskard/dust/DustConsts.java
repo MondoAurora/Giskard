@@ -1,7 +1,7 @@
-package me.giskard.java.dust;
+package me.giskard.dust;
 
-import me.giskard.java.Mind;
-import me.giskard.java.MindConsts;
+import me.giskard.Mind;
+import me.giskard.MindConsts;
 
 public interface DustConsts extends MindConsts {
 	String SEP_ID = "_";

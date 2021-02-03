@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." name="AntProps">
 
+	<property name="GISKARD_LIB" value="${GISKARD_SELF}/Ext/lib" />
 	<property name="GISKARD_INC_MOD" value="${GISKARD_SELF}/Inc/Mod/src" />
 	<property name="GISKARD_INC_APP" value="${GISKARD_SELF}/Inc/App/src" />
 

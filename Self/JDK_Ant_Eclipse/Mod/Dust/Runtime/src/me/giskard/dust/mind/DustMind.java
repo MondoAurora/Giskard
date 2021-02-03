@@ -1,10 +1,10 @@
-package me.giskard.java.dust.mind;
+package me.giskard.dust.mind;
 
 import java.text.MessageFormat;
 
-import me.giskard.java.Mind;
-import me.giskard.java.dust.DustCollections;
-import me.giskard.java.dust.DustConsts;
+import me.giskard.Mind;
+import me.giskard.dust.DustCollections;
+import me.giskard.dust.DustConsts;
 
 public class DustMind extends Mind implements DustConsts, DustCollections {
 	
@@ -40,7 +40,7 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	public DustMind() {
 		log = new DustLog();
 		try {
-			ctxTemp = (MiNDContext) Class.forName("me.giskard.java.dust.data.DustDataContext").newInstance();
+			ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.data.DustDataContext").newInstance();
 		} catch (Exception e) {
 			Mind.wrapException(e);
 		}
@@ -57,15 +57,13 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	}
 
 	@Override
-	protected void log_(MiNDEntity lvl, Object... obs) {
+	protected void log_(MiNDEventLevel lvl, Object... obs) {
 		log.log(lvl, obs);
 	}
 	
 	@Override
 	protected void init(String[] args) {
-		LOGLEVEL_EXCEPTION = Mind.getEntity("Event", "EventLvlCritical");
-
-		MiNDEntity t = LOGLEVEL_EXCEPTION;
-		Mind.log(t, "Hello, world! ");
+		MiNDEntity t = Mind.getEntity("Test", "Test01");
+		Mind.log(MiNDEventLevel.INFO, "Hello, world! ", t);
 	}
 }

@@ -1,8 +1,6 @@
-package me.giskard.java;
+package me.giskard;
 
 public class GiskardApplication extends RuntimeConnector {
-	public static String MODNAME_MIND = "MiND";
-
 	public GiskardApplication(String[] args) {
 		super(args);
 	}
@@ -10,9 +8,10 @@ public class GiskardApplication extends RuntimeConnector {
 	public static void main(String[] args) throws Exception {
 		GiskardApplication app = new GiskardApplication(args);
 		
-		app.addModule(MODNAME_MIND, "DustRuntime");
+		app.addModule("MiND", "DustRuntime");
+		app.addModule("IO", "DustIO", "json-simple-1.1.1.jar");
 		
-		app.initMind(MODNAME_MIND, "me.giskard.java.dust.mind.DustMind", args);
+		app.initMind("MiND", "me.giskard.dust.mind.DustMind", args);
 	}
 
 }

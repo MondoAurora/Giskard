@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_jar" name="MontruTest01">
+<project default="create_jar" name="DustIO">
 
 	<property name="GISKARD_SELF" value="../../.." />
 	<include file="${GISKARD_SELF}/Inc/Ant/ant_props.xml" />
@@ -12,17 +12,14 @@
 		       source="${javac.source}"
 		       target="${javac.target}">
 			<src path="${GISKARD_INC_MOD}" />
-			<src path="${GISKARD_INC_APP}" />
 			<src path="./src" />
 		</javac>
 
-		<jar destfile="${GISKARD_BRAIN}/App/MontruTest01.jar">
-			<manifest>
-				<attribute name="Main-Class" value="me.giskard.GiskardApplication" />
-				<attribute name="Class-Path" value="." />
-			</manifest>
-
+		<jar destfile="${GISKARD_BRAIN}/Mod/DustIO.jar">
 			<fileset dir="./bin" />
 		</jar>
+		
+		<copy file="${GISKARD_LIB}/json/json-simple-1.1.1.jar" todir="${GISKARD_BRAIN}/Ext/DustIO" overwrite="true"/>
+
 	</target>
 </project>

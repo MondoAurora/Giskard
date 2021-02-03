@@ -1,7 +1,23 @@
-package me.giskard.java;
+package me.giskard;
 
 public interface MindConsts {
 
+	enum MiNDEventLevel {
+		CRITICAL, ERROR, WARNING, INFO, TRACE, DEBUG
+	};
+
+	enum MiNDAgentAction {
+		INIT, BEGIN, PROCESS, END, RELEASE
+	};
+
+	enum MiNDDialogCmd {
+		CHK, GET, SET, ADD, DEL
+	};
+
+	enum MiNDResultType {
+		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
+	};
+	
 	public interface MiNDEntity {
 	}
 
@@ -17,7 +33,7 @@ public interface MindConsts {
 	}
 
 	public interface MiNDAgent {
-		void process() throws Exception;
+		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
 	}
 
 	public static final class MiNDException extends RuntimeException {
