@@ -7,17 +7,36 @@ public class DustDataContext implements DustDataConsts, MindConsts.MiNDContext {
 	DustDataContext parent;
 	
 	
-	DustFactory<MiNDEntity, DustDataBlock> entityBlocks;
-	
+	DustFactory<DustToken, DustDataBlock> entityBlocks;
+
+
 	@Override
-	public void select(MiNDEntity target, Object... path) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public <RetType> RetType access(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val, Object key) {
+	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void selectById(MiNDToken target, String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void selectByPath(MiNDToken target, Object... path) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public <RetType> RetType access(MiNDAccessCommand cmd, MiNDToken target, Object... valPath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+
 }

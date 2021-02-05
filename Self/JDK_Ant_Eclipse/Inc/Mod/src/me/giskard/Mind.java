@@ -1,5 +1,7 @@
 package me.giskard;
 
+import me.giskard.utils.MindUtils;
+
 public abstract class Mind implements MindConsts {
 
 	protected static Mind THE_MIND;
@@ -24,18 +26,22 @@ public abstract class Mind implements MindConsts {
 			}
 		}
 	}
-
-	public static MiNDEntity getEntity(Object unitName, Object entityId) {
-		return THE_MIND.getEntity_(unitName, entityId);
+	
+	public static MiNDToken defineToken(MiNDTokenType type, String name, Object... params)  {
+		return THE_MIND.getContext().defineToken(type, name, params);
+	}
+	
+	public static void selectById(MiNDToken target, String id)  {
+		THE_MIND.getContext().selectById(target, id);
 	}
 
-	public static void select(MiNDEntity target, Object... path) {
-		THE_MIND.getContext().select(target, path);
+	public static void selectByPath(MiNDToken target, Object... path) {
+		THE_MIND.getContext().selectByPath(target, path);
 	}
 
-	public static <RetType> RetType access(MiNDEntity cmd, MiNDEntity target, MiNDEntity tMember, RetType val,
-			Object key) {
-		return THE_MIND.getContext().access(cmd, target, tMember, val, key);
+	
+	public static <RetType> RetType access(MiNDAccessCommand cmd, MiNDToken target, Object... valPath) {
+		return THE_MIND.getContext().access( cmd, target, valPath);
 	}
 
 	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {
@@ -48,8 +54,6 @@ public abstract class Mind implements MindConsts {
 	}
 
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
-
-	protected abstract MiNDEntity getEntity_(Object unitName, Object entityId);
 
 	protected abstract MiNDContext getContext();
 

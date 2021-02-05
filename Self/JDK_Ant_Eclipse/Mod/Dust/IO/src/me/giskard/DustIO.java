@@ -6,6 +6,7 @@ import java.io.Reader;
 import org.json.simple.parser.JSONParser;
 
 import me.giskard.dust.io.json.DustIOJsonReader;
+import me.giskard.utils.MindUtils;
 
 public class DustIO {
 	public static void initModule() throws Exception {

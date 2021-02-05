@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardApp"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustRuntime"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -32,17 +32,35 @@ public interface DustConsts extends MindConsts {
 			}
 		}
 	}
+	
+	class DustToken implements MiNDToken {
+		public String token;
 
-	class DustVisitStatus<Key, Val> {
-		public MiNDEntity action;
-
-		public Key key;
-		public Val val;
+		public DustToken(String token) {
+			this.token = token;
+		}
+		
+		// may be needed for refactor to keep the instance but change the key
+		void setToken(String token) {
+			this.token = token;
+		}
+		
+		@Override
+		public String toString() {
+			return token;
+		}
 	}
 
-	interface DustVisitor<Key, Val> {
-		MiNDEntity visit(DustVisitStatus<Key, Val> status) throws Exception;
-	}
+//	class DustVisitStatus<Key, Val> {
+//		public MiNDAgentAction action;
+//
+//		public Key key;
+//		public Val val;
+//	}
+//
+//	interface DustVisitor<Key, Val> {
+//		MiNDResultType visit(DustVisitStatus<Key, Val> status) throws Exception;
+//	}
 
 	interface DustColl<Key, Val> {
 		boolean isEmpty();
@@ -51,7 +69,7 @@ public interface DustConsts extends MindConsts {
 
 		void clear();
 
-		MiNDEntity visit(DustVisitor<Key, Val> visitor);
+//		MiNDResultType visit(DustVisitor<Key, Val> visitor);
 	}
 
 	interface DustCollMap<Key, Val> {

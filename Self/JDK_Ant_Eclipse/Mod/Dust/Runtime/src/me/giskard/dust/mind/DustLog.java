@@ -2,9 +2,9 @@ package me.giskard.dust.mind;
 
 import java.io.PrintStream;
 
-import me.giskard.MindUtilsJava;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.DustUtils;
+import me.giskard.utils.MindUtilsJava;
 
 public class DustLog implements DustConsts {
 	static PrintStream psLog = System.out;

@@ -1,7 +1,7 @@
 package me.giskard.dust.io.json;
 
-import me.giskard.MindUtils;
 import me.giskard.dust.io.DustIOConsts;
+import me.giskard.utils.MindUtils;
 
 public interface DustIOJsonConsts extends DustIOConsts {
 

@@ -3,7 +3,7 @@ package me.giskard.dust;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import me.giskard.MindUtils;
+import me.giskard.utils.MindUtils;
 
 public class DustUtils extends MindUtils implements DustConsts {
 	

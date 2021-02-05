@@ -1,4 +1,6 @@
-package me.giskard;
+package me.giskard.utils;
+
+import me.giskard.MindConsts;
 
 public class MindUtilsJava implements MindConsts {
 	

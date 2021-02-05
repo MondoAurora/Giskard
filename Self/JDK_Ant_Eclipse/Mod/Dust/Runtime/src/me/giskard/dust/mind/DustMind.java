@@ -1,40 +1,20 @@
 package me.giskard.dust.mind;
 
-import java.text.MessageFormat;
-
 import me.giskard.Mind;
 import me.giskard.dust.DustCollections;
 import me.giskard.dust.DustConsts;
 
 public class DustMind extends Mind implements DustConsts, DustCollections {
 	
-	class DustEntity implements MiNDEntity {
-		public String token;
-
-		public DustEntity(String token) {
-			this.token = token;
-		}
-		
-		// may be needed for refactor to keep the instance but change the key
-		void setToken(String token) {
-			this.token = token;
-		}
-		
+	private final DustCreator<String, DustToken> entityCreator = new DustCreator<String, DustToken>() {
 		@Override
-		public String toString() {
-			return token;
-		}
-	}
-	
-	private final DustCreator<String, DustEntity> entityCreator = new DustCreator<String, DustEntity>() {
-		@Override
-		public DustEntity create(String key) {
-			return new DustEntity(key);
+		public DustToken create(String key) {
+			return new DustToken(key);
 		}
 	};
 
 	DustLog log;
-	DustFactory<String, DustEntity> entities = new DustFactory<>(true, entityCreator);
+	DustFactory<String, DustToken> entities = new DustFactory<>(true, entityCreator);
 	MiNDContext ctxTemp;
 	
 	public DustMind() {
@@ -46,10 +26,11 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 		}
 	}
 
-	@Override
-	protected MiNDEntity getEntity_(Object unitName, Object entityId) {
-		return entities.get(MessageFormat.format(FMT_ENTITY_ID, unitName, entityId));
-	}
+	
+//	@Override
+//	protected MiNDEntity getEntity_(Object unitName, Object entityId) {
+//		return entities.get(MessageFormat.format(FMT_ENTITY_ID, unitName, entityId));
+//	}
 
 	@Override
 	protected MiNDContext getContext() {
@@ -63,7 +44,7 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	
 	@Override
 	protected void init(String[] args) {
-		MiNDEntity t = Mind.getEntity("Test", "Test01");
-		Mind.log(MiNDEventLevel.INFO, "Hello, world! ", t);
+//		MiNDEntity t = Mind.getEntity("Test", "Test01");
+		Mind.log(MiNDEventLevel.INFO, "Hello, world!");
 	}
 }
