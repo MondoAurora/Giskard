@@ -8,8 +8,8 @@ import org.json.simple.parser.JSONParser;
 import me.giskard.dust.io.json.DustIOJsonReader;
 import me.giskard.utils.MindUtils;
 
-public class DustIO {
-	public static void initModule() throws Exception {
+public class DustIO implements MindConsts.MiNDAgent {
+	void initModule() throws Exception {
 		String root = MindUtils.getRoot();
 
 		if ( !MindUtils.isEmpty(root) ) {
@@ -20,5 +20,17 @@ public class DustIO {
 
 			p.parse(r, h);
 		}
+	}
+
+	@Override
+	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		switch ( action ) {
+		case INIT:
+			initModule();
+			break;
+		default:
+			break;
+		}
+		return MiNDResultType.ACCEPT;
 	}
 }

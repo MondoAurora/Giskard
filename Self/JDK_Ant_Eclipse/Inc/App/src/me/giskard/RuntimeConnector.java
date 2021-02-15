@@ -27,13 +27,13 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 	private File modRoot;
 	private File extRoot;
 	private Map<String, Module> modules = new TreeMap<>();
-	private ArrayList<Module> boot = new ArrayList<>();
 
 	class Module {
 		String libMod;
 		URLClassLoader modLoader;
+		MiNDAgent modAgent;
 
-		public Module(String libMod, String... libExt) {
+		public Module(String libMod, String ver, String... libExt) {
 			this.libMod = libMod;
 
 			String currLib = null;
@@ -41,8 +41,8 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 			try {
 				ArrayList<URL> urls = new ArrayList<>();
 
-				urls.add(optGetUrl(modRoot, libMod + ".jar"));
-				
+				urls.add(optGetUrl(modRoot, libMod + "-" + ver + ".jar"));
+
 				for (String ln : libExt) {
 					currLib = libMod + "/" + ln;
 					urls.add(optGetUrl(extRoot, currLib));
@@ -51,11 +51,23 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 				URL[] uu = new URL[urls.size()];
 				uu = urls.toArray(uu);
 				modLoader = new URLClassLoader(uu);
+				
+				Class<?> cMind = modLoader.loadClass(Mind.class.getCanonicalName());
 
 				if ( null != mind ) {
-					initModule();
-				} else {
-					boot.add(this);
+					cMind.getMethod("setMind", cMind).invoke(null, mind);
+				}
+				
+				String rootPkg = cMind.getPackage().getName();
+				Class<?> cMod = modLoader.loadClass(rootPkg + "." + libMod);
+				if ( null != cMod ) {
+					modAgent = (MiNDAgent) cMod.newInstance();
+					modAgent.process(MiNDAgentAction.INIT);
+				}
+
+				if ( null == mind ) {
+					mind = (Mind) cMind.getMethod("getMind").invoke(null);
+					Mind.setMind(mind);
 				}
 			} catch (Throwable e) {
 				Mind.wrapException(e, libMod, currLib);
@@ -67,19 +79,19 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 			Method method = c.getMethod("setMind", c);
 			method.invoke(null, mind);
 			String extInit = ", no custom init";
-			
+
 			try {
 				String rootPkg = c.getPackage().getName();
 				Class<?> cMod = modLoader.loadClass(rootPkg + "." + libMod);
-				Method mInit = cMod.getMethod("initModule");
-				mInit.invoke(null);
-				extInit = ", " + mInit.toString() + " called";
+				if ( null != cMod ) {
+					modAgent = (MiNDAgent) cMod.newInstance();
+					modAgent.process(MiNDAgentAction.INIT);
+					extInit = ", " + cMod.toString() + " called";
+				}
 			} catch (ClassNotFoundException e1) {
 				// no problem
-			} catch (NoSuchMethodException e2) {
-				// no problem
 			}
-			
+
 			Mind.log(MiNDEventLevel.TRACE, "Module", libMod, "initialized" + extInit + ".");
 		}
 
@@ -108,32 +120,27 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		}
 	}
 
-	protected void initMind(String modName, String binTypeId, String[] args) throws Exception {
-		Module mod = modules.get(modName);
-		mind = mod.createNative(binTypeId);
-		Mind.setMind(mind);
+	@Override
+	public final void addModule(String modName, String mainLib, String ver, String... extLibs) {
+		modules.put(modName, new Module(mainLib, ver, extLibs));
+	}
 
-		for (Module m : boot) {
-			m.initModule();
-		}
+	protected final void launch() throws Exception {
+		Mind.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 		
-		Mind.log(MiNDEventLevel.INFO, "GISKARD boot complete.");
-
-		mind.init(args);
+		Module mod = modules.get(MODULE_MIND);
+		mod.modAgent.process(MiNDAgentAction.BEGIN);
+		
+		Mind.log(MiNDEventLevel.INFO, "GISKARD finished.");
 	}
 
 	@Override
-	public void addModule(String modName, String mainLib, String... extLibs) {
-		modules.put(modName, new Module(mainLib, extLibs));
-	}
-
-	@Override
-	public <RetType> RetType createObject(String modName, String binTypeId, Object... params) {
+	public final <RetType> RetType createObject(String modName, String binTypeId, Object... params) {
 		return modules.get(modName).createNative(binTypeId, params);
 	}
 
 	@Override
-	public void deleteObject(String modName, String binTypeId, Object object) {
+	public final void deleteObject(String modName, String binTypeId, Object object) {
 	}
 
 }

@@ -8,10 +8,10 @@ public class GiskardApplication extends RuntimeConnector {
 	public static void main(String[] args) throws Exception {
 		GiskardApplication app = new GiskardApplication(args);
 		
-		app.addModule(MODULE_MIND, "DustRuntime");
-		app.addModule("IO", "DustIO", "json-simple-1.1.1.jar");
+		app.addModule(MODULE_MIND, "DustRuntime", "1.0");
+		app.addModule("IO", "DustIO", "1.0", "json-simple-1.1.1.jar");
 		
-		app.initMind(MODULE_MIND, "me.giskard.dust.mind.DustMind", args);
+		app.launch();
 	}
 
 }

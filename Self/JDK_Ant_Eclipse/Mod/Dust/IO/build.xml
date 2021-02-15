@@ -15,7 +15,7 @@
 			<src path="./src" />
 		</javac>
 
-		<jar destfile="${GISKARD_BRAIN}/Mod/DustIO.jar">
+		<jar destfile="${GISKARD_BRAIN}/Mod/DustIO-1.0.jar">
 			<fileset dir="./bin" />
 		</jar>
 		

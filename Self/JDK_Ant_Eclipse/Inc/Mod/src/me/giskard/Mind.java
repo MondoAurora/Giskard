@@ -6,7 +6,9 @@ public abstract class Mind implements MindConsts {
 
 	protected static Mind THE_MIND;
 
-	// should handle binary modules here, including Dust
+	public static Mind getMind() {
+		return THE_MIND;
+	}
 
 	public static void setMind(Mind mind) {
 		if ( (null != THE_MIND) && (THE_MIND != mind) ) {
@@ -57,6 +59,7 @@ public abstract class Mind implements MindConsts {
 
 	protected abstract MiNDContext getContext();
 
-	protected abstract void init(String[] args);
+	public void initContext() {
+	}
 
 }

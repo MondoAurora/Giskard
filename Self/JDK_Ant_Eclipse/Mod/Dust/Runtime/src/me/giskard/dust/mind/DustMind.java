@@ -19,18 +19,18 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	
 	public DustMind() {
 		log = new DustLog();
-		try {
-			ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.data.DustDataContext").newInstance();
-		} catch (Exception e) {
-			Mind.wrapException(e);
-		}
 	}
 
-	
-//	@Override
-//	protected MiNDEntity getEntity_(Object unitName, Object entityId) {
-//		return entities.get(MessageFormat.format(FMT_ENTITY_ID, unitName, entityId));
-//	}
+	@Override
+	public void initContext() {
+		if ( null == ctxTemp ) {
+			try {
+				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.data.DustDataContext").newInstance();
+			} catch (Throwable e) {
+				Mind.wrapException(e);
+			}
+		}
+	}
 
 	@Override
 	protected MiNDContext getContext() {
@@ -40,11 +40,5 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	@Override
 	protected void log_(MiNDEventLevel lvl, Object... obs) {
 		log.log(lvl, obs);
-	}
-	
-	@Override
-	protected void init(String[] args) {
-//		MiNDEntity t = Mind.getEntity("Test", "Test01");
-		Mind.log(MiNDEventLevel.INFO, "Hello, world!");
 	}
 }

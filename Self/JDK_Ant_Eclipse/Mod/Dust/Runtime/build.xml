@@ -15,7 +15,7 @@
 			<src path="./src" />
 		</javac>
 
-		<jar destfile="${GISKARD_BRAIN}/Mod/DustRuntime.jar">
+		<jar destfile="${GISKARD_BRAIN}/Mod/DustRuntime-1.0.jar">
 			<fileset dir="./bin" />
 		</jar>
 	</target>

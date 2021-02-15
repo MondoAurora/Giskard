@@ -50,12 +50,12 @@ public interface MindConsts {
 	};
 
 	public interface MiNDModuleManager {
-		void addModule(String modName, String mainLib, String... extLibs);
+		void addModule(String modName, String mainLib, String ver, String... extLibs);
 		<RetType> RetType createObject(String modName, String binTypeId, Object... params);
 		void deleteObject(String modName, String binTypeId, Object object);
 	}
 
-	public interface MiNDAgent {
+	public interface MiNDAgent extends MindConsts {
 		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
 	}
 
