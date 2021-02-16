@@ -6,15 +6,7 @@ import me.giskard.dust.runtime.DustConsts;
 
 public class DustMind extends Mind implements DustConsts, DustCollections {
 	
-	private final DustCreator<String, DustToken> entityCreator = new DustCreator<String, DustToken>() {
-		@Override
-		public DustToken create(String key) {
-			return new DustToken(key);
-		}
-	};
-
 	DustLog log;
-	DustFactory<String, DustToken> entities = new DustFactory<>(true, entityCreator);
 	MiNDContext ctxTemp;
 	
 	public DustMind() {
@@ -40,5 +32,10 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	@Override
 	protected void log_(MiNDEventLevel lvl, Object... obs) {
 		log.log(lvl, obs);
+	}
+	
+	@Override
+	public String toString() {
+		return ctxTemp.toString();
 	}
 }

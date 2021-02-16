@@ -15,6 +15,8 @@ public class DustRuntime implements MindConsts.MiNDAgent {
 			break;
 		case BEGIN:
 			Mind.log(MiNDEventLevel.INFO, "DustRuntime launch...");
+			
+			Mind.log(MiNDEventLevel.INFO, Mind.getMind());
 			break;
 		default:
 			break;

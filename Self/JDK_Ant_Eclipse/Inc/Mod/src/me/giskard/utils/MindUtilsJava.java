@@ -9,7 +9,21 @@ public class MindUtilsJava implements MindConsts {
 	}
 
 	public static String toString(Object ob) {
-		return (null == ob) ? "" : ob.toString();
+		return toString(ob, ", ");
+	}
+
+	public static String toString(Object ob, String sep) {
+		if ( null == ob ) {
+			return "";
+		} else if ( ob.getClass().isArray() ) {
+			StringBuilder sb = null;
+			for ( Object oo : (Object[]) ob) {
+				sb = sbAppend(sb, sep, false, oo);
+			}
+			return ( null == sb ) ? "" : sb.toString();
+		} else { 
+			return ob.toString();
+		}
 	}
 	
 	public static boolean isEmpty(String str) {

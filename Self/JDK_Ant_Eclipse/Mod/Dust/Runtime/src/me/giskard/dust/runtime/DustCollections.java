@@ -13,8 +13,18 @@ public interface DustCollections extends DustConsts {
 		}
 		
 		@Override
+		public String toString() {
+			return map.toString();
+		}
+		
+		@Override
 		public Val get(Key key) {
 			return map.get(key);
+		}
+		
+		@Override
+		public Val put(Key key, Val val) {
+			return map.put(key, val);
 		}
 	}	
 	
@@ -28,6 +38,11 @@ public interface DustCollections extends DustConsts {
 		public DustFactory(boolean sorted, DustCreator<Key, ? extends Val> creator) {
 			this(sorted);
 			setCreator(creator);
+		}
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public DustFactory(boolean sorted, Class<? extends Val> vc) {
+			this(sorted, new DustCreatorSimple(vc));
 		}
 		
 		public void setCreator(DustCreator<Key, ? extends Val> creator) {

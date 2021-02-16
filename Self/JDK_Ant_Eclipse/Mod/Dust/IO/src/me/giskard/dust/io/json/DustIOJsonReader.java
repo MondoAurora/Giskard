@@ -16,11 +16,11 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 		}
 
 		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
-			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_VARIANT_VALUE, param);
-			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_JSONEVENT_BLOCK, block);
+			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_VARIANT_VALUE);
+			Mind.access(MiNDAccessCommand.SET, block, MT_JSON_EVENT, MT_JSONEVENT_BLOCK);
 			
 			try {
-				MiNDResultType ret = processor.process(action);
+				MiNDResultType ret = MiNDResultType.ACCEPT_READ; // processor.process(action);
 
 				switch ( ret ) {
 				case NOTIMPLEMENTED:

@@ -10,7 +10,7 @@ public interface DustConsts extends MindConsts {
 	String FORMAT_DATE_DEFAULT = "YYYYMMdd";
 	String FORMAT_TIMESTAMP_DEFAULT = "YYYYMMdd_HHmmss_SSS";
 	
-	String FMT_ENTITY_ID = "de_{0}_{1}";
+//	String FMT_ENTITY_ID = "de_{0}_{1}";
 
 	interface DustCreator<Key, Val> {
 		Val create(Key key);
@@ -33,23 +33,23 @@ public interface DustConsts extends MindConsts {
 		}
 	}
 	
-	class DustToken implements MiNDToken {
-		public String token;
-
-		public DustToken(String token) {
-			this.token = token;
-		}
-		
-		// may be needed for refactor to keep the instance but change the key
-		void setToken(String token) {
-			this.token = token;
-		}
-		
-		@Override
-		public String toString() {
-			return token;
-		}
-	}
+//	class DustToken implements MiNDToken {
+//		public String token;
+//
+//		public DustToken(String token) {
+//			this.token = token;
+//		}
+//		
+//		// may be needed for refactor to keep the instance but change the key
+//		void setToken(String token) {
+//			this.token = token;
+//		}
+//		
+//		@Override
+//		public String toString() {
+//			return token;
+//		}
+//	}
 
 //	class DustVisitStatus<Key, Val> {
 //		public MiNDAgentAction action;
@@ -74,5 +74,6 @@ public interface DustConsts extends MindConsts {
 
 	interface DustCollMap<Key, Val> {
 		Val get(Key key);
+		Val put(Key key, Val val);
 	}
 }

@@ -11,16 +11,26 @@ import me.giskard.utils.MindUtils;
 
 public class DustIO implements MindConsts.MiNDAgent {
 	void initModule() throws Exception {
-		String root = MindUtils.getRoot();
+	String fileName = "Knowledge/Json/System.json";
+//String fileName = "/Users/lkedves/work/Giskard/data/countries.geojson";
+//String fileName = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
+//		String fileName = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
+	
 
-		if ( !MindUtils.isEmpty(root) ) {
-			Reader r = new FileReader(root + "/Knowledge/Json/System.json");
+		if ( !fileName.startsWith("/") ) {
+			String root = MindUtils.getRoot();
 
-			JSONParser p = new JSONParser();
-			DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(MindUtils.LOGGER);
-
-			p.parse(r, h);
+			if ( !MindUtils.isEmpty(root) ) {
+				fileName = root + "/" + fileName;
+			}
 		}
+
+		Reader r = new FileReader(fileName);
+
+		JSONParser p = new JSONParser();
+		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(MindUtils.LOGGER);
+
+		p.parse(r, h);
 	}
 
 	@Override
