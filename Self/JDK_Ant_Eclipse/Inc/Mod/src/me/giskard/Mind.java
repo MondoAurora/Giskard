@@ -42,8 +42,8 @@ public abstract class Mind implements MindConsts {
 	}
 
 	
-	public static <RetType> RetType access(MiNDAccessCommand cmd, MiNDToken target, Object... valPath) {
-		return THE_MIND.getContext().access( cmd, target, valPath);
+	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+		return THE_MIND.getContext().access( cmd, val, target, valPath);
 	}
 
 	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {

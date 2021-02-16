@@ -9,20 +9,18 @@ import me.giskard.Mind;
 
 public class DustIOJsonReader implements DustIOJsonConsts {
 	public static class JsonContentDispatcher implements ContentHandler {
-		JsonContext ctx;
 		MiNDAgent processor;
 
 		public JsonContentDispatcher(MiNDAgent processor) {
-			ctx = new JsonContext();
 			this.processor = processor;
 		}
 
-		boolean processJsonEvent(MiNDAgentAction action, JsonBlock block, Object param) {
-			ctx.block = block;
-			ctx.param = param;
-
+		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
+			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_VARIANT_VALUE, param);
+			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_JSONEVENT_BLOCK, block);
+			
 			try {
-				MiNDResultType ret = processor.process(action, ctx);
+				MiNDResultType ret = processor.process(action);
 
 				switch ( ret ) {
 				case NOTIMPLEMENTED:
@@ -49,37 +47,38 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 
 		@Override
 		public boolean startObjectEntry(String arg0) throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, JsonBlock.Entry, arg0);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_ENTRY, arg0);
 		}
 
 		@Override
 		public boolean endObjectEntry() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, JsonBlock.Entry, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_ENTRY, null);
 		}
 
+		
 		@Override
 		public boolean primitive(Object arg0) throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.PROCESS, null, arg0);
+			return processJsonEvent(MiNDAgentAction.PROCESS, MT_JSON_BLOCKTYPE_PRIMITIVE, arg0);
 		}
 
 		@Override
 		public boolean startObject() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, JsonBlock.Object, null);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_OBJECT, null);
 		}
 
 		@Override
 		public boolean endObject() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, JsonBlock.Object, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_OBJECT, null);
 		}
 
 		@Override
 		public boolean startArray() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, JsonBlock.Array, null);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_ARRAY, null);
 		}
 
 		@Override
 		public boolean endArray() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, JsonBlock.Array, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_ARRAY, null);
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package me.giskard;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 			return Mind.wrapException(t, "Missing library", f.getAbsolutePath());
 		}
 	}
-
-	private Mind mind;
+	
+	private static ClassLoader appLoader = ClassLoader.getSystemClassLoader();
 
 	private File modRoot;
 	private File extRoot;
@@ -50,49 +49,19 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 
 				URL[] uu = new URL[urls.size()];
 				uu = urls.toArray(uu);
-				modLoader = new URLClassLoader(uu);
+				modLoader = new URLClassLoader(uu, appLoader);
 				
 				Class<?> cMind = modLoader.loadClass(Mind.class.getCanonicalName());
-
-				if ( null != mind ) {
-					cMind.getMethod("setMind", cMind).invoke(null, mind);
-				}
 				
 				String rootPkg = cMind.getPackage().getName();
-				Class<?> cMod = modLoader.loadClass(rootPkg + "." + libMod);
+				Class<?> cMod = modLoader.loadClass(rootPkg + ".mod." + libMod);
 				if ( null != cMod ) {
 					modAgent = (MiNDAgent) cMod.newInstance();
 					modAgent.process(MiNDAgentAction.INIT);
-				}
-
-				if ( null == mind ) {
-					mind = (Mind) cMind.getMethod("getMind").invoke(null);
-					Mind.setMind(mind);
 				}
 			} catch (Throwable e) {
 				Mind.wrapException(e, libMod, currLib);
 			}
-		}
-
-		void initModule() throws Exception {
-			Class<?> c = modLoader.loadClass(Mind.class.getCanonicalName());
-			Method method = c.getMethod("setMind", c);
-			method.invoke(null, mind);
-			String extInit = ", no custom init";
-
-			try {
-				String rootPkg = c.getPackage().getName();
-				Class<?> cMod = modLoader.loadClass(rootPkg + "." + libMod);
-				if ( null != cMod ) {
-					modAgent = (MiNDAgent) cMod.newInstance();
-					modAgent.process(MiNDAgentAction.INIT);
-					extInit = ", " + cMod.toString() + " called";
-				}
-			} catch (ClassNotFoundException e1) {
-				// no problem
-			}
-
-			Mind.log(MiNDEventLevel.TRACE, "Module", libMod, "initialized" + extInit + ".");
 		}
 
 		@SuppressWarnings("unchecked")
@@ -120,11 +89,6 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		}
 	}
 
-	@Override
-	public final void addModule(String modName, String mainLib, String ver, String... extLibs) {
-		modules.put(modName, new Module(mainLib, ver, extLibs));
-	}
-
 	protected final void launch() throws Exception {
 		Mind.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 		
@@ -132,6 +96,14 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		mod.modAgent.process(MiNDAgentAction.BEGIN);
 		
 		Mind.log(MiNDEventLevel.INFO, "GISKARD finished.");
+	}
+
+	@Override
+	public final void addModule(String modName, String mainLib, String ver, String... extLibs) {
+		if ( modules.containsKey(modName) ) {
+			Mind.wrapException(null, "Module already loaded", modName);
+		}
+		modules.put(modName, new Module(mainLib, ver, extLibs));
 	}
 
 	@Override

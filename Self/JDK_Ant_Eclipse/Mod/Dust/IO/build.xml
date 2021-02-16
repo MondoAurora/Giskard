@@ -11,7 +11,10 @@
 		       includeantruntime="false"
 		       source="${javac.source}"
 		       target="${javac.target}">
-			<src path="${GISKARD_INC_MOD}" />
+			<classpath>
+				<path path="${GISKARD_PATH_MOD}"></path>
+			</classpath>
+			<src path="${GISKARD_INC_GEN}" />
 			<src path="./src" />
 		</javac>
 

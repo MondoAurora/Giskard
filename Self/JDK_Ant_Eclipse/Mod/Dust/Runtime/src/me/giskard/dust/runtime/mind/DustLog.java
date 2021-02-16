@@ -1,9 +1,9 @@
-package me.giskard.dust.mind;
+package me.giskard.dust.runtime.mind;
 
 import java.io.PrintStream;
 
-import me.giskard.dust.DustConsts;
-import me.giskard.dust.DustUtils;
+import me.giskard.dust.runtime.DustConsts;
+import me.giskard.dust.runtime.DustUtils;
 import me.giskard.utils.MindUtilsJava;
 
 public class DustLog implements DustConsts {

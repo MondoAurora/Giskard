@@ -1,8 +1,8 @@
-package me.giskard.dust.mind;
+package me.giskard.dust.runtime.mind;
 
 import me.giskard.Mind;
-import me.giskard.dust.DustCollections;
-import me.giskard.dust.DustConsts;
+import me.giskard.dust.runtime.DustCollections;
+import me.giskard.dust.runtime.DustConsts;
 
 public class DustMind extends Mind implements DustConsts, DustCollections {
 	
@@ -25,7 +25,7 @@ public class DustMind extends Mind implements DustConsts, DustCollections {
 	public void initContext() {
 		if ( null == ctxTemp ) {
 			try {
-				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.data.DustDataContext").newInstance();
+				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.runtime.data.DustDataContext").newInstance();
 			} catch (Throwable e) {
 				Mind.wrapException(e);
 			}

@@ -1,10 +1,11 @@
-package me.giskard;
+package me.giskard.mod;
 
 import java.io.FileReader;
 import java.io.Reader;
 
 import org.json.simple.parser.JSONParser;
 
+import me.giskard.MindConsts;
 import me.giskard.dust.io.json.DustIOJsonReader;
 import me.giskard.utils.MindUtils;
 

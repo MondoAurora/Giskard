@@ -34,7 +34,7 @@ public interface MindConsts {
 		void selectById(MiNDToken target, String id);
 		void selectByPath(MiNDToken target, Object... path);
 		
-		<RetType> RetType access(MiNDAccessCommand cmd, MiNDToken target, Object... valPath);
+		<RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath);
 	}
 
 	enum MiNDEventLevel {

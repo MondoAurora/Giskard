@@ -1,4 +1,4 @@
-package me.giskard.dust.data;
+package me.giskard.dust.runtime.data;
 
 public class DustDataBlock implements DustDataConsts {
 	DustDataBlock parent;

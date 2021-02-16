@@ -1,4 +1,4 @@
-package me.giskard.dust;
+package me.giskard.dust.runtime;
 
 import me.giskard.Mind;
 import me.giskard.MindConsts;

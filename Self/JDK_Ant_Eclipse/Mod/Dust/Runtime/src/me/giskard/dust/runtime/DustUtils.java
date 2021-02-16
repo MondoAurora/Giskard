@@ -1,4 +1,4 @@
-package me.giskard.dust;
+package me.giskard.dust.runtime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
