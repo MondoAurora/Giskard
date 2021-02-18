@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 import me.giskard.utils.MindUtils;
 
-public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManager {
+public class RuntimeConnector implements MindConsts, MindConsts.MiNDMachine {
 
 	static URL optGetUrl(File root, String name) {
 		File f = MindUtils.isEmpty(name) ? root : new File(root, name);
@@ -17,7 +17,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 		try {
 			return f.isFile() ? f.toURI().toURL() : null;
 		} catch (Throwable t) {
-			return Mind.wrapException(t, "Missing library", f.getAbsolutePath());
+			return MindUtils.wrapException(t, "Missing library", f.getAbsolutePath());
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 					modAgent.process(MiNDAgentAction.INIT);
 				}
 			} catch (Throwable e) {
-				Mind.wrapException(e, libMod, currLib);
+				MindUtils.wrapException(e, libMod, currLib);
 			}
 		}
 
@@ -70,7 +70,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 				Class<?> c = modLoader.loadClass(binTypeId);
 				return (RetType) c.newInstance();
 			} catch (Exception e) {
-				return Mind.wrapException(e, binTypeId);
+				return MindUtils.wrapException(e, binTypeId);
 			}
 		}
 	}
@@ -101,18 +101,14 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDModuleManage
 	@Override
 	public final void addModule(String modName, String mainLib, String ver, String... extLibs) {
 		if ( modules.containsKey(modName) ) {
-			Mind.wrapException(null, "Module already loaded", modName);
+			MindUtils.wrapException(null, "Module already loaded", modName);
 		}
 		modules.put(modName, new Module(mainLib, ver, extLibs));
 	}
-
+	
 	@Override
-	public final <RetType> RetType createObject(String modName, String binTypeId, Object... params) {
-		return modules.get(modName).createNative(binTypeId, params);
-	}
-
-	@Override
-	public final void deleteObject(String modName, String binTypeId, Object object) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+		return null;
 	}
 
 }

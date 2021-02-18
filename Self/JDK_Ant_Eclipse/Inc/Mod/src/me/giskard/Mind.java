@@ -12,7 +12,7 @@ public abstract class Mind implements MindConsts {
 
 	public static void setMind(Mind mind) {
 		if ( (null != THE_MIND) && (THE_MIND != mind) ) {
-			wrapException(null, "Multiple initialization!");
+			MindUtils.wrapException(null, "Multiple initialization!");
 		}
 
 		THE_MIND = mind;
@@ -43,16 +43,8 @@ public abstract class Mind implements MindConsts {
 
 	
 	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+//		return val;
 		return THE_MIND.getContext().access( cmd, val, target, valPath);
-	}
-
-	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {
-		if ( src instanceof MiNDException ) {
-			throw (MiNDException) src;
-		}
-
-		log(MiNDEventLevel.CRITICAL, src, params);
-		throw new MiNDException(src);
 	}
 
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);

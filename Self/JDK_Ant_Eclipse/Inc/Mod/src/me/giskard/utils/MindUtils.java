@@ -16,4 +16,21 @@ public class MindUtils extends MindUtilsJava {
 		String root = System.getenv("GISKARD");
 		return isEmpty(root) ? System.getenv("GISKARD_ECLIPSE") : root;
 	}
+	
+	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
+		return (cmd == MiNDAccessCommand.SET) || (cmd == MiNDAccessCommand.ADD);
+	}
+
+	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {
+		if ( src instanceof MiNDException ) {
+			throw (MiNDException) src;
+		}
+	
+		Mind.log(MiNDEventLevel.CRITICAL, src, params);
+		throw new MiNDException(src);
+	}
+	
+	public static void swallowException(Throwable src, Object... params) {
+		Mind.log(MiNDEventLevel.WARNING, src, params);
+	}
 }

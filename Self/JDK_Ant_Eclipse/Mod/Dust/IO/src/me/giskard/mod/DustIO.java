@@ -5,16 +5,17 @@ import java.io.Reader;
 
 import org.json.simple.parser.JSONParser;
 
+import me.giskard.Mind;
 import me.giskard.MindConsts;
 import me.giskard.dust.io.json.DustIOJsonReader;
 import me.giskard.utils.MindUtils;
 
 public class DustIO implements MindConsts.MiNDAgent {
 	void initModule() throws Exception {
-	String fileName = "Knowledge/Json/System.json";
+//	String fileName = "Knowledge/Json/System.json";
 //String fileName = "/Users/lkedves/work/Giskard/data/countries.geojson";
 //String fileName = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
-//		String fileName = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
+		String fileName = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
 	
 
 		if ( !fileName.startsWith("/") ) {
@@ -26,11 +27,16 @@ public class DustIO implements MindConsts.MiNDAgent {
 		}
 
 		Reader r = new FileReader(fileName);
+		
+		Mind.log(MiNDEventLevel.TRACE, "Reading JSON file", fileName);
 
 		JSONParser p = new JSONParser();
 		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(MindUtils.LOGGER);
 
 		p.parse(r, h);
+		
+		Mind.log(MiNDEventLevel.INFO, "File read success", fileName, h);
+
 	}
 
 	@Override

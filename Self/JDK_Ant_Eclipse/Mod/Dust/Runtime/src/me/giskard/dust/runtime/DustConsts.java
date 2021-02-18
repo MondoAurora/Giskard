@@ -1,7 +1,7 @@
 package me.giskard.dust.runtime;
 
-import me.giskard.Mind;
 import me.giskard.MindConsts;
+import me.giskard.utils.MindUtils;
 
 public interface DustConsts extends MindConsts {
 	String SEP_ID = "_";
@@ -28,7 +28,7 @@ public interface DustConsts extends MindConsts {
 			try {
 				return cVal.newInstance();
 			} catch (Throwable e) {
-				return Mind.wrapException(e);
+				return MindUtils.wrapException(e);
 			}
 		}
 	}

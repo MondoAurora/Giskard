@@ -49,6 +49,10 @@ public interface DustCollections extends DustConsts {
 			this.creator = creator;
 		}
 		
+		public synchronized Val peek(Key key) {
+			return super.get(key);
+		}
+		
 		public synchronized Val get(Key key) {
 			Val ret = super.get(key);
 			if ( null == ret ) {

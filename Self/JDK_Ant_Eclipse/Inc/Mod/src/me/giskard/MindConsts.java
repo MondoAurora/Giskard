@@ -25,16 +25,18 @@ public interface MindConsts {
 	}
 
 	enum MiNDAccessCommand {
-		CHK, GET, SET, ADD, DEL, VISIT
+		CHK, GET, SET, ADD, DEL, USE
 	};
 
-	public interface MiNDContext {
+	public interface MiNDAccessor {
+		<RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath);
+	};
+
+	public interface MiNDContext extends MiNDAccessor {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
 		
 		void selectById(MiNDToken target, String id);
-		void selectByPath(MiNDToken target, Object... path);
-		
-		<RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath);
+		void selectByPath(MiNDToken target, Object... path);		
 	}
 
 	enum MiNDEventLevel {
@@ -49,20 +51,18 @@ public interface MindConsts {
 		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
 	};
 
-	public interface MiNDModuleManager {
-		void addModule(String modName, String mainLib, String ver, String... extLibs);
-		<RetType> RetType createObject(String modName, String binTypeId, Object... params);
-		void deleteObject(String modName, String binTypeId, Object object);
-	}
-
 	public interface MiNDAgent extends MindConsts {
 		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
+	}
+
+	public interface MiNDMachine extends MiNDAccessor {
+		void addModule(String modName, String mainLib, String ver, String... extLibs);
 	}
 
 	public static final class MiNDException extends RuntimeException {
 		private static final long serialVersionUID = 1L;
 
-		MiNDException(Throwable src) {
+		public MiNDException(Throwable src) {
 			super(src);
 		}
 	}

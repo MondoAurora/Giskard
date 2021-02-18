@@ -6,33 +6,47 @@ import org.json.simple.parser.ContentHandler;
 import org.json.simple.parser.ParseException;
 
 import me.giskard.Mind;
+import me.giskard.utils.MindDevCounter;
+import me.giskard.utils.MindUtils;
 
 public class DustIOJsonReader implements DustIOJsonConsts {
 	public static class JsonContentDispatcher implements ContentHandler {
 		MiNDAgent processor;
+		MindDevCounter counter;
 
 		public JsonContentDispatcher(MiNDAgent processor) {
 			this.processor = processor;
+			counter = new MindDevCounter("JSON reader", false, 5000);
+			counter.setShowMem(true);
 		}
 
 		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
 			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_VARIANT_VALUE);
 			Mind.access(MiNDAccessCommand.SET, block, MT_JSON_EVENT, MT_JSONEVENT_BLOCK);
 			
+			if ( (MiNDAgentAction.BEGIN == action) || (MT_JSON_BLOCKTYPE_PRIMITIVE == block) ) {
+				counter.add(block);
+			}
+			
 			try {
 				MiNDResultType ret = MiNDResultType.ACCEPT_READ; // processor.process(action);
 
 				switch ( ret ) {
 				case NOTIMPLEMENTED:
-					return Mind.wrapException(null);
+					return MindUtils.wrapException(null);
 				case REJECT:
 					return false;
 				default:
 					return true;
 				}
 			} catch (Exception e) {
-				return Mind.wrapException(e);
+				return MindUtils.wrapException(e);
 			}
+		}
+		
+		@Override
+		public String toString() {
+			return counter.toString();
 		}
 
 		@Override

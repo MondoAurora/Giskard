@@ -12,7 +12,7 @@ public interface DustTokensMind extends MindConsts {
 	MiNDToken MT_DIALOG_ACCESSCOMMAND_SET = Mind.defineToken(MiNDTokenType.TAG, "Set", MT_DIALOG_ACCESSCOMMAND, MiNDAccessCommand.SET);
 	MiNDToken MT_DIALOG_ACCESSCOMMAND_ADD = Mind.defineToken(MiNDTokenType.TAG, "Add", MT_DIALOG_ACCESSCOMMAND, MiNDAccessCommand.ADD);
 	MiNDToken MT_DIALOG_ACCESSCOMMAND_DEL = Mind.defineToken(MiNDTokenType.TAG, "Del", MT_DIALOG_ACCESSCOMMAND, MiNDAccessCommand.DEL);
-	MiNDToken MT_DIALOG_ACCESSCOMMAND_VISIT = Mind.defineToken(MiNDTokenType.TAG, "Visit", MT_DIALOG_ACCESSCOMMAND, MiNDAccessCommand.VISIT);
+	MiNDToken MT_DIALOG_ACCESSCOMMAND_USE = Mind.defineToken(MiNDTokenType.TAG, "Use", MT_DIALOG_ACCESSCOMMAND, MiNDAccessCommand.USE);
 	
 	MiNDToken MT_NARRATIVE_UNIT = Mind.defineToken(MiNDTokenType.UNIT, "MiND_Narrative");
 	
