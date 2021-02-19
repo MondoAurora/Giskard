@@ -32,15 +32,15 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDMachine {
 		URLClassLoader modLoader;
 		MiNDAgent modAgent;
 
-		public Module(String libMod, String ver, String... libExt) {
-			this.libMod = libMod;
+		public Module(String libMod_, String ver, String... libExt) {
+			this.libMod = libMod_ + "-" + ver;
 
 			String currLib = null;
 
 			try {
 				ArrayList<URL> urls = new ArrayList<>();
 
-				urls.add(optGetUrl(modRoot, libMod + "-" + ver + ".jar"));
+				urls.add(optGetUrl(modRoot, libMod + ".jar"));
 
 				for (String ln : libExt) {
 					currLib = libMod + "/" + ln;
@@ -54,7 +54,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDMachine {
 				Class<?> cMind = modLoader.loadClass(Mind.class.getCanonicalName());
 				
 				String rootPkg = cMind.getPackage().getName();
-				Class<?> cMod = modLoader.loadClass(rootPkg + ".mod." + libMod);
+				Class<?> cMod = modLoader.loadClass(rootPkg + ".mod." + libMod_);
 				if ( null != cMod ) {
 					modAgent = (MiNDAgent) cMod.newInstance();
 					modAgent.process(MiNDAgentAction.INIT);

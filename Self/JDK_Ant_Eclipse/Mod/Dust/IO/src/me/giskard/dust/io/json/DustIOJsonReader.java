@@ -21,10 +21,10 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 		}
 
 		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
-			Mind.access(MiNDAccessCommand.SET, param, MT_JSON_EVENT, MT_VARIANT_VALUE);
-			Mind.access(MiNDAccessCommand.SET, block, MT_JSON_EVENT, MT_JSONEVENT_BLOCK);
+			Mind.access(MiNDAccessCommand.SET, param, MT_IO_SERIALIZEEVENT, MT_VARIANT_VALUE);
+			Mind.access(MiNDAccessCommand.SET, block, MT_IO_SERIALIZEEVENT, MT_IO_SERIALIZEITEM);
 			
-			if ( (MiNDAgentAction.BEGIN == action) || (MT_JSON_BLOCKTYPE_PRIMITIVE == block) ) {
+			if ( (MiNDAgentAction.BEGIN == action) || (MT_IO_SERIALIZEITEM_VALUE == block) ) {
 				counter.add(block);
 			}
 			
@@ -61,38 +61,38 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 
 		@Override
 		public boolean startObjectEntry(String arg0) throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_ENTRY, arg0);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_IO_SERIALIZEITEM_KEY, arg0);
 		}
 
 		@Override
 		public boolean endObjectEntry() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_ENTRY, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_IO_SERIALIZEITEM_KEY, null);
 		}
 
 		
 		@Override
 		public boolean primitive(Object arg0) throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.PROCESS, MT_JSON_BLOCKTYPE_PRIMITIVE, arg0);
+			return processJsonEvent(MiNDAgentAction.PROCESS, MT_IO_SERIALIZEITEM_VALUE, arg0);
 		}
 
 		@Override
 		public boolean startObject() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_OBJECT, null);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_IO_SERIALIZEITEM_MAP, null);
 		}
 
 		@Override
 		public boolean endObject() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_OBJECT, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_IO_SERIALIZEITEM_MAP, null);
 		}
 
 		@Override
 		public boolean startArray() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.BEGIN, MT_JSON_BLOCKTYPE_ARRAY, null);
+			return processJsonEvent(MiNDAgentAction.BEGIN, MT_IO_SERIALIZEITEM_ARRAY, null);
 		}
 
 		@Override
 		public boolean endArray() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.END, MT_JSON_BLOCKTYPE_ARRAY, null);
+			return processJsonEvent(MiNDAgentAction.END, MT_IO_SERIALIZEITEM_ARRAY, null);
 		}
 	}
 }

@@ -3,6 +3,8 @@ package me.giskard;
 public interface MindConsts {
 	String MODULE_MIND = "MiND";
 	
+	String SEP_ID = "_";
+
 	String DEF_ENCODING = "UTF-8";
 	String DEF_FORMAT_DATE = "YYYYMMdd";
 	String DEF_FORMAT_TIMESTAMP = "YYYYMMdd_HHmmss_SSS";
@@ -55,10 +57,6 @@ public interface MindConsts {
 		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
 	}
 
-	public interface MiNDMachine extends MiNDAccessor {
-		void addModule(String modName, String mainLib, String ver, String... extLibs);
-	}
-
 	public static final class MiNDException extends RuntimeException {
 		private static final long serialVersionUID = 1L;
 
@@ -66,4 +64,17 @@ public interface MindConsts {
 			super(src);
 		}
 	}
+
+	public interface MiNDMachine extends MiNDAccessor {
+		void addModule(String modName, String mainLib, String ver, String... extLibs);
+	}
+	
+	interface MiNDCreator<Key, Val> {
+		Val create(Key key);
+	}
+
+	abstract class MiNDBuilder<Key, Val> implements MiNDCreator<Key, Val>	{
+		public abstract void release(Key key, Val v);
+	}
+
 }

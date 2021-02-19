@@ -6,9 +6,6 @@ import me.giskard.tokens.DustTokensIO;
 
 public interface DustIOJsonConsts extends DustIOConsts, DustTokensIO, DustTokensGeneric {
 
-//	enum JsonBlock {
-//		Entry, Object, Array
-//	}
 //
 //	public class JsonContext {
 //		public JsonBlock block;

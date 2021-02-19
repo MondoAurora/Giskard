@@ -4,10 +4,15 @@
 	<property name="GISKARD_SELF" value="../../.." />
 	<include file="${GISKARD_SELF}/Inc/Ant/ant_props.xml" />
 
+	<target name="clean">
+		<delete dir="${javac.bindir}"/>
+	</target>
+	
 	<target name="create_jar">
+		<mkdir dir="${javac.bindir}"/>
 		<javac debug="true"
 		       debuglevel="${javac.debuglevel}"
-		       destdir="bin"
+		       destdir="${javac.bindir}"
 		       includeantruntime="false"
 		       source="${javac.source}"
 		       target="${javac.target}">
@@ -22,7 +27,7 @@
 				<attribute name="Class-Path" value="." />
 			</manifest>
 
-			<fileset dir="./bin" />
+			<fileset dir="${javac.bindir}" />
 		</jar>
 	</target>
 </project>

@@ -3,24 +3,39 @@ package me.giskard.dust.runtime;
 import java.util.HashSet;
 import java.util.Set;
 
-public interface DustMeta extends DustConsts {
+import me.giskard.coll.MindCollConsts;
+import me.giskard.utils.MindTokenTranslator;
+
+public interface DustMeta extends MindCollConsts {
 
 	abstract class DustToken implements MiNDToken {
 		public static String buildId(String name, DustToken parent) {
 			return (null == parent) ? name : parent.getId() + SEP_ID + name;
 		}
-		
+
 		public static DustToken createToken(MiNDTokenType type, String name, Object... params) {
+			DustToken ret;
+
 			switch ( type ) {
 			case UNIT:
-				return new DustTokenContainer(type, name, null);
+				ret = new DustTokenContainer(type, name, null);
+				break;
 			case MEMBER:
-				return new DustTokenMember(name, (DustTokenContainer) params[0], (MiNDValType) params[1], (MiNDCollType) params[2]);
+				ret = new DustTokenMember(name, (DustTokenContainer) params[0], (MiNDValType) params[1],
+						(MiNDCollType) params[2]);
+				break;
 			default:
-				return new DustTokenContainer(type, name, (DustTokenContainer) params[0]);
+				ret = new DustTokenContainer(type, name, (DustTokenContainer) params[0]);
+				if ( (type == MiNDTokenType.TAG) && (params.length > 1) ) {
+					MindTokenTranslator.register(ret, params[1]);
+				}
+
+				break;
 			}
+
+			return ret;
 		}
-		
+
 		MiNDTokenType type;
 		String name;
 		DustToken parent;
@@ -41,11 +56,10 @@ public interface DustMeta extends DustConsts {
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+
 		public String getId() {
 			return buildId(name, parent);
 		}
-
 
 		@Override
 		public String toString() {
@@ -59,7 +73,7 @@ public interface DustMeta extends DustConsts {
 		public DustTokenContainer(MiNDTokenType type, String name, DustTokenContainer parent) {
 			super(type, name, parent);
 		}
-		
+
 		protected void addChild(DustToken child) {
 			if ( null == children ) {
 				children = new HashSet<>();
@@ -71,18 +85,18 @@ public interface DustMeta extends DustConsts {
 	class DustTokenMember extends DustToken {
 		MiNDValType valType;
 		MiNDCollType collType;
-		
+
 		public DustTokenMember(String name, DustTokenContainer parent, MiNDValType valType, MiNDCollType collType) {
 			super(MiNDTokenType.MEMBER, name, parent);
-			
+
 			setValType(valType);
 			setCollType(collType);
 		}
-		
+
 		public void setValType(MiNDValType valType) {
 			this.valType = valType;
 		}
-		
+
 		public void setCollType(MiNDCollType collType) {
 			this.collType = collType;
 		}

@@ -2,11 +2,11 @@ package me.giskard.dust.runtime.mind;
 
 import java.io.PrintStream;
 
-import me.giskard.dust.runtime.DustConsts;
+import me.giskard.coll.MindCollConsts;
 import me.giskard.dust.runtime.DustUtils;
 import me.giskard.utils.MindUtilsJava;
 
-public class DustLog implements DustConsts {
+public class DustLog implements MindCollConsts {
 	static PrintStream psLog = System.out;
 
 	public void log(MiNDEventLevel lvl, Object... obs) {

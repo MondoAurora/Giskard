@@ -33,4 +33,5 @@ public class MindUtils extends MindUtilsJava {
 	public static void swallowException(Throwable src, Object... params) {
 		Mind.log(MiNDEventLevel.WARNING, src, params);
 	}
+	
 }

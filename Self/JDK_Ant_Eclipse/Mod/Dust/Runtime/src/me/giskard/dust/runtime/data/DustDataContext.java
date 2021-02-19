@@ -1,16 +1,18 @@
 package me.giskard.dust.runtime.data;
 
 import me.giskard.MindConsts;
-import me.giskard.dust.runtime.DustCollections;
+import me.giskard.coll.MindCollConsts;
+import me.giskard.coll.MindCollFactory;
+import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustMeta;
 import me.giskard.utils.MindUtils;
 
-public class DustDataContext implements DustDataConsts, DustMeta, DustCollections, MindConsts.MiNDContext {
+public class DustDataContext implements DustDataConsts, DustMeta, MindCollConsts, MindConsts.MiNDContext {
 	DustDataContext parentCtx;
 
-	DustMap<Object, DustToken> tokens = new DustMap<>(true);
+	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
 
-	DustFactory<MiNDToken, DustDataBlock> entityBlocks = new DustFactory<>(false, DustDataBlock.class);
+	MindCollFactory<MiNDToken, DustDataBlock> entityBlocks = new MindCollFactory<>(false, DustDataBlock.class);
 
 	DustToken getToken(Object id) {
 		DustToken ret = tokens.get(id);

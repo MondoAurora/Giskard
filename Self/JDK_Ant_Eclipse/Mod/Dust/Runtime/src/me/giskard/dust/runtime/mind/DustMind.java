@@ -1,11 +1,10 @@
 package me.giskard.dust.runtime.mind;
 
 import me.giskard.Mind;
-import me.giskard.dust.runtime.DustCollections;
-import me.giskard.dust.runtime.DustConsts;
+import me.giskard.coll.MindCollConsts;
 import me.giskard.utils.MindUtils;
 
-public class DustMind extends Mind implements DustConsts, DustCollections {
+public class DustMind extends Mind implements MindCollConsts {
 	
 	DustLog log;
 	MiNDContext ctxTemp;

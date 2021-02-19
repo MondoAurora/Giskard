@@ -1,20 +1,21 @@
 package me.giskard.dust.runtime.data;
 
-import me.giskard.Mind;
-import me.giskard.dust.runtime.DustCollections.DustMap;
+import me.giskard.coll.MindCollMap;
 
 public class DustDataBlock implements DustDataConsts {
 	DustDataBlock parent;
-	DustCollMap<DustToken, Object> localData = new DustMap<DustToken, Object>(false);
+	MiNDCollMap<DustToken, Object> localData = new MindCollMap<DustToken, Object>(false);
 	
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {
+//		Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
+
 		switch ( cmd ) {
 		case SET:
 			localData.put((DustToken)valPath[0], val);
 			break;
 
 		default:
-			Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
+//			Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 			break;
 		}
 		return null;

@@ -14,4 +14,5 @@
 	<property name="javac.debuglevel" value="source,lines,vars" />
 	<property name="javac.target" value="1.8" />
 	<property name="javac.source" value="1.8" />
+	<property name="javac.bindir" value="./ant" />
 </project>
