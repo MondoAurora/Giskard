@@ -57,7 +57,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDMachine {
 				Class<?> cMod = modLoader.loadClass(rootPkg + ".mod." + libMod_);
 				if ( null != cMod ) {
 					modAgent = (MiNDAgent) cMod.newInstance();
-					modAgent.process(MiNDAgentAction.INIT);
+					modAgent.process(MiNDAgentAction.Init);
 				}
 			} catch (Throwable e) {
 				MindUtils.wrapException(e, libMod, currLib);
@@ -93,7 +93,7 @@ public class RuntimeConnector implements MindConsts, MindConsts.MiNDMachine {
 		Mind.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 		
 		Module mod = modules.get(MODULE_MIND);
-		mod.modAgent.process(MiNDAgentAction.BEGIN);
+		mod.modAgent.process(MiNDAgentAction.Begin);
 		
 		Mind.log(MiNDEventLevel.INFO, "GISKARD finished.");
 	}

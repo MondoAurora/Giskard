@@ -18,7 +18,7 @@ public class MindUtils extends MindUtilsJava {
 	}
 	
 	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
-		return (cmd == MiNDAccessCommand.SET) || (cmd == MiNDAccessCommand.ADD);
+		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Add);
 	}
 
 	public static <FakeRet> FakeRet wrapException(Throwable src, Object... params) {

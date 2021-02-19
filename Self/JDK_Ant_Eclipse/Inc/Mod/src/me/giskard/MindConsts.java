@@ -16,18 +16,18 @@ public interface MindConsts {
 	}
 
 	enum MiNDValType {
-		INT, REAL, REF, RAW
+		Int, Real, Ref, Raw
 	}
 
 	enum MiNDCollType {
-		ONE, ARR, SET, MAP
+		One, Arr, Set, Map
 	}
 	
 	public interface MiNDToken {
 	}
 
 	enum MiNDAccessCommand {
-		CHK, GET, SET, ADD, DEL, USE
+		Chk, Get, Set, Add, Del, Use
 	};
 
 	public interface MiNDAccessor {
@@ -46,7 +46,7 @@ public interface MindConsts {
 	};
 
 	enum MiNDAgentAction {
-		INIT, BEGIN, PROCESS, END, RELEASE
+		Init, Begin, Process, End, Release
 	};
 
 	enum MiNDResultType {

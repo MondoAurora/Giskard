@@ -13,11 +13,11 @@ import me.giskard.utils.MindUtils;
 
 public class DustIO implements MindConsts.MiNDAgent {
 	void initModule() throws Exception {
-//	String fileName = "Knowledge/Json/System.json";
+	String fileName = "Knowledge/Json/System.json";
 //String fileName = "/Users/lkedves/work/Giskard/data/countries.geojson";
 //String fileName = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
 //		String fileName = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
-	String fileName = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
+//	String fileName = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
 
 		if ( !fileName.startsWith("/") ) {
 			String root = MindUtils.getRoot();
@@ -58,7 +58,7 @@ public class DustIO implements MindConsts.MiNDAgent {
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
-		case INIT:
+		case Init:
 			initModule();
 			break;
 		default:

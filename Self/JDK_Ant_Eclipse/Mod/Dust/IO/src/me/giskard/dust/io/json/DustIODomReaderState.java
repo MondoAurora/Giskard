@@ -9,67 +9,16 @@ import org.json.simple.JSONValue;
 
 import me.giskard.Mind;
 import me.giskard.coll.MindCollStack;
+import me.giskard.dust.io.DustIOSerializeStep;
 import me.giskard.tokens.DustTokensMind;
-import me.giskard.utils.MindTokenTranslator;
-import me.giskard.utils.MindUtils;
 
 @SuppressWarnings("rawtypes")
 public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	static final MiNDToken TC_ACTION = MT_NARRATIVE_AGENTACTION;
-	
-	static StringBuilder DEBUG_INDENT = new StringBuilder();
 
-
-	static class SerializeStep {
-		public MiNDAgentAction action;
-		public SerializeItem item;
-		public Object data;
-
-		public void reset() {
-			data = null;
-		}
-
-		public void setAll(MiNDAgentAction action, SerializeItem item, Object data) {
-			this.action = action;
-			this.item = item;
-			this.data = data;
-		}
-
-		public void publish(MiNDToken target) {
-			MindTokenTranslator.setEnumToken(MT_IO_SERIALIZEEVENT, item);
-			Object val = (item == SerializeItem.Key) ? ((Map.Entry)data).getKey() : (item == SerializeItem.Value) ? data : null;
-			Mind.access(MiNDAccessCommand.SET, val, MT_IO_SERIALIZEEVENT, MT_VARIANT_VALUE);
-			MindTokenTranslator.setEnumToken(MT_IO_SERIALIZEEVENT, action);
-			
-			if ( action == MiNDAgentAction.END) {
-				DEBUG_INDENT.delete(0, 2);
-			}
-			Mind.log(MiNDEventLevel.TRACE, "SerEvent ", DEBUG_INDENT, action, item, val);
-			if ( action == MiNDAgentAction.BEGIN) {
-				DEBUG_INDENT.append("  ");
-			}
-		}
-		
-		@Override
-		public String toString() {
-			return action + " " + item + " " + data;
-		}
-	}
-
-	MiNDBuilder<Integer, SerializeStep> serStepBuilder = new MiNDBuilder<Integer, SerializeStep>() {
-		@Override
-		public SerializeStep create(Integer key) {
-			return new SerializeStep();
-		}
-
-		@Override
-		public void release(Integer key, SerializeStep val) {
-			val.reset();
-		}
-	};
-
-	SerializeStep step;
-	MindCollStack<SerializeStep> procStack = new MindCollStack<SerializeStep>(serStepBuilder);
+	DustIOSerializeStep step;
+	MindCollStack<DustIOSerializeStep> procStack = new MindCollStack<DustIOSerializeStep>(DustIOSerializeStep.BUILDER);
+	StringBuilder indent = new StringBuilder();
 
 	public DustIODomReaderState(Reader r) throws Exception {
 		setCurrOb(JSONValue.parseWithException(r));
@@ -80,21 +29,21 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	}
 
 	void setCurrOb(Object newOb) {
-		MiNDAgentAction action = MiNDAgentAction.BEGIN;
+		MiNDAgentAction action = MiNDAgentAction.Begin;
 		Object ob = newOb;
-		SerializeItem item;
+		MiNDToken item;
 
 		if ( newOb instanceof List ) {
-			item = SerializeItem.Array;
+			item = MT_IDEA_COLLTYPE_ARR;
 			ob = ((List) newOb).iterator();
 		} else if ( newOb instanceof Map ) {
-			item = SerializeItem.Map;
+			item = MT_IDEA_COLLTYPE_MAP;
 			ob = ((Map) newOb).entrySet().iterator();
 		} else if ( newOb instanceof Map.Entry ) {
-			item = SerializeItem.Key;
+			item = MT_IDEA_VALTYPE_REF;
 		} else {
-			item = SerializeItem.Value;
-			action = MiNDAgentAction.PROCESS;
+			item = MT_IDEA_VALTYPE_RAW;
+			action = MiNDAgentAction.Process;
 		}
 
 		step = procStack.step(1);
@@ -104,35 +53,35 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	public boolean step() {
 		boolean ret = true;
 
-		step.publish(MT_IO_SERIALIZEEVENT);
+		Object val = step.publish(MT_IO_SERIALIZEEVENT);
+		
+		if ( step.action == MiNDAgentAction.End) {
+			indent.delete(0, 2);
+		}
+		Mind.log(MiNDEventLevel.TRACE, "SerEvent ", indent, step.action, step.item, val);
+		if ( step.action == MiNDAgentAction.Begin) {
+			indent.append("  ");
+		}
 
-		if ( (step.item == SerializeItem.Value) || (step.action == MiNDAgentAction.END) ) {
+		if ( (step.item == MT_IDEA_VALTYPE_RAW) || (step.action == MiNDAgentAction.End) ) {
 			step = procStack.step(-1);
 		}
 		
 		if ( null == step ) {
 			ret = false;
 		} else {
-			switch ( step.item ) {
-			case Value:
-				MindUtils.wrapException(null, "Should not get here");
-				break;
-			case Key:
-				if ( step.action == MiNDAgentAction.BEGIN ) {
-					step.action = MiNDAgentAction.END;
+			if (step.item == MT_IDEA_VALTYPE_REF) {
+				if ( step.action == MiNDAgentAction.Begin ) {
+					step.action = MiNDAgentAction.End;
 					setCurrOb(((Map.Entry<?, ?>) step.data).getValue());
 				}
-
-				break;
-			case Map:
-			case Array:
+			} else {
 				Iterator<?> it = (Iterator) step.data;
 				if ( it.hasNext() ) {
 					setCurrOb(it.next());
 				} else {
-					step.action = MiNDAgentAction.END;
+					step.action = MiNDAgentAction.End;
 				}
-				break;
 			}
 		}
 		return ret;

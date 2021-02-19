@@ -21,7 +21,7 @@ public class MindTokenTranslator implements MindConsts {
 	public static void setEnumToken(MiNDToken target, Enum<?> e) {
 		if ( null != e ) {
 			MiNDToken token = TOKEN_ENUM.getLeft(e);
-			Mind.access(MiNDAccessCommand.SET, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
+			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
 		}
 	}
 

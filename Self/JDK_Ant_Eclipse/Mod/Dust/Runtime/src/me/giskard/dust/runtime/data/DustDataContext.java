@@ -64,18 +64,18 @@ public class DustDataContext implements DustDataConsts, DustMeta, MindCollConsts
 
 		if ( null == eb ) {
 			switch ( cmd ) {
-			case ADD:
-			case SET:
+			case Add:
+			case Set:
 				// can't be here
 				break;
-			case CHK:
-			case DEL:
+			case Chk:
+			case Del:
 				ret = Boolean.FALSE;
 				break;
-			case GET:
+			case Get:
 				ret = val;
 				break;
-			case USE:
+			case Use:
 				ret = MiNDResultType.REJECT;
 				break;
 			}

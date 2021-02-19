@@ -10,7 +10,7 @@ public class DustDataBlock implements DustDataConsts {
 //		Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 
 		switch ( cmd ) {
-		case SET:
+		case Set:
 			localData.put((DustToken)valPath[0], val);
 			break;
 

@@ -8,12 +8,12 @@ public class DustRuntime implements MindConsts.MiNDAgent {
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
-		case INIT:
+		case Init:
 			Mind mind = (Mind) Class.forName("me.giskard.dust.runtime.mind.DustMind").newInstance();
 			Mind.setMind(mind);
 			mind.initContext();
 			break;
-		case BEGIN:
+		case Begin:
 			Mind.log(MiNDEventLevel.INFO, "DustRuntime launch...");
 			
 			Mind.log(MiNDEventLevel.INFO, Mind.getMind());
