@@ -1,9 +1,9 @@
-package me.giskard.dust.runtime.data;
+package me.giskard.dust.runtime.model;
 
 import me.giskard.coll.MindCollMap;
 
-public class DustDataBlock implements DustDataConsts {
-	DustDataBlock parent;
+public class DustModelBlock implements DustModelConsts {
+	DustModelBlock parent;
 	MiNDCollMap<DustToken, Object> localData = new MindCollMap<DustToken, Object>(false);
 	
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {

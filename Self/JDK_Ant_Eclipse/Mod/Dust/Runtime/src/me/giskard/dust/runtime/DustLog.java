@@ -1,9 +1,8 @@
-package me.giskard.dust.runtime.mind;
+package me.giskard.dust.runtime;
 
 import java.io.PrintStream;
 
 import me.giskard.coll.MindCollConsts;
-import me.giskard.dust.runtime.DustUtils;
 import me.giskard.utils.MindUtilsJava;
 
 public class DustLog implements MindCollConsts {

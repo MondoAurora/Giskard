@@ -29,10 +29,10 @@ DIGIT    =  %x30-39
                                 ; 0-9
 
 HEXDIG   =  DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
-                                
-                                
-                                
-                                
+
+
+
+
 POINT    = "."
 
 MINUS    = "-"
@@ -41,16 +41,16 @@ PLUS     = "+"
 
 STAR     = "*"
 
+SLASH    =  "/"
+
+BCKSLASH =  "\"
+
+EQU      =  "="
+
 SEMICOLON =  %x3B
 
 DQUOTE   =  %x22
                                 ; " (Double Quote)
-
-EQU      =  "="
-
-SLASH    =  "/"
-
-BCKSLASH =  "\"
 
 
 
@@ -78,8 +78,8 @@ CRLF     =  CR LF
 SP       =  " "
 
 WSP      =  SP / HTAB
-                                ; white space inline
-                                
+                                ; single white space inline
+
 LWSP     =  *(WSP / CRLF WSP)
                                 ; Use of this linear-white-space rule
                                 ;  permits lines containing only white
@@ -90,8 +90,6 @@ LWSP     =  *(WSP / CRLF WSP)
                                 ; Do not use when defining mail
                                 ;  headers and use with caution in
                                 ;  other contexts.
-                                
-BLANK    = *( SP / HTAB / CR / LF )
-                                ; white spaces
 
-                                
+BLANK    = *( SP / HTAB / CR / LF )
+                                ; multiple white spaces and newlines

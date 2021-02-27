@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.mind;
+package me.giskard.dust.runtime;
 
 import me.giskard.Mind;
 import me.giskard.coll.MindCollConsts;
@@ -17,7 +17,7 @@ public class DustMind extends Mind implements MindCollConsts {
 	public void initContext() {
 		if ( null == ctxTemp ) {
 			try {
-				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.runtime.data.DustDataContext").newInstance();
+				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.runtime.model.DustModelContext").newInstance();
 			} catch (Throwable e) {
 				MindUtils.wrapException(e);
 			}

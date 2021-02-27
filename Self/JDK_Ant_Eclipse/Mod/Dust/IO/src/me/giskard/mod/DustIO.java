@@ -67,11 +67,13 @@ public class DustIO implements MindConsts.MiNDAgent {
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
 		case Init:
-			initModule();
+//			initModule();
+			TestIOReader.testReader("test.txt", "UTF8");
 			break;
 		default:
 			break;
 		}
 		return MiNDResultType.ACCEPT;
 	}
+	
 }

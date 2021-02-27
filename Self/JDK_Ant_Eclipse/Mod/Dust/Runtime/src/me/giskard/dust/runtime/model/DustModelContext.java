@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.data;
+package me.giskard.dust.runtime.model;
 
 import me.giskard.MindConsts;
 import me.giskard.coll.MindCollConsts;
@@ -7,12 +7,12 @@ import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustMeta;
 import me.giskard.utils.MindUtils;
 
-public class DustDataContext implements DustDataConsts, DustMeta, MindCollConsts, MindConsts.MiNDContext {
-	DustDataContext parentCtx;
+public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, MindConsts.MiNDContext {
+	DustModelContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
 
-	MindCollFactory<MiNDToken, DustDataBlock> entityBlocks = new MindCollFactory<>(false, DustDataBlock.class);
+	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false, DustModelBlock.class);
 
 	DustToken getToken(Object id) {
 		DustToken ret = tokens.get(id);
@@ -60,7 +60,7 @@ public class DustDataContext implements DustDataConsts, DustMeta, MindCollConsts
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
 		Object ret = null;
 
-		DustDataBlock eb = MindUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
+		DustModelBlock eb = MindUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
 
 		if ( null == eb ) {
 			switch ( cmd ) {

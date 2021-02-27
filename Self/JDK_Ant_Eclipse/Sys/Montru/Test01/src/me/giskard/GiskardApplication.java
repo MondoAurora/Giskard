@@ -9,6 +9,7 @@ public class GiskardApplication extends RuntimeConnector {
 		GiskardApplication app = new GiskardApplication(args);
 		
 		app.addModule(MODULE_MIND, "DustRuntime", "1.0");
+		app.addModule("Text", "DustText", "1.0");
 		app.addModule("IO", "DustIO", "1.0", "json-simple-1.1.1.jar");
 		
 		app.launch();

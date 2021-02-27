@@ -34,4 +34,7 @@ public class MindUtils extends MindUtilsJava {
 		Mind.log(MiNDEventLevel.WARNING, src, params);
 	}
 	
+	public static boolean isAgentRead(MiNDResultType res ) {
+		return (res == MiNDResultType.READ) || (res == MiNDResultType.ACCEPT_READ);
+	}
 }

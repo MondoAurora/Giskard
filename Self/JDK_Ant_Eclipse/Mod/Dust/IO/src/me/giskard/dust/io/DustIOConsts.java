@@ -9,4 +9,7 @@ public interface DustIOConsts extends MindConsts, DustTokensMind, DustTokensGene
 //		Key, Map, Array, Value
 //	}
 	
+	public interface CodepointVisitor {
+		boolean process(int cp);
+	}
 }

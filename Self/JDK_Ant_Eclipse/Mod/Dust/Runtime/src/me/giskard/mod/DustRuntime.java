@@ -9,7 +9,7 @@ public class DustRuntime implements MindConsts.MiNDAgent {
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
 		case Init:
-			Mind mind = (Mind) Class.forName("me.giskard.dust.runtime.mind.DustMind").newInstance();
+			Mind mind = (Mind) Class.forName("me.giskard.dust.runtime.DustMind").newInstance();
 			Mind.setMind(mind);
 			mind.initContext();
 			break;

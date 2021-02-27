@@ -20,20 +20,18 @@ member     = string BLANK ":" BLANK value
 
 array      = BLANK "[" BLANK [ value *( BLANK "," BLANK value ) ] BLANK "]" BLANK
 
-
-
 string     = DQUOTE *(escaped / unescaped) DQUOTE
 
-escaped    = BCKSLASH (       ; after '\' character, 
-               DQUOTE / 
-               BCKSLASH / 
-               SLASH /
+escaped    = BCKSLASH (       ; after the '\' escape character, 
+               DQUOTE /       ; '"' as is,
+               BCKSLASH /     ; '\' as is,
+               SLASH /        ; '/' as is,
                "b" /          ; 'b' represents BCKSP,
                "f" /          ; 'f' represents FF,
                "n" /          ; 'n' represents LF,
                "r" /          ; 'r' represents CR,
                "t" /          ; 't' represents HTAB,
-               "u" 4HEXDIG    ; "uXXXX" represents a char of code U+XXXX
+               "u" 4HEXDIG    ; "uXXXX" represents the character of code U+XXXX
              )
 
 unescaped  = %x20-21 / %x23-5B / %x5D-10FFFF

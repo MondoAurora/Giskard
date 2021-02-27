@@ -12,7 +12,7 @@ public interface MindConsts {
 	final long KEY_APPEND = -1;
 
 	enum MiNDTokenType {
-		UNIT, TYPE, MEMBER, TAG
+		UNIT, AGENT, TYPE, MEMBER, TAG, LOCAL
 	}
 
 	enum MiNDValType {
