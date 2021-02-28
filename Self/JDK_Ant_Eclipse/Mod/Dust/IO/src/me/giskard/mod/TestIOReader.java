@@ -55,7 +55,7 @@ public class TestIOReader implements DustIOConsts {
 			setFont(font);
 
 			int size = new SizeCalculator(fontM).getSize(outString);
-			size += 24;
+			size += 8;
 
 			setSize(size, fontM.getHeight() + 60);
 			setLocation(getSize().width / 2, getSize().height / 2);
@@ -66,7 +66,7 @@ public class TestIOReader implements DustIOConsts {
 			Insets insets = getInsets();
 			int x = insets.left;
 			int y = insets.top;
-			g.drawString(outString, x + 6, y + fontM.getAscent() + 14);
+			g.drawString(outString, x + 4, y + fontM.getAscent() + 20);
 		}
 	}
 

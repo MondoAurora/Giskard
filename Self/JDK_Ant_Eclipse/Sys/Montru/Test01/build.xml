@@ -23,7 +23,7 @@
 
 		<jar destfile="${GISKARD_BRAIN}/App/MontruTest01.jar">
 			<manifest>
-				<attribute name="Main-Class" value="me.giskard.GiskardApplication" />
+				<attribute name="Main-Class" value="me.giskard.MontruTest01" />
 				<attribute name="Class-Path" value="." />
 			</manifest>
 

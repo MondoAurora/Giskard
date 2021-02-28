@@ -1,8 +1,6 @@
 package me.giskard;
 
 public interface MindConsts {
-	String MODULE_MIND = "MiND";
-	
 	String SEP_ID = "_";
 
 	String DEF_ENCODING = "UTF-8";
@@ -66,15 +64,17 @@ public interface MindConsts {
 	}
 
 	public interface MiNDMachine extends MiNDAccessor {
-		void addModule(String modName, String mainLib, String ver, String... extLibs);
+		void init() throws Exception;
+		Object addModule(String modName, String ver);
+		void launch() throws Exception;
 	}
 	
 	interface MiNDCreator<Key, Val> {
 		Val create(Key key);
 	}
 
-	abstract class MiNDBuilder<Key, Val> implements MiNDCreator<Key, Val>	{
-		public abstract void release(Key key, Val v);
+	interface MiNDBuilder<Key, Val> extends MiNDCreator<Key, Val>	{
+		void release(Key key, Val v);
 	}
 
 }

@@ -31,6 +31,9 @@ public interface DustTokensMind extends MindConsts {
 	
 	MiNDToken MT_NARRATIVE_UNIT = Mind.defineToken(MiNDTokenType.UNIT, "MiND_Narrative");
 	
+	MiNDToken MT_NARRATIVE_AGENT = Mind.defineToken(MiNDTokenType.TYPE, "Agent", MT_NARRATIVE_UNIT);
+	MiNDToken MT_NARRATIVE_AGENT_INSTANCE = Mind.defineToken(MiNDTokenType.MEMBER, "Instance", MT_NARRATIVE_AGENT, MiNDValType.Raw, MiNDCollType.One);
+	
 	MiNDToken MT_NARRATIVE_AGENTACTION = Mind.defineToken(MiNDTokenType.TAG, "AgentAction", MT_NARRATIVE_UNIT, MiNDAgentAction.class);
 	MiNDToken MT_NARRATIVE_AGENTACTION_INIT = Mind.defineToken(MiNDTokenType.TAG, "Init", MT_NARRATIVE_AGENTACTION, MiNDAgentAction.Init);
 	MiNDToken MT_NARRATIVE_AGENTACTION_BEGIN = Mind.defineToken(MiNDTokenType.TAG, "Begin", MT_NARRATIVE_AGENTACTION, MiNDAgentAction.Begin);
