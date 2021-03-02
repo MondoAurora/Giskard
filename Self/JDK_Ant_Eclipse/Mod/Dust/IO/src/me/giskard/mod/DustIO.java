@@ -20,7 +20,7 @@ public class DustIO implements MindConsts.MiNDAgent {
 		Mind.log(MiNDEventLevel.INFO, "DOM File read success", fDom, ", result:\n", rDom);
 
 		
-		String fSax = "/Users/lkedves/work/Giskard/data/countries.geojson";
+		String fSax = "Knowledge/Json/countries.geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
