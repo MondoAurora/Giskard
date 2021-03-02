@@ -18,6 +18,7 @@
 		       target="${javac.target}">
 			<src path="${GISKARD_INC_MOD}" />
 			<src path="${GISKARD_INC_APP}" />
+			<src path="${GISKARD_INC_GEN}" />
 			<src path="./src" />
 		</javac>
 

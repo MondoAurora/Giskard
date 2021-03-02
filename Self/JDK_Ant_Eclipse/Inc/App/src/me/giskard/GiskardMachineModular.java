@@ -68,6 +68,8 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 					modAgent = (MiNDAgent) cMod.newInstance();
 					modAgent.process(MiNDAgentAction.Init);
 				}
+				
+				optLoadNativeConn();
 			} catch (Throwable e) {
 				MindUtils.wrapException(e, libMod, currLib);
 			}
@@ -96,6 +98,8 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 		}
 
 		modMind = addModule(mindModule, mindVersion);
+		
+		setNativeConnector();
 	}
 
 	@Override
@@ -103,6 +107,8 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 		if ( modules.containsKey(modName) ) {
 			MindUtils.wrapException(null, "Module already loaded", modName);
 		}
+		
+		Mind.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
 		DynamicModule mod = new DynamicModule(modName, ver);
 		modules.put(modName, mod);
 		return mod;

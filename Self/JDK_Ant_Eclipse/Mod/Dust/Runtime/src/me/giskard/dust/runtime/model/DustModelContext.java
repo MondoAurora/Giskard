@@ -1,13 +1,17 @@
 package me.giskard.dust.runtime.model;
 
+import me.giskard.Mind;
 import me.giskard.MindConsts;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
 import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustMeta;
+import me.giskard.dust.runtime.DustMind;
+import me.giskard.dust.runtime.DustRuntimeConsts;
+import me.giskard.tokens.DustTokens;
 import me.giskard.utils.MindUtils;
 
-public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, MindConsts.MiNDContext {
+public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, MindConsts.MiNDContext {
 	DustModelContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
@@ -25,7 +29,7 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 
 	@Override
 	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
-		DustToken parent = (MiNDTokenType.UNIT == type) ? null : (DustToken) params[0];
+		DustToken parent = ((MiNDTokenType.UNIT == type) || (MiNDTokenType.LOCAL == type)) ? null : (DustToken) params[0];
 		String id = DustToken.buildId(name, parent);
 
 		DustToken ret = tokens.get(id);
@@ -90,4 +94,24 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	public String toString() {
 		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entityBlocks.toString();
 	}
+	
+	public static void boot() {
+		Mind.log(MiNDEventLevel.TRACE, "would boot now...");
+		
+		// Machine
+		Mind.selectByPath(MTSHARED_MACHINE);
+		
+		// Application
+		Mind.selectByPath(MTMEMBER_ACTION_PARAM);
+		Mind.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
+		
+		// Runtime module
+		DustTokens.registerNewModule();
+
+		// Agent implementation data
+		DustTokens.addModuleImpInfo(MTAGENT_MIND, DustMind.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CONTEXT, DustModelContext.class);
+		
+	}
+
 }

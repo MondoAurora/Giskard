@@ -4,7 +4,7 @@ import me.giskard.Mind;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.utils.MindUtils;
 
-public class DustMind extends Mind implements MindCollConsts {
+public class DustMind extends Mind implements MindCollConsts, DustRuntimeConsts {
 	
 	DustLog log;
 	MiNDContext ctxTemp;
@@ -17,7 +17,10 @@ public class DustMind extends Mind implements MindCollConsts {
 	public void initContext() {
 		if ( null == ctxTemp ) {
 			try {
-				ctxTemp = (MiNDContext) Class.forName("me.giskard.dust.runtime.model.DustModelContext").newInstance();
+				Class<?> ctxClass = Class.forName(CLASSNAME_CONTEXT);
+				ctxTemp = (MiNDContext) ctxClass.newInstance();
+				
+				ctxClass.getMethod("boot").invoke(null);
 			} catch (Throwable e) {
 				MindUtils.wrapException(e);
 			}

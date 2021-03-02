@@ -2,14 +2,17 @@ package me.giskard.mod;
 
 import me.giskard.Mind;
 import me.giskard.MindConsts;
+import me.giskard.dust.runtime.DustRuntimeConsts;
 
-public class DustRuntime implements MindConsts.MiNDAgent {
+public class DustRuntime implements MindConsts.MiNDAgent, DustRuntimeConsts {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
 		case Init:
-			Mind mind = (Mind) Class.forName("me.giskard.dust.runtime.DustMind").newInstance();
+			Mind.log(MiNDEventLevel.TRACE, "Runtime initializing");
+
+			Mind mind = (Mind) Class.forName(CLASSNAME_MIND).newInstance();
 			Mind.setMind(mind);
 			mind.initContext();
 			break;

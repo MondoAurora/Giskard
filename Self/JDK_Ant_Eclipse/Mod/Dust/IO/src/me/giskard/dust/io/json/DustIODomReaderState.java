@@ -14,7 +14,7 @@ import me.giskard.tokens.DustTokensMind;
 
 @SuppressWarnings("rawtypes")
 public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
-	static final MiNDToken TC_ACTION = MT_NARRATIVE_AGENTACTION;
+	static final MiNDToken TC_ACTION = MTTAG_AGENTACTION;
 
 	DustIOSerializeStep step;
 	MindCollStack<DustIOSerializeStep> procStack = new MindCollStack<DustIOSerializeStep>(DustIOSerializeStep.BUILDER);
@@ -34,15 +34,15 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 		MiNDToken item;
 
 		if ( newOb instanceof List ) {
-			item = MT_IDEA_COLLTYPE_ARR;
+			item = MTTAG_COLLTYPE_ARR;
 			ob = ((List) newOb).iterator();
 		} else if ( newOb instanceof Map ) {
-			item = MT_IDEA_COLLTYPE_MAP;
+			item = MTTAG_COLLTYPE_MAP;
 			ob = ((Map) newOb).entrySet().iterator();
 		} else if ( newOb instanceof Map.Entry ) {
-			item = MT_IDEA_VALTYPE_REF;
+			item = MTTAG_VALTYPE_REF;
 		} else {
-			item = MT_IDEA_VALTYPE_RAW;
+			item = MTTAG_VALTYPE_RAW;
 			action = MiNDAgentAction.Process;
 		}
 
@@ -53,7 +53,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	public boolean step() {
 		boolean ret = true;
 
-		Object val = step.publish(MT_IO_SERIALIZEEVENT);
+		Object val = step.publish(MTTYPE_SERIALIZEEVENT);
 		
 		if ( step.action == MiNDAgentAction.End) {
 			indent.delete(0, 2);
@@ -63,14 +63,14 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 			indent.append("  ");
 		}
 
-		if ( (step.item == MT_IDEA_VALTYPE_RAW) || (step.action == MiNDAgentAction.End) ) {
+		if ( (step.item == MTTAG_VALTYPE_RAW) || (step.action == MiNDAgentAction.End) ) {
 			step = procStack.step(-1);
 		}
 		
 		if ( null == step ) {
 			ret = false;
 		} else {
-			if (step.item == MT_IDEA_VALTYPE_REF) {
+			if (step.item == MTTAG_VALTYPE_REF) {
 				if ( step.action == MiNDAgentAction.Begin ) {
 					step.action = MiNDAgentAction.End;
 					setCurrOb(((Map.Entry<?, ?>) step.data).getValue());

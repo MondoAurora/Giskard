@@ -1,5 +1,6 @@
 package me.giskard.mod;
 
+import java.io.FileReader;
 import java.io.Reader;
 
 import org.json.simple.parser.JSONParser;
@@ -13,15 +14,28 @@ import me.giskard.utils.MindUtils;
 
 public class DustIO implements MindConsts.MiNDAgent {
 	void initModule() throws Exception {
-//	String fileName = "Knowledge/Json/System.json";
-//String fileName = "/Users/lkedves/work/Giskard/data/countries.geojson";
-//String fileName = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
-//		String fileName = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
-//	String fileName = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
 		
-		String fileName = "Knowledge/Abnf/abnf.abnf";
-//		String fileName = "Knowledge/Abnf/json.abnf";
+		String fDom = "Knowledge/Json/System.json";
+		Object rDom = testDom(fDom);
+		Mind.log(MiNDEventLevel.INFO, "DOM File read success", fDom, ", result:\n", rDom);
 
+		
+		String fSax = "/Users/lkedves/work/Giskard/data/countries.geojson";
+//	String fileSax = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
+//	String fileSax = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
+//	String fileSax = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
+		Object rSax = testSax(fSax);
+		Mind.log(MiNDEventLevel.INFO, "SAX File read success", fSax, ", result:\n", rSax);
+
+		
+		
+		String fAbnf = "Knowledge/Abnf/abnf.abnf";
+//		String fileName = "Knowledge/Abnf/json.abnf";
+		Object rAbnf = testAbnf(fAbnf);
+		Mind.log(MiNDEventLevel.INFO, "ABNF File read success", fAbnf, ", result:\n", rAbnf);
+	}
+
+	public String extendName(String fileName) {
 		if ( !fileName.startsWith("/") ) {
 			String root = MindUtils.getRoot();
 
@@ -29,37 +43,38 @@ public class DustIO implements MindConsts.MiNDAgent {
 				fileName = root + "/" + fileName;
 			}
 		}
-		
-		Mind.log(MiNDEventLevel.TRACE, "Start reading file", fileName, "...");
-
-//		Reader r = new FileReader(fileName);
-//		Object result = testSax(r);
-//		Object result = testDom(r);
-		Object result = testAbnf(fileName);
-		
-		Mind.log(MiNDEventLevel.INFO, "File read success", fileName, ", result:\n", result);
+		return fileName;
 	}
 
-	public Object testSax(Reader r) throws Exception {
+	public Reader getReader(String fName) throws Exception {
+		fName = extendName(fName);
+		Mind.log(MiNDEventLevel.TRACE, "Start reading file", fName, "...");
+		return new FileReader(fName);
+	}
+
+	public Object testSax(String fName) throws Exception {
 		JSONParser p = new JSONParser();
 		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(MindUtils.LOGGER);
 
-		p.parse(r, h);
+		p.parse(getReader(fName), h);
 		return h;
 	}
 
-	public Object testDom(Reader r) throws Exception {
-		DustIODomReaderState rs = new DustIODomReaderState(r);
-		
-		while ( rs.step() ) {
-			
+	public Object testDom(String fName) throws Exception {
+		DustIODomReaderState rs = new DustIODomReaderState(getReader(fName));
+
+		while (rs.step()) {
+
 		}
 
 		return rs;
 	}
 
-	public Object testAbnf(String name) throws Exception {
-		AbnfParserPrototype pp = new AbnfParserPrototype(name);
+	public Object testAbnf(String fName) throws Exception {
+		fName = extendName(fName);
+
+		Mind.log(MiNDEventLevel.TRACE, "Start reading file", fName, "...");
+		AbnfParserPrototype pp = new AbnfParserPrototype(fName);
 		return pp;
 	}
 
@@ -67,7 +82,9 @@ public class DustIO implements MindConsts.MiNDAgent {
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
 		case Init:
-//			initModule();
+			Mind.log(MiNDEventLevel.TRACE, "IO module initializing");
+
+			initModule();
 			TestIOReader.testReader("test.txt", "UTF8");
 			break;
 		default:
@@ -75,5 +92,5 @@ public class DustIO implements MindConsts.MiNDAgent {
 		}
 		return MiNDResultType.ACCEPT;
 	}
-	
+
 }

@@ -2,7 +2,7 @@ package me.giskard;
 
 import me.giskard.utils.MindUtils;
 
-public class GiskardMachineMonolith implements MindConsts, MindConsts.MiNDMachine {
+public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.MiNDMachine {
 
 	protected class MachineModule implements MiNDBuilder<String, Object>, MiNDAccessor {
 		MiNDAgent modAgent;
@@ -11,7 +11,7 @@ public class GiskardMachineMonolith implements MindConsts, MindConsts.MiNDMachin
 		public void setLoader(ClassLoader cl) {
 			this.cl = cl;
 		}
-		
+
 		@Override
 		public Object create(String key) {
 			try {
@@ -42,6 +42,7 @@ public class GiskardMachineMonolith implements MindConsts, MindConsts.MiNDMachin
 
 	protected MachineModule modMind;
 	protected MiNDAgent mainAgent;
+	protected NativeConnector nativeConnector;
 
 	protected GiskardMachineMonolith(MiNDAgent mainAgent, String... args) {
 		Mind.log(MiNDEventLevel.TRACE, "GISKARD boot started...");
@@ -53,6 +54,23 @@ public class GiskardMachineMonolith implements MindConsts, MindConsts.MiNDMachin
 		modMind = new MachineModule();
 		modMind.setLoader(ClassLoader.getSystemClassLoader());
 		modMind.modAgent = mainAgent;
+		
+		setNativeConnector();
+	}
+	
+	public void setNativeConnector() {
+		try {
+			this.nativeConnector = (NativeConnector) Class.forName("me.giskard.GiskardNativeConnector").newInstance();
+			optLoadNativeConn();
+		} catch (Exception e) {
+			MindUtils.wrapException(e);
+		}
+	}
+
+	public void optLoadNativeConn() throws Exception {
+		if ( null != nativeConnector ) {
+			nativeConnector.process(MiNDAgentAction.Init);
+		}
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public interface DustMeta extends MindCollConsts {
 
 			switch ( type ) {
 			case UNIT:
+			case LOCAL:
 				ret = new DustTokenContainer(type, name, null);
 				break;
 			case MEMBER:
