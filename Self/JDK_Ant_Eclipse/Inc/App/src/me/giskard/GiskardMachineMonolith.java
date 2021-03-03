@@ -77,6 +77,11 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.
 	public Object addModule(String modName, String ver) {
 		return MindUtils.wrapException(null, "addModule() not supported for monolith machine");
 	}
+	
+	@Override
+	public MiNDAgent testCreateAgent(MiNDToken token) throws Exception {
+		return nativeConnector.access(MiNDAccessCommand.Get, null, token);
+	}
 
 	@Override
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
@@ -84,6 +89,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.
 	}
 
 	public final void launch() throws Exception {
+		Mind.log(MiNDEventLevel.INFO, "Native assignments:", nativeConnector);
 		Mind.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 
 		modMind.modAgent.process(MiNDAgentAction.Begin);

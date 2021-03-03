@@ -64,4 +64,8 @@ public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensM
 		return MiNDResultType.ACCEPT;
 	}
 
+	@Override
+	public String toString() {
+		return nativeClasses.toString();
+	}
 }

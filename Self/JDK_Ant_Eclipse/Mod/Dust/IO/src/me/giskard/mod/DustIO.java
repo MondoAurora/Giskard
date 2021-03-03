@@ -14,25 +14,24 @@ import me.giskard.utils.MindUtils;
 
 public class DustIO implements MindConsts.MiNDAgent {
 	void initModule() throws Exception {
-		
+
 		String fDom = "Knowledge/Json/System.json";
 		Object rDom = testDom(fDom);
 		Mind.log(MiNDEventLevel.INFO, "DOM File read success", fDom, ", result:\n", rDom);
 
-		
-		String fSax = "Knowledge/Json/countries.geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
+		String fSax = "Knowledge/Json/countries.geojson";
 		Object rSax = testSax(fSax);
 		Mind.log(MiNDEventLevel.INFO, "SAX File read success", fSax, ", result:\n", rSax);
 
-		
-		
 		String fAbnf = "Knowledge/Abnf/abnf.abnf";
 //		String fileName = "Knowledge/Abnf/json.abnf";
 		Object rAbnf = testAbnf(fAbnf);
 		Mind.log(MiNDEventLevel.INFO, "ABNF File read success", fAbnf, ", result:\n", rAbnf);
+
+		TestIOReader.testReader("test.txt", "UTF8");
 	}
 
 	public String extendName(String fileName) {
@@ -85,7 +84,6 @@ public class DustIO implements MindConsts.MiNDAgent {
 			Mind.log(MiNDEventLevel.TRACE, "IO module initializing");
 
 			initModule();
-			TestIOReader.testReader("test.txt", "UTF8");
 			break;
 		default:
 			break;

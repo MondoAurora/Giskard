@@ -1,5 +1,8 @@
 package me.giskard.dust.runtime.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import me.giskard.Mind;
 import me.giskard.MindConsts;
 import me.giskard.coll.MindCollConsts;
@@ -9,6 +12,7 @@ import me.giskard.dust.runtime.DustMeta;
 import me.giskard.dust.runtime.DustMind;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.tokens.DustTokens;
+import me.giskard.utils.MindTokenTranslator;
 import me.giskard.utils.MindUtils;
 
 public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, MindConsts.MiNDContext {
@@ -16,7 +20,14 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
 
-	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false, DustModelBlock.class);
+	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false, new MiNDCreator<MiNDToken, DustModelBlock>() {
+		@Override
+		public DustModelBlock create(MiNDToken key) {
+			return new DustModelBlock(DustModelContext.this);
+		}
+	});
+	
+	Set<DustModelRef> refs = new HashSet<>();
 
 	DustToken getToken(Object id) {
 		DustToken ret = tokens.get(id);
@@ -25,6 +36,25 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 		}
 
 		return ret;
+	}
+	
+	DustModelRef setRef(DustModelBlock from, DustTokenMember def, DustModelBlock to) {
+		DustModelRef ref = new DustModelRef(from, def, to);
+		
+		refs.add(ref);
+		if ( null == to.incomingRefs ) {
+			to.incomingRefs = new HashSet<>();
+		}
+		to.incomingRefs.add(ref);
+		
+		return ref;
+	}
+
+	void delRef(DustModelRef ref) {
+		refs.remove(ref);
+		if ( null == ref.to.incomingRefs ) {
+			ref.to.incomingRefs.remove(ref);
+		}
 	}
 
 	@Override
@@ -47,16 +77,18 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 		return ret;
 	}
 
-	@Override
-	public void selectById(MiNDToken target, String id) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void selectById(MiNDToken target, String id) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public void selectByPath(MiNDToken target, Object... path) {
-		// TODO Auto-generated method stub
-
+		Mind.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
+		if ( 0 == path.length ) {
+			entityBlocks.put(target, new DustModelBlock(this));
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,6 +129,8 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	
 	public static void boot() {
 		Mind.log(MiNDEventLevel.TRACE, "would boot now...");
+		
+		MindTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
 		
 		// Machine
 		Mind.selectByPath(MTSHARED_MACHINE);

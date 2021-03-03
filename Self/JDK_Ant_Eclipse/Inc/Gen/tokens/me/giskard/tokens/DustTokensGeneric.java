@@ -6,6 +6,9 @@ import me.giskard.MindConsts;
 public interface DustTokensGeneric extends MindConsts {
 	MiNDToken MTUNIT_UTILS = Mind.defineToken(MiNDTokenType.UNIT, "Generic_Utils");
 	
+	MiNDToken MTTYPE_TAGGED = Mind.defineToken(MiNDTokenType.TYPE, "Tagged", MTUNIT_UTILS);
+	MiNDToken MTMEMBER_TAGGED_TAGS = Mind.defineToken(MiNDTokenType.MEMBER, "Tags", MTTYPE_TAGGED, MiNDValType.Ref, MiNDCollType.Set);
+	
 	MiNDToken MTTYPE_VARIANT = Mind.defineToken(MiNDTokenType.TYPE, "Variant", MTUNIT_UTILS);
 	MiNDToken MTMEMBER_VARIANT_TYPE = Mind.defineToken(MiNDTokenType.MEMBER, "Type", MTTYPE_VARIANT, MiNDValType.Ref, MiNDCollType.One);
 	MiNDToken MTMEMBER_VARIANT_VALUE = Mind.defineToken(MiNDTokenType.MEMBER, "Value", MTTYPE_VARIANT, MiNDValType.Raw, MiNDCollType.One);

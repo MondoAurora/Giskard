@@ -35,7 +35,7 @@ public interface MindConsts {
 	public interface MiNDContext extends MiNDAccessor {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
 		
-		void selectById(MiNDToken target, String id);
+//		void selectById(MiNDToken target, String id);
 		void selectByPath(MiNDToken target, Object... path);		
 	}
 
@@ -67,6 +67,7 @@ public interface MindConsts {
 		void init() throws Exception;
 		Object addModule(String modName, String ver);
 		void launch() throws Exception;
+		MiNDAgent testCreateAgent(MiNDToken token) throws Exception;
 	}
 	
 	interface MiNDCreator<Key, Val> {

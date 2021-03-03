@@ -3,6 +3,7 @@ package me.giskard.dust.text;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.giskard.Mind;
 import me.giskard.MindConsts;
 
 public class DustTextMatcherConst implements DustTextConsts, MindConsts.MiNDAgent {
@@ -10,6 +11,10 @@ public class DustTextMatcherConst implements DustTextConsts, MindConsts.MiNDAgen
 	int[] cpArr;
 	int size;
 	int idx;
+	
+	public DustTextMatcherConst() {
+		
+	}
 	
 	public DustTextMatcherConst(List<Integer> cps) {
 		load(cps);
@@ -37,6 +42,9 @@ public class DustTextMatcherConst implements DustTextConsts, MindConsts.MiNDAgen
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
+		case Init:
+			Mind.log(MiNDEventLevel.TRACE, "DustTextMatcherConst agent initialized.");
+			return MiNDResultType.ACCEPT;
 		case Begin:
 			idx = 0;
 			return MiNDResultType.ACCEPT;

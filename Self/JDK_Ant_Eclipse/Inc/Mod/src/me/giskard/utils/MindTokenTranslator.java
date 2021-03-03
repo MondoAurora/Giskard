@@ -7,6 +7,12 @@ import me.giskard.MindConsts;
 public class MindTokenTranslator implements MindConsts {
 	private static MindUtilsTranslator<MiNDToken, Class<Enum<?>>> TOKEN_ENUM_CLASS = new MindUtilsTranslator<>();
 	private static MindUtilsTranslator<MiNDToken, Enum<?>> TOKEN_ENUM = new MindUtilsTranslator<>();
+	
+	private static MiNDToken TOKEN_MEMBER;
+	
+	public static void setTokenMember(MiNDToken tm) {
+		TOKEN_MEMBER = tm;
+	}
 
 	public static void register(MiNDToken t, Object ob) {
 		System.out.println("Registering token " + t + " with " + ob);
@@ -21,7 +27,8 @@ public class MindTokenTranslator implements MindConsts {
 	public static void setEnumToken(MiNDToken target, Enum<?> e) {
 		if ( null != e ) {
 			MiNDToken token = TOKEN_ENUM.getLeft(e);
-			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
+//			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
+			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_MEMBER);
 		}
 	}
 

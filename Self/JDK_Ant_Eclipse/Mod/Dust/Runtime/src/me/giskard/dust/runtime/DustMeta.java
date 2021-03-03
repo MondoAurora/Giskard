@@ -94,10 +94,18 @@ public interface DustMeta extends MindCollConsts {
 			setCollType(collType);
 		}
 
+		public MiNDValType getValType() {
+			return valType;
+		}
+		
 		public void setValType(MiNDValType valType) {
 			this.valType = valType;
 		}
 
+		public MiNDCollType getCollType() {
+			return collType;
+		}
+		
 		public void setCollType(MiNDCollType collType) {
 			this.collType = collType;
 		}

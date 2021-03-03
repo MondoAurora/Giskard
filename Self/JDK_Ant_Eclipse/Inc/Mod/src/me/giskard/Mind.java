@@ -33,9 +33,9 @@ public abstract class Mind implements MindConsts {
 		return THE_MIND.getContext().defineToken(type, name, params);
 	}
 	
-	public static void selectById(MiNDToken target, String id)  {
-		THE_MIND.getContext().selectById(target, id);
-	}
+//	public static void selectById(MiNDToken target, String id)  {
+//		THE_MIND.getContext().selectById(target, id);
+//	}
 
 	public static void selectByPath(MiNDToken target, Object... path) {
 		THE_MIND.getContext().selectByPath(target, path);
