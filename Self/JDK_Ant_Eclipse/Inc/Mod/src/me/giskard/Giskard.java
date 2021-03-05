@@ -2,25 +2,25 @@ package me.giskard;
 
 import me.giskard.utils.MindUtils;
 
-public abstract class Mind implements MindConsts {
+public abstract class Giskard implements GiskardConsts {
 
-	protected static Mind THE_MIND;
+	protected static Giskard GISKARD;
 
-	public static Mind getMind() {
-		return THE_MIND;
-	}
-
-	public static void setMind(Mind mind) {
-		if ( (null != THE_MIND) && (THE_MIND != mind) ) {
+	public static void setImplementation(Giskard g) {
+		if ( (null != GISKARD) && (GISKARD != g) ) {
 			MindUtils.wrapException(null, "Multiple initialization!");
 		}
 
-		THE_MIND = mind;
+		GISKARD = g;
 	}
 
 	public static void log(MiNDEventLevel lvl, Object... obs) {
-		if ( null != THE_MIND ) {
-			THE_MIND.log_(lvl, obs);
+		if ( null != GISKARD ) {
+			if ( 0 < obs.length ) {
+				GISKARD.log_(lvl, obs);
+			} else {
+				GISKARD.log_(lvl, GISKARD);
+			}
 		} else {
 			StringBuilder sb = MindUtils.sbAppend(null, " ", false, obs);
 			if ( null != sb ) {
@@ -30,7 +30,7 @@ public abstract class Mind implements MindConsts {
 	}
 	
 	public static MiNDToken defineToken(MiNDTokenType type, String name, Object... params)  {
-		return THE_MIND.getContext().defineToken(type, name, params);
+		return GISKARD.getContext().defineToken(type, name, params);
 	}
 	
 //	public static void selectById(MiNDToken target, String id)  {
@@ -38,15 +38,21 @@ public abstract class Mind implements MindConsts {
 //	}
 
 	public static void selectByPath(MiNDToken target, Object... path) {
-		THE_MIND.getContext().selectByPath(target, path);
+		GISKARD.getContext().selectByPath(target, path);
 	}
 
 	
 	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
 //		return val;
-		return THE_MIND.getContext().access( cmd, val, target, valPath);
+		return GISKARD.getContext().access( cmd, val, target, valPath);
+	}
+	
+	public static MiNDResultType invoke(Object... agentPath) {
+		return GISKARD.invoke_(agentPath);
 	}
 
+	protected abstract MiNDResultType invoke_(Object... agentPath);
+	
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
 
 	protected abstract MiNDContext getContext();

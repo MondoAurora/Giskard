@@ -13,20 +13,20 @@ public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensM
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		switch ( cmd ) {
 		case Add:
+			try {
+				val = (RetType) nativeClasses.get(target).newInstance();
+			} catch (Exception e) {
+				MindUtils.wrapException(e);
+			}
 			break;
 		case Chk:
 			break;
 		case Del:
 			break;
 		case Get:
-			try {
-				val = (RetType) nativeClasses.get(target).newInstance();
-			} catch (Exception e) {
-				MindUtils.wrapException(e);
-			}
 			break;
 		case Set:
 			break;
@@ -34,9 +34,9 @@ public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensM
 			break;
 		default:
 			break;
-		
 		}
-		return val;
+		
+		return (RetType) val;
 	}
 
 	@Override
@@ -47,12 +47,12 @@ public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensM
 		case End:
 			break;
 		case Init:
-			Mind.access(MiNDAccessCommand.Use, this, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+			Giskard.access(MiNDAccessCommand.Use, this, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
 			break;
 		case Process:
-			MiNDToken t = Mind.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_IMPLEMENTATION_AGENT);
+			MiNDToken t = Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_IMPLEMENTATION_AGENT);
 			if ( null != t ) {
-				Class<?> c = Mind.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
+				Class<?> c = Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
 				if ( null != c ) {
 					nativeClasses.put(t, c);
 				}

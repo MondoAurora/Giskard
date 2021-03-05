@@ -1,6 +1,6 @@
 package me.giskard;
 
-public interface MindConsts {
+public interface GiskardConsts {
 	String SEP_ID = "_";
 
 	String DEF_ENCODING = "UTF-8";
@@ -29,7 +29,7 @@ public interface MindConsts {
 	};
 
 	public interface MiNDAccessor {
-		<RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath);
+		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
 	};
 
 	public interface MiNDContext extends MiNDAccessor {
@@ -51,7 +51,7 @@ public interface MindConsts {
 		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
 	};
 
-	public interface MiNDAgent extends MindConsts {
+	public interface MiNDAgent extends GiskardConsts {
 		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
 	}
 

@@ -3,14 +3,14 @@ package me.giskard.utils;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts.MiNDEventLevel;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts.MiNDEventLevel;
 
 public interface MindDevUtils {
 	public class DevTools {
 		public static void logMemUsage() {
 			MemoryMXBean mem = ManagementFactory.getMemoryMXBean();
-			Mind.log(MiNDEventLevel.INFO, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:", mem.getNonHeapMemoryUsage());
+			Giskard.log(MiNDEventLevel.INFO, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:", mem.getNonHeapMemoryUsage());
 		}
 	}
 
@@ -21,7 +21,7 @@ public interface MindDevUtils {
 		public DevTimer(String header) {
 			this.name = header;
 			this.start = System.currentTimeMillis();
-			Mind.log(MiNDEventLevel.INFO, header, "starting...");
+			Giskard.log(MiNDEventLevel.INFO, header, "starting...");
 		}
 
 		@Override
@@ -30,7 +30,7 @@ public interface MindDevUtils {
 		}
 
 		public void log() {
-			Mind.log(MiNDEventLevel.INFO, this);
+			Giskard.log(MiNDEventLevel.INFO, this);
 		}
 	}
 

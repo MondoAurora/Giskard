@@ -1,8 +1,8 @@
 package me.giskard.dust.runtime.narrative;
 
-import me.giskard.MindConsts;
+import me.giskard.GiskardConsts;
 
-public class DustNarrativeRepeat implements DustNarrativeConsts, MindConsts.MiNDAgent {
+public class DustNarrativeRepeat implements DustNarrativeConsts, GiskardConsts.MiNDAgent {
 	
 	int repMin;
 	int repMax;

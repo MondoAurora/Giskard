@@ -17,12 +17,11 @@ public class DustModelBlock implements DustModelConsts {
 		this.ctx = ctx;
 	}
 
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustTokenMember tMember) {
 		try {
 //		Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 
-			DustTokenMember t = (DustTokenMember) valPath[0];
-			Object current = localData.get(t);
+			Object current = localData.get(tMember);
 
 			DustModelBlock tBlock = (val instanceof DustToken) ? ctx.entityBlocks.peek((DustToken) val) : null;
 			Object data = (null == tBlock) ? val : tBlock;
@@ -30,31 +29,31 @@ public class DustModelBlock implements DustModelConsts {
 			switch ( cmd ) {
 			case Set:
 				if ( null != tBlock ) {
-					data = ctx.setRef(this, t, tBlock);
+					data = ctx.setRef(this, tMember, tBlock);
 				}
-				localData.put(t, data);
+				localData.put(tMember, data);
 				val = (RetType) current;
 				break;
 			case Add:
 				if ( null == current ) {
-					current = DustModelMultiVal.create(t);
-					localData.put(t, current);
+					current = DustModelMultiVal.create(tMember);
+					localData.put(tMember, current);
 				}
-				val = (RetType) ((DustModelMultiVal) current).access(this, t, cmd, data, valPath);
+				val = (RetType) ((DustModelMultiVal) current).access(this, tMember, cmd, data);
 				break;
 			case Use:
 				if ( null != current ) {
 					MiNDAgent agent = (MiNDAgent) val;
 					try {
-						agent.process(MiNDAgentAction.Begin, t);
+						agent.process(MiNDAgentAction.Begin, tMember);
 
 						if ( current instanceof DustModelMultiVal ) {
-							((DustModelMultiVal) current).access(this, t, cmd, agent);
+							((DustModelMultiVal) current).access(this, tMember, cmd, agent);
 						} else {
 							DustModelUtils.notifyAgent(agent, ctx, current);
 						}
 					} finally {
-						agent.process(MiNDAgentAction.End, t);
+						agent.process(MiNDAgentAction.End, tMember);
 					}
 				}
 				break;

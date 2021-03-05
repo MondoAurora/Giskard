@@ -2,7 +2,7 @@ package me.giskard.coll;
 
 import java.util.ArrayList;
 
-import me.giskard.MindConsts.MiNDBuilder;
+import me.giskard.GiskardConsts.MiNDBuilder;
 
 public class MindCollStack<Val> implements MindCollConsts.MiNDColl<Integer, Val> {
 	MiNDBuilder<Integer, Val> itemBuilder;

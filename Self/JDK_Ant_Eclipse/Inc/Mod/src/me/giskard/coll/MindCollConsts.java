@@ -1,8 +1,8 @@
 package me.giskard.coll;
 
-import me.giskard.MindConsts;
+import me.giskard.GiskardConsts;
 
-public interface MindCollConsts extends MindConsts {
+public interface MindCollConsts extends GiskardConsts {
 	
 	interface MiNDColl<Key, Val> {
 		boolean isEmpty();

@@ -1,25 +1,25 @@
 package me.giskard.mod;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 
-public class DustRuntime implements MindConsts.MiNDAgent, DustRuntimeConsts {
+public class DustRuntime implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 		switch ( action ) {
 		case Init:
-			Mind.log(MiNDEventLevel.TRACE, "Runtime initializing");
+			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");
 
-			Mind mind = (Mind) Class.forName(CLASSNAME_MIND).newInstance();
-			Mind.setMind(mind);
-			mind.initContext();
+			Giskard runtime = (Giskard) Class.forName(CLASSNAME_RUNTIME).newInstance();
+			Giskard.setImplementation(runtime);
+			runtime.initContext();
 			break;
 		case Begin:
-			Mind.log(MiNDEventLevel.INFO, "DustRuntime launch...");
-			
-			Mind.log(MiNDEventLevel.INFO, Mind.getMind());
+			Giskard.log(MiNDEventLevel.INFO, "DustRuntime launch...");
+
+			Giskard.log(MiNDEventLevel.TRACE);			
 			break;
 		default:
 			break;

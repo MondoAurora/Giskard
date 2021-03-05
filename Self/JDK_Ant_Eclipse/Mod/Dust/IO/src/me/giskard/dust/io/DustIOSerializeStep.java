@@ -2,7 +2,7 @@ package me.giskard.dust.io;
 
 import java.util.Map;
 
-import me.giskard.Mind;
+import me.giskard.Giskard;
 import me.giskard.utils.MindTokenTranslator;
 
 public class DustIOSerializeStep implements DustIOTokens {
@@ -33,10 +33,10 @@ public class DustIOSerializeStep implements DustIOTokens {
 	}
 
 	public Object publish(MiNDToken target) {
-		Mind.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
+		Giskard.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
 		Object val = (item == DustIOConsts.MTTAG_VALTYPE_REF) ? ((Map.Entry<?,?>) data).getKey()
 				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
-		Mind.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VARIANT_VALUE);
+		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VARIANT_VALUE);
 		MindTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
 
 		return val;

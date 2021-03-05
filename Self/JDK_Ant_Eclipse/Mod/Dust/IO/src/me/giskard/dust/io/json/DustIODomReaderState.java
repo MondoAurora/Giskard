@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.json.simple.JSONValue;
 
-import me.giskard.Mind;
+import me.giskard.Giskard;
 import me.giskard.coll.MindCollStack;
 import me.giskard.dust.io.DustIOSerializeStep;
 import me.giskard.tokens.DustTokensMind;
@@ -58,7 +58,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 		if ( step.action == MiNDAgentAction.End) {
 			indent.delete(0, 2);
 		}
-		Mind.log(MiNDEventLevel.TRACE, "SerEvent ", indent, step.action, step.item, val);
+		Giskard.log(MiNDEventLevel.TRACE, "SerEvent ", indent, step.action, step.item, val);
 		if ( step.action == MiNDAgentAction.Begin) {
 			indent.append("  ");
 		}

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.json.simple.parser.ContentHandler;
 import org.json.simple.parser.ParseException;
 
-import me.giskard.Mind;
+import me.giskard.Giskard;
 import me.giskard.utils.MindDevCounter;
 import me.giskard.utils.MindUtils;
 
@@ -21,8 +21,8 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 		}
 
 		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
-			Mind.access(MiNDAccessCommand.Set, param, MTTYPE_SERIALIZEEVENT, MTMEMBER_VARIANT_VALUE);
-			Mind.access(MiNDAccessCommand.Set, block, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
+			Giskard.access(MiNDAccessCommand.Set, param, MTTYPE_SERIALIZEEVENT, MTMEMBER_VARIANT_VALUE);
+			Giskard.access(MiNDAccessCommand.Set, block, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
 			
 			if ( (MiNDAgentAction.Begin == action) || (MTTAG_COLLTYPE_ONE == block) ) {
 				counter.add(block);

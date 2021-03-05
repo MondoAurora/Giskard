@@ -2,10 +2,10 @@ package me.giskard.dust.runtime.narrative;
 
 import java.util.Stack;
 
-import me.giskard.MindConsts;
+import me.giskard.GiskardConsts;
 import me.giskard.utils.MindUtils;
 
-public class DustNarrativeBlock implements DustNarrativeConsts, MindConsts.MiNDAgent {
+public class DustNarrativeBlock implements DustNarrativeConsts, GiskardConsts.MiNDAgent {
 	
 	Stack<MiNDAgent> agentStack;
 	MiNDAgent current;

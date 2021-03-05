@@ -1,10 +1,10 @@
 package me.giskard.utils;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
 
 @SuppressWarnings("unchecked")
-public class MindTokenTranslator implements MindConsts {
+public class MindTokenTranslator implements GiskardConsts {
 	private static MindUtilsTranslator<MiNDToken, Class<Enum<?>>> TOKEN_ENUM_CLASS = new MindUtilsTranslator<>();
 	private static MindUtilsTranslator<MiNDToken, Enum<?>> TOKEN_ENUM = new MindUtilsTranslator<>();
 	
@@ -28,7 +28,7 @@ public class MindTokenTranslator implements MindConsts {
 		if ( null != e ) {
 			MiNDToken token = TOKEN_ENUM.getLeft(e);
 //			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
-			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_MEMBER);
+			Giskard.access(MiNDAccessCommand.Set, token, target, TOKEN_MEMBER);
 		}
 	}
 

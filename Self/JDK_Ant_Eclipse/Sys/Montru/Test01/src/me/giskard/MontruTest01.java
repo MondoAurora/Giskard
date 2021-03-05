@@ -3,7 +3,7 @@ package me.giskard;
 import me.giskard.tokens.DustTokensMind;
 import me.giskard.tokens.DustTokensText;
 
-public class MontruTest01 implements MindConsts, DustTokensMind, DustTokensText {
+public class MontruTest01 implements GiskardConsts, DustTokensMind, DustTokensText {
 
 	public static void main(String[] args) throws Exception {
 		MiNDMachine machine = new GiskardMachineModular("DustRuntime", "1.0", args);

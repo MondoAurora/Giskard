@@ -1,15 +1,15 @@
 package me.giskard.mod;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
 import me.giskard.dust.text.DustTextMatcherConst;
 import me.giskard.dust.text.DustTextMatcherRange;
 import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensText;
 
-public class DustText implements MindConsts.MiNDAgent, DustTokensText {
+public class DustText implements GiskardConsts.MiNDAgent, DustTokensText {
 	void initModule() throws Exception {
-		Mind.log(MiNDEventLevel.TRACE, "Text module initializing");
+		Giskard.log(MiNDEventLevel.TRACE, "Text module initializing");
 		
 		DustTokens.registerNewModule();
 		

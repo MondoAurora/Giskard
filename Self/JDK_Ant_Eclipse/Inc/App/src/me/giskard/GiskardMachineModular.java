@@ -60,7 +60,7 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 				uu = urls.toArray(uu);
 				setLoader(new URLClassLoader(uu, APP_CLASSLOADER));
 
-				Class<?> cMind = cl.loadClass(Mind.class.getCanonicalName());
+				Class<?> cMind = cl.loadClass(Giskard.class.getCanonicalName());
 
 				String rootPkg = cMind.getPackage().getName();
 				Class<?> cMod = cl.loadClass(rootPkg + ".mod." + libMod_);
@@ -91,7 +91,7 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 			modRoot = new File(gr + "Mod");
 			extRoot = new File(gr + "Ext");
 
-			Mind.log(MiNDEventLevel.TRACE, "Modular machine using", gr);
+			Giskard.log(MiNDEventLevel.TRACE, "Modular machine using", gr);
 
 		} else {
 			throw new RuntimeException("GISKARD local filesystem root not found!");
@@ -108,14 +108,14 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 			MindUtils.wrapException(null, "Module already loaded", modName);
 		}
 		
-		Mind.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
+		Giskard.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
 		DynamicModule mod = new DynamicModule(modName, ver);
 		modules.put(modName, mod);
 		return mod;
 	}
 
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		return super.access(cmd, val, target, valPath);
 	}
 }

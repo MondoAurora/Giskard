@@ -2,7 +2,7 @@ package me.giskard;
 
 import me.giskard.utils.MindUtils;
 
-public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.MiNDMachine {
+public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardConsts.MiNDMachine {
 
 	protected class MachineModule implements MiNDBuilder<String, Object>, MiNDAccessor {
 		MiNDAgent modAgent;
@@ -34,7 +34,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.
 		}
 
 		@Override
-		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+		public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -45,7 +45,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.
 	protected NativeConnector nativeConnector;
 
 	protected GiskardMachineMonolith(MiNDAgent mainAgent, String... args) {
-		Mind.log(MiNDEventLevel.TRACE, "GISKARD boot started...");
+		Giskard.log(MiNDEventLevel.TRACE, "GISKARD boot started...");
 		this.mainAgent = mainAgent;
 	}
 
@@ -80,21 +80,21 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, MindConsts.
 	
 	@Override
 	public MiNDAgent testCreateAgent(MiNDToken token) throws Exception {
-		return nativeConnector.access(MiNDAccessCommand.Get, null, token);
+		return nativeConnector.access(MiNDAccessCommand.Add, null, token);
 	}
 
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		return modMind.access(cmd, val, target, valPath);
 	}
 
 	public final void launch() throws Exception {
-		Mind.log(MiNDEventLevel.INFO, "Native assignments:", nativeConnector);
-		Mind.log(MiNDEventLevel.INFO, "GISKARD boot success.");
+		Giskard.log(MiNDEventLevel.INFO, "Native assignments:", nativeConnector);
+		Giskard.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 
 		modMind.modAgent.process(MiNDAgentAction.Begin);
 
-		Mind.log(MiNDEventLevel.INFO, "GISKARD finished.");
+		Giskard.log(MiNDEventLevel.INFO, "GISKARD finished.");
 	}
 
 }

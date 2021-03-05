@@ -13,7 +13,7 @@ public class GiskardMachineRemote extends GiskardMachineModular {
 		File fMod = new File(modRoot, getModuleKey(modName, ver) + ".jar");
 		
 		if ( !fMod.isFile() ) {
-			Mind.log(MiNDEventLevel.INFO, "would download module from server", modName, ver);
+			Giskard.log(MiNDEventLevel.INFO, "would download module from server", modName, ver);
 		}
 
 		return super.addModule(modName, ver);

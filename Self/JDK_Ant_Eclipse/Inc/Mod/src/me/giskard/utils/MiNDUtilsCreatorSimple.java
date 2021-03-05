@@ -1,6 +1,6 @@
 package me.giskard.utils;
 
-import me.giskard.MindConsts.MiNDCreator;
+import me.giskard.GiskardConsts.MiNDCreator;
 
 public class MiNDUtilsCreatorSimple<Key, Val> implements MiNDCreator<Key, Val> {
 	Class<Val> cVal;

@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts.MiNDEventLevel;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts.MiNDEventLevel;
 import me.giskard.utils.MindUtils;
 
 public class AbnfParserPrototype {
@@ -193,7 +193,7 @@ public class AbnfParserPrototype {
 		seen.add(langName);
 		toSee.remove(langName);
 
-		Mind.log(MiNDEventLevel.TRACE, "Reading ABNF file", fAbnf.getAbsolutePath());
+		Giskard.log(MiNDEventLevel.TRACE, "Reading ABNF file", fAbnf.getAbsolutePath());
 
 		boolean header = true;
 

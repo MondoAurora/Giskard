@@ -3,19 +3,19 @@ package me.giskard.dust.runtime.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import me.giskard.Mind;
-import me.giskard.MindConsts;
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
 import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustMeta;
-import me.giskard.dust.runtime.DustMind;
+import me.giskard.dust.runtime.DustRuntime;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.tokens.DustTokens;
 import me.giskard.utils.MindTokenTranslator;
 import me.giskard.utils.MindUtils;
 
-public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, MindConsts.MiNDContext {
+public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, GiskardConsts.MiNDContext {
 	DustModelContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
@@ -52,9 +52,8 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 
 	void delRef(DustModelRef ref) {
 		refs.remove(ref);
-		if ( null == ref.to.incomingRefs ) {
-			ref.to.incomingRefs.remove(ref);
-		}
+		ref.to.incomingRefs.remove(ref);
+		ref.from.access(MiNDAccessCommand.Del, ref, ref.def);
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 
 	@Override
 	public void selectByPath(MiNDToken target, Object... path) {
-		Mind.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
+		Giskard.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
 		if ( 0 == path.length ) {
 			entityBlocks.put(target, new DustModelBlock(this));
 		}
@@ -93,7 +92,7 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		Object ret = null;
 
 		DustModelBlock eb = MindUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
@@ -116,7 +115,28 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 				break;
 			}
 		} else {
-			ret = eb.access(cmd, val, valPath);
+			if ( 0 < valPath.length ) {
+				ret = eb.access(cmd, val, (DustTokenMember) valPath[0]);
+			} else {
+				switch ( cmd ) {
+				case Add:
+				case Set:
+					// can't be here
+					break;
+				case Chk:
+					ret = Boolean.TRUE;
+					break;
+				case Del:
+					ret = Boolean.FALSE;
+					break;
+				case Get:
+					ret = val;
+					break;
+				case Use:
+					ret = MiNDResultType.REJECT;
+					break;
+				}
+			}
 		}
 
 		return (RetType) ret;
@@ -128,22 +148,22 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	}
 	
 	public static void boot() {
-		Mind.log(MiNDEventLevel.TRACE, "would boot now...");
+		Giskard.log(MiNDEventLevel.TRACE, "would boot now...");
 		
 		MindTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
 		
 		// Machine
-		Mind.selectByPath(MTSHARED_MACHINE);
+		Giskard.selectByPath(MTSHARED_MACHINE);
 		
 		// Application
-		Mind.selectByPath(MTMEMBER_ACTION_PARAM);
-		Mind.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
+		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
 		
 		// Runtime module
 		DustTokens.registerNewModule();
 
 		// Agent implementation data
-		DustTokens.addModuleImpInfo(MTAGENT_MIND, DustMind.class);
+		DustTokens.addModuleImpInfo(MTAGENT_MIND, DustRuntime.class);
 		DustTokens.addModuleImpInfo(MTAGENT_CONTEXT, DustModelContext.class);
 		
 	}

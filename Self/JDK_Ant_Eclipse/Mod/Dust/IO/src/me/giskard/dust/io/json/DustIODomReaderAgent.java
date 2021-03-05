@@ -1,9 +1,9 @@
 package me.giskard.dust.io.json;
 
-import me.giskard.MindConsts;
+import me.giskard.GiskardConsts;
 import me.giskard.dust.io.DustIOConsts;
 
-public class DustIODomReaderAgent implements DustIOConsts, MindConsts.MiNDAgent {
+public class DustIODomReaderAgent implements DustIOConsts, GiskardConsts.MiNDAgent {
 	
 	
 	@Override

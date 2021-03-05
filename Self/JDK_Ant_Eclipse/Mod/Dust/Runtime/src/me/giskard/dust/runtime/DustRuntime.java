@@ -1,15 +1,15 @@
 package me.giskard.dust.runtime;
 
-import me.giskard.Mind;
+import me.giskard.Giskard;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.utils.MindUtils;
 
-public class DustMind extends Mind implements MindCollConsts, DustRuntimeConsts {
+public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeConsts {
 	
 	DustLog log;
 	MiNDContext ctxTemp;
 	
-	public DustMind() {
+	public DustRuntime() {
 		log = new DustLog();
 	}
 
@@ -30,6 +30,11 @@ public class DustMind extends Mind implements MindCollConsts, DustRuntimeConsts 
 	@Override
 	protected MiNDContext getContext() {
 		return ctxTemp;
+	}
+	
+	@Override
+	protected MiNDResultType invoke_(Object... agentPath) {
+		return MiNDResultType.REJECT;
 	}
 
 	@Override

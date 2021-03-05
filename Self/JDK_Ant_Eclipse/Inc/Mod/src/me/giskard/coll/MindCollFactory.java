@@ -1,6 +1,6 @@
 package me.giskard.coll;
 
-import me.giskard.MindConsts.MiNDCreator;
+import me.giskard.GiskardConsts.MiNDCreator;
 import me.giskard.utils.MiNDUtilsCreatorSimple;
 
 public class MindCollFactory<Key, Val> extends MindCollMap<Key, Val> {

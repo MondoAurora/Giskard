@@ -9,7 +9,7 @@ import java.util.Set;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class DustModelMultiVal<ContainerType> implements DustModelConsts {
 	protected final ContainerType container;
-	public abstract Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val, Object... valPath) throws Exception;
+	public abstract Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val) throws Exception;
 	
 	public static DustModelMultiVal create(DustTokenMember token) {
 		switch (token.getCollType() ) {
@@ -35,7 +35,7 @@ public abstract class DustModelMultiVal<ContainerType> implements DustModelConst
 		}
 
 		@Override
-		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val, Object... valPath) throws Exception {
+		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val) throws Exception {
 			switch ( cmd ) {
 			case Add:
 				if ( val instanceof DustModelBlock ) {
@@ -73,7 +73,7 @@ public abstract class DustModelMultiVal<ContainerType> implements DustModelConst
 		}
 
 		@Override
-		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val, Object... valPath) {
+		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -85,7 +85,7 @@ public abstract class DustModelMultiVal<ContainerType> implements DustModelConst
 		}
 
 		@Override
-		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val, Object... valPath) {
+		public Object access(DustModelBlock owner, DustTokenMember token, MiNDAccessCommand cmd, Object val) {
 			// TODO Auto-generated method stub
 			return null;
 		}

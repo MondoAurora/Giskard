@@ -1,8 +1,8 @@
 package me.giskard.dust.text;
 
-import me.giskard.MindConsts;
+import me.giskard.GiskardConsts;
 
-public class DustTextMatcherRange implements DustTextConsts, MindConsts.MiNDAgent {
+public class DustTextMatcherRange implements DustTextConsts, GiskardConsts.MiNDAgent {
 	
 	int rangeMin;
 	int rangeMax;

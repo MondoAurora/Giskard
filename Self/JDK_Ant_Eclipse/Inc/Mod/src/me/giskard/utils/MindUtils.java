@@ -1,13 +1,13 @@
 package me.giskard.utils;
 
-import me.giskard.Mind;
+import me.giskard.Giskard;
 
 public class MindUtils extends MindUtilsJava {
 
 	public static final MiNDAgent LOGGER = new MiNDAgent() {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
-			Mind.log(MiNDEventLevel.INFO, action,  MindUtils.sbAppend(null, ",", true, params));
+			Giskard.log(MiNDEventLevel.INFO, action,  MindUtils.sbAppend(null, ",", true, params));
 			return MiNDResultType.ACCEPT_READ;
 		}
 	};
@@ -26,12 +26,12 @@ public class MindUtils extends MindUtilsJava {
 			throw (MiNDException) src;
 		}
 	
-		Mind.log(MiNDEventLevel.CRITICAL, src, params);
+		Giskard.log(MiNDEventLevel.CRITICAL, src, params);
 		throw new MiNDException(src);
 	}
 	
 	public static void swallowException(Throwable src, Object... params) {
-		Mind.log(MiNDEventLevel.WARNING, src, params);
+		Giskard.log(MiNDEventLevel.WARNING, src, params);
 	}
 	
 	public static boolean isAgentRead(MiNDResultType res ) {
