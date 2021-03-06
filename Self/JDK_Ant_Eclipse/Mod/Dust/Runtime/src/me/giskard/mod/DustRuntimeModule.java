@@ -4,7 +4,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 
-public class DustRuntime implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
+public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
@@ -14,7 +14,6 @@ public class DustRuntime implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
 
 			Giskard runtime = (Giskard) Class.forName(CLASSNAME_RUNTIME).newInstance();
 			Giskard.setImplementation(runtime);
-			runtime.initContext();
 			break;
 		case Begin:
 			Giskard.log(MiNDEventLevel.INFO, "DustRuntime launch...");

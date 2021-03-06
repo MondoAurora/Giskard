@@ -1,20 +1,20 @@
-package me.giskard.utils;
+package me.giskard.tools;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts.MiNDEventLevel;
+import me.giskard.GiskardUtils;
 
-public interface MindDevUtils {
-	public class DevTools {
-		public static void logMemUsage() {
-			MemoryMXBean mem = ManagementFactory.getMemoryMXBean();
-			Giskard.log(MiNDEventLevel.INFO, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:", mem.getNonHeapMemoryUsage());
-		}
+public class GisToolsUtils {
+	public static void logMemUsage() {
+		MemoryMXBean mem = ManagementFactory.getMemoryMXBean();
+		Giskard.log(MiNDEventLevel.INFO, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:",
+				mem.getNonHeapMemoryUsage());
 	}
-
-	public class DevTimer {
+	
+	public static class DevTimer {
 		String name;
 		long start;
 
@@ -34,9 +34,9 @@ public interface MindDevUtils {
 		}
 	}
 
-	public class DevMonitor extends DevTimer {
+	public static class DevMonitor extends DevTimer {
 		boolean showMem = false;
-		
+
 		long interval;
 		long next;
 
@@ -48,13 +48,13 @@ public interface MindDevUtils {
 			this.interval = interval;
 			reset();
 		}
-		
+
 		public void reset() {
 			totalCount = lastCount = 0;
 			start = System.currentTimeMillis();
 			next = start + interval;
 		}
-		
+
 		public void setShowMem(boolean showMem) {
 			this.showMem = showMem;
 		}
@@ -67,7 +67,7 @@ public interface MindDevUtils {
 			if ( t > next ) {
 				next = t + interval;
 				if ( showMem ) {
-					MindDevUtils.DevTools.logMemUsage();
+					logMemUsage();
 				}
 				log();
 				lastCount = 0;
@@ -78,7 +78,7 @@ public interface MindDevUtils {
 
 		@Override
 		public String toString() {
-			return MindUtils
+			return GiskardUtils
 					.sbAppend(null, " ", false, super.toString(), "Total count:", totalCount, "Since last:", lastCount)
 					.toString();
 		}

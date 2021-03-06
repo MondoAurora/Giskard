@@ -1,8 +1,8 @@
 package me.giskard.dust.text;
 
-import me.giskard.utils.MindUtils;
+import me.giskard.GiskardUtils;
 
-public class DustTextUtils extends MindUtils implements DustTextConsts {
+public class DustTextUtils extends GiskardUtils implements DustTextConsts {
 	
 
 }

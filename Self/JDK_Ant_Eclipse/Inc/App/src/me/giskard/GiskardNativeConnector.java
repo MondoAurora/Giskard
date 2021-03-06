@@ -6,7 +6,6 @@ import java.util.Map;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
-import me.giskard.utils.MindUtils;
 
 public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensMind, DustTokensGeneric, DustTokensMachine, GiskardMachineConsts.NativeConnector {
 	private Map<MiNDToken, Class<?>> nativeClasses = new HashMap<>();
@@ -19,7 +18,7 @@ public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensM
 			try {
 				val = (RetType) nativeClasses.get(target).newInstance();
 			} catch (Exception e) {
-				MindUtils.wrapException(e);
+				GiskardException.wrap(e);
 			}
 			break;
 		case Chk:

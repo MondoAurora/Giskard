@@ -3,7 +3,8 @@ package me.giskard.dust.io;
 import java.util.Map;
 
 import me.giskard.Giskard;
-import me.giskard.utils.MindTokenTranslator;
+import me.giskard.coll.MindCollConsts.MiNDBuilder;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustIOSerializeStep implements DustIOTokens {
 	public static final MiNDBuilder<Integer, DustIOSerializeStep> BUILDER = new MiNDBuilder<Integer, DustIOSerializeStep>() {
@@ -37,7 +38,7 @@ public class DustIOSerializeStep implements DustIOTokens {
 		Object val = (item == DustIOConsts.MTTAG_VALTYPE_REF) ? ((Map.Entry<?,?>) data).getKey()
 				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
 		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VARIANT_VALUE);
-		MindTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
+		GisToolsTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
 
 		return val;
 	}

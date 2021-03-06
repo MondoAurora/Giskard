@@ -7,7 +7,7 @@ import me.giskard.dust.text.DustTextMatcherRange;
 import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensText;
 
-public class DustText implements GiskardConsts.MiNDAgent, DustTokensText {
+public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "Text module initializing");
 		

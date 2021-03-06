@@ -1,8 +1,6 @@
-package me.giskard.utils;
+package me.giskard;
 
-import me.giskard.GiskardConsts;
-
-public class MindUtilsJava implements GiskardConsts {
+public class GiskardUtils implements GiskardConsts {
 	
 	public static boolean isEqual(Object o1, Object o2) {
 		return (null == o1) ? (null == o2) : (null != o2) && o1.equals(o2);
@@ -46,5 +44,26 @@ public class MindUtilsJava implements GiskardConsts {
 			}
 		}
 		return sb;
+	}
+
+	public static final MiNDAgent LOGGER = new MiNDAgent() {
+		@Override
+		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+			Giskard.log(MiNDEventLevel.INFO, action, sbAppend(null, ",", true, params));
+			return MiNDResultType.ACCEPT_READ;
+		}
+	};
+	
+	public static String getRoot() {
+		String root = System.getenv("GISKARD");
+		return isEmpty(root) ? System.getenv("GISKARD_ECLIPSE") : root;
+	}
+	
+	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
+		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Add);
+	}
+
+	public static boolean isAgentRead(MiNDResultType res ) {
+		return (res == MiNDResultType.READ) || (res == MiNDResultType.ACCEPT_READ);
 	}
 }

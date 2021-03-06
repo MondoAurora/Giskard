@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.giskard.coll.MindCollConsts;
-import me.giskard.utils.MindTokenTranslator;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 public interface DustMeta extends MindCollConsts {
 
@@ -28,7 +28,7 @@ public interface DustMeta extends MindCollConsts {
 			default:
 				ret = new DustTokenContainer(type, name, (DustTokenContainer) params[0]);
 				if ( (type == MiNDTokenType.TAG) && (params.length > 1) ) {
-					MindTokenTranslator.register(ret, params[1]);
+					GisToolsTokenTranslator.register(ret, params[1]);
 				}
 
 				break;

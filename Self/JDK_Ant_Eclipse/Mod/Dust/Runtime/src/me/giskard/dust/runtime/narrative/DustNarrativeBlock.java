@@ -3,7 +3,7 @@ package me.giskard.dust.runtime.narrative;
 import java.util.Stack;
 
 import me.giskard.GiskardConsts;
-import me.giskard.utils.MindUtils;
+import me.giskard.GiskardUtils;
 
 public class DustNarrativeBlock implements DustNarrativeConsts, GiskardConsts.MiNDAgent {
 	
@@ -20,7 +20,7 @@ public class DustNarrativeBlock implements DustNarrativeConsts, GiskardConsts.Mi
 		switch ( action ) {
 		case Process:
 			lastResult = current.process(action, params);
-			if ( !MindUtils.isAgentRead(lastResult) ) {
+			if ( !GiskardUtils.isAgentRead(lastResult) ) {
 				
 			}
 			return MiNDResultType.REJECT;

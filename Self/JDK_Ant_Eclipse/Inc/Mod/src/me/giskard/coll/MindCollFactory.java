@@ -1,7 +1,7 @@
 package me.giskard.coll;
 
-import me.giskard.GiskardConsts.MiNDCreator;
-import me.giskard.utils.MiNDUtilsCreatorSimple;
+import me.giskard.coll.MindCollConsts.CreatorSimple;
+import me.giskard.coll.MindCollConsts.MiNDCreator;
 
 public class MindCollFactory<Key, Val> extends MindCollMap<Key, Val> {
 	MiNDCreator<Key, ? extends Val> creator;
@@ -17,7 +17,7 @@ public class MindCollFactory<Key, Val> extends MindCollMap<Key, Val> {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public MindCollFactory(boolean sorted, Class<? extends Val> vc) {
-		this(sorted, new MiNDUtilsCreatorSimple(vc));
+		this(sorted, new CreatorSimple(vc));
 	}
 	
 	public void setCreator(MiNDCreator<Key, ? extends Val> creator) {

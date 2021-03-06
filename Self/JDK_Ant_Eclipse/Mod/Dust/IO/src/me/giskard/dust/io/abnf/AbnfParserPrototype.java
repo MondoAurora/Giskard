@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts.MiNDEventLevel;
-import me.giskard.utils.MindUtils;
+import me.giskard.GiskardUtils;
 
 public class AbnfParserPrototype {
 
@@ -148,12 +148,12 @@ public class AbnfParserPrototype {
 
 		public RuleDef(String def, Object comment) {
 			this.def = def;
-			this.comment = MindUtils.toString(comment);
+			this.comment = GiskardUtils.toString(comment);
 		}
 
 		@Override
 		public String toString() {
-			return (HIDE_COMMENTS || MindUtils.isEmpty(comment)) ? def : def + "\n            ; " + comment;
+			return (HIDE_COMMENTS || GiskardUtils.isEmpty(comment)) ? def : def + "\n            ; " + comment;
 		}
 	}
 
@@ -205,7 +205,7 @@ public class AbnfParserPrototype {
 			String rName = null;
 
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-				if ( !MindUtils.isEmpty(line.trim()) ) {
+				if ( !GiskardUtils.isEmpty(line.trim()) ) {
 					System.out.println(line);
 
 					int cStart = line.indexOf(";");
@@ -225,7 +225,7 @@ public class AbnfParserPrototype {
 									case 1:
 										for (String u : str.split(",")) {
 											String un = u.trim();
-											if ( !MindUtils.isEmpty(un) && !seen.contains(un) ) {
+											if ( !GiskardUtils.isEmpty(un) && !seen.contains(un) ) {
 												toSee.add(un);
 											}
 										}
@@ -256,13 +256,13 @@ public class AbnfParserPrototype {
 							rDef = new StringBuilder(line.substring(ruleSep + 1).trim());
 							rComment = null;
 						} else {
-							if ( wsstart && (null != rName) && !MindUtils.isEmpty(line) ) {
+							if ( wsstart && (null != rName) && !GiskardUtils.isEmpty(line) ) {
 								rDef.append(" ").append(line);
 							}
 						}
 
-						if ( (null != rName) && !MindUtils.isEmpty(comment) ) {
-							rComment = MindUtils.sbAppend(rComment, " ", false, comment);
+						if ( (null != rName) && !GiskardUtils.isEmpty(comment) ) {
+							rComment = GiskardUtils.sbAppend(rComment, " ", false, comment);
 						}
 					}
 				}
@@ -305,10 +305,10 @@ public class AbnfParserPrototype {
 		StringBuilder sb = null;
 
 		for (Map.Entry<?, ?> re : rules.entrySet()) {
-			sb = MindUtils.sbAppend(sb, "", false, re.getKey(), " = ", re.getValue(), "\n");
+			sb = GiskardUtils.sbAppend(sb, "", false, re.getKey(), " = ", re.getValue(), "\n");
 		}
 
-		sb = MindUtils.sbAppend(sb, "", false, "Terminals: ", terminals, "\n");
+		sb = GiskardUtils.sbAppend(sb, "", false, "Terminals: ", terminals, "\n");
 
 		return sb.toString();
 	}

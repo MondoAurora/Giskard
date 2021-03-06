@@ -2,8 +2,8 @@ package me.giskard.dust.runtime;
 
 import java.io.PrintStream;
 
+import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
-import me.giskard.utils.MindUtilsJava;
 
 public class DustLog implements MindCollConsts {
 	static PrintStream psLog = System.out;
@@ -13,7 +13,7 @@ public class DustLog implements MindCollConsts {
 		StringBuilder sb = null;
 
 		for (Object o : obs) {
-			String s = MindUtilsJava.toString(o);
+			String s = GiskardUtils.toString(o);
 
 			if ( (0 == ts) && !s.trim().isEmpty() ) {
 				ts = System.currentTimeMillis();
@@ -25,7 +25,7 @@ public class DustLog implements MindCollConsts {
 			psLog.print(s);
 			psLog.print(" ");
 
-			sb = MindUtilsJava.sbAppend(sb, " ", true, s);
+			sb = GiskardUtils.sbAppend(sb, " ", true, s);
 		}
 
 		if ( 0 != ts ) {

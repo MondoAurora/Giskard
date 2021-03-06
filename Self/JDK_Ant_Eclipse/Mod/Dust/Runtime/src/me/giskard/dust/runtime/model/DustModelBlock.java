@@ -2,8 +2,8 @@ package me.giskard.dust.runtime.model;
 
 import java.util.Set;
 
+import me.giskard.GiskardException;
 import me.giskard.coll.MindCollMap;
-import me.giskard.utils.MindUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustModelBlock implements DustModelConsts {
@@ -63,7 +63,7 @@ public class DustModelBlock implements DustModelConsts {
 			}
 			return val;
 		} catch (Exception e) {
-			return MindUtils.wrapException(e);
+			return GiskardException.wrap(e);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package me.giskard.utils;
+package me.giskard.tools;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class MindDevCounter extends MindDevUtils.DevMonitor implements Iterable<Map.Entry<Object, Long>> {
+import me.giskard.GiskardUtils;
+
+public class GisToolsCounter extends GisToolsUtils.DevMonitor implements Iterable<Map.Entry<Object, Long>> {
     Map<Object, Long> counts;
     
-    public MindDevCounter(String name, boolean sorted, long interval) {
+    public GisToolsCounter(String name, boolean sorted, long interval) {
     	super(name, interval);
         counts = sorted ? new TreeMap<>() : new HashMap<>();
     }
@@ -31,11 +33,11 @@ public class MindDevCounter extends MindDevUtils.DevMonitor implements Iterable<
         StringBuilder sb = new StringBuilder(super.toString());
         
         for ( Map.Entry<Object, Long> e : this ) {
-            sb = MindUtils.sbAppend(sb, ", ", false, e.getKey());
-            MindUtils.sbAppend(sb, "", false, ": ", e.getValue());
+            sb = GiskardUtils.sbAppend(sb, ", ", false, e.getKey());
+            GiskardUtils.sbAppend(sb, "", false, ": ", e.getValue());
         }
         
-        return MindUtils.toString(sb);
+        return GiskardUtils.toString(sb);
     }
     
     @Override

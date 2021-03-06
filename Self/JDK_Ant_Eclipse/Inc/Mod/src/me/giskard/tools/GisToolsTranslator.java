@@ -1,15 +1,15 @@
-package me.giskard.utils;
+package me.giskard.tools;
 
 import java.util.HashMap;
 
-public class MindUtilsTranslator<Left, Right> {
+public class GisToolsTranslator<Left, Right> {
     HashMap<Left, Right> l2r = new HashMap<>();
     HashMap<Right, Left> r2l = new HashMap<>();
     
-    public MindUtilsTranslator() {
+    public GisToolsTranslator() {
     }
 
-    public MindUtilsTranslator(Left[] lefts, Right[] rights) {
+    public GisToolsTranslator(Left[] lefts, Right[] rights) {
         int l = lefts.length;
         
         if ( l != rights.length ) {

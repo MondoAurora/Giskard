@@ -3,9 +3,9 @@ package me.giskard.dust.io;
 import java.io.IOException;
 import java.io.Reader;
 
-import me.giskard.utils.MindUtils;
+import me.giskard.GiskardUtils;
 
-public class DustIOUtils extends MindUtils implements DustIOConsts {
+public class DustIOUtils extends GiskardUtils implements DustIOConsts {
 
 	// https://stackoverflow.com/questions/53270963/read-text-stream-codepoint-by-codepoint
 	public static int read(Reader reader) throws IOException {

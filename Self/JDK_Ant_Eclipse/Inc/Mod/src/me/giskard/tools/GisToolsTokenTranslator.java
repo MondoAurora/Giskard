@@ -1,12 +1,12 @@
-package me.giskard.utils;
+package me.giskard.tools;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 @SuppressWarnings("unchecked")
-public class MindTokenTranslator implements GiskardConsts {
-	private static MindUtilsTranslator<MiNDToken, Class<Enum<?>>> TOKEN_ENUM_CLASS = new MindUtilsTranslator<>();
-	private static MindUtilsTranslator<MiNDToken, Enum<?>> TOKEN_ENUM = new MindUtilsTranslator<>();
+public class GisToolsTokenTranslator implements GiskardConsts {
+	private static GisToolsTranslator<MiNDToken, Class<Enum<?>>> TOKEN_ENUM_CLASS = new GisToolsTranslator<>();
+	private static GisToolsTranslator<MiNDToken, Enum<?>> TOKEN_ENUM = new GisToolsTranslator<>();
 	
 	private static MiNDToken TOKEN_MEMBER;
 	

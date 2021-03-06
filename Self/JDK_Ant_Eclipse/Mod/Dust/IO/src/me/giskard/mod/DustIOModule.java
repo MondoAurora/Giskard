@@ -7,12 +7,12 @@ import org.json.simple.parser.JSONParser;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.GiskardUtils;
 import me.giskard.dust.io.abnf.AbnfParserPrototype;
 import me.giskard.dust.io.json.DustIODomReaderState;
 import me.giskard.dust.io.json.DustIOJsonReader;
-import me.giskard.utils.MindUtils;
 
-public class DustIO implements GiskardConsts.MiNDAgent {
+public class DustIOModule implements GiskardConsts.MiNDAgent {
 	void initModule() throws Exception {
 
 		String fDom = "Knowledge/Json/System.json";
@@ -36,9 +36,9 @@ public class DustIO implements GiskardConsts.MiNDAgent {
 
 	public String extendName(String fileName) {
 		if ( !fileName.startsWith("/") ) {
-			String root = MindUtils.getRoot();
+			String root = GiskardUtils.getRoot();
 
-			if ( !MindUtils.isEmpty(root) ) {
+			if ( !GiskardUtils.isEmpty(root) ) {
 				fileName = root + "/" + fileName;
 			}
 		}
@@ -53,7 +53,7 @@ public class DustIO implements GiskardConsts.MiNDAgent {
 
 	public Object testSax(String fName) throws Exception {
 		JSONParser p = new JSONParser();
-		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(MindUtils.LOGGER);
+		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(GiskardUtils.LOGGER);
 
 		p.parse(getReader(fName), h);
 		return h;

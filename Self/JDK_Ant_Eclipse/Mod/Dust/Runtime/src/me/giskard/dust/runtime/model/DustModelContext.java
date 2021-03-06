@@ -5,6 +5,7 @@ import java.util.Set;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
 import me.giskard.coll.MindCollMap;
@@ -12,8 +13,7 @@ import me.giskard.dust.runtime.DustMeta;
 import me.giskard.dust.runtime.DustRuntime;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.tokens.DustTokens;
-import me.giskard.utils.MindTokenTranslator;
-import me.giskard.utils.MindUtils;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, GiskardConsts.MiNDContext {
 	DustModelContext parentCtx;
@@ -95,7 +95,7 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		Object ret = null;
 
-		DustModelBlock eb = MindUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
+		DustModelBlock eb = GiskardUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
 
 		if ( null == eb ) {
 			switch ( cmd ) {
@@ -150,7 +150,7 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	public static void boot() {
 		Giskard.log(MiNDEventLevel.TRACE, "would boot now...");
 		
-		MindTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
+		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
 		
 		// Machine
 		Giskard.selectByPath(MTSHARED_MACHINE);

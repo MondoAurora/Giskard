@@ -6,17 +6,17 @@ import org.json.simple.parser.ContentHandler;
 import org.json.simple.parser.ParseException;
 
 import me.giskard.Giskard;
-import me.giskard.utils.MindDevCounter;
-import me.giskard.utils.MindUtils;
+import me.giskard.GiskardException;
+import me.giskard.tools.GisToolsCounter;
 
 public class DustIOJsonReader implements DustIOJsonConsts {
 	public static class JsonContentDispatcher implements ContentHandler {
 		MiNDAgent processor;
-		MindDevCounter counter;
+		GisToolsCounter counter;
 
 		public JsonContentDispatcher(MiNDAgent processor) {
 			this.processor = processor;
-			counter = new MindDevCounter("JSON reader", false, 5000);
+			counter = new GisToolsCounter("JSON reader", false, 5000);
 			counter.setShowMem(true);
 		}
 
@@ -33,14 +33,14 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 
 				switch ( ret ) {
 				case NOTIMPLEMENTED:
-					return MindUtils.wrapException(null);
+					return GiskardException.wrap(null);
 				case REJECT:
 					return false;
 				default:
 					return true;
 				}
 			} catch (Exception e) {
-				return MindUtils.wrapException(e);
+				return GiskardException.wrap(e);
 			}
 		}
 		

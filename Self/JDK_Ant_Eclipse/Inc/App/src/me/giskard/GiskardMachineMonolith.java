@@ -1,6 +1,6 @@
 package me.giskard;
 
-import me.giskard.utils.MindUtils;
+import me.giskard.coll.MindCollConsts.MiNDBuilder;
 
 public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardConsts.MiNDMachine {
 
@@ -18,7 +18,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardCons
 				Class<?> c = cl.loadClass(key);
 				return c.newInstance();
 			} catch (Exception e) {
-				return MindUtils.wrapException(e);
+				return GiskardException.wrap(e);
 			}
 		}
 
@@ -28,7 +28,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardCons
 				try {
 					((MiNDAgent) v).process(MiNDAgentAction.Release);
 				} catch (Exception e) {
-					MindUtils.wrapException(e);
+					GiskardException.wrap(e);
 				}
 			}
 		}
@@ -63,7 +63,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardCons
 			this.nativeConnector = (NativeConnector) Class.forName("me.giskard.GiskardNativeConnector").newInstance();
 			optLoadNativeConn();
 		} catch (Exception e) {
-			MindUtils.wrapException(e);
+			GiskardException.wrap(e);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class GiskardMachineMonolith implements GiskardMachineConsts, GiskardCons
 
 	@Override
 	public Object addModule(String modName, String ver) {
-		return MindUtils.wrapException(null, "addModule() not supported for monolith machine");
+		return GiskardException.wrap(null, "addModule() not supported for monolith machine");
 	}
 	
 	@Override

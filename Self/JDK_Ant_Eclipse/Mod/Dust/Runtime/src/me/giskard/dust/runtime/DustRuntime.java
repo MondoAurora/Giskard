@@ -1,8 +1,8 @@
 package me.giskard.dust.runtime;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardException;
 import me.giskard.coll.MindCollConsts;
-import me.giskard.utils.MindUtils;
 
 public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeConsts {
 	
@@ -22,7 +22,7 @@ public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeC
 				
 				ctxClass.getMethod("boot").invoke(null);
 			} catch (Throwable e) {
-				MindUtils.wrapException(e);
+				GiskardException.wrap(e);
 			}
 		}
 	}

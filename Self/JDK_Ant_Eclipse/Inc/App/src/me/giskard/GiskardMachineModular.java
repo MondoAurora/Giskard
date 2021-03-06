@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import me.giskard.utils.MindUtils;
-
 public class GiskardMachineModular extends GiskardMachineMonolith {
 
 	private static ClassLoader APP_CLASSLOADER = ClassLoader.getSystemClassLoader();
@@ -18,12 +16,12 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 	}
 
 	static URL optGetUrl(File root, String name) {
-		File f = MindUtils.isEmpty(name) ? root : new File(root, name);
+		File f = GiskardUtils.isEmpty(name) ? root : new File(root, name);
 
 		try {
 			return f.isFile() ? f.toURI().toURL() : null;
 		} catch (Throwable t) {
-			return MindUtils.wrapException(t, "Missing library", f.getAbsolutePath());
+			return GiskardException.wrap(t, "Missing library", f.getAbsolutePath());
 		}
 	}
 
@@ -63,7 +61,7 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 				Class<?> cMind = cl.loadClass(Giskard.class.getCanonicalName());
 
 				String rootPkg = cMind.getPackage().getName();
-				Class<?> cMod = cl.loadClass(rootPkg + ".mod." + libMod_);
+				Class<?> cMod = cl.loadClass(rootPkg + ".mod." + libMod_ + "Module");
 				if ( null != cMod ) {
 					modAgent = (MiNDAgent) cMod.newInstance();
 					modAgent.process(MiNDAgentAction.Init);
@@ -71,7 +69,7 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 				
 				optLoadNativeConn();
 			} catch (Throwable e) {
-				MindUtils.wrapException(e, libMod, currLib);
+				GiskardException.wrap(e, libMod, currLib);
 			}
 		}
 	}
@@ -84,9 +82,9 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 	}
 
 	public void init() {
-		String root = MindUtils.getRoot();
+		String root = GiskardUtils.getRoot();
 
-		if ( !MindUtils.isEmpty(root) ) {
+		if ( !GiskardUtils.isEmpty(root) ) {
 			String gr = root + "/Brain/JRE/";
 			modRoot = new File(gr + "Mod");
 			extRoot = new File(gr + "Ext");
@@ -105,7 +103,7 @@ public class GiskardMachineModular extends GiskardMachineMonolith {
 	@Override
 	public DynamicModule addModule(String modName, String ver) {
 		if ( modules.containsKey(modName) ) {
-			MindUtils.wrapException(null, "Module already loaded", modName);
+			GiskardException.wrap(null, "Module already loaded", modName);
 		}
 		
 		Giskard.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
