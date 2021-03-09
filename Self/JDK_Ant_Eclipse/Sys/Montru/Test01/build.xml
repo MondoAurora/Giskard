@@ -17,14 +17,13 @@
 		       source="${javac.source}"
 		       target="${javac.target}">
 			<src path="${GISKARD_INC_MOD}" />
-			<src path="${GISKARD_INC_APP}" />
 			<src path="${GISKARD_INC_GEN}" />
 			<src path="./src" />
 		</javac>
 
 		<jar destfile="${GISKARD_BRAIN}/App/MontruTest01.jar">
 			<manifest>
-				<attribute name="Main-Class" value="me.giskard.MontruTest01" />
+				<attribute name="Main-Class" value="me.giskard.Giskard" />
 				<attribute name="Class-Path" value="." />
 			</manifest>
 

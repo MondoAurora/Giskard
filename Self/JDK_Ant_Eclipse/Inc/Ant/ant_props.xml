@@ -3,7 +3,6 @@
 
 	<property name="GISKARD_LIB" value="${GISKARD_SELF}/Ext/lib" />
 	<property name="GISKARD_INC_MOD" value="${GISKARD_SELF}/Inc/Mod/src" />
-	<property name="GISKARD_INC_APP" value="${GISKARD_SELF}/Inc/App/src" />
 	<property name="GISKARD_INC_GEN" value="${GISKARD_SELF}/Inc/Gen/tokens" />
 
 	<property name="GISKARD_PATH_MOD" value="${GISKARD_SELF}/Inc/Mod/bin" />

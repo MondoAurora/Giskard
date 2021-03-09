@@ -6,7 +6,7 @@ import java.util.Set;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public interface DustMeta extends MindCollConsts {
+public interface DustRuntimeMeta extends MindCollConsts {
 
 	abstract class DustToken implements MiNDToken {
 		public static String buildId(String name, DustToken parent) {

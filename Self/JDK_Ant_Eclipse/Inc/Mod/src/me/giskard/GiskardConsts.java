@@ -7,6 +7,16 @@ public interface GiskardConsts {
 	String DEF_FORMAT_DATE = "YYYYMMdd";
 	String DEF_FORMAT_TIMESTAMP = "YYYYMMdd_HHmmss_SSS";
 
+	String GISKARD_PATH_BRAIN = "/Brain/JRE";
+	String GISKARD_SEGMENT_MOD = "/Mod";
+	String GISKARD_SEGMENT_EXT = "/Ext";
+	
+	String EXT_JAR = ".jar";
+
+	String GISKARD_PACKAGE = Giskard.class.getPackage().getName();
+	String GISKARD_CLASS_APP = GISKARD_PACKAGE + ".app.GiskardApp";
+	String GISKARD_PACKAGE_MOD = GISKARD_PACKAGE + ".mod.";
+
 	final long KEY_APPEND = -1;
 
 	enum MiNDTokenType {
@@ -20,22 +30,10 @@ public interface GiskardConsts {
 	enum MiNDCollType {
 		One, Arr, Set, Map
 	}
-	
-	public interface MiNDToken {
-	}
 
 	enum MiNDAccessCommand {
 		Chk, Get, Set, Add, Del, Use
 	};
-
-	public interface MiNDAccessor {
-		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
-	};
-
-	public interface MiNDContext extends MiNDAccessor {
-		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
-		void selectByPath(MiNDToken target, Object... path);		
-	}
 
 	enum MiNDEventLevel {
 		CRITICAL, ERROR, WARNING, INFO, TRACE, DEBUG
@@ -49,15 +47,11 @@ public interface GiskardConsts {
 		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
 	};
 
-	public interface MiNDAgent extends GiskardConsts {
-		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
+	public interface MiNDToken {
 	}
 
-	public interface MiNDMachine extends MiNDAccessor {
-		void init() throws Exception;
-		Object addModule(String modName, String ver);
-		void launch() throws Exception;
-		MiNDAgent testCreateAgent(MiNDToken token) throws Exception;
+	public interface MiNDAgent extends GiskardConsts {
+		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
 	}
 
 }

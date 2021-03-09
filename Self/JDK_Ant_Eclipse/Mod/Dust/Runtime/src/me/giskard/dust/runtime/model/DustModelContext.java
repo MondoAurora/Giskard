@@ -4,18 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.giskard.Giskard;
-import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
 import me.giskard.coll.MindCollMap;
-import me.giskard.dust.runtime.DustMeta;
-import me.giskard.dust.runtime.DustRuntime;
 import me.giskard.dust.runtime.DustRuntimeConsts;
-import me.giskard.tokens.DustTokens;
-import me.giskard.tools.GisToolsTokenTranslator;
+import me.giskard.dust.runtime.DustRuntimeMeta;
 
-public class DustModelContext implements DustModelConsts, DustMeta, MindCollConsts, DustRuntimeConsts, GiskardConsts.MiNDContext {
+public class DustModelContext implements DustModelConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
 	DustModelContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
@@ -146,26 +142,4 @@ public class DustModelContext implements DustModelConsts, DustMeta, MindCollCons
 	public String toString() {
 		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entityBlocks.toString();
 	}
-	
-	public static void boot() {
-		Giskard.log(MiNDEventLevel.TRACE, "would boot now...");
-		
-		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
-		
-		// Machine
-		Giskard.selectByPath(MTSHARED_MACHINE);
-		
-		// Application
-		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
-		
-		// Runtime module
-		DustTokens.registerNewModule();
-
-		// Agent implementation data
-		DustTokens.addModuleImpInfo(MTAGENT_MIND, DustRuntime.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CONTEXT, DustModelContext.class);
-		
-	}
-
 }

@@ -1,13 +1,15 @@
-package me.giskard;
+package me.giskard.dust.runtime.machine;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import me.giskard.Giskard;
+import me.giskard.GiskardException;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
 
-public class GiskardNativeConnector implements GiskardMachineConsts, DustTokensMind, DustTokensGeneric, DustTokensMachine, GiskardMachineConsts.NativeConnector {
+public class DustMachineNativeConnector implements DustMachineConsts, DustTokensMind, DustTokensGeneric, DustTokensMachine, DustMachineConsts.NativeConnector {
 	private Map<MiNDToken, Class<?>> nativeClasses = new HashMap<>();
 
 	@SuppressWarnings("unchecked")

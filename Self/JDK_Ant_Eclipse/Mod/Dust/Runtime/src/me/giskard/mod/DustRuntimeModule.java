@@ -11,9 +11,14 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeCo
 		switch ( action ) {
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");
+			
+			DustRuntime runtime = (DustRuntime) Class.forName(CLASSNAME_RUNTIME).newInstance();
+			DustMachine machine = (DustMachine) Class.forName(CLASSNAME_MACHINE).newInstance();
+			machine.init("DustRuntime", this);
+			runtime.setMachine(machine);
+			
+			Class.forName(CLASSNAME_BOOT).getMethod("boot").invoke(null);
 
-			Giskard runtime = (Giskard) Class.forName(CLASSNAME_RUNTIME).newInstance();
-			Giskard.setImplementation(runtime);
 			break;
 		case Begin:
 			Giskard.log(MiNDEventLevel.INFO, "DustRuntime launch...");

@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
 
-public class DustLog implements MindCollConsts {
+public class DustRuntimeLog implements MindCollConsts {
 	static PrintStream psLog = System.out;
 
 	public void log(MiNDEventLevel lvl, Object... obs) {
@@ -17,7 +17,7 @@ public class DustLog implements MindCollConsts {
 
 			if ( (0 == ts) && !s.trim().isEmpty() ) {
 				ts = System.currentTimeMillis();
-				psLog.print(DustUtils.strTimestamp(ts));
+				psLog.print(DustRuntimeUtils.strTimestamp(ts));
 				psLog.print(" ");
 				psLog.print(lvl);
 				psLog.print(" ");

@@ -4,13 +4,15 @@ import me.giskard.Giskard;
 import me.giskard.GiskardException;
 import me.giskard.coll.MindCollConsts;
 
-public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeConsts {
+public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustRuntime {
 	
-	DustLog log;
-	MiNDContext ctxTemp;
+	DustRuntimeLog log;
+	DustContext ctxTemp;
+	DustMachine machine;
 	
 	public DustRuntime() {
-		log = new DustLog();
+		log = new DustRuntimeLog();
+		setImplementation(this);
 	}
 
 	@Override
@@ -18,18 +20,40 @@ public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeC
 		if ( null == ctxTemp ) {
 			try {
 				Class<?> ctxClass = Class.forName(CLASSNAME_CONTEXT);
-				ctxTemp = (MiNDContext) ctxClass.newInstance();
-				
-				ctxClass.getMethod("boot").invoke(null);
+				ctxTemp = (DustContext) ctxClass.newInstance();
 			} catch (Throwable e) {
 				GiskardException.wrap(e);
 			}
-		}
+		}		
+	}
+	
+	@Override
+	public void setMachine(DustMachine machine) {
+		this.machine = machine;
 	}
 
-	@Override
-	protected MiNDContext getContext() {
+	protected DustContext getContext() {
 		return ctxTemp;
+	}
+	
+	@Override
+	protected MiNDToken defineToken_(MiNDTokenType type, String name, Object... params) {
+		return getContext().defineToken(type, name, params);
+	}
+	
+	@Override
+	protected void selectByPath_(MiNDToken target, Object... path) {
+		getContext().selectByPath(target, path);
+	}
+	
+	@Override
+	protected <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
+		return getContext().access(cmd, val, target, valPath);
+	}
+	
+	@Override
+	protected void addModule_(String modName, String ver) throws Exception {
+		machine.addModule(modName, ver);
 	}
 	
 	@Override
