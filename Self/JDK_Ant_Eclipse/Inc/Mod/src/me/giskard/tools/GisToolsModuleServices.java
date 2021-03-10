@@ -20,18 +20,24 @@ public class GisToolsModuleServices implements GiskardConsts {
 		return mod + "-" + ver;
 	}
 
+	public static String getModClassName(String mod) {
+		return GISKARD_PACKAGE_MOD + mod + "Module";
+	}
+
 	public static ClassLoader getClassLoader(String mod, String ver) {
-		String modClassName = GISKARD_PACKAGE_MOD + mod + "Module";
+		String modClassName = getModClassName(mod);
+		String moduleId = getModuleId(mod, ver);
 
 		try {
 			clSys.loadClass(modClassName);
+			
+			Giskard.log(MiNDEventLevel.TRACE, "Module", moduleId, "available locally.");
 			return clSys;
 		} catch (Throwable t) {
 			// try dynamic
 		}
 
 		ArrayList<URL> urls = new ArrayList<>();
-		String moduleId = getModuleId(mod, ver);
 
 		try {
 			if ( null == fMod ) {
@@ -60,6 +66,8 @@ public class GisToolsModuleServices implements GiskardConsts {
 			ClassLoader ret = new URLClassLoader(uu, clSys);
 			ret.loadClass(modClassName);
 			
+			Giskard.log(MiNDEventLevel.TRACE, "Module", moduleId, "avaliable externally:", urls);
+
 			return ret;
 		} catch (Throwable t) {
 			Giskard.log(MiNDEventLevel.WARNING, "Classloader not found for module", moduleId, "with URLs", urls);
@@ -71,7 +79,7 @@ public class GisToolsModuleServices implements GiskardConsts {
 	public static MiNDAgent initModule(ClassLoader cl, String mod) throws Exception {
 		MiNDAgent modAgent = null;
 
-		Class<?> cMod = cl.loadClass(GISKARD_PACKAGE_MOD + mod + "Module");
+		Class<?> cMod = cl.loadClass(getModClassName(mod));
 		if ( null != cMod ) {
 			modAgent = (MiNDAgent) cMod.newInstance();
 			modAgent.process(MiNDAgentAction.Init);

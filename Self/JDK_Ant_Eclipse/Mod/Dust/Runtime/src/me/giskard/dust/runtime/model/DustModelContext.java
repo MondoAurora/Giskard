@@ -11,18 +11,20 @@ import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta;
 
-public class DustModelContext implements DustModelConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
+public class DustModelContext
+		implements DustModelConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
 	DustModelContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
 
-	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false, new MiNDCreator<MiNDToken, DustModelBlock>() {
-		@Override
-		public DustModelBlock create(MiNDToken key) {
-			return new DustModelBlock(DustModelContext.this);
-		}
-	});
-	
+	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false,
+			new MiNDCreator<MiNDToken, DustModelBlock>() {
+				@Override
+				public DustModelBlock create(MiNDToken key) {
+					return new DustModelBlock(DustModelContext.this);
+				}
+			});
+
 	Set<DustModelRef> refs = new HashSet<>();
 
 	DustToken getToken(Object id) {
@@ -33,16 +35,16 @@ public class DustModelContext implements DustModelConsts, DustRuntimeMeta, MindC
 
 		return ret;
 	}
-	
+
 	DustModelRef setRef(DustModelBlock from, DustTokenMember def, DustModelBlock to) {
 		DustModelRef ref = new DustModelRef(from, def, to);
-		
+
 		refs.add(ref);
 		if ( null == to.incomingRefs ) {
 			to.incomingRefs = new HashSet<>();
 		}
 		to.incomingRefs.add(ref);
-		
+
 		return ref;
 	}
 
@@ -64,6 +66,7 @@ public class DustModelContext implements DustModelConsts, DustRuntimeMeta, MindC
 
 			if ( null == ret ) {
 				ret = DustToken.createToken(type, name, params);
+				ret.setEntity(entityBlocks.get(ret));
 			}
 
 			tokens.put(id, ret);
@@ -72,17 +75,23 @@ public class DustModelContext implements DustModelConsts, DustRuntimeMeta, MindC
 		return ret;
 	}
 
-//	@Override
-//	public void selectById(MiNDToken target, String id) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	@Override
 	public void selectByPath(MiNDToken target, Object... path) {
 		Giskard.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
 		if ( 0 == path.length ) {
 			entityBlocks.put(target, new DustModelBlock(this));
+		} else {
+			Object b = null;
+			for (Object o : path) {
+				DustTokenMember mt = (DustTokenMember) o;
+				b = (null == b) ? entityBlocks.peek(mt) : ((DustModelBlock) b).localData.get(mt);
+				if ( null == b ) {
+					break;
+				} else if ( b  instanceof DustModelRef ) {
+					b = ((DustModelRef)b).to;
+				}
+			}
+			entityBlocks.put(target, (DustModelBlock) b);
 		}
 	}
 

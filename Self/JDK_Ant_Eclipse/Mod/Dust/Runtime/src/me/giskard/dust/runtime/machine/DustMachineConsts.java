@@ -4,6 +4,8 @@ import me.giskard.dust.runtime.DustRuntimeConsts;
 
 public interface DustMachineConsts extends DustRuntimeConsts {
 	
-	interface NativeConnector extends DustAccessor, MiNDAgent {
+	interface NativeConnector extends MiNDAgent {
+		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
+
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.giskard.coll.MindCollConsts;
+import me.giskard.dust.runtime.model.DustModelBlock;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public interface DustRuntimeMeta extends MindCollConsts {
@@ -40,6 +41,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 		MiNDTokenType type;
 		String name;
 		DustToken parent;
+		DustModelBlock entity;
 
 		public MiNDTokenType getType() {
 			return type;
@@ -56,6 +58,14 @@ public interface DustRuntimeMeta extends MindCollConsts {
 
 		public void setName(String name) {
 			this.name = name;
+		}
+		
+		public void setEntity(DustModelBlock entity) {
+			this.entity = entity;
+		}
+		
+		public DustModelBlock getEntity() {
+			return entity;
 		}
 
 		public String getId() {

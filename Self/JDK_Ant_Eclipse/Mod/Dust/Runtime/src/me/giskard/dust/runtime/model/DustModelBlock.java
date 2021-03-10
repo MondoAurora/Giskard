@@ -27,6 +27,15 @@ public class DustModelBlock implements DustModelConsts {
 			Object data = (null == tBlock) ? val : tBlock;
 			
 			switch ( cmd ) {
+			case Get:
+				if ( null != current ) {
+					if ( current instanceof DustModelRef ) {
+						val = (RetType) ((DustModelRef) current).to;
+					} else {
+						val = (RetType) current;
+					}
+				}
+				break;
 			case Set:
 				if ( null != tBlock ) {
 					data = ctx.setRef(this, tMember, tBlock);

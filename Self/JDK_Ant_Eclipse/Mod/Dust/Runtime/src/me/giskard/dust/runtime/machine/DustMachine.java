@@ -5,74 +5,32 @@ import java.util.TreeMap;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
-import me.giskard.coll.MindCollConsts.MiNDBuilder;
 import me.giskard.dust.runtime.DustRuntimeConsts;
+import me.giskard.dust.runtime.DustRuntimeUtils;
+import me.giskard.tokens.DustTokensMachine;
+import me.giskard.tokens.DustTokensMind;
 import me.giskard.tools.GisToolsModuleServices;
 
-public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMachine {
+public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMachine, DustTokensMachine, DustTokensMind {
 
-	protected class MachineModule implements MiNDBuilder<String, Object>, DustAccessor {
-		MiNDAgent modAgent;
-		ClassLoader cl;
+	private Map<String, DustMachineModule> modules = new TreeMap<>();
 
-		MachineModule(String mod, ClassLoader cl) throws Exception {
-			this.cl = cl;
-			modAgent = GisToolsModuleServices.initModule(cl, mod);
-			optLoadNativeConn();
-		}
-
-		MachineModule(String mod, MiNDAgent agent) throws Exception {
-			this.cl = agent.getClass().getClassLoader();
-			modAgent = agent;
-			optLoadNativeConn();
-		}
-
-		@Override
-		public Object create(String key) {
-			try {
-				Class<?> c = cl.loadClass(key);
-				return c.newInstance();
-			} catch (Exception e) {
-				return GiskardException.wrap(e);
-			}
-		}
-
-		@Override
-		public void release(String key, Object v) {
-			if ( v instanceof MiNDAgent ) {
-				try {
-					((MiNDAgent) v).process(MiNDAgentAction.Release);
-				} catch (Exception e) {
-					GiskardException.wrap(e);
-				}
-			}
-		}
-
-		@Override
-		public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
-			return null;
-		}
-	}
-
-	protected MachineModule modMind;
-	private Map<String, MachineModule> modules = new TreeMap<>();
-	protected NativeConnector nativeConnector;
-
+	private DustContext knowledge;
+	private DustMachineModule modMind;
+	private NativeConnector nativeConnector;
+	
 	@Override
-	public void init(String mindModule, MiNDAgent agent) throws Exception {
-		modMind = new MachineModule(mindModule, agent);
+	public void init(String mindModule, MiNDAgent agent) throws Exception {		
+		knowledge = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_CONTEXT);
+
+		modMind = new DustMachineModule(mindModule, agent);
 		modules.put(mindModule, modMind);
 
-		nativeConnector = (NativeConnector) Class.forName(CLASSNAME_NATIVECONNECTOR).newInstance();
+		nativeConnector = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_NATIVECONNECTOR);
+		
 		optLoadNativeConn();
 	}
-
-	public void optLoadNativeConn() throws Exception {
-		if ( null != nativeConnector ) {
-			nativeConnector.process(MiNDAgentAction.Init);
-		}
-	}
-
+	
 	@Override
 	public Object addModule(String modName, String ver) throws Exception {
 		if ( modules.containsKey(modName) ) {
@@ -87,28 +45,41 @@ public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMac
 		}
 
 		Giskard.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
-		MachineModule mod = new MachineModule(modName, clMod);
+		DustMachineModule mod = new DustMachineModule(modName, clMod);
 		modules.put(modName, mod);
+		
+		optLoadNativeConn();
+
 		return mod;
 	}
 
 	@Override
-	public MiNDAgent testCreateAgent(MiNDToken token) throws Exception {
-		return nativeConnector.access(MiNDAccessCommand.Add, null, token);
+	public DustContext getContext() {
+		return knowledge;
 	}
-
+	
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
-		return modMind.access(cmd, val, target, valPath);
+	public MiNDResultType invoke(Object... agentPath) throws Exception {
+//		if ( 0 == agentPath.length ) {
+//			agentPath = new Object[] {MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP, MTMEMBER_APPLICATION_MAINAGENT};
+//		}
+//		
+//		Giskard.log(MiNDEventLevel.TRACE, "invoking", agentPath);
+//		
+		
+		// for testing, MTMEMBER_ACTION_LOCAL is set to agent
+//		knowledge.selectByPath(MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_LOCAL, MTMEMBER_ENTITY_PRIMARYTYPE);
+//		MiNDAgent agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_PARAM);
+		MiNDAgent agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_LOCAL);
+		
+		return (null == agent) ? MiNDResultType.REJECT : agent.process(MiNDAgentAction.Process);
 	}
 
-	public final void launch() throws Exception {
-		Giskard.log(MiNDEventLevel.INFO, "Native assignments:", nativeConnector);
-		Giskard.log(MiNDEventLevel.INFO, "GISKARD boot success.");
 
-		modMind.modAgent.process(MiNDAgentAction.Begin);
-
-		Giskard.log(MiNDEventLevel.INFO, "GISKARD finished.");
+	private void optLoadNativeConn() throws Exception {
+		if ( null != nativeConnector ) {
+			nativeConnector.process(MiNDAgentAction.Init);
+		}
 	}
 
 }

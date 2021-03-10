@@ -4,6 +4,12 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public interface DustTokensMind extends GiskardConsts {
+	MiNDToken MTUNIT_MODEL = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Model");
+
+	MiNDToken MTTYPE_ENTITY = Giskard.defineToken(MiNDTokenType.TYPE, "Entity", MTUNIT_MODEL);
+	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Ref, MiNDCollType.One);
+	
+	
 	MiNDToken MTUNIT_IDEA = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Idea");
 	
 	MiNDToken MTTAG_VALTYPE = Giskard.defineToken(MiNDTokenType.TAG, "ValType", MTUNIT_IDEA, MiNDValType.class);
