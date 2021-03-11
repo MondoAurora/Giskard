@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.model;
+package me.giskard.dust.runtime.knowledge;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,21 +11,29 @@ import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta;
 
-public class DustModelContext
-		implements DustModelConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
-	DustModelContext parentCtx;
+public class DustKnowledgeContext
+		implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
+	DustKnowledgeContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
 
-	MindCollFactory<MiNDToken, DustModelBlock> entityBlocks = new MindCollFactory<>(false,
-			new MiNDCreator<MiNDToken, DustModelBlock>() {
+	MindCollFactory<MiNDToken, DustKnowledgeBlock> entities = new MindCollFactory<>(false,
+			new MiNDCreator<MiNDToken, DustKnowledgeBlock>() {
 				@Override
-				public DustModelBlock create(MiNDToken key) {
-					return new DustModelBlock(DustModelContext.this);
+				public DustKnowledgeBlock create(MiNDToken key) {
+					return new DustKnowledgeBlock(DustKnowledgeContext.this);
 				}
 			});
 
-	Set<DustModelRef> refs = new HashSet<>();
+	Set<DustKnowledgeLink> allLinks = new HashSet<>();
+	
+	public DustKnowledgeContext(DustKnowledgeContext parentCtx_) {
+		this.parentCtx = parentCtx_;
+	}
+
+	public DustKnowledgeContext() {
+		this(null);
+	}
 
 	DustToken getToken(Object id) {
 		DustToken ret = tokens.get(id);
@@ -36,22 +44,22 @@ public class DustModelContext
 		return ret;
 	}
 
-	DustModelRef setRef(DustModelBlock from, DustTokenMember def, DustModelBlock to) {
-		DustModelRef ref = new DustModelRef(from, def, to);
+	DustKnowledgeLink setLink(DustKnowledgeBlock from, DustTokenMember def, DustKnowledgeBlock to) {
+		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
 
-		refs.add(ref);
-		if ( null == to.incomingRefs ) {
-			to.incomingRefs = new HashSet<>();
+		allLinks.add(link);
+		if ( null == to.incomingLinks ) {
+			to.incomingLinks = new HashSet<>();
 		}
-		to.incomingRefs.add(ref);
+		to.incomingLinks.add(link);
 
-		return ref;
+		return link;
 	}
 
-	void delRef(DustModelRef ref) {
-		refs.remove(ref);
-		ref.to.incomingRefs.remove(ref);
-		ref.from.access(MiNDAccessCommand.Del, ref, ref.def);
+	void delLink(DustKnowledgeLink link) {
+		allLinks.remove(link);
+		link.to.incomingLinks.remove(link);
+		link.from.access(MiNDAccessCommand.Del, link, link.def);
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class DustModelContext
 
 			if ( null == ret ) {
 				ret = DustToken.createToken(type, name, params);
-				ret.setEntity(entityBlocks.get(ret));
+				ret.setEntity(entities.get(ret));
 			}
 
 			tokens.put(id, ret);
@@ -79,19 +87,19 @@ public class DustModelContext
 	public void selectByPath(MiNDToken target, Object... path) {
 		Giskard.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
 		if ( 0 == path.length ) {
-			entityBlocks.put(target, new DustModelBlock(this));
+			entities.put(target, new DustKnowledgeBlock(this));
 		} else {
 			Object b = null;
 			for (Object o : path) {
 				DustTokenMember mt = (DustTokenMember) o;
-				b = (null == b) ? entityBlocks.peek(mt) : ((DustModelBlock) b).localData.get(mt);
+				b = (null == b) ? entities.peek(mt) : ((DustKnowledgeBlock) b).localData.get(mt);
 				if ( null == b ) {
 					break;
-				} else if ( b  instanceof DustModelRef ) {
-					b = ((DustModelRef)b).to;
+				} else if ( b  instanceof DustKnowledgeLink ) {
+					b = ((DustKnowledgeLink)b).to;
 				}
 			}
-			entityBlocks.put(target, (DustModelBlock) b);
+			entities.put(target, (DustKnowledgeBlock) b);
 		}
 	}
 
@@ -100,7 +108,7 @@ public class DustModelContext
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
 		Object ret = null;
 
-		DustModelBlock eb = GiskardUtils.isAccessCreator(cmd) ? entityBlocks.get(target) : entityBlocks.peek(target);
+		DustKnowledgeBlock eb = GiskardUtils.isAccessCreator(cmd) ? entities.get(target) : entities.peek(target);
 
 		if ( null == eb ) {
 			switch ( cmd ) {
@@ -135,7 +143,7 @@ public class DustModelContext
 					ret = Boolean.FALSE;
 					break;
 				case Get:
-					ret = val;
+					ret = eb;
 					break;
 				case Use:
 					ret = MiNDResultType.REJECT;
@@ -146,9 +154,14 @@ public class DustModelContext
 
 		return (RetType) ret;
 	}
+	
+	@Override
+	public void put(MiNDToken token, Object block) {
+		entities.put(token, (DustKnowledgeBlock) block);
+	}
 
 	@Override
 	public String toString() {
-		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entityBlocks.toString();
+		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entities.toString();
 	}
 }

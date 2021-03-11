@@ -24,7 +24,7 @@ public interface GiskardConsts {
 	}
 
 	enum MiNDValType {
-		Int, Real, Ref, Raw
+		Int, Real, Link, Raw
 	}
 
 	enum MiNDCollType {

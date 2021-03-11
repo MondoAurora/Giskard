@@ -61,12 +61,12 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 
 		@Override
 		public boolean startObjectEntry(String arg0) throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.Begin, MTTAG_VALTYPE_REF, arg0);
+			return processJsonEvent(MiNDAgentAction.Begin, MTTAG_VALTYPE_LINK, arg0);
 		}
 
 		@Override
 		public boolean endObjectEntry() throws ParseException, IOException {
-			return processJsonEvent(MiNDAgentAction.End, MTTAG_VALTYPE_REF, null);
+			return processJsonEvent(MiNDAgentAction.End, MTTAG_VALTYPE_LINK, null);
 		}
 
 		

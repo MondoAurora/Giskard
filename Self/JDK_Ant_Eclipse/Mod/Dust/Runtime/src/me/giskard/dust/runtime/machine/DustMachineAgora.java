@@ -5,32 +5,32 @@ import java.util.TreeMap;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
+import me.giskard.GiskardUtils;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeUtils;
+import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
 import me.giskard.tools.GisToolsModuleServices;
 
-public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMachine, DustTokensMachine, DustTokensMind {
-
+public class DustMachineAgora implements DustMachineConsts, DustRuntimeConsts.DustMachine, DustTokensMachine, DustTokensMind, DustTokensGeneric {
+	private DustMachineModule modMind;
 	private Map<String, DustMachineModule> modules = new TreeMap<>();
 
-	private DustContext knowledge;
-	private DustMachineModule modMind;
-	private NativeConnector nativeConnector;
+	DustContext knowledge;
+	DustMachineControl.Invocation invocation;
+	NativeConnector nativeConnector;
 	
 	@Override
-	public void init(String mindModule, MiNDAgent agent) throws Exception {		
-		knowledge = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_CONTEXT);
+	public void init(DustContext knowledge_, MiNDAgent agent) throws Exception {		
+		this.knowledge = knowledge_;
 
-		modMind = new DustMachineModule(mindModule, agent);
-		modules.put(mindModule, modMind);
+		modMind = new DustMachineModule(MODULE_NAME, agent);
+		modules.put(MODULE_NAME, modMind);
 
 		nativeConnector = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_NATIVECONNECTOR);
-		
-		optLoadNativeConn();
 	}
-	
+		
 	@Override
 	public Object addModule(String modName, String ver) throws Exception {
 		if ( modules.containsKey(modName) ) {
@@ -55,11 +55,30 @@ public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMac
 
 	@Override
 	public DustContext getContext() {
-		return knowledge;
+		return (null == invocation) ? knowledge : invocation;
 	}
 	
 	@Override
 	public MiNDResultType invoke(Object... agentPath) throws Exception {
+		int pl = agentPath.length;
+		MiNDToken tAgent = (0 < pl) ? (MiNDToken) agentPath[0] : MTMEMBER_ACTION_TARGET;
+		MiNDToken tParam = (1 < pl) ? (MiNDToken) agentPath[1] : MTMEMBER_ACTION_PARAM;
+		
+		if ( null == invocation ) {
+			invocation = new DustMachineControl.Invocation(this, tAgent, tParam);
+			invocation.process(MiNDAgentAction.Init);
+			MiNDResultType ret;
+			
+			do {
+				ret = invocation.process(MiNDAgentAction.Process);
+			} while ( GiskardUtils.isAgentRead(ret) );
+			
+			return ret;
+		} else {
+			invocation.invoke(this, tAgent, tParam);
+			return MiNDResultType.ACCEPT;
+		}
+		
 //		if ( 0 == agentPath.length ) {
 //			agentPath = new Object[] {MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP, MTMEMBER_APPLICATION_MAINAGENT};
 //		}
@@ -70,13 +89,12 @@ public class DustMachine implements DustMachineConsts, DustRuntimeConsts.DustMac
 		// for testing, MTMEMBER_ACTION_LOCAL is set to agent
 //		knowledge.selectByPath(MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_LOCAL, MTMEMBER_ENTITY_PRIMARYTYPE);
 //		MiNDAgent agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_PARAM);
-		MiNDAgent agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_LOCAL);
-		
-		return (null == agent) ? MiNDResultType.REJECT : agent.process(MiNDAgentAction.Process);
+//		MiNDAgent agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_LOCAL);
+//		
+//		return (null == agent) ? MiNDResultType.REJECT : agent.process(MiNDAgentAction.Process);
 	}
 
-
-	private void optLoadNativeConn() throws Exception {
+	public void optLoadNativeConn() throws Exception {
 		if ( null != nativeConnector ) {
 			nativeConnector.process(MiNDAgentAction.Init);
 		}

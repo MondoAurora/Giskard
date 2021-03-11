@@ -13,10 +13,11 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeCo
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");
 			
-			DustRuntime runtime = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_RUNTIME);
-			runtime.init("DustRuntime", this);
+			DustRuntime runtime = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_GISKARD);
+			runtime.init(this);
 			
-			DustRuntimeUtils.getRuntimeClass(CLASSPATH_BOOT).getMethod("boot").invoke(null);
+			Class.forName("me.giskard.mod.DustRuntimeBoot").getMethod("boot").invoke(null);
+			runtime.afterBoot();
 
 			break;
 		case Begin:

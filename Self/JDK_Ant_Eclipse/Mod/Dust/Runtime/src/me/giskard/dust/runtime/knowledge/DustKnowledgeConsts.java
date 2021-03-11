@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.model;
+package me.giskard.dust.runtime.knowledge;
 
 import me.giskard.dust.runtime.DustRuntimeMeta;
 import me.giskard.dust.runtime.DustRuntimeConsts;
@@ -7,6 +7,6 @@ import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
 import me.giskard.tokens.DustTokensText;
 
-public interface DustModelConsts extends DustRuntimeConsts, DustRuntimeMeta, DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
+public interface DustKnowledgeConsts extends DustRuntimeConsts, DustRuntimeMeta, DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
 
 }

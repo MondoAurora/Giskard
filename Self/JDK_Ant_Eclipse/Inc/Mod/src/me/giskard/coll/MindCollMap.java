@@ -13,6 +13,10 @@ public class MindCollMap<Key, Val> implements MiNDCollMap<Key, Val> {
 		this.map = sorted ? new TreeMap<>() : new HashMap<>();
 	}
 	
+	public MindCollMap(MindCollMap<Key, Val> source) {
+		this.map = (source.map instanceof TreeMap) ? new TreeMap<>(source.map) : new HashMap<>(source.map);
+	}
+	
 	@Override
 	public String toString() {
 		return map.toString();

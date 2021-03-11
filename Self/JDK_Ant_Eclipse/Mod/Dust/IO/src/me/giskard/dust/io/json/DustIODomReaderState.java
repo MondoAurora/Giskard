@@ -40,7 +40,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 			item = MTTAG_COLLTYPE_MAP;
 			ob = ((Map) newOb).entrySet().iterator();
 		} else if ( newOb instanceof Map.Entry ) {
-			item = MTTAG_VALTYPE_REF;
+			item = MTTAG_VALTYPE_LINK;
 		} else {
 			item = MTTAG_VALTYPE_RAW;
 			action = MiNDAgentAction.Process;
@@ -70,7 +70,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 		if ( null == step ) {
 			ret = false;
 		} else {
-			if (step.item == MTTAG_VALTYPE_REF) {
+			if (step.item == MTTAG_VALTYPE_LINK) {
 				if ( step.action == MiNDAgentAction.Begin ) {
 					step.action = MiNDAgentAction.End;
 					setCurrOb(((Map.Entry<?, ?>) step.data).getValue());

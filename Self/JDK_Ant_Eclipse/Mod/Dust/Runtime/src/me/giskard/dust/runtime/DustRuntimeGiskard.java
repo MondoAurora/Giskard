@@ -3,20 +3,27 @@ package me.giskard.dust.runtime;
 import me.giskard.Giskard;
 import me.giskard.coll.MindCollConsts;
 
-public class DustRuntime extends Giskard implements MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustRuntime {
+public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustRuntime {
 	
-	DustRuntimeLog log;
+	private DustContext knowledge;
 	DustMachine machine;
+	DustRuntimeLog log;
 	
-	public DustRuntime() {
+	public DustRuntimeGiskard() {
 		log = new DustRuntimeLog();
 		setImplementation(this);
+		knowledge = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_CONTEXT);
 		machine = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_MACHINE);
 	}
 
 	@Override
-	public void init(String mindModule, MiNDAgent agent) throws Exception {
-		machine.init(mindModule, agent);
+	public void init(MiNDAgent agent) throws Exception {
+		machine.init(knowledge, agent);
+	}
+
+	@Override
+	public void afterBoot() throws Exception {
+		machine.optLoadNativeConn();
 	}
 
 	@Override
