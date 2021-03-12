@@ -7,13 +7,12 @@ import me.giskard.dust.runtime.DustRuntimeMeta;
 import me.giskard.dust.runtime.knowledge.DustKnowledgeConsts;
 import me.giskard.dust.runtime.machine.DustMachineControl;
 import me.giskard.tokens.DustTokens;
-import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts {
 	public static void boot() {
 		Giskard.log(MiNDEventLevel.TRACE, "DustRuntimeBoot.boot started...");
 		
-		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
+//		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
 		
 		// Machine
 		Giskard.selectByPath(MTSHARED_MACHINE);

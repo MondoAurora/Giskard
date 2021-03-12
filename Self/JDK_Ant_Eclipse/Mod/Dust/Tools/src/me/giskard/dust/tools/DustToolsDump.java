@@ -1,0 +1,34 @@
+package me.giskard.dust.tools;
+
+import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
+
+public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
+	
+	Object val = "Not initialized.";
+	
+	public DustToolsDump() {
+		
+	}
+	
+	@Override
+	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		MiNDResultType ret = MiNDResultType.ACCEPT;
+		switch ( action ) {
+		case Begin:
+			break;
+		case End:
+			break;
+		case Init:
+			val = Giskard.access(MiNDAccessCommand.Get, "Not configured.", MTMEMBER_ACTION_THIS, MTMEMBER_VARIANT_VALUE);
+			break;
+		case Process:
+			Giskard.log(MiNDEventLevel.INFO, "Dump called", val);
+			break;
+		case Release:
+			break;
+		}
+		return ret;
+	}
+
+}

@@ -8,11 +8,11 @@ public class GisToolsTokenTranslator implements GiskardConsts {
 	private static GisToolsTranslator<MiNDToken, Class<Enum<?>>> TOKEN_ENUM_CLASS = new GisToolsTranslator<>();
 	private static GisToolsTranslator<MiNDToken, Enum<?>> TOKEN_ENUM = new GisToolsTranslator<>();
 	
-	private static MiNDToken TOKEN_MEMBER;
+//	private static MiNDToken TOKEN_MEMBER;
 	
-	public static void setTokenMember(MiNDToken tm) {
-		TOKEN_MEMBER = tm;
-	}
+//	public static void setTokenMember(MiNDToken tm) {
+//		TOKEN_MEMBER = tm;
+//	}
 
 	public static void register(MiNDToken t, Object ob) {
 		System.out.println("Registering token " + t + " with " + ob);
@@ -28,7 +28,8 @@ public class GisToolsTokenTranslator implements GiskardConsts {
 		if ( null != e ) {
 			MiNDToken token = TOKEN_ENUM.getLeft(e);
 //			Mind.access(MiNDAccessCommand.Set, token, target, TOKEN_ENUM_CLASS.getLeft((Class<Enum<?>>) e.getClass()));
-			Giskard.access(MiNDAccessCommand.Set, token, target, TOKEN_MEMBER);
+//			Giskard.access(MiNDAccessCommand.Set, token, target, TOKEN_MEMBER);
+			Giskard.access(MiNDAccessCommand.Set, token, target);
 		}
 	}
 

@@ -48,17 +48,17 @@ public class DustKnowledgeContext
 		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
 
 		allLinks.add(link);
-		if ( null == to.incomingLinks ) {
-			to.incomingLinks = new HashSet<>();
-		}
-		to.incomingLinks.add(link);
+//		if ( null == to.incomingLinks ) {
+//			to.incomingLinks = new HashSet<>();
+//		}
+//		to.incomingLinks.add(link);
 
 		return link;
 	}
 
 	void delLink(DustKnowledgeLink link) {
 		allLinks.remove(link);
-		link.to.incomingLinks.remove(link);
+//		link.to.incomingLinks.remove(link);
 		link.from.access(MiNDAccessCommand.Del, link, link.def);
 	}
 
@@ -134,7 +134,7 @@ public class DustKnowledgeContext
 				switch ( cmd ) {
 				case Add:
 				case Set:
-					// can't be here
+					ret = eb.access(cmd, val, null);
 					break;
 				case Chk:
 					ret = Boolean.TRUE;

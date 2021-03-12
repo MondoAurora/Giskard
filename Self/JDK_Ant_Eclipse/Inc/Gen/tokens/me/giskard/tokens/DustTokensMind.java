@@ -36,7 +36,15 @@ public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTTAG_ACCESSCOMMAND_USE = Giskard.defineToken(MiNDTokenType.TAG, "Use", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Use);
 	
 	MiNDToken MTUNIT_NARRATIVE = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Narrative");
-
+	
+	MiNDToken MTTAG_RESULTTYPE = Giskard.defineToken(MiNDTokenType.TAG, "ResultType", MTUNIT_NARRATIVE, MiNDResultType.class);
+	MiNDToken MTTAG_RESULTTYPE_NOTIMPLEMENTED = Giskard.defineToken(MiNDTokenType.TAG, "NOTIMPLEMENTED", MTTAG_RESULTTYPE, MiNDResultType.NOTIMPLEMENTED);
+	MiNDToken MTTAG_RESULTTYPE_REJECT = Giskard.defineToken(MiNDTokenType.TAG, "REJECT", MTTAG_RESULTTYPE, MiNDResultType.REJECT);
+	MiNDToken MTTAG_RESULTTYPE_ACCEPT_PASS = Giskard.defineToken(MiNDTokenType.TAG, "ACCEPT_PASS", MTTAG_RESULTTYPE, MiNDResultType.ACCEPT_PASS);
+	MiNDToken MTTAG_RESULTTYPE_ACCEPT = Giskard.defineToken(MiNDTokenType.TAG, "ACCEPT", MTTAG_RESULTTYPE, MiNDResultType.ACCEPT);
+	MiNDToken MTTAG_RESULTTYPE_ACCEPT_READ = Giskard.defineToken(MiNDTokenType.TAG, "ACCEPT_READ", MTTAG_RESULTTYPE, MiNDResultType.ACCEPT_READ);
+	MiNDToken MTTAG_RESULTTYPE_READ = Giskard.defineToken(MiNDTokenType.TAG, "READ", MTTAG_RESULTTYPE, MiNDResultType.READ);
+	
 	MiNDToken MTAGENT_CTRL_ITERATION = Giskard.defineToken(MiNDTokenType.AGENT, "Iteration", MTUNIT_NARRATIVE);
 	MiNDToken MTAGENT_CTRL_SEQUENCE = Giskard.defineToken(MiNDTokenType.AGENT, "Sequence", MTUNIT_NARRATIVE);
 	MiNDToken MTAGENT_CTRL_SELECTION = Giskard.defineToken(MiNDTokenType.AGENT, "Selection", MTUNIT_NARRATIVE);
