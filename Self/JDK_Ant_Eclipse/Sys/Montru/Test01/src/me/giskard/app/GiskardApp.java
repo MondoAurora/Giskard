@@ -19,7 +19,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.selectByPath(MTMEMBER_ACTION_TARGET);
 
 //		testIterator();
-		testSequence();
+//		testSequence();
+		testSelect();
 
 		return MiNDResultType.ACCEPT;
 	}
@@ -40,18 +41,18 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_ACTION_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
 
 		linkDump("one", MiNDResultType.ACCEPT);
+	linkDump("not this", MiNDResultType.REJECT);
 		linkDump("two", MiNDResultType.ACCEPT);
 		linkDump("three", MiNDResultType.ACCEPT);
-//		linkDump("not this", MiNDResultType.REJECT);
 	}
 
 	public static void testSelect() throws Exception {
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SELECTION, MTMEMBER_ACTION_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		linkDump("not this", MiNDResultType.REJECT);
-		linkDump("not this", MiNDResultType.REJECT);
+		linkDump("not this 1", MiNDResultType.REJECT);
+		linkDump("not this 2", MiNDResultType.REJECT);
 		linkDump("this", MiNDResultType.ACCEPT);
-		linkDump("not this", MiNDResultType.REJECT);
+		linkDump("not this 4", MiNDResultType.REJECT);
 	}
 
 	public static void linkDump(String msg, MiNDResultType res) throws Exception {

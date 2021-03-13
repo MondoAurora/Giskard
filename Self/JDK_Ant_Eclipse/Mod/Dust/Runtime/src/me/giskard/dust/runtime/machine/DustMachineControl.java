@@ -120,25 +120,37 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 	public static class Selection extends Multi {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+			MiNDResultType ret = MiNDResultType.ACCEPT;
+			
 			switch ( action ) {
 			case Init:
 				break;
 			case Begin:
 				break;
 			case Process:
+				if ( null != currChild ) {
+					ret = getCurrResp(MiNDResultType.READ);
+					if ( GiskardUtils.isAgentAccept(ret) ) {
+						break;
+					}
+				}
+				
+				ret = relayChild() ? MiNDResultType.READ : MiNDResultType.REJECT;
 				break;
+				
 			case End:
 				break;
 			case Release:
 				break;
 			}
-			return null;
+			
+			return ret;
 		}
 	}
 	
 	public MiNDResultType getCurrResp(MiNDResultType defVal) {
 		MiNDResultType ret = defVal;
-		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_THIS);
+		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG);
 		if ( null != resp ) {
 			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 		}
