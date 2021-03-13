@@ -32,8 +32,8 @@ public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustR
 	}
 	
 	@Override
-	protected void selectByPath_(MiNDToken target, Object... path) {
-		machine.getContext().selectByPath(target, path);
+	protected boolean selectByPath_(MiNDToken target, Object... path) throws Exception {
+		return machine.getContext().selectByPath(target, path);
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustR
 	
 	@Override
 	protected MiNDResultType invoke_(Object... agentPath) throws Exception {
-		return machine.invoke(agentPath);
+		return machine.invoke();
 	}
 
 	@Override

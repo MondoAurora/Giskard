@@ -53,8 +53,8 @@ public abstract class Giskard implements GiskardConsts {
 		return GISKARD.defineToken_(type, name, params);
 	}
 
-	public static void selectByPath(MiNDToken target, Object... path) {
-		GISKARD.selectByPath_(target, path);
+	public static boolean selectByPath(MiNDToken target, Object... path) throws Exception {
+		return GISKARD.selectByPath_(target, path);
 	}
 
 	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
@@ -82,6 +82,6 @@ public abstract class Giskard implements GiskardConsts {
 
 	protected abstract MiNDToken defineToken_(MiNDTokenType type, String name, Object... params);
 
-	protected abstract void selectByPath_(MiNDToken target, Object... path);
+	protected abstract boolean selectByPath_(MiNDToken target, Object... path) throws Exception;
 
 }

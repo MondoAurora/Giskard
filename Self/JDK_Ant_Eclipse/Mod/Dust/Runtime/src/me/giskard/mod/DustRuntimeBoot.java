@@ -9,7 +9,7 @@ import me.giskard.dust.runtime.machine.DustMachineControl;
 import me.giskard.tokens.DustTokens;
 
 public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts {
-	public static void boot() {
+	public static void boot() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "DustRuntimeBoot.boot started...");
 		
 //		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);

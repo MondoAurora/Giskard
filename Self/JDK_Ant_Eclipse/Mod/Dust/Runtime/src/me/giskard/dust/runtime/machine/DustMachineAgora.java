@@ -26,7 +26,7 @@ public class DustMachineAgora
 			DustContext ctx;
 			MiNDAgent agent;
 
-			public Invocation(MiNDToken tAgent, MiNDToken tParam) throws Exception {
+			public Invocation() throws Exception {
 
 				ctx = new DustKnowledgeContext((DustKnowledgeContext) ctxDlg);
 				ctx.put(MTMEMBER_ACTION_DIALOG, bDlg);
@@ -34,15 +34,15 @@ public class DustMachineAgora
 				DustContext ctxSrc = (null == current) ? knowledge : current.ctx;
 
 				DustKnowledgeBlock b;
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, tAgent);
+				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TARGET);
 				ctx.put(MTMEMBER_ACTION_THIS, new DustKnowledgeBlock(b));
 
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, tParam);
+				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM);
 				ctx.put(MTMEMBER_ACTION_PARAM, b);
 
 				ctx.put(MTMEMBER_ACTION_LOCAL, new DustKnowledgeBlock((DustKnowledgeContext) ctx));
 
-				agent = nativeConnector.access(MiNDAccessCommand.Add, null, tAgent);
+				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_TARGET);
 				
 				if ( agent instanceof DustMachineControl ) {
 					((DustMachineControl) agent).dialog = Dialog.this;
@@ -61,19 +61,19 @@ public class DustMachineAgora
 		private Invocation current;
 		private Stack<Invocation> callStack;
 
-		public Dialog(MiNDToken tAgent, MiNDToken tParam) throws Exception {
+		public Dialog() throws Exception {
 			ctxDlg = new DustKnowledgeContext((DustKnowledgeContext) knowledge);
 			ctxDlg.put(MTMEMBER_ACTION_DIALOG, bDlg = new DustKnowledgeBlock((DustKnowledgeContext) ctxDlg));
 
-			current = new Invocation(tAgent, tParam);
+			current = new Invocation();
 		}
 		
 		public Invocation getCurrent() {
 			return current;
 		}
 
-		public Invocation relay(MiNDToken tAgent, MiNDToken tParam) throws Exception {
-			push(new Invocation(tAgent, tParam));
+		public Invocation relay() throws Exception {
+			push(new Invocation());
 			current.process(MiNDAgentAction.Init);
 			return current;
 		}
@@ -158,16 +158,12 @@ public class DustMachineAgora
 	}
 
 	@Override
-	public MiNDResultType invoke(Object... agentPath) throws Exception {
-		int pl = agentPath.length;
-		MiNDToken tAgent = (0 < pl) ? (MiNDToken) agentPath[0] : MTMEMBER_ACTION_TARGET;
-		MiNDToken tParam = (1 < pl) ? (MiNDToken) agentPath[1] : MTMEMBER_ACTION_PARAM;
-		
+	public MiNDResultType invoke() throws Exception {
 		if ( null == dialog ) {
-			dialog = new Dialog(tAgent, tParam);
+			dialog = new Dialog();
 			return dialog.execute();
 		} else {
-			dialog.relay(tAgent, tParam);
+			dialog.relay();
 			return MiNDResultType.ACCEPT;
 		}
 	}

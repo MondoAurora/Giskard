@@ -1,9 +1,14 @@
 package me.giskard.dust.runtime.machine;
 
+import java.util.ArrayList;
+
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.GiskardUtils;
+import me.giskard.dust.runtime.machine.DustMachineAgora.Dialog.Invocation;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 public abstract class DustMachineControl implements DustMachineConsts, GiskardConsts.MiNDAgent, DustTokensMachine, DustTokensGeneric {
 
@@ -42,7 +47,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 					
 					if ( null == currChild ) {
 						Giskard.selectByPath(MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-						currChild = dialog.relay(MTMEMBER_ACTION_TARGET, null);
+						currChild = dialog.relay();
 					} else {
 						dialog.push(currChild);
 					}
@@ -59,17 +64,70 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 		}
 	}
 
-	public static class Sequence extends DustMachineControl {
+	static abstract class Multi extends DustMachineControl {
+		ArrayList<Invocation> children = new ArrayList<>();
+		
+		boolean relayChild() throws Exception {
+			boolean ok = false;
+			int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+			
+			++c;
+			Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+
+			if ( c < children.size() ) {
+				dialog.push(currChild = children.get(c));
+				ok = true;
+			} else if ( Giskard.selectByPath(MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c) ) {
+				children.add(currChild = dialog.relay());
+				ok = true;
+			}
+			
+			return ok;
+		}
+	}
+
+	public static class Sequence extends Multi {
+		@Override
+		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+			MiNDResultType ret = MiNDResultType.ACCEPT;
+			
+			switch ( action ) {
+			case Init:
+				break;
+			case Begin:
+				break;
+			case Process:
+				if ( null != currChild ) {
+					ret = getCurrResp(MiNDResultType.ACCEPT);
+					if ( !GiskardUtils.isAgentAccept(ret) ) {
+						break;
+					}
+				}
+				
+				ret = relayChild() ? MiNDResultType.READ : MiNDResultType.ACCEPT_PASS;
+				break;
+				
+			case End:
+				break;
+			case Release:
+				break;
+			}
+			
+			return ret;
+		}
+	}
+
+	public static class Selection extends Multi {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
 			switch ( action ) {
-			case Begin:
-				break;
-			case End:
-				break;
 			case Init:
 				break;
+			case Begin:
+				break;
 			case Process:
+				break;
+			case End:
 				break;
 			case Release:
 				break;
@@ -77,23 +135,13 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 			return null;
 		}
 	}
-
-	public static class Selection extends DustMachineControl {
-		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
-			switch ( action ) {
-			case Begin:
-				break;
-			case End:
-				break;
-			case Init:
-				break;
-			case Process:
-				break;
-			case Release:
-				break;
-			}
-			return null;
+	
+	public MiNDResultType getCurrResp(MiNDResultType defVal) {
+		MiNDResultType ret = defVal;
+		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_THIS);
+		if ( null != resp ) {
+			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 		}
+		return ret;
 	}
 }

@@ -90,4 +90,8 @@ public class GiskardUtils implements GiskardConsts {
 	public static boolean isAgentRead(MiNDResultType res ) {
 		return (res == MiNDResultType.READ) || (res == MiNDResultType.ACCEPT_READ);
 	}
+
+	public static boolean isAgentAccept(MiNDResultType res ) {
+		return (res == MiNDResultType.ACCEPT) || (res == MiNDResultType.ACCEPT_READ) || (res == MiNDResultType.ACCEPT_PASS);
+	}
 }

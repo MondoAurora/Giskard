@@ -68,6 +68,10 @@ public interface DustRuntimeMeta extends MindCollConsts {
 			return entity;
 		}
 
+		public DustToken getParent() {
+			return parent;
+		}
+		
 		public String getId() {
 			return buildId(name, parent);
 		}

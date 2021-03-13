@@ -84,22 +84,29 @@ public class DustKnowledgeContext
 	}
 
 	@Override
-	public void selectByPath(MiNDToken target, Object... path) {
+	public boolean selectByPath(MiNDToken target, Object... path) throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
 		if ( 0 == path.length ) {
 			entities.put(target, new DustKnowledgeBlock(this));
+			return true;
 		} else {
 			Object b = null;
 			for (Object o : path) {
-				DustTokenMember mt = (DustTokenMember) o;
-				b = (null == b) ? entities.peek(mt) : ((DustKnowledgeBlock) b).localData.get(mt);
+				if ( o instanceof DustTokenMember ) {
+					DustTokenMember mt = (DustTokenMember) o;
+					b = (null == b) ? entities.peek(mt) : ((DustKnowledgeBlock) b).localData.get(mt);
+				} else if ( b instanceof DustKnowledgeCollection.ValArr) {
+					b = ((DustKnowledgeCollection<?>) b).access(MiNDAccessCommand.Get, null, (Integer) o);
+				}
+				
 				if ( null == b ) {
-					break;
+					return false;
 				} else if ( b  instanceof DustKnowledgeLink ) {
 					b = ((DustKnowledgeLink)b).to;
 				}
 			}
 			entities.put(target, (DustKnowledgeBlock) b);
+			return true;
 		}
 	}
 
@@ -134,6 +141,7 @@ public class DustKnowledgeContext
 				switch ( cmd ) {
 				case Add:
 				case Set:
+				case Get:
 					ret = eb.access(cmd, val, null);
 					break;
 				case Chk:
@@ -141,9 +149,6 @@ public class DustKnowledgeContext
 					break;
 				case Del:
 					ret = Boolean.FALSE;
-					break;
-				case Get:
-					ret = eb;
 					break;
 				case Use:
 					ret = MiNDResultType.REJECT;

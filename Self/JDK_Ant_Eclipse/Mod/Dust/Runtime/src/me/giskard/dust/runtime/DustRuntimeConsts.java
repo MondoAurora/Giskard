@@ -15,7 +15,7 @@ public interface DustRuntimeConsts extends GiskardConsts {
 	
 	public interface DustContext {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
-		void selectByPath(MiNDToken target, Object... path);
+		boolean selectByPath(MiNDToken target, Object... path) throws Exception;
 		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
 		void put(MiNDToken token, Object block);
 	}
@@ -29,7 +29,7 @@ public interface DustRuntimeConsts extends GiskardConsts {
 		void init(DustContext knowledge, MiNDAgent agent) throws Exception;
 		Object addModule(String modName, String ver) throws Exception;
 		DustContext getContext();
-		MiNDResultType invoke(Object... agentPath) throws Exception;
+		MiNDResultType invoke() throws Exception;
 		void optLoadNativeConn() throws Exception;
 	}
 
