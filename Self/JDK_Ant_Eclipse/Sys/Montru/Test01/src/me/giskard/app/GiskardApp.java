@@ -2,27 +2,43 @@ package me.giskard.app;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.tokens.DustTokensDB;
 import me.giskard.tokens.DustTokensGeneric;
+import me.giskard.tokens.DustTokensGuard;
 import me.giskard.tokens.DustTokensIO;
 import me.giskard.tokens.DustTokensMachine;
+import me.giskard.tokens.DustTokensText;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO {
+public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, DustTokensGuard, DustTokensDB, DustTokensText {
 
 	public static final MiNDResultType boot(String[] args) throws Exception {
 		Giskard.addModule("DustRuntime", "1.0");
 
 		Giskard.addModule("DustText", "1.0");
 		Giskard.addModule("DustIO", "1.0");
+		Giskard.addModule("DustDB", "1.0");
 		Giskard.addModule("DustTools", "1.0");
 
 		Giskard.selectByPath(MTMEMBER_ACTION_TARGET);
 
 //		testIterator();
 //		testSequence();
-		testSelect();
+//		testSelect();
 
+		testDB();
+		
 		return MiNDResultType.ACCEPT;
+	}
+
+	public static void testDB() {
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DBTEST01, MTMEMBER_ACTION_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+		
+		Giskard.access(MiNDAccessCommand.Set, "com.mysql.jdbc.Driver", MTMEMBER_ACTION_TARGET, MTMEMBER_DRIVER);
+		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", MTMEMBER_ACTION_TARGET, MTMEMBER_URL);
+		Giskard.access(MiNDAccessCommand.Set, "dust", MTMEMBER_ACTION_TARGET, MTMEMBER_STRING);
+		
+		GiskardPrivate.setDB();
 	}
 
 	public static void testIO() {
@@ -30,9 +46,10 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static void testIterator() throws Exception {
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTION_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+
 		Giskard.access(MiNDAccessCommand.Set, 0, MTMEMBER_ACTION_TARGET, MTMEMBER_RANGE_INT_MIN);
 		Giskard.access(MiNDAccessCommand.Set, 10, MTMEMBER_ACTION_TARGET, MTMEMBER_RANGE_INT_MAX);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTION_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
 
 		linkDump("Hey, world!", MTMEMBER_LINK_ONE);
 	}
