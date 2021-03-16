@@ -46,19 +46,12 @@ public class DustKnowledgeContext
 
 	DustKnowledgeLink setLink(DustKnowledgeBlock from, DustTokenMember def, DustKnowledgeBlock to) {
 		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
-
 		allLinks.add(link);
-//		if ( null == to.incomingLinks ) {
-//			to.incomingLinks = new HashSet<>();
-//		}
-//		to.incomingLinks.add(link);
-
 		return link;
 	}
 
 	void delLink(DustKnowledgeLink link) {
 		allLinks.remove(link);
-//		link.to.incomingLinks.remove(link);
 		link.from.access(MiNDAccessCommand.Del, link, link.def);
 	}
 
@@ -90,24 +83,29 @@ public class DustKnowledgeContext
 			entities.put(target, new DustKnowledgeBlock(this));
 			return true;
 		} else {
-			Object b = null;
-			for (Object o : path) {
-				if ( o instanceof DustTokenMember ) {
-					DustTokenMember mt = (DustTokenMember) o;
-					b = (null == b) ? entities.peek(mt) : ((DustKnowledgeBlock) b).localData.get(mt);
-				} else if ( b instanceof DustKnowledgeCollection.ValArr) {
-					b = ((DustKnowledgeCollection<?>) b).access(MiNDAccessCommand.Get, null, (Integer) o);
-				}
-				
-				if ( null == b ) {
-					return false;
-				} else if ( b  instanceof DustKnowledgeLink ) {
-					b = ((DustKnowledgeLink)b).to;
-				}
-			}
-			entities.put(target, (DustKnowledgeBlock) b);
-			return true;
+			return resolvePath(target, path);
 		}
+	}
+
+	public boolean resolvePath(MiNDToken target, Object... path) throws Exception {
+		Object b = null;
+		for (Object o : path) {
+			if ( null == b ) {
+				b = entities.peek((MiNDToken) o);
+			} else if ( o instanceof DustTokenMember ) {
+				b = ((DustKnowledgeBlock) b).localData.get((DustTokenMember) o);
+			} else if ( b instanceof DustKnowledgeCollection.ValArr) {
+				b = ((DustKnowledgeCollection<?>) b).access(MiNDAccessCommand.Get, null, (Integer) o);
+			}
+			
+			if ( null == b ) {
+				return false;
+			} else if ( b  instanceof DustKnowledgeLink ) {
+				b = ((DustKnowledgeLink)b).to;
+			}
+		}
+		entities.put(target, (DustKnowledgeBlock) b);
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")

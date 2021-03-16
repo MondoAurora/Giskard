@@ -6,9 +6,11 @@ public interface DustTokensGeometry extends DustTokensMind {
 	MiNDToken MTUNIT_GEOMETRY = Giskard.defineToken(MiNDTokenType.UNIT, "Geometry");
 	
 	
-	MiNDToken MTTAG_LOCDATA_X = Giskard.defineToken(MiNDTokenType.TAG, "X");
-	MiNDToken MTTAG_LOCDATA_Y = Giskard.defineToken(MiNDTokenType.TAG, "Y");
-	MiNDToken MTTAG_LOCDATA_Z = Giskard.defineToken(MiNDTokenType.TAG, "Z");
+	MiNDToken MTTAG_LOCDATA = Giskard.defineToken(MiNDTokenType.TAG, "X", MTUNIT_GEOMETRY);
+	
+	MiNDToken MTTAG_LOCDATA_X = Giskard.defineToken(MiNDTokenType.TAG, "X", MTTAG_LOCDATA);
+	MiNDToken MTTAG_LOCDATA_Y = Giskard.defineToken(MiNDTokenType.TAG, "Y", MTTAG_LOCDATA);
+	MiNDToken MTTAG_LOCDATA_Z = Giskard.defineToken(MiNDTokenType.TAG, "Z", MTTAG_LOCDATA);
 
 	MiNDToken MTTYPE_ENVIRONMENT = Giskard.defineToken(MiNDTokenType.TYPE, "Environment", MTUNIT_GEOMETRY);
 	MiNDToken MTMEMBER_ENVIRONMENT_COORDSYS = Giskard.defineToken(MiNDTokenType.MEMBER, "Coordsys", MTTYPE_ENVIRONMENT, MiNDValType.Link, MiNDCollType.Arr);

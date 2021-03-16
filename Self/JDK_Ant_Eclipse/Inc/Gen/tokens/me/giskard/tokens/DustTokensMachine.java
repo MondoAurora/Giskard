@@ -6,7 +6,7 @@ import me.giskard.GiskardConsts;
 public interface DustTokensMachine extends GiskardConsts {
 	MiNDToken MTUNIT_MACHINE = Giskard.defineToken(MiNDTokenType.UNIT, "Machine");
 	
-	MiNDToken MTSHARED_MACHINE = Giskard.defineToken(MiNDTokenType.LOCAL, "Machine");
+	MiNDToken MTSHARED_MACHINE = Giskard.defineToken(MiNDTokenType.LOCAL, "Machine", MTUNIT_MACHINE);
 	
 	MiNDToken MTTYPE_MACHINE = Giskard.defineToken(MiNDTokenType.TYPE, "Machine", MTUNIT_MACHINE);
 	MiNDToken MTMEMBER_MACHINE_MIND = Giskard.defineToken(MiNDTokenType.MEMBER, "Mind", MTTYPE_MACHINE, MiNDValType.Link, MiNDCollType.One);

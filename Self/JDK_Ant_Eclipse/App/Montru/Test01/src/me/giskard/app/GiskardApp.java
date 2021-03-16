@@ -4,13 +4,16 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.tokens.DustTokensDB;
 import me.giskard.tokens.DustTokensGeneric;
+import me.giskard.tokens.DustTokensGeometry;
 import me.giskard.tokens.DustTokensGuard;
+import me.giskard.tokens.DustTokensGui;
 import me.giskard.tokens.DustTokensIO;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensText;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, DustTokensGuard, DustTokensDB, DustTokensText {
+public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, 
+DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui {
 
 	public static final MiNDResultType boot(String[] args) throws Exception {
 		Giskard.addModule("DustRuntime", "1.0");
@@ -19,6 +22,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.addModule("DustIO", "1.0");
 		Giskard.addModule("DustDB", "1.0");
 		Giskard.addModule("DustTools", "1.0");
+		Giskard.addModule("DustGuiSwing", "1.0");
 
 		Giskard.selectByPath(MTMEMBER_ACTION_TARGET);
 
@@ -26,9 +30,34 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 //		testSequence();
 //		testSelect();
 
-		testDB();
+//		testDB();
+		
+		testGui();
 		
 		return MiNDResultType.ACCEPT;
+	}
+
+	public static void testGui() throws Exception {
+		Giskard.selectByPath(MTMEMBER_ACTION_THIS);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_WINDOW, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Set, "Montru", MTMEMBER_ACTION_THIS, MTMEMBER_STRING);
+
+		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_PARAM, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_PARAM, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Add, 100, MTMEMBER_ACTION_PARAM, MTMEMBER_GEODATA_COORDS);
+
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_CENTER);
+
+		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_PARAM, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Add, 400, MTMEMBER_ACTION_PARAM, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Add, 100, MTMEMBER_ACTION_PARAM, MTMEMBER_GEODATA_COORDS);
+		
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
+
+		Giskard.selectByPath(MTMEMBER_ACTION_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_WORLD, MTMEMBER_WORLD_RENDERER);
+		Giskard.selectByPath(MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_THIS);
 	}
 
 	public static void testDB() {

@@ -5,6 +5,9 @@ import me.giskard.Giskard;
 public interface DustTokensGui extends DustTokensMind {
 	MiNDToken MTUNIT_GUI = Giskard.defineToken(MiNDTokenType.UNIT, "Gui");
 	
+	MiNDToken MTTYPE_GUIOWNER = Giskard.defineToken(MiNDTokenType.TYPE, "GuiOwner", MTUNIT_GUI);
+	MiNDToken MTMEMBER_GUIOWNER_WORLD = Giskard.defineToken(MiNDTokenType.MEMBER, "World", MTTYPE_GUIOWNER, MiNDValType.Link, MiNDCollType.One);
+	
 	MiNDToken MTTYPE_WORLD = Giskard.defineToken(MiNDTokenType.TYPE, "World", MTUNIT_GUI);
 	MiNDToken MTMEMBER_WORLD_SCREENS = Giskard.defineToken(MiNDTokenType.MEMBER, "Screens", MTTYPE_WORLD, MiNDValType.Link, MiNDCollType.Arr);
 	MiNDToken MTMEMBER_WORLD_POINTERS = Giskard.defineToken(MiNDTokenType.MEMBER, "Pointers", MTTYPE_WORLD, MiNDValType.Link, MiNDCollType.Arr);
