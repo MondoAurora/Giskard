@@ -2,34 +2,10 @@
 <project default="create_jar" name="DustDB">
 
 	<property name="GISKARD_SELF" value="../../.." />
-	<include file="${GISKARD_SELF}/Inc/Ant/ant_props.xml" />
-	
-	<target name="clean">
-		<delete dir="${javac.bindir}"/>
-	</target>
+	<include file="${GISKARD_SELF}/Inc/Ant/ant_tools.xml" />
 	
 	<target name="create_jar">
-		<mkdir dir="${javac.bindir}"/>
-		
-		<javac debug="true"
-		       debuglevel="${javac.debuglevel}"
-		       destdir="${javac.bindir}"
-		       includeantruntime="false"
-		       source="${javac.source}"
-		       target="${javac.target}">
-			<classpath>
-				<path path="${GISKARD_PATH_MOD}"></path>
-				<path path="${GISKARD_LIB}/jdbc/mysql-connector-java-8.0.18.jar"></path>
-			</classpath>
-			<src path="${GISKARD_INC_GEN}" />
-			<src path="./src" />
-		</javac>
-
-		<jar destfile="${GISKARD_BRAIN}/Mod/DustDB-1.0.jar">
-			<fileset dir="${javac.bindir}" />
-		</jar>
-		
-		<copy file="${GISKARD_LIB}/jdbc/mysql-connector-java-8.0.18.jar" todir="${GISKARD_BRAIN}/Ext/DustDB-1.0" overwrite="true"/>
-
+		<giskard-build-mod vendor="Dust" module="DB" ver="1.0" />
 	</target>
+	
 </project>
