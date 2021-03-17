@@ -83,11 +83,17 @@ public class DustKnowledgeContext
 			entities.put(target, new DustKnowledgeBlock(this));
 			return true;
 		} else {
-			return resolvePath(target, path);
+			Object b = resolvePath(target, path);
+			if ( b instanceof DustKnowledgeBlock) {
+				entities.put(target, (DustKnowledgeBlock) b);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
-	public boolean resolvePath(MiNDToken target, Object... path) throws Exception {
+	public Object resolvePath(MiNDToken target, Object... path) throws Exception {
 		Object b = null;
 		for (Object o : path) {
 			if ( null == b ) {
@@ -104,8 +110,7 @@ public class DustKnowledgeContext
 				b = ((DustKnowledgeLink)b).to;
 			}
 		}
-		entities.put(target, (DustKnowledgeBlock) b);
-		return true;
+		return b;
 	}
 
 	@SuppressWarnings("unchecked")

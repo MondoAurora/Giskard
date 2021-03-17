@@ -12,4 +12,8 @@ public class DustKnowledgeLink implements DustKnowledgeConsts {
 		this.to = to;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Link " + from.toString() + " -(" + def + ")-> " + to.toString();
+//	}
 }
