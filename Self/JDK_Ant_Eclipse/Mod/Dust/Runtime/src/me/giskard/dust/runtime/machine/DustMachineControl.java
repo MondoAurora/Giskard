@@ -46,7 +46,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 					Giskard.log(MiNDEventLevel.INFO, "Repeat called", c);
 					
 					if ( null == currChild ) {
-						Giskard.selectByPath(MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 						currChild = dialog.relay();
 					} else {
 						dialog.push(currChild);
@@ -77,7 +77,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 			if ( c < children.size() ) {
 				dialog.push(currChild = children.get(c));
 				ok = true;
-			} else if ( Giskard.selectByPath(MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c) ) {
+			} else if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c) ) {
 				children.add(currChild = dialog.relay());
 				ok = true;
 			}

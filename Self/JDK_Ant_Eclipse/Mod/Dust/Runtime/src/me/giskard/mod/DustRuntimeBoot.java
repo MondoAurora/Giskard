@@ -15,10 +15,10 @@ public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, Mi
 //		GisToolsTokenTranslator.setTokenMember(MTMEMBER_TAGGED_TAGS);
 		
 		// Machine
-		Giskard.selectByPath(MTSHARED_MACHINE);
+		Giskard.access(MiNDAccessCommand.Get, MTSHARED_MACHINE);
 		
 		// Application
-		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
 		
 		// Runtime module

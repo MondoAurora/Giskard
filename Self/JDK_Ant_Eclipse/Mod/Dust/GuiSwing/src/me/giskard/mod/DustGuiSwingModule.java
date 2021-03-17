@@ -12,10 +12,10 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "GUI Swing module initializing");
 		
-		Giskard.selectByPath(MTMEMBER_ACTION_PARAM);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_RENDERER, MTMEMBER_ACTION_PARAM, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		Giskard.selectByPath(MTMEMBER_ACTION_THIS);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Set, MTTYPE_WORLD, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_THIS, MTMEMBER_WORLD_RENDERER);
 

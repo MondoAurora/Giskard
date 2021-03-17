@@ -53,12 +53,9 @@ public abstract class Giskard implements GiskardConsts {
 		return GISKARD.defineToken_(type, name, params);
 	}
 
-	public static boolean selectByPath(MiNDToken target, Object... path) throws Exception {
-		return GISKARD.selectByPath_(target, path);
-	}
 
-	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken target, Object... valPath) {
-		return GISKARD.access_(cmd, val, target, valPath);
+	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {
+		return GISKARD.access_(cmd, val, valPath);
 	}
 
 	public static MiNDResultType invoke(Object... agentPath) throws Exception {
@@ -78,10 +75,9 @@ public abstract class Giskard implements GiskardConsts {
 
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
 
-	protected abstract <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
+	protected abstract <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath);
 
 	protected abstract MiNDToken defineToken_(MiNDTokenType type, String name, Object... params);
 
-	protected abstract boolean selectByPath_(MiNDToken target, Object... path) throws Exception;
 
 }

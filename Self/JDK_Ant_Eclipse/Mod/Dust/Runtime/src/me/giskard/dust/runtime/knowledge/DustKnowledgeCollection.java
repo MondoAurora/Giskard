@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import me.giskard.GiskardException;
+
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class DustKnowledgeCollection<ContainerType> implements DustKnowledgeConsts {
 	protected final ContainerType container;
 	protected final DustKnowledgeBlock owner;
 	protected final DustTokenMember token;
 
-	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key) throws Exception;
+	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key);
 
 	public static DustKnowledgeCollection create(DustKnowledgeBlock owner, DustTokenMember token) {
 		switch ( token.getCollType() ) {
@@ -33,14 +35,23 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		this.container = container;
 	}
 
+	protected void notify(Object val, Iterable container) {
+		for (Object ob : container) {
+			try {
+				DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
+			} catch (Exception e) {
+				GiskardException.swallow(e);
+			}
+		}
+	}
+
 	public static class ValSet extends DustKnowledgeCollection<Set> {
 		public ValSet(DustKnowledgeBlock owner, DustTokenMember token) {
 			super( owner,  token, new HashSet());
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key)
-				throws Exception {
+		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			switch ( cmd ) {
 			case Add:
 				if ( val instanceof DustKnowledgeBlock ) {
@@ -63,9 +74,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 			case Set:
 				break;
 			case Use:
-				for (Object ob : container) {
-					DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
-				}
+				notify(val, container);
 				break;
 			}
 			return null;
@@ -78,8 +87,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key)
-				throws Exception {
+		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = val;
 			Integer idx = (Integer) key;
 			
@@ -102,9 +110,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 			case Set:
 				break;
 			case Use:
-				for (Object ob : container) {
-					DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
-				}
+				notify(val, container);
 				break;
 			}
 			return ret;
@@ -117,8 +123,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key)
-				throws Exception {
+		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			// TODO Auto-generated method stub
 			return null;
 		}

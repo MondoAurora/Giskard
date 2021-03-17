@@ -12,7 +12,6 @@ import me.giskard.coll.MindCollMap;
 public class DustKnowledgeBlock implements DustKnowledgeConsts {
 	DustKnowledgeContext ctx;
 	DustKnowledgeBlock orig;
-//	Set<DustKnowledgeLink> incomingLinks;
 
 	final MindCollMap<DustTokenMember, Object> localData;
 	Set<DustToken> tags;
@@ -31,7 +30,7 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 		}
 	}
 
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustTokenMember tMember) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustTokenMember tMember, Object key) {
 		try {
 //		Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 

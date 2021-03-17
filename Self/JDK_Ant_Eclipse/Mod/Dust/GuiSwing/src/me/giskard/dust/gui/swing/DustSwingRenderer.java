@@ -27,7 +27,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 		case Process:
 			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_PARAM, MTMEMBER_STRING);
 			
-			Giskard.selectByPath(MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER);			
+			Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER);			
 			Giskard.log(MiNDEventLevel.INFO, "Frame center", MTMEMBER_ACTION_TEMP01);
 
 			frmMain = new JFrame();

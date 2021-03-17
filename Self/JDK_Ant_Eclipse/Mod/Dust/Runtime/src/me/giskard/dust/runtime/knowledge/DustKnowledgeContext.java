@@ -3,8 +3,6 @@ package me.giskard.dust.runtime.knowledge;
 import java.util.HashSet;
 import java.util.Set;
 
-import me.giskard.Giskard;
-import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
 import me.giskard.coll.MindCollMap;
@@ -13,6 +11,56 @@ import me.giskard.dust.runtime.DustRuntimeMeta;
 
 public class DustKnowledgeContext
 		implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
+
+	class PathResolver {
+		Object[] path;
+		int plen;
+
+		Object lastOb;
+		DustKnowledgeBlock lastBlock;
+		int lastBlockIdx;
+
+		PathResolver(Object... path_) {
+			this.path = path_;
+			plen = path.length;
+
+			for (int i = 0; i < plen; ++i) {
+				Object o = path[i];
+
+				if ( null == lastOb ) {
+					lastOb = entities.peek((MiNDToken) o);
+				} else if ( o instanceof DustTokenMember ) {
+					lastOb = lastBlock.localData.get((DustTokenMember) o);
+				} else if ( lastOb instanceof DustKnowledgeCollection.ValArr ) {
+					lastOb = ((DustKnowledgeCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, (Integer) o);
+				}
+
+				if ( lastOb instanceof DustKnowledgeLink ) {
+					lastBlock = ((DustKnowledgeLink) lastOb).to;
+					lastOb = lastBlock;
+					lastBlockIdx = i;
+				} else if ( lastOb instanceof DustKnowledgeBlock ) {
+					lastBlock = (DustKnowledgeBlock) lastOb;
+					lastBlockIdx = i;
+				}
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
+			if ( (plen == lastBlockIdx + 1) && (cmd == MiNDAccessCommand.Get) && !((val instanceof DustToken) && (((DustToken)val).getType() == MiNDTokenType.TAG)) ) {
+				entities.put((MiNDToken) val, lastBlock);
+				return (RetType) lastBlock;
+//				return val;
+			} else {
+				Object key = (lastBlockIdx < (plen - 2)) ? path[plen - 1] : null;
+				DustTokenMember tMember = (DustTokenMember) ((null != key) ? path[plen - 2]
+						: (lastBlockIdx < (plen - 1)) ? path[plen - 1] : null);
+				return lastBlock.access(cmd, val, tMember, key);
+			}
+		}
+	}
+
 	DustKnowledgeContext parentCtx;
 
 	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
@@ -26,7 +74,7 @@ public class DustKnowledgeContext
 			});
 
 	Set<DustKnowledgeLink> allLinks = new HashSet<>();
-	
+
 	public DustKnowledgeContext(DustKnowledgeContext parentCtx_) {
 		this.parentCtx = parentCtx_;
 	}
@@ -42,17 +90,6 @@ public class DustKnowledgeContext
 		}
 
 		return ret;
-	}
-
-	DustKnowledgeLink setLink(DustKnowledgeBlock from, DustTokenMember def, DustKnowledgeBlock to) {
-		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
-		allLinks.add(link);
-		return link;
-	}
-
-	void delLink(DustKnowledgeLink link) {
-		allLinks.remove(link);
-		link.from.access(MiNDAccessCommand.Del, link, link.def);
 	}
 
 	@Override
@@ -76,96 +113,98 @@ public class DustKnowledgeContext
 		return ret;
 	}
 
-	@Override
-	public boolean selectByPath(MiNDToken target, Object... path) throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "selectByPath", target, path);
-		if ( 0 == path.length ) {
-			entities.put(target, new DustKnowledgeBlock(this));
-			return true;
-		} else {
-			Object b = resolvePath(target, path);
-			if ( b instanceof DustKnowledgeBlock) {
-				entities.put(target, (DustKnowledgeBlock) b);
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-	public Object resolvePath(MiNDToken target, Object... path) throws Exception {
-		Object b = null;
-		for (Object o : path) {
-			if ( null == b ) {
-				b = entities.peek((MiNDToken) o);
-			} else if ( o instanceof DustTokenMember ) {
-				b = ((DustKnowledgeBlock) b).localData.get((DustTokenMember) o);
-			} else if ( b instanceof DustKnowledgeCollection.ValArr) {
-				b = ((DustKnowledgeCollection<?>) b).access(MiNDAccessCommand.Get, null, (Integer) o);
-			}
-			
-			if ( null == b ) {
-				return false;
-			} else if ( b  instanceof DustKnowledgeLink ) {
-				b = ((DustKnowledgeLink)b).to;
-			}
-		}
-		return b;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
-	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
-		Object ret = null;
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath) {
+		Object ret = val;
 
-		DustKnowledgeBlock eb = GiskardUtils.isAccessCreator(cmd) ? entities.get(target) : entities.peek(target);
-
-		if ( null == eb ) {
+		if ( 0 == valPath.length ) {
 			switch ( cmd ) {
+			case Get:
+				if ( val instanceof MiNDToken ) {
+					entities.put((MiNDToken) val, new DustKnowledgeBlock(this));
+				}
+				break;
 			case Add:
 			case Set:
-				// can't be here
-				break;
 			case Chk:
 			case Del:
 				ret = Boolean.FALSE;
-				break;
-			case Get:
-				ret = val;
 				break;
 			case Use:
 				ret = MiNDResultType.REJECT;
 				break;
 			}
 		} else {
-			if ( 0 < valPath.length ) {
-				ret = eb.access(cmd, val, (DustTokenMember) valPath[0]);
-			} else {
+			PathResolver pr = new PathResolver(valPath);
+
+			ret = pr.lastOb;
+			DustKnowledgeBlock eb = pr.lastBlock;
+
+			if ( null == eb ) {
 				switch ( cmd ) {
 				case Add:
 				case Set:
-				case Get:
-					ret = eb.access(cmd, val, null);
-					break;
 				case Chk:
-					ret = Boolean.TRUE;
-					break;
 				case Del:
 					ret = Boolean.FALSE;
+					break;
+				case Get:
+					// Get can be used to select the target entity. If the resolver did not find it,
+					// return null!
+					ret = (val instanceof MiNDToken) ? null : val;
 					break;
 				case Use:
 					ret = MiNDResultType.REJECT;
 					break;
+				}
+			} else {
+				if ( 0 < valPath.length ) {
+					ret = pr.access(cmd, val);
+				} else {
+					switch ( cmd ) {
+					case Add:
+					case Set:
+					case Get:
+						ret = eb.access(cmd, val, null, null);
+						break;
+					case Chk:
+						ret = Boolean.TRUE;
+						break;
+					case Del:
+						ret = Boolean.FALSE;
+						break;
+					case Use:
+						ret = MiNDResultType.REJECT;
+						break;
+					}
 				}
 			}
 		}
 
 		return (RetType) ret;
 	}
-	
+
 	@Override
 	public void put(MiNDToken token, Object block) {
 		entities.put(token, (DustKnowledgeBlock) block);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <RetType> RetType peek(MiNDToken token) {
+		return (RetType) entities.peek(token);
+	}
+
+	DustKnowledgeLink setLink(DustKnowledgeBlock from, DustTokenMember def, DustKnowledgeBlock to) {
+		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
+		allLinks.add(link);
+		return link;
+	}
+
+	void delLink(DustKnowledgeLink link) {
+		allLinks.remove(link);
+		link.from.access(MiNDAccessCommand.Del, link, link.def, null);
 	}
 
 	@Override

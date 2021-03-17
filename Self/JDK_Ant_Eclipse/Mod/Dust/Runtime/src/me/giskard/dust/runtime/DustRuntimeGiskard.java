@@ -32,13 +32,8 @@ public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustR
 	}
 	
 	@Override
-	protected boolean selectByPath_(MiNDToken target, Object... path) throws Exception {
-		return machine.getContext().selectByPath(target, path);
-	}
-	
-	@Override
-	protected <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
-		return machine.getContext().access(cmd, val, target, valPath);
+	protected <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
+		return machine.getContext().access(cmd, val, valPath);
 	}
 	
 	@Override

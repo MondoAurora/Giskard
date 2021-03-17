@@ -15,9 +15,9 @@ public interface DustRuntimeConsts extends GiskardConsts {
 	
 	public interface DustContext {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
-		boolean selectByPath(MiNDToken target, Object... path) throws Exception;
-		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath);
+		<RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath);
 		void put(MiNDToken token, Object block);
+		<RetType> RetType peek(MiNDToken token);
 	}
 
 	public interface DustRuntime {
