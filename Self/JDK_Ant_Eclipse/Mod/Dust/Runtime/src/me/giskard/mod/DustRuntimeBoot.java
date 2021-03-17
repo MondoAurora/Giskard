@@ -18,8 +18,8 @@ public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, Mi
 		Giskard.access(MiNDAccessCommand.Get, MTSHARED_MACHINE);
 		
 		// Application
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
 		
 		// Runtime module
 		DustTokens.registerNewModule();

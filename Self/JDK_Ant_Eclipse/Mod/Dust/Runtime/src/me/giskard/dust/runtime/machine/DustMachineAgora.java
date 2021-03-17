@@ -34,15 +34,15 @@ public class DustMachineAgora
 				DustContext ctxSrc = (null == current) ? knowledge : current.ctx;
 
 				DustKnowledgeBlock b;
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TARGET);
+				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 				ctx.put(MTMEMBER_ACTION_THIS, new DustKnowledgeBlock(b));
 
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM);
+				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 				ctx.put(MTMEMBER_ACTION_PARAM, b);
 
 				ctx.put(MTMEMBER_ACTION_LOCAL, new DustKnowledgeBlock((DustKnowledgeContext) ctx));
 
-				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_TARGET);
+				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_CALL_TARGET);
 				
 				if ( agent instanceof DustMachineControl ) {
 					((DustMachineControl) agent).dialog = Dialog.this;

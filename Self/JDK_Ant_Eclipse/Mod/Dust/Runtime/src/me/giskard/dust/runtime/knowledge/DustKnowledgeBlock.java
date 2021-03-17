@@ -105,11 +105,17 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 			switch ( cmd ) {
 			case Get:
 				if ( null != current ) {
+					if ( current instanceof DustKnowledgeCollection<?> ) {
+						current = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, key);
+					}
+					
 					if ( current instanceof DustKnowledgeLink ) {
 						val = (RetType) ((DustKnowledgeLink) current).to;
 					} else {
 						val = (RetType) current;
 					}
+				} else if (val instanceof MiNDToken) {
+					val = null;
 				}
 				break;
 			case Set:

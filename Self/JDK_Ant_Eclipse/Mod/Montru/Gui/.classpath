@@ -4,8 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardGen"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DustGuiSwing"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DustRuntime"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MontruGui"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
