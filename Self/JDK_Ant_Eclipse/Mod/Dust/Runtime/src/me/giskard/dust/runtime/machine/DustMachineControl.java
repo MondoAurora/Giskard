@@ -8,9 +8,10 @@ import me.giskard.GiskardUtils;
 import me.giskard.dust.runtime.machine.DustMachineAgora.Dialog.Invocation;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
+import me.giskard.tokens.DustTokensMind;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public abstract class DustMachineControl implements DustMachineConsts, GiskardConsts.MiNDAgent, DustTokensMachine, DustTokensGeneric {
+public abstract class DustMachineControl implements DustMachineConsts, GiskardConsts.MiNDAgent, DustTokensMachine, DustTokensGeneric, DustTokensMind {
 
 	DustMachineAgora.Dialog dialog;
 	DustMachineAgora.Dialog.Invocation currChild;
@@ -150,7 +151,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 	
 	public MiNDResultType getCurrResp(MiNDResultType defVal) {
 		MiNDResultType ret = defVal;
-		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG);
+		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
 		if ( null != resp ) {
 			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 		}

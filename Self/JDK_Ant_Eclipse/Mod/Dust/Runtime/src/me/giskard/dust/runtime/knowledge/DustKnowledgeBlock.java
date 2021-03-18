@@ -39,7 +39,8 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 			if ( val instanceof DustToken ) {
 				DustToken tok = (DustToken) val;
 
-				if ( tok.getType() == MiNDTokenType.TAG ) {
+//				if ( tok.getType() == MiNDTokenType.TAG ) {
+				if ( MTMEMBER_ENTITY_TAGS == tMember) {
 					Object ret = val;
 					DustToken p = tok.getParent();
 

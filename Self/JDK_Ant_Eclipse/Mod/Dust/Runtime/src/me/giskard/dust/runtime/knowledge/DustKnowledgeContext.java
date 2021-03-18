@@ -48,7 +48,8 @@ public class DustKnowledgeContext
 
 		@SuppressWarnings("unchecked")
 		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
-			if ( (plen == lastBlockIdx + 1) && (cmd == MiNDAccessCommand.Get) && !((val instanceof DustToken) && (((DustToken)val).getType() == MiNDTokenType.TAG)) ) {
+			if ( (plen == lastBlockIdx + 1) && (cmd == MiNDAccessCommand.Get)
+					&& !((val instanceof DustToken) && (((DustToken) val).getType() == MiNDTokenType.TAG)) ) {
 				entities.put((MiNDToken) val, lastBlock);
 				return (RetType) lastBlock;
 //				return val;
@@ -159,26 +160,7 @@ public class DustKnowledgeContext
 					break;
 				}
 			} else {
-				if ( 0 < valPath.length ) {
-					ret = pr.access(cmd, val);
-				} else {
-					switch ( cmd ) {
-					case Add:
-					case Set:
-					case Get:
-						ret = eb.access(cmd, val, null, null);
-						break;
-					case Chk:
-						ret = Boolean.TRUE;
-						break;
-					case Del:
-						ret = Boolean.FALSE;
-						break;
-					case Use:
-						ret = MiNDResultType.REJECT;
-						break;
-					}
-				}
+				ret = pr.access(cmd, val);
 			}
 		}
 
@@ -189,7 +171,7 @@ public class DustKnowledgeContext
 	public void put(MiNDToken token, Object block) {
 		entities.put(token, (DustKnowledgeBlock) block);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <RetType> RetType peek(MiNDToken token) {

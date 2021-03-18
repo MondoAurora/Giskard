@@ -77,6 +77,9 @@ DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui
 		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", MTMEMBER_CALL_TARGET, MTMEMBER_URL);
 		Giskard.access(MiNDAccessCommand.Set, "dust", MTMEMBER_CALL_TARGET, MTMEMBER_STRING);
 		
+//		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_ACCOUNTID);
+//		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_PASSWORD);
+//    The actual values are in this class, which is of course, on gitignore...
 		GiskardPrivate.setDB();
 	}
 
@@ -114,7 +117,7 @@ DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui
 	public static void linkDump(String msg, MiNDResultType res) throws Exception {
 		linkDump(msg, MTMEMBER_LINK_ARR);
 		if ( null != res ) {
-			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_TEMP01);
+			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_TAGS);
 		}
 	}
 

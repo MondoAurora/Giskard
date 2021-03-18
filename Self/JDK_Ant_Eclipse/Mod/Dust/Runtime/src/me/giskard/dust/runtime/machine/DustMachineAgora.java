@@ -94,7 +94,7 @@ public class DustMachineAgora
 			ret = current.process(MiNDAgentAction.Begin);
 			do {
 				ret = current.process(MiNDAgentAction.Process);
-				ctxDlg.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG);
+				ctxDlg.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
 
 				if ( !GiskardUtils.isAgentRead(ret) ) {
 					if ( (null != callStack) && !callStack.isEmpty() ) {

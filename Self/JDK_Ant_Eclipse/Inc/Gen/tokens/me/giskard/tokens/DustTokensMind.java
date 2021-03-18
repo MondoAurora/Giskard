@@ -6,12 +6,22 @@ import me.giskard.GiskardConsts;
 public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTUNIT_MODEL = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Model");
 
+	MiNDToken MTTYPE_UNIT = Giskard.defineToken(MiNDTokenType.TYPE, "Unit", MTUNIT_MODEL);
+
 	MiNDToken MTTYPE_ENTITY = Giskard.defineToken(MiNDTokenType.TYPE, "Entity", MTUNIT_MODEL);
-	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_ENTITY_TYPES = Giskard.defineToken(MiNDTokenType.MEMBER, "Types", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
+	MiNDToken MTMEMBER_ENTITY_TAGS = Giskard.defineToken(MiNDTokenType.MEMBER, "Tags", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
+	MiNDToken MTMEMBER_ENTITY_STOREUNIT = Giskard.defineToken(MiNDTokenType.MEMBER, "StoreUnit", MTTYPE_ENTITY, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ENTITY_STOREID = Giskard.defineToken(MiNDTokenType.MEMBER, "StoreId", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
+
 	
 	
 	MiNDToken MTUNIT_IDEA = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Idea");
 	
+	MiNDToken MTTYPE_TYPE = Giskard.defineToken(MiNDTokenType.TYPE, "Type", MTUNIT_IDEA);
+	MiNDToken MTTYPE_MEMBER = Giskard.defineToken(MiNDTokenType.TYPE, "Member", MTUNIT_IDEA);
+
 	MiNDToken MTTAG_VALTYPE = Giskard.defineToken(MiNDTokenType.TAG, "ValType", MTUNIT_IDEA, MiNDValType.class);
 	MiNDToken MTTAG_VALTYPE_INT = Giskard.defineToken(MiNDTokenType.TAG, "Int", MTTAG_VALTYPE, MiNDValType.Int);
 	MiNDToken MTTAG_VALTYPE_REAL = Giskard.defineToken(MiNDTokenType.TAG, "Real", MTTAG_VALTYPE, MiNDValType.Real);
@@ -36,6 +46,8 @@ public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTTAG_ACCESSCOMMAND_USE = Giskard.defineToken(MiNDTokenType.TAG, "Use", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Use);
 	
 	MiNDToken MTUNIT_NARRATIVE = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Narrative");
+	
+	MiNDToken MTTYPE_AGENT = Giskard.defineToken(MiNDTokenType.TYPE, "Agent", MTUNIT_NARRATIVE);
 	
 	MiNDToken MTTAG_RESULTTYPE = Giskard.defineToken(MiNDTokenType.TAG, "ResultType", MTUNIT_NARRATIVE, MiNDResultType.class);
 	MiNDToken MTTAG_RESULTTYPE_NOTIMPLEMENTED = Giskard.defineToken(MiNDTokenType.TAG, "NOTIMPLEMENTED", MTTAG_RESULTTYPE, MiNDResultType.NOTIMPLEMENTED);

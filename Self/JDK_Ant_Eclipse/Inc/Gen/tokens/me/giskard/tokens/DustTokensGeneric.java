@@ -6,6 +6,8 @@ import me.giskard.GiskardConsts;
 public interface DustTokensGeneric extends GiskardConsts {
 	MiNDToken MTUNIT_UTILS = Giskard.defineToken(MiNDTokenType.UNIT, "Generic_Utils");
 
+	MiNDToken MTTYPE_TAG = Giskard.defineToken(MiNDTokenType.TYPE, "Tag", MTUNIT_UTILS);
+
 	MiNDToken MTTYPE_CALL = Giskard.defineToken(MiNDTokenType.TYPE, "Call", MTUNIT_UTILS);
 	MiNDToken MTMEMBER_CALL_TARGET = Giskard.defineToken(MiNDTokenType.MEMBER, "Target", MTTYPE_CALL, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_CALL_PARAM = Giskard.defineToken(MiNDTokenType.MEMBER, "Param", MTTYPE_CALL, MiNDValType.Link, MiNDCollType.One);
