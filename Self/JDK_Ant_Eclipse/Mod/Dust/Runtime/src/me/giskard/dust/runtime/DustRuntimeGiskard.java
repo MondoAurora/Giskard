@@ -2,6 +2,8 @@ package me.giskard.dust.runtime;
 
 import me.giskard.Giskard;
 import me.giskard.coll.MindCollConsts;
+import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
+import me.giskard.dust.runtime.knowledge.DustKnowledgeUtils;
 
 public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustRuntime {
 	
@@ -23,6 +25,11 @@ public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustR
 
 	@Override
 	public void afterBoot() throws Exception {
+		DustRuntimeUtils.BOOT_DONE = true;
+		for ( DustToken t : knowledge) {
+			DustKnowledgeUtils.optSyncToken(t);
+		}
+		
 		machine.optLoadNativeConn();
 	}
 

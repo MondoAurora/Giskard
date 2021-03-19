@@ -8,6 +8,11 @@ import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollConsts;
 
 public class DustRuntimeUtils extends GiskardUtils implements MindCollConsts, DustRuntimeConsts {
+	static boolean BOOT_DONE = false;
+	
+	public static boolean isBootDone() {
+		return BOOT_DONE;
+	}
 	
 	public static String strTimestamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);

@@ -1,6 +1,7 @@
 package me.giskard.dust.runtime;
 
 import me.giskard.GiskardConsts;
+import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
 
 public interface DustRuntimeConsts extends GiskardConsts {
 	String MODULE_NAME = "DustRuntime";
@@ -13,7 +14,7 @@ public interface DustRuntimeConsts extends GiskardConsts {
 	String CLASSPATH_MACHINE = "machine.DustMachineAgora";
 	String CLASSPATH_NATIVECONNECTOR = "machine.DustMachineNativeConnector";
 	
-	public interface DustContext {
+	public interface DustContext extends Iterable<DustToken> {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
 		<RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath);
 		void put(MiNDToken token, Object block);

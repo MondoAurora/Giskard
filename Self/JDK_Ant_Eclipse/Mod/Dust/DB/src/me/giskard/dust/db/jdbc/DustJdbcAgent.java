@@ -47,7 +47,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 
 	private void optCreateConn() throws Exception {
 		if ( (null == conn) || conn.isClosed() ) {
-			String dbName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_STRING);
+			String dbName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 			String dbUrl = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_URL);
 			if ( !GiskardUtils.isEmpty(dbName) && !dbUrl.endsWith(dbName) ) {
 				dbUrl += "/" + dbName;

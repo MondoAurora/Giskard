@@ -29,6 +29,12 @@ public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, Mi
 		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustMachineControl.Sequence.class);
 		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustMachineControl.Selection.class);
 		
+		MiNDToken[] bootTokens = { 
+				MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT,
+				MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE, MTTYPE_UNIT};
+		
+		Giskard.log(MiNDEventLevel.TRACE, "Boot tokens registered", bootTokens);
+
 //		DustTokens.addModuleImpInfo(MTAGENT_MIND, DustRuntime.class);
 //		DustTokens.addModuleImpInfo(MTAGENT_CONTEXT, DustKnowledgeContext.class);
 		

@@ -1,11 +1,14 @@
 package me.giskard.dust.runtime.knowledge;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
+import me.giskard.GiskardException;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.coll.MindCollFactory;
-import me.giskard.coll.MindCollMap;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta;
 
@@ -64,7 +67,7 @@ public class DustKnowledgeContext
 
 	DustKnowledgeContext parentCtx;
 
-	MindCollMap<Object, DustToken> tokens = new MindCollMap<>(true);
+	Map<String, DustToken> tokens = new TreeMap<>();
 
 	MindCollFactory<MiNDToken, DustKnowledgeBlock> entities = new MindCollFactory<>(false,
 			new MiNDCreator<MiNDToken, DustKnowledgeBlock>() {
@@ -106,12 +109,18 @@ public class DustKnowledgeContext
 			if ( null == ret ) {
 				ret = DustToken.createToken(type, name, params);
 				ret.setEntity(entities.get(ret));
+				DustKnowledgeUtils.optSyncToken(ret);
 			}
 
 			tokens.put(id, ret);
 		}
 
 		return ret;
+	}
+
+	@Override
+	public Iterator<DustToken> iterator() {
+		return tokens.values().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -133,7 +142,23 @@ public class DustKnowledgeContext
 				ret = Boolean.FALSE;
 				break;
 			case Use:
-				ret = MiNDResultType.REJECT;
+				if ( val instanceof MiNDAgent ) {
+					MiNDAgent a = (MiNDAgent) val;
+					DustKnowledgeContext c = this;
+					while (null != c.parentCtx) {
+						c = c.parentCtx;
+					}
+					for (DustToken t : c) {
+						access(MiNDAccessCommand.Set, t.getEntity().toString(), MTMEMBER_ACTION_LOCAL, MTMEMBER_VARIANT_VALUE);
+						try {
+							ret = a.process(MiNDAgentAction.Process);
+						} catch (Exception e) {
+							GiskardException.swallow(e);
+						}
+					}
+				} else {
+					ret = MiNDResultType.REJECT;
+				}
 				break;
 			}
 		} else {

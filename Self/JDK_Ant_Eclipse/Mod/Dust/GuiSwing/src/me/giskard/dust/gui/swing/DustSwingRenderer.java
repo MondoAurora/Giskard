@@ -23,7 +23,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 		case Process:
 
 			if ( null == frmMain ) {
-				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_PARAM, MTMEMBER_STRING);
+				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_PARAM, MTMEMBER_PLAIN_STRING);
 
 				Integer cx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER,	MTMEMBER_GEODATA_COORDS, 0);
 				Integer cy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER, MTMEMBER_GEODATA_COORDS, 1);
