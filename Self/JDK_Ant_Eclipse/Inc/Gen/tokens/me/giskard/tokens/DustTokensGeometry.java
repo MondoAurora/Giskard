@@ -19,7 +19,7 @@ public interface DustTokensGeometry extends DustTokensMind {
 	MiNDToken MTMEMBER_GEODATA_COORDS = Giskard.defineToken(MiNDTokenType.MEMBER, "Coords", MTTYPE_GEODATA, MiNDValType.Real, MiNDCollType.Arr);
 
 	MiNDToken MTTYPE_AREA = Giskard.defineToken(MiNDTokenType.TYPE, "Area", MTUNIT_GEOMETRY);
-	MiNDToken MTMEMBER_AREA_CENTER = Giskard.defineToken(MiNDTokenType.MEMBER, "Center", MTTYPE_AREA, MiNDValType.Real, MiNDCollType.One);
-	MiNDToken MTMEMBER_AREA_SPAN = Giskard.defineToken(MiNDTokenType.MEMBER, "Span", MTTYPE_AREA, MiNDValType.Real, MiNDCollType.One);
+	MiNDToken MTMEMBER_AREA_CENTER = Giskard.defineToken(MiNDTokenType.MEMBER, "Center", MTTYPE_AREA, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_AREA_SPAN = Giskard.defineToken(MiNDTokenType.MEMBER, "Span", MTTYPE_AREA, MiNDValType.Link, MiNDCollType.One);
 
 }

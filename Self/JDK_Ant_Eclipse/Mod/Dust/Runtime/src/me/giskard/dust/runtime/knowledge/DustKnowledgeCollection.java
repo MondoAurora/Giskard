@@ -3,6 +3,7 @@ package me.giskard.dust.runtime.knowledge;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		case Map:
 			return new ValMap(owner, token);
 		case Set:
-			return new ValSet(owner, token);
+			return (MTMEMBER_ENTITY_TAGS == token) ? new TagManager(owner, token) : new ValSet(owner, token);
 		default:
 			return null;
 		}
@@ -126,6 +127,61 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+	}
+
+	public static class TagManager extends ValSet {
+		public TagManager(DustKnowledgeBlock owner, DustTokenMember token) {
+			super(owner, token);
+		}
+		
+		@Override
+		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+			DustToken tok = (DustToken) val;
+			Object ret = val;
+			DustToken p = tok.getParent();
+
+			switch ( cmd ) {
+			case Add:
+				container.add(tok);
+				break;
+			case Set:
+				if ( !container.contains(tok) ) {
+					if ( null != p ) {
+						for (Iterator<DustToken> it = container.iterator(); it.hasNext();) {
+							DustToken t = it.next();
+							if ( p == t.getParent() ) {
+								it.remove();
+							}
+						}
+					}
+
+					container.add(tok);
+				}
+				break;
+			case Chk:
+				ret = container.contains(tok);
+				break;
+			case Del:
+				ret = container.remove(tok);
+				break;
+			case Get:
+				ret = tok;
+
+					if ( null != p ) {
+						for (DustToken t : (Iterable<DustToken>) container) {
+							if ( p == t.getParent() ) {
+								ret = t;
+								break;
+							}
+						}
+				}
+				break;
+			case Use:
+				break;
+			}
+
+			return ret;
 		}
 	}
 }

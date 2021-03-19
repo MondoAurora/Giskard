@@ -1,9 +1,5 @@
 package me.giskard.dust.runtime.knowledge;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.MindCollMap;
@@ -14,7 +10,6 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 	DustKnowledgeBlock orig;
 
 	final MindCollMap<DustTokenMember, Object> localData;
-	Set<DustToken> tags;
 
 	public DustKnowledgeBlock(DustKnowledgeContext ctx) {
 		this.ctx = ctx;
@@ -24,84 +19,24 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 	public DustKnowledgeBlock(DustKnowledgeBlock source) {
 		this.ctx = source.ctx;
 		localData = new MindCollMap<DustTokenMember, Object>(source.localData);
-
-		if ( (null != source.tags) && !source.tags.isEmpty() ) {
-			tags = new HashSet<>(source.tags);
-		}
 	}
 
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustTokenMember tMember, Object key) {
 		try {
-//		Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
-
-			DustKnowledgeBlock tBlock = null;
-
-			if ( val instanceof DustToken ) {
-				DustToken tok = (DustToken) val;
-
-//				if ( tok.getType() == MiNDTokenType.TAG ) {
-				if ( MTMEMBER_ENTITY_TAGS == tMember) {
-					Object ret = val;
-					DustToken p = tok.getParent();
-
-					if ( (null == tags) && GiskardUtils.isAccessCreator(cmd) ) {
-						tags = new HashSet<>();
-					}
-
-					switch ( cmd ) {
-					case Add:
-						tags.add(tok);
-						break;
-					case Set:
-						if ( !tags.contains(tok) ) {
-							if ( null != p ) {
-								for (Iterator<DustToken> it = tags.iterator(); it.hasNext();) {
-									DustToken t = it.next();
-									if ( p == t.getParent() ) {
-										it.remove();
-									}
-								}
-							}
-
-							tags.add(tok);
-						}
-						break;
-					case Chk:
-						ret = (null != tags) && tags.contains(tok);
-						break;
-					case Del:
-						ret = (null != tags) && tags.remove(tok);
-						break;
-					case Get:
-						ret = tok;
-
-						if ( null != tags ) {
-							if ( null != p ) {
-								for (DustToken t : tags) {
-									if ( p == t.getParent() ) {
-										ret = t;
-										break;
-									}
-								}
-							}
-						}
-						break;
-					case Use:
-						break;
-					}
-
-					return (RetType) ret;
-				}
-
-				tBlock = ctx.entities.peek(tok);
-			}
-			
 			if ( null == tMember ) {
 				return (RetType) this;
 			}
 
+			DustKnowledgeBlock tBlock = ((cmd != MiNDAccessCommand.Use) && (tMember.getValType() == MiNDValType.Link)) 
+					? ctx.entities.peek((DustToken) val) : null;
+
 			Object current = localData.get(tMember);
 			Object data = (null == tBlock) ? val : tBlock;
+			
+			if ( (null == current) && ( MTMEMBER_ENTITY_TAGS == tMember) && GiskardUtils.isAccessCreator(cmd)) {
+				current = DustKnowledgeCollection.create(this, tMember);
+				localData.put(tMember, current);
+			}
 
 			switch ( cmd ) {
 			case Get:

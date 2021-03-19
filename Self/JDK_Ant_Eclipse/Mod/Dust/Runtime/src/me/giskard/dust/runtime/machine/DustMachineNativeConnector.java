@@ -5,6 +5,7 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
+import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
@@ -18,8 +19,8 @@ public class DustMachineNativeConnector implements DustMachineConsts, DustTokens
 		switch ( cmd ) {
 		case Add:
 			try {
-				Object a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
-				val = (RetType) nativeClasses.get(a).newInstance();
+				DustToken a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
+				val = (RetType) nativeClasses.get(a.getEntity()).newInstance();
 			} catch (Exception e) {
 				GiskardException.wrap(e);
 			}

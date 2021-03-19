@@ -33,12 +33,11 @@ public class DustMachineAgora
 				
 				DustContext ctxSrc = (null == current) ? knowledge : current.ctx;
 
-				DustKnowledgeBlock b;
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
-				ctx.put(MTMEMBER_ACTION_THIS, new DustKnowledgeBlock(b));
+				DustKnowledgeBlock bTarget = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+				ctx.put(MTMEMBER_ACTION_THIS, new DustKnowledgeBlock(bTarget));
 
-				b = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-				ctx.put(MTMEMBER_ACTION_PARAM, b);
+				DustKnowledgeBlock bParam = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+				ctx.put(MTMEMBER_ACTION_PARAM, bParam);
 
 				ctx.put(MTMEMBER_ACTION_LOCAL, new DustKnowledgeBlock((DustKnowledgeContext) ctx));
 
