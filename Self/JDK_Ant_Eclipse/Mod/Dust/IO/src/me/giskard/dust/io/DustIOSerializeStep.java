@@ -34,7 +34,7 @@ public class DustIOSerializeStep implements DustIOTokens {
 	}
 
 	public Object publish(MiNDToken target) {
-		Giskard.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
+		Giskard.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
 		Object val = (item == DustIOConsts.MTTAG_VALTYPE_LINK) ? ((Map.Entry<?,?>) data).getKey()
 				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
 		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VARIANT_VALUE);

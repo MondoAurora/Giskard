@@ -16,6 +16,8 @@ import me.giskard.GiskardUtils;
 public class MontruGuiMainPanel implements MontruGuiConsts, GiskardConsts.MiNDAgent {
 
 	JComponent pnlMain;
+	
+	int filterCount;
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
@@ -47,30 +49,27 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GiskardConsts.MiNDAg
 
 	public void buildPanel() {
 
-//		pnlMain = new JPanel(new BorderLayout());
-//		JComponent content = new JLabel("Montru GUI main panel", JLabel.CENTER);
-//		pnlMain.add(content, BorderLayout.CENTER);
-		
 		StringBuilder sbAll = new StringBuilder();
 		MiNDAgent reader = new MiNDAgent() {
 			@Override
 			public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
-				switch ( action ) {
-				case Process:
-					Object p = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_LOCAL, MTMEMBER_VARIANT_VALUE);
-					GiskardUtils.sbAppend(sbAll, "\n", false, p);
-					return MiNDResultType.ACCEPT_READ;
-				default:
-					break;
-				}
-				return null;
+				return MiNDResultType.ACCEPT_READ;
 			}
 		};
 		Giskard.access(MiNDAccessCommand.Use, reader);
 		
+		filterCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, KEY_SIZE);
+		
+		for ( int idx = 0; idx < filterCount; ++idx ) {
+			Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
+			Object type = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
+			Object id = Giskard.access(MiNDAccessCommand.Get, "", MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_STOREID);
+			GiskardUtils.sbAppend(sbAll, "\n", false, GiskardUtils.toString(type) + ":" + id);
+		}
+		
 		JTextArea ta = new JTextArea();
 		ta.setText(sbAll.toString());
-
+		
 		JSplitPane splFilter = split(JSplitPane.VERTICAL_SPLIT, 0.2, new JLabel("Filter conditions", JLabel.CENTER),
 				new JLabel("Entity list", JLabel.CENTER));
 

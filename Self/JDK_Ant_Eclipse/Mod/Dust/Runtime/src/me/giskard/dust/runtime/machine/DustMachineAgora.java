@@ -8,6 +8,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 import me.giskard.dust.runtime.DustRuntimeConsts;
+import me.giskard.dust.runtime.DustRuntimeMeta.DustTokenMember;
 import me.giskard.dust.runtime.DustRuntimeUtils;
 import me.giskard.dust.runtime.knowledge.DustKnowledgeBlock;
 import me.giskard.dust.runtime.knowledge.DustKnowledgeContext;
@@ -21,50 +22,16 @@ public class DustMachineAgora
 		implements DustMachineConsts, DustRuntimeConsts.DustMachine, DustTokensMachine, DustTokensMind, DustTokensGeneric {
 
 	class Dialog {
-
-		public class Invocation implements MiNDAgent {
-			DustContext ctx;
-			MiNDAgent agent;
-
-			public Invocation() throws Exception {
-
-				ctx = new DustKnowledgeContext((DustKnowledgeContext) ctxDlg);
-				ctx.put(MTMEMBER_ACTION_DIALOG, bDlg);
-				
-				DustContext ctxSrc = (null == current) ? knowledge : current.ctx;
-
-				DustKnowledgeBlock bTarget = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
-				ctx.put(MTMEMBER_ACTION_THIS, new DustKnowledgeBlock(bTarget));
-
-				DustKnowledgeBlock bParam = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-				ctx.put(MTMEMBER_ACTION_PARAM, bParam);
-
-				ctx.put(MTMEMBER_ACTION_LOCAL, new DustKnowledgeBlock((DustKnowledgeContext) ctx));
-
-				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_CALL_TARGET);
-				
-				if ( agent instanceof DustMachineControl ) {
-					((DustMachineControl) agent).dialog = Dialog.this;
-				}
-			}
-
-			@Override
-			public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
-				return agent.process(action, params);
-			}
-		}
-
-		private DustContext ctxDlg;
-		private DustKnowledgeBlock bDlg;
+		private DustKnowledgeContext ctx;
 
 		private Invocation current;
 		private Stack<Invocation> callStack;
 
 		public Dialog() throws Exception {
-			ctxDlg = new DustKnowledgeContext((DustKnowledgeContext) knowledge);
-			ctxDlg.put(MTMEMBER_ACTION_DIALOG, bDlg = new DustKnowledgeBlock((DustKnowledgeContext) ctxDlg));
+			ctx = new DustKnowledgeContext((DustKnowledgeContext) knowledge, HANDLE_DIALOG);
+//			ctx.put(MTMEMBER_ACTION_DIALOG, bDlg = new DustKnowledgeBlock((DustKnowledgeContext) ctx));
 
-			current = new Invocation();
+			current = new Invocation(this);
 		}
 		
 		public Invocation getCurrent() {
@@ -72,7 +39,7 @@ public class DustMachineAgora
 		}
 
 		public Invocation relay() throws Exception {
-			push(new Invocation());
+			push(new Invocation(this));
 			current.process(MiNDAgentAction.Init);
 			return current;
 		}
@@ -93,7 +60,7 @@ public class DustMachineAgora
 			ret = current.process(MiNDAgentAction.Begin);
 			do {
 				ret = current.process(MiNDAgentAction.Process);
-				ctxDlg.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
+				ctx.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
 
 				if ( !GiskardUtils.isAgentRead(ret) ) {
 					if ( (null != callStack) && !callStack.isEmpty() ) {
@@ -109,6 +76,54 @@ public class DustMachineAgora
 			current.process(MiNDAgentAction.Release);
 			
 			return ret;
+		}
+
+		public DustKnowledgeContext getContext() {
+			return (null == current) ? (DustKnowledgeContext) knowledge : current.ctx;
+		}
+	}
+	
+	public class Invocation implements MiNDAgent {
+		Dialog dlg;
+		DustKnowledgeContext ctx;
+		MiNDAgent agent;
+
+		public Invocation(Dialog dlg_) throws Exception {
+			setDialog( dlg_);
+		}
+		
+		void setDialog(Dialog dlg_) throws Exception {
+			this.dlg = dlg_;
+
+			DustKnowledgeContext ctxSrc = dlg.getContext();
+
+			ctx = new DustKnowledgeContext(ctxSrc, HANDLE_INVOCATION);
+			
+			DustKnowledgeBlock bRoot = ctx.getRootBlock();
+//			bRoot.put((DustTokenMember) MTMEMBER_ACTION_DIALOG, dlg.ctx.getRootBlock());
+
+			Integer handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			DustKnowledgeBlock bTarget = ctxSrc.getEntity(handle);
+			DustKnowledgeBlock e = new DustKnowledgeBlock(ctx, bTarget);
+			bRoot.access(MiNDAccessCommand.Set, e.getHandle(), (DustTokenMember) MTMEMBER_ACTION_THIS, null);
+
+			handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+			if ( null != handle ) {
+				bRoot.access(MiNDAccessCommand.Set, handle, (DustTokenMember) MTMEMBER_ACTION_PARAM, null);
+			}
+		}
+		
+		@Override
+		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+			if ( null == agent ) {
+				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
+				
+				if ( agent instanceof DustMachineControl ) {
+					((DustMachineControl) agent).dialog = dlg;
+				}
+				
+			}
+			return agent.process(action, params);
 		}
 	}
 

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.giskard.coll.MindCollConsts;
-import me.giskard.dust.runtime.knowledge.DustKnowledgeBlock;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public interface DustRuntimeMeta extends MindCollConsts {
@@ -41,7 +40,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 		MiNDTokenType type;
 		String name;
 		DustToken parent;
-		DustKnowledgeBlock entity;
+		int entityHandle;
 
 		public MiNDTokenType getType() {
 			return type;
@@ -60,14 +59,14 @@ public interface DustRuntimeMeta extends MindCollConsts {
 			this.name = name;
 		}
 		
-		public void setEntity(DustKnowledgeBlock entity) {
-			this.entity = entity;
+		public int getEntityHandle() {
+			return entityHandle;
 		}
 		
-		public DustKnowledgeBlock getEntity() {
-			return entity;
+		public void setEntityHandle(int entityHandle) {
+			this.entityHandle = entityHandle;
 		}
-
+		
 		public DustToken getParent() {
 			return parent;
 		}
@@ -84,10 +83,19 @@ public interface DustRuntimeMeta extends MindCollConsts {
 			return buildId(name, parent);
 		}
 
+		public MiNDCollType getCollType() {
+			return MiNDCollType.One;
+		}
+		
+		public MiNDValType getValType() {
+			return MiNDValType.Link;
+		}
+
 		@Override
 		public String toString() {
 			return type + ":" + getId();
 		}
+
 	}
 
 	class DustTokenContainer extends DustToken {
@@ -116,6 +124,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 			setCollType(collType);
 		}
 
+		@Override
 		public MiNDValType getValType() {
 			return valType;
 		}
@@ -124,6 +133,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 			this.valType = valType;
 		}
 
+		@Override
 		public MiNDCollType getCollType() {
 			return collType;
 		}

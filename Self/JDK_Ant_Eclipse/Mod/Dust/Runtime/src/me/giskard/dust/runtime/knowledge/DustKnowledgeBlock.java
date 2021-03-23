@@ -1,86 +1,93 @@
 package me.giskard.dust.runtime.knowledge;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
-import me.giskard.coll.MindCollMap;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustKnowledgeBlock implements DustKnowledgeConsts {
-	DustKnowledgeContext ctx;
-	DustKnowledgeBlock orig;
+	private static int NEXT_HANDLE = HANDLE_START;
 
-	final MindCollMap<DustTokenMember, Object> localData;
+	private synchronized static int getNextHandle() {
+		return NEXT_HANDLE++;
+	}
+
+	private Integer handle;
+
+	DustKnowledgeContext ctx;
+
+	final Map<DustToken, Object> localData;
+
+	public DustKnowledgeBlock(DustKnowledgeContext ctx, Integer handle_) {
+		this.ctx = ctx;
+		localData = new HashMap<>();
+		handle = handle_;
+	}
 
 	public DustKnowledgeBlock(DustKnowledgeContext ctx) {
+		this(ctx, getNextHandle());
+	}
+
+	public DustKnowledgeBlock(DustKnowledgeContext ctx, DustKnowledgeBlock source) {
 		this.ctx = ctx;
-		localData = new MindCollMap<DustTokenMember, Object>(false);
+		localData = new HashMap<>(source.localData);
+		handle = source.handle;
 	}
 
-	public DustKnowledgeBlock(DustKnowledgeBlock source) {
-		this.ctx = source.ctx;
-		localData = new MindCollMap<DustTokenMember, Object>(source.localData);
+	public int getHandle() {
+		return handle;
 	}
 
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustTokenMember tMember, Object key) {
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof DustKnowledgeBlock) ? ((DustKnowledgeBlock) obj).handle == handle : false;
+	}
+
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustToken token, Object key) {
+		if ( null == token ) {
+			return (RetType) this;
+		}
+
 		try {
-			if ( null == tMember ) {
-				return (RetType) this;
-			}
+			boolean one = token.getCollType() == MiNDCollType.One;
+			Object current = localData.get(token);
 
-			DustKnowledgeBlock tBlock = ((cmd != MiNDAccessCommand.Use) && (tMember.getValType() == MiNDValType.Link)) 
-					? ctx.entities.peek((DustToken) val) : null;
-
-			Object current = localData.get(tMember);
-			Object data = (null == tBlock) ? val : tBlock;
-			
-			if ( (null == current) && ( MTMEMBER_ENTITY_TAGS == tMember) && GiskardUtils.isAccessCreator(cmd)) {
-				current = DustKnowledgeCollection.create(this, tMember);
-				localData.put(tMember, current);
+			if ( (null == current) && !one && GiskardUtils.isAccessCreator(cmd) ) {
+				current = DustKnowledgeCollection.create(this, token);
+				localData.put(token, current);
 			}
 
 			switch ( cmd ) {
 			case Get:
-				if ( null != current ) {
-					if ( current instanceof DustKnowledgeCollection<?> ) {
-						current = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, key);
-					}
-					
-					if ( current instanceof DustKnowledgeLink ) {
-						val = (RetType) ((DustKnowledgeLink) current).to;
-					} else {
-						val = (RetType) current;
-					}
-				} else if (val instanceof MiNDToken) {
-					val = null;
-				}
+				val = (RetType) (((null == current) || one) ? current
+						: ((DustKnowledgeCollection) current).access(cmd, val, key));
 				break;
 			case Set:
-				if ( null != tBlock ) {
-					data = ctx.setLink(this, tMember, tBlock);
+				if ( one ) {
+					localData.put(token, val);
+					val = (RetType) current;
+				} else {
+					val = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, key);
 				}
-				localData.put(tMember, data);
-				val = (RetType) current;
 				break;
 			case Add:
-				if ( null == current ) {
-					current = DustKnowledgeCollection.create(this, tMember);
-					localData.put(tMember, current);
-				}
-				val = (RetType) ((DustKnowledgeCollection) current).access(cmd, data, null);
+				val = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, null);
 				break;
 			case Use:
 				if ( null != current ) {
 					MiNDAgent agent = (MiNDAgent) val;
 					try {
-						agent.process(MiNDAgentAction.Begin, tMember);
+						agent.process(MiNDAgentAction.Begin, token);
 
-						if ( current instanceof DustKnowledgeCollection ) {
-							((DustKnowledgeCollection) current).access(cmd, agent, null);
-						} else {
+						if ( one ) {
 							DustKnowledgeUtils.notifyAgent(agent, ctx, current);
+						} else {
+							((DustKnowledgeCollection) current).access(cmd, agent, null);
 						}
 					} finally {
-						agent.process(MiNDAgentAction.End, tMember);
+						agent.process(MiNDAgentAction.End, token);
 					}
 				}
 				break;
@@ -88,6 +95,7 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 //			Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 				break;
 			}
+
 			return val;
 		} catch (Exception e) {
 			return GiskardException.wrap(e);

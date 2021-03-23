@@ -1,14 +1,12 @@
 package me.giskard.dust.runtime.knowledge;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import me.giskard.GiskardException;
 import me.giskard.coll.MindCollConsts;
-import me.giskard.coll.MindCollFactory;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta;
 
@@ -19,48 +17,53 @@ public class DustKnowledgeContext
 		Object[] path;
 		int plen;
 
-		Object lastOb;
 		DustKnowledgeBlock lastBlock;
-		int lastBlockIdx;
+		DustToken lastMember;
+		Object lastKey;
+		Object lastOb;
 
 		PathResolver(Object... path_) {
 			this.path = path_;
-			plen = path.length;
+			plen = path_.length;
+			lastOb = lastBlock = null;
+			boolean coll = false;
 
 			for (int i = 0; i < plen; ++i) {
 				Object o = path[i];
+				lastKey = null;
 
-				if ( null == lastOb ) {
-					lastOb = entities.peek((MiNDToken) o);
-				} else if ( o instanceof DustTokenMember ) {
-					lastOb = lastBlock.localData.get((DustTokenMember) o);
-				} else if ( lastOb instanceof DustKnowledgeCollection.ValArr ) {
-					lastOb = ((DustKnowledgeCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, (Integer) o);
+				if ( coll ) {
+					lastOb = ((DustKnowledgeCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
+					lastKey = o;
+				} else if ( o instanceof DustToken ) {
+					lastMember = (DustToken) o;
+					if ( null == lastBlock ) {
+						lastOb = rootBlock.localData.get(lastMember);
+					} else {
+						lastOb = lastBlock.localData.get(lastMember);
+					}
 				}
 
-				if ( lastOb instanceof DustKnowledgeLink ) {
-					lastBlock = ((DustKnowledgeLink) lastOb).to;
-					lastOb = lastBlock;
-					lastBlockIdx = i;
-				} else if ( lastOb instanceof DustKnowledgeBlock ) {
-					lastBlock = (DustKnowledgeBlock) lastOb;
-					lastBlockIdx = i;
+				if ( null != lastOb ) {
+					if ( lastOb instanceof DustKnowledgeCollection ) {
+						coll = true;
+					} else if ( lastMember.getValType() == MiNDValType.Link ) {
+						lastBlock = getEntity((Integer) lastOb);
+						lastMember = null;
+					}
 				}
 			}
 		}
 
 		@SuppressWarnings("unchecked")
 		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
-			if ( (plen == lastBlockIdx + 1) && (cmd == MiNDAccessCommand.Get)
-					&& !((val instanceof DustToken) && (((DustToken) val).getType() == MiNDTokenType.TAG)) ) {
-				entities.put((MiNDToken) val, lastBlock);
-				return (RetType) lastBlock;
-//				return val;
+			if ( (cmd == MiNDAccessCommand.Get) && (null == lastMember) ) {
+				if ( val instanceof DustToken ) {
+					rootBlock.access(MiNDAccessCommand.Set, lastOb, (DustToken) val, null);
+				}
+				return (RetType) lastOb;
 			} else {
-				Object key = (lastBlockIdx < (plen - 2)) ? path[plen - 1] : null;
-				DustTokenMember tMember = (DustTokenMember) ((null != key) ? path[plen - 2]
-						: (lastBlockIdx < (plen - 1)) ? path[plen - 1] : null);
-				return lastBlock.access(cmd, val, tMember, key);
+				return lastBlock.access(cmd, val, lastMember, lastKey);
 			}
 		}
 	}
@@ -69,22 +72,33 @@ public class DustKnowledgeContext
 
 	Map<String, DustToken> tokens = new TreeMap<>();
 
-	MindCollFactory<MiNDToken, DustKnowledgeBlock> entities = new MindCollFactory<>(false,
-			new MiNDCreator<MiNDToken, DustKnowledgeBlock>() {
-				@Override
-				public DustKnowledgeBlock create(MiNDToken key) {
-					return new DustKnowledgeBlock(DustKnowledgeContext.this);
-				}
-			});
+	Map<Integer, DustKnowledgeBlock> entities = new HashMap<>();
+	DustKnowledgeBlock rootBlock;
 
-	Set<DustKnowledgeLink> allLinks = new HashSet<>();
-
-	public DustKnowledgeContext(DustKnowledgeContext parentCtx_) {
+	public DustKnowledgeContext(DustKnowledgeContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
+		rootBlock = (null == parentCtx) ? new DustKnowledgeBlock(this) : new DustKnowledgeBlock(this, parentCtx_.rootBlock);
+		entities.put(rootHandle, rootBlock);
 	}
 
 	public DustKnowledgeContext() {
-		this(null);
+		this(null, null);
+	}
+
+	DustKnowledgeBlock createEntity() {
+		DustKnowledgeBlock e = new DustKnowledgeBlock(this);
+		entities.put(e.getHandle(), e);
+		return e;
+	}
+
+	public DustKnowledgeBlock getEntity(Integer handle) {
+		DustKnowledgeBlock e = null;
+
+		for (DustKnowledgeContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
+			e = ctx.entities.get(handle);
+		}
+
+		return e;
 	}
 
 	DustToken getToken(Object id) {
@@ -101,16 +115,14 @@ public class DustKnowledgeContext
 		DustToken parent = ((MiNDTokenType.UNIT == type) || (MiNDTokenType.LOCAL == type)) ? null : (DustToken) params[0];
 		String id = DustToken.buildId(name, parent);
 
-		DustToken ret = tokens.get(id);
+		DustToken ret = getToken(id);
 
 		if ( null == ret ) {
-			ret = getToken(id);
-
-			if ( null == ret ) {
-				ret = DustToken.createToken(type, name, params);
-				ret.setEntity(entities.get(ret));
-				DustKnowledgeUtils.optSyncToken(ret);
-			}
+			ret = DustToken.createToken(type, name, params);
+			DustKnowledgeBlock te = createEntity();
+			ret.setEntityHandle(te.getHandle());
+			rootBlock.access(MiNDAccessCommand.Set, te.getHandle(), ret, null);
+			DustKnowledgeUtils.optSyncToken(this, ret);
 
 			tokens.put(id, ret);
 		}
@@ -131,8 +143,8 @@ public class DustKnowledgeContext
 		if ( 0 == valPath.length ) {
 			switch ( cmd ) {
 			case Get:
-				if ( val instanceof MiNDToken ) {
-					entities.put((MiNDToken) val, new DustKnowledgeBlock(this));
+				if ( val instanceof DustToken ) {
+					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (DustToken) val, null);
 				}
 				break;
 			case Add:
@@ -148,8 +160,10 @@ public class DustKnowledgeContext
 					while (null != c.parentCtx) {
 						c = c.parentCtx;
 					}
+					access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 					for (DustToken t : c) {
-						access(MiNDAccessCommand.Set, t.getEntity().toString(), MTMEMBER_ACTION_LOCAL, MTMEMBER_VARIANT_VALUE);
+//						access(MiNDAccessCommand.Add, t, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+						access(MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 						try {
 							ret = a.process(MiNDAgentAction.Process);
 						} catch (Exception e) {
@@ -166,6 +180,9 @@ public class DustKnowledgeContext
 
 			ret = pr.lastOb;
 			DustKnowledgeBlock eb = pr.lastBlock;
+			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustToken) && (((DustToken)val).getType() != MiNDTokenType.TAG) ) {
+				val = rootBlock.access(MiNDAccessCommand.Get, null, (DustToken) val, null);
+			}
 
 			if ( null == eb ) {
 				switch ( cmd ) {
@@ -178,7 +195,8 @@ public class DustKnowledgeContext
 				case Get:
 					// Get can be used to select the target entity. If the resolver did not find it,
 					// return null!
-					ret = (val instanceof MiNDToken) ? null : val;
+//					ret = (val instanceof MiNDToken) ? null : val;
+					ret = val;
 					break;
 				case Use:
 					ret = MiNDResultType.REJECT;
@@ -186,6 +204,10 @@ public class DustKnowledgeContext
 				}
 			} else {
 				ret = pr.access(cmd, val);
+				
+				if ( (null == ret ) && (cmd == MiNDAccessCommand.Get) ) {
+					ret = val;
+				}
 			}
 		}
 
@@ -193,29 +215,11 @@ public class DustKnowledgeContext
 	}
 
 	@Override
-	public void put(MiNDToken token, Object block) {
-		entities.put(token, (DustKnowledgeBlock) block);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <RetType> RetType peek(MiNDToken token) {
-		return (RetType) entities.peek(token);
-	}
-
-	DustKnowledgeLink setLink(DustKnowledgeBlock from, DustTokenMember def, DustKnowledgeBlock to) {
-		DustKnowledgeLink link = new DustKnowledgeLink(from, def, to);
-		allLinks.add(link);
-		return link;
-	}
-
-	void delLink(DustKnowledgeLink link) {
-		allLinks.remove(link);
-		link.from.access(MiNDAccessCommand.Del, link, link.def, null);
-	}
-
-	@Override
 	public String toString() {
 		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entities.toString();
+	}
+
+	public DustKnowledgeBlock getRootBlock() {
+		return rootBlock;
 	}
 }

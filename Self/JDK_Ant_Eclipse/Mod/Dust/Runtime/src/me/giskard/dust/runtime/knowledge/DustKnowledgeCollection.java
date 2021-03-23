@@ -8,16 +8,17 @@ import java.util.Map;
 import java.util.Set;
 
 import me.giskard.GiskardException;
+import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class DustKnowledgeCollection<ContainerType> implements DustKnowledgeConsts {
 	protected final ContainerType container;
 	protected final DustKnowledgeBlock owner;
-	protected final DustTokenMember token;
+	protected final DustToken token;
 
 	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key);
 
-	public static DustKnowledgeCollection create(DustKnowledgeBlock owner, DustTokenMember token) {
+	public static DustKnowledgeCollection create(DustKnowledgeBlock owner, DustToken token) {
 		switch ( token.getCollType() ) {
 		case Arr:
 			return new ValArr(owner, token);
@@ -30,73 +31,71 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 	}
 
-	public DustKnowledgeCollection(DustKnowledgeBlock owner, DustTokenMember token, ContainerType container) {
+	protected DustKnowledgeCollection(DustKnowledgeBlock owner, DustToken token, ContainerType container) {
 		this.owner = owner;
 		this.token = token;
 		this.container = container;
 	}
 
-	protected void notify(Object val, Iterable container) {
+	protected MiNDResultType notify(Object val, Iterable container) {
+		MiNDResultType ret = MiNDResultType.REJECT;
+		
 		for (Object ob : container) {
 			try {
-				DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
+				ret = DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
 			} catch (Exception e) {
 				GiskardException.swallow(e);
 			}
 		}
+		
+		return ret;
 	}
 
 	public static class ValSet extends DustKnowledgeCollection<Set> {
-		public ValSet(DustKnowledgeBlock owner, DustTokenMember token) {
-			super( owner,  token, new HashSet());
+		public ValSet(DustKnowledgeBlock owner, DustToken token) {
+			super(owner, token, new HashSet());
 		}
 
 		@Override
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+			Object ret = null;
+			
 			switch ( cmd ) {
 			case Add:
-				if ( val instanceof DustKnowledgeBlock ) {
-					for (Object link : container) {
-						if ( ((DustKnowledgeLink) link).to == val ) {
-							return false;
-						}
-					}
-					container.add(owner.ctx.setLink(owner, token, (DustKnowledgeBlock) val));
-				} else {
-					container.add(val);
-				}
+					ret = container.add(val);
 				break;
 			case Chk:
 				break;
 			case Del:
 				break;
 			case Get:
+				if ( GiskardUtils.isEqual(KEY_SIZE, key) ) {
+					return container.size();
+				}
 				break;
 			case Set:
 				break;
 			case Use:
-				notify(val, container);
+				ret = notify(val, container);
 				break;
 			}
-			return null;
+			
+			return ret;
 		}
 	}
 
 	public static class ValArr extends DustKnowledgeCollection<ArrayList> {
-		public ValArr(DustKnowledgeBlock owner, DustTokenMember token) {
-			super( owner,  token, new ArrayList());
+		public ValArr(DustKnowledgeBlock owner, DustToken token) {
+			super(owner, token, new ArrayList());
 		}
 
 		@Override
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = val;
 			Integer idx = (Integer) key;
-			
+
 			switch ( cmd ) {
 			case Add:
-				if ( val instanceof DustKnowledgeBlock ) {
-					val = owner.ctx.setLink(owner, token, (DustKnowledgeBlock) val);
-				}
 				container.add(val);
 				break;
 			case Chk:
@@ -104,7 +103,9 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 			case Del:
 				break;
 			case Get:
-				if ( idx < container.size() ) {
+				if ( GiskardUtils.isEqual(KEY_SIZE, key) ) {
+					return container.size();
+				} else if ( idx < container.size() ) {
 					ret = container.get(idx);
 				}
 				break;
@@ -119,8 +120,8 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 	}
 
 	public static class ValMap extends DustKnowledgeCollection<Map> {
-		public ValMap(DustKnowledgeBlock owner, DustTokenMember token) {
-			super( owner,  token, new HashMap());
+		public ValMap(DustKnowledgeBlock owner, DustToken token) {
+			super(owner, token, new HashMap());
 		}
 
 		@Override
@@ -131,12 +132,16 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 	}
 
 	public static class TagManager extends ValSet {
-		public TagManager(DustKnowledgeBlock owner, DustTokenMember token) {
+		public TagManager(DustKnowledgeBlock owner, DustToken token) {
 			super(owner, token);
 		}
-		
+
 		@Override
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+			if ( null == val ) {
+				GiskardException.wrap(null, "invalid access of", token, "missing value!");
+			}
+			
 			DustToken tok = (DustToken) val;
 			Object ret = val;
 			DustToken p = tok.getParent();
@@ -168,13 +173,13 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 			case Get:
 				ret = tok;
 
-					if ( null != p ) {
-						for (DustToken t : (Iterable<DustToken>) container) {
-							if ( p == t.getParent() ) {
-								ret = t;
-								break;
-							}
+				if ( null != p ) {
+					for (DustToken t : (Iterable<DustToken>) container) {
+						if ( p == t.getParent() ) {
+							ret = t;
+							break;
 						}
+					}
 				}
 				break;
 			case Use:

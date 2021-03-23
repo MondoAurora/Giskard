@@ -27,7 +27,7 @@ public class DustRuntimeGiskard extends Giskard implements MindCollConsts, DustR
 	public void afterBoot() throws Exception {
 		DustRuntimeUtils.BOOT_DONE = true;
 		for ( DustToken t : knowledge) {
-			DustKnowledgeUtils.optSyncToken(t);
+			DustKnowledgeUtils.optSyncToken(knowledge, t);
 		}
 		
 		machine.optLoadNativeConn();

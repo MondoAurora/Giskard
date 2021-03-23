@@ -4,16 +4,13 @@ import me.giskard.dust.runtime.DustRuntimeUtils;
 
 public class DustKnowledgeUtils implements DustKnowledgeConsts {
 	public static MiNDResultType notifyAgent(MiNDAgent agent, DustKnowledgeContext ctx, Object val) throws Exception {
-		if ( val instanceof DustKnowledgeLink ) {
-			ctx.entities.put(MTMEMBER_ACTION_PARAM, ((DustKnowledgeLink) val).to);
-		}
-
+		ctx.rootBlock.access(MiNDAccessCommand.Set, val, (DustTokenMember) MTMEMBER_ACTION_PARAM, null);
 		return agent.process(MiNDAgentAction.Process);
 	}
 
-	public static void optSyncToken(DustToken token) {
+	public static void optSyncToken(DustContext ctx, DustToken token) {
 		if ( DustRuntimeUtils.isBootDone() ) {
-			DustKnowledgeBlock e = token.getEntity();
+			DustKnowledgeBlock e = (DustKnowledgeBlock) ctx.getEntity(token.getEntityHandle());
 
 			e.access(MiNDAccessCommand.Set, token.getName(), (DustTokenMember) MTMEMBER_PLAIN_STRING, null);
 

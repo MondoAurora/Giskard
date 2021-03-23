@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
-import me.giskard.dust.runtime.machine.DustMachineAgora.Dialog.Invocation;
+import me.giskard.dust.runtime.machine.DustMachineAgora.Invocation;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
@@ -14,7 +14,7 @@ import me.giskard.tools.GisToolsTokenTranslator;
 public abstract class DustMachineControl implements DustMachineConsts, GiskardConsts.MiNDAgent, DustTokensMachine, DustTokensGeneric, DustTokensMind {
 
 	DustMachineAgora.Dialog dialog;
-	DustMachineAgora.Dialog.Invocation currChild;
+	DustMachineAgora.Invocation currChild;
 	
 	public static class Iteration extends DustMachineControl {
 		int repMin;

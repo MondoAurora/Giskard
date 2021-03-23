@@ -18,6 +18,9 @@ public abstract class Giskard implements GiskardConsts {
 		Method boot = clApp.getMethod("boot", String[].class);
 		boot.invoke(null, new Object[] { args });
 		
+		log(MiNDEventLevel.TRACE, "Loaded...");
+		log(MiNDEventLevel.TRACE);
+		
 		log(MiNDEventLevel.TRACE, "Launching main...");
 		
 		invoke();

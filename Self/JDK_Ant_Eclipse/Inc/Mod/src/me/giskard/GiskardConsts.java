@@ -17,7 +17,8 @@ public interface GiskardConsts {
 	String GISKARD_CLASS_APP = GISKARD_PACKAGE + ".app.GiskardApp";
 	String GISKARD_PACKAGE_MOD = GISKARD_PACKAGE + ".mod.";
 
-	final long KEY_APPEND = -1;
+	final int KEY_APPEND = -1;
+	final int KEY_SIZE = -2;
 
 	enum MiNDTokenType {
 		UNIT, AGENT, TYPE, MEMBER, TAG, LOCAL

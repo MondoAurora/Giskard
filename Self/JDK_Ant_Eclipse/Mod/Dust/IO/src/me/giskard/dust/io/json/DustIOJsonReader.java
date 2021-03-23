@@ -22,7 +22,9 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 
 		boolean processJsonEvent(MiNDAgentAction action, MiNDToken block, Object param) {
 			Giskard.access(MiNDAccessCommand.Set, param, MTTYPE_SERIALIZEEVENT, MTMEMBER_VARIANT_VALUE);
-			Giskard.access(MiNDAccessCommand.Set, block, MTTYPE_SERIALIZEEVENT, MTMEMBER_SERIALIZEEVENT_TYPE);
+			if ( null != block ) {
+				Giskard.access(MiNDAccessCommand.Set, block, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
+			}
 			
 			if ( (MiNDAgentAction.Begin == action) || (MTTAG_COLLTYPE_ONE == block) ) {
 				counter.add(block);

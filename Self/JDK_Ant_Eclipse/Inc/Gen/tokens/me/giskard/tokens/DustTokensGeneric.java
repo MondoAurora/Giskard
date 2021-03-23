@@ -16,7 +16,6 @@ public interface DustTokensGeneric extends GiskardConsts {
 	MiNDToken MTMEMBER_ACTION_THIS = Giskard.defineToken(MiNDTokenType.MEMBER, "This", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_PARAM = Giskard.defineToken(MiNDTokenType.MEMBER, "Param", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_DIALOG = Giskard.defineToken(MiNDTokenType.MEMBER, "Dialog", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_ACTION_LOCAL = Giskard.defineToken(MiNDTokenType.MEMBER, "Local", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_TEMP01 = Giskard.defineToken(MiNDTokenType.MEMBER, "Temp01", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	
 	MiNDToken MTTYPE_VARIANT = Giskard.defineToken(MiNDTokenType.TYPE, "Variant", MTUNIT_UTILS);

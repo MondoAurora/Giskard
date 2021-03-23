@@ -6,7 +6,7 @@ public interface DustTokensIO extends DustTokensMind {
 	MiNDToken MTUNIT_IO = Giskard.defineToken(MiNDTokenType.UNIT, "IO");
 	
 	MiNDToken MTTYPE_SERIALIZEEVENT = Giskard.defineToken(MiNDTokenType.TYPE, "SerializeEvent", MTUNIT_IO);
-	MiNDToken MTMEMBER_SERIALIZEEVENT_TYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "Type", MTTYPE_SERIALIZEEVENT, MiNDValType.Link, MiNDCollType.One);
+//	MiNDToken MTMEMBER_SERIALIZEEVENT_TYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "Type", MTTYPE_SERIALIZEEVENT, MiNDValType.Link, MiNDCollType.One);
 
 	MiNDToken MTTYPE_STREAM = Giskard.defineToken(MiNDTokenType.TYPE, "Stream", MTUNIT_IO);
 	MiNDToken MTMEMBER_URL= Giskard.defineToken(MiNDTokenType.MEMBER, "Url", MTTYPE_STREAM, MiNDValType.Raw, MiNDCollType.One);

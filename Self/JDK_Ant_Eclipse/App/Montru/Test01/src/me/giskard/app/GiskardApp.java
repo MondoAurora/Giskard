@@ -13,8 +13,8 @@ import me.giskard.tokens.DustTokensMontru;
 import me.giskard.tokens.DustTokensText;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, 
-DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui, DustTokensMontru {
+public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, DustTokensGuard,
+		DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui, DustTokensMontru {
 
 	public static final MiNDResultType boot(String[] args) throws Exception {
 		Giskard.addModule("DustRuntime", "1.0");
@@ -29,22 +29,21 @@ DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
 //		testIO();
-		
+//		testDB();
+
 //		testIterator();
 //		testSequence();
 //		testSelect();
 
-//		testDB();
-		
 		testGui();
-		
+
 		return MiNDResultType.ACCEPT;
 	}
 
 	public static void testGui() throws Exception {
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Set, MTTYPE_WINDOW, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
+
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MAINPANEL, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
@@ -62,21 +61,22 @@ DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui
 		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Add, 1000, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
 		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
-		
+
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_WORLD, MTMEMBER_WORLD_RENDERER);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_WORLD,
+				MTMEMBER_WORLD_RENDERER);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_THIS);
-		
+
 	}
 
 	public static void testDB() {
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DBTEST01, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
+
 		Giskard.access(MiNDAccessCommand.Set, "com.mysql.cj.jdbc.Driver", MTMEMBER_CALL_TARGET, MTMEMBER_DRIVER);
 		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", MTMEMBER_CALL_TARGET, MTMEMBER_URL);
 		Giskard.access(MiNDAccessCommand.Set, "dust", MTMEMBER_CALL_TARGET, MTMEMBER_PLAIN_STRING);
-		
+
 //		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_ACCOUNTID);
 //		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_PASSWORD);
 //    The actual values are in this class, which is of course, on gitignore...
@@ -117,7 +117,8 @@ DustTokensGuard, DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui
 	public static void linkDump(String msg, MiNDResultType res) throws Exception {
 		linkDump(msg, MTMEMBER_LINK_ARR);
 		if ( null != res ) {
-			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_TAGS);
+			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_TEMP01,
+					MTMEMBER_ENTITY_TAGS);
 		}
 	}
 

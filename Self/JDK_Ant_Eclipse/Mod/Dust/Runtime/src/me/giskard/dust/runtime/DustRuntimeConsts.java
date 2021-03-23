@@ -14,11 +14,16 @@ public interface DustRuntimeConsts extends GiskardConsts {
 	String CLASSPATH_MACHINE = "machine.DustMachineAgora";
 	String CLASSPATH_NATIVECONNECTOR = "machine.DustMachineNativeConnector";
 	
+	int HANDLE_NULL = 0;
+	int HANDLE_START = 1;
+	int HANDLE_DIALOG = -1;
+	int HANDLE_INVOCATION = -2;
+	
 	public interface DustContext extends Iterable<DustToken> {
 		MiNDToken defineToken(MiNDTokenType type, String name, Object... params);
 		<RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath);
-		void put(MiNDToken token, Object block);
-		<RetType> RetType peek(MiNDToken token);
+//		void put(MiNDToken token, Object block);
+		Object getEntity(Integer handle);
 	}
 
 	public interface DustRuntime {

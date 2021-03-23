@@ -5,13 +5,12 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
-import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
 
 public class DustMachineNativeConnector implements DustMachineConsts, DustTokensMind, DustTokensGeneric, DustTokensMachine, DustMachineConsts.NativeConnector {
-	private Map<Object, Class<?>> nativeClasses = new HashMap<>();
+	private Map<Integer, Class<?>> nativeClasses = new HashMap<>();
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -19,8 +18,8 @@ public class DustMachineNativeConnector implements DustMachineConsts, DustTokens
 		switch ( cmd ) {
 		case Add:
 			try {
-				DustToken a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
-				val = (RetType) nativeClasses.get(a.getEntity()).newInstance();
+				Integer a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
+				val = (RetType) nativeClasses.get(a).newInstance();
 			} catch (Exception e) {
 				GiskardException.wrap(e);
 			}
@@ -57,7 +56,7 @@ public class DustMachineNativeConnector implements DustMachineConsts, DustTokens
 			if ( null != agent ) {
 				Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
 				if ( null != c ) {
-					nativeClasses.put(agent, c);
+					nativeClasses.put((Integer) agent, c);
 				}
 			}
 			break;
