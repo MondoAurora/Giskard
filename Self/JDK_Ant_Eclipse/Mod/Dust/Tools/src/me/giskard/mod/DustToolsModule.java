@@ -17,7 +17,7 @@ public class DustToolsModule implements GiskardConsts.MiNDAgent, DustTokensGener
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			initModule();

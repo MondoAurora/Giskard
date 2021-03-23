@@ -42,7 +42,7 @@ public class DustMachineNativeConnector implements DustMachineConsts, DustTokens
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Begin:
 			break;

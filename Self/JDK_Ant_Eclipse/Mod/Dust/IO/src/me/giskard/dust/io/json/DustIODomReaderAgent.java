@@ -7,7 +7,7 @@ public class DustIODomReaderAgent implements DustIOConsts, GiskardConsts.MiNDAge
 	
 	
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

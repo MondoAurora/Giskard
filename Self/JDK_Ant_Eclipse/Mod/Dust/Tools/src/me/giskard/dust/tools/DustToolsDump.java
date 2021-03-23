@@ -14,7 +14,7 @@ public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
 	}
 	
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		MiNDResultType ret = MiNDResultType.ACCEPT;
 		switch ( action ) {
 		case Begin:

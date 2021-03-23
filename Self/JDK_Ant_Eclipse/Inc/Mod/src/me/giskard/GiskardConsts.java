@@ -52,7 +52,7 @@ public interface GiskardConsts {
 	}
 
 	public interface MiNDAgent extends GiskardConsts {
-		MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception;
+		MiNDResultType process(MiNDAgentAction action) throws Exception;
 	}
 
 }

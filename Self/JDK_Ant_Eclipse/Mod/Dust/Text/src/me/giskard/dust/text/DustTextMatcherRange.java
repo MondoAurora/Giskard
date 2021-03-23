@@ -1,5 +1,6 @@
 package me.giskard.dust.text;
 
+import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public class DustTextMatcherRange implements DustTextConsts, GiskardConsts.MiNDAgent {
@@ -14,10 +15,10 @@ public class DustTextMatcherRange implements DustTextConsts, GiskardConsts.MiNDA
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Process:
-			int chr = (int) params[0];
+			int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VARIANT_VALUE);
 			return ((rangeMin <= chr) && (chr <= rangeMax)) ? MiNDResultType.ACCEPT : MiNDResultType.REJECT;
 		default:
 			return MiNDResultType.ACCEPT;

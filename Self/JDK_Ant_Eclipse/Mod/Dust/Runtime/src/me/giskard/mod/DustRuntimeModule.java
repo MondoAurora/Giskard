@@ -8,7 +8,7 @@ import me.giskard.dust.runtime.DustRuntimeUtils;
 public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");

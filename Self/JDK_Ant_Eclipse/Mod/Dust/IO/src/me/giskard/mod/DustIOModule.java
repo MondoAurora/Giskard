@@ -15,7 +15,7 @@ public class DustIOModule implements GiskardConsts.MiNDAgent, DustTokensIO {
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "IO module initializing");

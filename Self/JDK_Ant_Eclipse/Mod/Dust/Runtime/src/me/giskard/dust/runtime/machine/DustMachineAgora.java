@@ -114,20 +114,19 @@ public class DustMachineAgora
 		}
 		
 		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			if ( null == agent ) {
 				agent = nativeConnector.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
-				
 				if ( agent instanceof DustMachineControl ) {
 					((DustMachineControl) agent).dialog = dlg;
 				}
-				
 			}
-			return agent.process(action, params);
+			
+			return agent.process(action);
 		}
 	}
 
-	private DustMachineModule modMind;
+//	private DustMachineModule modMind;
 	private Map<String, DustMachineModule> modules = new TreeMap<>();
 
 	DustContext knowledge;
@@ -138,7 +137,7 @@ public class DustMachineAgora
 	public void init(DustContext knowledge_, MiNDAgent agent) throws Exception {
 		this.knowledge = knowledge_;
 
-		modMind = new DustMachineModule(MODULE_NAME, agent);
+		DustMachineModule modMind = new DustMachineModule(MODULE_NAME, agent);
 		modules.put(MODULE_NAME, modMind);
 
 		nativeConnector = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_NATIVECONNECTOR);

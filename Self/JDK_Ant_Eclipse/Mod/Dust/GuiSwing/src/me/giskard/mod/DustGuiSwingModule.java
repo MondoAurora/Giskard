@@ -28,7 +28,7 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			initModule();

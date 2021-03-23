@@ -11,7 +11,7 @@ public class DustDBTest01 implements DustDBConsts, GiskardConsts.MiNDAgent {
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		MiNDResultType ret = MiNDResultType.ACCEPT_PASS;
 		
 		switch ( action ) {

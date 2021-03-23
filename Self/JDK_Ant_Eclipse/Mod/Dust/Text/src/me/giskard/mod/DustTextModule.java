@@ -19,7 +19,7 @@ public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			initModule();

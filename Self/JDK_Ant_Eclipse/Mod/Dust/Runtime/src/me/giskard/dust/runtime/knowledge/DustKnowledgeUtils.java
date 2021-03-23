@@ -45,8 +45,6 @@ public class DustKnowledgeUtils implements DustKnowledgeConsts {
 
 			e.access(MiNDAccessCommand.Set, token.getId(), (DustTokenMember) MTMEMBER_ENTITY_STOREID, null);
 			e.access(MiNDAccessCommand.Set, token.getRoot(), (DustTokenMember) MTMEMBER_ENTITY_STOREUNIT, null);
-			
-//			Giskard.log(MiNDEventLevel.TRACE, "SyncToken", e);
 		}
 	}
 }

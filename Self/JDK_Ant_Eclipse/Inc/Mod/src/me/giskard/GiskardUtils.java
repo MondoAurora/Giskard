@@ -51,8 +51,8 @@ public class GiskardUtils implements GiskardConsts {
 
 	public static final MiNDAgent LOGGER = new MiNDAgent() {
 		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
-			Giskard.log(MiNDEventLevel.INFO, action, sbAppend(null, ",", true, params));
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+			Giskard.log(MiNDEventLevel.INFO, action, sbAppend(null, ",", true, action));
 			return MiNDResultType.ACCEPT_READ;
 		}
 	};

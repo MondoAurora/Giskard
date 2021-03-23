@@ -10,7 +10,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 	JFrame frmMain;
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		MiNDResultType ret = MiNDResultType.ACCEPT;
 
 		switch ( action ) {

@@ -40,7 +40,7 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "DustTextMatcherConst agent initialized.");
@@ -49,7 +49,7 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 			idx = 0;
 			return MiNDResultType.ACCEPT;
 		case Process:
-			int chr = (int) params[0];
+			int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VARIANT_VALUE);
 			return (chr == cpArr[idx]) ? (++idx < size) ? MiNDResultType.ACCEPT_READ : MiNDResultType.ACCEPT_PASS : MiNDResultType.REJECT;
 		default:
 			return MiNDResultType.ACCEPT;

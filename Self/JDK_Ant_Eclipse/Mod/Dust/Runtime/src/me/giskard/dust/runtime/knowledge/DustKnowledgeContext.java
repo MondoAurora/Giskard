@@ -162,7 +162,6 @@ public class DustKnowledgeContext
 					}
 					access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 					for (DustToken t : c) {
-//						access(MiNDAccessCommand.Add, t, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 						access(MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 						try {
 							ret = a.process(MiNDAgentAction.Process);
@@ -193,9 +192,6 @@ public class DustKnowledgeContext
 					ret = Boolean.FALSE;
 					break;
 				case Get:
-					// Get can be used to select the target entity. If the resolver did not find it,
-					// return null!
-//					ret = (val instanceof MiNDToken) ? null : val;
 					ret = val;
 					break;
 				case Use:

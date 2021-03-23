@@ -79,7 +79,7 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 				if ( null != current ) {
 					MiNDAgent agent = (MiNDAgent) val;
 					try {
-						agent.process(MiNDAgentAction.Begin, token);
+						agent.process(MiNDAgentAction.Begin);
 
 						if ( one ) {
 							DustKnowledgeUtils.notifyAgent(agent, ctx, current);
@@ -87,7 +87,7 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 							((DustKnowledgeCollection) current).access(cmd, agent, null);
 						}
 					} finally {
-						agent.process(MiNDAgentAction.End, token);
+						agent.process(MiNDAgentAction.End);
 					}
 				}
 				break;

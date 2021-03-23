@@ -20,7 +20,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GiskardConsts.MiNDAg
 	int filterCount;
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		MiNDResultType ret = MiNDResultType.ACCEPT;
 
 		switch ( action ) {
@@ -52,7 +52,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GiskardConsts.MiNDAg
 		StringBuilder sbAll = new StringBuilder();
 		MiNDAgent reader = new MiNDAgent() {
 			@Override
-			public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+			public MiNDResultType process(MiNDAgentAction action) throws Exception {
 				return MiNDResultType.ACCEPT_READ;
 			}
 		};

@@ -16,7 +16,7 @@ public class DustDBModule implements GiskardConsts.MiNDAgent, DustTokensDB {
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
 			initModule();

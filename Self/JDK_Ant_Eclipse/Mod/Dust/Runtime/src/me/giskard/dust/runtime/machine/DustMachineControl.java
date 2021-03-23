@@ -21,7 +21,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 		int repMax;
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			MiNDResultType ret = MiNDResultType.ACCEPT;
 			switch ( action ) {
 			case Init:
@@ -89,7 +89,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 
 	public static class Sequence extends Multi {
 		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			MiNDResultType ret = MiNDResultType.ACCEPT;
 			
 			switch ( action ) {
@@ -120,7 +120,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 
 	public static class Selection extends Multi {
 		@Override
-		public MiNDResultType process(MiNDAgentAction action, Object... params) throws Exception {
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			MiNDResultType ret = MiNDResultType.ACCEPT;
 			
 			switch ( action ) {
