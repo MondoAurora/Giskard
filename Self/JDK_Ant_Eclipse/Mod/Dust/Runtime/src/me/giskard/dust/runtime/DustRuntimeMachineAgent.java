@@ -1,22 +1,19 @@
-package me.giskard.dust.runtime.machine;
+package me.giskard.dust.runtime;
 
 import java.util.ArrayList;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
-import me.giskard.dust.runtime.machine.DustMachineAgora.Invocation;
-import me.giskard.tokens.DustTokensGeneric;
-import me.giskard.tokens.DustTokensMachine;
-import me.giskard.tokens.DustTokensMind;
+import me.giskard.dust.runtime.DustRuntimeMachine.Invocation;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public abstract class DustMachineControl implements DustMachineConsts, GiskardConsts.MiNDAgent, DustTokensMachine, DustTokensGeneric, DustTokensMind {
+public abstract class DustRuntimeMachineAgent implements DustRuntimeConsts, GiskardConsts.MiNDAgent {
 
-	DustMachineAgora.Dialog dialog;
-	DustMachineAgora.Invocation currChild;
+	DustRuntimeMachine.Dialog dialog;
+	DustRuntimeMachine.Invocation currChild;
 	
-	public static class Iteration extends DustMachineControl {
+	public static class Iteration extends DustRuntimeMachineAgent {
 		int repMin;
 		int repMax;
 
@@ -65,7 +62,7 @@ public abstract class DustMachineControl implements DustMachineConsts, GiskardCo
 		}
 	}
 
-	static abstract class Multi extends DustMachineControl {
+	static abstract class Multi extends DustRuntimeMachineAgent {
 		ArrayList<Invocation> children = new ArrayList<>();
 		
 		boolean relayChild() throws Exception {

@@ -4,9 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import me.giskard.GiskardUtils;
-import me.giskard.coll.MindCollConsts;
 
-public class DustRuntimeUtils extends GiskardUtils implements MindCollConsts, DustRuntimeConsts {
+public class DustRuntimeUtils extends GiskardUtils implements DustRuntimeConsts {
 	public static String strTimestamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);
 		return sdf.format(new Date());
@@ -20,5 +19,10 @@ public class DustRuntimeUtils extends GiskardUtils implements MindCollConsts, Du
 	public static String strTimestamp(long time) {
 		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);
 		return sdf.format(new Date(time));
+	}
+
+	public static MiNDResultType notifyAgent(MiNDAgent agent, DustRuntimeDataContext ctx, Object val) throws Exception {
+		ctx.rootBlock.access(MiNDAccessCommand.Set, val, (DustRuntimeToken.Member) MTMEMBER_ACTION_PARAM, null);
+		return agent.process(MiNDAgentAction.Process);
 	}
 }

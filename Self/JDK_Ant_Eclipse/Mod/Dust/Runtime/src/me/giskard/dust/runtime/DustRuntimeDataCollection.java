@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.knowledge;
+package me.giskard.dust.runtime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +11,14 @@ import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class DustKnowledgeCollection<ContainerType> implements DustKnowledgeConsts {
+public abstract class DustRuntimeDataCollection<ContainerType> implements DustRuntimeConsts {
 	protected final ContainerType container;
-	protected final DustKnowledgeBlock owner;
-	protected final DustToken token;
+	protected final DustRuntimeDataBlock owner;
+	protected final DustRuntimeToken token;
 
 	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key);
 
-	public static DustKnowledgeCollection create(DustKnowledgeBlock owner, DustToken token) {
+	public static DustRuntimeDataCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 		switch ( token.getCollType() ) {
 		case Arr:
 			return new ValArr(owner, token);
@@ -31,7 +31,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 	}
 
-	protected DustKnowledgeCollection(DustKnowledgeBlock owner, DustToken token, ContainerType container) {
+	protected DustRuntimeDataCollection(DustRuntimeDataBlock owner, DustRuntimeToken token, ContainerType container) {
 		this.owner = owner;
 		this.token = token;
 		this.container = container;
@@ -42,7 +42,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		
 		for (Object ob : container) {
 			try {
-				ret = DustKnowledgeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
+				ret = DustRuntimeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
 			} catch (Exception e) {
 				GiskardException.swallow(e);
 			}
@@ -51,8 +51,8 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		return ret;
 	}
 
-	public static class ValSet extends DustKnowledgeCollection<Set> {
-		public ValSet(DustKnowledgeBlock owner, DustToken token) {
+	public static class ValSet extends DustRuntimeDataCollection<Set> {
+		public ValSet(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashSet());
 		}
 
@@ -84,8 +84,8 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 	}
 
-	public static class ValArr extends DustKnowledgeCollection<ArrayList> {
-		public ValArr(DustKnowledgeBlock owner, DustToken token) {
+	public static class ValArr extends DustRuntimeDataCollection<ArrayList> {
+		public ValArr(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new ArrayList());
 		}
 
@@ -119,8 +119,8 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 		}
 	}
 
-	public static class ValMap extends DustKnowledgeCollection<Map> {
-		public ValMap(DustKnowledgeBlock owner, DustToken token) {
+	public static class ValMap extends DustRuntimeDataCollection<Map> {
+		public ValMap(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashMap());
 		}
 
@@ -132,7 +132,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 	}
 
 	public static class TagManager extends ValSet {
-		public TagManager(DustKnowledgeBlock owner, DustToken token) {
+		public TagManager(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token);
 		}
 
@@ -142,9 +142,9 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 				GiskardException.wrap(null, "invalid access of", token, "missing value!");
 			}
 			
-			DustToken tok = (DustToken) val;
+			DustRuntimeToken tok = (DustRuntimeToken) val;
 			Object ret = val;
-			DustToken p = tok.getParent();
+			DustRuntimeToken p = tok.getParent();
 
 			switch ( cmd ) {
 			case Add:
@@ -153,8 +153,8 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 			case Set:
 				if ( !container.contains(tok) ) {
 					if ( null != p ) {
-						for (Iterator<DustToken> it = container.iterator(); it.hasNext();) {
-							DustToken t = it.next();
+						for (Iterator<DustRuntimeToken> it = container.iterator(); it.hasNext();) {
+							DustRuntimeToken t = it.next();
 							if ( p == t.getParent() ) {
 								it.remove();
 							}
@@ -174,7 +174,7 @@ public abstract class DustKnowledgeCollection<ContainerType> implements DustKnow
 				ret = tok;
 
 				if ( null != p ) {
-					for (DustToken t : (Iterable<DustToken>) container) {
+					for (DustRuntimeToken t : (Iterable<DustRuntimeToken>) container) {
 						if ( p == t.getParent() ) {
 							ret = t;
 							break;

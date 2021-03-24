@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.simple.JSONValue;
 
 import me.giskard.Giskard;
-import me.giskard.coll.MindCollStack;
+import me.giskard.coll.GisCollStack;
 import me.giskard.dust.io.DustIOSerializeStep;
 import me.giskard.tokens.DustTokensMind;
 
@@ -17,7 +17,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	static final MiNDToken TC_ACTION = MTTAG_AGENTACTION;
 
 	DustIOSerializeStep step;
-	MindCollStack<DustIOSerializeStep> procStack = new MindCollStack<DustIOSerializeStep>(DustIOSerializeStep.BUILDER);
+	GisCollStack<DustIOSerializeStep> procStack = new GisCollStack<DustIOSerializeStep>(DustIOSerializeStep.BUILDER);
 	StringBuilder indent = new StringBuilder();
 
 	public DustIODomReaderState(Reader r) throws Exception {

@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.knowledge;
+package me.giskard.dust.runtime;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,20 +6,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.GiskardException;
-import me.giskard.coll.MindCollConsts;
-import me.giskard.dust.runtime.DustRuntimeConsts;
-import me.giskard.dust.runtime.DustRuntimeMeta;
-import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
+import me.giskard.coll.GisCollConsts;
 
-public class DustKnowledgeContext
-		implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, Iterable<DustToken> {
+public class DustRuntimeDataContext
+		implements DustRuntimeConsts, GisCollConsts, DustRuntimeBootConsts, Iterable<DustRuntimeToken> {
 
 	class PathResolver {
 		Object[] path;
 		int plen;
 
-		DustKnowledgeBlock lastBlock;
-		DustToken lastMember;
+		DustRuntimeDataBlock lastBlock;
+		DustRuntimeToken lastMember;
 		Object lastKey;
 		Object lastOb;
 
@@ -34,10 +31,10 @@ public class DustKnowledgeContext
 				lastKey = null;
 
 				if ( coll ) {
-					lastOb = ((DustKnowledgeCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
+					lastOb = ((DustRuntimeDataCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
 					lastKey = o;
-				} else if ( o instanceof DustToken ) {
-					lastMember = (DustToken) o;
+				} else if ( o instanceof DustRuntimeToken ) {
+					lastMember = (DustRuntimeToken) o;
 					if ( null == lastBlock ) {
 						lastOb = rootBlock.localData.get(lastMember);
 					} else {
@@ -46,7 +43,7 @@ public class DustKnowledgeContext
 				}
 
 				if ( null != lastOb ) {
-					if ( lastOb instanceof DustKnowledgeCollection ) {
+					if ( lastOb instanceof DustRuntimeDataCollection ) {
 						coll = true;
 					} else if ( lastMember.getValType() == MiNDValType.Link ) {
 						lastBlock = getEntity((Integer) lastOb);
@@ -59,8 +56,8 @@ public class DustKnowledgeContext
 		@SuppressWarnings("unchecked")
 		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
 			if ( (cmd == MiNDAccessCommand.Get) && (null == lastMember) ) {
-				if ( val instanceof DustToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, lastOb, (DustToken) val, null);
+				if ( val instanceof DustRuntimeToken ) {
+					rootBlock.access(MiNDAccessCommand.Set, lastOb, (DustRuntimeToken) val, null);
 				}
 				return (RetType) lastOb;
 			} else {
@@ -69,41 +66,41 @@ public class DustKnowledgeContext
 		}
 	}
 
-	DustKnowledgeContext parentCtx;
+	DustRuntimeDataContext parentCtx;
 
-	Map<String, DustToken> tokens = new TreeMap<>();
+	Map<String, DustRuntimeToken> tokens = new TreeMap<>();
 
-	Map<Integer, DustKnowledgeBlock> entities = new HashMap<>();
-	DustKnowledgeBlock rootBlock;
+	Map<Integer, DustRuntimeDataBlock> entities = new HashMap<>();
+	DustRuntimeDataBlock rootBlock;
 
-	public DustKnowledgeContext(DustKnowledgeContext parentCtx_, Integer rootHandle) {
+	public DustRuntimeDataContext(DustRuntimeDataContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
-		rootBlock = (null == parentCtx) ? new DustKnowledgeBlock(this) : new DustKnowledgeBlock(this, parentCtx_.rootBlock);
+		rootBlock = (null == parentCtx) ? new DustRuntimeDataBlock(this) : new DustRuntimeDataBlock(this, parentCtx_.rootBlock);
 		entities.put(rootHandle, rootBlock);
 	}
 
-	public DustKnowledgeContext() {
+	public DustRuntimeDataContext() {
 		this(null, null);
 	}
 
-	DustKnowledgeBlock createEntity() {
-		DustKnowledgeBlock e = new DustKnowledgeBlock(this);
+	DustRuntimeDataBlock createEntity() {
+		DustRuntimeDataBlock e = new DustRuntimeDataBlock(this);
 		entities.put(e.getHandle(), e);
 		return e;
 	}
 
-	public DustKnowledgeBlock getEntity(Integer handle) {
-		DustKnowledgeBlock e = null;
+	public DustRuntimeDataBlock getEntity(Integer handle) {
+		DustRuntimeDataBlock e = null;
 
-		for (DustKnowledgeContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
+		for (DustRuntimeDataContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
 			e = ctx.entities.get(handle);
 		}
 
 		return e;
 	}
 
-	DustToken getToken(Object id) {
-		DustToken ret = tokens.get(id);
+	DustRuntimeToken getToken(Object id) {
+		DustRuntimeToken ret = tokens.get(id);
 		if ( null != parentCtx ) {
 			ret = parentCtx.getToken(id);
 		}
@@ -112,30 +109,30 @@ public class DustKnowledgeContext
 	}
 
 	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
-		String id = DustToken.buildId(type, name, params);
+		String id = DustRuntimeToken.buildId(type, name, params);
 
-		DustToken ret = getToken(id);
+		DustRuntimeToken ret = getToken(id);
 
 		if ( null == ret ) {
-			ret = DustToken.createToken(type, name, params);
+			ret = DustRuntimeToken.createToken(type, name, params);
 			registerToken(id, ret);
 		}
 
 		return ret;
 	}
 
-	public void registerToken(String id, DustToken token) {
+	public void registerToken(String id, DustRuntimeToken token) {
 		tokens.put(id, token);
 
-		DustKnowledgeBlock te = createEntity();
+		DustRuntimeDataBlock te = createEntity();
 		token.setEntityHandle(te.getHandle());
 		rootBlock.localData.put(token, te.getHandle());
 
-		te.access(MiNDAccessCommand.Set, token.getName(), (DustTokenMember) MTMEMBER_PLAIN_STRING, null);
+		te.access(MiNDAccessCommand.Set, token.getName(), (DustRuntimeToken.Member) MTMEMBER_PLAIN_STRING, null);
 
-		DustToken p = token.getParent();
+		DustRuntimeToken p = token.getParent();
 		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p, (DustTokenMember) MTMEMBER_CONN_OWNER, null);
+			te.access(MiNDAccessCommand.Set, p, (DustRuntimeToken.Member) MTMEMBER_CONN_OWNER, null);
 		}
 
 		MiNDToken t;
@@ -160,14 +157,14 @@ public class DustKnowledgeContext
 		}
 		
 		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, (DustTokenMember) MTMEMBER_ENTITY_PRIMARYTYPE, null);
+			te.access(MiNDAccessCommand.Set, t, (DustRuntimeToken.Member) MTMEMBER_ENTITY_PRIMARYTYPE, null);
 		}
 
-		te.access(MiNDAccessCommand.Set, token.getId(), (DustTokenMember) MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot(), (DustTokenMember) MTMEMBER_ENTITY_STOREUNIT, null);	
+		te.access(MiNDAccessCommand.Set, token.getId(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREID, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);	
 	}
 
-	public Iterator<DustToken> iterator() {
+	public Iterator<DustRuntimeToken> iterator() {
 		return tokens.values().iterator();
 	}
 
@@ -178,8 +175,8 @@ public class DustKnowledgeContext
 		if ( 0 == valPath.length ) {
 			switch ( cmd ) {
 			case Get:
-				if ( val instanceof DustToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (DustToken) val, null);
+				if ( val instanceof DustRuntimeToken ) {
+					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (DustRuntimeToken) val, null);
 				}
 				break;
 			case Add:
@@ -191,12 +188,12 @@ public class DustKnowledgeContext
 			case Use:
 				if ( val instanceof MiNDAgent ) {
 					MiNDAgent a = (MiNDAgent) val;
-					DustKnowledgeContext c = this;
+					DustRuntimeDataContext c = this;
 					while (null != c.parentCtx) {
 						c = c.parentCtx;
 					}
 					access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-					for (DustToken t : c) {
+					for (DustRuntimeToken t : c) {
 						access(MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 						try {
 							ret = a.process(MiNDAgentAction.Process);
@@ -213,9 +210,9 @@ public class DustKnowledgeContext
 			PathResolver pr = new PathResolver(valPath);
 
 			ret = pr.lastOb;
-			DustKnowledgeBlock eb = pr.lastBlock;
-			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustToken) && (((DustToken)val).getType() != MiNDTokenType.TAG) ) {
-				val = rootBlock.access(MiNDAccessCommand.Get, null, (DustToken) val, null);
+			DustRuntimeDataBlock eb = pr.lastBlock;
+			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustRuntimeToken) && (((DustRuntimeToken)val).getType() != MiNDTokenType.TAG) ) {
+				val = rootBlock.access(MiNDAccessCommand.Get, null, (DustRuntimeToken) val, null);
 			}
 
 			if ( null == eb ) {
@@ -250,7 +247,7 @@ public class DustKnowledgeContext
 		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entities.toString();
 	}
 
-	public DustKnowledgeBlock getRootBlock() {
+	public DustRuntimeDataBlock getRootBlock() {
 		return rootBlock;
 	}
 }

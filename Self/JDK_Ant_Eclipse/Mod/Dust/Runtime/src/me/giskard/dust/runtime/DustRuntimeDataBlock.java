@@ -1,4 +1,4 @@
-package me.giskard.dust.runtime.knowledge;
+package me.giskard.dust.runtime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustKnowledgeBlock implements DustKnowledgeConsts {
+public class DustRuntimeDataBlock implements DustRuntimeConsts {
 	private static int NEXT_HANDLE = HANDLE_START;
 
 	private synchronized static int getNextHandle() {
@@ -16,21 +16,21 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 
 	private Integer handle;
 
-	DustKnowledgeContext ctx;
+	DustRuntimeDataContext ctx;
 
-	final Map<DustToken, Object> localData;
+	final Map<DustRuntimeToken, Object> localData;
 
-	public DustKnowledgeBlock(DustKnowledgeContext ctx, Integer handle_) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, Integer handle_) {
 		this.ctx = ctx;
 		localData = new HashMap<>();
 		handle = handle_;
 	}
 
-	public DustKnowledgeBlock(DustKnowledgeContext ctx) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
 		this(ctx, getNextHandle());
 	}
 
-	public DustKnowledgeBlock(DustKnowledgeContext ctx, DustKnowledgeBlock source) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, DustRuntimeDataBlock source) {
 		this.ctx = ctx;
 		localData = new HashMap<>(source.localData);
 		handle = source.handle;
@@ -42,10 +42,10 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof DustKnowledgeBlock) ? ((DustKnowledgeBlock) obj).handle == handle : false;
+		return (obj instanceof DustRuntimeDataBlock) ? ((DustRuntimeDataBlock) obj).handle == handle : false;
 	}
 
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustToken token, Object key) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustRuntimeToken token, Object key) {
 		if ( null == token ) {
 			return (RetType) this;
 		}
@@ -55,25 +55,25 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 			Object current = localData.get(token);
 
 			if ( (null == current) && !one && GiskardUtils.isAccessCreator(cmd) ) {
-				current = DustKnowledgeCollection.create(this, token);
+				current = DustRuntimeDataCollection.create(this, token);
 				localData.put(token, current);
 			}
 
 			switch ( cmd ) {
 			case Get:
 				val = (RetType) (((null == current) || one) ? current
-						: ((DustKnowledgeCollection) current).access(cmd, val, key));
+						: ((DustRuntimeDataCollection) current).access(cmd, val, key));
 				break;
 			case Set:
 				if ( one ) {
 					localData.put(token, val);
 					val = (RetType) current;
 				} else {
-					val = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, key);
+					val = (RetType) ((DustRuntimeDataCollection) current).access(cmd, val, key);
 				}
 				break;
 			case Add:
-				val = (RetType) ((DustKnowledgeCollection) current).access(cmd, val, null);
+				val = (RetType) ((DustRuntimeDataCollection) current).access(cmd, val, null);
 				break;
 			case Use:
 				if ( null != current ) {
@@ -82,9 +82,9 @@ public class DustKnowledgeBlock implements DustKnowledgeConsts {
 						agent.process(MiNDAgentAction.Begin);
 
 						if ( one ) {
-							DustKnowledgeUtils.notifyAgent(agent, ctx, current);
+							DustRuntimeUtils.notifyAgent(agent, ctx, current);
 						} else {
-							((DustKnowledgeCollection) current).access(cmd, agent, null);
+							((DustRuntimeDataCollection) current).access(cmd, agent, null);
 						}
 					} finally {
 						agent.process(MiNDAgentAction.End);

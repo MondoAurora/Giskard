@@ -1,18 +1,10 @@
 package me.giskard.dust.runtime;
 
-import me.giskard.GiskardConsts;
+import me.giskard.tokens.DustTokensGeneric;
+import me.giskard.tokens.DustTokensMachine;
+import me.giskard.tokens.DustTokensMind;
+import me.giskard.tokens.DustTokensText;
 
-public interface DustRuntimeConsts extends GiskardConsts {
-	String MODULE_NAME = "DustRuntime";
-	
-	int HANDLE_NULL = 0;
-	int HANDLE_START = 1;
-	int HANDLE_DIALOG = -1;
-	int HANDLE_INVOCATION = -2;
-	
-	public interface DustGiskard {
-		void init(MiNDAgent agent) throws Exception;
-		void afterBoot() throws Exception;
-	}
+public interface DustRuntimeConsts extends DustRuntimeBootConsts, DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
 
 }

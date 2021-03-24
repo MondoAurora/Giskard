@@ -2,9 +2,9 @@ package me.giskard.mod;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
-import me.giskard.dust.runtime.DustRuntimeConsts;
+import me.giskard.dust.runtime.DustRuntimeBootConsts;
 
-public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
+public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeBootConsts {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {

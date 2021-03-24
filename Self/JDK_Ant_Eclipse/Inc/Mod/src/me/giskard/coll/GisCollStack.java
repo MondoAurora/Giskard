@@ -2,14 +2,14 @@ package me.giskard.coll;
 
 import java.util.ArrayList;
 
-import me.giskard.coll.MindCollConsts.MiNDBuilder;
+import me.giskard.coll.GisCollConsts.MiNDBuilder;
 
-public class MindCollStack<Val> implements MindCollConsts.MiNDColl<Integer, Val> {
+public class GisCollStack<Val> implements GisCollConsts.MiNDColl<Integer, Val> {
 	MiNDBuilder<Integer, Val> itemBuilder;
 	ArrayList<Val> items = new ArrayList<>();
 	int ptr = -1;
 
-	public MindCollStack(MiNDBuilder<Integer, Val> itemBuilder) {
+	public GisCollStack(MiNDBuilder<Integer, Val> itemBuilder) {
 		this.itemBuilder = itemBuilder;
 	}
 

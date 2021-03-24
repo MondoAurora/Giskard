@@ -4,27 +4,24 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.Giskard;
-import me.giskard.coll.MindCollConsts;
-import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
-import me.giskard.dust.runtime.knowledge.DustKnowledgeContext;
-import me.giskard.dust.runtime.machine.DustMachineAgora;
+import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeGiskard extends Giskard
-		implements MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustGiskard {
+		implements GisCollConsts, DustRuntimeBootConsts, DustRuntimeBootConsts.DustGiskard {
 
-	DustMachineAgora machine;
+	DustRuntimeMachine machine;
 
 	DustRuntimeLog log;
-	Map<String, DustToken> bootTokens = new TreeMap<>();
+	Map<String, DustRuntimeToken> bootTokens = new TreeMap<>();
 
 	public DustRuntimeGiskard() {
 		log = new DustRuntimeLog();
 		setImplementation(this);
 		
-		machine = new DustMachineAgora();
+		machine = new DustRuntimeMachine();
 		
-		DustKnowledgeContext ctx = machine.getContext();
-		for ( Map.Entry<String, DustToken> e : bootTokens.entrySet() ) {
+		DustRuntimeDataContext ctx = machine.getContext();
+		for ( Map.Entry<String, DustRuntimeToken> e : bootTokens.entrySet() ) {
 			ctx.registerToken(e.getKey(), e.getValue());
 		}
 	}
@@ -36,7 +33,7 @@ public class DustRuntimeGiskard extends Giskard
 
 	@Override
 	public void afterBoot() throws Exception {
-		machine.optLoadNativeConn();
+		machine.getNativeConn().loadMappedClasses();
 	}
 
 	@Override
@@ -44,11 +41,11 @@ public class DustRuntimeGiskard extends Giskard
 		if ( null != machine ) {
 			return machine.getContext().defineToken(type, name, params);
 		} else {
-			String id = DustToken.buildId(type, name, params);
-			DustToken ret = bootTokens.get(id);
+			String id = DustRuntimeToken.buildId(type, name, params);
+			DustRuntimeToken ret = bootTokens.get(id);
 
 			if ( null == ret ) {
-				ret = DustToken.createToken(type, name, params);
+				ret = DustRuntimeToken.createToken(type, name, params);
 				bootTokens.put(id, ret);
 			}
 
@@ -63,7 +60,7 @@ public class DustRuntimeGiskard extends Giskard
 
 	@Override
 	protected void addModule_(String modName, String ver) throws Exception {
-		machine.addModule(modName, ver);
+		machine.getNativeConn().addModule(modName, ver);
 	}
 
 	@Override

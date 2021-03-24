@@ -3,7 +3,7 @@ package me.giskard.coll;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardException;
 
-public interface MindCollConsts extends GiskardConsts {
+public interface GisCollConsts extends GiskardConsts {
 	
 	interface MiNDCreator<Key, Val> {
 		Val create(Key key);

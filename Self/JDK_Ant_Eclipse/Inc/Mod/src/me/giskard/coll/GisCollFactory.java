@@ -1,22 +1,22 @@
 package me.giskard.coll;
 
-import me.giskard.coll.MindCollConsts.CreatorSimple;
-import me.giskard.coll.MindCollConsts.MiNDCreator;
+import me.giskard.coll.GisCollConsts.CreatorSimple;
+import me.giskard.coll.GisCollConsts.MiNDCreator;
 
-public class MindCollFactory<Key, Val> extends MindCollMap<Key, Val> {
+public class GisCollFactory<Key, Val> extends GisCollMap<Key, Val> {
 	MiNDCreator<Key, ? extends Val> creator;
 	
-	public MindCollFactory(boolean sorted) {
+	public GisCollFactory(boolean sorted) {
 		super(sorted);
 	}
 	
-	public MindCollFactory(boolean sorted, MiNDCreator<Key, ? extends Val> creator) {
+	public GisCollFactory(boolean sorted, MiNDCreator<Key, ? extends Val> creator) {
 		this(sorted);
 		setCreator(creator);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public MindCollFactory(boolean sorted, Class<? extends Val> vc) {
+	public GisCollFactory(boolean sorted, Class<? extends Val> vc) {
 		this(sorted, new CreatorSimple(vc));
 	}
 	

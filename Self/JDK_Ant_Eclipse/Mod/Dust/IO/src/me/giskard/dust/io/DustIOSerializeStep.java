@@ -3,7 +3,7 @@ package me.giskard.dust.io;
 import java.util.Map;
 
 import me.giskard.Giskard;
-import me.giskard.coll.MindCollConsts.MiNDBuilder;
+import me.giskard.coll.GisCollConsts.MiNDBuilder;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustIOSerializeStep implements DustIOTokens {

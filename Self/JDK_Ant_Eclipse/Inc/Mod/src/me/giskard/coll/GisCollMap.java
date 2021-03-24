@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import me.giskard.coll.MindCollConsts.MiNDCollMap;
+import me.giskard.coll.GisCollConsts.MiNDCollMap;
 
-public class MindCollMap<Key, Val> implements MiNDCollMap<Key, Val> {
+public class GisCollMap<Key, Val> implements MiNDCollMap<Key, Val> {
 	Map<Key, Val> map;
 	
-	public MindCollMap(boolean sorted) {
+	public GisCollMap(boolean sorted) {
 		this.map = sorted ? new TreeMap<>() : new HashMap<>();
 	}
 	
-	public MindCollMap(MindCollMap<Key, Val> source) {
+	public GisCollMap(GisCollMap<Key, Val> source) {
 		this.map = (source.map instanceof TreeMap) ? new TreeMap<>(source.map) : new HashMap<>(source.map);
 	}
 	

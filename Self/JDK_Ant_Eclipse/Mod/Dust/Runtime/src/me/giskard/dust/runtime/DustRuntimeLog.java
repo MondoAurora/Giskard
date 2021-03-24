@@ -3,9 +3,9 @@ package me.giskard.dust.runtime;
 import java.io.PrintStream;
 
 import me.giskard.GiskardUtils;
-import me.giskard.coll.MindCollConsts;
+import me.giskard.coll.GisCollConsts;
 
-public class DustRuntimeLog implements MindCollConsts {
+public class DustRuntimeLog implements GisCollConsts {
 	static PrintStream psLog = System.out;
 
 	public void log(MiNDEventLevel lvl, Object... obs) {

@@ -1,14 +1,11 @@
 package me.giskard.mod;
 
 import me.giskard.Giskard;
-import me.giskard.coll.MindCollConsts;
+import me.giskard.dust.runtime.DustRuntimeMachineAgent;
 import me.giskard.dust.runtime.DustRuntimeConsts;
-import me.giskard.dust.runtime.DustRuntimeMeta;
-import me.giskard.dust.runtime.knowledge.DustKnowledgeConsts;
-import me.giskard.dust.runtime.machine.DustMachineControl;
 import me.giskard.tokens.DustTokens;
 
-public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts {
+public class DustRuntimeBoot implements DustRuntimeConsts {
 	public static void boot() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "DustRuntimeBoot.boot started...");
 		
@@ -23,9 +20,9 @@ public class DustRuntimeBoot implements DustKnowledgeConsts, DustRuntimeMeta, Mi
 		DustTokens.registerNewModule();
 
 		// Agent implementation data
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustMachineControl.Iteration.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustMachineControl.Sequence.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustMachineControl.Selection.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustRuntimeMachineAgent.Iteration.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustRuntimeMachineAgent.Sequence.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustRuntimeMachineAgent.Selection.class);
 		
 	}
 

@@ -30,11 +30,9 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 //		testIO();
 //		testDB();
-
 //		testIterator();
 //		testSequence();
 //		testSelect();
-
 		testGui();
 
 		return MiNDResultType.ACCEPT;
