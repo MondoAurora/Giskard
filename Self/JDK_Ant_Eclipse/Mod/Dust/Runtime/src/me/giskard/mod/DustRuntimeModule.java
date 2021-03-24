@@ -3,7 +3,6 @@ package me.giskard.mod;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.dust.runtime.DustRuntimeConsts;
-import me.giskard.dust.runtime.DustRuntimeUtils;
 
 public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeConsts {
 
@@ -13,7 +12,7 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeCo
 		case Init:
 			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");
 			
-			DustRuntime runtime = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_GISKARD);
+			DustGiskard runtime = (DustGiskard) Class.forName("me.giskard.dust.runtime.DustRuntimeGiskard").newInstance();
 			runtime.init(this);
 			
 			Class.forName("me.giskard.mod.DustRuntimeBoot").getMethod("boot").invoke(null);

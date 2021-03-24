@@ -9,9 +9,10 @@ import me.giskard.GiskardException;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta;
+import me.giskard.dust.runtime.DustRuntimeMeta.DustToken;
 
 public class DustKnowledgeContext
-		implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, DustRuntimeConsts.DustContext {
+		implements DustKnowledgeConsts, DustRuntimeMeta, MindCollConsts, DustRuntimeConsts, Iterable<DustToken> {
 
 	class PathResolver {
 		Object[] path;
@@ -110,33 +111,67 @@ public class DustKnowledgeContext
 		return ret;
 	}
 
-	@Override
 	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
-		DustToken parent = ((MiNDTokenType.UNIT == type) || (MiNDTokenType.LOCAL == type)) ? null : (DustToken) params[0];
-		String id = DustToken.buildId(name, parent);
+		String id = DustToken.buildId(type, name, params);
 
 		DustToken ret = getToken(id);
 
 		if ( null == ret ) {
 			ret = DustToken.createToken(type, name, params);
-			DustKnowledgeBlock te = createEntity();
-			ret.setEntityHandle(te.getHandle());
-			rootBlock.access(MiNDAccessCommand.Set, te.getHandle(), ret, null);
-			DustKnowledgeUtils.optSyncToken(this, ret);
-
-			tokens.put(id, ret);
+			registerToken(id, ret);
 		}
 
 		return ret;
 	}
 
-	@Override
+	public void registerToken(String id, DustToken token) {
+		tokens.put(id, token);
+
+		DustKnowledgeBlock te = createEntity();
+		token.setEntityHandle(te.getHandle());
+		rootBlock.localData.put(token, te.getHandle());
+
+		te.access(MiNDAccessCommand.Set, token.getName(), (DustTokenMember) MTMEMBER_PLAIN_STRING, null);
+
+		DustToken p = token.getParent();
+		if ( null != p ) {
+			te.access(MiNDAccessCommand.Set, p, (DustTokenMember) MTMEMBER_CONN_OWNER, null);
+		}
+
+		MiNDToken t;
+		switch ( token.getType() ) {
+		case AGENT:
+			t = MTTYPE_AGENT;
+			break;
+		case MEMBER:
+			t = MTTYPE_MEMBER;
+			break;
+		case TAG:
+			t = MTTYPE_TAG;
+			break;
+		case TYPE:
+			t = MTTYPE_TYPE;
+			break;
+		case UNIT:
+			t = MTTYPE_UNIT;
+			break;
+		default:
+			t = null;
+		}
+		
+		if ( null != t ) {
+			te.access(MiNDAccessCommand.Set, t, (DustTokenMember) MTMEMBER_ENTITY_PRIMARYTYPE, null);
+		}
+
+		te.access(MiNDAccessCommand.Set, token.getId(), (DustTokenMember) MTMEMBER_ENTITY_STOREID, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot(), (DustTokenMember) MTMEMBER_ENTITY_STOREUNIT, null);	
+	}
+
 	public Iterator<DustToken> iterator() {
 		return tokens.values().iterator();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath) {
 		Object ret = val;
 

@@ -6,10 +6,11 @@ import java.util.Set;
 import me.giskard.coll.MindCollConsts;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public interface DustRuntimeMeta extends MindCollConsts {
+public interface DustRuntimeMeta extends MindCollConsts, DustRuntimeConsts {
 
 	abstract class DustToken implements MiNDToken {
-		public static String buildId(String name, DustToken parent) {
+		public static String buildId(MiNDTokenType type, String name, Object... params) {
+			DustToken parent = ((MiNDTokenType.UNIT == type) || (MiNDTokenType.LOCAL == type)) ? null : (DustToken) params[0];
 			return (null == parent) ? name : parent.getId() + SEP_ID + name;
 		}
 
@@ -40,7 +41,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 		MiNDTokenType type;
 		String name;
 		DustToken parent;
-		int entityHandle;
+		int entityHandle = HANDLE_NULL;
 
 		public MiNDTokenType getType() {
 			return type;
@@ -80,7 +81,7 @@ public interface DustRuntimeMeta extends MindCollConsts {
 		}
 		
 		public String getId() {
-			return buildId(name, parent);
+			return buildId(type, name, parent);
 		}
 
 		public MiNDCollType getCollType() {

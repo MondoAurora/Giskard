@@ -7,19 +7,18 @@ import java.util.TreeMap;
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
-import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.dust.runtime.DustRuntimeMeta.DustTokenMember;
-import me.giskard.dust.runtime.DustRuntimeUtils;
 import me.giskard.dust.runtime.knowledge.DustKnowledgeBlock;
 import me.giskard.dust.runtime.knowledge.DustKnowledgeContext;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensMachine;
 import me.giskard.tokens.DustTokensMind;
+import me.giskard.tokens.DustTokensText;
 import me.giskard.tools.GisToolsModuleServices;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustMachineAgora
-		implements DustMachineConsts, DustRuntimeConsts.DustMachine, DustTokensMachine, DustTokensMind, DustTokensGeneric {
+		implements DustMachineConsts, DustTokensMachine, DustTokensMind, DustTokensGeneric, DustTokensText {
 
 	class Dialog {
 		private DustKnowledgeContext ctx;
@@ -126,24 +125,30 @@ public class DustMachineAgora
 		}
 	}
 
-//	private DustMachineModule modMind;
 	private Map<String, DustMachineModule> modules = new TreeMap<>();
 
-	DustContext knowledge;
+	DustKnowledgeContext knowledge;
 	Dialog dialog;
-	NativeConnector nativeConnector;
+	DustMachineNativeConnector nativeConnector;
+	
+	public DustMachineAgora() {
+		this.knowledge = new DustKnowledgeContext();
 
-	@Override
-	public void init(DustContext knowledge_, MiNDAgent agent) throws Exception {
-		this.knowledge = knowledge_;
+		MiNDToken[] bootTokens = { 
+				MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT,
+				MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE, MTTYPE_UNIT};
+		
+		Giskard.log(MiNDEventLevel.TRACE, "Boot tokens registered", bootTokens);
 
+	}
+
+	public void init(MiNDAgent agent) throws Exception {
 		DustMachineModule modMind = new DustMachineModule(MODULE_NAME, agent);
 		modules.put(MODULE_NAME, modMind);
 
-		nativeConnector = DustRuntimeUtils.createRuntimeComponent(CLASSPATH_NATIVECONNECTOR);
+		nativeConnector = new DustMachineNativeConnector();
 	}
 
-	@Override
 	public Object addModule(String modName, String ver) throws Exception {
 		if ( modules.containsKey(modName) ) {
 			GiskardException.wrap(null, "Module already loaded", modName);
@@ -165,12 +170,10 @@ public class DustMachineAgora
 		return mod;
 	}
 
-	@Override
-	public DustContext getContext() {
+	public DustKnowledgeContext getContext() {
 		return (null == dialog) ? knowledge : dialog.current.ctx;
 	}
 
-	@Override
 	public MiNDResultType invoke() throws Exception {
 		if ( null == dialog ) {
 			dialog = new Dialog();
