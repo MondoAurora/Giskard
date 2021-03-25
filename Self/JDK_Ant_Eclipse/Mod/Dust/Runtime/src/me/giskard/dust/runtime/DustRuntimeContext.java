@@ -75,7 +75,8 @@ public class DustRuntimeContext
 
 	public DustRuntimeContext(DustRuntimeContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
-		rootBlock = (null == parentCtx) ? new DustRuntimeDataBlock(this) : new DustRuntimeDataBlock(this, parentCtx_.rootBlock);
+//		rootBlock = (null == parentCtx) ? new DustRuntimeDataBlock(this) : new DustRuntimeDataBlock(this, parentCtx_.rootBlock);
+		rootBlock = new DustRuntimeDataBlock(this);
 		entities.put(rootHandle, rootBlock);
 	}
 

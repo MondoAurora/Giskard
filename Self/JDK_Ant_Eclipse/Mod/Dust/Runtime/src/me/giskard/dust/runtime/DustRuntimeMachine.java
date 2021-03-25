@@ -24,7 +24,16 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 		public Dialog(DustRuntimeMachine machine_) throws Exception {
 			this.machine = machine_;
 			ctx = new DustRuntimeContext(machine.knowledge, HANDLE_DIALOG);
-//			ctx.getRootBlock().access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken) MTMEMBER_ACTION_DIALOG, null);
+			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
+			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken) MTMEMBER_ACTION_DIALOG, null);
+
+			Integer handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			bRoot.access(MiNDAccessCommand.Set, handle, (DustRuntimeToken.Member) MTMEMBER_CALL_TARGET, null);
+
+			handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+			if ( null != handle ) {
+				bRoot.access(MiNDAccessCommand.Set, handle, (DustRuntimeToken.Member) MTMEMBER_CALL_PARAM, null);
+			}
 
 			current = invoke();
 		}
@@ -92,12 +101,10 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 	public static class Invocation implements MiNDAgent {
 		Dialog dlg;
 		DustRuntimeContext ctx;
-		DustRuntimeMachine machine;
 		MiNDAgent agent;
 
 		void setDialog(Dialog dlg_) throws Exception {
 			this.dlg = dlg_;
-			machine = dlg.getMachine();
 
 			DustRuntimeContext ctxSrc = dlg.getContext();
 
@@ -105,6 +112,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
 			// bRoot.put((DustTokenMember) MTMEMBER_ACTION_DIALOG, dlg.ctx.getRootBlock());
+			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken.Member) MTMEMBER_ACTION_DIALOG, null);
 
 			Integer handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			DustRuntimeDataBlock bTarget = ctxSrc.getEntity(handle);
@@ -120,9 +128,9 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			if ( null == agent ) {
-				agent = machine.getNativeConn().access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
-				if ( agent instanceof DustRuntimeAgentControl ) {
-					((DustRuntimeAgentControl) agent).dialog = dlg;
+				agent = dlg.machine.getNativeConn().access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
+				if ( agent instanceof RuntimeAgent ) {
+					((RuntimeAgent) agent).setInvocation(this);
 				}
 			}
 

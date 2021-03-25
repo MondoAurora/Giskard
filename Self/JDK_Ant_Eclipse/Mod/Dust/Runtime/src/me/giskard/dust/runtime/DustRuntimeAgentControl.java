@@ -3,11 +3,11 @@ package me.giskard.dust.runtime;
 import java.util.ArrayList;
 
 import me.giskard.Giskard;
-import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
+import me.giskard.dust.runtime.DustRuntimeMachine.Invocation;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public abstract class DustRuntimeAgentControl implements DustRuntimeConsts, GiskardConsts.MiNDAgent {
+public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeAgent {
 
 	DustRuntimeMachine.Dialog dialog;
 	DustRuntimeMachine.Invocation currChild;
@@ -152,5 +152,11 @@ public abstract class DustRuntimeAgentControl implements DustRuntimeConsts, Gisk
 			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 		}
 		return ret;
+	}
+	
+	@Override
+	public void setInvocation(Invocation invocation_) {
+		super.setInvocation(invocation_);
+		dialog = invocation_.dlg;
 	}
 }
