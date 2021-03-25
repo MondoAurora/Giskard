@@ -1,7 +1,7 @@
 package me.giskard.mod;
 
 import me.giskard.Giskard;
-import me.giskard.dust.runtime.DustRuntimeMachineAgent;
+import me.giskard.dust.runtime.DustRuntimeAgentControl;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.tokens.DustTokens;
 
@@ -20,9 +20,9 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		DustTokens.registerNewModule();
 
 		// Agent implementation data
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustRuntimeMachineAgent.Iteration.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustRuntimeMachineAgent.Sequence.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustRuntimeMachineAgent.Selection.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustRuntimeAgentControl.Iteration.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustRuntimeAgentControl.Sequence.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustRuntimeAgentControl.Selection.class);
 		
 	}
 

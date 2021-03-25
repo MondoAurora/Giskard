@@ -11,14 +11,14 @@ import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class DustRuntimeDataCollection<ContainerType> implements DustRuntimeConsts {
-	protected final ContainerType container;
+public abstract class DustRuntimeValueCollection<CollectorType> implements DustRuntimeConsts {
+	protected final CollectorType collector;
 	protected final DustRuntimeDataBlock owner;
 	protected final DustRuntimeToken token;
 
 	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key);
 
-	public static DustRuntimeDataCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
+	public static DustRuntimeValueCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 		switch ( token.getCollType() ) {
 		case Arr:
 			return new ValArr(owner, token);
@@ -31,16 +31,16 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 		}
 	}
 
-	protected DustRuntimeDataCollection(DustRuntimeDataBlock owner, DustRuntimeToken token, ContainerType container) {
-		this.owner = owner;
-		this.token = token;
-		this.container = container;
+	protected DustRuntimeValueCollection(DustRuntimeDataBlock owner_, DustRuntimeToken token_, CollectorType collector_) {
+		this.owner = owner_;
+		this.token = token_;
+		this.collector = collector_;
 	}
 
-	protected MiNDResultType notify(Object val, Iterable container) {
+	protected MiNDResultType notify(Object val, Iterable itContent) {
 		MiNDResultType ret = MiNDResultType.REJECT;
 		
-		for (Object ob : container) {
+		for (Object ob : itContent) {
 			try {
 				ret = DustRuntimeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
 			} catch (Exception e) {
@@ -51,7 +51,7 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 		return ret;
 	}
 
-	public static class ValSet extends DustRuntimeDataCollection<Set> {
+	public static class ValSet extends DustRuntimeValueCollection<Set> {
 		public ValSet(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashSet());
 		}
@@ -62,7 +62,7 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 			
 			switch ( cmd ) {
 			case Add:
-					ret = container.add(val);
+					ret = collector.add(val);
 				break;
 			case Chk:
 				break;
@@ -70,13 +70,13 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 				break;
 			case Get:
 				if ( GiskardUtils.isEqual(KEY_SIZE, key) ) {
-					return container.size();
+					return collector.size();
 				}
 				break;
 			case Set:
 				break;
 			case Use:
-				ret = notify(val, container);
+				ret = notify(val, collector);
 				break;
 			}
 			
@@ -84,7 +84,7 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 		}
 	}
 
-	public static class ValArr extends DustRuntimeDataCollection<ArrayList> {
+	public static class ValArr extends DustRuntimeValueCollection<ArrayList> {
 		public ValArr(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new ArrayList());
 		}
@@ -96,7 +96,7 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 
 			switch ( cmd ) {
 			case Add:
-				container.add(val);
+				collector.add(val);
 				break;
 			case Chk:
 				break;
@@ -104,22 +104,22 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 				break;
 			case Get:
 				if ( GiskardUtils.isEqual(KEY_SIZE, key) ) {
-					return container.size();
-				} else if ( idx < container.size() ) {
-					ret = container.get(idx);
+					return collector.size();
+				} else if ( idx < collector.size() ) {
+					ret = collector.get(idx);
 				}
 				break;
 			case Set:
 				break;
 			case Use:
-				notify(val, container);
+				notify(val, collector);
 				break;
 			}
 			return ret;
 		}
 	}
 
-	public static class ValMap extends DustRuntimeDataCollection<Map> {
+	public static class ValMap extends DustRuntimeValueCollection<Map> {
 		public ValMap(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashMap());
 		}
@@ -148,12 +148,12 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 
 			switch ( cmd ) {
 			case Add:
-				container.add(tok);
+				collector.add(tok);
 				break;
 			case Set:
-				if ( !container.contains(tok) ) {
+				if ( !collector.contains(tok) ) {
 					if ( null != p ) {
-						for (Iterator<DustRuntimeToken> it = container.iterator(); it.hasNext();) {
+						for (Iterator<DustRuntimeToken> it = collector.iterator(); it.hasNext();) {
 							DustRuntimeToken t = it.next();
 							if ( p == t.getParent() ) {
 								it.remove();
@@ -161,20 +161,20 @@ public abstract class DustRuntimeDataCollection<ContainerType> implements DustRu
 						}
 					}
 
-					container.add(tok);
+					collector.add(tok);
 				}
 				break;
 			case Chk:
-				ret = container.contains(tok);
+				ret = collector.contains(tok);
 				break;
 			case Del:
-				ret = container.remove(tok);
+				ret = collector.remove(tok);
 				break;
 			case Get:
 				ret = tok;
 
 				if ( null != p ) {
-					for (DustRuntimeToken t : (Iterable<DustRuntimeToken>) container) {
+					for (DustRuntimeToken t : (Iterable<DustRuntimeToken>) collector) {
 						if ( p == t.getParent() ) {
 							ret = t;
 							break;

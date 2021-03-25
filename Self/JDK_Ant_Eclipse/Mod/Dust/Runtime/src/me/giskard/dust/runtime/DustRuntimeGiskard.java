@@ -20,7 +20,7 @@ public class DustRuntimeGiskard extends Giskard
 		
 		machine = new DustRuntimeMachine();
 		
-		DustRuntimeDataContext ctx = machine.getContext();
+		DustRuntimeContext ctx = machine.getContext();
 		for ( Map.Entry<String, DustRuntimeToken> e : bootTokens.entrySet() ) {
 			ctx.registerToken(e.getKey(), e.getValue());
 		}

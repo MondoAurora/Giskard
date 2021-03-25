@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import me.giskard.GiskardException;
 import me.giskard.coll.GisCollConsts;
 
-public class DustRuntimeDataContext
+public class DustRuntimeContext
 		implements DustRuntimeConsts, GisCollConsts, DustRuntimeBootConsts, Iterable<DustRuntimeToken> {
 
 	class PathResolver {
@@ -31,7 +31,7 @@ public class DustRuntimeDataContext
 				lastKey = null;
 
 				if ( coll ) {
-					lastOb = ((DustRuntimeDataCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
+					lastOb = ((DustRuntimeValueCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
 					lastKey = o;
 				} else if ( o instanceof DustRuntimeToken ) {
 					lastMember = (DustRuntimeToken) o;
@@ -43,7 +43,7 @@ public class DustRuntimeDataContext
 				}
 
 				if ( null != lastOb ) {
-					if ( lastOb instanceof DustRuntimeDataCollection ) {
+					if ( lastOb instanceof DustRuntimeValueCollection ) {
 						coll = true;
 					} else if ( lastMember.getValType() == MiNDValType.Link ) {
 						lastBlock = getEntity((Integer) lastOb);
@@ -66,20 +66,20 @@ public class DustRuntimeDataContext
 		}
 	}
 
-	DustRuntimeDataContext parentCtx;
+	DustRuntimeContext parentCtx;
 
 	Map<String, DustRuntimeToken> tokens = new TreeMap<>();
 
 	Map<Integer, DustRuntimeDataBlock> entities = new HashMap<>();
 	DustRuntimeDataBlock rootBlock;
 
-	public DustRuntimeDataContext(DustRuntimeDataContext parentCtx_, Integer rootHandle) {
+	public DustRuntimeContext(DustRuntimeContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
 		rootBlock = (null == parentCtx) ? new DustRuntimeDataBlock(this) : new DustRuntimeDataBlock(this, parentCtx_.rootBlock);
 		entities.put(rootHandle, rootBlock);
 	}
 
-	public DustRuntimeDataContext() {
+	public DustRuntimeContext() {
 		this(null, null);
 	}
 
@@ -92,7 +92,7 @@ public class DustRuntimeDataContext
 	public DustRuntimeDataBlock getEntity(Integer handle) {
 		DustRuntimeDataBlock e = null;
 
-		for (DustRuntimeDataContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
+		for (DustRuntimeContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
 			e = ctx.entities.get(handle);
 		}
 
@@ -188,7 +188,7 @@ public class DustRuntimeDataContext
 			case Use:
 				if ( val instanceof MiNDAgent ) {
 					MiNDAgent a = (MiNDAgent) val;
-					DustRuntimeDataContext c = this;
+					DustRuntimeContext c = this;
 					while (null != c.parentCtx) {
 						c = c.parentCtx;
 					}

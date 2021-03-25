@@ -7,18 +7,36 @@ import me.giskard.GiskardUtils;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustRuntimeMachine implements DustRuntimeConsts {
+	
+	/*
+	 * Main purposes are not yet visible:
+	 *  - Thread management
+	 *  - Dialog thread connection, priorities, watchdogs
+	 */
 
-	class Dialog {
-		private DustRuntimeDataContext ctx;
+	static class Dialog {
+		private DustRuntimeMachine machine;
+		private DustRuntimeContext ctx;
 
 		private Invocation current;
 		private Stack<Invocation> callStack;
 
-		public Dialog() throws Exception {
-			ctx = new DustRuntimeDataContext((DustRuntimeDataContext) knowledge, HANDLE_DIALOG);
-//			ctx.put(MTMEMBER_ACTION_DIALOG, bDlg = new DustKnowledgeBlock((DustKnowledgeContext) ctx));
+		public Dialog(DustRuntimeMachine machine_) throws Exception {
+			this.machine = machine_;
+			ctx = new DustRuntimeContext(machine.knowledge, HANDLE_DIALOG);
+//			ctx.getRootBlock().access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken) MTMEMBER_ACTION_DIALOG, null);
 
-			current = new Invocation(this);
+			current = invoke();
+		}
+
+		public DustRuntimeMachine getMachine() {
+			return machine;
+		}
+
+		Invocation invoke() throws Exception {
+			Invocation ret = new Invocation();
+			ret.setDialog(this);
+			return ret;
 		}
 
 		public Invocation getCurrent() {
@@ -26,7 +44,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 		}
 
 		public Invocation relay() throws Exception {
-			push(new Invocation(this));
+			push(invoke());
 			current.process(MiNDAgentAction.Init);
 			return current;
 		}
@@ -66,29 +84,27 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			return ret;
 		}
 
-		public DustRuntimeDataContext getContext() {
-			return (null == current) ? (DustRuntimeDataContext) knowledge : current.ctx;
+		public DustRuntimeContext getContext() {
+			return (null == current) ? ctx : current.ctx;
 		}
 	}
 
-	public class Invocation implements MiNDAgent {
+	public static class Invocation implements MiNDAgent {
 		Dialog dlg;
-		DustRuntimeDataContext ctx;
+		DustRuntimeContext ctx;
+		DustRuntimeMachine machine;
 		MiNDAgent agent;
-
-		public Invocation(Dialog dlg_) throws Exception {
-			setDialog(dlg_);
-		}
 
 		void setDialog(Dialog dlg_) throws Exception {
 			this.dlg = dlg_;
+			machine = dlg.getMachine();
 
-			DustRuntimeDataContext ctxSrc = dlg.getContext();
+			DustRuntimeContext ctxSrc = dlg.getContext();
 
-			ctx = new DustRuntimeDataContext(ctxSrc, HANDLE_INVOCATION);
+			ctx = new DustRuntimeContext(ctxSrc, HANDLE_INVOCATION);
 
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
-//			bRoot.put((DustTokenMember) MTMEMBER_ACTION_DIALOG, dlg.ctx.getRootBlock());
+			// bRoot.put((DustTokenMember) MTMEMBER_ACTION_DIALOG, dlg.ctx.getRootBlock());
 
 			Integer handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			DustRuntimeDataBlock bTarget = ctxSrc.getEntity(handle);
@@ -104,9 +120,9 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			if ( null == agent ) {
-				agent = nativeConn.access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
-				if ( agent instanceof DustRuntimeMachineAgent ) {
-					((DustRuntimeMachineAgent) agent).dialog = dlg;
+				agent = machine.getNativeConn().access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
+				if ( agent instanceof DustRuntimeAgentControl ) {
+					((DustRuntimeAgentControl) agent).dialog = dlg;
 				}
 			}
 
@@ -114,12 +130,12 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 		}
 	}
 
-	DustRuntimeDataContext knowledge;
+	DustRuntimeContext knowledge;
 	Dialog dialog;
-	DustRuntimeMachineNativeConn nativeConn;
+	DustRuntimeNativeConnector nativeConn;
 
 	public DustRuntimeMachine() {
-		this.knowledge = new DustRuntimeDataContext();
+		this.knowledge = new DustRuntimeContext();
 
 		MiNDToken[] bootTokens = { MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE,
 				MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
@@ -130,20 +146,20 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 	}
 
 	public void init(MiNDAgent agent) throws Exception {
-		nativeConn = new DustRuntimeMachineNativeConn(agent);
+		nativeConn = new DustRuntimeNativeConnector(agent);
 	}
-	
-	public DustRuntimeMachineNativeConn getNativeConn() {
+
+	public DustRuntimeNativeConnector getNativeConn() {
 		return nativeConn;
 	}
 
-	public DustRuntimeDataContext getContext() {
+	public DustRuntimeContext getContext() {
 		return (null == dialog) ? knowledge : dialog.current.ctx;
 	}
 
 	public MiNDResultType invoke() throws Exception {
 		if ( null == dialog ) {
-			dialog = new Dialog();
+			dialog = new Dialog(this);
 			return dialog.execute();
 		} else {
 			dialog.relay();

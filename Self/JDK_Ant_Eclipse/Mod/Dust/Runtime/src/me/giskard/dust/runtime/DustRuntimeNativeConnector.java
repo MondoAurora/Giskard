@@ -10,7 +10,7 @@ import me.giskard.GiskardException;
 import me.giskard.coll.GisCollConsts;
 import me.giskard.tools.GisToolsModuleServices;
 
-public class DustRuntimeMachineNativeConn implements DustRuntimeConsts, GisCollConsts, GiskardConsts.MiNDAgent {
+public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollConsts, GiskardConsts.MiNDAgent {
 	class DustModule implements MiNDBuilder<String, Object> {
 		MiNDAgent modAgent;
 		ClassLoader cl;
@@ -50,7 +50,7 @@ public class DustRuntimeMachineNativeConn implements DustRuntimeConsts, GisCollC
 
 	private Map<Integer, Class<?>> nativeClasses = new HashMap<>();
 	
-	public DustRuntimeMachineNativeConn(MiNDAgent agent) throws Exception {
+	public DustRuntimeNativeConnector(MiNDAgent agent) throws Exception {
 		DustModule modMind = new DustModule(MODULE_NAME, agent);
 		modules.put(MODULE_NAME, modMind);
 	}

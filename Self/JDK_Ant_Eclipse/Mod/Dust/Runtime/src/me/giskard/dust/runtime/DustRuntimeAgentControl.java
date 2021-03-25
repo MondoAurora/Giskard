@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
-import me.giskard.dust.runtime.DustRuntimeMachine.Invocation;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public abstract class DustRuntimeMachineAgent implements DustRuntimeConsts, GiskardConsts.MiNDAgent {
+public abstract class DustRuntimeAgentControl implements DustRuntimeConsts, GiskardConsts.MiNDAgent {
 
 	DustRuntimeMachine.Dialog dialog;
 	DustRuntimeMachine.Invocation currChild;
 	
-	public static class Iteration extends DustRuntimeMachineAgent {
+	public static class Iteration extends DustRuntimeAgentControl {
 		int repMin;
 		int repMax;
 
@@ -62,8 +61,8 @@ public abstract class DustRuntimeMachineAgent implements DustRuntimeConsts, Gisk
 		}
 	}
 
-	static abstract class Multi extends DustRuntimeMachineAgent {
-		ArrayList<Invocation> children = new ArrayList<>();
+	static abstract class Multi extends DustRuntimeAgentControl {
+		ArrayList<DustRuntimeMachine.Invocation> children = new ArrayList<>();
 		
 		boolean relayChild() throws Exception {
 			boolean ok = false;

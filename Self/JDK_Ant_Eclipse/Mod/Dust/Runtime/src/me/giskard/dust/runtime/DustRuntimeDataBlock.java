@@ -16,21 +16,21 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts {
 
 	private Integer handle;
 
-	DustRuntimeDataContext ctx;
+	DustRuntimeContext ctx;
 
 	final Map<DustRuntimeToken, Object> localData;
 
-	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, Integer handle_) {
+	public DustRuntimeDataBlock(DustRuntimeContext ctx, Integer handle_) {
 		this.ctx = ctx;
 		localData = new HashMap<>();
 		handle = handle_;
 	}
 
-	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
+	public DustRuntimeDataBlock(DustRuntimeContext ctx) {
 		this(ctx, getNextHandle());
 	}
 
-	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, DustRuntimeDataBlock source) {
+	public DustRuntimeDataBlock(DustRuntimeContext ctx, DustRuntimeDataBlock source) {
 		this.ctx = ctx;
 		localData = new HashMap<>(source.localData);
 		handle = source.handle;
@@ -55,25 +55,25 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts {
 			Object current = localData.get(token);
 
 			if ( (null == current) && !one && GiskardUtils.isAccessCreator(cmd) ) {
-				current = DustRuntimeDataCollection.create(this, token);
+				current = DustRuntimeValueCollection.create(this, token);
 				localData.put(token, current);
 			}
 
 			switch ( cmd ) {
 			case Get:
 				val = (RetType) (((null == current) || one) ? current
-						: ((DustRuntimeDataCollection) current).access(cmd, val, key));
+						: ((DustRuntimeValueCollection) current).access(cmd, val, key));
 				break;
 			case Set:
 				if ( one ) {
 					localData.put(token, val);
 					val = (RetType) current;
 				} else {
-					val = (RetType) ((DustRuntimeDataCollection) current).access(cmd, val, key);
+					val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, key);
 				}
 				break;
 			case Add:
-				val = (RetType) ((DustRuntimeDataCollection) current).access(cmd, val, null);
+				val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, null);
 				break;
 			case Use:
 				if ( null != current ) {
@@ -84,7 +84,7 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts {
 						if ( one ) {
 							DustRuntimeUtils.notifyAgent(agent, ctx, current);
 						} else {
-							((DustRuntimeDataCollection) current).access(cmd, agent, null);
+							((DustRuntimeValueCollection) current).access(cmd, agent, null);
 						}
 					} finally {
 						agent.process(MiNDAgentAction.End);

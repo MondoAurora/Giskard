@@ -21,7 +21,7 @@ public class DustRuntimeUtils extends GiskardUtils implements DustRuntimeConsts 
 		return sdf.format(new Date(time));
 	}
 
-	public static MiNDResultType notifyAgent(MiNDAgent agent, DustRuntimeDataContext ctx, Object val) throws Exception {
+	public static MiNDResultType notifyAgent(MiNDAgent agent, DustRuntimeContext ctx, Object val) throws Exception {
 		ctx.rootBlock.access(MiNDAccessCommand.Set, val, (DustRuntimeToken.Member) MTMEMBER_ACTION_PARAM, null);
 		return agent.process(MiNDAgentAction.Process);
 	}
