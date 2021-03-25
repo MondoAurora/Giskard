@@ -27,13 +27,29 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.addModule("MontruGui", "1.0");
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
-
-//		testIO();
-//		testDB();
-//		testIterator();
-//		testSequence();
-//		testSelect();
-		testGui();
+		
+		String testId = (args.length > 0) ? args[0] : "gui";
+		
+		switch ( testId ) {
+		case "io":
+			testIO();
+			break;
+		case "db":
+			testDB();
+			break;
+		case "rep":
+			testIterator();
+			break;
+		case "seq":
+			testSequence();
+			break;
+		case "sel":
+			testSelect();
+			break;
+		case "gui":
+			testGui();
+			break;
+		}
 
 		return MiNDResultType.ACCEPT;
 	}

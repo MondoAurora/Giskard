@@ -18,6 +18,5 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="me.giskard.Giskard"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="GiskardMod"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="test1 test2"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="MontruTest01"/>
 </launchConfiguration>
