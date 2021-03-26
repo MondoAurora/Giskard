@@ -46,6 +46,11 @@ abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 		return type;
 	}
 
+	@Override
+	public String getMiNDName() {
+		return name;
+	}
+	
 	protected DustRuntimeToken(MiNDTokenType type, String name, Container parent) {
 		this.type = type;
 		this.parent = parent;

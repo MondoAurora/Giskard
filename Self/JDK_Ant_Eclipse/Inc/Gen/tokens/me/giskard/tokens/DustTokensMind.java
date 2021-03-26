@@ -9,6 +9,7 @@ public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTTYPE_UNIT = Giskard.defineToken(MiNDTokenType.TYPE, "Unit", MTUNIT_MODEL);
 
 	MiNDToken MTTYPE_ENTITY = Giskard.defineToken(MiNDTokenType.TYPE, "Entity", MTUNIT_MODEL);
+	MiNDToken MTMEMBER_ENTITY_HANDLE = Giskard.defineToken(MiNDTokenType.MEMBER, "Handle", MTTYPE_ENTITY, MiNDValType.Int, MiNDCollType.One);
 	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
 	MiNDToken MTMEMBER_ENTITY_TYPES = Giskard.defineToken(MiNDTokenType.MEMBER, "Types", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
 	MiNDToken MTMEMBER_ENTITY_TAGS = Giskard.defineToken(MiNDTokenType.MEMBER, "Tags", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);

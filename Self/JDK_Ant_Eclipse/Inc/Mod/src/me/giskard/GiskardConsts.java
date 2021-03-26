@@ -48,7 +48,11 @@ public interface GiskardConsts {
 		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
 	};
 
-	public interface MiNDToken {
+	public interface MiNDNamed {
+		String getMiNDName();
+	}
+
+	public interface MiNDToken extends MiNDNamed {
 	}
 
 	public interface MiNDAgent extends GiskardConsts {

@@ -23,7 +23,7 @@ public class GiskardUtils implements GiskardConsts {
 			}
 			return ( null == sb ) ? "" : sb.toString();
 		} else { 
-			return ob.toString();
+			return (ob instanceof MiNDNamed) ? ((MiNDNamed)ob).getMiNDName() : ob.toString();
 		}
 	}
 	

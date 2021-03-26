@@ -133,7 +133,7 @@ public class DustRuntimeContext
 
 		DustRuntimeToken p = token.getParent();
 		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p, (DustRuntimeToken.Member) MTMEMBER_CONN_OWNER, null);
+			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_CONN_OWNER, null);
 		}
 
 		MiNDToken t;
@@ -162,7 +162,7 @@ public class DustRuntimeContext
 		}
 
 		te.access(MiNDAccessCommand.Set, token.getId(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);	
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);	
 	}
 
 	public Iterator<DustRuntimeToken> iterator() {

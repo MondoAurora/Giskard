@@ -46,4 +46,8 @@ public class GisCollMap<Key, Val> implements MiNDCollMap<Key, Val> {
 	public void clear() {
 		map.clear();
 	}
+	
+	public Iterable<Key> keys() {
+		return map.keySet();
+	}
 }

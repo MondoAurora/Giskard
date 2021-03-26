@@ -5,9 +5,10 @@ import java.util.Map;
 
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
+import me.giskard.GiskardConsts.MiNDNamed;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustRuntimeDataBlock implements DustRuntimeConsts {
+public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 	private static int NEXT_HANDLE = HANDLE_START;
 
 	private synchronized static int getNextHandle() {
@@ -24,6 +25,9 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts {
 		this.ctx = ctx;
 		localData = new HashMap<>();
 		handle = handle_;
+		if ( HANDLE_NULL < handle ) {
+			localData.put((DustRuntimeToken) MTMEMBER_ENTITY_HANDLE, handle);
+		}
 	}
 
 	public DustRuntimeDataBlock(DustRuntimeContext ctx) {
@@ -38,6 +42,21 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts {
 
 	public int getHandle() {
 		return handle;
+	}
+	
+	@Override
+	public String getMiNDName() {
+		Object ret = localData.get(MTMEMBER_PLAIN_STRING);
+		
+		if ( null == ret ) {
+			ret = localData.get(MTMEMBER_ENTITY_STOREID);
+		}
+		
+		if ( null == ret ) {
+			ret = localData.get(MTMEMBER_ENTITY_HANDLE);
+		}
+		
+		return GiskardUtils.toString(ret);
 	}
 
 	@Override
