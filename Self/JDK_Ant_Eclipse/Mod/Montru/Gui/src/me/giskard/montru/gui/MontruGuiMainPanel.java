@@ -2,6 +2,7 @@ package me.giskard.montru.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -22,20 +23,27 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -51,19 +59,24 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 
 	static final String[] FILTER_TABS = { "Text", "Type", "Unit" };
 
+	enum FilterInfo {
+		text, textValue, textAnyData, textRegexp, types, units
+	}
+
 	class KnowledgeGraph extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		Rectangle rct = new Rectangle();
 		double dC = 500;
 		double dS = 1000;
-		
-		GisCollFactory<Integer, Color> factColor = new GisCollFactory<Integer, Color>(false, new MiNDCreator<Integer, Color>() {
-			@Override
-			public Color create(Integer key) {
-				return new Color(255, 255, 255, key);
-			}
-		});
+
+		GisCollFactory<Integer, Color> factColor = new GisCollFactory<Integer, Color>(false,
+				new MiNDCreator<Integer, Color>() {
+					@Override
+					public Color create(Integer key) {
+						return new Color(255, 255, 255, key);
+					}
+				});
 
 		Font fnt;
 		GisCollFactory<Integer, Font> factFont = new GisCollFactory<Integer, Font>(false, new MiNDCreator<Integer, Font>() {
@@ -72,7 +85,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				return fnt.deriveFont((float) key);
 			}
 		});
-		
+
 		public KnowledgeGraph() {
 			setBackground(Color.black);
 			setForeground(Color.white);
@@ -81,35 +94,36 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		@Override
 		protected void paintChildren(Graphics g) {
 			getBounds(rct);
-			
+
 			Color c = g.getColor();
 			fnt = g.getFont();
 
 			int dx = rct.x + rct.width / 2;
 			int dy = rct.y + rct.height / 2;
-			int lbl = 1;
-			
+			int lbl = 0;
+
 			g.setColor(Color.white);
 			g.drawArc(dx, dy, 20, 20, 0, 360);
-			
-			for (Iterator<Double> it = coords.iterator(); it.hasNext() && (lbl < filteredEntities.size()); ++lbl) {
+
+			for (Iterator<Double> it = coords.iterator(); it.hasNext() && (lbl < selectedEntities.size()); ++lbl) {
 				double x = it.next();
 				double y = it.next();
 				double z = it.next();
 
 				int px = dx + (int) (dS * x / (dC + z));
 				int py = dy + (int) (dS * y / (dC + z));
-				
-				int alpha = (int) ((z + 300.0) / 400.0 * 255.0); 
+
+				int alpha = (int) ((z + 300.0) / 400.0 * 255.0);
 				int r = alpha / 25;
-				
-				g.setColor(factColor.get(alpha));				
+
+				g.setColor(factColor.get(alpha));
 				g.setFont(factFont.get(10 + r));
-				
-				String text = GiskardUtils.toString(factEntityData.get(filteredEntities.get(lbl)).get(MTMEMBER_PLAIN_STRING));
-				g.drawString(text, px, py);				
+
+				Map<Object, Object> ed = factEntityData.get(selectedEntities.get(lbl));
+				String text = GiskardUtils.toString(ed.get(MTMEMBER_PLAIN_STRING));
+				g.drawString(text, px, py);
 			}
-			
+
 			g.setColor(c);
 			g.setFont(fnt);
 
@@ -117,46 +131,141 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			AffineTransform rotX = AffineTransform.getRotateInstance(Math.toRadians(10));
 			AffineTransform rotY = AffineTransform.getRotateInstance(Math.toRadians(5));
 
-			for ( int i = 0; i < coords.size(); i += 3) {
+			for (int i = 0; i < coords.size(); i += 3) {
 				double x = coords.get(i);
-				double y = coords.get(i+1);
-				double z = coords.get(i+2);
-				
+				double y = coords.get(i + 1);
+				double z = coords.get(i + 2);
+
 				in.setLocation(x, z);
-				
+
 				rotX.transform(in, in);
-				
+
 				coords.set(i, in.getX());
 				in.setLocation(y, in.getY());
 
 				rotY.transform(in, in);
-				coords.set(i+1, in.getX());
-				coords.set(i+2, in.getY());
+				coords.set(i + 1, in.getX());
+				coords.set(i + 2, in.getY());
 			}
 		}
 	}
 
-	enum FilterInfo {
-		text, textValue, textAnyData, textRegexp
+	private static int[] NOSEL = new int[] {};
+
+	class FilterPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+
+		final int tabIdx;
+		final Object type;
+		final Object key;
+
+		Set<Object> items = new HashSet<>();
+		DefaultListModel<Object> lm = new DefaultListModel<Object>();
+
+		JButton btnClear;
+
+		public FilterPanel(FilterInfo fi, int tabIdx, Object type, Object key) {
+			super(new BorderLayout());
+			this.tabIdx = tabIdx;
+			this.type = type;
+			this.key = key;
+
+			JList<Object> lst = new JList<>(lm);
+			lst.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+			lst.setCellRenderer(new DefaultListCellRenderer() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+						boolean cellHasFocus) {
+					value = factEntityData.get(value).get(MTMEMBER_PLAIN_STRING);
+					Component ret = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					return ret;
+				}
+			});
+
+			lst.addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					items.clear();
+
+					for (int sel : lst.getSelectedIndices()) {
+						items.add(lm.elementAt(sel));
+					}
+
+					updateStatus();
+				}
+			});
+
+			add(new JScrollPane(lst), BorderLayout.CENTER);
+
+			btnClear = new JButton("Clear");
+			btnClear.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lst.setSelectedIndices(NOSEL);
+					clearSelection();
+				}
+			});
+			add(btnClear, BorderLayout.SOUTH);
+
+			filterSettings.put(fi, items);
+		}
+
+		void clearSelection() {
+			items.clear();
+			updateStatus();
+		}
+
+		void updateStatus() {
+			boolean empty = items.isEmpty();
+			tpFilter.setForegroundAt(tabIdx, empty ? Color.black : Color.pink);
+			btnClear.setEnabled(!empty);
+
+			updateEntityList();
+		}
+
+		void optAdd(Object handle, Map<Object, Object> ed) {
+			if ( type == ed.get(MTMEMBER_ENTITY_PRIMARYTYPE) ) {
+				if ( items.add(handle) ) {
+					lm.addElement(handle);
+				}
+			}
+		}
+
+		public boolean allows(Map<Object, Object> ed) {
+			if ( items.isEmpty() ) {
+				return true;
+			} else {
+				Object h = ed.get(key);
+				if (items.contains(h)) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
-	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_ENTITY_STOREID, MTMEMBER_PLAIN_STRING };
+	Object[] allColumns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_ENTITY_STOREID,
+			MTMEMBER_PLAIN_STRING, MTMEMBER_ENTITY_PTHANDLE };
+
+	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT,
+			MTMEMBER_PLAIN_STRING, MTMEMBER_ENTITY_PTHANDLE };
 
 	EnumMap<FilterInfo, Object> filterSettings = new EnumMap<>(FilterInfo.class);
 
-	GisCollFactory<Object, Map<Object, Object>> factEntityData = new GisCollFactory<Object, Map<Object, Object>>(false, new MiNDCreator<Object, Map<Object, Object>>() {
-		@Override
-		public Map<Object, Object> create(Object key) {
-			return new HashMap<>();
-		}
-	});
-
-	Set<Object> types = new HashSet<>();
-	Set<Object> units = new HashSet<>();
+	GisCollFactory<Object, Map<Object, Object>> factEntityData = new GisCollFactory<Object, Map<Object, Object>>(false,
+			new MiNDCreator<Object, Map<Object, Object>>() {
+				@Override
+				public Map<Object, Object> create(Object key) {
+					return new HashMap<>();
+				}
+			});
 
 	ArrayList<Object> filteredEntities = new ArrayList<>();
 	JTable tblFiltEnt;
 
+	ArrayList<Object> selectedEntities = new ArrayList<>();
 	ArrayList<Double> coords = new ArrayList<>();
 
 	JComponent pnlMain;
@@ -164,6 +273,9 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 	int entityCount;
 
 	JTabbedPane tpFilter;
+
+	Set<FilterPanel> filterPanels = new HashSet<>();
+
 	JComponent cmpGraph;
 
 	String selView;
@@ -218,7 +330,6 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 	}
 
 	public void buildPanel() {
-		loadEntities();
 
 		for (int x = 0; x < 2; ++x) {
 			for (int y = 0; y < 2; ++y) {
@@ -228,6 +339,11 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 					coords.add(100.0 * z - 50);
 				}
 			}
+		}
+
+		tpFilter = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+		for (int i = 0; i < FILTER_TABS.length; ++i) {
+			addFilterTab(i);
 		}
 
 		DefaultComboBoxModel<String> cbmViews = new DefaultComboBoxModel<>();
@@ -247,6 +363,8 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				}
 			}
 		});
+
+		loadEntities();
 
 		TableModel tmFilteredModel = new AbstractTableModel() {
 			private static final long serialVersionUID = 1L;
@@ -287,11 +405,18 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		};
 		tblFiltEnt = new JTable(tmFilteredModel);
 		tblFiltEnt.setFillsViewportHeight(true);
-
-		tpFilter = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-		for (int i = 0; i < FILTER_TABS.length; ++i) {
-			addFilterTab(i);
-		}
+		ListSelectionModel sm = tblFiltEnt.getSelectionModel();
+		sm.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		sm.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				selectedEntities.clear();
+				for (int selRow : tblFiltEnt.getSelectedRows()) {
+					selectedEntities.add(filteredEntities.get(selRow));
+				}
+				cmpGraph.repaint();
+			}
+		});
 
 		JSplitPane splFilter = split(JSplitPane.VERTICAL_SPLIT, 0.2, boundSegment("Filter conditions", tpFilter),
 				boundSegment("Entity list", new JScrollPane(tblFiltEnt)));
@@ -327,24 +452,23 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_HANDLE);
 
 			Map<Object, Object> ed = factEntityData.get(handle);
-			for (Object key : columns) {
+			for (Object key : allColumns) {
 				Object val = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TEMP01, key);
 				if ( null != val ) {
 					ed.put(key, val);
 				}
 			}
 
-			Object pt = ed.get(MTMEMBER_ENTITY_PRIMARYTYPE);
-			if ( MTTYPE_TYPE == pt ) {
-				types.add(handle);
-			} else if ( MTTYPE_UNIT == pt ) {
-				types.add(handle);
+			for (FilterPanel fp : filterPanels) {
+				fp.optAdd(handle, ed);
 			}
 		}
 	}
 
 	private void addFilterTab(int i) {
 		JComponent comp;
+		FilterPanel fp = null;
+
 		switch ( i ) {
 		case 0:
 			JTextField tf = new JTextField();
@@ -388,9 +512,21 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 
 			comp = pnlTxt;
 			break;
+		case 1:
+			fp = new FilterPanel(FilterInfo.types, i, MTTYPE_TYPE, MTMEMBER_ENTITY_PTHANDLE);
+			comp = fp;
+			break;
+		case 2:
+			fp = new FilterPanel(FilterInfo.units, i, MTTYPE_UNIT, MTMEMBER_ENTITY_STOREUNIT);
+			comp = fp;
+			break;
 		default:
 			comp = new JLabel(FILTER_TABS[i], JLabel.CENTER);
 			break;
+		}
+
+		if ( null != fp ) {
+			filterPanels.add(fp);
 		}
 
 		tpFilter.addTab(FILTER_TABS[i], comp);
@@ -414,16 +550,28 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 
 		for (Object key : factEntityData.keys()) {
 			Map<Object, Object> ed = factEntityData.get(key);
+			boolean add = true;
 
 			if ( chkTxt ) {
 				String str = (String) ed.get(MTMEMBER_ENTITY_STOREID);
 
 				if ( -1 == str.toLowerCase().indexOf(txt) ) {
-					continue;
+					add = false;
 				}
 			}
 
-			filteredEntities.add(key);
+			for (FilterPanel fp : filterPanels) {
+				if ( !fp.allows(ed) ) {
+					add = false;
+				}
+//				if ( !fp.items.isEmpty() && fp.items.contains(ed.get(fp.key))) {
+//					continue;
+//				}
+			}
+
+			if ( add ) {
+				filteredEntities.add(key);
+			}
 		}
 
 		((AbstractTableModel) tblFiltEnt.getModel()).fireTableDataChanged();

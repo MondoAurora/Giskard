@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import me.giskard.Giskard;
 import me.giskard.GiskardException;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeContext
@@ -136,6 +138,19 @@ public class DustRuntimeContext
 			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_CONN_OWNER, null);
 		}
 
+		DustRuntimeToken t = getTypeToken(token);
+
+		if ( null != t ) {
+			te.access(MiNDAccessCommand.Set, t, (DustRuntimeToken.Member) MTMEMBER_ENTITY_PRIMARYTYPE, null);
+			te.access(MiNDAccessCommand.Set, t.getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_PTHANDLE, null);
+		}
+
+		te.access(MiNDAccessCommand.Set, token.getId(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREID, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(),
+				(DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);
+	}
+
+	public DustRuntimeToken getTypeToken(DustRuntimeToken token) {
 		MiNDToken t;
 		switch ( token.getType() ) {
 		case AGENT:
@@ -156,13 +171,24 @@ public class DustRuntimeContext
 		default:
 			t = null;
 		}
-		
-		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, (DustRuntimeToken.Member) MTMEMBER_ENTITY_PRIMARYTYPE, null);
-		}
+		return (DustRuntimeToken) t;
+	}
 
-		te.access(MiNDAccessCommand.Set, token.getId(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);	
+	void ensurePTHandle(DustRuntimeToken token) {
+		Object val;
+
+		String str = GiskardUtils.toString(token);
+
+		if ( "IntMax".equalsIgnoreCase(str) ) {
+			Giskard.log(MiNDEventLevel.TRACE, "ensurePTHandle", str);
+		}
+		val = Giskard.access(MiNDAccessCommand.Get, 0, token, MTMEMBER_ENTITY_PTHANDLE);
+		if ( GiskardUtils.isEqual(0, val) ) {
+			DustRuntimeToken t = getTypeToken(token);
+			if ( null != t ) {
+				Giskard.access(MiNDAccessCommand.Set, t.getEntityHandle(), token, MTMEMBER_ENTITY_PTHANDLE);
+			}
+		}
 	}
 
 	public Iterator<DustRuntimeToken> iterator() {
@@ -212,7 +238,8 @@ public class DustRuntimeContext
 
 			ret = pr.lastOb;
 			DustRuntimeDataBlock eb = pr.lastBlock;
-			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustRuntimeToken) && (((DustRuntimeToken)val).getType() != MiNDTokenType.TAG) ) {
+			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustRuntimeToken)
+					&& (((DustRuntimeToken) val).getType() != MiNDTokenType.TAG) ) {
 				val = rootBlock.access(MiNDAccessCommand.Get, null, (DustRuntimeToken) val, null);
 			}
 
@@ -233,8 +260,8 @@ public class DustRuntimeContext
 				}
 			} else {
 				ret = pr.access(cmd, val);
-				
-				if ( (null == ret ) && (cmd == MiNDAccessCommand.Get) ) {
+
+				if ( (null == ret) && (cmd == MiNDAccessCommand.Get) ) {
 					ret = val;
 				}
 			}

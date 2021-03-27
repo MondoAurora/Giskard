@@ -1,3 +1,4 @@
 **/.settings
 **/bin
 **/ant
+**/hs_err_pid*.log

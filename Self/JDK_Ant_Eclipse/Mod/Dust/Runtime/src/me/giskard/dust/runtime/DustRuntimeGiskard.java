@@ -24,6 +24,12 @@ public class DustRuntimeGiskard extends Giskard
 		for ( Map.Entry<String, DustRuntimeToken> e : bootTokens.entrySet() ) {
 			ctx.registerToken(e.getKey(), e.getValue());
 		}
+		for ( DustRuntimeToken token : bootTokens.values() ) {
+			ctx.ensurePTHandle(token);
+		}
+		for ( DustRuntimeToken token : bootTokens.values() ) {
+			ctx.ensurePTHandle(token);
+		}
 	}
 
 	@Override
