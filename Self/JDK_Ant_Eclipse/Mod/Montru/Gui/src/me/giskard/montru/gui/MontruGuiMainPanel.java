@@ -161,7 +161,8 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 
 		Set<Object> items = new HashSet<>();
 		DefaultListModel<Object> lm = new DefaultListModel<Object>();
-
+		JList<Object> lst;
+		
 		JButton btnClear;
 
 		public FilterPanel(FilterInfo fi, int tabIdx, Object type, Object key) {
@@ -170,7 +171,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			this.type = type;
 			this.key = key;
 
-			JList<Object> lst = new JList<>(lm);
+			lst = new JList<>(lm);
 			lst.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			lst.setCellRenderer(new DefaultListCellRenderer() {
 				private static final long serialVersionUID = 1L;
@@ -178,7 +179,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				@Override
 				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
-					value = factEntityData.get(value).get(MTMEMBER_PLAIN_STRING);
+					value = factEntityData.get(value).get(MTMEMBER_ENTITY_STOREID);
 					Component ret = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 					return ret;
 				}
@@ -203,7 +204,6 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			btnClear.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					lst.setSelectedIndices(NOSEL);
 					clearSelection();
 				}
 			});
@@ -213,6 +213,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		}
 
 		void clearSelection() {
+			lst.setSelectedIndices(NOSEL);
 			items.clear();
 			updateStatus();
 		}
@@ -238,7 +239,11 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				return true;
 			} else {
 				Object h = ed.get(key);
-				if (items.contains(h)) {
+				if ( h instanceof MiNDToken ) {
+					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_CONTEXT_TOKENS, h);
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_HANDLE);
+				}
+				if ( items.contains(h) ) {
 					return true;
 				}
 			}
@@ -247,10 +252,9 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 	}
 
 	Object[] allColumns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_ENTITY_STOREID,
-			MTMEMBER_PLAIN_STRING, MTMEMBER_ENTITY_PTHANDLE };
+			MTMEMBER_PLAIN_STRING };
 
-	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT,
-			MTMEMBER_PLAIN_STRING, MTMEMBER_ENTITY_PTHANDLE };
+	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_PLAIN_STRING };
 
 	EnumMap<FilterInfo, Object> filterSettings = new EnumMap<>(FilterInfo.class);
 
@@ -364,8 +368,6 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			}
 		});
 
-		loadEntities();
-
 		TableModel tmFilteredModel = new AbstractTableModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -434,6 +436,8 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		JSplitPane splMain = split(JSplitPane.HORIZONTAL_SPLIT, 0.2, pnlLeft, splRight);
 
 		pnlMain = splMain;
+
+		loadEntities();
 	}
 
 	public void loadEntities() {
@@ -462,6 +466,10 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			for (FilterPanel fp : filterPanels) {
 				fp.optAdd(handle, ed);
 			}
+		}
+
+		for (FilterPanel fp : filterPanels) {
+			fp.clearSelection();
 		}
 	}
 
@@ -513,7 +521,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			comp = pnlTxt;
 			break;
 		case 1:
-			fp = new FilterPanel(FilterInfo.types, i, MTTYPE_TYPE, MTMEMBER_ENTITY_PTHANDLE);
+			fp = new FilterPanel(FilterInfo.types, i, MTTYPE_TYPE, MTMEMBER_ENTITY_PRIMARYTYPE);
 			comp = fp;
 			break;
 		case 2:

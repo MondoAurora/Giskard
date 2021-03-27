@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import me.giskard.Giskard;
 import me.giskard.GiskardException;
-import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeContext
@@ -38,7 +36,9 @@ public class DustRuntimeContext
 				} else if ( o instanceof DustRuntimeToken ) {
 					lastMember = (DustRuntimeToken) o;
 					if ( null == lastBlock ) {
-						lastOb = rootBlock.localData.get(lastMember);
+						for ( DustRuntimeContext ctx = DustRuntimeContext.this; (null != ctx) && (null == lastOb); ctx = ctx.parentCtx ) {
+							lastOb = ctx.rootBlock.localData.get(lastMember);							
+						}
 					} else {
 						lastOb = lastBlock.localData.get(lastMember);
 					}
@@ -59,7 +59,7 @@ public class DustRuntimeContext
 		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
 			if ( (cmd == MiNDAccessCommand.Get) && (null == lastMember) ) {
 				if ( val instanceof DustRuntimeToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, lastOb, (DustRuntimeToken) val, null);
+					rootBlock.access(MiNDAccessCommand.Set, lastOb, (MiNDToken) val, null);
 				}
 				return (RetType) lastOb;
 			} else {
@@ -129,25 +129,23 @@ public class DustRuntimeContext
 
 		DustRuntimeDataBlock te = createEntity();
 		token.setEntityHandle(te.getHandle());
-		rootBlock.localData.put(token, te.getHandle());
+		rootBlock.access(MiNDAccessCommand.Add, te.getHandle(), MTMEMBER_CONTEXT_TOKENS, token);
 
-		te.access(MiNDAccessCommand.Set, token.getName(), (DustRuntimeToken.Member) MTMEMBER_PLAIN_STRING, null);
+		te.access(MiNDAccessCommand.Set, token.getName(), MTMEMBER_PLAIN_STRING, null);
 
 		DustRuntimeToken p = token.getParent();
 		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_CONN_OWNER, null);
+			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), MTMEMBER_CONN_OWNER, null);
 		}
 
 		DustRuntimeToken t = getTypeToken(token);
 
 		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, (DustRuntimeToken.Member) MTMEMBER_ENTITY_PRIMARYTYPE, null);
-			te.access(MiNDAccessCommand.Set, t.getEntityHandle(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_PTHANDLE, null);
+			te.access(MiNDAccessCommand.Set, t, MTMEMBER_ENTITY_PRIMARYTYPE, null);
 		}
 
-		te.access(MiNDAccessCommand.Set, token.getId(), (DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(),
-				(DustRuntimeToken.Member) MTMEMBER_ENTITY_STOREUNIT, null);
+		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_STOREID, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(), MTMEMBER_ENTITY_STOREUNIT, null);
 	}
 
 	public DustRuntimeToken getTypeToken(DustRuntimeToken token) {
@@ -174,23 +172,6 @@ public class DustRuntimeContext
 		return (DustRuntimeToken) t;
 	}
 
-	void ensurePTHandle(DustRuntimeToken token) {
-		Object val;
-
-		String str = GiskardUtils.toString(token);
-
-		if ( "IntMax".equalsIgnoreCase(str) ) {
-			Giskard.log(MiNDEventLevel.TRACE, "ensurePTHandle", str);
-		}
-		val = Giskard.access(MiNDAccessCommand.Get, 0, token, MTMEMBER_ENTITY_PTHANDLE);
-		if ( GiskardUtils.isEqual(0, val) ) {
-			DustRuntimeToken t = getTypeToken(token);
-			if ( null != t ) {
-				Giskard.access(MiNDAccessCommand.Set, t.getEntityHandle(), token, MTMEMBER_ENTITY_PTHANDLE);
-			}
-		}
-	}
-
 	public Iterator<DustRuntimeToken> iterator() {
 		return tokens.values().iterator();
 	}
@@ -203,7 +184,7 @@ public class DustRuntimeContext
 			switch ( cmd ) {
 			case Get:
 				if ( val instanceof DustRuntimeToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (DustRuntimeToken) val, null);
+					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (MiNDToken) val, null);
 				}
 				break;
 			case Add:
@@ -240,7 +221,11 @@ public class DustRuntimeContext
 			DustRuntimeDataBlock eb = pr.lastBlock;
 			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustRuntimeToken)
 					&& (((DustRuntimeToken) val).getType() != MiNDTokenType.TAG) ) {
-				val = rootBlock.access(MiNDAccessCommand.Get, null, (DustRuntimeToken) val, null);
+				Object block = rootBlock.access(MiNDAccessCommand.Get, null, (MiNDToken) val, null);
+				if ( null == block ) {
+					block = rootBlock.access(MiNDAccessCommand.Get, block, MTMEMBER_CONTEXT_TOKENS, val);
+				}
+				val = block;
 			}
 
 			if ( null == eb ) {

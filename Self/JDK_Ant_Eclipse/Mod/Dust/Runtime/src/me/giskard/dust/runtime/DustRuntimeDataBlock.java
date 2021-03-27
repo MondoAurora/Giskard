@@ -64,12 +64,13 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 		return (obj instanceof DustRuntimeDataBlock) ? ((DustRuntimeDataBlock) obj).handle == handle : false;
 	}
 
-	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, DustRuntimeToken token, Object key) {
-		if ( null == token ) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken mt, Object key) {
+		if ( null == mt ) {
 			return (RetType) this;
 		}
 
 		try {
+			DustRuntimeToken token = (DustRuntimeToken) mt;
 			boolean one = token.getCollType() == MiNDCollType.One;
 			Object current = localData.get(token);
 
@@ -92,7 +93,7 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 				}
 				break;
 			case Add:
-				val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, null);
+				val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, key);
 				break;
 			case Use:
 				if ( null != current ) {

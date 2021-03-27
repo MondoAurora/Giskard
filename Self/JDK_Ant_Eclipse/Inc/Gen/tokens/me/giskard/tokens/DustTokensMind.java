@@ -10,7 +10,6 @@ public interface DustTokensMind extends GiskardConsts {
 
 	MiNDToken MTTYPE_ENTITY = Giskard.defineToken(MiNDTokenType.TYPE, "Entity", MTUNIT_MODEL);
 	MiNDToken MTMEMBER_ENTITY_HANDLE = Giskard.defineToken(MiNDTokenType.MEMBER, "Handle", MTTYPE_ENTITY, MiNDValType.Int, MiNDCollType.One);
-	MiNDToken MTMEMBER_ENTITY_PTHANDLE = Giskard.defineToken(MiNDTokenType.MEMBER, "PTHandle", MTTYPE_ENTITY, MiNDValType.Int, MiNDCollType.One);
 	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
 	MiNDToken MTMEMBER_ENTITY_TYPES = Giskard.defineToken(MiNDTokenType.MEMBER, "Types", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
 	MiNDToken MTMEMBER_ENTITY_TAGS = Giskard.defineToken(MiNDTokenType.MEMBER, "Tags", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
@@ -39,6 +38,9 @@ public interface DustTokensMind extends GiskardConsts {
 	
 	MiNDToken MTUNIT_DIALOG = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Dialog");
 	
+	MiNDToken MTTYPE_CONTEXT = Giskard.defineToken(MiNDTokenType.TYPE, "Context", MTUNIT_DIALOG);
+	MiNDToken MTMEMBER_CONTEXT_TOKENS = Giskard.defineToken(MiNDTokenType.MEMBER, "Tokens", MTTYPE_CONTEXT, MiNDValType.Link, MiNDCollType.Map);
+
 	MiNDToken MTTAG_ACCESSCOMMAND = Giskard.defineToken(MiNDTokenType.TAG, "AccessCommand", MTUNIT_DIALOG, MiNDAccessCommand.class);
 	MiNDToken MTTAG_ACCESSCOMMAND_CHK = Giskard.defineToken(MiNDTokenType.TAG, "Chk", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Chk);
 	MiNDToken MTTAG_ACCESSCOMMAND_GET = Giskard.defineToken(MiNDTokenType.TAG, "Get", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Get);

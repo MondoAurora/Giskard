@@ -39,7 +39,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 
 	protected MiNDResultType notify(Object val, Iterable itContent) {
 		MiNDResultType ret = MiNDResultType.REJECT;
-		
+
 		for (Object ob : itContent) {
 			try {
 				ret = DustRuntimeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
@@ -47,7 +47,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 				GiskardException.swallow(e);
 			}
 		}
-		
+
 		return ret;
 	}
 
@@ -59,10 +59,10 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		@Override
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = null;
-			
+
 			switch ( cmd ) {
 			case Add:
-					ret = collector.add(val);
+				ret = collector.add(val);
 				break;
 			case Chk:
 				break;
@@ -79,7 +79,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 				ret = notify(val, collector);
 				break;
 			}
-			
+
 			return ret;
 		}
 	}
@@ -126,8 +126,28 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 
 		@Override
 		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
-			// TODO Auto-generated method stub
-			return null;
+			Object ret = val;
+
+			switch ( cmd ) {
+			case Add:
+				ret = collector.put(key, val);
+				break;
+			case Chk:
+				break;
+			case Del:
+				break;
+			case Get:
+				ret = GiskardUtils.isEqual(KEY_SIZE, key) ? collector.size() : collector.get(key);
+				break;
+			case Set:
+				collector.clear();
+				collector.put(key, val);
+				break;
+			case Use:
+				notify(val, collector.entrySet());
+				break;
+			}
+			return ret;
 		}
 	}
 
@@ -141,7 +161,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 			if ( null == val ) {
 				GiskardException.wrap(null, "invalid access of", token, "missing value!");
 			}
-			
+
 			DustRuntimeToken tok = (DustRuntimeToken) val;
 			Object ret = val;
 			DustRuntimeToken p = tok.getParent();

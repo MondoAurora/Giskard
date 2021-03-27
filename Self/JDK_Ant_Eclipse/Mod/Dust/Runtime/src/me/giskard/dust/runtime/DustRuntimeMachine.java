@@ -25,14 +25,14 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			this.machine = machine_;
 			ctx = new DustRuntimeContext(machine.knowledge, HANDLE_DIALOG);
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
-			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken) MTMEMBER_ACTION_DIALOG, null);
+			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
 			Integer handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
-			bRoot.access(MiNDAccessCommand.Set, handle, (DustRuntimeToken.Member) MTMEMBER_CALL_TARGET, null);
+			bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_TARGET, null);
 
 			handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 			if ( null != handle ) {
-				bRoot.access(MiNDAccessCommand.Set, handle, (DustRuntimeToken.Member) MTMEMBER_CALL_PARAM, null);
+				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_PARAM, null);
 			}
 
 			current = invoke();
@@ -111,17 +111,16 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			ctx = new DustRuntimeContext(ctxSrc, HANDLE_INVOCATION);
 
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
-			// bRoot.put((DustTokenMember) MTMEMBER_ACTION_DIALOG, dlg.ctx.getRootBlock());
-			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, (DustRuntimeToken.Member) MTMEMBER_ACTION_DIALOG, null);
+			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
 			Integer handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			DustRuntimeDataBlock bTarget = ctxSrc.getEntity(handle);
 			DustRuntimeDataBlock e = new DustRuntimeDataBlock(ctx, bTarget);
-			bRoot.access(MiNDAccessCommand.Set, e.getHandle(), (DustRuntimeToken.Member) MTMEMBER_ACTION_THIS, null);
+			bRoot.access(MiNDAccessCommand.Set, e.getHandle(), MTMEMBER_ACTION_THIS, null);
 
 			handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 			if ( null != handle ) {
-				bRoot.access(MiNDAccessCommand.Set, handle, (DustRuntimeToken.Member) MTMEMBER_ACTION_PARAM, null);
+				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_ACTION_PARAM, null);
 			}
 		}
 
