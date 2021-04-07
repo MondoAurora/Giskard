@@ -3,9 +3,9 @@ package me.giskard.dust.runtime;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.giskard.GiskardConsts.MiNDNamed;
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
-import me.giskard.GiskardConsts.MiNDNamed;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
@@ -65,6 +65,10 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 	}
 
 	public <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDToken mt, Object key) {
+		return access(NULL_NOTIF, cmd, val, mt, key);
+	}
+
+	public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, RetType val, MiNDToken mt, Object key) {
 		if ( null == mt ) {
 			return (RetType) this;
 		}
@@ -82,18 +86,18 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 			switch ( cmd ) {
 			case Get:
 				val = (RetType) (((null == current) || one) ? current
-						: ((DustRuntimeValueCollection) current).access(cmd, val, key));
+						: ((DustRuntimeValueCollection) current).access(notif, cmd, val, key));
 				break;
 			case Set:
 				if ( one ) {
 					localData.put(token, val);
 					val = (RetType) current;
 				} else {
-					val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, key);
+					val = (RetType) ((DustRuntimeValueCollection) current).access(notif, cmd, val, key);
 				}
 				break;
 			case Add:
-				val = (RetType) ((DustRuntimeValueCollection) current).access(cmd, val, key);
+				val = (RetType) ((DustRuntimeValueCollection) current).access(notif, cmd, val, key);
 				break;
 			case Use:
 				if ( null != current ) {
@@ -104,7 +108,7 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 						if ( one ) {
 							DustRuntimeUtils.notifyAgent(agent, ctx, current);
 						} else {
-							((DustRuntimeValueCollection) current).access(cmd, agent, null);
+							((DustRuntimeValueCollection) current).access(notif, cmd, agent, null);
 						}
 					} finally {
 						agent.process(MiNDAgentAction.End);

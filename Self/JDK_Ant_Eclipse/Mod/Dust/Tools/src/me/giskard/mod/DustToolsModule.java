@@ -10,8 +10,6 @@ public class DustToolsModule implements GiskardConsts.MiNDAgent, DustTokensGener
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "Tools module initializing");
 		
-		DustTokens.registerNewModule();
-		
 		DustTokens.addModuleImpInfo(MTAGENT_DUMP, DustToolsDump.class);
 
 	}

@@ -240,8 +240,8 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			} else {
 				Object h = ed.get(key);
 				if ( h instanceof MiNDToken ) {
-					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_CONTEXT_TOKENS, h);
-					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_HANDLE);
+					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_CONTEXT_TOKENS, h);
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
 				}
 				if ( items.contains(h) ) {
 					return true;
@@ -452,12 +452,12 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		entityCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, KEY_SIZE);
 
 		for (int idx = 0; idx < entityCount; ++idx) {
-			Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
-			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_HANDLE);
+			Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
+			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
 
 			Map<Object, Object> ed = factEntityData.get(handle);
 			for (Object key : allColumns) {
-				Object val = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_TEMP01, key);
+				Object val = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_GPR01, key);
 				if ( null != val ) {
 					ed.put(key, val);
 				}

@@ -4,15 +4,29 @@ import me.giskard.GiskardConsts;
 
 public interface DustRuntimeBootConsts extends GiskardConsts {
 	String MODULE_NAME = "DustRuntime";
+	String MODULE_VER = "1.0";
 	
 	int HANDLE_NULL = 0;
 	int HANDLE_START = 1;
-	int HANDLE_DIALOG = -1;
-	int HANDLE_INVOCATION = -2;
+	int HANDLE_INVOCATION = -1;
+	int HANDLE_DIALOG = -2;
+	int HANDLE_MACHINE = -3;
 	
 	public interface DustGiskard {
 		void init(MiNDAgent agent) throws Exception;
-		void afterBoot() throws Exception;
+//		void afterBoot() throws Exception;
 	}
+
+	public interface DustNotifier {
+		boolean notify(MiNDAccessCommand cmd, Object block, Object valOld, Object valNew, MiNDToken member, Object key);
+	}
+	
+	DustNotifier NULL_NOTIF = new DustNotifier() {
+		@Override
+		public boolean notify(MiNDAccessCommand cmd, Object block, Object valOld, Object valNew, MiNDToken member, Object key) {
+			// Do nothing
+			return false;
+		}
+	};
 
 }

@@ -31,7 +31,7 @@ public class DustRuntimeContext
 				lastKey = null;
 
 				if ( coll ) {
-					lastOb = ((DustRuntimeValueCollection<?>) lastOb).access(MiNDAccessCommand.Get, null, o);
+					lastOb = ((DustRuntimeValueCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
 					lastKey = o;
 				} else if ( o instanceof DustRuntimeToken ) {
 					lastMember = (DustRuntimeToken) o;
@@ -56,14 +56,14 @@ public class DustRuntimeContext
 		}
 
 		@SuppressWarnings("unchecked")
-		public <RetType> RetType access(MiNDAccessCommand cmd, RetType val) {
+		public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, RetType val) {
 			if ( (cmd == MiNDAccessCommand.Get) && (null == lastMember) ) {
 				if ( val instanceof DustRuntimeToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, lastOb, (MiNDToken) val, null);
+					rootBlock.access(notif, MiNDAccessCommand.Set, lastOb, (MiNDToken) val, null);
 				}
 				return (RetType) lastOb;
 			} else {
-				return lastBlock.access(cmd, val, lastMember, lastKey);
+				return lastBlock.access(notif, cmd, val, lastMember, lastKey);
 			}
 		}
 	}
@@ -177,7 +177,7 @@ public class DustRuntimeContext
 	}
 
 	@SuppressWarnings("unchecked")
-	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath) {
+	public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object... valPath) {
 		Object ret = val;
 
 		if ( 0 == valPath.length ) {
@@ -200,9 +200,9 @@ public class DustRuntimeContext
 					while (null != c.parentCtx) {
 						c = c.parentCtx;
 					}
-					access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+					access(notif, MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 					for (DustRuntimeToken t : c) {
-						access(MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+						access(notif, MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 						try {
 							ret = a.process(MiNDAgentAction.Process);
 						} catch (Exception e) {
@@ -244,7 +244,7 @@ public class DustRuntimeContext
 					break;
 				}
 			} else {
-				ret = pr.access(cmd, val);
+				ret = pr.access(notif, cmd, val);
 
 				if ( (null == ret) && (cmd == MiNDAccessCommand.Get) ) {
 					ret = val;

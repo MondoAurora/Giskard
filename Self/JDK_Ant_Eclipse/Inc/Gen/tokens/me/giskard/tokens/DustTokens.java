@@ -2,19 +2,23 @@ package me.giskard.tokens;
 
 import me.giskard.Giskard;
 
-public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokensGeneric {
+public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
 
-	public static void registerNewModule() throws Exception {
+	public static void addModule(String mod, String ver) throws Exception {
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_THIS, MTMEMBER_ACTION_PARAM, MTMEMBER_APPLICATION_MODULES);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_MODULE, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Set, mod, MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
+		Giskard.access(MiNDAccessCommand.Set, ver, MTMEMBER_ACTION_THIS, MTMEMBER_VERSIONED_SIGNATURE);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_THIS, MTSHARED_MACHINE, MTMEMBER_MACHINE_MODULES);
 	}
 
 	public static void addModuleImpInfo(MiNDToken agent, Class<?> c) throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "Registering implementation for agent", agent, "->", c.getName());
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
-		Giskard.access(MiNDAccessCommand.Set, agent, MTMEMBER_ACTION_TEMP01, MTMEMBER_IMPLEMENTATION_AGENT);
-		Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_TEMP01, MTMEMBER_VARIANT_VALUE);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_IMPLEMENTATION, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Set, agent, MTMEMBER_ACTION_GPR01, MTMEMBER_IMPLEMENTATION_AGENT);
+		Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_GPR01, MTMEMBER_VARIANT_VALUE);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
 	}
 }

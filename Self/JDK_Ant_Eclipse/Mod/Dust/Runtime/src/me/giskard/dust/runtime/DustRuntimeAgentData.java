@@ -79,8 +79,8 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 				Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
 				break;
 			case Process:
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
 				ret = MiNDResultType.ACCEPT_READ;
 				break;
 			default:

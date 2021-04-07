@@ -17,14 +17,14 @@ public abstract class Giskard implements GiskardConsts {
 		Class clApp = Class.forName(GISKARD_CLASS_APP);
 		Method boot = clApp.getMethod("boot", String[].class);
 		boot.invoke(null, new Object[] { args });
-		
+
 		log(MiNDEventLevel.TRACE, "Loaded...");
 		log(MiNDEventLevel.TRACE);
-		
+
 		log(MiNDEventLevel.TRACE, "Launching main...");
-		
+
 		invoke();
-		
+
 		log(MiNDEventLevel.TRACE, "Success. Or at least, no exception, exiting Giskard.main() :-)");
 	}
 
@@ -43,19 +43,14 @@ public abstract class Giskard implements GiskardConsts {
 		}
 	}
 
-	public static void addModule(String mod, String ver) throws Exception {
-		if ( null == GISKARD ) {
-			ClassLoader cl = GisToolsModuleServices.getClassLoader(mod, ver);
-			GisToolsModuleServices.initModule(cl, mod);
-		} else {
-			GISKARD.addModule_(mod, ver);
-		}
+	public static void initRuntime(String mod, String ver) throws Exception {
+		ClassLoader cl = GisToolsModuleServices.getClassLoader(mod, ver);
+		GisToolsModuleServices.initModule(cl, mod);
 	}
 
 	public static MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
 		return GISKARD.defineToken_(type, name, params);
 	}
-
 
 	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {
 		return GISKARD.access_(cmd, val, valPath);
@@ -72,8 +67,6 @@ public abstract class Giskard implements GiskardConsts {
 		GISKARD = g;
 	}
 
-	protected abstract void addModule_(String modName, String ver) throws Exception;
-
 	protected abstract MiNDResultType invoke_(Object... agentPath) throws Exception;
 
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
@@ -81,6 +74,5 @@ public abstract class Giskard implements GiskardConsts {
 	protected abstract <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath);
 
 	protected abstract MiNDToken defineToken_(MiNDTokenType type, String name, Object... params);
-
 
 }

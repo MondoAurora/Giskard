@@ -32,11 +32,6 @@ public class DustRuntimeGiskard extends Giskard
 	}
 
 	@Override
-	public void afterBoot() throws Exception {
-		machine.getNativeConn().loadMappedClasses();
-	}
-
-	@Override
 	protected MiNDToken defineToken_(MiNDTokenType type, String name, Object... params) {
 		if ( null != machine ) {
 			return machine.getContext().defineToken(type, name, params);
@@ -55,12 +50,7 @@ public class DustRuntimeGiskard extends Giskard
 
 	@Override
 	protected <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
-		return machine.getContext().access(cmd, val, valPath);
-	}
-
-	@Override
-	protected void addModule_(String modName, String ver) throws Exception {
-		machine.getNativeConn().addModule(modName, ver);
+		return machine.access(cmd, val, valPath);
 	}
 
 	@Override

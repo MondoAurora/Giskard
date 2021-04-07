@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardException;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 import me.giskard.tools.GisToolsModuleServices;
 
@@ -71,15 +72,8 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		DustModule mod = new DustModule(modName, clMod);
 		modules.put(modName, mod);
 
-		loadMappedClasses();
-
 		return mod;
 	}
-
-	public void loadMappedClasses() throws Exception {
-		process(MiNDAgentAction.Init);
-	}
-
 
 	@SuppressWarnings("unchecked")
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
@@ -117,14 +111,25 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		case End:
 			break;
 		case Init:
-			Giskard.access(MiNDAccessCommand.Use, this, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+//			Giskard.access(MiNDAccessCommand.Use, this, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
 			break;
 		case Process:
-			Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_IMPLEMENTATION_AGENT);
-			if ( null != agent ) {
-				Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
-				if ( null != c ) {
-					nativeClasses.put((Integer) agent, c);
+			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_ENTITY_PRIMARYTYPE);
+			
+			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_MODULE).entityHandle, pt ) ) {
+				String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
+				String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_VERSIONED_SIGNATURE);				
+
+				if ( !MODULE_NAME.equals(modName) ) {
+					addModule(modName, modVer);
+				}
+			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_IMPLEMENTATION).entityHandle, pt ) ) {			
+				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_IMPLEMENTATION_AGENT);
+				if ( null != agent ) {
+					Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_VARIANT_VALUE);
+					if ( null != c ) {
+						nativeClasses.put((Integer) agent, c);
+					}
 				}
 			}
 			break;

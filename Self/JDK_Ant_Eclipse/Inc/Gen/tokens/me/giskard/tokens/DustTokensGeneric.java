@@ -16,11 +16,18 @@ public interface DustTokensGeneric extends GiskardConsts {
 	MiNDToken MTMEMBER_ACTION_THIS = Giskard.defineToken(MiNDTokenType.MEMBER, "This", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_PARAM = Giskard.defineToken(MiNDTokenType.MEMBER, "Param", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_DIALOG = Giskard.defineToken(MiNDTokenType.MEMBER, "Dialog", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_ACTION_TEMP01 = Giskard.defineToken(MiNDTokenType.MEMBER, "Temp01", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
+
+	MiNDToken MTMEMBER_ACTION_GPR01 = Giskard.defineToken(MiNDTokenType.MEMBER, "GPR01", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ACTION_GPR02 = Giskard.defineToken(MiNDTokenType.MEMBER, "GPR02", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ACTION_GPR03 = Giskard.defineToken(MiNDTokenType.MEMBER, "GPR03", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ACTION_GPR04 = Giskard.defineToken(MiNDTokenType.MEMBER, "GPR04", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	
 	MiNDToken MTTYPE_VARIANT = Giskard.defineToken(MiNDTokenType.TYPE, "Variant", MTUNIT_UTILS);
 	MiNDToken MTMEMBER_VARIANT_TYPE = Giskard.defineToken(MiNDTokenType.MEMBER, "Type", MTTYPE_VARIANT, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_VARIANT_VALUE = Giskard.defineToken(MiNDTokenType.MEMBER, "Value", MTTYPE_VARIANT, MiNDValType.Raw, MiNDCollType.One);
+
+	MiNDToken MTTYPE_VERSIONED = Giskard.defineToken(MiNDTokenType.TYPE, "Versioned", MTUNIT_UTILS);
+	MiNDToken MTMEMBER_VERSIONED_SIGNATURE = Giskard.defineToken(MiNDTokenType.MEMBER, "Signature", MTTYPE_VERSIONED, MiNDValType.Raw, MiNDCollType.One);
 
 	MiNDToken MTTYPE_CONN = Giskard.defineToken(MiNDTokenType.TYPE, "Conn", MTUNIT_UTILS);
 	MiNDToken MTMEMBER_CONN_OWNER = Giskard.defineToken(MiNDTokenType.MEMBER, "Owner", MTTYPE_CONN, MiNDValType.Link, MiNDCollType.One);

@@ -16,7 +16,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 	protected final DustRuntimeDataBlock owner;
 	protected final DustRuntimeToken token;
 
-	public abstract Object access(MiNDAccessCommand cmd, Object val, Object key);
+	public abstract Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key);
 
 	public static DustRuntimeValueCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 		switch ( token.getCollType() ) {
@@ -57,12 +57,17 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+		public Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = null;
 
 			switch ( cmd ) {
 			case Add:
-				ret = collector.add(val);
+				if ( collector.add(val) ) {
+					ret = true;
+					notif.notify(cmd, owner.getHandle(), val, val, token, key);
+				} else {
+					ret = false;
+				}
 				break;
 			case Chk:
 				break;
@@ -90,7 +95,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+		public Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = val;
 			Integer idx = (Integer) key;
 
@@ -125,7 +130,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+		public Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = val;
 
 			switch ( cmd ) {
@@ -157,7 +162,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 
 		@Override
-		public Object access(MiNDAccessCommand cmd, Object val, Object key) {
+		public Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key) {
 			if ( null == val ) {
 				GiskardException.wrap(null, "invalid access of", token, "missing value!");
 			}

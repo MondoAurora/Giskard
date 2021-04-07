@@ -6,7 +6,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 import me.giskard.tools.GisToolsTokenTranslator;
 
-public class DustRuntimeMachine implements DustRuntimeConsts {
+public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifier {
 	
 	/*
 	 * Main purposes are not yet visible:
@@ -27,10 +27,10 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
 			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
-			Integer handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			Integer handle = machine.knowledge.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_TARGET, null);
 
-			handle = machine.knowledge.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+			handle = machine.knowledge.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 			if ( null != handle ) {
 				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_PARAM, null);
 			}
@@ -74,7 +74,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			ret = current.process(MiNDAgentAction.Begin);
 			do {
 				ret = current.process(MiNDAgentAction.Process);
-				ctx.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG,
+				ctx.access(NULL_NOTIF, MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG,
 						MTMEMBER_ENTITY_TAGS);
 
 				if ( !GiskardUtils.isAgentRead(ret) ) {
@@ -113,12 +113,12 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
 			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
-			Integer handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			Integer handle = ctxSrc.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			DustRuntimeDataBlock bTarget = ctxSrc.getEntity(handle);
 			DustRuntimeDataBlock e = new DustRuntimeDataBlock(ctx, bTarget);
 			bRoot.access(MiNDAccessCommand.Set, e.getHandle(), MTMEMBER_ACTION_THIS, null);
 
-			handle = ctxSrc.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+			handle = ctxSrc.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 			if ( null != handle ) {
 				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_ACTION_PARAM, null);
 			}
@@ -140,9 +140,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 	DustRuntimeContext knowledge;
 	Dialog dialog;
 	DustRuntimeNativeConnector nativeConn;
+	NotifDispatcher mainNotifier;
 
 	public DustRuntimeMachine() {
-		this.knowledge = new DustRuntimeContext();
+		this.mainNotifier = new NotifDispatcher();
+		this.knowledge = new DustRuntimeContext(null, HANDLE_MACHINE);
 
 		MiNDToken[] bootTokens = { MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE,
 				MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
@@ -154,6 +156,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 
 	public void init(MiNDAgent agent) throws Exception {
 		nativeConn = new DustRuntimeNativeConnector(agent);
+		mainNotifier.setListener(true, nativeConn);
 	}
 
 	public DustRuntimeNativeConnector getNativeConn() {
@@ -162,6 +165,10 @@ public class DustRuntimeMachine implements DustRuntimeConsts {
 
 	public DustRuntimeContext getContext() {
 		return (null == dialog) ? knowledge : dialog.current.ctx;
+	}
+	
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath) {
+		return getContext().access(mainNotifier, cmd, val, valPath);
 	}
 
 	public MiNDResultType invoke() throws Exception {

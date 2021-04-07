@@ -10,8 +10,6 @@ public class MontruGuiModule implements GiskardConsts.MiNDAgent, DustTokensMontr
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "Montru Gui module initializing");
 		
-		DustTokens.registerNewModule();
-		
 		DustTokens.addModuleImpInfo(MTAGENT_MAINPANEL, MontruGuiMainPanel.class);
 	}
 

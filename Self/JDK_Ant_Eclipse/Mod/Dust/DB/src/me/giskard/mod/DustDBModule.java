@@ -10,8 +10,6 @@ public class DustDBModule implements GiskardConsts.MiNDAgent, DustTokensDB {
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "DB module initializing");
 		
-		DustTokens.registerNewModule();
-		
 		DustTokens.addModuleImpInfo(MTAGENT_DBTEST01, DustJdbcAgent.class);
 	}
 

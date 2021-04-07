@@ -13,12 +13,8 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		// Machine
 		Giskard.access(MiNDAccessCommand.Get, MTSHARED_MACHINE);
 
-		// Application
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTSHARED_MACHINE, MTMEMBER_MACHINE_CURRENTAPP);
-
 		// Runtime module
-		DustTokens.registerNewModule();
+		DustTokens.addModule(MODULE_NAME, MODULE_VER);
 
 		// Agent implementation data
 		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustRuntimeAgentControl.Iteration.class);

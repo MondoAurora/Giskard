@@ -11,8 +11,6 @@ public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
 	void initModule() throws Exception {
 		Giskard.log(MiNDEventLevel.TRACE, "Text module initializing");
 		
-		DustTokens.registerNewModule();
-		
 		DustTokens.addModuleImpInfo(MTAGENT_MATCHCONST, DustTextMatcherConst.class);
 		DustTokens.addModuleImpInfo(MTAGENT_MATCHRANGE, DustTextMatcherRange.class);
 

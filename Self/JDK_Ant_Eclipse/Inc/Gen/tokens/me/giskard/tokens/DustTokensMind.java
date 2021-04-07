@@ -48,7 +48,21 @@ public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTTAG_ACCESSCOMMAND_ADD = Giskard.defineToken(MiNDTokenType.TAG, "Add", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Add);
 	MiNDToken MTTAG_ACCESSCOMMAND_DEL = Giskard.defineToken(MiNDTokenType.TAG, "Del", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Del);
 	MiNDToken MTTAG_ACCESSCOMMAND_USE = Giskard.defineToken(MiNDTokenType.TAG, "Use", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Use);
+
+	MiNDToken MTTAG_VISITSTATE = Giskard.defineToken(MiNDTokenType.TAG, "VisitState", MTUNIT_DIALOG, MiNDVisitState.class);
+	MiNDToken MTTAG_VISITSTATE_ENTITY = Giskard.defineToken(MiNDTokenType.TAG, "Entity", MTTAG_VISITSTATE, MiNDVisitState.Entity);
+	MiNDToken MTTAG_VISITSTATE_TOKEN = Giskard.defineToken(MiNDTokenType.TAG, "Token", MTTAG_VISITSTATE, MiNDVisitState.Token);
+	MiNDToken MTTAG_VISITSTATE_VALUE = Giskard.defineToken(MiNDTokenType.TAG, "Value", MTTAG_VISITSTATE, MiNDVisitState.Value);
 	
+	MiNDToken MTTYPE_VISITINFO = Giskard.defineToken(MiNDTokenType.TYPE, "VisitInfo", MTUNIT_DIALOG);
+	MiNDToken MTMEMBER_VISITINFO_KEY = Giskard.defineToken(MiNDTokenType.MEMBER, "Key", MTTYPE_VISITINFO, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_VISITINFO_TOKEN = Giskard.defineToken(MiNDTokenType.MEMBER, "Token", MTTYPE_VISITINFO, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_VISITINFO_VALOLD = Giskard.defineToken(MiNDTokenType.MEMBER, "ValOld", MTTYPE_VISITINFO, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_VISITINFO_VALNEW = Giskard.defineToken(MiNDTokenType.MEMBER, "ValNew", MTTYPE_VISITINFO, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_VISITINFO_LINKOLD = Giskard.defineToken(MiNDTokenType.MEMBER, "LinkOld", MTTYPE_VISITINFO, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_VISITINFO_LINKNEW = Giskard.defineToken(MiNDTokenType.MEMBER, "LinkNew", MTTYPE_VISITINFO, MiNDValType.Link, MiNDCollType.One);
+
+
 	MiNDToken MTUNIT_NARRATIVE = Giskard.defineToken(MiNDTokenType.UNIT, "MiND_Narrative");
 	
 	MiNDToken MTTYPE_AGENT = Giskard.defineToken(MiNDTokenType.TYPE, "Agent", MTUNIT_NARRATIVE);
@@ -60,6 +74,7 @@ public interface DustTokensMind extends GiskardConsts {
 	MiNDToken MTTAG_RESULTTYPE_ACCEPT = Giskard.defineToken(MiNDTokenType.TAG, "ACCEPT", MTTAG_RESULTTYPE, MiNDResultType.ACCEPT);
 	MiNDToken MTTAG_RESULTTYPE_ACCEPT_READ = Giskard.defineToken(MiNDTokenType.TAG, "ACCEPT_READ", MTTAG_RESULTTYPE, MiNDResultType.ACCEPT_READ);
 	MiNDToken MTTAG_RESULTTYPE_READ = Giskard.defineToken(MiNDTokenType.TAG, "READ", MTTAG_RESULTTYPE, MiNDResultType.READ);
+	MiNDToken MTTAG_RESULTTYPE_WAIT = Giskard.defineToken(MiNDTokenType.TAG, "WAIT", MTTAG_RESULTTYPE, MiNDResultType.WAIT);
 	
 	MiNDToken MTAGENT_CTRL_ITERATION = Giskard.defineToken(MiNDTokenType.AGENT, "Iteration", MTUNIT_NARRATIVE);
 	MiNDToken MTAGENT_CTRL_SEQUENCE = Giskard.defineToken(MiNDTokenType.AGENT, "Sequence", MTUNIT_NARRATIVE);

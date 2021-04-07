@@ -36,6 +36,10 @@ public interface GiskardConsts {
 		Chk, Get, Set, Add, Del, Use
 	};
 
+	enum MiNDVisitState {
+		Entity, Token, Value
+	};
+
 	enum MiNDEventLevel {
 		CRITICAL, ERROR, WARNING, INFO, TRACE, DEBUG
 	};
@@ -45,7 +49,7 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDResultType {
-		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ
+		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ, WAIT
 	};
 
 	public interface MiNDNamed {

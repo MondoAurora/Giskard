@@ -2,6 +2,7 @@ package me.giskard.app;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensDB;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensGeometry;
@@ -17,14 +18,14 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui, DustTokensMontru {
 
 	public static final MiNDResultType boot(String[] args) throws Exception {
-		Giskard.addModule("DustRuntime", "1.0");
+		Giskard.initRuntime("DustRuntime", "1.0");
 
-		Giskard.addModule("DustText", "1.0");
-		Giskard.addModule("DustIO", "1.0");
-		Giskard.addModule("DustDB", "1.0");
-		Giskard.addModule("DustTools", "1.0");
-		Giskard.addModule("DustGuiSwing", "1.0");
-		Giskard.addModule("MontruGui", "1.0");
+		DustTokens.addModule("DustText", "1.0");
+		DustTokens.addModule("DustIO", "1.0");
+		DustTokens.addModule("DustDB", "1.0");
+		DustTokens.addModule("DustTools", "1.0");
+		DustTokens.addModule("DustGuiSwing", "1.0");
+		DustTokens.addModule("MontruGui", "1.0");
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		
@@ -58,25 +59,25 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Set, MTTYPE_WINDOW, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MAINPANEL, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MAINPANEL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 
 		Giskard.access(MiNDAccessCommand.Set, "Montru", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
-		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
-		Giskard.access(MiNDAccessCommand.Add, 400, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_GPR01, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Add, 400, MTMEMBER_ACTION_GPR01, MTMEMBER_GEODATA_COORDS);
 
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_CENTER);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_CENTER);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
-		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Add, 1000, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
-		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_TEMP01, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Add, 1000, MTMEMBER_ACTION_GPR01, MTMEMBER_GEODATA_COORDS);
+		Giskard.access(MiNDAccessCommand.Add, 600, MTMEMBER_ACTION_GPR01, MTMEMBER_GEODATA_COORDS);
 
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_TEMP01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_WORLD,
 				MTMEMBER_WORLD_RENDERER);
@@ -131,17 +132,17 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	public static void linkDump(String msg, MiNDResultType res) throws Exception {
 		linkDump(msg, MTMEMBER_LINK_ARR);
 		if ( null != res ) {
-			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_TEMP01,
+			Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(res), MTMEMBER_ACTION_GPR01,
 					MTMEMBER_ENTITY_TAGS);
 		}
 	}
 
 	public static void linkDump(String msg, MiNDToken link) throws Exception {
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_TEMP01);
-		Giskard.access(MiNDAccessCommand.Set, msg, MTMEMBER_ACTION_TEMP01, MTMEMBER_VARIANT_VALUE);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DUMP, MTMEMBER_ACTION_TEMP01, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, msg, MTMEMBER_ACTION_GPR01, MTMEMBER_VARIANT_VALUE);
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DUMP, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		Giskard.access((MTMEMBER_LINK_ONE == link) ? MiNDAccessCommand.Set : MiNDAccessCommand.Add, MTMEMBER_ACTION_TEMP01,
+		Giskard.access((MTMEMBER_LINK_ONE == link) ? MiNDAccessCommand.Set : MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01,
 				MTMEMBER_CALL_TARGET, link);
 	}
 
