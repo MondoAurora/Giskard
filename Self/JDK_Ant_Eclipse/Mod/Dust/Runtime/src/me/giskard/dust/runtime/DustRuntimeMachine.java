@@ -127,7 +127,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			if ( null == agent ) {
-				agent = dlg.machine.getNativeConn().access(MiNDAccessCommand.Add, null, MTMEMBER_ACTION_THIS);
+				agent = dlg.machine.getNativeConn().createNative(MTMEMBER_ACTION_THIS);
 				if ( agent instanceof RuntimeAgent ) {
 					((RuntimeAgent) agent).setInvocation(this);
 				}

@@ -2,6 +2,7 @@ package me.giskard.mod;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.dust.gui.swing.DustSwingAgent;
 import me.giskard.dust.gui.swing.DustSwingRenderer;
 import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensGeneric;
@@ -13,6 +14,8 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 		Giskard.log(MiNDEventLevel.TRACE, "GUI Swing module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_RENDERER, DustSwingRenderer.class);
+		
+		DustTokens.addModuleImpInfo(MTAGENT_FRAME, DustSwingAgent.Frame.class);
 
 		
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);

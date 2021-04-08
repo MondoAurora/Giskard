@@ -22,4 +22,6 @@ public interface DustTokensGui extends DustTokensMind {
 
 	MiNDToken MTAGENT_RENDERER = Giskard.defineToken(MiNDTokenType.AGENT, "Renderer", MTUNIT_GUI);
 
+	MiNDToken MTAGENT_FRAME = Giskard.defineToken(MiNDTokenType.AGENT, "Frame", MTUNIT_GUI);
+
 }

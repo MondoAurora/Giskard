@@ -47,15 +47,16 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 			}
 		}
 	}
+
 	private Map<String, DustModule> modules = new TreeMap<>();
 
 	private Map<Integer, Class<?>> nativeClasses = new HashMap<>();
-	
+
 	public DustRuntimeNativeConnector(MiNDAgent agent) throws Exception {
 		DustModule modMind = new DustModule(MODULE_NAME, agent);
 		modules.put(MODULE_NAME, modMind);
 	}
-	
+
 	public Object addModule(String modName, String ver) throws Exception {
 		if ( modules.containsKey(modName) ) {
 			GiskardException.wrap(null, "Module already loaded", modName);
@@ -75,58 +76,50 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		return mod;
 	}
 
+	public <RetType> RetType createNative(MiNDToken target) {
+		Integer a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
+		return createNative(a);
+	}
+
 	@SuppressWarnings("unchecked")
-	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDToken target, Object... valPath) {
-		switch ( cmd ) {
-		case Add:
-			try {
-				Integer a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
-				val = (RetType) nativeClasses.get(a).newInstance();
-			} catch (Exception e) {
-				GiskardException.wrap(e);
-			}
-			break;
-		case Chk:
-			break;
-		case Del:
-			break;
-		case Get:
-			break;
-		case Set:
-			break;
-		case Use:
-			break;
-		default:
-			break;
+	public <RetType> RetType createNative(Integer hType) {
+		try {
+			return (RetType) nativeClasses.get(hType).newInstance();
+		} catch (Exception e) {
+			return GiskardException.wrap(e);
 		}
-		
-		return (RetType) val;
 	}
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		MiNDResultType ret = MiNDResultType.ACCEPT;
+
 		switch ( action ) {
 		case Begin:
 			break;
 		case End:
 			break;
 		case Init:
-//			Giskard.access(MiNDAccessCommand.Use, this, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
 			break;
 		case Process:
-			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_ENTITY_PRIMARYTYPE);
-			
-			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_MODULE).entityHandle, pt ) ) {
-				String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
-				String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_VERSIONED_SIGNATURE);				
+			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+					MTMEMBER_ENTITY_PRIMARYTYPE);
+
+			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_MODULE).entityHandle, pt) ) {
+				String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+						MTMEMBER_PLAIN_STRING);
+				String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+						MTMEMBER_VERSIONED_SIGNATURE);
 
 				if ( !MODULE_NAME.equals(modName) ) {
 					addModule(modName, modVer);
 				}
-			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_IMPLEMENTATION).entityHandle, pt ) ) {			
-				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_IMPLEMENTATION_AGENT);
+			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_IMPLEMENTATION).entityHandle, pt) ) {
+				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+						MTMEMBER_IMPLEMENTATION_AGENT);
 				if ( null != agent ) {
-					Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_VARIANT_VALUE);
+					Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+							MTMEMBER_VARIANT_VALUE);
 					if ( null != c ) {
 						nativeClasses.put((Integer) agent, c);
 					}
@@ -136,7 +129,8 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		case Release:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+
+		return ret;
 	}
 
 	@Override
