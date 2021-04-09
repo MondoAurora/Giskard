@@ -13,12 +13,10 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 	}
 
 	public static void addModuleImpInfo(MiNDToken agent, Class<?> c) throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "Registering implementation for agent", agent, "->", c.getName());
+		Giskard.log(MiNDEventLevel.Trace, "Registering implementation for agent", agent, "->", c.getName());
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		Giskard.access(MiNDAccessCommand.Set, MTTYPE_IMPLEMENTATION, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Set, agent, MTMEMBER_ACTION_GPR01, MTMEMBER_IMPLEMENTATION_AGENT);
 		Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_GPR01, MTMEMBER_VARIANT_VALUE);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_MODULE_NATIVES, agent);
 	}
 }

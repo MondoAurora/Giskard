@@ -18,14 +18,14 @@ public abstract class Giskard implements GiskardConsts {
 		Method boot = clApp.getMethod("boot", String[].class);
 		boot.invoke(null, new Object[] { args });
 
-		log(MiNDEventLevel.TRACE, "Loaded...");
-		log(MiNDEventLevel.TRACE);
+		log(MiNDEventLevel.Trace, "Loaded...");
+//		log(MiNDEventLevel.TRACE);
 
-		log(MiNDEventLevel.TRACE, "Launching main...");
+		log(MiNDEventLevel.Trace, "Launching main...");
 
 		invoke();
 
-		log(MiNDEventLevel.TRACE, "Success. Or at least, no exception, exiting Giskard.main() :-)");
+		log(MiNDEventLevel.Trace, "Success. Or at least, no exception, exiting Giskard.main() :-)");
 	}
 
 	public static void log(MiNDEventLevel lvl, Object... obs) {

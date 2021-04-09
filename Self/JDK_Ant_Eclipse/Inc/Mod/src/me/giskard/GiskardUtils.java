@@ -52,8 +52,8 @@ public class GiskardUtils implements GiskardConsts {
 	public static final MiNDAgent LOGGER = new MiNDAgent() {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			Giskard.log(MiNDEventLevel.INFO, action, sbAppend(null, ",", true, action));
-			return MiNDResultType.ACCEPT_READ;
+			Giskard.log(MiNDEventLevel.Info, action, sbAppend(null, ",", true, action));
+			return MiNDResultType.AcceptRead;
 		}
 	};
 	
@@ -88,10 +88,10 @@ public class GiskardUtils implements GiskardConsts {
 	}
 
 	public static boolean isAgentRead(MiNDResultType res ) {
-		return (res == MiNDResultType.READ) || (res == MiNDResultType.ACCEPT_READ);
+		return (res == MiNDResultType.Read) || (res == MiNDResultType.AcceptRead);
 	}
 
 	public static boolean isAgentAccept(MiNDResultType res ) {
-		return (res == MiNDResultType.ACCEPT) || (res == MiNDResultType.ACCEPT_READ) || (res == MiNDResultType.ACCEPT_PASS);
+		return (res == MiNDResultType.Accept) || (res == MiNDResultType.AcceptRead) || (res == MiNDResultType.AcceptPass);
 	}
 }

@@ -11,7 +11,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT;
+		MiNDResultType ret = MiNDResultType.Accept;
 
 		switch ( action ) {
 		case Begin:
@@ -29,7 +29,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 				Integer cy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER, MTMEMBER_GEODATA_COORDS, 1);
 				Integer sx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 0);
 				Integer sy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 1);
-				Giskard.log(MiNDEventLevel.INFO, "Frame", label, ", center (", cx, cy, "), size (", sx, sy, ")");
+				Giskard.log(MiNDEventLevel.Info, "Frame", label, ", center (", cx, cy, "), size (", sx, sy, ")");
 
 				frmMain = new JFrame();
 				frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

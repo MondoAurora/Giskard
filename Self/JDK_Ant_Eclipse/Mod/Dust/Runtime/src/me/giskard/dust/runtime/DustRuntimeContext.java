@@ -23,7 +23,6 @@ public class DustRuntimeContext
 		PathResolver(Object... path_) {
 			this.path = path_;
 			plen = path_.length;
-			lastOb = lastBlock = null;
 			boolean coll = false;
 
 			for (int i = 0; i < plen; ++i) {
@@ -31,10 +30,13 @@ public class DustRuntimeContext
 				lastKey = null;
 
 				if ( coll ) {
-					lastOb = ((DustRuntimeValueCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
+					lastOb = (null == lastOb) ? null : ((DustRuntimeValueCollection<?>)lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
 					lastKey = o;
+					coll = false;
 				} else if ( o instanceof DustRuntimeToken ) {
 					lastMember = (DustRuntimeToken) o;
+					coll = MiNDCollType.One != lastMember.getCollType();
+
 					if ( null == lastBlock ) {
 						for ( DustRuntimeContext ctx = DustRuntimeContext.this; (null != ctx) && (null == lastOb); ctx = ctx.parentCtx ) {
 							lastOb = ctx.rootBlock.localData.get(lastMember);							
@@ -44,13 +46,9 @@ public class DustRuntimeContext
 					}
 				}
 
-				if ( null != lastOb ) {
-					if ( lastOb instanceof DustRuntimeValueCollection ) {
-						coll = true;
-					} else if ( lastMember.getValType() == MiNDValType.Link ) {
-						lastBlock = getEntity((Integer) lastOb);
-						lastMember = null;
-					}
+				if ( !coll && (null != lastOb ) && ( lastMember.getValType() == MiNDValType.Link ) ) {
+					lastBlock = getEntity((Integer) lastOb);
+					lastMember = null;
 				}
 			}
 		}
@@ -151,19 +149,19 @@ public class DustRuntimeContext
 	public DustRuntimeToken getTypeToken(DustRuntimeToken token) {
 		MiNDToken t;
 		switch ( token.getType() ) {
-		case AGENT:
+		case Agent:
 			t = MTTYPE_AGENT;
 			break;
-		case MEMBER:
+		case Member:
 			t = MTTYPE_MEMBER;
 			break;
-		case TAG:
+		case Tag:
 			t = MTTYPE_TAG;
 			break;
-		case TYPE:
+		case Type:
 			t = MTTYPE_TYPE;
 			break;
-		case UNIT:
+		case Unit:
 			t = MTTYPE_UNIT;
 			break;
 		default:
@@ -210,7 +208,7 @@ public class DustRuntimeContext
 						}
 					}
 				} else {
-					ret = MiNDResultType.REJECT;
+					ret = MiNDResultType.Reject;
 				}
 				break;
 			}
@@ -220,7 +218,7 @@ public class DustRuntimeContext
 			ret = pr.lastOb;
 			DustRuntimeDataBlock eb = pr.lastBlock;
 			if ( (cmd != MiNDAccessCommand.Get) && (val instanceof DustRuntimeToken)
-					&& (((DustRuntimeToken) val).getType() != MiNDTokenType.TAG) ) {
+					&& (((DustRuntimeToken) val).getType() != MiNDTokenType.Tag) ) {
 				Object block = rootBlock.access(MiNDAccessCommand.Get, null, (MiNDToken) val, null);
 				if ( null == block ) {
 					block = rootBlock.access(MiNDAccessCommand.Get, block, MTMEMBER_CONTEXT_TOKENS, val);
@@ -240,7 +238,7 @@ public class DustRuntimeContext
 					ret = val;
 					break;
 				case Use:
-					ret = MiNDResultType.REJECT;
+					ret = MiNDResultType.Reject;
 					break;
 				}
 			} else {

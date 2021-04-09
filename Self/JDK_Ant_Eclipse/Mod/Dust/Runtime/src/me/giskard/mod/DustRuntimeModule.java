@@ -10,7 +10,7 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeBo
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Init:
-			Giskard.log(MiNDEventLevel.TRACE, "Runtime initializing");
+			Giskard.log(MiNDEventLevel.Trace, "Runtime initializing");
 			
 			DustGiskard runtime = (DustGiskard) Class.forName("me.giskard.dust.runtime.DustRuntimeGiskard").newInstance();
 			runtime.init(this);
@@ -19,13 +19,13 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeBo
 
 			break;
 		case Begin:
-			Giskard.log(MiNDEventLevel.INFO, "DustRuntime launch...");
+			Giskard.log(MiNDEventLevel.Info, "DustRuntime launch...");
 
-			Giskard.log(MiNDEventLevel.TRACE);			
+			Giskard.log(MiNDEventLevel.Trace);			
 			break;
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 }

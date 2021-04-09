@@ -18,7 +18,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 			switch ( action ) {
 			case Init:
 				repMin = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_RANGE_INT_MIN);
@@ -37,10 +37,10 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				}
 				
 				if ( c == repMax ) {
-					ret = MiNDResultType.ACCEPT_PASS;
+					ret = MiNDResultType.AcceptPass;
 				} else {
 					Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
-					Giskard.log(MiNDEventLevel.INFO, "Repeat called", c);
+					Giskard.log(MiNDEventLevel.Info, "Repeat called", c);
 					
 					if ( null == currChild ) {
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
@@ -48,7 +48,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					} else {
 						dialog.push(currChild);
 					}
-					ret = MiNDResultType.READ;
+					ret = MiNDResultType.Read;
 				}
 				
 				break;
@@ -86,7 +86,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 	public static class Sequence extends Multi {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 			
 			switch ( action ) {
 			case Init:
@@ -95,13 +95,13 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				break;
 			case Process:
 				if ( null != currChild ) {
-					ret = getCurrResp(MiNDResultType.ACCEPT);
+					ret = getCurrResp(MiNDResultType.Accept);
 					if ( !GiskardUtils.isAgentAccept(ret) ) {
 						break;
 					}
 				}
 				
-				ret = relayChild() ? MiNDResultType.READ : MiNDResultType.ACCEPT_PASS;
+				ret = relayChild() ? MiNDResultType.Read : MiNDResultType.AcceptPass;
 				break;
 				
 			case End:
@@ -117,7 +117,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 	public static class Selection extends Multi {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 			
 			switch ( action ) {
 			case Init:
@@ -126,13 +126,13 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				break;
 			case Process:
 				if ( null != currChild ) {
-					ret = getCurrResp(MiNDResultType.READ);
+					ret = getCurrResp(MiNDResultType.Read);
 					if ( GiskardUtils.isAgentAccept(ret) ) {
 						break;
 					}
 				}
 				
-				ret = relayChild() ? MiNDResultType.READ : MiNDResultType.REJECT;
+				ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Reject;
 				break;
 				
 			case End:

@@ -150,7 +150,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 				MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
 				MTTYPE_UNIT };
 
-		Giskard.log(MiNDEventLevel.TRACE, "Boot tokens registered", bootTokens);
+		Giskard.log(MiNDEventLevel.Trace, "Boot tokens registered", bootTokens);
 
 	}
 
@@ -177,7 +177,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			return dialog.execute();
 		} else {
 			dialog.relay();
-			return MiNDResultType.ACCEPT;
+			return MiNDResultType.Accept;
 		}
 	}
 

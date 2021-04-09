@@ -21,7 +21,7 @@ public class GisToolsModuleServices implements GiskardConsts {
 	}
 
 	public static String getModClassName(String mod) {
-		return GISKARD_PACKAGE_MOD + mod + "Module";
+		return GISKARD_PREFIX_MOD + mod + "Module";
 	}
 
 	public static ClassLoader getClassLoader(String mod, String ver) {
@@ -31,7 +31,7 @@ public class GisToolsModuleServices implements GiskardConsts {
 		try {
 			clSys.loadClass(modClassName);
 			
-			Giskard.log(MiNDEventLevel.TRACE, "Module", moduleId, "available locally.");
+			Giskard.log(MiNDEventLevel.Trace, "Module", moduleId, "available locally.");
 			return clSys;
 		} catch (Throwable t) {
 			// try dynamic
@@ -66,11 +66,11 @@ public class GisToolsModuleServices implements GiskardConsts {
 			ClassLoader ret = new URLClassLoader(uu, clSys);
 			ret.loadClass(modClassName);
 			
-			Giskard.log(MiNDEventLevel.TRACE, "Module", moduleId, "avaliable externally:", urls);
+			Giskard.log(MiNDEventLevel.Trace, "Module", moduleId, "avaliable externally:", urls);
 
 			return ret;
 		} catch (Throwable t) {
-			Giskard.log(MiNDEventLevel.WARNING, "Classloader not found for module", moduleId, "with URLs", urls);
+			Giskard.log(MiNDEventLevel.Warning, "Classloader not found for module", moduleId, "with URLs", urls);
 		}
 
 		return null;

@@ -15,14 +15,14 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 
 			switch ( action ) {
 			case Init:
 				break;
 			case Begin:
 				visited.clear();
-				ret = optSelectContext(getInvocation().ctx) ? MiNDResultType.ACCEPT : MiNDResultType.REJECT;
+				ret = optSelectContext(getInvocation().ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
 				break;
 			case Process:
 				while ( (null != it) && it.hasNext()) {
@@ -30,13 +30,13 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 					if ( (HANDLE_NULL < h) && visited.add(h) ) {
 						Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-						ret = MiNDResultType.ACCEPT_PASS;
+						ret = MiNDResultType.AcceptPass;
 						break;
 					}
 
 					if ( !it.hasNext() && !optSelectContext(ctx.parentCtx) ) {
 						Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-						ret = MiNDResultType.REJECT;
+						ret = MiNDResultType.Reject;
 						break;
 					}
 				}
@@ -72,7 +72,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 	public static class Collect extends DustRuntimeAgentData {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 
 			switch ( action ) {
 			case Begin:
@@ -81,7 +81,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			case Process:
 				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
 				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
-				ret = MiNDResultType.ACCEPT_READ;
+				ret = MiNDResultType.AcceptRead;
 				break;
 			default:
 				break;

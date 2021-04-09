@@ -19,19 +19,19 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 
 		String fDom = "Knowledge/Json/System.json";
 		Object rDom = testDom(fDom);
-		Giskard.log(MiNDEventLevel.INFO, "DOM File read success", fDom, ", result:\n", rDom);
+		Giskard.log(MiNDEventLevel.Info, "DOM File read success", fDom, ", result:\n", rDom);
 
 //	String fileSax = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
 		String fSax = "Knowledge/Json/countries.geojson";
 		Object rSax = testSax(fSax);
-		Giskard.log(MiNDEventLevel.INFO, "SAX File read success", fSax, ", result:\n", rSax);
+		Giskard.log(MiNDEventLevel.Info, "SAX File read success", fSax, ", result:\n", rSax);
 
 		String fAbnf = "Knowledge/Abnf/abnf.abnf";
 //		String fileName = "Knowledge/Abnf/json.abnf";
 		Object rAbnf = testAbnf(fAbnf);
-		Giskard.log(MiNDEventLevel.INFO, "ABNF File read success", fAbnf, ", result:\n", rAbnf);
+		Giskard.log(MiNDEventLevel.Info, "ABNF File read success", fAbnf, ", result:\n", rAbnf);
 
 		TestIOReader.testReader("test.txt", "UTF8");
 	}
@@ -49,7 +49,7 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 
 	public Reader getReader(String fName) throws Exception {
 		fName = extendName(fName);
-		Giskard.log(MiNDEventLevel.TRACE, "Start reading file", fName, "...");
+		Giskard.log(MiNDEventLevel.Trace, "Start reading file", fName, "...");
 		return new FileReader(fName);
 	}
 
@@ -74,19 +74,19 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 	public Object testAbnf(String fName) throws Exception {
 		fName = extendName(fName);
 
-		Giskard.log(MiNDEventLevel.TRACE, "Start reading file", fName, "...");
+		Giskard.log(MiNDEventLevel.Trace, "Start reading file", fName, "...");
 		AbnfParserPrototype pp = new AbnfParserPrototype(fName);
 		return pp;
 	}
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT_PASS;
+		MiNDResultType ret = MiNDResultType.AcceptPass;
 		
 		switch ( action ) {
 		case Process:
 			runTest();
-			ret = MiNDResultType.ACCEPT;
+			ret = MiNDResultType.Accept;
 			break;
 
 		default:

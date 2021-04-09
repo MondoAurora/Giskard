@@ -7,7 +7,7 @@ import me.giskard.tokens.DustTokensIO;
 
 public class DustIOModule implements GiskardConsts.MiNDAgent, DustTokensIO {
 	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "IO module initializing");
+		Giskard.log(MiNDEventLevel.Trace, "IO module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_TEST01, DustIOTest01.class);
 	}
@@ -21,7 +21,7 @@ public class DustIOModule implements GiskardConsts.MiNDAgent, DustTokensIO {
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 
 }

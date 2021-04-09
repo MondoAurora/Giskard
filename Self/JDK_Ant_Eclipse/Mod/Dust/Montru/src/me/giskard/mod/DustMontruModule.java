@@ -2,15 +2,18 @@ package me.giskard.mod;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
-import me.giskard.montru.gui.MontruGuiMainPanel;
+import me.giskard.dust.montru.gui.MontruGuiMainPanel;
 import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensMontru;
 
-public class MontruGuiModule implements GiskardConsts.MiNDAgent, DustTokensMontru {
+public class DustMontruModule implements GiskardConsts.MiNDAgent, DustTokensMontru {
 	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "Montru Gui module initializing");
+		Giskard.log(MiNDEventLevel.Trace, "Montru Gui module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_MAINPANEL, MontruGuiMainPanel.class);
+		
+		Giskard.access(MiNDAccessCommand.Add, MTUNIT_MONTRU, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+
 	}
 
 	@Override
@@ -22,6 +25,6 @@ public class MontruGuiModule implements GiskardConsts.MiNDAgent, DustTokensMontr
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 }

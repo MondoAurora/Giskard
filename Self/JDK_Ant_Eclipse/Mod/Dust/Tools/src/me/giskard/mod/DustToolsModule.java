@@ -8,7 +8,7 @@ import me.giskard.tokens.DustTokensGeneric;
 
 public class DustToolsModule implements GiskardConsts.MiNDAgent, DustTokensGeneric {
 	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "Tools module initializing");
+		Giskard.log(MiNDEventLevel.Trace, "Tools module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_DUMP, DustToolsDump.class);
 
@@ -23,6 +23,6 @@ public class DustToolsModule implements GiskardConsts.MiNDAgent, DustTokensGener
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 }

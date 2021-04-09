@@ -3,8 +3,11 @@ package me.giskard.tokens;
 import me.giskard.Giskard;
 
 public interface DustTokensMontru extends DustTokensMind {
-	MiNDToken MTUNIT_MONTRUGUI = Giskard.defineToken(MiNDTokenType.UNIT, "MontruGui");
+	MiNDToken MTUNIT_MONTRU = Giskard.defineToken(MiNDTokenType.Unit, "Montru");
 	
-	MiNDToken MTAGENT_MAINPANEL = Giskard.defineToken(MiNDTokenType.AGENT, "MainPanel", MTUNIT_MONTRUGUI);
+	MiNDToken MTSERVICE_GUI = Giskard.defineToken(MiNDTokenType.Service, "GuiMain", MTUNIT_MONTRU);
+
+	
+	MiNDToken MTAGENT_MAINPANEL = Giskard.defineToken(MiNDTokenType.Agent, "MainPanel", MTUNIT_MONTRU);
 
 }

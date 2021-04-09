@@ -10,7 +10,7 @@ public final class GiskardException extends RuntimeException {
 	}
 
 	public static void swallow(Throwable src, Object... params) {
-		Giskard.log(MiNDEventLevel.WARNING, src, params);
+		Giskard.log(MiNDEventLevel.Warning, src, params);
 	}
 
 	public static <FakeRet> FakeRet wrap(Throwable src, Object... params) {
@@ -18,7 +18,7 @@ public final class GiskardException extends RuntimeException {
 			throw (GiskardException) src;
 		}
 	
-		Giskard.log(MiNDEventLevel.CRITICAL, src, params);
+		Giskard.log(MiNDEventLevel.Critical, src, params);
 		throw new GiskardException(src);
 	}
 }

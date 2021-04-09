@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_jar" name="MontruTest01">
+<project default="create_jar" name="DustTest01">
 
 	<property name="GISKARD_SELF" value="../../.." />
 	<include file="${GISKARD_SELF}/Inc/Ant/ant_tools.xml" />
@@ -12,9 +12,9 @@
 		<giskard-build-mod vendor="Dust" module="Text" ver="1.0" />
 		<giskard-build-mod vendor="Dust" module="Tools" ver="1.0" />
 		
-		<giskard-build-mod vendor="Montru" module="Gui" ver="1.0"/>
+		<giskard-build-mod vendor="Dust" module="Montru" ver="1.0"/>
 		
-		<giskard-build-app vendor="Montru" module="Test01" ver="1.0"/>
+		<giskard-build-app vendor="Dust" module="Test01" ver="1.0"/>
 	</target>
 
 </project>

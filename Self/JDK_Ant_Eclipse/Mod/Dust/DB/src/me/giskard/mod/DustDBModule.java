@@ -8,7 +8,7 @@ import me.giskard.tokens.DustTokensDB;
 
 public class DustDBModule implements GiskardConsts.MiNDAgent, DustTokensDB {
 	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "DB module initializing");
+		Giskard.log(MiNDEventLevel.Trace, "DB module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_DBTEST01, DustJdbcAgent.class);
 	}
@@ -22,7 +22,7 @@ public class DustDBModule implements GiskardConsts.MiNDAgent, DustTokensDB {
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 
 }

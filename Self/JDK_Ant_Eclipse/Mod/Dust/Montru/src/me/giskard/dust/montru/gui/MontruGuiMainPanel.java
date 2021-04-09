@@ -1,4 +1,4 @@
-package me.giskard.montru.gui;
+package me.giskard.dust.montru.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -286,7 +286,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT;
+		MiNDResultType ret = MiNDResultType.Accept;
 
 		switch ( action ) {
 		case Begin:
@@ -444,7 +444,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		MiNDAgent reader = new MiNDAgent() {
 			@Override
 			public MiNDResultType process(MiNDAgentAction action) throws Exception {
-				return MiNDResultType.ACCEPT_READ;
+				return MiNDResultType.AcceptRead;
 			}
 		};
 		Giskard.access(MiNDAccessCommand.Use, reader);

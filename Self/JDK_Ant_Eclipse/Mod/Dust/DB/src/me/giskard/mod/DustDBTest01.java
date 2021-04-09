@@ -7,17 +7,17 @@ import me.giskard.dust.db.DustDBConsts;
 public class DustDBTest01 implements DustDBConsts, GiskardConsts.MiNDAgent {
 	
 	void runTest() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "Running DB test...");
+		Giskard.log(MiNDEventLevel.Trace, "Running DB test...");
 	}
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT_PASS;
+		MiNDResultType ret = MiNDResultType.AcceptPass;
 		
 		switch ( action ) {
 		case Process:
 			runTest();
-			ret = MiNDResultType.ACCEPT;
+			ret = MiNDResultType.Accept;
 			break;
 
 		default:

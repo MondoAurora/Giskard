@@ -8,7 +8,7 @@ import me.giskard.tools.GisToolsTokenTranslator;
 
 abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 	public static String buildId(MiNDTokenType type, String name, Object... params) {
-		DustRuntimeToken parent = ((MiNDTokenType.UNIT == type) || (MiNDTokenType.LOCAL == type)) ? null
+		DustRuntimeToken parent = ((MiNDTokenType.Unit == type) || (MiNDTokenType.Local == type)) ? null
 				: (DustRuntimeToken) params[0];
 		return (null == parent) ? name : parent.getId() + SEP_ID + name;
 	}
@@ -17,17 +17,17 @@ abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 		DustRuntimeToken ret;
 
 		switch ( type ) {
-		case UNIT:
-		case LOCAL:
+		case Unit:
+		case Local:
 			ret = new Container(type, name, null);
 			break;
-		case MEMBER:
+		case Member:
 			ret = new Member(name, (Container) params[0], (MiNDValType) params[1],
 					(MiNDCollType) params[2]);
 			break;
 		default:
 			ret = new Container(type, name, (Container) params[0]);
-			if ( (type == MiNDTokenType.TAG) && (params.length > 1) ) {
+			if ( (type == MiNDTokenType.Tag) && (params.length > 1) ) {
 				GisToolsTokenTranslator.register(ret, params[1]);
 			}
 
@@ -121,7 +121,7 @@ abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 		MiNDCollType collType;
 
 		public Member(String name, Container parent, MiNDValType valType, MiNDCollType collType) {
-			super(MiNDTokenType.MEMBER, name, parent);
+			super(MiNDTokenType.Member, name, parent);
 
 			setValType(valType);
 			setCollType(collType);

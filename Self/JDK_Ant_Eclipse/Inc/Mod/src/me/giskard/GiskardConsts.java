@@ -15,13 +15,14 @@ public interface GiskardConsts {
 
 	String GISKARD_PACKAGE = Giskard.class.getPackage().getName();
 	String GISKARD_CLASS_APP = GISKARD_PACKAGE + ".app.GiskardApp";
-	String GISKARD_PACKAGE_MOD = GISKARD_PACKAGE + ".mod.";
+	String GISKARD_PREFIX_MOD = GISKARD_PACKAGE + ".mod.";
+	String GISKARD_PREFIX_UNIT = GISKARD_PACKAGE + ".units.Unit";
 
 	final int KEY_APPEND = -1;
 	final int KEY_SIZE = -2;
 
 	enum MiNDTokenType {
-		UNIT, AGENT, TYPE, MEMBER, TAG, LOCAL
+		Unit, Type, Member, Tag, Service, Agent, Local
 	}
 
 	enum MiNDValType {
@@ -41,7 +42,7 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDEventLevel {
-		CRITICAL, ERROR, WARNING, INFO, TRACE, DEBUG
+		Critical, Error, Warning, Info, Trace, Debug
 	};
 
 	enum MiNDAgentAction {
@@ -49,7 +50,7 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDResultType {
-		NOTIMPLEMENTED, REJECT, ACCEPT_PASS, ACCEPT, ACCEPT_READ, READ, WAIT
+		Notimplemented, Reject, AcceptPass, Accept, AcceptRead, Read, Wait
 	};
 
 	public interface MiNDNamed {

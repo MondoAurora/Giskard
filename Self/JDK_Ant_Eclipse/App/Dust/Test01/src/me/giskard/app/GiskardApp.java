@@ -25,12 +25,12 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokens.addModule("DustDB", "1.0");
 		DustTokens.addModule("DustTools", "1.0");
 		DustTokens.addModule("DustGuiSwing", "1.0");
-		DustTokens.addModule("MontruGui", "1.0");
+		DustTokens.addModule("DustMontru", "1.0");
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
-		
-		String testId = (args.length > 0) ? args[0] : "gui2";
-		
+
+		String testId = (args.length > 0) ? args[0] : "gui";
+
 		switch ( testId ) {
 		case "io":
 			testIO();
@@ -55,18 +55,17 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 			break;
 		}
 
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
-	
+
 	public static void setCoords(MiNDToken target, Integer... coords) {
 		Giskard.access(MiNDAccessCommand.Get, target);
 		Giskard.access(MiNDAccessCommand.Set, MTTYPE_GEODATA, target, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
-		for ( Integer i : coords ) {
+
+		for (Integer i : coords) {
 			Giskard.access(MiNDAccessCommand.Add, i, target, MTMEMBER_GEODATA_COORDS);
 		}
 	}
-	
 
 	public static void testGui2() throws Exception {
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
@@ -103,8 +102,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		setCoords(MTMEMBER_ACTION_GPR01, 1000, 600);
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_WORLD,
-				MTMEMBER_WORLD_RENDERER);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_PLATFORMS,
+				MTTAG_PLATFORM_SWING, MTMEMBER_PLATFORM_MANAGER);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_THIS);
 	}
 
@@ -137,19 +136,19 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	public static void testSequence() throws Exception {
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		linkDump("one", MiNDResultType.ACCEPT);
-		linkDump("two", MiNDResultType.ACCEPT);
-		linkDump("not this", MiNDResultType.REJECT);
-		linkDump("three", MiNDResultType.ACCEPT);
+		linkDump("one", MiNDResultType.Accept);
+		linkDump("two", MiNDResultType.Accept);
+		linkDump("not this", MiNDResultType.Reject);
+		linkDump("three", MiNDResultType.Accept);
 	}
 
 	public static void testSelect() throws Exception {
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SELECTION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		linkDump("not this 1", MiNDResultType.REJECT);
-		linkDump("not this 2", MiNDResultType.REJECT);
-		linkDump("this", MiNDResultType.ACCEPT);
-		linkDump("not this 4", MiNDResultType.REJECT);
+		linkDump("not this 1", MiNDResultType.Reject);
+		linkDump("not this 2", MiNDResultType.Reject);
+		linkDump("this", MiNDResultType.Accept);
+		linkDump("not this 4", MiNDResultType.Reject);
 	}
 
 	public static void linkDump(String msg, MiNDResultType res) throws Exception {

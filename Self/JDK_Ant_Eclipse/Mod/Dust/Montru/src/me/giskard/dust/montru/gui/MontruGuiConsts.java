@@ -1,4 +1,4 @@
-package me.giskard.montru.gui;
+package me.giskard.dust.montru.gui;
 
 import me.giskard.GiskardConsts;
 import me.giskard.tokens.DustTokensGeneric;

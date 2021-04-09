@@ -1,5 +1,6 @@
 package me.giskard.dust.runtime;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,12 +19,23 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 
 		DustModule(String mod, ClassLoader cl) throws Exception {
 			this.cl = cl;
+			modules.put(mod, this);
 			modAgent = GisToolsModuleServices.initModule(cl, mod);
 		}
 
 		DustModule(String mod, MiNDAgent agent) throws Exception {
 			this.cl = agent.getClass().getClassLoader();
 			modAgent = agent;
+		}
+
+		public void optInitUnit(String unitName) {
+			try {
+				Class<?> c = cl.loadClass(GISKARD_PREFIX_UNIT + unitName);
+				Method init = c.getMethod("init");
+				init.invoke(null);
+			} catch (Exception e) {
+				GiskardException.swallow(e);
+			}
 		}
 
 		@Override
@@ -49,6 +61,7 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 	}
 
 	private Map<String, DustModule> modules = new TreeMap<>();
+	private Map<String, DustModule> provider = new TreeMap<>();
 
 	private Map<Integer, Class<?>> nativeClasses = new HashMap<>();
 
@@ -65,13 +78,12 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		ClassLoader clMod = GisToolsModuleServices.getClassLoader(modName, ver);
 
 		if ( null == clMod ) {
-			Giskard.log(MiNDEventLevel.INFO, "would download module from server", modName, ver);
+			Giskard.log(MiNDEventLevel.Info, "would download module from server", modName, ver);
 			return null;
 		}
 
-		Giskard.log(MiNDEventLevel.TRACE, "Adding module", modName, ver);
+		Giskard.log(MiNDEventLevel.Trace, "Adding module", modName, ver);
 		DustModule mod = new DustModule(modName, clMod);
-		modules.put(modName, mod);
 
 		return mod;
 	}
@@ -92,7 +104,7 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT;
+		MiNDResultType ret = MiNDResultType.Accept;
 
 		switch ( action ) {
 		case Begin:
@@ -102,10 +114,9 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		case Init:
 			break;
 		case Process:
-			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-					MTMEMBER_ENTITY_PRIMARYTYPE);
+			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_TOKEN);
 
-			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_MODULE).entityHandle, pt) ) {
+			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_MODULES).entityHandle, pt) ) {
 				String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
 						MTMEMBER_PLAIN_STRING);
 				String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
@@ -114,15 +125,29 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 				if ( !MODULE_NAME.equals(modName) ) {
 					addModule(modName, modVer);
 				}
-			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTTYPE_IMPLEMENTATION).entityHandle, pt) ) {
-				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-						MTMEMBER_IMPLEMENTATION_AGENT);
+			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MODULE_NATIVES).entityHandle, pt) ) {
+				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+				
 				if ( null != agent ) {
 					Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
 							MTMEMBER_VARIANT_VALUE);
 					if ( null != c ) {
 						nativeClasses.put((Integer) agent, c);
 					}
+				}
+			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_CONN_PROVIDES).entityHandle, pt) ) {
+				String unitName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+						MTMEMBER_PLAIN_STRING);
+				
+				if ( !provider.containsKey(unitName) ) {
+					String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_LINK_ONE,
+							MTMEMBER_PLAIN_STRING);
+
+					Giskard.log(MiNDEventLevel.Trace, "Module", modName, "provides unit", unitName);
+					DustModule mod = modules.get(modName);
+					mod.optInitUnit(unitName);
+					
+					provider.put(unitName, mod);
 				}
 			}
 			break;

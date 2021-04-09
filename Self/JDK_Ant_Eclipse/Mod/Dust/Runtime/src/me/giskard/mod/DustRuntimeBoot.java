@@ -8,7 +8,7 @@ import me.giskard.tokens.DustTokens;
 
 public class DustRuntimeBoot implements DustRuntimeConsts {
 	public static void boot() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "DustRuntimeBoot.boot started...");
+		Giskard.log(MiNDEventLevel.Trace, "DustRuntimeBoot.boot started...");
 
 		// Machine
 		Giskard.access(MiNDAccessCommand.Get, MTSHARED_MACHINE);

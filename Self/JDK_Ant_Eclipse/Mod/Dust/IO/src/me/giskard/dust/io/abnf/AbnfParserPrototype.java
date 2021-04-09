@@ -193,7 +193,7 @@ public class AbnfParserPrototype {
 		seen.add(langName);
 		toSee.remove(langName);
 
-		Giskard.log(MiNDEventLevel.TRACE, "Reading ABNF file", fAbnf.getAbsolutePath());
+		Giskard.log(MiNDEventLevel.Trace, "Reading ABNF file", fAbnf.getAbsolutePath());
 
 		boolean header = true;
 

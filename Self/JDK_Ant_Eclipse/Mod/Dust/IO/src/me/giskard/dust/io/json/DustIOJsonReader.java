@@ -31,12 +31,12 @@ public class DustIOJsonReader implements DustIOJsonConsts {
 			}
 			
 			try {
-				MiNDResultType ret = MiNDResultType.ACCEPT_READ; // processor.process(action);
+				MiNDResultType ret = MiNDResultType.AcceptRead; // processor.process(action);
 
 				switch ( ret ) {
-				case NOTIMPLEMENTED:
+				case Notimplemented:
 					return GiskardException.wrap(null);
-				case REJECT:
+				case Reject:
 					return false;
 				default:
 					return true;

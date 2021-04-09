@@ -31,7 +31,21 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
 				Giskard.access(MiNDAccessCommand.Set, block, MTMEMBER_ACTION_PARAM, MTMEMBER_LINK_ONE);
 				Giskard.access(MiNDAccessCommand.Set, member, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_TOKEN);
-				Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEY);
+				
+				switch ( ((DustRuntimeToken) member).getCollType() ) {
+				case Arr:
+					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					break;
+				case Map:
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					break;
+				default:
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					break;
+				}
 
 				if ( ((DustRuntimeToken) member).getValType() == MiNDValType.Link ) {
 					Giskard.access(MiNDAccessCommand.Set, valOld, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKOLD);

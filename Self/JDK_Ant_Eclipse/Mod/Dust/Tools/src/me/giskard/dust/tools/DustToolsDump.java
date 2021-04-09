@@ -15,7 +15,7 @@ public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
 	
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT;
+		MiNDResultType ret = MiNDResultType.Accept;
 		switch ( action ) {
 		case Begin:
 			break;
@@ -30,9 +30,9 @@ public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
 				ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 			}
 			if ( GiskardUtils.isAgentAccept(ret)) {
-				Giskard.log(MiNDEventLevel.INFO, "Dump called", val);				
+				Giskard.log(MiNDEventLevel.Info, "Dump called", val);				
 			} else {
-				Giskard.log(MiNDEventLevel.TRACE, "Dump SKIPPED!", val);				
+				Giskard.log(MiNDEventLevel.Trace, "Dump SKIPPED!", val);				
 			}
 			break;
 		case Release:

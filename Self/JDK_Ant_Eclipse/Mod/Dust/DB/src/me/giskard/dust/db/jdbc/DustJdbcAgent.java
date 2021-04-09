@@ -17,7 +17,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.ACCEPT_PASS;
+		MiNDResultType ret = MiNDResultType.AcceptPass;
 
 		switch ( action ) {
 		case Begin:
@@ -31,7 +31,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 			optCreateConn();
 			String query = "select * from dust_entity";
 
-			Giskard.log(MiNDEventLevel.TRACE, "Running SQL command", query);
+			Giskard.log(MiNDEventLevel.Trace, "Running SQL command", query);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -53,7 +53,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 				dbUrl += "/" + dbName;
 			}
 
-			Giskard.log(MiNDEventLevel.TRACE, "Connecting to database...", dbUrl);
+			Giskard.log(MiNDEventLevel.Trace, "Connecting to database...", dbUrl);
 
 			try {
 				String driver = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DRIVER);
@@ -67,7 +67,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 
 				dbMetaData = conn.getMetaData();
 
-				Giskard.log(MiNDEventLevel.TRACE, "Connection successful.");
+				Giskard.log(MiNDEventLevel.Trace, "Connection successful.");
 
 			} catch (Throwable e) {
 				releaseConn(conn, e);
@@ -89,7 +89,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 					}
 				}
 				conn.close();
-				Giskard.log(MiNDEventLevel.TRACE, "DB connection closed.");
+				Giskard.log(MiNDEventLevel.Trace, "DB connection closed.");
 			}
 			conn = null;
 		}

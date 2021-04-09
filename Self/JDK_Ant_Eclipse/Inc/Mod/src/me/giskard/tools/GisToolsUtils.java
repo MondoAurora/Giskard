@@ -10,7 +10,7 @@ import me.giskard.GiskardUtils;
 public class GisToolsUtils {
 	public static void logMemUsage() {
 		MemoryMXBean mem = ManagementFactory.getMemoryMXBean();
-		Giskard.log(MiNDEventLevel.INFO, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:",
+		Giskard.log(MiNDEventLevel.Info, "Memory usage - heap:", mem.getHeapMemoryUsage(), "non heap:",
 				mem.getNonHeapMemoryUsage());
 	}
 	
@@ -21,7 +21,7 @@ public class GisToolsUtils {
 		public DevTimer(String header) {
 			this.name = header;
 			this.start = System.currentTimeMillis();
-			Giskard.log(MiNDEventLevel.INFO, header, "starting...");
+			Giskard.log(MiNDEventLevel.Info, header, "starting...");
 		}
 
 		@Override
@@ -30,7 +30,7 @@ public class GisToolsUtils {
 		}
 
 		public void log() {
-			Giskard.log(MiNDEventLevel.INFO, this);
+			Giskard.log(MiNDEventLevel.Info, this);
 		}
 	}
 

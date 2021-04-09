@@ -9,7 +9,7 @@ import me.giskard.tokens.DustTokensText;
 
 public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
 	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.TRACE, "Text module initializing");
+		Giskard.log(MiNDEventLevel.Trace, "Text module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_MATCHCONST, DustTextMatcherConst.class);
 		DustTokens.addModuleImpInfo(MTAGENT_MATCHRANGE, DustTextMatcherRange.class);
@@ -25,6 +25,6 @@ public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
 		default:
 			break;
 		}
-		return MiNDResultType.ACCEPT;
+		return MiNDResultType.Accept;
 	}
 }

@@ -38,7 +38,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 	}
 
 	protected MiNDResultType notify(Object val, Iterable itContent) {
-		MiNDResultType ret = MiNDResultType.REJECT;
+		MiNDResultType ret = MiNDResultType.Reject;
 
 		for (Object ob : itContent) {
 			try {
@@ -136,6 +136,9 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 			switch ( cmd ) {
 			case Add:
 				ret = collector.put(key, val);
+				if ( !GiskardUtils.isEqual(ret, val)) {
+					notif.notify(cmd, owner.getHandle(), ret, val, token, key);
+				}
 				break;
 			case Chk:
 				break;

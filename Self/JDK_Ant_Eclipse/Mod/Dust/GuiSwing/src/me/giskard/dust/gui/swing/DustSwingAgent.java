@@ -22,7 +22,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.ACCEPT;
+			MiNDResultType ret = MiNDResultType.Accept;
 
 			switch ( action ) {
 			case Begin:
@@ -34,7 +34,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 				Rectangle rct = DustSwingUtils.toRect(MTMEMBER_ACTION_THIS);
 
-				Giskard.log(MiNDEventLevel.INFO, "Frame", label, ", rectangle (", rct, ")");
+				Giskard.log(MiNDEventLevel.Info, "Frame", label, ", rectangle (", rct, ")");
 
 				comp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				comp.setTitle(label);

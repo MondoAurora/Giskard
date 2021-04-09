@@ -58,7 +58,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 		if ( step.action == MiNDAgentAction.End) {
 			indent.delete(0, 2);
 		}
-		Giskard.log(MiNDEventLevel.TRACE, "SerEvent ", indent, step.action, step.item, val);
+		Giskard.log(MiNDEventLevel.Trace, "SerEvent ", indent, step.action, step.item, val);
 		if ( step.action == MiNDAgentAction.Begin) {
 			indent.append("  ");
 		}
