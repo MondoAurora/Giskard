@@ -1,12 +1,13 @@
 package me.giskard.units;
 
 import me.giskard.Giskard;
+import me.giskard.tokens.DustTokensGeometry;
 import me.giskard.tokens.DustTokensGui;
 import me.giskard.tokens.DustTokensMind;
 import me.giskard.tokens.DustTokensMontru;
 import me.giskard.tokens.DustTokensText;
 
-public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensGui, DustTokensText {
+public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensGui, DustTokensText, DustTokensGeometry {
 	public static void init() throws Exception {
 
 		Giskard.log(MiNDEventLevel.Trace, UnitMontru.class, "init() called.");
@@ -23,6 +24,7 @@ public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensG
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR09);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_PANEL, MTMEMBER_ACTION_GPR09, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Add, MTTAG_LAYOUT_GRID, MTMEMBER_ACTION_GPR09, MTMEMBER_ENTITY_TAGS);
+		Giskard.access(MiNDAccessCommand.Add, MTTAG_LOCDATA_Y, MTMEMBER_ACTION_GPR09, MTMEMBER_ENTITY_TAGS);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_GPR09, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, 0.8, MTMEMBER_ACTION_GPR09, MTMEMBER_SPLIT_WEIGHT);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR09, MTMEMBER_LINK_ARR);
@@ -44,6 +46,7 @@ public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensG
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR08);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_PANEL, MTMEMBER_ACTION_GPR08, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Add, MTTAG_LAYOUT_GRID, MTMEMBER_ACTION_GPR08, MTMEMBER_ENTITY_TAGS);
+		Giskard.access(MiNDAccessCommand.Add, MTTAG_LOCDATA_Y, MTMEMBER_ACTION_GPR08, MTMEMBER_ENTITY_TAGS);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_GPR08, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, 0.2, MTMEMBER_ACTION_GPR08, MTMEMBER_SPLIT_WEIGHT);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR08, MTMEMBER_LINK_ARR);
@@ -72,6 +75,7 @@ public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensG
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR06);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_PANEL, MTMEMBER_ACTION_GPR06, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Add, MTTAG_LAYOUT_GRID, MTMEMBER_ACTION_GPR06, MTMEMBER_ENTITY_TAGS);
+		Giskard.access(MiNDAccessCommand.Add, MTTAG_LOCDATA_X, MTMEMBER_ACTION_GPR06, MTMEMBER_ENTITY_TAGS);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR07, MTMEMBER_ACTION_GPR06, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, 0.2, MTMEMBER_ACTION_GPR06, MTMEMBER_SPLIT_WEIGHT);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR09, MTMEMBER_ACTION_GPR06, MTMEMBER_LINK_ARR);

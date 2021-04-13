@@ -66,7 +66,7 @@ public class GisToolsModuleServices implements GiskardConsts {
 			ClassLoader ret = new URLClassLoader(uu, clSys);
 			ret.loadClass(modClassName);
 			
-			Giskard.log(MiNDEventLevel.Trace, "Module", moduleId, "avaliable externally:", urls);
+			Giskard.log(MiNDEventLevel.Trace, "Module", moduleId, "available externally:", urls);
 
 			return ret;
 		} catch (Throwable t) {

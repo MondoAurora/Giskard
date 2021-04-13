@@ -53,10 +53,10 @@ public class DustRuntimeGiskard extends Giskard
 		return machine.access(cmd, val, valPath);
 	}
 
-	@Override
-	protected MiNDResultType invoke_(Object... agentPath) throws Exception {
-		return machine.invoke();
-	}
+//	@Override
+//	protected MiNDResultType invoke_(Object... agentPath) throws Exception {
+//		return machine.invoke();
+//	}
 
 	@Override
 	protected void log_(MiNDEventLevel lvl, Object... obs) {

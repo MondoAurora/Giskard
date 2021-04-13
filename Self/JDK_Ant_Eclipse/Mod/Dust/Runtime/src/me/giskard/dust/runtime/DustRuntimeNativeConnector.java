@@ -6,13 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.Giskard;
-import me.giskard.GiskardConsts;
 import me.giskard.GiskardException;
-import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 import me.giskard.tools.GisToolsModuleServices;
 
-public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollConsts, GiskardConsts.MiNDAgent {
+public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollConsts {
 	class DustModule implements MiNDBuilder<String, Object> {
 		MiNDAgent modAgent;
 		ClassLoader cl;
@@ -96,70 +94,41 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 	@SuppressWarnings("unchecked")
 	public <RetType> RetType createNative(Integer hType) {
 		try {
-			return (RetType) nativeClasses.get(hType).newInstance();
+			if ( null != hType ) {
+				Class<?> cl = nativeClasses.get(hType);
+				if ( null != cl ) {
+					return (RetType) cl.newInstance();
+				}
+			}
 		} catch (Exception e) {
 			return GiskardException.wrap(e);
 		}
+		
+		Giskard.log(MiNDEventLevel.Warning, "Agent not found for", hType);
+
+		return null;
 	}
 
-	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.Accept;
+	public void addAgentClass(Integer agent, Class<?> c) {
+		nativeClasses.put(agent, c);
+	}
 
-		switch ( action ) {
-		case Begin:
-			break;
-		case End:
-			break;
-		case Init:
-			break;
-		case Process:
-			Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_TOKEN);
+	public void addUnitImpl(String unitName) {
+		if ( !provider.containsKey(unitName) ) {
+			String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_LINK_ONE,
+					MTMEMBER_PLAIN_STRING);
 
-			if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_MODULES).entityHandle, pt) ) {
-				String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-						MTMEMBER_PLAIN_STRING);
-				String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-						MTMEMBER_VERSIONED_SIGNATURE);
+			Giskard.log(MiNDEventLevel.Trace, "Module", modName, "provides unit", unitName);
+			DustModule mod = modules.get(modName);
+			mod.optInitUnit(unitName);
 
-				if ( !MODULE_NAME.equals(modName) ) {
-					addModule(modName, modVer);
-				}
-			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MODULE_NATIVES).entityHandle, pt) ) {
-				Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
-				
-				if ( null != agent ) {
-					Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-							MTMEMBER_VARIANT_VALUE);
-					if ( null != c ) {
-						nativeClasses.put((Integer) agent, c);
-					}
-				}
-			} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_CONN_PROVIDES).entityHandle, pt) ) {
-				String unitName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-						MTMEMBER_PLAIN_STRING);
-				
-				if ( !provider.containsKey(unitName) ) {
-					String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_LINK_ONE,
-							MTMEMBER_PLAIN_STRING);
-
-					Giskard.log(MiNDEventLevel.Trace, "Module", modName, "provides unit", unitName);
-					DustModule mod = modules.get(modName);
-					mod.optInitUnit(unitName);
-					
-					provider.put(unitName, mod);
-				}
-			}
-			break;
-		case Release:
-			break;
+			provider.put(unitName, mod);
 		}
-
-		return ret;
 	}
 
 	@Override
 	public String toString() {
 		return nativeClasses.toString();
 	}
+
 }

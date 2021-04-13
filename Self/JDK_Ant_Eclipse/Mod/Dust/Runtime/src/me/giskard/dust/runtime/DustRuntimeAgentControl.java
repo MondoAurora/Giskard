@@ -9,7 +9,7 @@ import me.giskard.tools.GisToolsTokenTranslator;
 
 public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeAgent {
 
-	DustRuntimeMachine.Dialog dialog;
+	DustRuntimeMachine.Activity activity;
 	DustRuntimeMachine.Invocation currChild;
 	
 	public static class Iteration extends DustRuntimeAgentControl {
@@ -44,9 +44,9 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					
 					if ( null == currChild ) {
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-						currChild = dialog.relay();
+						currChild = activity.relay();
 					} else {
-						dialog.push(currChild);
+						activity.push(currChild);
 					}
 					ret = MiNDResultType.Read;
 				}
@@ -72,10 +72,10 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 
 			if ( c < children.size() ) {
-				dialog.push(currChild = children.get(c));
+				activity.push(currChild = children.get(c));
 				ok = true;
 			} else if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c) ) {
-				children.add(currChild = dialog.relay());
+				children.add(currChild = activity.relay());
 				ok = true;
 			}
 			
@@ -157,6 +157,6 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 	@Override
 	public void setInvocation(Invocation invocation_) {
 		super.setInvocation(invocation_);
-		dialog = invocation_.dlg;
+		activity = invocation_.activity;
 	}
 }

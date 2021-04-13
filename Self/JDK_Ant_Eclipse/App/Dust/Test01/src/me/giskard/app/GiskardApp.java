@@ -29,7 +29,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
-		String testId = (args.length > 0) ? args[0] : "gui";
+		String testId = (args.length > 0) ? args[0] : "io";
 
 		switch ( testId ) {
 		case "io":
@@ -53,7 +53,19 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		case "gui2":
 			testGui2();
 			break;
+		default:
+			testId = "UNKNOWN";
+			break;
 		}
+
+		Giskard.log(MiNDEventLevel.Info, "Starting test", testId);
+
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+		Giskard.access(MiNDAccessCommand.Set, MTTYPE_DIALOG, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_GPR01, MTMEMBER_DIALOG_ACTIVITIES);
+
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTSHARED_MACHINE, MTMEMBER_MACHINE_DIALOGS);
 
 		return MiNDResultType.Accept;
 	}
@@ -71,9 +83,9 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_FRAME, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
 
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MAINPANEL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+//		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
+//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MAINPANEL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
+//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 
 		Giskard.access(MiNDAccessCommand.Set, "Montru", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 
@@ -82,6 +94,11 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		setCoords(MTMEMBER_ACTION_GPR01, 1000, 600);
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_AREA_SPAN);
+
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTUNIT_MONTRU, MTMEMBER_UNIT_SERVICES, MTSERVICE_GUI);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+
+//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_THIS, MTSHARED_MACHINE, MTMEMBER_MACHINE_DIALOGS);
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS);
 	}

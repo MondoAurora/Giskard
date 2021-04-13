@@ -22,7 +22,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 				break;
 			case Begin:
 				visited.clear();
-				ret = optSelectContext(getInvocation().ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
+				ret = optSelectContext(getInvocation().runningActor.ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
 				break;
 			case Process:
 				while ( (null != it) && it.hasNext()) {

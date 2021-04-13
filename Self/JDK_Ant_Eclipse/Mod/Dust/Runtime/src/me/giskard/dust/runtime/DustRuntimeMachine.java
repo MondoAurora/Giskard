@@ -1,50 +1,55 @@
 package me.giskard.dust.runtime;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
-import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifier {
-	
-	/*
-	 * Main purposes are not yet visible:
-	 *  - Thread management
-	 *  - Dialog thread connection, priorities, watchdogs
-	 */
 
-	static class Dialog {
-		private DustRuntimeMachine machine;
-		private DustRuntimeContext ctx;
+	Activity createActivity(Dialog dlg) throws Exception {
+		Activity ret = new Activity();
+		ret.init(dlg);
+		return ret;
+	}
+
+	class Dialog {
+		private DustRuntimeContext ctxDialog;
+		Set<Activity> activities = new HashSet<>();
+
+		public Dialog() throws Exception {
+			ctxDialog = new DustRuntimeContext(knowledge, HANDLE_DIALOG);
+			DustRuntimeDataBlock bRoot = ctxDialog.getRootBlock();
+			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
+
+			// deep copy of all entities
+
+			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, KEY_SIZE);
+			for (int i = 0; i < actCount; ++i) {
+				Integer act = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, i);
+				ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_CALL_TARGET, null);
+//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, i);
+				activities.add(createActivity(this));
+			}
+		}
+	}
+
+	class Activity {
+		private Dialog dlg;
 
 		private Invocation current;
 		private Stack<Invocation> callStack;
 
-		public Dialog(DustRuntimeMachine machine_) throws Exception {
-			this.machine = machine_;
-			ctx = new DustRuntimeContext(machine.knowledge, HANDLE_DIALOG);
-			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
-			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
-
-			Integer handle = machine.knowledge.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
-			bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_TARGET, null);
-
-			handle = machine.knowledge.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-			if ( null != handle ) {
-				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_CALL_PARAM, null);
-			}
-
+		public void init(Dialog dlg) throws Exception {
+			this.dlg = dlg;
 			current = invoke();
-		}
-
-		public DustRuntimeMachine getMachine() {
-			return machine;
 		}
 
 		Invocation invoke() throws Exception {
 			Invocation ret = new Invocation();
-			ret.setDialog(this);
+			ret.init(this);
 			return ret;
 		}
 
@@ -54,7 +59,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 		public Invocation relay() throws Exception {
 			push(invoke());
-			current.process(MiNDAgentAction.Init);
 			return current;
 		}
 
@@ -67,80 +71,189 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 			return current;
 		}
+	}
 
-		public MiNDResultType execute() throws Exception {
-			MiNDResultType ret = current.process(MiNDAgentAction.Init);
+	public class Invocation {
+		Activity activity;
 
-			ret = current.process(MiNDAgentAction.Begin);
-			do {
-				ret = current.process(MiNDAgentAction.Process);
-				ctx.access(NULL_NOTIF, MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG,
-						MTMEMBER_ENTITY_TAGS);
+		DustRuntimeDataBlock bThis;
+		DustRuntimeDataBlock bParam;
+		MiNDAgent agent;
 
-				if ( !GiskardUtils.isAgentRead(ret) ) {
-					if ( (null != callStack) && !callStack.isEmpty() ) {
-						current = callStack.pop();
-					} else {
-						break;
-					}
-				}
+		Actor runningActor;
+		MiNDResultType state;
 
-			} while (true);
+		void init(Activity activity_) throws Exception {
+			this.activity = activity_;
 
-			current.process(MiNDAgentAction.End);
-			current.process(MiNDAgentAction.Release);
+			DustRuntimeContext ctxDialog = activity.dlg.ctxDialog;
+			Integer handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			DustRuntimeDataBlock bTarget = ctxDialog.getEntity(handle);
 
-			return ret;
+			bThis = new DustRuntimeDataBlock(null, bTarget);
+
+			handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+			bParam = (null != handle) ? ctxDialog.getEntity(handle) : null;
 		}
 
-		public DustRuntimeContext getContext() {
-			return (null == current) ? ctx : current.ctx;
+		MiNDResultType step(Actor a) throws Exception {
+			try {
+				runningActor = a;
+
+				if ( null == agent ) {
+					agent = getNativeConn().createNative(MTMEMBER_ACTION_THIS);
+					if ( agent instanceof RuntimeAgent ) {
+						((RuntimeAgent) agent).setInvocation(this);
+					}
+					agent.process(MiNDAgentAction.Init);
+				}
+				state = agent.process(MiNDAgentAction.Process);
+			} finally {
+				runningActor = null;
+			}
+			
+			return state;
 		}
 	}
 
-	public static class Invocation implements MiNDAgent {
-		Dialog dlg;
+	public class Actor implements Runnable {
 		DustRuntimeContext ctx;
-		MiNDAgent agent;
+		Invocation last;
+		Invocation current;
 
-		void setDialog(Dialog dlg_) throws Exception {
-			this.dlg = dlg_;
+		volatile boolean stopRequest;
 
-			DustRuntimeContext ctxSrc = dlg.getContext();
+		public Actor() {
+			ctx = new DustRuntimeContext(knowledge, HANDLE_INVOCATION);
+			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_THIS, MTMEMBER_ACTION_THIS, null);
+			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_PARAM, MTMEMBER_ACTION_PARAM, null);
+		}
 
-			ctx = new DustRuntimeContext(ctxSrc, HANDLE_INVOCATION);
+		public void syncCtx(Dialog dlg) {
+			ctx.parentCtx = dlg.ctxDialog;
+			ctx.entities.put(HANDLE_DIALOG, dlg.ctxDialog.rootBlock);
+			ctx.entities.put(HANDLE_THIS, current.bThis);
+			ctx.entities.put(HANDLE_PARAM, current.bParam);
+		}
 
-			DustRuntimeDataBlock bRoot = ctx.getRootBlock();
-			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
-
-			Integer handle = ctxSrc.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
-			DustRuntimeDataBlock bTarget = ctxSrc.getEntity(handle);
-			DustRuntimeDataBlock e = new DustRuntimeDataBlock(ctx, bTarget);
-			bRoot.access(MiNDAccessCommand.Set, e.getHandle(), MTMEMBER_ACTION_THIS, null);
-
-			handle = ctxSrc.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-			if ( null != handle ) {
-				bRoot.access(MiNDAccessCommand.Set, handle, MTMEMBER_ACTION_PARAM, null);
-			}
+		public void execute(Dialog dlg) throws Exception {
+			current = last = dlg.activities.iterator().next().invoke();
+			syncCtx(dlg);
+			run();
 		}
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			if ( null == agent ) {
-				agent = dlg.machine.getNativeConn().createNative(MTMEMBER_ACTION_THIS);
-				if ( agent instanceof RuntimeAgent ) {
-					((RuntimeAgent) agent).setInvocation(this);
+		public void run() {
+			for (stopRequest = false; !stopRequest;) {
+				current = getNextTask(this);
+
+				if ( null == current ) {
+					synchronized (this) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							stopRequest = true;
+						}
+					}
+				} else {
+					if ( last != current ) {
+						syncCtx(current.activity.dlg);
+					}
+
+					try {
+						current.step(this);
+						ctx.commit();
+						last = current;
+						
+						if ( GiskardUtils.isAgentRead(current.state) ) {
+							current = null;
+						} else {
+							// for now...
+							stopRequest = true;
+						}
+						
+					} catch (Throwable e) {
+
+					}
 				}
 			}
+		}
 
-			return agent.process(action);
+		synchronized void stop() {
+			stopRequest = true;
+			notifyAll();
+		}
+	}
+
+	class MachineListener implements MiNDAgent {
+		@Override
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+			MiNDResultType ret = MiNDResultType.Accept;
+
+			switch ( action ) {
+			case Begin:
+				break;
+			case End:
+				break;
+			case Init:
+				break;
+			case Process:
+				Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_TOKEN);
+
+				if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_MODULES).entityHandle, pt) ) {
+					String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM,
+							MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
+					String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+							MTMEMBER_VERSIONED_SIGNATURE);
+
+					if ( !MODULE_NAME.equals(modName) ) {
+						nativeConn.addModule(modName, modVer);
+					}
+				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MODULE_NATIVES).entityHandle, pt) ) {
+					Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+
+					if ( null != agent ) {
+						Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
+								MTMEMBER_VARIANT_VALUE);
+						if ( null != c ) {
+							nativeConn.addAgentClass((Integer) agent, c);
+						}
+					}
+				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_CONN_PROVIDES).entityHandle, pt) ) {
+					String unitName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM,
+							MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
+
+					nativeConn.addUnitImpl(unitName);
+				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_DIALOGS).entityHandle, pt) ) {
+//					String dlgName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM,
+//							MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
+
+					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_LINK_ONE, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW);
+
+					Dialog dlg = new Dialog();
+
+					dialogs.add(dlg);
+
+					singleActor = new Actor();
+					singleActor.execute(dlg);
+				}
+				break;
+			case Release:
+				break;
+			}
+
+			return ret;
 		}
 	}
 
 	DustRuntimeContext knowledge;
-	Dialog dialog;
 	DustRuntimeNativeConnector nativeConn;
+	MachineListener ml = new MachineListener();
+
 	NotifDispatcher mainNotifier;
+
+	Set<Dialog> dialogs = new HashSet<>();
+	Actor singleActor;
 
 	public DustRuntimeMachine() {
 		this.mainNotifier = new NotifDispatcher();
@@ -151,12 +264,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 				MTTYPE_UNIT };
 
 		Giskard.log(MiNDEventLevel.Trace, "Boot tokens registered", bootTokens);
-
 	}
 
 	public void init(MiNDAgent agent) throws Exception {
 		nativeConn = new DustRuntimeNativeConnector(agent);
-		mainNotifier.setListener(true, nativeConn);
+		mainNotifier.setListener(true, ml);
 	}
 
 	public DustRuntimeNativeConnector getNativeConn() {
@@ -164,21 +276,15 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 	}
 
 	public DustRuntimeContext getContext() {
-		return (null == dialog) ? knowledge : dialog.current.ctx;
+		return (null == singleActor) ? knowledge : singleActor.ctx;
 	}
-	
+
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath) {
 		return getContext().access(mainNotifier, cmd, val, valPath);
 	}
 
-	public MiNDResultType invoke() throws Exception {
-		if ( null == dialog ) {
-			dialog = new Dialog(this);
-			return dialog.execute();
-		} else {
-			dialog.relay();
-			return MiNDResultType.Accept;
-		}
+	Invocation getNextTask(Actor actor) {
+		return actor.last;
 	}
 
 }

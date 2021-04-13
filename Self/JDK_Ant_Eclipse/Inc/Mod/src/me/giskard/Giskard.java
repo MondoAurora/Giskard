@@ -21,9 +21,9 @@ public abstract class Giskard implements GiskardConsts {
 		log(MiNDEventLevel.Trace, "Loaded...");
 //		log(MiNDEventLevel.TRACE);
 
-		log(MiNDEventLevel.Trace, "Launching main...");
-
-		invoke();
+//		log(MiNDEventLevel.Trace, "Launching main...");
+//
+//		invoke();
 
 		log(MiNDEventLevel.Trace, "Success. Or at least, no exception, exiting Giskard.main() :-)");
 	}
@@ -56,9 +56,9 @@ public abstract class Giskard implements GiskardConsts {
 		return GISKARD.access_(cmd, val, valPath);
 	}
 
-	public static MiNDResultType invoke(Object... agentPath) throws Exception {
-		return GISKARD.invoke_(agentPath);
-	}
+//	public static MiNDResultType invoke(Object... agentPath) throws Exception {
+//		return GISKARD.invoke_(agentPath);
+//	}
 
 	protected static void setImplementation(Giskard g) {
 		if ( (null != GISKARD) && (GISKARD != g) ) {
@@ -67,7 +67,7 @@ public abstract class Giskard implements GiskardConsts {
 		GISKARD = g;
 	}
 
-	protected abstract MiNDResultType invoke_(Object... agentPath) throws Exception;
+//	protected abstract MiNDResultType invoke_(Object... agentPath) throws Exception;
 
 	protected abstract void log_(MiNDEventLevel lvl, Object... obs);
 

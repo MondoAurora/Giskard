@@ -38,7 +38,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 
 				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_PARAM,	MTMEMBER_LINK_ONE) ) {
 					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_PARAM);					
-					Giskard.invoke();
+//					Giskard.invoke();
 				}
 
 				frmMain.pack();

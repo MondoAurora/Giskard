@@ -11,6 +11,7 @@ public final class GiskardException extends RuntimeException {
 
 	public static void swallow(Throwable src, Object... params) {
 		Giskard.log(MiNDEventLevel.Warning, src, params);
+		src.printStackTrace();
 	}
 
 	public static <FakeRet> FakeRet wrap(Throwable src, Object... params) {

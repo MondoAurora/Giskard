@@ -15,7 +15,9 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 		
 		DustTokens.addModuleImpInfo(MTAGENT_MANAGER, DustSwingRenderer.class);
 		
-		DustTokens.addModuleImpInfo(MTAGENT_FRAME, DustSwingAgent.Frame.class);
+		DustTokens.addModuleImpInfo(MTAGENT_FRAME, DustSwingAgent.SwingFrame.class);
+		DustTokens.addModuleImpInfo(MTAGENT_PANEL, DustSwingAgent.SwingPanel.class);
+		DustTokens.addModuleImpInfo(MTAGENT_LABEL, DustSwingAgent.SwingLabel.class);
 
 		
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);

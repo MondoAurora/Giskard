@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.GiskardException;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeContext
@@ -30,7 +31,8 @@ public class DustRuntimeContext
 				lastKey = null;
 
 				if ( coll ) {
-					lastOb = (null == lastOb) ? null : ((DustRuntimeValueCollection<?>)lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
+					lastOb = (null == lastOb) ? null
+							: ((DustRuntimeValueCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
 					lastKey = o;
 					coll = false;
 				} else if ( o instanceof DustRuntimeToken ) {
@@ -38,15 +40,19 @@ public class DustRuntimeContext
 					coll = MiNDCollType.One != lastMember.getCollType();
 
 					if ( null == lastBlock ) {
-						for ( DustRuntimeContext ctx = DustRuntimeContext.this; (null != ctx) && (null == lastOb); ctx = ctx.parentCtx ) {
-							lastOb = ctx.rootBlock.localData.get(lastMember);							
+						for (DustRuntimeContext ctx = DustRuntimeContext.this; (null != ctx)
+								&& (null == lastOb); ctx = ctx.parentCtx) {
+							lastOb = ctx.rootBlock.localData.get(lastMember);
+						}
+						if ( null == lastOb ) {
+							lastOb = lastMember.entityHandle;
 						}
 					} else {
 						lastOb = lastBlock.localData.get(lastMember);
 					}
 				}
 
-				if ( !coll && (null != lastOb ) && ( lastMember.getValType() == MiNDValType.Link ) ) {
+				if ( !coll && (lastOb instanceof Integer) && !GiskardUtils.isEqual(KEY_SIZE, lastKey) && (lastMember.getValType() == MiNDValType.Link) ) {
 					lastBlock = getEntity((Integer) lastOb);
 					lastMember = null;
 				}
@@ -235,7 +241,9 @@ public class DustRuntimeContext
 					ret = Boolean.FALSE;
 					break;
 				case Get:
-					ret = val;
+					if ( null == ret ) {
+						ret = val;
+					}
 					break;
 				case Use:
 					ret = MiNDResultType.Reject;
@@ -260,5 +268,11 @@ public class DustRuntimeContext
 
 	public DustRuntimeDataBlock getRootBlock() {
 		return rootBlock;
+	}
+
+	public void commit() {
+		if ( null != parentCtx ) {
+			// TODO update parent
+		}
 	}
 }
