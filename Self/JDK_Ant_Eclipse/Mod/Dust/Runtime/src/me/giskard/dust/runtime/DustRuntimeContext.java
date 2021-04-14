@@ -62,6 +62,7 @@ public class DustRuntimeContext
 		@SuppressWarnings("unchecked")
 		public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, RetType val) {
 			if ( (cmd == MiNDAccessCommand.Get) && (null == lastMember) ) {
+//			if ( (cmd == MiNDAccessCommand.Get) && ((null == lastMember) || (lastMember.getCollType() != MiNDCollType.One)) ) {
 				if ( val instanceof DustRuntimeToken ) {
 					rootBlock.access(notif, MiNDAccessCommand.Set, lastOb, (MiNDToken) val, null);
 				}

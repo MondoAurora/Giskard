@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 import me.giskard.dust.runtime.DustRuntimeMachine.Invocation;
-import me.giskard.tools.GisToolsTokenTranslator;
 
 public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeAgent {
 
 	DustRuntimeMachine.Activity activity;
 	DustRuntimeMachine.Invocation currChild;
+	MiNDResultType lastProc;
 	
 	public static class Iteration extends DustRuntimeAgentControl {
 		int repMin;
@@ -29,9 +29,11 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				break;
 			case Process:
 				int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+				boolean callBegin = false;
 				
 				if ( -1 == c ) {
 					c = repMin;
+					callBegin = true;
 				} else {
 					++c;
 				}
@@ -44,15 +46,17 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					
 					if ( null == currChild ) {
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-						currChild = activity.relay();
+						currChild = activity.relay(callBegin);
 					} else {
 						activity.push(currChild);
 					}
 					ret = MiNDResultType.Read;
 				}
 				
+				lastProc = ret;
 				break;
 			case End:
+				ret = lastProc;
 				break;
 			case Release:
 				break;
@@ -63,6 +67,11 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 	static abstract class Multi extends DustRuntimeAgentControl {
 		ArrayList<DustRuntimeMachine.Invocation> children = new ArrayList<>();
+		int count;
+		
+		void setCount() {
+			count = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, KEY_SIZE);
+		}
 		
 		boolean relayChild() throws Exception {
 			boolean ok = false;
@@ -74,8 +83,9 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			if ( c < children.size() ) {
 				activity.push(currChild = children.get(c));
 				ok = true;
-			} else if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c) ) {
-				children.add(currChild = activity.relay());
+			} else if ( c < count ) {
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
+				children.add(currChild = activity.relay(true));
 				ok = true;
 			}
 			
@@ -90,6 +100,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			
 			switch ( action ) {
 			case Init:
+				setCount();
 				break;
 			case Begin:
 				break;
@@ -97,14 +108,16 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				if ( null != currChild ) {
 					ret = getCurrResp(MiNDResultType.Accept);
 					if ( !GiskardUtils.isAgentAccept(ret) ) {
+						lastProc = ret;
 						break;
 					}
 				}
 				
-				ret = relayChild() ? MiNDResultType.Read : MiNDResultType.AcceptPass;
+				lastProc = ret = relayChild() ? MiNDResultType.Read : MiNDResultType.AcceptPass;
 				break;
 				
 			case End:
+				ret = lastProc;
 				break;
 			case Release:
 				break;
@@ -121,6 +134,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			
 			switch ( action ) {
 			case Init:
+				setCount();
 				break;
 			case Begin:
 				break;
@@ -128,14 +142,16 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				if ( null != currChild ) {
 					ret = getCurrResp(MiNDResultType.Read);
 					if ( GiskardUtils.isAgentAccept(ret) ) {
+						lastProc = ret;
 						break;
 					}
 				}
 				
-				ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Reject;
+				lastProc = ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Reject;
 				break;
 				
 			case End:
+				ret = lastProc;
 				break;
 			case Release:
 				break;
@@ -146,11 +162,11 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 	}
 	
 	public MiNDResultType getCurrResp(MiNDResultType defVal) {
-		MiNDResultType ret = defVal;
-		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
-		if ( null != resp ) {
-			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
-		}
+		MiNDResultType ret = currChild.state;
+//		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
+//		if ( null != resp ) {
+//			ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
+//		}
 		return ret;
 	}
 	

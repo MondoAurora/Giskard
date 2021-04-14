@@ -87,6 +87,10 @@ public class GiskardUtils implements GiskardConsts {
 		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Add);
 	}
 
+	public static boolean isAgentReject(MiNDResultType res ) {
+		return (res == MiNDResultType.Reject) || (res == MiNDResultType.Notimplemented);
+	}
+
 	public static boolean isAgentRead(MiNDResultType res ) {
 		return (res == MiNDResultType.Read) || (res == MiNDResultType.AcceptRead);
 	}

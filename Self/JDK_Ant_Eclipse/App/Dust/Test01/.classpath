@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/DustGuiSwing"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustRuntime"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustMontru"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DustTools"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

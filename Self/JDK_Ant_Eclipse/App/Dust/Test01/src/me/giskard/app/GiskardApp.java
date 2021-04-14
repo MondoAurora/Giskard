@@ -29,7 +29,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
-		String testId = (args.length > 0) ? args[0] : "io";
+		String testId = (args.length > 0) ? args[0] : "sel";
 
 		switch ( testId ) {
 		case "io":
@@ -46,6 +46,9 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 			break;
 		case "sel":
 			testSelect();
+			break;
+		case "ctrl":
+			testCtrl();
 			break;
 		case "gui":
 			testGui();
@@ -148,6 +151,27 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Set, 10, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MAX);
 
 		linkDump("Hey, world!", MTMEMBER_LINK_ONE);
+	}
+
+	public static void testCtrl() throws Exception {
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS, MTMEMBER_CALL_TARGET);
+
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
+		
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
+		testIterator();
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+		
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
+		testSequence();
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+		
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
+		testSelect();
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS);
+
 	}
 
 	public static void testSequence() throws Exception {
