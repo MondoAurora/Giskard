@@ -29,7 +29,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
-		String testId = (args.length > 0) ? args[0] : "sel";
+		String testId = (args.length > 0) ? args[0] : "ctrl";
 
 		switch ( testId ) {
 		case "io":
@@ -158,18 +158,21 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
 		
+		linkDump("Testing Iterator", MTMEMBER_LINK_ARR, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		testIterator();
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 		
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
-		testSequence();
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-		
+		linkDump("Testing Selection", MTMEMBER_LINK_ARR, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		testSelect();
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
 
+		linkDump("Testing Sequence", MTMEMBER_LINK_ARR, MTMEMBER_ACTION_THIS);
+		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
+		testSequence();
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
+		
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS);
 
 	}
@@ -201,12 +204,16 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static void linkDump(String msg, MiNDToken link) throws Exception {
+		linkDump(msg, link, MTMEMBER_CALL_TARGET);
+	}
+
+	public static void linkDump(String msg, MiNDToken link, MiNDToken target) throws Exception {
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
 		Giskard.access(MiNDAccessCommand.Set, msg, MTMEMBER_ACTION_GPR01, MTMEMBER_VARIANT_VALUE);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DUMP, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
 
 		Giskard.access((MTMEMBER_LINK_ONE == link) ? MiNDAccessCommand.Set : MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01,
-				MTMEMBER_CALL_TARGET, link);
+				target, link);
 	}
 
 }

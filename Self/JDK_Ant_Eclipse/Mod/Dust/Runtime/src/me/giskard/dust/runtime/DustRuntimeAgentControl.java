@@ -29,11 +29,9 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				break;
 			case Process:
 				int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
-				boolean callBegin = false;
 				
 				if ( -1 == c ) {
 					c = repMin;
-					callBegin = true;
 				} else {
 					++c;
 				}
@@ -46,7 +44,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					
 					if ( null == currChild ) {
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-						currChild = activity.relay(callBegin);
+						currChild = activity.relay();
 					} else {
 						activity.push(currChild);
 					}
@@ -85,7 +83,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				ok = true;
 			} else if ( c < count ) {
 				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
-				children.add(currChild = activity.relay(true));
+				children.add(currChild = activity.relay());
 				ok = true;
 			}
 			
