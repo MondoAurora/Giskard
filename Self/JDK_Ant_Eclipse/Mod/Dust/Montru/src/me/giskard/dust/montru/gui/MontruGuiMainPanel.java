@@ -441,13 +441,13 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 	}
 
 	public void loadEntities() {
-		MiNDAgent reader = new MiNDAgent() {
-			@Override
-			public MiNDResultType process(MiNDAgentAction action) throws Exception {
-				return MiNDResultType.AcceptRead;
-			}
-		};
-		Giskard.access(MiNDAccessCommand.Use, reader);
+//		MiNDAgent reader = new MiNDAgent() {
+//			@Override
+//			public MiNDResultType process(MiNDAgentAction action) throws Exception {
+//				return MiNDResultType.AcceptRead;
+//			}
+//		};
+//		Giskard.access(MiNDAccessCommand.Use, reader);
 
 		entityCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, KEY_SIZE);
 

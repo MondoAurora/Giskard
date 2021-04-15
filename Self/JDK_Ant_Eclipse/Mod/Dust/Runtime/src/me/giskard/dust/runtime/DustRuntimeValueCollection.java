@@ -37,20 +37,6 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		this.collector = collector_;
 	}
 
-	protected MiNDResultType notify(Object val, Iterable itContent) {
-		MiNDResultType ret = MiNDResultType.Reject;
-
-		for (Object ob : itContent) {
-			try {
-				ret = DustRuntimeUtils.notifyAgent((MiNDAgent) val, owner.ctx, ob);
-			} catch (Exception e) {
-				GiskardException.swallow(e);
-			}
-		}
-
-		return ret;
-	}
-
 	public static class ValSet extends DustRuntimeValueCollection<Set> {
 		public ValSet(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashSet());
@@ -79,9 +65,6 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 				}
 				break;
 			case Set:
-				break;
-			case Use:
-				ret = notify(val, collector);
 				break;
 			}
 
@@ -116,9 +99,6 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 				break;
 			case Set:
 				break;
-			case Use:
-				notify(val, collector);
-				break;
 			}
 			return ret;
 		}
@@ -150,9 +130,6 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 			case Set:
 				collector.clear();
 				collector.put(key, val);
-				break;
-			case Use:
-				notify(val, collector.entrySet());
 				break;
 			}
 			return ret;
@@ -209,8 +186,6 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 						}
 					}
 				}
-				break;
-			case Use:
 				break;
 			}
 

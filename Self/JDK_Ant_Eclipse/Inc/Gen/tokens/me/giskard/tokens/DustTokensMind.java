@@ -60,7 +60,6 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_ACCESSCOMMAND_SET = Giskard.defineToken(MiNDTokenType.Tag, "Set", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Set);
 	MiNDToken MTTAG_ACCESSCOMMAND_ADD = Giskard.defineToken(MiNDTokenType.Tag, "Add", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Add);
 	MiNDToken MTTAG_ACCESSCOMMAND_DEL = Giskard.defineToken(MiNDTokenType.Tag, "Del", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Del);
-	MiNDToken MTTAG_ACCESSCOMMAND_USE = Giskard.defineToken(MiNDTokenType.Tag, "Use", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Use);
 
 	MiNDToken MTTAG_VISITSTATE = Giskard.defineToken(MiNDTokenType.Tag, "VisitState", MTUNIT_DIALOG, MiNDVisitState.class);
 	MiNDToken MTTAG_VISITSTATE_ENTITY = Giskard.defineToken(MiNDTokenType.Tag, "Entity", MTTAG_VISITSTATE, MiNDVisitState.Entity);

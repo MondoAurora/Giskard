@@ -99,22 +99,6 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 			case Add:
 				val = (RetType) ((DustRuntimeValueCollection) current).access(notif, cmd, val, key);
 				break;
-			case Use:
-				if ( null != current ) {
-					MiNDAgent agent = (MiNDAgent) val;
-					try {
-						agent.process(MiNDAgentAction.Begin);
-
-						if ( one ) {
-							DustRuntimeUtils.notifyAgent(agent, ctx, current);
-						} else {
-							((DustRuntimeValueCollection) current).access(notif, cmd, agent, null);
-						}
-					} finally {
-						agent.process(MiNDAgentAction.End);
-					}
-				}
-				break;
 			default:
 //			Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
 				break;

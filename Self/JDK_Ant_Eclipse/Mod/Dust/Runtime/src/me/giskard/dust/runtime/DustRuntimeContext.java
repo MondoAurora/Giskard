@@ -1,16 +1,13 @@
 package me.giskard.dust.runtime;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 
-import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeContext
-		implements DustRuntimeConsts, GisCollConsts, DustRuntimeBootConsts, Iterable<DustRuntimeToken> {
+		implements DustRuntimeConsts, GisCollConsts, DustRuntimeBootConsts {
 
 	class PathResolver {
 		Object[] path;
@@ -75,14 +72,14 @@ public class DustRuntimeContext
 
 	DustRuntimeContext parentCtx;
 
-	Map<String, DustRuntimeToken> tokens = new TreeMap<>();
+	private DustRuntimeTokenManager tokenManager;
 
 	Map<Integer, DustRuntimeDataBlock> entities = new HashMap<>();
 	DustRuntimeDataBlock rootBlock;
 
 	public DustRuntimeContext(DustRuntimeContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
-//		rootBlock = (null == parentCtx) ? new DustRuntimeDataBlock(this) : new DustRuntimeDataBlock(this, parentCtx_.rootBlock);
+		tokenManager = new DustRuntimeTokenManager(this);
 		rootBlock = new DustRuntimeDataBlock(this);
 		entities.put(rootHandle, rootBlock);
 	}
@@ -107,80 +104,6 @@ public class DustRuntimeContext
 		return e;
 	}
 
-	DustRuntimeToken getToken(Object id) {
-		DustRuntimeToken ret = tokens.get(id);
-		if ( null != parentCtx ) {
-			ret = parentCtx.getToken(id);
-		}
-
-		return ret;
-	}
-
-	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
-		String id = DustRuntimeToken.buildId(type, name, params);
-
-		DustRuntimeToken ret = getToken(id);
-
-		if ( null == ret ) {
-			ret = DustRuntimeToken.createToken(type, name, params);
-			registerToken(id, ret);
-		}
-
-		return ret;
-	}
-
-	public void registerToken(String id, DustRuntimeToken token) {
-		tokens.put(id, token);
-
-		DustRuntimeDataBlock te = createEntity();
-		token.setEntityHandle(te.getHandle());
-		rootBlock.access(MiNDAccessCommand.Add, te.getHandle(), MTMEMBER_CONTEXT_TOKENS, token);
-
-		te.access(MiNDAccessCommand.Set, token.getName(), MTMEMBER_PLAIN_STRING, null);
-
-		DustRuntimeToken p = token.getParent();
-		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), MTMEMBER_CONN_OWNER, null);
-		}
-
-		DustRuntimeToken t = getTypeToken(token);
-
-		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, MTMEMBER_ENTITY_PRIMARYTYPE, null);
-		}
-
-		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(), MTMEMBER_ENTITY_STOREUNIT, null);
-	}
-
-	public DustRuntimeToken getTypeToken(DustRuntimeToken token) {
-		MiNDToken t;
-		switch ( token.getType() ) {
-		case Agent:
-			t = MTTYPE_AGENT;
-			break;
-		case Member:
-			t = MTTYPE_MEMBER;
-			break;
-		case Tag:
-			t = MTTYPE_TAG;
-			break;
-		case Type:
-			t = MTTYPE_TYPE;
-			break;
-		case Unit:
-			t = MTTYPE_UNIT;
-			break;
-		default:
-			t = null;
-		}
-		return (DustRuntimeToken) t;
-	}
-
-	public Iterator<DustRuntimeToken> iterator() {
-		return tokens.values().iterator();
-	}
-
 	@SuppressWarnings("unchecked")
 	public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object... valPath) {
 		Object ret = val;
@@ -197,26 +120,6 @@ public class DustRuntimeContext
 			case Chk:
 			case Del:
 				ret = Boolean.FALSE;
-				break;
-			case Use:
-				if ( val instanceof MiNDAgent ) {
-					MiNDAgent a = (MiNDAgent) val;
-					DustRuntimeContext c = this;
-					while (null != c.parentCtx) {
-						c = c.parentCtx;
-					}
-					access(notif, MiNDAccessCommand.Del, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-					for (DustRuntimeToken t : c) {
-						access(notif, MiNDAccessCommand.Add, t.getEntityHandle(), MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-						try {
-							ret = a.process(MiNDAgentAction.Process);
-						} catch (Exception e) {
-							GiskardException.swallow(e);
-						}
-					}
-				} else {
-					ret = MiNDResultType.Reject;
-				}
 				break;
 			}
 		} else {
@@ -246,9 +149,6 @@ public class DustRuntimeContext
 						ret = val;
 					}
 					break;
-				case Use:
-					ret = MiNDResultType.Reject;
-					break;
 				}
 			} else {
 				ret = pr.access(notif, cmd, val);
@@ -264,11 +164,15 @@ public class DustRuntimeContext
 
 	@Override
 	public String toString() {
-		return "Tokens: \n" + tokens.toString() + "\n\nEntities: \n" + entities.toString();
+		return "Tokens: \n" + tokenManager.toString() + "\n\nEntities: \n" + entities.toString();
 	}
 
 	public DustRuntimeDataBlock getRootBlock() {
 		return rootBlock;
+	}
+	
+	public DustRuntimeTokenManager getTokenManager() {
+		return tokenManager;
 	}
 
 	public void commit() {

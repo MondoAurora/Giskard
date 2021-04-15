@@ -21,8 +21,28 @@ public class DustRuntimeUtils extends GiskardUtils implements DustRuntimeConsts 
 		return sdf.format(new Date(time));
 	}
 
-	public static MiNDResultType notifyAgent(MiNDAgent agent, DustRuntimeContext ctx, Object val) throws Exception {
-		ctx.rootBlock.access(MiNDAccessCommand.Set, val, MTMEMBER_ACTION_PARAM, null);
-		return agent.process(MiNDAgentAction.Process);
+	public static DustRuntimeToken getTypeToken(DustRuntimeToken token) {
+		MiNDToken t;
+		switch ( token.getType() ) {
+		case Agent:
+			t = MTTYPE_AGENT;
+			break;
+		case Member:
+			t = MTTYPE_MEMBER;
+			break;
+		case Tag:
+			t = MTTYPE_TAG;
+			break;
+		case Type:
+			t = MTTYPE_TYPE;
+			break;
+		case Unit:
+			t = MTTYPE_UNIT;
+			break;
+		default:
+			t = null;
+		}
+		return (DustRuntimeToken) t;
 	}
+
 }

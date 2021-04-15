@@ -20,9 +20,9 @@ public class DustRuntimeGiskard extends Giskard
 		
 		machine = new DustRuntimeMachine();
 		
-		DustRuntimeContext ctx = machine.getContext();
+		DustRuntimeTokenManager tm = machine.getContext().getTokenManager();
 		for ( Map.Entry<String, DustRuntimeToken> e : bootTokens.entrySet() ) {
-			ctx.registerToken(e.getKey(), e.getValue());
+			tm.registerToken(e.getKey(), e.getValue());
 		}
 	}
 
@@ -34,7 +34,7 @@ public class DustRuntimeGiskard extends Giskard
 	@Override
 	protected MiNDToken defineToken_(MiNDTokenType type, String name, Object... params) {
 		if ( null != machine ) {
-			return machine.getContext().defineToken(type, name, params);
+			return machine.getContext().getTokenManager().defineToken(type, name, params);
 		} else {
 			String id = DustRuntimeToken.buildId(type, name, params);
 			DustRuntimeToken ret = bootTokens.get(id);
@@ -52,11 +52,6 @@ public class DustRuntimeGiskard extends Giskard
 	protected <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
 		return machine.access(cmd, val, valPath);
 	}
-
-//	@Override
-//	protected MiNDResultType invoke_(Object... agentPath) throws Exception {
-//		return machine.invoke();
-//	}
 
 	@Override
 	protected void log_(MiNDEventLevel lvl, Object... obs) {

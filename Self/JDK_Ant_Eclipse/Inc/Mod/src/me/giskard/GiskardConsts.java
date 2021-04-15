@@ -34,7 +34,7 @@ public interface GiskardConsts {
 	}
 
 	enum MiNDAccessCommand {
-		Chk, Get, Set, Add, Del, Use
+		Chk, Get, Set, Add, Del
 	};
 
 	enum MiNDVisitState {
