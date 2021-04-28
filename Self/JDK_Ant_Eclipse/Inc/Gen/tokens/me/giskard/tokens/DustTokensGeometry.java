@@ -22,4 +22,6 @@ public interface DustTokensGeometry extends DustTokensMind {
 	MiNDToken MTMEMBER_AREA_CENTER = Giskard.defineToken(MiNDTokenType.Member, "Center", MTTYPE_AREA, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_AREA_SPAN = Giskard.defineToken(MiNDTokenType.Member, "Span", MTTYPE_AREA, MiNDValType.Link, MiNDCollType.One);
 
+	MiNDToken MTTYPE_PROJECTION = Giskard.defineToken(MiNDTokenType.Type, "Projection", MTUNIT_GEOMETRY);
+	MiNDToken MTMEMBER_PROJECTION_ENTITIES = Giskard.defineToken(MiNDTokenType.Member, "Entities", MTTYPE_PROJECTION, MiNDValType.Link, MiNDCollType.Arr);
 }

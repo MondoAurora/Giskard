@@ -1,0 +1,58 @@
+Database connection
+
+General automatic store/retrieve any data
+Automatic full backup before save (app errors may cause significant damage)
+Native date support (should "know" Event)
+
+ -> Single persistence for Montru (edit+Java src gen); then JSON can come through generic IO
+
+----- Implementation -------
+
+Automatic backup
+ - add a commitId field to all tables
+ - should be NULL for the active records
+ - before starting any transaction, the whole active content must be saved with the last transaction id
+     INSERT INTO <tbl> (commitId, <all other tbl fields>) 
+     SELECT <lastCommitIdValue>, <all other tbl fields> 
+     FROM <tbl> 
+     WHERE commitId IS NULL;
+   (this is similar to a version control commit)
+ - this way, can rollback to any previous state
+   - DELETE <tbl> WHERE commitId IS NULL;
+   - INSERT INTO <tbl> (commitId, <all other tbl fields>) 
+     SELECT null, <all other tbl fields> 
+     FROM <tbl> 
+     WHERE commitId IS commitId;
+ - may also know the head commit id (in the Store entity?)
+ - can later implement compare, merge, etc. operations
+
+Connection to events
+ - MiND does NOT handle date/time information, that is Raw and handled by the Event unit/module
+ - DB must have an dust_event table with TIMESTAMP (?) values and other mandatory fields (type, owner, ...)
+ - the module redirects Event type to this table
+ - consequentially, can efficiently use the event table for filtering and sorting
+ - "Commit" is an event
+ 
+Text
+ - MiND does not handle Strings, it is Raw and handled by the Text unit/module
+ - DB peeks into the Text module, should be aware of encoding etc.
+ - the dust_data table HAS a ValIdentifier field for strictly ASCII and limited length strings
+ - larger texts should have a separate, dust_text table for arbitrary text nodes (like MySQL TEXT 64k)
+ - the "normal" text nodes should not exceed this limit ("knowledge card"), larger texts are combined nodes
+ - the DB should adapt to extreme storage needs (exported cumulative texts), can use tags or adapt on the fly
+ - OR: do NOT accept larger texts, 
+   > they should not contain primary information (search will find in the cards)
+   > would contain either embedded formatting (styles) or structural (json) information -> problems
+   > for exports, use binary, and BLOB is OK, you will not use it as text anyway     
+ 
+Binary
+ - Streams stored in DB BLOBs, used by IO module
+ - "path", "name", "extension", "content type" should also be stored in a separate, dust_binary table
+
+----------- Services ----------
+
+Unit load
+ - The atom for DB load is the unit
+ - When the unit appears in the application, the store listens to it and tries to load all entities from it
+ - When resolving links, they may point to other units, they are put on the units list and gets loaded as well
+ - Identification must connect the entities registered in source code (token definitions) and loaded from DB

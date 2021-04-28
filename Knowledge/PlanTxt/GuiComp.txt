@@ -1,0 +1,112 @@
+GUI Components
+
+ - Component - any GUI element that displays "something" using its configuration
+   - mandatory: a path to a data that is displayed ("target attribute"), final
+   - optional: parent container
+   - optional: root entity link, where the target is accessed 
+   - it will traverse upwards over parents until finds the root entity link
+   - should handle multiple Init messages (when the root entity changes, passive)
+   - instance reuse? probably with Release (-> Release/Init are asymmetric!)
+   - can have pointer interaction (hover, click, drag)
+   - can have individual layout settings like size, scrollable, inset etc.
+   - ... but NO appearance settings, that is controlled by a SET of styles to be applied
+   - the style set can be extended by the referred data state
+
+ - Container - displays children to show/edit data from the managed entity
+   - contains a LinkOne entity, the path root for the children
+   - contains a LinkArr for members
+   - IS_A Component: may contain a path and be inside another container
+   - Init and Process does the same: updates the LinkOne member  
+   - NO! (Manager does this) when the entity is updated, sends a recursive Init to all children
+ 
+ - Layout - position management in a Container; uses the Container's LinkArr data
+   - "NoLayout": each component have their own location and size configuration
+     - probably the other layouts only update the geometric information package of the children?
+     - this allows overlapping, should contain information about the relationship among the members as layers
+       - "transparency" of the layers
+       - 2D translation or 3D depth? (fixed delta for indices or individual values for the member array)
+   - "SelectLayout": only one of the members appear
+     - the selected index controls the appearance
+     - may be self activated (normal tab pane) / or external selector does the job
+   - "BorderLayout": grid with named segments: PageTop, PageBottom, LineBegin, LineEnd, Center
+     - content appears as LinkMap, keys are the segments
+   - "GridLayout": free multi-dimensional grid with cell position as index array
+     - Array of axis (like X, Y) - the order of indices in the location array
+     - Map of split information: X -> column split size or weight array
+     - Content as LinkArray; Location as [axis1idx, axis2idx, ...]
+   - "FlowLayout": 
+     - Array of Axis to represent the order of the flow (align horizontally, then vertically or...)
+     - optional Array of direction ("normal" or reverse)
+   
+ - LabelPlain - read-only, short, updated text
+   - NO! (Manager does this) must listen to change of the text and update
+   - NO! (IS_A component) must contain the PATH to the data to display
+   - Init and Process does the same: updates the text  
+ 
+ - Icon - LabelPlain with Style
+   - the "master" icon is assigned as a Tag
+   - Supports sub elements
+   - Init and Process does the same: updates the image
+ 
+ - LabelDeco - LabelPlain with Style
+   - can display an icon and a LabelPlain
+   - Init and Process does the same: updates the style and Icon if exists  
+   
+ - Button ??? Not more than a LabelDeco with handled pointer click event
+   - the target entity is a Dialog
+   - click event puts the Dialog on the active list, thus starting the process
+   - configuration tells if it can be launched multiple times; if not, its activity depends on the status
+   - the status can also disable the button
+   
+ - OptionToggler - tag on/off (target entity, fixed tag)
+   - the status can disable selected mandatory and unselected invalid options (which remain visible, tooltip may explain why)
+   - can be toggle button, checkbox or radiobutton
+   - the option buttons allow LabelDeco features
+   - any action does an immediate Tag set/delete
+   
+ - OptionGroup - tag on/off with known set of options
+   - the option list may come from a dynamic list or a common parent tag; one of them must be present (updated by the manager)
+   - can use OptionToggler set for the options, checkbox (multi), radiobutton (single), toggle for both selections
+   - combo box for single, list for multiple selection
+   - combo/list allows plain (in Java, CustomRenderer may be OK, but other platforms may not support that)
+   - optional set/reset all buttons - belongs to the same control to avoid parallel item management
+   - "transaction" - multiple changes in begin/end pair (?)
+   
+ - TextField - direct editing of data except Link
+   - uses the KEY_FORMAT_STRING parameter in Get/Set; that allows updating the value through the Runtime service
+   - the update attempt is immediate (after key pressed, Java Document listener)
+   - the update may fail; the String remains the same, the editing can continue (the style should indicate the status)
+   - Runtime solves Int, Real and raw String; the first candidate is Event, date/time values
+   
+ - LinkField - display and select a single Link value
+   - LabelDeco that displays the toString of the tartget entity, or empty
+   - should be able the "focus" the target entity in the environment (double click?)
+   - remove the link (contained button? Del button?)
+   - create/replace link (special button? drag into the label?)
+   ! the focus/del/set functions should have separate buttons, which is too many. Local menu to be used instead.
+
+ - CollManager - complete management of Set, Arr and Map of any ValType (NOT GRID!!!)
+   - vertical border layout: TOP simple text filter; CENTER item table; BOTTOM control buttons
+   - Text filter: TextField for typing, the list is filtered by it; button to clear the filter and show all
+   - Table: one row/item, multi range selection, TextField/LinkField value editor depending on the type; 
+     - for Map there are two columns, first is LinkField for the key, second is value
+     - multi-drop: puts the items into the Collection, for Map, the dropped items are KEYS
+     - can be sorted by the column: natural order for not Link; SortConfig for entities; Map: both columns; Arr: actually updates the order WYSIWYG
+   - Control: 
+     - Add external selected entities (Map: always as KEYS, extend; Arr/Set: works only for Link ValType)
+     - Add: new rows for Arr/Set for not Link ValType
+     - Select / Clear All button
+     - Del: selected rows
+     - Move Up/Down (visible for arrays only)
+
+ - Grid - display/edit one/more entities
+   - List of attributes to display / automatic if not set, can be configured
+   - LinkOne or LinkArr to entity/entities to display (contact to original entity done through the index!)
+   - LinkArr can have "collapse" tag; in this case only same values appear; set is executed on all members
+   - X/Y tag selects the attribute axis; default is X for LinkArr (entity grid) and Y for LinkOne or collapse (property sheet)
+   - Sort automatically set by attribute header clicks, SortConfig can be edited directly
+   - Selection configurable (single, single range, multi range)
+   - focus: always single item, follows and sets global
+   !!! The entity array is controlled from outside, generally by a manual selection or result of a search/filter. ENTITIES NEVER ADDED/REMOVED HERE!
+
+   

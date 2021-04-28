@@ -1,0 +1,45 @@
+Generic services
+ - Runtime level toString for labels
+  - KEY_FORMAT_STRING constant
+  - implement basic toString in Runtime: 
+    - Entity: if it has Plain text or formatted toString, write it; otherwise Type + handle
+    - "One" Real, Int, Raw value to/from String
+    - "Link": -> Entity
+    - Collections formatting: item count in proper brackets: Array [12], Set (5), Map {8} 
+  - possible extension: formatter plugin, similar to change listener
+  
+ - recursive traverse "Owner" or "Parent" for a member value (property sheet LinkOne entity)
+   
+ ! (CAN WAIT!) may have multiple instance managers, not only the one in the Runtime
+   - that would allow having multiple GUI implementation modules in the same application
+   - that means, modules can provide preference orders, considered when referring to agents
+   - the Runtime 
+   
+ - Delta collection
+   - create Delta objects inside the Runtime (making access functions easier anyways
+   - exclude temp objects (notification)
+   - exclude (?) bulk load
+   - make the collected delta easy to traverse
+   
+-----------
+
+Persistence connection
+
+ - the Runtime has an array of persistence stores
+ - after boot but before start, it must load all referred units from the stores to load all saved entities
+ - now it should be one, the "dust" MySQL DB on localhost
+ - DB should traverse the delta
+   - CREATE (Entities) first for the new sequence-based unique identifiers
+   - UPDATE (Entities, update/create/delete in Links, Tags, Data) to remove links to deleted entities but can create links to new ones
+   - DELETE (Entities)
+ 
+----------
+
+Java source generation
+
+ - Text templates for generation
+ - IO for folder, file, stream management
+ - Runtime entity visitor; lazy creation of target items ensuring owner order
+ - container tagging - MiND units in single source
+ - enum mapping to be separated from the token generation! name-based automation? (single call on enum class+parent token)
+ 

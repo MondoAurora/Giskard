@@ -1,0 +1,36 @@
+Generic GUI
+ - Manager - singleton listening to data changes and notifying related components
+   - this is more complex than individual listeners but
+   - single agent code and instance instead of replicating
+   - contains update listeners, link to all components
+   - when updating, remember the active component to avoid recursion
+   - can manage event storms
+   - can act as instance pool if needed
+   - pointer input, Set (one per HW mice, touchpads, etc.)
+   - character input Set (keyboard, speech recognition, char input stream)
+   - Viewer set
+   
+ - InfoText - text information assigned to a GUI element (non-display)
+   - name: short, clear "token" string; generally appears on labels and tooltips
+   - description: longer explanatory text, probably formatted; appears on tooltips or in the hint panel
+   - state: dynamically updated text about the data, may appear in tooltips and state info panel
+   
+ - Skin elements - building block sets, their actual configuration is the GUI customisation
+  - Font face (name, serif/sans serif; "meta names" and actual font names)
+  - Colour (named and direct values - Array of RGBA, CMYK, ... for simpler translation)
+  - Icon (name, size, colour depth, raw stream etc.) May combine conditional sub elements (type+state, app+notif, ...)
+  - Pen (Java Stroke for now: line settings)
+  - Border (Java Border set for now)
+  
+ - Style
+   - named sets of Skin elements ("warning", "important" etc.)
+   - formatting is only allowed by referring to named Styles, the point is the meaning and not the look
+   - styles have a general order (Array) at the Manager level, applied accordingly (fix override)
+
+ - Viewer - represents a user interacting with the GUI (because there can be more than one!)
+   - mouse position and event source, Set of pointing devices, merging input
+   - character event source, Set, merge
+   - focused GUI component (target of char input)
+   - selected entities
+   - focused entity
+   

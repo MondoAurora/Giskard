@@ -1,0 +1,11 @@
+Text services
+
+Language
+
+Card structures
+
+Connection to entities (resource)
+
+Display/Edit features
+
+Code generation

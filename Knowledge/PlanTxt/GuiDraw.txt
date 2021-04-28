@@ -1,0 +1,66 @@
+Ability to draw graphical primitives and text, manages coordinate transformations
+
+The problem here is the array of arrays with great size (point clouds, paths).
+Points should not be entities, that would ruin the underlying optimisations.
+
+Solution: 
+ - flat array, higher level knows where to split the coordinates and how to handle the elements (COORDS)
+ - selection is internal, index-based; temporal entities for the selected items if necessary
+ - question: extra data - should be external parallel array
+
+With GeoData, I have a point cloud. I need extra info to know what to do with them
+I need a CoordSys from somewhere, either in the data or in the container, that tells me the separation
+A higher level type can tell me how to use the coords
+ - PointCloud: individual points, draw local shape around as Center
+ - Path: points are connected in their order (default is open, close wit a tag)
+ - LineCloud: moveTo-lineTo pairs, segments not connected
+ - PolyCloud: external array selects the points to form the polygon (default 3: triangle)
+
+A GeoData can have a LinkArr with other GeoData 
+ - recursive structure, or even fractal, may need to pass the draw depth down (mirror in mirror)
+ - settings are inherited or overwritten (like geometric inclusion transformations)
+ 
+A top level is a Projection
+ - Array of Entities that may or may not have geometric information IMMUTABLE
+ - assign GeoData to each Entity and work with that (LinkArr)
+ - all changes are applied on the LinkArr content
+ - the projection is general, does not consider the perspective of a visitor 
+   
+ProjectionViewBase
+ - projection matrix based on the relation between the screen, eye and the space
+ - calculate depth-based style information (brightness, font size, stroke width)
+ - may draw navigation lines and legends (controlled by the actual view)
+ - may draw extra for selected entities (different style)
+ - may draw extra info for selected invisible entities (actual view)
+ - navigation operations
+   - viewAll: make all entities fit into the view (depends on the actual view)
+   - reset: viewAll + align the view coordinate system with the projection
+ - navigation limits:
+   - never allow looking "away": empty screen because there is nothing to see that way
+   - never allow zooming out more than the whole space
+ - visibility may be controlled by a filter (type, attributes)
+ - contains the projection matrices that are managed by the actual view
+ - keeps another coordinate array up-to-date on any change, they are the coordinates of displayed data
+ - 3 coordinates: (X, Y, distance); distance is used to select drawing Style information (ranges to indices)
+
+ProjectionViewShape - like a 3D map
+ - the projection space is clipped by
+   - a sphere (center, radius), follows the smaller diameter of the vindow
+   - a cuboid (centre, area), follows x/y sizes of the window, z (depth) may be cut
+ - matches the projection matrix so that the zoom space fits the window on init and window change
+ - navigation lines: cuboid or spherical grid, vectors from the center etc. ALWAYS in Projection coordinate system
+ - extra info arrows pointing out of zoomed space; spots on the zoom shape surface
+ - navigation 
+   - slide the center of the clip shape according to the current window X, Y and Z (depth)
+   - rotate the projection around the shape center by Window x, y, z
+   - zoom around the centre
+   
+ProjectionViewEye - like StreetView
+ - the eye is in the projection, looking into a direction
+ - clip only by distance
+ - navigation moves the eye -> the view frustum
+   - turn around by eye X, Y, Z axis
+   - move in current eye X, Y, Z direction
+   - zoom - possible, temporal
+
+
