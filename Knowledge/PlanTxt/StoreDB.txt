@@ -3,6 +3,7 @@ Database connection
 General automatic store/retrieve any data
 Automatic full backup before save (app errors may cause significant damage)
 Native date support (should "know" Event)
+CommitID MUST be "dumb" (not a timestamp) and implementation level external (here sequence) 
 
  -> Single persistence for Montru (edit+Java src gen); then JSON can come through generic IO
 

@@ -1,0 +1,7 @@
+Brain dump
+
+Cornerstones - must be separate, focused. SRP DSL dimensions, Tensegrity axes
+ - Model - unit, entity, value, collection, link.
+  === DATA memory segment
+ - Idea - type, member, tag, service; tags for ValType, CollType.
+  === META: Offsets in DATA/CODE segment: data members, function addresses

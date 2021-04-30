@@ -1,0 +1,17 @@
+20210430
+
+ - This lasts longer than expected. The reason is: now I switch from pull to push.
+ - I will not be able to hold all components in my mind, so from now on, I am not the centre that pulls the strings
+ - I set up the posts and connect them with strings as they must be connected, their rules
+ - I put rods to the edges and connect them at the centre
+ - rods should not fit, that is elevation in the centre, and I should climb on the rods
+ - the weirdness of this point is that now I give up source code as my comfort zone
+  > after this state, I should handle source code as I handled bytecode, binary or database content: I trust that it works
+  > this text is the first step when I understand the system from the specification and not from the code
+  > must trust it, if it fails, I literally lose my mind...
+  - NO, and this is the point: I can lose my brain (the running system), but not the mind, which is the specification
+  - with proper backup and rollback mechanisms, it can be as safe as any other system
+ 
+ - accept that the generated sources are the link, the token name is what I understand, but the ID is DB entity id. Not for human eyes.
+ - create a DB view to_string that connects the string id to the entity (may join on load and use in db view)
+ - Voice, Music modules :-)
