@@ -1,0 +1,45 @@
+Roadmap
+
+DB refactor
+ - create tables: text, event, binary
+ - remove table link
+ - data: remove timestamp, add link (target unit id field; ValInteger is OK / ValIdentifier for url)
+ 
+Entity identification
+ - CommitID moves up as the commit entity unique ID; the commit entity is final
+ - Entity is identified by the StoreId; sequence created when first introduced
+ - changedId is the commitId
+
+Listening to units
+ - the DB unit should contain a connector service, added as listener, look for new Unit entities
+ - "dirty": assume that other units will be added and check for loaded status (like db unique id)
+ - Connector service initial version: log "would load", set the ID
+ 
+Connector service: read unit
+ - create an acceptable set of SQL commands that read content
+  -> perhaps the QnD version is to join all tables and sort
+  -> maybe OK for long run: no problem with incoming changes during select (assuming that DB server locks)
+  -- NO! due to the many input tables, there will be too many duplicates. MUST select tables individually
+  -> MAY select count from each ext table and optimise the tables to query
+  -> then locking comes back: references to new entities not seen in the first query
+ - write the load process
+  -> identifying entity instances
+  -> lazy link resolution
+ - references may go out of the unit boundary
+  -> should request unit loading
+  -> keep in mind: remote unit loading;
+  -> loading module for unit and current node, maybe remote
+ - think about optional refresh
+  -> the "new" info is the current data, no change to collect
+  -> notifications should work to update the environment
+  -> updates in collections... something KISS
+  -> deleting values, entities
+
+Connector service: write unit
+ - Target: initial population from the existing sources
+ - Question: how to handle remote units (not stored in the current DB)
+   -> store URL instead; the loading App can use it to dispatch to other (Stream)
+   -> if no URL is found, the unit is local
+ - initialise the DB with the initial commit entity with commitID 0 - sequence 0
+ - 
+ 
