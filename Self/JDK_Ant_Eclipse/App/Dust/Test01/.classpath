@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/DustRuntime"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustMontru"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustTools"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DustDB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

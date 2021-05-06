@@ -52,7 +52,9 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 			if ( !GiskardUtils.isEmpty(dbName) && !dbUrl.endsWith(dbName) ) {
 				dbUrl += "/" + dbName;
 			}
-
+			
+			dbUrl += "?serverTimezone=CET";
+			
 			Giskard.log(MiNDEventLevel.Trace, "Connecting to database...", dbUrl);
 
 			try {

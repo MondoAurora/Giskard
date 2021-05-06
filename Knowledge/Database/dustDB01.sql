@@ -16,7 +16,7 @@ CREATE TABLE `dust_entity` (
 CREATE TABLE `dust_data` (
   `DataId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastChange` int NOT NULL COMMENT 'NULL for current, otherwise the last Change in which this was the value',
+  `LastValid` int NOT NULL COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Token` int NOT NULL,
   `ValInteger` int,
   `ValReal` double,
@@ -27,17 +27,17 @@ CREATE TABLE `dust_data` (
   KEY `DATA_ENTITY` (`Entity`),
   KEY `DATA_TOKEN` (`Token`),
   KEY `FK_DATA_KEY_idx` (`OptKey`),
-  KEY `FK_DATA_LASTChange_idx` (`LastChange`),
+  KEY `FK_DATA_CHANGE_idx` (`LastValid`),
   CONSTRAINT `FK_DATA_ENTITY` FOREIGN KEY (`Entity`) REFERENCES `dust_entity` (`EntityId`) ON DELETE CASCADE,
   CONSTRAINT `FK_DATA_KEY` FOREIGN KEY (`OptKey`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
-  CONSTRAINT `FK_DATA_LASTChange` FOREIGN KEY (`LastChange`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
+  CONSTRAINT `FK_DATA_CHANGE` FOREIGN KEY (`LastValid`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_DATA_TOKEN` FOREIGN KEY (`Token`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT
 ) AUTO_INCREMENT=1 ;
 
 CREATE TABLE `dust_event` (
   `EventId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastChange` int DEFAULT NULL COMMENT 'NULL for current, otherwise the last Change in which this was the value',
+  `LastValid` int DEFAULT NULL COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Type` int NOT NULL,
   `Level` int NOT NULL,
   `Start` DATETIME NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE `dust_event` (
 CREATE TABLE `dust_text` (
   `TextId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastChange` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Language` int NOT NULL,
   `Text` Text NOT NULL,
   PRIMARY KEY (`TextId`),
@@ -61,7 +61,7 @@ CREATE TABLE `dust_text` (
 CREATE TABLE `dust_stream` (
   `StreamId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastChange` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Type` int NOT NULL,
   `Content` BLOB NOT NULL,
   PRIMARY KEY (`StreamId`),
