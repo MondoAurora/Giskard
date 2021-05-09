@@ -1,5 +1,10 @@
 Roadmap
 
+Runtime access nodes
+ - test findall, filter, visitor in sequence (prepare unit processing)
+ - listener to be optional, tag the tokens to be listened
+ - may also tag not listened, apply it to temporal entities, test on IO geojson
+
 DB refactor
  - create tables: text, event, binary
  - remove table link

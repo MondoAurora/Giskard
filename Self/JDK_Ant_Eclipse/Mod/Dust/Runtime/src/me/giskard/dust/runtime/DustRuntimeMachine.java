@@ -253,7 +253,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 					if ( null != agent ) {
 						Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW,
-								MTMEMBER_VARIANT_VALUE);
+								MTMEMBER_VALUE_RAW);
 						if ( null != c ) {
 							nativeConn.addAgentClass((Integer) agent, c);
 						}

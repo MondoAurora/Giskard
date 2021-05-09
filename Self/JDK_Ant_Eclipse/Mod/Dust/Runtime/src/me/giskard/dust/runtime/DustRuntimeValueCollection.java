@@ -18,6 +18,8 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 
 	public abstract Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key);
 
+	abstract Iterator getIterator();
+
 	public static DustRuntimeValueCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 		switch ( token.getCollType() ) {
 		case Arr:
@@ -70,6 +72,11 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 
 			return ret;
 		}
+
+		@Override
+		Iterator getIterator() {
+			return collector.iterator();
+		}
 	}
 
 	public static class ValArr extends DustRuntimeValueCollection<ArrayList> {
@@ -102,6 +109,11 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 			}
 			return ret;
 		}
+
+		@Override
+		Iterator getIterator() {
+			return collector.iterator();
+		}
 	}
 
 	public static class ValMap extends DustRuntimeValueCollection<Map> {
@@ -116,7 +128,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 			switch ( cmd ) {
 			case Add:
 				ret = collector.put(key, val);
-				if ( !GiskardUtils.isEqual(ret, val)) {
+				if ( !GiskardUtils.isEqual(ret, val) ) {
 					notif.notify(cmd, owner.getHandle(), ret, val, token, key);
 				}
 				break;
@@ -133,6 +145,11 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 				break;
 			}
 			return ret;
+		}
+
+		@Override
+		Iterator getIterator() {
+			return collector.entrySet().iterator();
 		}
 	}
 

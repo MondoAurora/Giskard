@@ -34,7 +34,7 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 				frmMain = new JFrame();
 				frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmMain.setTitle(label);
-				Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
+				Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEMBER_ACTION_PARAM, MTMEMBER_VALUE_RAW);
 
 				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_PARAM,	MTMEMBER_LINK_ONE) ) {
 					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_PARAM);					

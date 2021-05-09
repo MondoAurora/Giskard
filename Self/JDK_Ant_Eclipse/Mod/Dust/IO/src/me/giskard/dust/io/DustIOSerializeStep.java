@@ -37,7 +37,7 @@ public class DustIOSerializeStep implements DustIOTokens {
 		Giskard.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
 		Object val = (item == DustIOConsts.MTTAG_VALTYPE_LINK) ? ((Map.Entry<?,?>) data).getKey()
 				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
-		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VARIANT_VALUE);
+		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VALUE_RAW);
 		GisToolsTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
 
 		return val;

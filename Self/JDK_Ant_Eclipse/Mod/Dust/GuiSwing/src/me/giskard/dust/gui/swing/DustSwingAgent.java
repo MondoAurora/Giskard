@@ -67,7 +67,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 
 				comp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				comp.setTitle(label);
-				Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VARIANT_VALUE);
+				Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
 
 				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS,
 						MTMEMBER_LINK_ONE) ) {

@@ -20,7 +20,7 @@ CREATE TABLE `dust_data` (
   `Token` int NOT NULL,
   `ValInteger` int,
   `ValReal` double,
-  `ValIdentifier` varchar(100),
+--  `ValIdentifier` varchar(100),
   `OptKey` int,
   `OptIdx` int,
   PRIMARY KEY (`DataId`),

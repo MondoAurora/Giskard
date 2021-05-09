@@ -45,8 +45,13 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 						currChild = activity.relay();
 					} else {
+						if ( GiskardUtils.isAgentReject(currChild.state) ) {
+							ret = currChild.state;
+							break;
+						}
 						activity.push(currChild);
 					}
+					
 					ret = MiNDResultType.Read;
 				}
 

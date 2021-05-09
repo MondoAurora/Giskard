@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
 public class DustRuntimeGiskard extends Giskard
@@ -32,16 +33,18 @@ public class DustRuntimeGiskard extends Giskard
 	}
 
 	@Override
-	protected MiNDToken defineToken_(MiNDTokenType type, String name, Object... params) {
+	protected MiNDToken defineToken_(MiNDTokenType type, Object id, Object... params) {
+		String name = GiskardUtils.toString(id);
+		
 		if ( null != machine ) {
 			return machine.getContext().getTokenManager().defineToken(type, name, params);
 		} else {
-			String id = DustRuntimeToken.buildId(type, name, params);
+			String tokenId = DustRuntimeToken.buildId(type, name, params);
 			DustRuntimeToken ret = bootTokens.get(id);
 
 			if ( null == ret ) {
 				ret = DustRuntimeToken.createToken(type, name, params);
-				bootTokens.put(id, ret);
+				bootTokens.put(tokenId, ret);
 			}
 
 			return ret;

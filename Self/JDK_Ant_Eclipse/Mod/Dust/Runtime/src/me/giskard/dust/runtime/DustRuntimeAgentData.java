@@ -1,17 +1,21 @@
 package me.giskard.dust.runtime;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardUtils;
 
 public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgent {
 
-	public static class FindAll extends DustRuntimeAgentData {
+	public static class ListAll extends DustRuntimeAgentData {
 		DustRuntimeContext ctx;
 		Iterator<Integer> it;
 		Set<Integer> visited = new TreeSet<>();
+		MiNDResultType procRet;
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
@@ -19,14 +23,17 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 			switch ( action ) {
 			case Init:
-				break;
-			case Begin:
 				visited.clear();
 				ret = optSelectContext(getInvocation().runningActor.ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
 				break;
+			case Begin:
+				break;
 			case Process:
+				Integer h = null;
+				ret = MiNDResultType.Reject;
+				
 				while ( (null != it) && it.hasNext()) {
-					Integer h = it.next();
+					h = it.next();
 
 					if ( (HANDLE_NULL < h) && visited.add(h) ) {
 						Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
@@ -40,8 +47,14 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 						break;
 					}
 				}
+				
+				procRet = ret;
+				Giskard.log(MiNDEventLevel.Info, "List returning", h, ret);
+				
 				break;
 			case End:
+				ret = procRet;
+				break;
 			case Release:
 				visited.clear();
 				ctx = null;
@@ -69,6 +82,143 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 		}
 	}
 
+	public static class Visit extends DustRuntimeAgentData {
+		class VisitStep {
+			Integer current;
+			
+			DustRuntimeDataBlock block;
+			Iterator<DustRuntimeToken> itToken;
+			Iterator<?> itColl;
+			
+			DustRuntimeToken tok;
+			Object val;
+			Object key;
+			
+			public VisitStep() {
+				current = null;
+			}
+			
+			boolean stepColl() {
+				if (null != itColl) {
+					if (itColl.hasNext() ) {
+						val = itColl.next();
+						
+						switch ( tok.getCollType() ) {
+						case Arr:
+						case Set:
+							key = (null == key) ? 0 : ((Integer) key) + 1;
+							break;
+						case Map:
+							Map.Entry<?, ?> e = (Map.Entry<?, ?>) val;
+							val = e.getValue();
+							key = e.getKey();
+							break;
+						default:
+							break;
+						}
+						
+						return true;
+					} else {
+						itColl = null;
+					}
+				}		
+				
+				return false;
+			}
+			
+			boolean step() {
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				MiNDToken t = MTMEMBER_ACTION_GPR01;
+				Integer h = (Integer) getInvocation().runningActor.ctx.rootBlock.localData.get(t);
+
+//				Integer h = ((DustRuntimeToken)t).getEntityHandle();
+				if ( !GiskardUtils.isEqual(current, h)) {
+					current = h;
+					block = getInvocation().runningActor.ctx.getEntity(current);
+					itToken = block.localData.keySet().iterator();
+					itColl = null;
+				}
+				
+				if (!stepColl()) {
+					while (null != itToken) {
+						if (itToken.hasNext() ) {
+							tok = itToken.next();
+							key = null;
+							
+							if ( tok.getCollType() == MiNDCollType.One ) {
+								val = block.localData.get(tok);
+								return true;
+							} else {
+								itColl = ((DustRuntimeValueCollection<?>)val).getIterator();
+								if ( stepColl() ) {
+									return true;
+								}
+							}
+						} else {
+							itToken = null;
+							return false;
+						}
+					}
+				}
+
+				return true;
+			}
+			
+			public void log() {
+				Giskard.log(MiNDEventLevel.Info, "VisitStep", current, tok.getId(), val, key);
+			}
+		}
+		
+		
+		VisitStep currStep = new VisitStep();
+		Stack<VisitStep> visitStack;
+		MiNDResultType procRet;
+		
+		@Override
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+			MiNDResultType ret = MiNDResultType.Accept;
+
+			switch ( action ) {
+			case Process:
+				if ( currStep.step() ) {
+					currStep.log();
+					ret = MiNDResultType.AcceptPass;
+				} else {
+					ret = MiNDResultType.Reject;
+				}
+				procRet = ret;
+				break;
+			case End:
+				ret = procRet;
+			default:
+				break;
+			}
+			return ret;
+		}
+	}
+	
+	public static class Read extends DustRuntimeAgentData {
+		@Override
+		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+			MiNDResultType ret = MiNDResultType.Accept;
+
+			switch ( action ) {
+			case Begin:
+				Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+				break;
+			case Process:
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+				ret = MiNDResultType.AcceptRead;
+				break;
+			default:
+				break;
+			}
+			return ret;
+		}
+	}
+	
 	public static class Collect extends DustRuntimeAgentData {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
@@ -88,6 +238,5 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			}
 			return ret;
 		}
-
 	}
 }

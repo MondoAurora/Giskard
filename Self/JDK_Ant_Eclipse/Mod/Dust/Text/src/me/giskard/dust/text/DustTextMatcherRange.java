@@ -18,7 +18,7 @@ public class DustTextMatcherRange implements DustTextConsts, GiskardConsts.MiNDA
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
 		switch ( action ) {
 		case Process:
-			int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VARIANT_VALUE);
+			int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VALUE_RAW);
 			return ((rangeMin <= chr) && (chr <= rangeMax)) ? MiNDResultType.Accept : MiNDResultType.Reject;
 		default:
 			return MiNDResultType.Accept;

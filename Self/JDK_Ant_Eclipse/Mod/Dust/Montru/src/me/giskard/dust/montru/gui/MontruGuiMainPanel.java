@@ -297,14 +297,14 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			if ( null == pnlMain ) {
 				buildPanel();
 
-				JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
+				JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VALUE_RAW);
 				frm.getContentPane().add(pnlMain, BorderLayout.CENTER);
 
 				selectView(DEFAULT_VIEW);
 				updateEntityList();
 			}
 
-			Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEMBER_ACTION_PARAM, MTMEMBER_VARIANT_VALUE);
+			Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEMBER_ACTION_PARAM, MTMEMBER_VALUE_RAW);
 			break;
 		case Process:
 			break;

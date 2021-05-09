@@ -16,7 +16,7 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 		Giskard.log(MiNDEventLevel.Trace, "Registering implementation for agent", agent, "->", c.getName());
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_GPR01, MTMEMBER_VARIANT_VALUE);
+		Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_GPR01, MTMEMBER_VALUE_RAW);
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_MODULE_NATIVES, agent);
 	}
 }

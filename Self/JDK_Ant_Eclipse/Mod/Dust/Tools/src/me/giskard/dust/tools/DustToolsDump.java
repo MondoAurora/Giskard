@@ -24,7 +24,7 @@ public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
 			ret = result;
 			break;
 		case Init:
-			val = Giskard.access(MiNDAccessCommand.Get, "Not configured.", MTMEMBER_ACTION_THIS, MTMEMBER_VARIANT_VALUE);
+			val = Giskard.access(MiNDAccessCommand.Get, "Not configured.", MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
 			MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(ret), MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_TAGS);
 			result = ( null == resp ) ? ret : (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 			break;

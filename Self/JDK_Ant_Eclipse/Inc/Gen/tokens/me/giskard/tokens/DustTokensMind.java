@@ -94,8 +94,10 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTAGENT_CTRL_SEQUENCE = Giskard.defineToken(MiNDTokenType.Agent, "Sequence", MTUNIT_NARRATIVE);
 	MiNDToken MTAGENT_CTRL_SELECTION = Giskard.defineToken(MiNDTokenType.Agent, "Selection", MTUNIT_NARRATIVE);
 
-	MiNDToken MTAGENT_DATA_FINDALL = Giskard.defineToken(MiNDTokenType.Agent, "FindAll", MTUNIT_NARRATIVE);
-	MiNDToken MTAGENT_DATA_COLLECT = Giskard.defineToken(MiNDTokenType.Agent, "Collect", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATA_LISTALL = Giskard.defineToken(MiNDTokenType.Agent, "FindAll", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATA_VISIT = Giskard.defineToken(MiNDTokenType.Agent, "Visit", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATA_READ = Giskard.defineToken(MiNDTokenType.Agent, "Read", MTUNIT_NARRATIVE);
+//	MiNDToken MTAGENT_DATA_COLLECT = Giskard.defineToken(MiNDTokenType.Agent, "Collect", MTUNIT_NARRATIVE);
 
 	MiNDToken MTTAG_AGENTACTION = Giskard.defineToken(MiNDTokenType.Tag, "AgentAction", MTUNIT_NARRATIVE, MiNDAgentAction.class);
 	MiNDToken MTTAG_AGENTACTION_INIT = Giskard.defineToken(MiNDTokenType.Tag, "Init", MTTAG_AGENTACTION, MiNDAgentAction.Init);

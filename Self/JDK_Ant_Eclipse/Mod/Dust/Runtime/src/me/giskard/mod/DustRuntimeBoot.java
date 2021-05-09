@@ -21,8 +21,10 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustRuntimeAgentControl.Sequence.class);
 		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustRuntimeAgentControl.Selection.class);
 
-		DustTokens.addModuleImpInfo(MTAGENT_DATA_FINDALL, DustRuntimeAgentData.FindAll.class);
-		DustTokens.addModuleImpInfo(MTAGENT_DATA_COLLECT, DustRuntimeAgentData.Collect.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATA_LISTALL, DustRuntimeAgentData.ListAll.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATA_VISIT, DustRuntimeAgentData.Visit.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATA_READ, DustRuntimeAgentData.Read.class);
+//		DustTokens.addModuleImpInfo(MTAGENT_DATA_COLLECT, DustRuntimeAgentData.Collect.class);
 
 	}
 
