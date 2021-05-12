@@ -26,33 +26,33 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 			boolean ret = false;
 
 			if ( !listeners.isEmpty() ) {
-				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_PARAM, MTMEMBER_ACTION_GPR04);
+				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_DIALOG, MTMEMBER_ACTION_GPR04);
 
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_PARAM);
-				Giskard.access(MiNDAccessCommand.Set, block, MTMEMBER_ACTION_PARAM, MTMEMBER_LINK_ONE);
-				Giskard.access(MiNDAccessCommand.Set, member, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_TOKEN);
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_DIALOG);
+				Giskard.access(MiNDAccessCommand.Set, block, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				Giskard.access(MiNDAccessCommand.Set, member, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_TOKEN);
 				
 				switch ( ((DustRuntimeToken) member).getCollType() ) {
 				case Arr:
-					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
-					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYMAP);
 					break;
 				case Map:
-					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
-					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, key, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYMAP);
 					break;
 				default:
-					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYARR);
-					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_KEYMAP);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYARR);
+					Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYMAP);
 					break;
 				}
 
 				if ( ((DustRuntimeToken) member).getValType() == MiNDValType.Link ) {
-					Giskard.access(MiNDAccessCommand.Set, valOld, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKOLD);
-					Giskard.access(MiNDAccessCommand.Set, valNew, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_LINKNEW);
+					Giskard.access(MiNDAccessCommand.Set, valOld, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_LINKOLD);
+					Giskard.access(MiNDAccessCommand.Set, valNew, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_LINKNEW);
 				} else {
-					Giskard.access(MiNDAccessCommand.Set, valOld, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_VALOLD);
-					Giskard.access(MiNDAccessCommand.Set, valNew, MTMEMBER_ACTION_PARAM, MTMEMBER_VISITINFO_VALNEW);
+					Giskard.access(MiNDAccessCommand.Set, valOld, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_VALOLD);
+					Giskard.access(MiNDAccessCommand.Set, valNew, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_VALNEW);
 				}
 				for (MiNDAgent a : listeners) {
 					try {
@@ -62,7 +62,7 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 					}
 				}
 
-				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_PARAM);
+				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_DIALOG);
 			}
 
 			return ret;

@@ -59,6 +59,8 @@ public interface GiskardConsts {
 	}
 
 	public interface MiNDToken extends MiNDNamed {
+		MiNDCollType getCollType();
+		MiNDValType getValType();
 	}
 
 	public interface MiNDAgent extends GiskardConsts {

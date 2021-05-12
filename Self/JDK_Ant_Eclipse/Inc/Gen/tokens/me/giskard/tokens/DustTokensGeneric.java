@@ -14,7 +14,6 @@ public interface DustTokensGeneric extends GiskardConsts {
 
 	MiNDToken MTTYPE_ACTION = Giskard.defineToken(MiNDTokenType.Type, "Action", MTUNIT_UTILS);
 	MiNDToken MTMEMBER_ACTION_THIS = Giskard.defineToken(MiNDTokenType.Member, "This", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_ACTION_PARAM = Giskard.defineToken(MiNDTokenType.Member, "Param", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_ACTION_DIALOG = Giskard.defineToken(MiNDTokenType.Member, "Dialog", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
 
 	MiNDToken MTMEMBER_ACTION_GPR01 = Giskard.defineToken(MiNDTokenType.Member, "GPR01", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
@@ -31,6 +30,7 @@ public interface DustTokensGeneric extends GiskardConsts {
 	MiNDToken MTMEMBER_VALUE_TYPE = Giskard.defineToken(MiNDTokenType.Member, "Type", MTTYPE_VALUE, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_VALUE_INT = Giskard.defineToken(MiNDTokenType.Member, "Int", MTTYPE_VALUE, MiNDValType.Int, MiNDCollType.One);
 	MiNDToken MTMEMBER_VALUE_REAL = Giskard.defineToken(MiNDTokenType.Member, "Real", MTTYPE_VALUE, MiNDValType.Real, MiNDCollType.One);
+	MiNDToken MTMEMBER_VALUE_LINK = Giskard.defineToken(MiNDTokenType.Member, "Link", MTTYPE_VALUE, MiNDValType.Link, MiNDCollType.One);
 	MiNDToken MTMEMBER_VALUE_RAW = Giskard.defineToken(MiNDTokenType.Member, "Raw", MTTYPE_VALUE, MiNDValType.Raw, MiNDCollType.One);
 
 	MiNDToken MTTYPE_VERSIONED = Giskard.defineToken(MiNDTokenType.Type, "Versioned", MTUNIT_UTILS);

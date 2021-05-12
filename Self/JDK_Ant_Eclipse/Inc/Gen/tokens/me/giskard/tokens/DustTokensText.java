@@ -11,6 +11,7 @@ public interface DustTokensText extends DustTokensMind {
 	MiNDToken MTMEMBER_PLAIN_STRING = Giskard.defineToken(MiNDTokenType.Member, "String", MTTYPE_PLAIN, MiNDValType.Raw,
 			MiNDCollType.One);
 
-	MiNDToken MTAGENT_MATCHCONST = Giskard.defineToken(MiNDTokenType.Agent, "MatchConst", MTUNIT_TEXT);
-	MiNDToken MTAGENT_MATCHRANGE = Giskard.defineToken(MiNDTokenType.Agent, "MatchRange", MTUNIT_TEXT);
+	MiNDToken MTAGENT_TEXT_MATCHCONST = Giskard.defineToken(MiNDTokenType.Agent, "MatchConst", MTUNIT_TEXT);
+	MiNDToken MTAGENT_TEXT_MATCHRANGE = Giskard.defineToken(MiNDTokenType.Agent, "MatchRange", MTUNIT_TEXT);
+	MiNDToken MTAGENT_TEXT_FORMAT = Giskard.defineToken(MiNDTokenType.Agent, "Format", MTUNIT_TEXT);
 }

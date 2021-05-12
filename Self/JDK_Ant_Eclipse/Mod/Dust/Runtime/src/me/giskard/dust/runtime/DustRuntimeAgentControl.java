@@ -14,6 +14,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 	public static class Iteration extends DustRuntimeAgentControl {
 		int repMin;
 		int repMax;
+		MiNDResultType repState;
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
@@ -47,16 +48,19 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					} else {
 						if ( GiskardUtils.isAgentReject(currChild.state) ) {
 							ret = currChild.state;
+							repState = MiNDResultType.Reject;
 							break;
 						}
 						activity.push(currChild);
 					}
 					
 					ret = MiNDResultType.Read;
+					repState = MiNDResultType.Accept;
 				}
 
 				break;
 			case End:
+				ret = repState;
 				break;
 			case Release:
 				break;
@@ -108,6 +112,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				if ( null != currChild ) {
 					ret = currChild.state;
 					if ( !GiskardUtils.isAgentAccept(ret) ) {
+						Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 						break;
 					}
 				}

@@ -29,7 +29,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
-		String testId = (args.length > 0) ? args[0] : "visit";
+		String testId = (args.length > 0) ? args[0] : "ctrl";
 
 		switch ( testId ) {
 		case "visit":
@@ -76,42 +76,94 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		return MiNDResultType.Accept;
 	}
 
-	static void testVisitNew() {
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
-		// TODO sequence instead of containing!
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_LISTALL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR02);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTION_GPR02, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR03);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_VISIT, MTMEMBER_ACTION_GPR03, MTMEMBER_ENTITY_PRIMARYTYPE);
-
-		Giskard.access( MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR03, MTMEMBER_ACTION_GPR02, MTMEMBER_LINK_ONE);
-		Giskard.access( MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ONE);
-		Giskard.access( MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
-	}
-
 	static void testVisit() {
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR01, MTAGENT_CTRL_SEQUENCE);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR02, MTAGENT_DATA_LISTALL);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR03, MTAGENT_CTRL_ITERATION);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR04, MTAGENT_CTRL_SEQUENCE);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR05, MTAGENT_DATA_VISIT);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR06, MTAGENT_TEXT_FORMAT);
+
+		setupValFormatter(MTMEMBER_ACTION_GPR06);
 		
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_GPR03, MTMEMBER_LINK_ONE);
+
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR03, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
+	}
+	
+	static void testVisitTest() {
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR04, MTAGENT_CTRL_SEQUENCE);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR05, MTAGENT_DATA_VISIT);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR06, MTAGENT_TEXT_FORMAT);
+
+		setupValFormatter(MTMEMBER_ACTION_GPR06);
+		
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR05, MTMEMBER_LINK_ONE);
+		
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
+	}
+
+	public static void setupValFormatter(MiNDToken target) {
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_LINK_ONE, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_TOKEN, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_TYPE, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_INT, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_REAL, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_RAW, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_LINK, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYARR, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYMAP, target, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Set,
+				"Entity: {0}, Token: {1}, Value type: {2}, Value(Int/Real/Raw/Link): ({3}, {4}, {5}, {6}), Key(Arr/Map): ({7}, {8})",
+				target, MTMEMBER_PLAIN_STRING);
+	}
+
+	static void testVisit1() {
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR01, MTAGENT_CTRL_SEQUENCE);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
+
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR02, MTAGENT_DATA_LISTALL);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
+
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR03, MTAGENT_CTRL_ITERATION);
+		DustTokens.createAgent(MTMEMBER_ACTION_GPR04, MTAGENT_DATA_VISIT);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_GPR03, MTMEMBER_LINK_ONE);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR03, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
+	}
+
+	static void testVisit2() {
+		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_CALL_TARGET, MTMEMBER_ENTITY_PRIMARYTYPE);
+
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		
+
 //		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_LISTALL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_VISIT, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
+
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR02);
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DUMP, MTMEMBER_ACTION_GPR02, MTMEMBER_ENTITY_PRIMARYTYPE);
 		Giskard.access(MiNDAccessCommand.Set, "pompompom", MTMEMBER_ACTION_GPR02, MTMEMBER_VALUE_RAW);
-		Giskard.access( MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ONE);
-		
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ONE);
+
 //		Giskard.access(MiNDAccessCommand.Set, 0, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MIN);
 //		Giskard.access(MiNDAccessCommand.Set, 10, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MAX);
 
-
-		Giskard.access( MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
+		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
 	}
 
 	public static void setCoords(MiNDToken target, Integer... coords) {
@@ -198,12 +250,12 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS, MTMEMBER_CALL_TARGET);
 
 		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
-		
+
 		linkDump("Testing Iterator", MTMEMBER_LINK_ARR, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		testIterator();
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-		
+
 		linkDump("Testing Selection", MTMEMBER_LINK_ARR, MTMEMBER_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		testSelect();
@@ -213,7 +265,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 		testSequence();
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR);
-		
+
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS);
 
 	}

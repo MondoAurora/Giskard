@@ -23,21 +23,21 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 		case Process:
 
 			if ( null == frmMain ) {
-				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_PARAM, MTMEMBER_PLAIN_STRING);
+				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_DIALOG, MTMEMBER_PLAIN_STRING);
 
-				Integer cx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER,	MTMEMBER_GEODATA_COORDS, 0);
-				Integer cy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_CENTER, MTMEMBER_GEODATA_COORDS, 1);
-				Integer sx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 0);
-				Integer sy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_PARAM, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 1);
+				Integer cx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_CENTER,	MTMEMBER_GEODATA_COORDS, 0);
+				Integer cy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_CENTER, MTMEMBER_GEODATA_COORDS, 1);
+				Integer sx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 0);
+				Integer sy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_SPAN, MTMEMBER_GEODATA_COORDS, 1);
 				Giskard.log(MiNDEventLevel.Info, "Frame", label, ", center (", cx, cy, "), size (", sx, sy, ")");
 
 				frmMain = new JFrame();
 				frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmMain.setTitle(label);
-				Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEMBER_ACTION_PARAM, MTMEMBER_VALUE_RAW);
+				Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
 
-				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_PARAM,	MTMEMBER_LINK_ONE) ) {
-					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_PARAM);					
+				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_DIALOG,	MTMEMBER_LINK_ONE) ) {
+					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_DIALOG);					
 //					Giskard.invoke();
 				}
 

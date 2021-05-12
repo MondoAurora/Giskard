@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
+import me.giskard.tokens.DustTokens;
 
 public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgent {
 
@@ -31,8 +32,8 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			case Process:
 				Integer h = null;
 				ret = MiNDResultType.Reject;
-				
-				while ( (null != it) && it.hasNext()) {
+
+				while ((null != it) && it.hasNext()) {
 					h = it.next();
 
 					if ( (HANDLE_NULL < h) && visited.add(h) ) {
@@ -47,10 +48,10 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 						break;
 					}
 				}
-				
+
 				procRet = ret;
 				Giskard.log(MiNDEventLevel.Info, "List returning", h, ret);
-				
+
 				break;
 			case End:
 				ret = procRet;
@@ -85,24 +86,24 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 	public static class Visit extends DustRuntimeAgentData {
 		class VisitStep {
 			Integer current;
-			
+
 			DustRuntimeDataBlock block;
 			Iterator<DustRuntimeToken> itToken;
 			Iterator<?> itColl;
-			
+
 			DustRuntimeToken tok;
 			Object val;
 			Object key;
-			
+
 			public VisitStep() {
 				current = null;
 			}
-			
+
 			boolean stepColl() {
-				if (null != itColl) {
-					if (itColl.hasNext() ) {
+				if ( null != itColl ) {
+					if ( itColl.hasNext() ) {
 						val = itColl.next();
-						
+
 						switch ( tok.getCollType() ) {
 						case Arr:
 						case Set:
@@ -116,47 +117,54 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 						default:
 							break;
 						}
-						
+
 						return true;
 					} else {
 						itColl = null;
 					}
-				}		
-				
+				}
+
 				return false;
 			}
-			
+
 			boolean step() {
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 //				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-				MiNDToken t = MTMEMBER_ACTION_GPR01;
-				Integer h = (Integer) getInvocation().runningActor.ctx.rootBlock.localData.get(t);
+//				MiNDToken t = MTMEMBER_ACTION_GPR01;
+//				Integer h = (Integer) getInvocation().runningActor.ctx.rootBlock.localData.get(t);
+				
+				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+				if ( null == h ) {
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				}
 
 //				Integer h = ((DustRuntimeToken)t).getEntityHandle();
-				if ( !GiskardUtils.isEqual(current, h)) {
+				if ( !GiskardUtils.isEqual(current, h) ) {
 					current = h;
 					block = getInvocation().runningActor.ctx.getEntity(current);
 					itToken = block.localData.keySet().iterator();
 					itColl = null;
 				}
-				
-				if (!stepColl()) {
+
+				if ( !stepColl() ) {
 					while (null != itToken) {
-						if (itToken.hasNext() ) {
+						if ( itToken.hasNext() ) {
 							tok = itToken.next();
 							key = null;
-							
+
 							if ( tok.getCollType() == MiNDCollType.One ) {
 								val = block.localData.get(tok);
 								return true;
 							} else {
-								itColl = ((DustRuntimeValueCollection<?>)val).getIterator();
+								itColl = ((DustRuntimeValueCollection<?>) val).getIterator();
 								if ( stepColl() ) {
 									return true;
 								}
 							}
 						} else {
 							itToken = null;
+							current = null;
+							block = null;
 							return false;
 						}
 					}
@@ -164,17 +172,20 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 				return true;
 			}
-			
-			public void log() {
-				Giskard.log(MiNDEventLevel.Info, "VisitStep", current, tok.getId(), val, key);
+
+			public void store(MiNDEventLevel optLogLevel) {
+				DustTokens.setValue(MTMEMBER_ACTION_DIALOG, tok, val, key);
+
+				if ( null != optLogLevel ) {
+					Giskard.log(MiNDEventLevel.Info, "VisitStep", current, tok.getId(), val, key);
+				}
 			}
 		}
-		
-		
+
 		VisitStep currStep = new VisitStep();
 		Stack<VisitStep> visitStack;
 		MiNDResultType procRet;
-		
+
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
@@ -182,7 +193,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			switch ( action ) {
 			case Process:
 				if ( currStep.step() ) {
-					currStep.log();
+					currStep.store(MiNDEventLevel.Info);
 					ret = MiNDResultType.AcceptPass;
 				} else {
 					ret = MiNDResultType.Reject;
@@ -197,7 +208,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			return ret;
 		}
 	}
-	
+
 	public static class Read extends DustRuntimeAgentData {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
@@ -218,7 +229,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			return ret;
 		}
 	}
-	
+
 	public static class Collect extends DustRuntimeAgentData {
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
