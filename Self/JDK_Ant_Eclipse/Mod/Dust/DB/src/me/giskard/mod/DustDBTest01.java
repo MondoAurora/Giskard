@@ -12,12 +12,11 @@ public class DustDBTest01 implements DustDBConsts, GiskardConsts.MiNDAgent {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.AcceptPass;
+		MiNDResultType ret = MiNDResultType.Accept;
 		
 		switch ( action ) {
 		case Process:
 			runTest();
-			ret = MiNDResultType.Accept;
 			break;
 
 		default:

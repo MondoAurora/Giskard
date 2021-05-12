@@ -38,7 +38,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 					if ( (HANDLE_NULL < h) && visited.add(h) ) {
 						Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-						ret = MiNDResultType.AcceptPass;
+						ret = MiNDResultType.Accept;
 						break;
 					}
 
@@ -133,9 +133,9 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 //				MiNDToken t = MTMEMBER_ACTION_GPR01;
 //				Integer h = (Integer) getInvocation().runningActor.ctx.rootBlock.localData.get(t);
 				
-				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
 				if ( null == h ) {
-					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 				}
 
 //				Integer h = ((DustRuntimeToken)t).getEntityHandle();
@@ -191,10 +191,12 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			MiNDResultType ret = MiNDResultType.Accept;
 
 			switch ( action ) {
+			case Begin:
+				break;
 			case Process:
 				if ( currStep.step() ) {
 					currStep.store(MiNDEventLevel.Info);
-					ret = MiNDResultType.AcceptPass;
+					ret = MiNDResultType.Accept;
 				} else {
 					ret = MiNDResultType.Reject;
 				}

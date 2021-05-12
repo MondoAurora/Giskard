@@ -20,7 +20,7 @@ CREATE TABLE `dust_data` (
   `Token` int NOT NULL,
   `ValInteger` int,
   `ValReal` double,
---  `ValIdentifier` varchar(100),
+  `ValLink` int,
   `OptKey` int,
   `OptIdx` int,
   PRIMARY KEY (`DataId`),
@@ -31,7 +31,8 @@ CREATE TABLE `dust_data` (
   CONSTRAINT `FK_DATA_ENTITY` FOREIGN KEY (`Entity`) REFERENCES `dust_entity` (`EntityId`) ON DELETE CASCADE,
   CONSTRAINT `FK_DATA_KEY` FOREIGN KEY (`OptKey`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_DATA_CHANGE` FOREIGN KEY (`LastValid`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
-  CONSTRAINT `FK_DATA_TOKEN` FOREIGN KEY (`Token`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT
+  CONSTRAINT `FK_DATA_TOKEN` FOREIGN KEY (`Token`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT,
+  CONSTRAINT `FK_DATA_LINK` FOREIGN KEY (`ValLink`) REFERENCES `dust_entity` (`EntityId`) ON DELETE RESTRICT
 ) AUTO_INCREMENT=1 ;
 
 CREATE TABLE `dust_event` (

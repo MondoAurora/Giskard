@@ -17,7 +17,7 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 
 	@Override
 	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		MiNDResultType ret = MiNDResultType.AcceptPass;
+		MiNDResultType ret = MiNDResultType.Accept;
 
 		switch ( action ) {
 		case Begin:

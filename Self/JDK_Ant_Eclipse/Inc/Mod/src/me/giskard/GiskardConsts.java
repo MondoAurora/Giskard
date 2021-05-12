@@ -51,7 +51,7 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDResultType {
-		Notimplemented, Reject, AcceptPass, Accept, AcceptRead, Read, Wait
+		Notimplemented, Reject, Accept, AcceptRead, Read, Wait
 	};
 
 	public interface MiNDNamed {

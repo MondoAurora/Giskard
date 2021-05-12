@@ -79,6 +79,21 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 		Giskard.access(MiNDAccessCommand.Set, keyArr, target, MTMEMBER_VISITINFO_KEYARR);
 		Giskard.access(MiNDAccessCommand.Set, keyMap, target, MTMEMBER_VISITINFO_KEYMAP);
 	}
-	
 
+	public static void setupValFormatter(MiNDToken target) {
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_LINK_ONE, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_TOKEN, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_TYPE, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_INT, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_REAL, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_RAW, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_LINK, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYARR, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYMAP, target, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Set,
+				"Entity: {0}, Token: {1}, Value type: {2}, Value(Int/Real/Raw/Link): ({3}, {4}, {5}, {6}), Key(Arr/Map): ({7}, {8})",
+				target, MTMEMBER_PLAIN_STRING);
+	}
+	
 }

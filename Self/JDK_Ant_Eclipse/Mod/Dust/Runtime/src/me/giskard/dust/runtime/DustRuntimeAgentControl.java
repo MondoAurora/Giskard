@@ -3,6 +3,7 @@ package me.giskard.dust.runtime;
 import java.util.ArrayList;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 import me.giskard.dust.runtime.DustRuntimeMachine.Invocation;
 
@@ -10,11 +11,12 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 	DustRuntimeMachine.Activity activity;
 	DustRuntimeMachine.Invocation currChild;
+	MiNDResultType repState;
+	boolean relayCalled;
 
 	public static class Iteration extends DustRuntimeAgentControl {
 		int repMin;
 		int repMax;
-		MiNDResultType repState;
 
 		@Override
 		public MiNDResultType process(MiNDAgentAction action) throws Exception {
@@ -26,19 +28,18 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				break;
 			case Begin:
 				Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+				relayCalled = false;
 				break;
 			case Process:
 				int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 
-				if ( -1 == c ) {
-					c = repMin;
-				} else {
-					++c;
-				}
+				++c;
 
 				if ( c == repMax ) {
-					ret = MiNDResultType.AcceptPass;
+					ret = MiNDResultType.Accept;
 				} else {
+					ret = MiNDResultType.Read;
+
 					Giskard.access(MiNDAccessCommand.Set, c, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 					Giskard.log(MiNDEventLevel.Info, "Repeat called", c);
 
@@ -46,17 +47,19 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 						currChild = activity.relay();
 					} else {
-						if ( GiskardUtils.isAgentReject(currChild.state) ) {
-							ret = currChild.state;
-							repState = MiNDResultType.Reject;
-							break;
+						if ( relayCalled && GiskardUtils.isAgentReject(currChild.state) ) {
+							ret = ((repMin <= c) && ((-1 == repMax) || (c <= repMax))) ? MiNDResultType.Accept
+									: MiNDResultType.Reject;
+//						} else if ( GiskardUtils.isAgentAccept(currChild.state) ) {
+//							ret = currChild.state;
+						} else {
+							activity.push(currChild);
 						}
-						activity.push(currChild);
 					}
 					
-					ret = MiNDResultType.Read;
-					repState = MiNDResultType.Accept;
+					relayCalled = true;
 				}
+				repState = ret;
 
 				break;
 			case End:
@@ -107,20 +110,42 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				setCount();
 				break;
 			case Begin:
+				Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+				currChild = null;
 				break;
 			case Process:
-				if ( null != currChild ) {
-					ret = currChild.state;
-					if ( !GiskardUtils.isAgentAccept(ret) ) {
-						Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
-						break;
-					}
+				ret = (null == currChild) ? MiNDResultType.Accept : currChild.state;
+				
+				switch ( ret ) {
+				case Accept:
+					// the member reported done, start from beginning
+//					Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+//					break;
+//				case AcceptPass:
+					// child done its job, next member please...
+					break;
+				case Wait:
+				case Read:
+				case AcceptRead:
+					// the child invocation should loop in these cases
+					GiskardException.wrap(null, "How can I get here?");
+					break;
+				case Notimplemented:
+				case Reject:
+					// do nothing, the sequence should report the child failure
+					break;
 				}
 
-				ret = relayChild() ? MiNDResultType.Read : MiNDResultType.AcceptPass;
+				if ( GiskardUtils.isAgentAccept(ret) ) {
+					repState = ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Accept;
+				} else {
+					repState = ret;
+				}
+
 				break;
 
 			case End:
+				ret = repState;
 				break;
 			case Release:
 				break;

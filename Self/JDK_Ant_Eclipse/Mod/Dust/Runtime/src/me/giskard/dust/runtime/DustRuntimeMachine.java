@@ -121,7 +121,8 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 				firstCall = true;
 				try {
 					runningActor = actor;
-					state = agent.process(MiNDAgentAction.End);
+//					state = agent.process(MiNDAgentAction.End);
+					agent.process(MiNDAgentAction.End);
 				} finally {
 					runningActor = null;
 				}

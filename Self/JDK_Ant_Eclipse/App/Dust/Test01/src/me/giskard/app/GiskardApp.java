@@ -29,7 +29,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET);
 
-		String testId = (args.length > 0) ? args[0] : "ctrl";
+		String testId = (args.length > 0) ? args[0] : "visit";
 
 		switch ( testId ) {
 		case "visit":
@@ -86,10 +86,10 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokens.createAgent(MTMEMBER_ACTION_GPR05, MTAGENT_DATA_VISIT);
 		DustTokens.createAgent(MTMEMBER_ACTION_GPR06, MTAGENT_TEXT_FORMAT);
 
-		setupValFormatter(MTMEMBER_ACTION_GPR06);
+		DustTokens.setupValFormatter(MTMEMBER_ACTION_GPR06);
 		
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
+//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_GPR03, MTMEMBER_LINK_ONE);
 
@@ -97,6 +97,9 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR03, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
+		
+		Giskard.access(MiNDAccessCommand.Set, 500, MTMEMBER_ACTION_GPR03, MTMEMBER_RANGE_INT_MAX);
+		Giskard.access(MiNDAccessCommand.Set, 500, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MAX);
 	}
 	
 	static void testVisitTest() {
@@ -106,7 +109,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokens.createAgent(MTMEMBER_ACTION_GPR05, MTAGENT_DATA_VISIT);
 		DustTokens.createAgent(MTMEMBER_ACTION_GPR06, MTAGENT_TEXT_FORMAT);
 
-		setupValFormatter(MTMEMBER_ACTION_GPR06);
+		DustTokens.setupValFormatter(MTMEMBER_ACTION_GPR06);
 		
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR05, MTMEMBER_LINK_ONE);
 		
@@ -114,22 +117,6 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_CALL_TARGET, MTMEMBER_LINK_ONE);
-	}
-
-	public static void setupValFormatter(MiNDToken target) {
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_LINK_ONE, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_TOKEN, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_TYPE, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_INT, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_REAL, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_RAW, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_LINK, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYARR, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYMAP, target, MTMEMBER_LINK_ARR);
-
-		Giskard.access(MiNDAccessCommand.Set,
-				"Entity: {0}, Token: {1}, Value type: {2}, Value(Int/Real/Raw/Link): ({3}, {4}, {5}, {6}), Key(Arr/Map): ({7}, {8})",
-				target, MTMEMBER_PLAIN_STRING);
 	}
 
 	static void testVisit1() {

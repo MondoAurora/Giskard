@@ -96,6 +96,6 @@ public class GiskardUtils implements GiskardConsts {
 	}
 
 	public static boolean isAgentAccept(MiNDResultType res ) {
-		return (res == MiNDResultType.Accept) || (res == MiNDResultType.AcceptRead) || (res == MiNDResultType.AcceptPass);
+		return (res == MiNDResultType.Accept) || (res == MiNDResultType.AcceptRead);
 	}
 }

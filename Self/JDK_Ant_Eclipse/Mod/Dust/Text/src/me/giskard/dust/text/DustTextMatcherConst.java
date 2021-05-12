@@ -50,7 +50,7 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 			return MiNDResultType.Accept;
 		case Process:
 			int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VALUE_RAW);
-			return (chr == cpArr[idx]) ? (++idx < size) ? MiNDResultType.AcceptRead : MiNDResultType.AcceptPass : MiNDResultType.Reject;
+			return (chr == cpArr[idx]) ? (++idx < size) ? MiNDResultType.AcceptRead : MiNDResultType.Accept : MiNDResultType.Reject;
 		default:
 			return MiNDResultType.Accept;
 		}

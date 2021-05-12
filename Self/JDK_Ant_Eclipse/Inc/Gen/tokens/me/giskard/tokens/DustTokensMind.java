@@ -84,7 +84,7 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_RESULTTYPE = Giskard.defineToken(MiNDTokenType.Tag, "ResultType", MTUNIT_NARRATIVE, MiNDResultType.class);
 	MiNDToken MTTAG_RESULTTYPE_NOTIMPLEMENTED = Giskard.defineToken(MiNDTokenType.Tag, "Notimplemented", MTTAG_RESULTTYPE, MiNDResultType.Notimplemented);
 	MiNDToken MTTAG_RESULTTYPE_REJECT = Giskard.defineToken(MiNDTokenType.Tag, "Reject", MTTAG_RESULTTYPE, MiNDResultType.Reject);
-	MiNDToken MTTAG_RESULTTYPE_ACCEPT_PASS = Giskard.defineToken(MiNDTokenType.Tag, "AcceptPass", MTTAG_RESULTTYPE, MiNDResultType.AcceptPass);
+//	MiNDToken MTTAG_RESULTTYPE_ACCEPT_PASS = Giskard.defineToken(MiNDTokenType.Tag, "AcceptPass", MTTAG_RESULTTYPE, MiNDResultType.AcceptPass);
 	MiNDToken MTTAG_RESULTTYPE_ACCEPT = Giskard.defineToken(MiNDTokenType.Tag, "Accept", MTTAG_RESULTTYPE, MiNDResultType.Accept);
 	MiNDToken MTTAG_RESULTTYPE_ACCEPT_READ = Giskard.defineToken(MiNDTokenType.Tag, "AcceptRead", MTTAG_RESULTTYPE, MiNDResultType.AcceptRead);
 	MiNDToken MTTAG_RESULTTYPE_READ = Giskard.defineToken(MiNDTokenType.Tag, "Read", MTTAG_RESULTTYPE, MiNDResultType.Read);
