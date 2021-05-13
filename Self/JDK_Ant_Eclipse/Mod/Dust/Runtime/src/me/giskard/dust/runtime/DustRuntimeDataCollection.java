@@ -11,7 +11,7 @@ import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class DustRuntimeValueCollection<CollectorType> implements DustRuntimeConsts {
+public abstract class DustRuntimeDataCollection<CollectorType> implements DustRuntimeConsts {
 	protected final CollectorType collector;
 	protected final DustRuntimeDataBlock owner;
 	protected final DustRuntimeToken token;
@@ -20,7 +20,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 
 	abstract Iterator getIterator();
 
-	public static DustRuntimeValueCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
+	public static DustRuntimeDataCollection create(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 		switch ( token.getCollType() ) {
 		case Arr:
 			return new ValArr(owner, token);
@@ -33,13 +33,13 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 	}
 
-	protected DustRuntimeValueCollection(DustRuntimeDataBlock owner_, DustRuntimeToken token_, CollectorType collector_) {
+	protected DustRuntimeDataCollection(DustRuntimeDataBlock owner_, DustRuntimeToken token_, CollectorType collector_) {
 		this.owner = owner_;
 		this.token = token_;
 		this.collector = collector_;
 	}
 
-	public static class ValSet extends DustRuntimeValueCollection<Set> {
+	public static class ValSet extends DustRuntimeDataCollection<Set> {
 		public ValSet(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashSet());
 		}
@@ -79,7 +79,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 	}
 
-	public static class ValArr extends DustRuntimeValueCollection<ArrayList> {
+	public static class ValArr extends DustRuntimeDataCollection<ArrayList> {
 		public ValArr(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new ArrayList());
 		}
@@ -116,7 +116,7 @@ public abstract class DustRuntimeValueCollection<CollectorType> implements DustR
 		}
 	}
 
-	public static class ValMap extends DustRuntimeValueCollection<Map> {
+	public static class ValMap extends DustRuntimeDataCollection<Map> {
 		public ValMap(DustRuntimeDataBlock owner, DustRuntimeToken token) {
 			super(owner, token, new HashMap());
 		}

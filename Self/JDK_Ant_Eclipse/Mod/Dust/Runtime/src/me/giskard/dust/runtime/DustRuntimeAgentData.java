@@ -13,7 +13,7 @@ import me.giskard.tokens.DustTokens;
 public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgent {
 
 	public static class ListAll extends DustRuntimeAgentData {
-		DustRuntimeContext ctx;
+		DustRuntimeDataContext ctx;
 		Iterator<Integer> it;
 		Set<Integer> visited = new TreeSet<>();
 		MiNDResultType procRet;
@@ -65,7 +65,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			return ret;
 		}
 
-		boolean optSelectContext(DustRuntimeContext ctx_) {
+		boolean optSelectContext(DustRuntimeDataContext ctx_) {
 			boolean ret = false;
 
 			it = null;
@@ -88,7 +88,8 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			Integer current;
 
 			DustRuntimeDataBlock block;
-			Iterator<DustRuntimeToken> itToken;
+			DustRuntimeTokenManager tm;
+			Iterator<Integer> itToken;
 			Iterator<?> itColl;
 
 			DustRuntimeToken tok;
@@ -142,21 +143,22 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 				if ( !GiskardUtils.isEqual(current, h) ) {
 					current = h;
 					block = getInvocation().runningActor.ctx.getEntity(current);
-					itToken = block.localData.keySet().iterator();
+					tm = block.ctx.getTokenManager();
+					itToken = block.getKeyIter();
 					itColl = null;
 				}
 
 				if ( !stepColl() ) {
 					while (null != itToken) {
 						if ( itToken.hasNext() ) {
-							tok = itToken.next();
+							tok = tm.getTokenByHandle(itToken.next());
 							key = null;
 
 							if ( tok.getCollType() == MiNDCollType.One ) {
-								val = block.localData.get(tok);
+								val = block.getValue(tok);
 								return true;
 							} else {
-								itColl = ((DustRuntimeValueCollection<?>) val).getIterator();
+								itColl = ((DustRuntimeDataCollection<?>) val).getIterator();
 								if ( stepColl() ) {
 									return true;
 								}

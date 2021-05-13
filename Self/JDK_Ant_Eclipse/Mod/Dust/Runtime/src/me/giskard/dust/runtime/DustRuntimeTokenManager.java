@@ -3,21 +3,33 @@ package me.giskard.dust.runtime;
 import java.util.Map;
 import java.util.TreeMap;
 
+import me.giskard.Giskard;
+
 class DustRuntimeTokenManager implements DustRuntimeConsts {
-	DustRuntimeContext ctx;
+	DustRuntimeDataContext ctx;
 	DustRuntimeTokenManager parent;
 	
-	Map<String, DustRuntimeToken> tokens = new TreeMap<>();
+	private Map<String, DustRuntimeToken> tokensById = new TreeMap<>();
+	private Map<Integer, DustRuntimeToken> tokensByHandle = new TreeMap<>();
 
-	public DustRuntimeTokenManager(DustRuntimeContext ctx_) {
+	public DustRuntimeTokenManager(DustRuntimeDataContext ctx_) {
 		this.ctx = ctx_;
 		parent = (null == ctx.parentCtx) ? null : ctx.parentCtx.getTokenManager();
 	}
 
-	DustRuntimeToken getToken(Object id) {
-		DustRuntimeToken ret = tokens.get(id);
+	DustRuntimeToken getTokenById(Object id) {
+		DustRuntimeToken ret = tokensById.get(id);
 		if ( null != parent ) {
-			ret = parent.getToken(id);
+			ret = parent.getTokenById(id);
+		}
+
+		return ret;
+	}
+
+	DustRuntimeToken getTokenByHandle(Integer handle) {
+		DustRuntimeToken ret = tokensByHandle.get(handle);
+		if ( null != parent ) {
+			ret = parent.tokensByHandle.get(handle);
 		}
 
 		return ret;
@@ -26,7 +38,7 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 	public MiNDToken defineToken(MiNDTokenType type, String name, Object... params) {
 		String id = DustRuntimeToken.buildId(type, name, params);
 
-		DustRuntimeToken ret = getToken(id);
+		DustRuntimeToken ret = getTokenById(id);
 
 		if ( null == ret ) {
 			ret = DustRuntimeToken.createToken(type, name, params);
@@ -36,18 +48,39 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 		return ret;
 	}
 
-	public void registerToken(String id, DustRuntimeToken token) {
-		tokens.put(id, token);
+	public int getTokenHandle(DustRuntimeToken token) {
+		int th = token.entityHandle;
+		
+		if ( HANDLE_NULL == th ) {
+			DustRuntimeDataBlock te = ctx.createEntity();
+			th = te.getHandle();
+			token.entityHandle = th;
+			tokensByHandle.put(th, token);
+		}
+		
+		return th;
+	}
 
-		DustRuntimeDataBlock te = ctx.createEntity();
-		token.setEntityHandle(te.getHandle());
-		ctx.rootBlock.access(MiNDAccessCommand.Add, te.getHandle(), MTMEMBER_CONTEXT_TOKENS, token);
+	public void registerToken(String id, DustRuntimeToken token) {
+//		DustRuntimeDataBlock te = ctx.createEntity();
+//		int th = te.getHandle();
+//		token.setEntityHandle(th);
+//		tokensByHandle.put(th, token);
+		
+		tokensById.put(id, token);
+		
+		int th = token.getEntityHandle(this);
+		DustRuntimeDataBlock te = ctx.getEntity(th);
+		
+		Giskard.log(MiNDEventLevel.Info, "Registering token", id, "->", th);
+		
+		ctx.rootBlock.access(MiNDAccessCommand.Add, th, MTMEMBER_CONTEXT_TOKENS, token);
 
 		te.access(MiNDAccessCommand.Set, token.getName(), MTMEMBER_PLAIN_STRING, null);
 
 		DustRuntimeToken p = token.getParent();
 		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p.getEntityHandle(), MTMEMBER_CONN_OWNER, null);
+			te.access(MiNDAccessCommand.Set, p.getEntityHandle(this), MTMEMBER_CONN_OWNER, null);
 		}
 
 		DustRuntimeToken t = DustRuntimeUtils.getTypeToken(token);
@@ -57,11 +90,11 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 		}
 
 		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(), MTMEMBER_ENTITY_STOREUNIT, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(this), MTMEMBER_ENTITY_STOREUNIT, null);
 	}
 
 	@Override
 	public String toString() {
-		return tokens.toString();
+		return tokensById.toString();
 	}
 }

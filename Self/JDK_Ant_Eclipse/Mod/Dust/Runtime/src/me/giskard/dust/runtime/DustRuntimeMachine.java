@@ -17,11 +17,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 	}
 
 	class Dialog {
-		private DustRuntimeContext ctxDialog;
+		private DustRuntimeDataContext ctxDialog;
 		Set<Activity> activities = new HashSet<>();
 
 		public Dialog() throws Exception {
-			ctxDialog = new DustRuntimeContext(knowledge, HANDLE_DIALOG);
+			ctxDialog = new DustRuntimeDataContext(knowledge, HANDLE_DIALOG);
 			DustRuntimeDataBlock bRoot = ctxDialog.getRootBlock();
 			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
@@ -106,11 +106,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		void init(Activity activity_) throws Exception {
 			this.activity = activity_;
 
-			DustRuntimeContext ctxDialog = activity.dlg.ctxDialog;
+			DustRuntimeDataContext ctxDialog = activity.dlg.ctxDialog;
 			Integer handle = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
 			DustRuntimeDataBlock bTarget = ctxDialog.getEntity(handle);
 
-			bThis = new DustRuntimeDataBlock(null, bTarget);
+			bThis = new DustRuntimeDataBlock(ctxDialog, bTarget);
 
 			handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
 			bParam = (null != handle) ? ctxDialog.getEntity(handle) : null;
@@ -161,21 +161,21 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 	}
 
 	public class Actor implements Runnable {
-		DustRuntimeContext ctx;
+		DustRuntimeDataContext ctx;
 		Activity last;
 		Activity current;
 
 		volatile boolean stopRequest;
 
 		public Actor() {
-			ctx = new DustRuntimeContext(knowledge, HANDLE_INVOCATION);
+			ctx = new DustRuntimeDataContext(knowledge, HANDLE_INVOCATION);
 			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_THIS, MTMEMBER_ACTION_THIS, null);
 			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_PARAM, MTMEMBER_ACTION_DIALOG, null);
 		}
 
 		public void optSyncCtx() {
 			if ( current != last ) {
-				DustRuntimeContext dc = current.dlg.ctxDialog;
+				DustRuntimeDataContext dc = current.dlg.ctxDialog;
 				ctx.parentCtx = dc;
 				ctx.entities.put(HANDLE_DIALOG, dc.rootBlock);
 			}
@@ -280,7 +280,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		}
 	}
 
-	DustRuntimeContext knowledge;
+	DustRuntimeDataContext knowledge;
 	DustRuntimeNativeConnector nativeConn;
 	MachineListener ml = new MachineListener();
 
@@ -291,7 +291,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 	public DustRuntimeMachine() {
 		this.mainNotifier = new NotifDispatcher();
-		this.knowledge = new DustRuntimeContext(null, HANDLE_MACHINE);
+		this.knowledge = new DustRuntimeDataContext(null, HANDLE_MACHINE);
 
 		MiNDToken[] bootTokens = { MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE,
 				MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
@@ -309,7 +309,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		return nativeConn;
 	}
 
-	public DustRuntimeContext getContext() {
+	public DustRuntimeDataContext getContext() {
 		return (null == singleActor) ? knowledge : singleActor.ctx;
 	}
 

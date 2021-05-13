@@ -6,7 +6,7 @@ import java.util.Map;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollConsts;
 
-public class DustRuntimeContext
+public class DustRuntimeDataContext
 		implements DustRuntimeConsts, GisCollConsts, DustRuntimeBootConsts {
 
 	class PathResolver {
@@ -29,7 +29,7 @@ public class DustRuntimeContext
 
 				if ( coll ) {
 					lastOb = (null == lastOb) ? null
-							: ((DustRuntimeValueCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
+							: ((DustRuntimeDataCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
 					lastKey = o;
 					coll = false;
 				} else if ( o instanceof DustRuntimeToken ) {
@@ -37,15 +37,15 @@ public class DustRuntimeContext
 					coll = MiNDCollType.One != lastMember.getCollType();
 
 					if ( null == lastBlock ) {
-						for (DustRuntimeContext ctx = DustRuntimeContext.this; (null != ctx)
+						for (DustRuntimeDataContext ctx = DustRuntimeDataContext.this; (null != ctx)
 								&& (null == lastOb); ctx = ctx.parentCtx) {
-							lastOb = ctx.rootBlock.localData.get(lastMember);
+							lastOb = ctx.rootBlock.getValue(lastMember);
 						}
 						if ( null == lastOb ) {
 							lastOb = lastMember.entityHandle;
 						}
 					} else {
-						lastOb = lastBlock.localData.get(lastMember);
+						lastOb = lastBlock.getValue(lastMember);
 					}
 				}
 
@@ -70,21 +70,21 @@ public class DustRuntimeContext
 		}
 	}
 
-	DustRuntimeContext parentCtx;
+	DustRuntimeDataContext parentCtx;
 
 	private DustRuntimeTokenManager tokenManager;
 
 	Map<Integer, DustRuntimeDataBlock> entities = new HashMap<>();
 	DustRuntimeDataBlock rootBlock;
 
-	public DustRuntimeContext(DustRuntimeContext parentCtx_, Integer rootHandle) {
+	public DustRuntimeDataContext(DustRuntimeDataContext parentCtx_, Integer rootHandle) {
 		this.parentCtx = parentCtx_;
 		tokenManager = new DustRuntimeTokenManager(this);
 		rootBlock = new DustRuntimeDataBlock(this);
 		entities.put(rootHandle, rootBlock);
 	}
 
-	public DustRuntimeContext() {
+	public DustRuntimeDataContext() {
 		this(null, null);
 	}
 
@@ -97,7 +97,7 @@ public class DustRuntimeContext
 	public DustRuntimeDataBlock getEntity(Integer handle) {
 		DustRuntimeDataBlock e = null;
 
-		for (DustRuntimeContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
+		for (DustRuntimeDataContext ctx = this; (null == e) && (null != ctx); ctx = ctx.parentCtx) {
 			e = ctx.entities.get(handle);
 		}
 

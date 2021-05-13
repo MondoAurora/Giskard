@@ -1,6 +1,7 @@
 package me.giskard.dust.runtime;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import me.giskard.GiskardConsts.MiNDNamed;
@@ -17,25 +18,28 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 
 	private Integer handle;
 
-	DustRuntimeContext ctx;
+	DustRuntimeDataContext ctx;
 
-	final Map<DustRuntimeToken, Object> localData;
+	private final Map<Integer, Object> localData;
 
-	public DustRuntimeDataBlock(DustRuntimeContext ctx, Integer handle_) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, Integer handle_) {
 		this.ctx = ctx;
+		ctx.getTokenManager();
 		localData = new HashMap<>();
 		handle = handle_;
 		if ( HANDLE_NULL < handle ) {
-			localData.put((DustRuntimeToken) MTMEMBER_ENTITY_HANDLE, handle);
+//			setValue(MTMEMBER_ENTITY_HANDLE, handle);
+//			localData.put((DustRuntimeToken) MTMEMBER_ENTITY_HANDLE, handle);
 		}
 	}
 
-	public DustRuntimeDataBlock(DustRuntimeContext ctx) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
 		this(ctx, getNextHandle());
 	}
 
-	public DustRuntimeDataBlock(DustRuntimeContext ctx, DustRuntimeDataBlock source) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, DustRuntimeDataBlock source) {
 		this.ctx = ctx;
+		ctx.getTokenManager();
 		localData = new HashMap<>(source.localData);
 		handle = source.handle;
 	}
@@ -44,16 +48,28 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 		return handle;
 	}
 	
+	public Iterator<Integer> getKeyIter() {
+		return localData.keySet().iterator();
+	}
+	
+	void setValue(MiNDToken t, Object o) {
+		localData.put( ((DustRuntimeToken) t).getEntityHandle(ctx.getTokenManager()), o);
+	}
+	
+	Object getValue(MiNDToken t) {
+		return localData.get( ((DustRuntimeToken) t).getEntityHandle(ctx.getTokenManager()));
+	}
+	
 	@Override
 	public String getMiNDName() {
-		Object ret = localData.get(MTMEMBER_PLAIN_STRING);
+		Object ret = getValue(MTMEMBER_PLAIN_STRING);
 		
 		if ( null == ret ) {
-			ret = localData.get(MTMEMBER_ENTITY_STOREID);
+			ret = getValue(MTMEMBER_ENTITY_STOREID);
 		}
 		
 		if ( null == ret ) {
-			ret = localData.get(MTMEMBER_ENTITY_HANDLE);
+			ret = getValue(MTMEMBER_ENTITY_HANDLE);
 		}
 		
 		return GiskardUtils.toString(ret);
@@ -76,28 +92,28 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 		try {
 			DustRuntimeToken token = (DustRuntimeToken) mt;
 			boolean one = token.getCollType() == MiNDCollType.One;
-			Object current = localData.get(token);
+			Object current = getValue(token);
 
 			if ( (null == current) && !one && GiskardUtils.isAccessCreator(cmd) ) {
-				current = DustRuntimeValueCollection.create(this, token);
-				localData.put(token, current);
+				current = DustRuntimeDataCollection.create(this, token);
+				setValue(token, current);
 			}
 
 			switch ( cmd ) {
 			case Get:
 				val = (RetType) (((null == current) || one) ? current
-						: ((DustRuntimeValueCollection) current).access(notif, cmd, val, key));
+						: ((DustRuntimeDataCollection) current).access(notif, cmd, val, key));
 				break;
 			case Set:
 				if ( one ) {
-					localData.put(token, val);
+					setValue(token, val);
 					val = (RetType) current;
 				} else {
-					val = (RetType) ((DustRuntimeValueCollection) current).access(notif, cmd, val, key);
+					val = (RetType) ((DustRuntimeDataCollection) current).access(notif, cmd, val, key);
 				}
 				break;
 			case Add:
-				val = (RetType) ((DustRuntimeValueCollection) current).access(notif, cmd, val, key);
+				val = (RetType) ((DustRuntimeDataCollection) current).access(notif, cmd, val, key);
 				break;
 			default:
 //			Mind.log(MiNDEventLevel.TRACE, cmd, val, valPath);
