@@ -30,7 +30,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, KEY_SIZE);
 			for (int i = 0; i < actCount; ++i) {
 				Integer act = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, i);
-				ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_CALL_TARGET, null);
+				ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE, null);
 				activities.add(createActivity(this));
 			}
 		}
@@ -95,7 +95,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		Activity activity;
 
 		DustRuntimeDataBlock bThis;
-		DustRuntimeDataBlock bParam;
+//		DustRuntimeDataBlock bParam;
 		
 		MiNDAgent agent;
 		boolean firstCall;
@@ -107,13 +107,13 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			this.activity = activity_;
 
 			DustRuntimeDataContext ctxDialog = activity.dlg.ctxDialog;
-			Integer handle = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_CALL_TARGET);
+			Integer handle = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTIVITY_INSTANCE);
 			DustRuntimeDataBlock bTarget = ctxDialog.getEntity(handle);
 
 			bThis = new DustRuntimeDataBlock(ctxDialog, bTarget);
 
-			handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-			bParam = (null != handle) ? ctxDialog.getEntity(handle) : null;
+//			handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
+//			bParam = (null != handle) ? ctxDialog.getEntity(handle) : null;
 		}
 		
 		public MiNDResultType optEnd(Actor actor) throws Exception {
@@ -170,7 +170,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		public Actor() {
 			ctx = new DustRuntimeDataContext(knowledge, HANDLE_INVOCATION);
 			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_THIS, MTMEMBER_ACTION_THIS, null);
-			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_PARAM, MTMEMBER_ACTION_DIALOG, null);
+//			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_PARAM, MTMEMBER_ACTION_DIALOG, null);
 		}
 
 		public void optSyncCtx() {
@@ -181,7 +181,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			}
 			Invocation invoc = current.current;
 			ctx.entities.put(HANDLE_THIS, invoc.bThis);
-			ctx.entities.put(HANDLE_PARAM, invoc.bParam);
+//			ctx.entities.put(HANDLE_PARAM, invoc.bParam);
 		}
 
 		@Override

@@ -44,7 +44,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 					Giskard.log(MiNDEventLevel.Info, "Repeat called", c);
 
 					if ( null == currChild ) {
-						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+						Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 						currChild = activity.relay();
 					} else {
 						if ( relayCalled && GiskardUtils.isAgentReject(currChild.state) ) {
@@ -91,7 +91,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				activity.push(currChild = children.get(c));
 				ok = true;
 			} else if ( c < count ) {
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
+				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
 				children.add(currChild = activity.relay());
 				ok = true;
 			}

@@ -24,13 +24,8 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 
 	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, Integer handle_) {
 		this.ctx = ctx;
-		ctx.getTokenManager();
 		localData = new HashMap<>();
 		handle = handle_;
-		if ( HANDLE_NULL < handle ) {
-//			setValue(MTMEMBER_ENTITY_HANDLE, handle);
-//			localData.put((DustRuntimeToken) MTMEMBER_ENTITY_HANDLE, handle);
-		}
 	}
 
 	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
@@ -87,6 +82,8 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 	public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, RetType val, MiNDToken mt, Object key) {
 		if ( null == mt ) {
 			return (RetType) this;
+		} else if ( MTMEMBER_ENTITY_HANDLE == mt ) {
+			return (RetType) handle;
 		}
 
 		try {
@@ -106,7 +103,11 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 				break;
 			case Set:
 				if ( one ) {
-					setValue(token, val);
+					if ( !GiskardUtils.isEqual(current, val) ) {
+						setValue(token, val);
+// call loop
+//						notif.notify(cmd, handle, current, val, token, key);
+					}
 					val = (RetType) current;
 				} else {
 					val = (RetType) ((DustRuntimeDataCollection) current).access(notif, cmd, val, key);

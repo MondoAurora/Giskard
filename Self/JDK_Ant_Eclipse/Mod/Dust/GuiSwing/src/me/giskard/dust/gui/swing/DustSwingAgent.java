@@ -69,11 +69,11 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 				comp.setTitle(label);
 				Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
 
-				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS,
-						MTMEMBER_LINK_ONE) ) {
-					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_THIS);
-//					Giskard.invoke();
-				}
+//				if ( null != Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS,
+//						MTMEMBER_LINK_ONE) ) {
+//					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_THIS);
+////					Giskard.invoke();
+//				}
 
 				comp.pack();
 				comp.setVisible(true);
