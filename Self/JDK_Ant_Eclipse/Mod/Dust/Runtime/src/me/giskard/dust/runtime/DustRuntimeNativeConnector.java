@@ -87,7 +87,8 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 	}
 
 	public <RetType> RetType createNative(MiNDToken target) {
-		Integer a = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Object pt = Giskard.access(MiNDAccessCommand.Get, null, target, MTMEMBER_ENTITY_PRIMARYTYPE);
+		Integer a = (pt instanceof DustRuntimeToken) ? ((DustRuntimeToken)pt).entityHandle : (Integer) pt;
 		return createNative(a);
 	}
 
@@ -115,7 +116,7 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 
 	public void addUnitImpl(String unitName) {
 		if ( !provider.containsKey(unitName) ) {
-			String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE,
+			String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE, MTMEMBER_LINK_ONE,
 					MTMEMBER_PLAIN_STRING);
 
 			Giskard.log(MiNDEventLevel.Trace, "Module", modName, "provides unit", unitName);

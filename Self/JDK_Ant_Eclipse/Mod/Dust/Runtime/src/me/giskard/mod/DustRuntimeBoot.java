@@ -11,7 +11,8 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		Giskard.log(MiNDEventLevel.Trace, "DustRuntimeBoot.boot started...");
 
 		// Machine
-		Giskard.access(MiNDAccessCommand.Get, MTSHARED_MACHINE);
+		Object machine = Giskard.access(MiNDAccessCommand.Get, MTTYPE_MACHINE);
+		Giskard.access(MiNDAccessCommand.Set, machine, MTSHARED_MACHINE);
 
 		// Runtime module
 		DustTokens.addModule(MODULE_NAME, MODULE_VER);

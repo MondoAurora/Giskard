@@ -1,5 +1,11 @@
 Brain dump
 
+Lazy creation
+ - special default value on get?
+ - flag on the member definition, so Get will always return a real entity, created on first call
+ 
+the root block is the "runtime entity", so there is no shared machine, it's just a normal link/one member of the runtime, containing itself?
+
 Cornerstones - must be separate, focused. SRP DSL dimensions, Tensegrity axes
  - Model - unit, entity, value, collection, link.
   === DATA memory segment

@@ -12,7 +12,8 @@ public class DustMontruModule implements GiskardConsts.MiNDAgent, DustTokensMont
 		
 		DustTokens.addModuleImpInfo(MTAGENT_MAINPANEL, MontruGuiMainPanel.class);
 		
-		Giskard.access(MiNDAccessCommand.Add, MTUNIT_MONTRU, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
+		// TODO Temp removal, should put back...
+//		Giskard.access(MiNDAccessCommand.Add, MTUNIT_MONTRU, MTMEMBER_ACTION_THIS, MTMEMBER_CONN_PROVIDES);
 
 	}
 

@@ -22,14 +22,10 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 
 	private final Map<Integer, Object> localData;
 
-	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, Integer handle_) {
+	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
 		this.ctx = ctx;
 		localData = new HashMap<>();
-		handle = handle_;
-	}
-
-	public DustRuntimeDataBlock(DustRuntimeDataContext ctx) {
-		this(ctx, getNextHandle());
+		handle = getNextHandle();
 	}
 
 	public DustRuntimeDataBlock(DustRuntimeDataContext ctx, DustRuntimeDataBlock source) {

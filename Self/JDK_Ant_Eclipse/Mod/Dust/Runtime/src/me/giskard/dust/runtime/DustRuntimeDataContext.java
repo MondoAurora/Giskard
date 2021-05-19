@@ -27,7 +27,14 @@ public class DustRuntimeDataContext
 				Object o = path[i];
 				lastKey = null;
 
-				if ( coll ) {
+				if ( !coll && (lastOb instanceof Integer) && !GiskardUtils.isEqual(KEY_SIZE, lastKey) && (lastMember.getValType() == MiNDValType.Link) ) {
+					lastBlock = getEntity((Integer) lastOb);
+					lastMember = null;
+				}
+				
+				if ( (0 == i) && (o instanceof Integer) ) {
+					lastOb = lastBlock = getEntity((Integer) o);
+				} else if ( coll ) {
 					lastOb = (null == lastOb) ? null
 							: ((DustRuntimeDataCollection<?>) lastOb).access(NULL_NOTIF, MiNDAccessCommand.Get, null, o);
 					lastKey = o;
@@ -49,10 +56,10 @@ public class DustRuntimeDataContext
 					}
 				}
 
-				if ( !coll && (lastOb instanceof Integer) && !GiskardUtils.isEqual(KEY_SIZE, lastKey) && (lastMember.getValType() == MiNDValType.Link) ) {
-					lastBlock = getEntity((Integer) lastOb);
-					lastMember = null;
-				}
+//				if ( !coll && (lastOb instanceof Integer) && !GiskardUtils.isEqual(KEY_SIZE, lastKey) && (lastMember.getValType() == MiNDValType.Link) ) {
+//					lastBlock = getEntity((Integer) lastOb);
+//					lastMember = null;
+//				}
 			}
 		}
 
@@ -112,7 +119,10 @@ public class DustRuntimeDataContext
 			switch ( cmd ) {
 			case Get:
 				if ( val instanceof DustRuntimeToken ) {
-					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (MiNDToken) val, null);
+					DustRuntimeDataBlock e = createEntity();
+					e.access(MiNDAccessCommand.Set, val, MTMEMBER_ENTITY_PRIMARYTYPE, null);
+					ret = e.getHandle();
+//					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (MiNDToken) val, null);
 				}
 				break;
 			case Add:

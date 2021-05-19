@@ -17,19 +17,19 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 	}
 
 	class Dialog {
-		private DustRuntimeDataContext ctxDialog;
+		DustRuntimeDataContext ctxDialog;
 		Set<Activity> activities = new HashSet<>();
 
-		public Dialog() throws Exception {
+		public Dialog(Object hDlg) throws Exception {
 			ctxDialog = new DustRuntimeDataContext(knowledge, HANDLE_DIALOG);
 			DustRuntimeDataBlock bRoot = ctxDialog.getRootBlock();
 			bRoot.access(MiNDAccessCommand.Set, HANDLE_DIALOG, MTMEMBER_ACTION_DIALOG, null);
 
 			// deep copy of all entities
 
-			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, KEY_SIZE);
+			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, hDlg, MTMEMBER_DIALOG_ACTIVITIES, KEY_SIZE);
 			for (int i = 0; i < actCount; ++i) {
-				Integer act = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_LINK_ONE, MTMEMBER_DIALOG_ACTIVITIES, i);
+				Integer act = Giskard.access(MiNDAccessCommand.Get, null, hDlg, MTMEMBER_DIALOG_ACTIVITIES, i);
 				ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE, null);
 				activities.add(createActivity(this));
 			}
@@ -75,7 +75,8 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			return current;
 		}
 
-		public Invocation relay() throws Exception {
+		public Invocation relay(Object act) throws Exception {
+			dlg.ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE, null);
 			push(invoke());
 			return current;
 		}
@@ -95,7 +96,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		Activity activity;
 
 		DustRuntimeDataBlock bThis;
-//		DustRuntimeDataBlock bParam;
 		
 		MiNDAgent agent;
 		boolean firstCall;
@@ -107,13 +107,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			this.activity = activity_;
 
 			DustRuntimeDataContext ctxDialog = activity.dlg.ctxDialog;
-			Integer handle = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTIVITY_INSTANCE);
+			Integer handle = ctxDialog.rootBlock.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTIVITY_INSTANCE, null);
+//			Integer handle = Giskard.access(MiNDAccessCommand.GetNew, null, MTMEMBER_ACTIVITY_INSTANCE);
 			DustRuntimeDataBlock bTarget = ctxDialog.getEntity(handle);
 
 			bThis = new DustRuntimeDataBlock(ctxDialog, bTarget);
-
-//			handle = ctxDialog.access(NULL_NOTIF, MiNDAccessCommand.Get, null, MTMEMBER_CALL_PARAM);
-//			bParam = (null != handle) ? ctxDialog.getEntity(handle) : null;
 		}
 		
 		public MiNDResultType optEnd(Actor actor) throws Exception {
@@ -170,7 +168,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		public Actor() {
 			ctx = new DustRuntimeDataContext(knowledge, HANDLE_INVOCATION);
 			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_THIS, MTMEMBER_ACTION_THIS, null);
-//			ctx.rootBlock.access(MiNDAccessCommand.Set, HANDLE_PARAM, MTMEMBER_ACTION_DIALOG, null);
 		}
 
 		public void optSyncCtx() {
@@ -181,7 +178,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			}
 			Invocation invoc = current.current;
 			ctx.entities.put(HANDLE_THIS, invoc.bThis);
-//			ctx.entities.put(HANDLE_PARAM, invoc.bParam);
 		}
 
 		@Override
@@ -238,36 +234,38 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 			case Init:
 				break;
 			case Process:
-				Object pt = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_TOKEN);
+				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
+				Object pt = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_TOKEN);
 
 				if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_MODULES).entityHandle, pt) ) {
-					String modName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG,
+					String modName = Giskard.access(MiNDAccessCommand.Get, null, chg,
 							MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
-					String modVer = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_LINKNEW,
+					String modVer = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_LINKNEW,
 							MTMEMBER_VERSIONED_SIGNATURE);
 
 					if ( !MODULE_NAME.equals(modName) ) {
 						nativeConn.addModule(modName, modVer);
 					}
 				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MODULE_NATIVES).entityHandle, pt) ) {
-					Object agent = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_KEYMAP);
+					Object agent = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_KEYMAP);
 
 					if ( null != agent ) {
-						Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_LINKNEW,
+						Class<?> c = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_LINKNEW,
 								MTMEMBER_VALUE_RAW);
 						if ( null != c ) {
 							nativeConn.addAgentClass((Integer) agent, c);
 						}
 					}
 				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_CONN_PROVIDES).entityHandle, pt) ) {
-					String unitName = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG,
+					String unitName = Giskard.access(MiNDAccessCommand.Get, null, chg,
 							MTMEMBER_VISITINFO_LINKNEW, MTMEMBER_PLAIN_STRING);
 
 					nativeConn.addUnitImpl(unitName);
 				} else if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_DIALOGS).entityHandle, pt) ) {
-					Giskard.access(MiNDAccessCommand.Get, MTMEMBER_LINK_ONE, MTMEMBER_ACTION_DIALOG, MTMEMBER_VISITINFO_LINKNEW);
+					Object dlg = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_LINKNEW);
+//					Giskard.access(MiNDAccessCommand.Set, dlg, MTMEMBER_LINK_ONE);
 
-					dialogs.add(new Dialog());
+					dialogs.add(new Dialog(dlg));
 					singleActor = new Actor();
 					singleActor.run();
 				}

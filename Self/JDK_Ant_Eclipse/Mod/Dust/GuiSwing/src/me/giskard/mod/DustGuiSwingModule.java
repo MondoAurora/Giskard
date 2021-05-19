@@ -18,16 +18,12 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 		DustTokens.addModuleImpInfo(MTAGENT_FRAME, DustSwingAgent.SwingFrame.class);
 		DustTokens.addModuleImpInfo(MTAGENT_PANEL, DustSwingAgent.SwingPanel.class);
 		DustTokens.addModuleImpInfo(MTAGENT_LABEL, DustSwingAgent.SwingLabel.class);
-
 		
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-		Giskard.access(MiNDAccessCommand.Set, MTAGENT_MANAGER, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-
-		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_THIS);
-		Giskard.access(MiNDAccessCommand.Set, MTTYPE_PLATFORM, MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_PRIMARYTYPE);
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_PLATFORM_MANAGER);
-
-		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_THIS, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_PLATFORMS, MTTAG_PLATFORM_SWING);
+		Object mgr = Giskard.access(MiNDAccessCommand.Get, MTAGENT_MANAGER);
+		Object plt = Giskard.access(MiNDAccessCommand.Get, MTTYPE_PLATFORM);
+		
+		Giskard.access(MiNDAccessCommand.Set, mgr, plt, MTMEMBER_PLATFORM_MANAGER);
+		Giskard.access(MiNDAccessCommand.Set, plt, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_PLATFORMS, MTTAG_PLATFORM_SWING);
 
 	}
 

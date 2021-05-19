@@ -17,12 +17,12 @@ public class DustTextFormat implements DustTextConsts, GiskardConsts.MiNDAgent {
 			Object[] p = new Object[paramCount];
 
 			for (int idx = 0; idx < paramCount; ++idx) {
-//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
-//				Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
+//				Giskard.access(MiNDAccessCommand.GetNew, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
+//				Object handle = Giskard.access(MiNDAccessCommand.GetNew, -1, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
 				Object handle = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
 
 				p[idx] = handle;
-//				p[idx] = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, handle);
+//				p[idx] = Giskard.access(MiNDAccessCommand.GetNew, null, MTMEMBER_ACTION_DIALOG, handle);
 			}
 			
 			String result = MessageFormat.format(fmt, p);

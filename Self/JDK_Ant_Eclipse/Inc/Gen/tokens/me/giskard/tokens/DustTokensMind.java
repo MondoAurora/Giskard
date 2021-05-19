@@ -50,6 +50,7 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	
 	MiNDToken MTTYPE_DIALOG = Giskard.defineToken(MiNDTokenType.Type, "Dialog", MTUNIT_DIALOG);
 	MiNDToken MTMEMBER_DIALOG_ACTIVITIES = Giskard.defineToken(MiNDTokenType.Member, "Activities", MTTYPE_DIALOG, MiNDValType.Link, MiNDCollType.Arr);
+	MiNDToken MTMEMBER_DIALOG_CHANGE = Giskard.defineToken(MiNDTokenType.Member, "Change", MTTYPE_DIALOG, MiNDValType.Link, MiNDCollType.One);
 
 	MiNDToken MTTYPE_CONTEXT = Giskard.defineToken(MiNDTokenType.Type, "Context", MTUNIT_DIALOG);
 	MiNDToken MTMEMBER_CONTEXT_TOKENS = Giskard.defineToken(MiNDTokenType.Member, "Tokens", MTTYPE_CONTEXT, MiNDValType.Link, MiNDCollType.Map);

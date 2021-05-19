@@ -152,10 +152,10 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 					while (null != itToken) {
 						if ( itToken.hasNext() ) {
 							tok = tm.getTokenByHandle(itToken.next());
+							val = block.getValue(tok);
 							key = null;
 
 							if ( tok.getCollType() == MiNDCollType.One ) {
-								val = block.getValue(tok);
 								return true;
 							} else {
 								itColl = ((DustRuntimeDataCollection<?>) val).getIterator();
@@ -220,16 +220,13 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 			switch ( action ) {
 			case Begin:
-				Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
 				break;
 			case Process:
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
-				ret = MiNDResultType.AcceptRead;
 				break;
 			default:
 				break;
 			}
+			
 			return ret;
 		}
 	}
@@ -244,8 +241,8 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 				Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
 				break;
 			case Process:
-				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-				Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+				Object o = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				Giskard.access(MiNDAccessCommand.Add, o, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
 				ret = MiNDResultType.AcceptRead;
 				break;
 			default:

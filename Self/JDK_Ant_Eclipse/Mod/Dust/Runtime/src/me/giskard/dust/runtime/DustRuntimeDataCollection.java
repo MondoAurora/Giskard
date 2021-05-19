@@ -16,6 +16,7 @@ public abstract class DustRuntimeDataCollection<CollectorType> implements DustRu
 	protected final DustRuntimeDataBlock owner;
 	protected final DustRuntimeToken token;
 
+	// TODO : access with standard hints like KEY_SIZE
 	public abstract Object access(DustNotifier notif, MiNDAccessCommand cmd, Object val, Object key);
 
 	abstract Iterator getIterator();
