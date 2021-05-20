@@ -12,11 +12,9 @@ public interface DustRuntimeBootConsts extends GiskardConsts {
 	int HANDLE_DIALOG = -2;
 	int HANDLE_MACHINE = -3;
 	int HANDLE_THIS = -4;
-//	int HANDLE_PARAM = -5;
 	
 	public interface DustGiskard {
 		void init(MiNDAgent agent) throws Exception;
-//		void afterBoot() throws Exception;
 	}
 
 	public interface DustNotifier {

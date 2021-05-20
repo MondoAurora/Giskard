@@ -68,10 +68,6 @@ abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 		return ( HANDLE_NULL == entityHandle ) ? mgr.getTokenHandle(this) : entityHandle;
 	}
 
-//	public void setEntityHandle(int entityHandle) {
-//		this.entityHandle = entityHandle;
-//	}
-
 	public DustRuntimeToken getParent() {
 		return parent;
 	}

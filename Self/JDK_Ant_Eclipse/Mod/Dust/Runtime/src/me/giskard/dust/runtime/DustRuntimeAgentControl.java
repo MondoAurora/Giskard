@@ -45,8 +45,6 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 					if ( null == currChild ) {
 						Object act = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-//						activity.dlg.ctxDialog.access(null, act, null);
-//						Giskard.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE);
 						currChild = activity.relay(act);
 					} else {
 						if ( relayCalled && GiskardUtils.isAgentReject(currChild.state) ) {
@@ -92,8 +90,6 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 				ok = true;
 			} else if ( c < count ) {
 				Object act = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
-//				Giskard.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE);
-//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, c);
 				children.add(currChild = activity.relay(act));
 				ok = true;
 			}

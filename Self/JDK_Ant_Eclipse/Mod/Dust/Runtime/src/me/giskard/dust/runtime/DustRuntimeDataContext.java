@@ -55,11 +55,6 @@ public class DustRuntimeDataContext
 						lastOb = lastBlock.getValue(lastMember);
 					}
 				}
-
-//				if ( !coll && (lastOb instanceof Integer) && !GiskardUtils.isEqual(KEY_SIZE, lastKey) && (lastMember.getValType() == MiNDValType.Link) ) {
-//					lastBlock = getEntity((Integer) lastOb);
-//					lastMember = null;
-//				}
 			}
 		}
 
@@ -122,7 +117,6 @@ public class DustRuntimeDataContext
 					DustRuntimeDataBlock e = createEntity();
 					e.access(MiNDAccessCommand.Set, val, MTMEMBER_ENTITY_PRIMARYTYPE, null);
 					ret = e.getHandle();
-//					rootBlock.access(MiNDAccessCommand.Set, createEntity().getHandle(), (MiNDToken) val, null);
 				}
 				break;
 			case Add:

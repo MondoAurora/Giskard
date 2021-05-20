@@ -62,11 +62,6 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 	}
 
 	public void registerToken(String id, DustRuntimeToken token) {
-//		DustRuntimeDataBlock te = ctx.createEntity();
-//		int th = te.getHandle();
-//		token.setEntityHandle(th);
-//		tokensByHandle.put(th, token);
-		
 		tokensById.put(id, token);
 		
 		int th = token.getEntityHandle(this);

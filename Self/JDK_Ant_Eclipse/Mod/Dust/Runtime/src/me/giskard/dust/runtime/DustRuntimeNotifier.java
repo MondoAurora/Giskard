@@ -34,9 +34,6 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 					Giskard.access(MiNDAccessCommand.Set, chg, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
 				}
 
-//				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_DIALOG, MTMEMBER_ACTION_GPR04);
-//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_DIALOG);
-				
 				Giskard.access(MiNDAccessCommand.Set, block, chg, MTMEMBER_LINK_ONE);
 				Giskard.access(MiNDAccessCommand.Set, member, chg, MTMEMBER_VISITINFO_TOKEN);
 				
@@ -70,8 +67,6 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 						GiskardException.swallow(e, "Change notification");
 					}
 				}
-
-//				Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_DIALOG);
 			}
 
 			return ret;

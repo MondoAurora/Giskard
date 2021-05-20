@@ -129,17 +129,11 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			}
 
 			boolean step() {
-//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
-//				Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-//				MiNDToken t = MTMEMBER_ACTION_GPR01;
-//				Integer h = (Integer) getInvocation().runningActor.ctx.rootBlock.localData.get(t);
-				
 				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
 				if ( null == h ) {
 					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
 				}
 
-//				Integer h = ((DustRuntimeToken)t).getEntityHandle();
 				if ( !GiskardUtils.isEqual(current, h) ) {
 					current = h;
 					block = getInvocation().runningActor.ctx.getEntity(current);
