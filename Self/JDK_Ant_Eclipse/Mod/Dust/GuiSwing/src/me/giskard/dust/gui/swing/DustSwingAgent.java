@@ -10,12 +10,22 @@ import javax.swing.JPanel;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
-public abstract class DustSwingAgent<CompType> implements DustSwingConsts, GiskardConsts.MiNDAgent {
+public abstract class DustSwingAgent<CompType> implements DustSwingConsts, GiskardConsts.MiNDAgentResource {
 
 	final CompType comp;
 
 	protected DustSwingAgent(CompType c) {
 		this.comp = c;
+	}
+	
+	@Override
+	public MiNDResultType mindAgentInit() throws Exception {
+		return null;
+	}
+	
+	@Override
+	public MiNDResultType mindAgentRelease() throws Exception {
+		return null;
 	}
 
 	public static class SwingLabel extends DustSwingAgent<JLabel> {
@@ -24,7 +34,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 		}
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentProcess() throws Exception {
 			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 			comp.setText(label);
 			return MiNDResultType.Accept;
@@ -39,7 +49,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 		}
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentProcess() throws Exception {
 			return MiNDResultType.Accept;
 		}
 	}
@@ -48,47 +58,33 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 		public SwingFrame() {
 			super(new JFrame());
 		}
-
+		
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			MiNDResultType ret = MiNDResultType.Accept;
+		public MiNDResultType mindAgentInit() throws Exception {
 
-			switch ( action ) {
-			case Begin:
-				break;
-			case End:
-				break;
-			case Init:
+			comp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			comp.pack();
+			comp.setVisible(true);
 
-				String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
-				Rectangle rct = DustSwingUtils.toRect(MTMEMBER_ACTION_THIS);
+			Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
 
-				Giskard.log(MiNDEventLevel.Info, "Frame", label, ", rectangle (", rct, ")");
+			return mindAgentProcess();
+		}
+		
+		@Override
+		public MiNDResultType mindAgentProcess() throws Exception {
+			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
+			Rectangle rct = DustSwingUtils.toRect(MTMEMBER_ACTION_THIS);
 
-				comp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				comp.setTitle(label);
-				Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
+			Giskard.log(MiNDEventLevel.Info, "Frame", label, ", rectangle (", rct, ")");
 
-//				if ( null != Giskard.access(MiNDAccessCommand.GetNew, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_THIS,
-//						MTMEMBER_LINK_ONE) ) {
-//					Giskard.access(MiNDAccessCommand.GetNew, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_THIS);
-////					Giskard.invoke();
-//				}
+			comp.setTitle(label);
+			
+			comp.setSize(rct.width, rct.height);
+			comp.setLocation(rct.getLocation());
 
-				comp.pack();
-				comp.setVisible(true);
-
-				comp.setSize(rct.width, rct.height);
-				comp.setLocation(rct.getLocation());
-
-				break;
-			case Process:
-				break;
-			case Release:
-				break;
-			}
-
-			return ret;
+			return MiNDResultType.Accept;
 		}
 
 	}

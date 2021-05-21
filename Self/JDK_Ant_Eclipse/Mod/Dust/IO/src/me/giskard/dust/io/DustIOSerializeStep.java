@@ -4,7 +4,6 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.coll.GisCollConsts.MiNDBuilder;
-import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustIOSerializeStep implements DustIOTokens {
 	public static final MiNDBuilder<Integer, DustIOSerializeStep> BUILDER = new MiNDBuilder<Integer, DustIOSerializeStep>() {
@@ -19,7 +18,7 @@ public class DustIOSerializeStep implements DustIOTokens {
 		}
 	};
 	
-	public MiNDAgentAction action;
+	public MiNDToken action;
 	public MiNDToken item;
 	public Object data;
 
@@ -27,7 +26,7 @@ public class DustIOSerializeStep implements DustIOTokens {
 		data = null;
 	}
 
-	public void setAll(MiNDAgentAction action, MiNDToken item, Object data) {
+	public void setAll(MiNDToken action, MiNDToken item, Object data) {
 		this.action = action;
 		this.item = item;
 		this.data = data;
@@ -38,8 +37,8 @@ public class DustIOSerializeStep implements DustIOTokens {
 		Object val = (item == DustIOConsts.MTTAG_VALTYPE_LINK) ? ((Map.Entry<?,?>) data).getKey()
 				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
 		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VALUE_RAW);
-		GisToolsTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
-
+//		GisToolsTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
+		Giskard.access(MiNDAccessCommand.Set, action, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
 		return val;
 	}
 

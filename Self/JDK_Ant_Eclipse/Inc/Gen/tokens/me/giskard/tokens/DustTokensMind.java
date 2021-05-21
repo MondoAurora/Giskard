@@ -62,10 +62,10 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_ACCESSCOMMAND_ADD = Giskard.defineToken(MiNDTokenType.Tag, "Add", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Add);
 	MiNDToken MTTAG_ACCESSCOMMAND_DEL = Giskard.defineToken(MiNDTokenType.Tag, "Del", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Del);
 
-	MiNDToken MTTAG_VISITSTATE = Giskard.defineToken(MiNDTokenType.Tag, "VisitState", MTUNIT_DIALOG, MiNDVisitState.class);
-	MiNDToken MTTAG_VISITSTATE_ENTITY = Giskard.defineToken(MiNDTokenType.Tag, "Entity", MTTAG_VISITSTATE, MiNDVisitState.Entity);
-	MiNDToken MTTAG_VISITSTATE_TOKEN = Giskard.defineToken(MiNDTokenType.Tag, "Token", MTTAG_VISITSTATE, MiNDVisitState.Token);
-	MiNDToken MTTAG_VISITSTATE_VALUE = Giskard.defineToken(MiNDTokenType.Tag, "Value", MTTAG_VISITSTATE, MiNDVisitState.Value);
+//	MiNDToken MTTAG_VISITSTATE = Giskard.defineToken(MiNDTokenType.Tag, "VisitState", MTUNIT_DIALOG, MiNDVisitState.class);
+//	MiNDToken MTTAG_VISITSTATE_ENTITY = Giskard.defineToken(MiNDTokenType.Tag, "Entity", MTTAG_VISITSTATE, MiNDVisitState.Entity);
+//	MiNDToken MTTAG_VISITSTATE_TOKEN = Giskard.defineToken(MiNDTokenType.Tag, "Token", MTTAG_VISITSTATE, MiNDVisitState.Token);
+//	MiNDToken MTTAG_VISITSTATE_VALUE = Giskard.defineToken(MiNDTokenType.Tag, "Value", MTTAG_VISITSTATE, MiNDVisitState.Value);
 	
 	MiNDToken MTTYPE_VISITINFO = Giskard.defineToken(MiNDTokenType.Type, "VisitInfo", MTUNIT_DIALOG);
 	MiNDToken MTMEMBER_VISITINFO_KEYARR = Giskard.defineToken(MiNDTokenType.Member, "KeyArr", MTTYPE_VISITINFO, MiNDValType.Int, MiNDCollType.One);
@@ -100,11 +100,18 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTAGENT_DATA_READ = Giskard.defineToken(MiNDTokenType.Agent, "Read", MTUNIT_NARRATIVE);
 //	MiNDToken MTAGENT_DATA_COLLECT = Giskard.defineToken(MiNDTokenType.Agent, "Collect", MTUNIT_NARRATIVE);
 
-	MiNDToken MTTAG_AGENTACTION = Giskard.defineToken(MiNDTokenType.Tag, "AgentAction", MTUNIT_NARRATIVE, MiNDAgentAction.class);
-	MiNDToken MTTAG_AGENTACTION_INIT = Giskard.defineToken(MiNDTokenType.Tag, "Init", MTTAG_AGENTACTION, MiNDAgentAction.Init);
-	MiNDToken MTTAG_AGENTACTION_BEGIN = Giskard.defineToken(MiNDTokenType.Tag, "Begin", MTTAG_AGENTACTION, MiNDAgentAction.Begin);
-	MiNDToken MTTAG_AGENTACTION_PROCESS = Giskard.defineToken(MiNDTokenType.Tag, "Process", MTTAG_AGENTACTION, MiNDAgentAction.Process);
-	MiNDToken MTTAG_AGENTACTION_END = Giskard.defineToken(MiNDTokenType.Tag, "End", MTTAG_AGENTACTION, MiNDAgentAction.End);
-	MiNDToken MTTAG_AGENTACTION_RELEASE = Giskard.defineToken(MiNDTokenType.Tag, "Release", MTTAG_AGENTACTION, MiNDAgentAction.Release);
+	MiNDToken MTTAG_AGENTACTION = Giskard.defineToken(MiNDTokenType.Tag, "AgentAction", MTUNIT_NARRATIVE);
+	MiNDToken MTTAG_AGENTACTION_INIT = Giskard.defineToken(MiNDTokenType.Tag, "Init", MTTAG_AGENTACTION);
+	MiNDToken MTTAG_AGENTACTION_BEGIN = Giskard.defineToken(MiNDTokenType.Tag, "Begin", MTTAG_AGENTACTION);
+	MiNDToken MTTAG_AGENTACTION_PROCESS = Giskard.defineToken(MiNDTokenType.Tag, "Process", MTTAG_AGENTACTION);
+	MiNDToken MTTAG_AGENTACTION_END = Giskard.defineToken(MiNDTokenType.Tag, "End", MTTAG_AGENTACTION);
+	MiNDToken MTTAG_AGENTACTION_RELEASE = Giskard.defineToken(MiNDTokenType.Tag, "Release", MTTAG_AGENTACTION);
+
+//	MiNDToken MTTAG_AGENTACTION = Giskard.defineToken(MiNDTokenType.Tag, "AgentAction", MTUNIT_NARRATIVE, MiNDAgentAction.class);
+//	MiNDToken MTTAG_AGENTACTION_INIT = Giskard.defineToken(MiNDTokenType.Tag, "Init", MTTAG_AGENTACTION, MiNDAgentAction.Init);
+//	MiNDToken MTTAG_AGENTACTION_BEGIN = Giskard.defineToken(MiNDTokenType.Tag, "Begin", MTTAG_AGENTACTION, MiNDAgentAction.Begin);
+//	MiNDToken MTTAG_AGENTACTION_PROCESS = Giskard.defineToken(MiNDTokenType.Tag, "Process", MTTAG_AGENTACTION, MiNDAgentAction.Process);
+//	MiNDToken MTTAG_AGENTACTION_END = Giskard.defineToken(MiNDTokenType.Tag, "End", MTTAG_AGENTACTION, MiNDAgentAction.End);
+//	MiNDToken MTTAG_AGENTACTION_RELEASE = Giskard.defineToken(MiNDTokenType.Tag, "Release", MTTAG_AGENTACTION, MiNDAgentAction.Release);
 	
 }

@@ -7,7 +7,7 @@ import me.giskard.tokens.DustTokensText;
 
 public interface DustRuntimeConsts extends DustRuntimeBootConsts, DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
 
-	abstract class RuntimeAgent implements DustRuntimeConsts, MiNDAgent {
+	abstract class RuntimeAgent implements DustRuntimeConsts, MiNDAgentBlock {
 		private DustRuntimeMachine.Invocation invocation;
 		
 		protected DustRuntimeMachine.Invocation getInvocation() {

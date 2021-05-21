@@ -12,58 +12,71 @@ import me.giskard.tokens.DustTokens;
 
 public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgent {
 
+	@Override
+	public MiNDResultType mindAgentBegin() throws Exception {
+		return MiNDResultType.Accept;
+	}
+
+	@Override
+	public MiNDResultType mindAgentEnd() throws Exception {
+		return null;
+	}
+
 	public static class ListAll extends DustRuntimeAgentData {
 		DustRuntimeDataContext ctx;
 		Iterator<Integer> it;
-		Set<Integer> visited = new TreeSet<>();
-		MiNDResultType procRet;
+		Set<Integer> visited;
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentBegin() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
-
-			switch ( action ) {
-			case Init:
-				visited.clear();
+			if ( null == visited ) {
+				visited = new TreeSet<>();
 				ret = optSelectContext(getInvocation().runningActor.ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
-				break;
-			case Begin:
-				break;
-			case Process:
-				Integer h = null;
-				ret = MiNDResultType.Reject;
-
-				while ((null != it) && it.hasNext()) {
-					h = it.next();
-
-					if ( (HANDLE_NULL < h) && visited.add(h) ) {
-						Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-						ret = MiNDResultType.Accept;
-						break;
-					}
-
-					if ( !it.hasNext() && !optSelectContext(ctx.parentCtx) ) {
-						Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-						ret = MiNDResultType.Reject;
-						break;
-					}
-				}
-
-				procRet = ret;
-				Giskard.log(MiNDEventLevel.Info, "List returning", h, ret);
-
-				break;
-			case End:
-				ret = procRet;
-				break;
-			case Release:
-				visited.clear();
-				ctx = null;
-				it = null;
-				break;
 			}
+//			visited.clear();
 			return ret;
 		}
+
+		@Override
+		public MiNDResultType mindAgentProcess() throws Exception {
+			MiNDResultType ret = MiNDResultType.Accept;
+
+			Integer h = null;
+			ret = MiNDResultType.Reject;
+
+			while ((null != it) && it.hasNext()) {
+				h = it.next();
+
+				if ( (HANDLE_NULL < h) && visited.add(h) ) {
+					Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+					ret = MiNDResultType.Accept;
+					break;
+				}
+
+				if ( !it.hasNext() && !optSelectContext(ctx.parentCtx) ) {
+					ret = MiNDResultType.Reject;
+					break;
+				}
+			}
+			
+			if ( MiNDResultType.Reject == ret ) {
+				Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);				
+				Giskard.log(MiNDEventLevel.Info, "List finished");				
+			} else {
+				Giskard.log(MiNDEventLevel.Info, "List returning", h, ret);				
+			}
+
+			return ret;
+		}
+
+//		@Override
+//		public MiNDResultType mindAgentEnd() throws Exception {
+//			visited.clear();
+//			ctx = null;
+//			it = null;
+//			return null;
+//		}
 
 		boolean optSelectContext(DustRuntimeDataContext ctx_) {
 			boolean ret = false;
@@ -180,28 +193,16 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 		VisitStep currStep = new VisitStep();
 		Stack<VisitStep> visitStack;
-		MiNDResultType procRet;
 
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-			switch ( action ) {
-			case Begin:
-				break;
-			case Process:
-				if ( currStep.step() ) {
-					currStep.store(MiNDEventLevel.Info);
-					ret = MiNDResultType.Accept;
-				} else {
-					ret = MiNDResultType.Reject;
-				}
-				procRet = ret;
-				break;
-			case End:
-				ret = procRet;
-			default:
-				break;
+			if ( currStep.step() ) {
+				currStep.store(MiNDEventLevel.Info);
+				ret = MiNDResultType.Accept;
+			} else {
+				ret = MiNDResultType.Reject;
 			}
 			return ret;
 		}
@@ -209,39 +210,29 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 	public static class Read extends DustRuntimeAgentData {
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-			switch ( action ) {
-			case Begin:
-				break;
-			case Process:
-				break;
-			default:
-				break;
-			}
-			
 			return ret;
 		}
 	}
 
 	public static class Collect extends DustRuntimeAgentData {
+
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentBegin() throws Exception {
+			Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+			return MiNDResultType.Accept;
+		}
+
+		@Override
+		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-			switch ( action ) {
-			case Begin:
-				Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
-				break;
-			case Process:
-				Object o = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-				Giskard.access(MiNDAccessCommand.Add, o, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
-				ret = MiNDResultType.AcceptRead;
-				break;
-			default:
-				break;
-			}
+			Object o = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+			Giskard.access(MiNDAccessCommand.Add, o, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+			ret = MiNDResultType.AcceptRead;
+
 			return ret;
 		}
 	}

@@ -14,7 +14,7 @@ import me.giskard.dust.io.json.DustIODomReaderState;
 import me.giskard.dust.io.json.DustIOJsonReader;
 
 public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
-	
+
 	void runTest() throws Exception {
 
 		String fDom = "Knowledge/Json/System.json";
@@ -24,7 +24,7 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 //	String fileSax = "/Users/lkedves/work/Giskard/data/National_Wild_and_Scenic_River_Lines_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/work/Giskard/data/Current_Invasive_Plants_(Feature_Layer).geojson";
 //	String fileSax = "/Users/lkedves/git/rtms/milestone00/RtmsFrontend/out/scanAll.json";
-		
+
 //		String fSax = "Knowledge/Json/countries.geojson";
 //		Object rSax = testSax(fSax);
 //		Giskard.log(MiNDEventLevel.Info, "SAX File read success", fSax, ", result:\n", rSax);
@@ -81,18 +81,11 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
+	public MiNDResultType mindAgentProcess() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
-		
-		switch ( action ) {
-		case Process:
-			runTest();
-			break;
 
-		default:
-			break;
-		}
-		
+		runTest();
+
 		return ret;
 	}
 

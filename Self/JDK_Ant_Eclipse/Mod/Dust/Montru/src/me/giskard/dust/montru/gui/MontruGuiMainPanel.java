@@ -286,32 +286,20 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 	String selView;
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
+	public MiNDResultType mindAgentProcess() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
 
-		switch ( action ) {
-		case Begin:
-			break;
-		case End:
-			break;
-		case Init:
-			if ( null == pnlMain ) {
-				buildPanel();
+		if ( null == pnlMain ) {
+			buildPanel();
 
-				JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
-				frm.getContentPane().add(pnlMain, BorderLayout.CENTER);
+			JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
+			frm.getContentPane().add(pnlMain, BorderLayout.CENTER);
 
-				selectView(DEFAULT_VIEW);
-				updateEntityList();
-			}
-
-			Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
-			break;
-		case Process:
-			break;
-		case Release:
-			break;
+			selectView(DEFAULT_VIEW);
+			updateEntityList();
 		}
+
+		Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
 
 		return ret;
 	}

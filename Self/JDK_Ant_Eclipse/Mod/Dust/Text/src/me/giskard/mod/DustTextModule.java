@@ -9,23 +9,14 @@ import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensText;
 
 public class DustTextModule implements GiskardConsts.MiNDAgent, DustTokensText {
-	void initModule() throws Exception {
+	@Override
+	public MiNDResultType mindAgentProcess() throws Exception {
 		Giskard.log(MiNDEventLevel.Trace, "Text module initializing");
-		
+
 		DustTokens.addModuleImpInfo(MTAGENT_TEXT_MATCHCONST, DustTextMatcherConst.class);
 		DustTokens.addModuleImpInfo(MTAGENT_TEXT_MATCHRANGE, DustTextMatcherRange.class);
 		DustTokens.addModuleImpInfo(MTAGENT_TEXT_FORMAT, DustTextFormat.class);
-	}
 
-	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		switch ( action ) {
-		case Init:
-			initModule();
-			break;
-		default:
-			break;
-		}
 		return MiNDResultType.Accept;
 	}
 }

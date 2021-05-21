@@ -10,7 +10,8 @@ import me.giskard.tokens.DustTokensGui;
 import me.giskard.tokens.DustTokensMachine;
 
 public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGui, DustTokensMachine, DustTokensGeneric {
-	void initModule() throws Exception {
+	@Override
+	public MiNDResultType mindAgentProcess() throws Exception {
 		Giskard.log(MiNDEventLevel.Trace, "GUI Swing module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_MANAGER, DustSwingRenderer.class);
@@ -25,17 +26,6 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 		Giskard.access(MiNDAccessCommand.Set, mgr, plt, MTMEMBER_PLATFORM_MANAGER);
 		Giskard.access(MiNDAccessCommand.Set, plt, MTSHARED_MACHINE, MTMEMBER_GUIOWNER_PLATFORMS, MTTAG_PLATFORM_SWING);
 
-	}
-
-	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		switch ( action ) {
-		case Init:
-			initModule();
-			break;
-		default:
-			break;
-		}
 		return MiNDResultType.Accept;
 	}
 }

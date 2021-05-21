@@ -82,7 +82,7 @@ public class GisToolsModuleServices implements GiskardConsts {
 		Class<?> cMod = cl.loadClass(getModClassName(mod));
 		if ( null != cMod ) {
 			modAgent = (MiNDAgent) cMod.newInstance();
-			modAgent.process(MiNDAgentAction.Init);
+			modAgent.mindAgentProcess();
 		}
 
 		return modAgent;

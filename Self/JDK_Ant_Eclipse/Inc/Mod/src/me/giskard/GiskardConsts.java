@@ -38,17 +38,17 @@ public interface GiskardConsts {
 		Chk, Get, Set, Add, Del
 	};
 
-	enum MiNDVisitState {
-		Entity, Token, Value
-	};
+//	enum MiNDVisitState {
+//		Entity, Token, Value
+//	};
 
 	enum MiNDEventLevel {
 		Critical, Error, Warning, Info, Trace, Debug
 	};
 
-	enum MiNDAgentAction {
-		Init, Begin, Process, End, Release
-	};
+//	enum MiNDAgentAction {
+//		Init, Begin, Process, End, Release
+//	};
 
 	enum MiNDResultType {
 		Notimplemented, Reject, Accept, AcceptRead, Read, Wait
@@ -64,7 +64,16 @@ public interface GiskardConsts {
 	}
 
 	public interface MiNDAgent extends GiskardConsts {
-		MiNDResultType process(MiNDAgentAction action) throws Exception;
+		MiNDResultType mindAgentProcess() throws Exception;
 	}
 
+	public interface MiNDAgentBlock extends MiNDAgent {
+		MiNDResultType mindAgentBegin() throws Exception;
+		MiNDResultType mindAgentEnd() throws Exception;
+	}
+
+	public interface MiNDAgentResource extends MiNDAgent {
+		MiNDResultType mindAgentInit() throws Exception;
+		MiNDResultType mindAgentRelease() throws Exception;
+	}
 }

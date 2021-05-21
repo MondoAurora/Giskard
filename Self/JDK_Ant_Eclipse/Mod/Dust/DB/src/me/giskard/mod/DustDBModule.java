@@ -7,21 +7,13 @@ import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensDB;
 
 public class DustDBModule implements GiskardConsts.MiNDAgent, DustTokensDB {
-	void initModule() throws Exception {
+	
+	@Override
+	public MiNDResultType mindAgentProcess() throws Exception {
 		Giskard.log(MiNDEventLevel.Trace, "DB module initializing");
 		
 		DustTokens.addModuleImpInfo(MTAGENT_DBTEST01, DustJdbcAgent.class);
-	}
-
-	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		switch ( action ) {
-		case Init:
-			initModule();
-			break;
-		default:
-			break;
-		}
+		
 		return MiNDResultType.Accept;
 	}
 

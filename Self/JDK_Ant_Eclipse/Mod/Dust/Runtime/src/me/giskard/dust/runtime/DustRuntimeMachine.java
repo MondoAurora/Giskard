@@ -98,6 +98,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		DustRuntimeDataBlock bThis;
 		
 		MiNDAgent agent;
+		boolean blockAgent;
 		boolean firstCall;
 
 		Actor runningActor;
@@ -119,12 +120,14 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 				firstCall = true;
 				try {
 					runningActor = actor;
-//					state = agent.process(MiNDAgentAction.End);
-					agent.process(MiNDAgentAction.End);
+					if ( blockAgent ) {
+						((MiNDAgentBlock) agent).mindAgentEnd();
+					}
 				} finally {
 					runningActor = null;
 				}
 			}
+			
 			return state;
 		}
 
@@ -137,19 +140,22 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 					if ( agent instanceof RuntimeAgent ) {
 						((RuntimeAgent) agent).setInvocation(this);
 					}
-					agent.process(MiNDAgentAction.Init);
+//					agent.mindAgentProcess(); opt init called in createNative
 					firstCall = true;
+					blockAgent = ( agent instanceof MiNDAgentBlock);
 				}
 				
 				if ( firstCall ) {
-					state = agent.process(MiNDAgentAction.Begin);
-					if ( GiskardUtils.isAgentReject(state) ) {
-						return state;
+					if ( blockAgent ) {
+						state = ((MiNDAgentBlock) agent).mindAgentBegin();
+						if ( GiskardUtils.isAgentReject(state) ) {
+							return state;
+						}
 					}
 				}
 				
 				firstCall = false;
-				state = agent.process(MiNDAgentAction.Process);
+				state = agent.mindAgentProcess();
 			} finally {
 				runningActor = null;
 			}
@@ -223,17 +229,9 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 	class MachineListener implements MiNDAgent {
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
+		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-			switch ( action ) {
-			case Begin:
-				break;
-			case End:
-				break;
-			case Init:
-				break;
-			case Process:
 				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
 				Object pt = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_TOKEN);
 
@@ -269,10 +267,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 					singleActor = new Actor();
 					singleActor.run();
 				}
-				break;
-			case Release:
-				break;
-			}
 
 			return ret;
 		}

@@ -49,11 +49,24 @@ public class GiskardUtils implements GiskardConsts {
 		return sb;
 	}
 
-	public static final MiNDAgent LOGGER = new MiNDAgent() {
+	public static final MiNDAgent LOGGER = new MiNDAgentBlock() {
+		
 		@Override
-		public MiNDResultType process(MiNDAgentAction action) throws Exception {
-			Giskard.log(MiNDEventLevel.Info, action, sbAppend(null, ",", true, action));
+		public MiNDResultType mindAgentEnd() throws Exception {
+			Giskard.log(MiNDEventLevel.Info, sbAppend(null, ",", true, "End"));
+			return null;
+		}
+		
+		@Override
+		public MiNDResultType mindAgentProcess() throws Exception {
+			Giskard.log(MiNDEventLevel.Info, sbAppend(null, ",", true, "Process"));
 			return MiNDResultType.AcceptRead;
+		}
+
+		@Override
+		public MiNDResultType mindAgentBegin() throws Exception {
+			Giskard.log(MiNDEventLevel.Info, sbAppend(null, ",", true, "Begin"));
+			return null;
 		}
 	};
 	

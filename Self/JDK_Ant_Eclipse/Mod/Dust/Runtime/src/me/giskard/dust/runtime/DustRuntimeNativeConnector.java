@@ -50,7 +50,7 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		public void release(String key, Object v) {
 			if ( v instanceof MiNDAgent ) {
 				try {
-					((MiNDAgent) v).process(MiNDAgentAction.Release);
+					((MiNDAgent) v).mindAgentProcess();
 				} catch (Exception e) {
 					GiskardException.wrap(e);
 				}
@@ -94,11 +94,18 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 
 	@SuppressWarnings("unchecked")
 	public <RetType> RetType createNative(Integer hType) {
+		RetType ret = null;
 		try {
 			if ( null != hType ) {
 				Class<?> cl = nativeClasses.get(hType);
 				if ( null != cl ) {
-					return (RetType) cl.newInstance();
+					ret = (RetType) cl.newInstance();
+					
+					if ( ret instanceof MiNDAgentResource ) {
+						((MiNDAgentResource)ret).mindAgentInit();
+					}
+					
+					return ret;
 				}
 			}
 		} catch (Exception e) {
@@ -107,7 +114,7 @@ public class DustRuntimeNativeConnector implements DustRuntimeConsts, GisCollCon
 		
 		Giskard.log(MiNDEventLevel.Warning, "Agent not found for", hType);
 
-		return null;
+		return ret;
 	}
 
 	public void addAgentClass(Integer agent, Class<?> c) {

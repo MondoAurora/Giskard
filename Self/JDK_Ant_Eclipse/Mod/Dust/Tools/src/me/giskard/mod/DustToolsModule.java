@@ -7,22 +7,13 @@ import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensGeneric;
 
 public class DustToolsModule implements GiskardConsts.MiNDAgent, DustTokensGeneric {
-	void initModule() throws Exception {
-		Giskard.log(MiNDEventLevel.Trace, "Tools module initializing");
-		
-		DustTokens.addModuleImpInfo(MTAGENT_DUMP, DustToolsDump.class);
-
-	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		switch ( action ) {
-		case Init:
-			initModule();
-			break;
-		default:
-			break;
-		}
+	public MiNDResultType mindAgentProcess() throws Exception {
+		Giskard.log(MiNDEventLevel.Trace, "Tools module initializing");
+
+		DustTokens.addModuleImpInfo(MTAGENT_DUMP, DustToolsDump.class);
 		return MiNDResultType.Accept;
 	}
+	
 }

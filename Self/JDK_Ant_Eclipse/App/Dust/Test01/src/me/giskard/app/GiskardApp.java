@@ -26,9 +26,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokens.addModule("DustTools", "1.0");
 		DustTokens.addModule("DustGuiSwing", "1.0");
 		DustTokens.addModule("DustMontru", "1.0");
-
-//		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTIVITY_INSTANCE);
-
+		
 		String testId = (args.length > 0) ? args[0] : "visit";
 		Object hTest = null;
 

@@ -38,7 +38,8 @@ public abstract class Giskard implements GiskardConsts {
 
 	public static void initRuntime(String mod, String ver) throws Exception {
 		ClassLoader cl = GisToolsModuleServices.getClassLoader(mod, ver);
-		GisToolsModuleServices.initModule(cl, mod);
+		MiNDAgent rt = GisToolsModuleServices.initModule(cl, mod);
+		((MiNDAgentResource)rt).mindAgentInit();
 	}
 
 	public static MiNDToken defineToken(MiNDTokenType type, Object id, Object... params) {

@@ -4,28 +4,26 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.dust.runtime.DustRuntimeBootConsts;
 
-public class DustRuntimeModule implements GiskardConsts.MiNDAgent, DustRuntimeBootConsts {
+public class DustRuntimeModule implements GiskardConsts.MiNDAgentResource, DustRuntimeBootConsts {
+	
+	@Override
+	public MiNDResultType mindAgentInit() throws Exception {
+		Giskard.log(MiNDEventLevel.Trace, "Runtime initializing");
+		
+		DustGiskard runtime = (DustGiskard) Class.forName("me.giskard.dust.runtime.DustRuntimeGiskard").newInstance();
+		runtime.init(this);
+		
+		Class.forName("me.giskard.mod.DustRuntimeBoot").getMethod("boot").invoke(null);
+		return MiNDResultType.Accept;
+	}
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
-		switch ( action ) {
-		case Init:
-			Giskard.log(MiNDEventLevel.Trace, "Runtime initializing");
-			
-			DustGiskard runtime = (DustGiskard) Class.forName("me.giskard.dust.runtime.DustRuntimeGiskard").newInstance();
-			runtime.init(this);
-			
-			Class.forName("me.giskard.mod.DustRuntimeBoot").getMethod("boot").invoke(null);
-
-			break;
-		case Begin:
-			Giskard.log(MiNDEventLevel.Info, "DustRuntime launch...");
-
-			Giskard.log(MiNDEventLevel.Trace);			
-			break;
-		default:
-			break;
-		}
+	public MiNDResultType mindAgentProcess() throws Exception {
 		return MiNDResultType.Accept;
+	}
+	
+	@Override
+	public MiNDResultType mindAgentRelease() throws Exception {
+		return null;
 	}
 }

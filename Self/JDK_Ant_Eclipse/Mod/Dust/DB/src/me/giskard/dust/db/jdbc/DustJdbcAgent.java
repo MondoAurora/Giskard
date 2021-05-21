@@ -11,38 +11,35 @@ import me.giskard.GiskardConsts;
 import me.giskard.GiskardException;
 import me.giskard.GiskardUtils;
 
-public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
+public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgentBlock {
 	Connection conn = null;
 	DatabaseMetaData dbMetaData;
 
 	@Override
-	public MiNDResultType process(MiNDAgentAction action) throws Exception {
+	public MiNDResultType mindAgentProcess() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
 
-		switch ( action ) {
-		case Begin:
-			break;
-		case End:
-			releaseConn(conn, null);
-			break;
-		case Init:
-			break;
-		case Process:
-			optCreateConn();
-			String query = "select * from dust_entity";
+		optCreateConn();
+		String query = "select * from dust_entity";
 
-			Giskard.log(MiNDEventLevel.Trace, "Running SQL command", query);
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+		Giskard.log(MiNDEventLevel.Trace, "Running SQL command", query);
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
 
-			DustJdbcUtils.dumpResultSet(rs);
-
-			break;
-		case Release:
-			break;
-		}
+		DustJdbcUtils.dumpResultSet(rs);
 
 		return ret;
+	}
+
+	@Override
+	public MiNDResultType mindAgentBegin() throws Exception {
+		return null;
+	}
+
+	@Override
+	public MiNDResultType mindAgentEnd() throws Exception {
+		releaseConn(conn, null);
+		return null;
 	}
 
 	private void optCreateConn() throws Exception {
@@ -52,16 +49,16 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgent {
 			if ( !GiskardUtils.isEmpty(dbName) && !dbUrl.endsWith(dbName) ) {
 				dbUrl += "/" + dbName;
 			}
-			
+
 			dbUrl += "?serverTimezone=CET";
-			
+
 			Giskard.log(MiNDEventLevel.Trace, "Connecting to database...", dbUrl);
 
 			try {
 				String driver = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DRIVER);
 				Class.forName(driver);
 
-				conn = DriverManager.getConnection(dbUrl, 
+				conn = DriverManager.getConnection(dbUrl,
 						Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_ACCOUNTID),
 						Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_PASSWORD));
 

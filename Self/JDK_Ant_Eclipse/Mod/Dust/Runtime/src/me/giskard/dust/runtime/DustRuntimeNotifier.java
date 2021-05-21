@@ -62,7 +62,7 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 				
 				for (MiNDAgent a : listeners) {
 					try {
-						a.process(MiNDAgentAction.Process);
+						a.mindAgentProcess();
 					} catch (Throwable e) {
 						GiskardException.swallow(e, "Change notification");
 					}
