@@ -75,6 +75,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	static Object testVisit() {
+		Object hDBConn = testDB();
+		
 		Object hMain = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
 
 		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
@@ -82,12 +84,14 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
 		Object hS2 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
 		Object hVisit = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_VISIT);
-		Object hPrint = Giskard.access(MiNDAccessCommand.Get, MTAGENT_TEXT_FORMAT);
-
-		DustTokens.setupValFormatter(hPrint);
+//		Object hPrint = Giskard.access(MiNDAccessCommand.Get, MTAGENT_TEXT_FORMAT);
+//
+//		DustTokens.setupValFormatter(hPrint);
 		
 		Giskard.access(MiNDAccessCommand.Add, hVisit, hS2, MTMEMBER_LINK_ARR);
 //		Giskard.access(MiNDAccessCommand.Add, hPrint, hS2, MTMEMBER_LINK_ARR);
+
+		Giskard.access(MiNDAccessCommand.Add, hDBConn, hS2, MTMEMBER_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set, hS2, hIter, MTMEMBER_LINK_ONE);
 
@@ -208,18 +212,23 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 //	}
 
 	public static Object testDB() {
-		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DBTEST01);
+		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYPE_DBCONN);
 
 		Giskard.access(MiNDAccessCommand.Set, "com.mysql.cj.jdbc.Driver", hRet, MTMEMBER_DRIVER);
 		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", hRet, MTMEMBER_URL);
 		Giskard.access(MiNDAccessCommand.Set, "dust", hRet, MTMEMBER_PLAIN_STRING);
+		Giskard.access(MiNDAccessCommand.Set, "serverTimezone=CET", hRet, MTMEMBER_DBCONN_OPTIONS);
 
 //		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_ACCOUNTID);
 //		Giskard.access(MiNDAccessCommand.Set, ":-)", MTMEMBER_CALL_TARGET, MTMEMBER_PASSWORD);
 //    The actual values are in this class, which is of course, on gitignore...
-		GiskardPrivate.setDB(hRet);
 		
-		return hRet;
+		GiskardPrivate.setDBCredentials(hRet);
+		
+		Object hAgent = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DBTEST01);
+		Giskard.access(MiNDAccessCommand.Set, hRet, hAgent, MTMEMBER_DBUSER_CONN);
+		
+		return hAgent;
 	}
 
 	public static Object testIO() {

@@ -58,8 +58,14 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 	}
 	
 	public static void setValue(MiNDToken target, MiNDToken tok, Object val, Object key) {
-		Giskard.access(MiNDAccessCommand.Set, tok, target, MTMEMBER_VISITINFO_TOKEN);
+		Giskard.access(MiNDAccessCommand.Set, tok.getEntity(), target, MTMEMBER_VISITINFO_TOKEN);
 		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getValType()), target, MTMEMBER_VALUE_TYPE);
+		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getCollType()), target, MTMEMBER_VALUE_COLLTYPE);
+
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_INT);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_REAL);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_RAW);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_LINK);
 		Giskard.access(MiNDAccessCommand.Set, val, target, DustTokens.TRANSLATE_VAL_TOKEN.getRight(tok.getValType()));
 
 		Object keyArr = null;

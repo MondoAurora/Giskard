@@ -11,22 +11,4 @@ public interface DustJdbcConsts extends DustDBConsts {
     String JDBC_FKCOLUMN_NAME = "FKCOLUMN_NAME";
     String JDBC_COLUMN_NAME = "COLUMN_NAME";
 
-//    
-//    enum DustJdbcTypes {
-//        JdbcConnector, JdbcDataType, JdbcTable, JdbcColumn, JdbcRecord
-//    };
-//    
-//    enum DustJdbcAtts {
-//        RecordContent, RecordLastUpdate, RecordOwner
-//    }
-//    
-//    enum DustJdbcLinks {
-//        DataTypeToDustType, ConnectorDataTypes, ColumnType
-//    }
-//    
-//    enum DustJdbcServices {
-//        JdbcConnector
-//    };
-
-
 }

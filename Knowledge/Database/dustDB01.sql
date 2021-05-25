@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS dust_entity, dust_data, dust_text, dust_stream, dust_event;
+DROP TABLE IF EXISTS dust_entity, dust_data, dust_event, dust_text, dust_stream;
 
 CREATE TABLE `dust_entity` (
   `EntityId` int NOT NULL AUTO_INCREMENT,
-  `Unit` int NOT NULL,
   `PrimaryType` int NOT NULL,
+  `Unit` int NOT NULL,
   `LastChange` int NOT NULL,
   PRIMARY KEY (`EntityId`),
   KEY `ENTITY_PRIMARY_TYPE` (`PrimaryType`),
