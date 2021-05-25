@@ -32,14 +32,12 @@ public class DustJdbcAgent implements DustJdbcConsts, GiskardConsts.MiNDAgentBlo
 	}
 
 	@Override
-	public MiNDResultType mindAgentBegin() throws Exception {
-		return null;
+	public void mindAgentBegin() throws Exception {
 	}
 
 	@Override
-	public MiNDResultType mindAgentEnd() throws Exception {
+	public void mindAgentEnd() throws Exception {
 		releaseConn(conn, null);
-		return null;
 	}
 
 	private void optCreateConn() throws Exception {

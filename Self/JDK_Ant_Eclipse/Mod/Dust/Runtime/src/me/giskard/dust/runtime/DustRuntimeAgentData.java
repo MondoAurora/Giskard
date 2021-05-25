@@ -13,13 +13,11 @@ import me.giskard.tokens.DustTokens;
 public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgent {
 
 	@Override
-	public MiNDResultType mindAgentBegin() throws Exception {
-		return MiNDResultType.Accept;
+	public void mindAgentBegin() throws Exception {
 	}
 
 	@Override
-	public MiNDResultType mindAgentEnd() throws Exception {
-		return null;
+	public void mindAgentEnd() throws Exception {
 	}
 
 	public static class ListAll extends DustRuntimeAgentData {
@@ -28,14 +26,12 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 		Set<Integer> visited;
 
 		@Override
-		public MiNDResultType mindAgentBegin() throws Exception {
-			MiNDResultType ret = MiNDResultType.Accept;
+		public void mindAgentBegin() throws Exception {
 			if ( null == visited ) {
 				visited = new TreeSet<>();
-				ret = optSelectContext(getInvocation().runningActor.ctx) ? MiNDResultType.Accept : MiNDResultType.Reject;
+				optSelectContext(getInvocation().runningActor.ctx);
 			}
 //			visited.clear();
-			return ret;
 		}
 
 		@Override
@@ -220,9 +216,8 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 	public static class Collect extends DustRuntimeAgentData {
 
 		@Override
-		public MiNDResultType mindAgentBegin() throws Exception {
+		public void mindAgentBegin() throws Exception {
 			Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
-			return MiNDResultType.Accept;
 		}
 
 		@Override

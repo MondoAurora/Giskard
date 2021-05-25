@@ -68,12 +68,12 @@ public interface GiskardConsts {
 	}
 
 	public interface MiNDAgentBlock extends MiNDAgent {
-		MiNDResultType mindAgentBegin() throws Exception;
-		MiNDResultType mindAgentEnd() throws Exception;
+		void mindAgentBegin() throws Exception;
+		void mindAgentEnd() throws Exception;
 	}
 
 	public interface MiNDAgentResource extends MiNDAgent {
-		MiNDResultType mindAgentInit() throws Exception;
-		MiNDResultType mindAgentRelease() throws Exception;
+		void mindAgentInit() throws Exception;
+		void mindAgentRelease() throws Exception;
 	}
 }

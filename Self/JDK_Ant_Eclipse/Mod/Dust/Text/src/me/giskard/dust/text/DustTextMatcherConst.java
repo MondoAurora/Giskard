@@ -27,12 +27,10 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 	}
 
 	@Override
-	public MiNDResultType mindAgentBegin() throws Exception {
+	public void mindAgentBegin() throws Exception {
 		String str = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
 		load(str);
 		idx = 0;
-		
-		return MiNDResultType.Accept;
 	}
 
 	@Override
@@ -42,7 +40,6 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 	}
 
 	@Override
-	public MiNDResultType mindAgentEnd() throws Exception {
-		return null;
+	public void mindAgentEnd() throws Exception {
 	}
 }

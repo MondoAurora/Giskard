@@ -50,10 +50,12 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		}
 
 		public MiNDResultType step(Actor actor) throws Exception {
-			MiNDResultType ret = MiNDResultType.Read;
+//			MiNDResultType ret = MiNDResultType.Read;
+//
+//			state = GiskardUtils.isAgentReject(ret) ? ret : current.step(actor);
 
-			state = GiskardUtils.isAgentReject(ret) ? ret : current.step(actor);
-
+			state = current.step(actor);
+			
 			if ( !GiskardUtils.isAgentRead(state) ) {
 				current.optEnd(actor);
 				if ( (null != callStack) && !callStack.isEmpty() ) {
@@ -109,7 +111,6 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 			DustRuntimeDataContext ctxDialog = activity.dlg.ctxDialog;
 			Integer handle = ctxDialog.rootBlock.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTIVITY_INSTANCE, null);
-//			Integer handle = Giskard.access(MiNDAccessCommand.GetNew, null, MTMEMBER_ACTIVITY_INSTANCE);
 			DustRuntimeDataBlock bTarget = ctxDialog.getEntity(handle);
 
 			bThis = new DustRuntimeDataBlock(ctxDialog, bTarget);
@@ -147,14 +148,11 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 				
 				if ( firstCall ) {
 					if ( blockAgent ) {
-						state = ((MiNDAgentBlock) agent).mindAgentBegin();
-						if ( GiskardUtils.isAgentReject(state) ) {
-							return state;
-						}
+						((MiNDAgentBlock) agent).mindAgentBegin();
 					}
+					firstCall = false;
 				}
 				
-				firstCall = false;
 				state = agent.mindAgentProcess();
 			} finally {
 				runningActor = null;

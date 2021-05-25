@@ -11,33 +11,39 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 	DustRuntimeMachine.Activity activity;
 	DustRuntimeMachine.Invocation currChild;
-	MiNDResultType repState;
+	MiNDResultType lastState;
 	boolean relayCalled;
 
 	@Override
-	public MiNDResultType mindAgentEnd() throws Exception {
-		return repState;
+	public void mindAgentEnd() throws Exception {
 	}
 
 	public static class Iteration extends DustRuntimeAgentControl {
 		int repMin;
 		int repMax;
-
+		
 		@Override
-		public MiNDResultType mindAgentBegin() throws Exception {
+		public void mindAgentBegin() throws Exception {
 			repMin = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_RANGE_INT_MIN);
 			repMax = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_RANGE_INT_MAX);
 
 			Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 			relayCalled = false;
-
-			return MiNDResultType.Accept;
 		}
 
 		@Override
 		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
-			int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+//			int c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+			int c;
+			
+			if ( MiNDResultType.Read == lastState ) {
+				c = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+			} else {
+				Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
+				relayCalled = false;
+				c = -1;
+			}
 
 			++c;
 
@@ -62,7 +68,7 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 
 				relayCalled = true;
 			}
-			repState = ret;
+			lastState = ret;
 
 			return ret;
 		}
@@ -96,11 +102,10 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 		}
 
 		@Override
-		public MiNDResultType mindAgentBegin() throws Exception {
+		public void mindAgentBegin() throws Exception {
 			setCount();
 			Giskard.access(MiNDAccessCommand.Set, -1, MTMEMBER_ACTION_THIS, MTMEMBER_ITERATOR_INDEX);
 			currChild = null;
-			return MiNDResultType.Accept;
 		}
 	}
 
@@ -132,9 +137,9 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			}
 
 			if ( GiskardUtils.isAgentAccept(ret) ) {
-				repState = ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Accept;
+				lastState = ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Accept;
 			} else {
-				repState = ret;
+				lastState = ret;
 			}
 
 			return ret;
@@ -149,13 +154,13 @@ public abstract class DustRuntimeAgentControl extends DustRuntimeConsts.RuntimeA
 			if ( null != currChild ) {
 				ret = currChild.state;
 				if ( GiskardUtils.isAgentAccept(ret) ) {
-					repState = ret;
+					lastState = ret;
 					return ret;
 				}
 			}
 
 			ret = relayChild() ? MiNDResultType.Read : MiNDResultType.Reject;
-			repState = ret;
+			lastState = ret;
 
 			return ret;
 		}

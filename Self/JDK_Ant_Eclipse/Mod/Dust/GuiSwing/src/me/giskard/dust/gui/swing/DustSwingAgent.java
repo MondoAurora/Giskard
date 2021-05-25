@@ -19,13 +19,11 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 	}
 	
 	@Override
-	public MiNDResultType mindAgentInit() throws Exception {
-		return null;
+	public void mindAgentInit() throws Exception {
 	}
 	
 	@Override
-	public MiNDResultType mindAgentRelease() throws Exception {
-		return null;
+	public void mindAgentRelease() throws Exception {
 	}
 
 	public static class SwingLabel extends DustSwingAgent<JLabel> {
@@ -60,7 +58,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 		}
 		
 		@Override
-		public MiNDResultType mindAgentInit() throws Exception {
+		public void mindAgentInit() throws Exception {
 
 			comp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
@@ -69,7 +67,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 
 			Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
 
-			return mindAgentProcess();
+			mindAgentProcess();
 		}
 		
 		@Override

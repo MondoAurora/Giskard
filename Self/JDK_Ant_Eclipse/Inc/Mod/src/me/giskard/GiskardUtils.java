@@ -52,9 +52,8 @@ public class GiskardUtils implements GiskardConsts {
 	public static final MiNDAgent LOGGER = new MiNDAgentBlock() {
 		
 		@Override
-		public MiNDResultType mindAgentEnd() throws Exception {
+		public void mindAgentEnd() throws Exception {
 			Giskard.log(MiNDEventLevel.Info, sbAppend(null, ",", true, "End"));
-			return null;
 		}
 		
 		@Override
@@ -64,9 +63,8 @@ public class GiskardUtils implements GiskardConsts {
 		}
 
 		@Override
-		public MiNDResultType mindAgentBegin() throws Exception {
+		public void mindAgentBegin() throws Exception {
 			Giskard.log(MiNDEventLevel.Info, sbAppend(null, ",", true, "Begin"));
-			return null;
 		}
 	};
 	
