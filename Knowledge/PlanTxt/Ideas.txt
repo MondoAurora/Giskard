@@ -1,5 +1,17 @@
 Brain dump
 
+DB
+ - Text table should have a unit id. 
+  > When loading a unit, all valid texts for a language can be loaded in one call, that's the resource of the unit.
+ - Event table should have a flag separating core / log records
+  > "core" is that would be a "date" member in the type
+  > "log" is that would be a list of dates - including "obsolete" core values
+  > the flag comes from the event type definition, added to each event record for simple access
+  > changing the type definition should result a mass update of the event records
+ - Event table may also have a unit id, used similarly as in Text
+ !! OR: all tables can be loaded on unit level
+  select * from 
+
 Lazy creation
  - special default value on get?
  - flag on the member definition, so Get will always return a real entity, created on first call

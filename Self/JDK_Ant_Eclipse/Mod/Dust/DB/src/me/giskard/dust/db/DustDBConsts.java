@@ -11,13 +11,13 @@ import me.giskard.tokens.DustTokensText;
 public interface DustDBConsts extends GiskardConsts, DustTokensMind, DustTokensGeneric, DustTokensText, DustTokensIO, DustTokensDB, DustTokensGuard {
 
 	enum DbEntity {
-		EntityId, Unit, PrimaryType, LastChange
+		EntityId, Unit, PrimaryType, LastChange, LastValid
 	}
 	
 	enum DbData {
 		DataId, Entity, LastValid, Token, 
 		ValInteger, ValReal, ValLink,
-		OptKey, OptIdx
+		OptKey
 	}
 
 	enum DbEvent {
