@@ -1,7 +1,14 @@
 package me.giskard.dust.db.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
@@ -11,22 +18,61 @@ import me.giskard.coll.GisCollFactory;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustJdbcSerializer implements DustJdbcConsts {
+	Object hDBConn;
+	Connection conn;
+
+	DustJdbcMetaInfo metaInfo;
 
 	class DBDeltaEntity {
 		Object entity;
 
 		DBDeltaEntity unit;
-		String dbId;
+		Integer dbId;
 
 		ArrayList<DBDeltaData> data = new ArrayList<>();
 
 		public DBDeltaEntity(Object entity_) {
 			this.entity = entity_;
-			dbId = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_STOREID);
+			dbId = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_TEMP_DBID);
 		}
 
 		void addData() {
 			data.add(new DBDeltaData());
+		}
+
+		boolean setStParams(PreparedStatement ps, Integer commitId) throws Exception {
+			boolean ret = true;
+
+			MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_PRIMARYTYPE);
+			Integer i = (null == pt) ? -1 : Giskard.access(MiNDAccessCommand.Get, -1, pt.getEntity(), MTMEMBER_TEMP_DBID);
+			ps.setInt(1, i);
+
+			if ( -1 == i ) {
+				ret = false;
+			}
+
+			i = Giskard.access(MiNDAccessCommand.Get, -1, entity, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_TEMP_DBID);
+
+			ps.setInt(2, i);
+			if ( -1 == i ) {
+				ret = false;
+			}
+
+			i = commitId;
+			ps.setInt(3, i);
+			if ( -1 == i ) {
+				ret = false;
+			}
+
+			ps.setNull(4, Types.INTEGER);
+
+			return ret;
+		}
+
+		Integer loadDbId(ResultSet res) throws Exception {
+			dbId = res.getInt(1);
+			Giskard.access(MiNDAccessCommand.Set, dbId, entity, MTMEMBER_TEMP_DBID);
+			return dbId;
 		}
 
 		@Override
@@ -90,6 +136,9 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			}
 
 			key = (null == keyKey) ? null : Giskard.access(MiNDAccessCommand.Get, null, hRoot, keyKey);
+			if ( key instanceof MiNDToken ) {
+				key = ((MiNDToken)key).getEntity();
+			}
 		}
 
 		@Override
@@ -102,6 +151,69 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			}
 
 			return sb.toString();
+		}
+
+		public void setStParams(PreparedStatement psData, PreparedStatement psText, DBDeltaEntity de, Integer commitId) throws Exception {
+			PreparedStatement ps;
+
+			if ( val instanceof String ) {
+				ps = psText;
+				ps.clearParameters();
+				
+				psText.setInt(DbText.Language.ordinal(), 0);
+				psText.setString(DbText.Text.ordinal(), (String) val);
+				
+			} else {
+				ps = psData;
+				ps.clearParameters();
+				
+				ps.setNull(DbData.ValInteger.ordinal(), Types.INTEGER);
+				ps.setNull(DbData.ValReal.ordinal(), Types.REAL);
+				ps.setNull(DbData.ValLink.ordinal(), Types.INTEGER);
+				
+				switch ( mvt ) {
+				case Int:
+					setInt(val, false, psData, DbData.ValInteger.ordinal());
+					break;
+				case Link:
+					setInt(val, true, psData, DbData.ValLink.ordinal());
+					break;
+				case Real:
+					psData.setDouble(DbData.ValReal.ordinal(), (Double) val);
+					break;
+				case Raw:
+					return;
+				}
+				
+				psData.setInt(DbData.Token.ordinal(), token.dbId);
+				
+				setInt(key, (mct == MiNDCollType.Map), psData, DbData.OptKey.ordinal());
+
+				ps = psData;				
+			}
+			
+			ps.setInt(1, de.dbId);
+			ps.setNull(2, Types.INTEGER);
+			
+			ps.addBatch();
+		}
+
+		public void setInt(Object src, boolean link, PreparedStatement ps, int col) throws SQLException {
+			Integer value = optResolve(link, src);				
+			if ( null == value ) {
+				ps.setNull(col, Types.INTEGER);
+			} else {
+				ps.setInt(col, value);
+			}
+		}
+
+		public Integer optResolve(boolean link, Object val) {
+			if ( !link || (null == val) ) {
+				return (Integer) val;
+			}
+			
+			DBDeltaEntity mk = factEntities.peek((Integer) val);
+			return ( (null == mk ) || (null == mk.dbId)) ? null : mk.dbId;
 		}
 	}
 
@@ -123,14 +235,6 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				}
 			});
 
-	
-	
-	
-	
-	public DustJdbcSerializer(DustJdbcMetaInfo metaInfo) throws Exception {
-		validateDB(metaInfo);
-	}
-	
 	@Override
 	public String toString() {
 		StringBuilder sb = null;
@@ -140,11 +244,11 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		return sb.toString();
 	}
 
-	public void step(Object hDBConn, Connection conn) throws Exception {
+	public void step() throws Exception {
 		Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_LINK_ONE);
 
 		if ( null == entity ) {
-			save(hDBConn, conn);
+			save();
 		} else {
 			DBDeltaEntity de = getDeltaEntity(entity);
 
@@ -154,9 +258,24 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		}
 	}
 
-	
+	/******** Collecting data ********/
+
+	private DBDeltaEntity getDeltaEntity(Object entity) {
+		DBDeltaEntity de = null;
+
+		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_STOREUNIT);
+
+		if ( null != unit ) {
+			DBDeltaEntity du = factUnits.get(unit);
+			de = factEntities.get(entity);
+			de.unit = du;
+		}
+
+		return de;
+	}
+
 	/******** Meta validation ********/
-	
+
 	private void validateDB(DustJdbcMetaInfo metaInfo) throws Exception {
 		boolean error = false;
 
@@ -203,31 +322,151 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		return error;
 	}
 
-	/******** Collecting data ********/
-	
-	private DBDeltaEntity getDeltaEntity(Object entity) {
-		DBDeltaEntity de = null;
+	/******** Loading ********/
 
-		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_STOREUNIT);
+	class DBContent {
+		Set<Object> unitIds = new HashSet<>();
 
-		if ( null != unit ) {
-			DBDeltaEntity du = factUnits.get(unit);
-			de = factEntities.get(entity);
-			de.unit = du;
+		public DBContent(Connection conn, DBView... views) throws Exception {
+			StringBuilder sb = null;
+
+			Giskard.log(MiNDEventLevel.Trace, "---- Loading units ----");
+
+			for (Object o : factUnits.keys()) {
+				unitIds.add(o);
+				sb = GiskardUtils.sbAppend(sb, ", ", true, o);
+				Giskard.log(MiNDEventLevel.Trace, factEntities.peek(o));
+			}
+//			Array arrUnits = conn.createArrayOf("INT", unitIds.toArray());
+			Statement stmt = conn.createStatement();
+
+			for (DBView v : views) {
+//				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + v + " WHERE Unit in (?)");
+//				stmt.setArray(1, arrUnits);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM " + v + " WHERE Unit in (" + sb + ")");
+
+				DustJdbcUtils.dumpResultSet(rs);
+			}
 		}
 
-		return de;
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return super.toString();
+		}
 	}
 
-	/******** Loading ********/
-	
-	public void load(Object hDBConn, Connection conn) throws Exception {
+	public void initConn() throws Exception {
+		hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DBUSER_CONN);
+		conn = DustJdbcUtils.optCreateConn(hDBConn, conn);
+
+		if ( null == metaInfo ) {
+			metaInfo = new DustJdbcMetaInfo(hDBConn, conn);
+			validateDB(metaInfo);
+		}
+	}
+
+	public void load() throws Exception {
 	}
 
 	/******** Saving ********/
-	public void save(Object hDBConn, Connection conn) throws Exception {
-		Giskard.log(MiNDEventLevel.Trace, this);
+	public void save() throws Exception {
+		initConn();
+
+//		DBContent dbc = new DBContent(conn, DBView.dust_unit_entities, DBView.dust_unit_state, DBView.dust_unit_dates,
+//				DBView.dust_unit_res);
+
+		boolean change = false;
+
+		ArrayList<DBDeltaEntity> newEntities = new ArrayList<>();
+
+		for (Object e : factEntities.keys()) {
+			DBDeltaEntity de = factEntities.peek(e);
+			
+			if ( null == Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_TEMP_DBID) ) {
+				change = true;
+				newEntities.add(de);
+			}
+			
+			if ( !de.data.isEmpty() ) {
+				change = true;
+			}
+		}
+
+		if ( change ) {
+			boolean ac = conn.getAutoCommit();
+
+			try {
+				conn.setAutoCommit(false);
+
+				PreparedStatement psNewEntity = DbTable.dust_entity.getInsertStatement(conn);
+				ResultSet res;
+
+				Integer commitId = -1;
+				Object chg = Giskard.access(MiNDAccessCommand.Get, MTTYPE_COMMIT);
+				DBDeltaEntity deCommit = factEntities.get(chg);
+
+				deCommit.setStParams(psNewEntity, commitId);
+				psNewEntity.execute();
+				res = psNewEntity.getGeneratedKeys();
+				res.first();
+				commitId = deCommit.loadDbId(res);
+
+				ArrayList<DBDeltaEntity> entUpdate = new ArrayList<>();
+				entUpdate.add(deCommit);
+
+				if ( !newEntities.isEmpty() ) {
+					for (DBDeltaEntity de : newEntities) {
+						if ( !de.setStParams(psNewEntity, commitId) ) {
+							entUpdate.add(de);
+						}
+						psNewEntity.addBatch();
+					}
+
+					psNewEntity.executeBatch();
+
+					res = psNewEntity.getGeneratedKeys();
+					res.first();
+					for (DBDeltaEntity de : newEntities) {
+						de.loadDbId(res);
+						res.next();
+					}
+				}
+
+				if ( !entUpdate.isEmpty() ) {
+					PreparedStatement psEntUpdate = DbTable.dust_entity.getUpdateStatement(conn);
+
+					for (DBDeltaEntity de : entUpdate) {
+						Integer dbid = Giskard.access(MiNDAccessCommand.Get, -1, de.entity, MTMEMBER_TEMP_DBID);
+						if ( -1 != dbid ) {
+							de.setStParams(psEntUpdate, commitId);
+							psEntUpdate.setInt(5, dbid);
+							psEntUpdate.addBatch();
+						}
+					}
+
+					psEntUpdate.executeBatch();
+				}
+				
+				PreparedStatement psData = DbTable.dust_data.getInsertStatement(conn);
+				PreparedStatement psText = DbTable.dust_text.getInsertStatement(conn);
+				
+				for (Object e : factEntities.keys()) {
+					DBDeltaEntity de = factEntities.peek(e);
+					
+					for ( DBDeltaData dd : de.data ) {
+						dd.setStParams(psData, psText, de, commitId);
+					}
+				}
+
+				psData.executeBatch();
+				psText.executeBatch();
+
+				conn.commit();
+			} finally {
+				conn.setAutoCommit(ac);
+			}
+		}
 	}
 
-	
 }

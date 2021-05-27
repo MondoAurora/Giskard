@@ -1,17 +1,9 @@
 package me.giskard.dust.db.jdbc;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public class DustJdbcAgentDBConn implements DustJdbcConsts, GiskardConsts.MiNDAgentBlock {
-	Object hDBConn = MTMEMBER_ACTION_THIS;
-	Connection conn = null;
-
-	DustJdbcMetaInfo metaInfo;
 	DustJdbcSerializer serializer;
 
 	@Override
@@ -21,23 +13,15 @@ public class DustJdbcAgentDBConn implements DustJdbcConsts, GiskardConsts.MiNDAg
 		Object ser = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
 
 		if ( null == ser ) {
-			if ( null == conn ) {
-				hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DBUSER_CONN);
-				conn = DustJdbcUtils.optCreateConn(hDBConn, conn);
-
-				firstTest();
-				getMetaInfo();
-
-				serializer = new DustJdbcSerializer(metaInfo);
+				serializer = new DustJdbcSerializer();
 				Giskard.access(MiNDAccessCommand.Set, serializer, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
 				Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_LOAD, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
-			}
 		} else {
 			serializer = (DustJdbcSerializer) ser;
 			Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_SAVE, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
 		}
 
-		serializer.step(hDBConn, conn);
+		serializer.step();
 
 		return ret;
 	}
@@ -48,27 +32,6 @@ public class DustJdbcAgentDBConn implements DustJdbcConsts, GiskardConsts.MiNDAg
 
 	@Override
 	public void mindAgentEnd() throws Exception {
-//		DustJdbcUtils.releaseConn(conn, null);
-
-//		Giskard.log(MiNDEventLevel.Trace, " ---- Collected for serialisation ----", serializer);
-
-	}
-
-	public DustJdbcMetaInfo getMetaInfo() throws Exception {
-		if ( null == metaInfo ) {
-			metaInfo = new DustJdbcMetaInfo(hDBConn, conn);
-		}
-		return metaInfo;
-	}
-
-	public void firstTest() throws Exception {
-		String query = "select * from dust_entity";
-
-		Giskard.log(MiNDEventLevel.Trace, "Running SQL command", query);
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-
-		DustJdbcUtils.dumpResultSet(rs);
 	}
 
 }

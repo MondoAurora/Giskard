@@ -1,6 +1,10 @@
 package me.giskard.dust.db;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import me.giskard.GiskardConsts;
+import me.giskard.GiskardUtils;
 import me.giskard.tokens.DustTokensDB;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensGuard;
@@ -38,9 +42,36 @@ DustTokensDB, DustTokensGuard, DustTokensTemp {
 		dust_entity(DbEntity.class), dust_data(DbData.class), dust_event(DbEvent.class), dust_text(DbText.class), dust_stream(DbStream.class);
 		
 		public final Class<?> fldEnum;
+		public final int dataCount;
+		public final String sqlInsert;
+		public final String sqlUpdate;
 
 		private DbTable(Class<?> fldEnum) {
 			this.fldEnum = fldEnum;
+			
+			StringBuilder sbFld = null;
+			StringBuilder sbPar = null;
+			StringBuilder sbSet = null;
+			
+			Object[] ec = fldEnum.getEnumConstants();
+			dataCount = ec.length - 1;
+			
+			for ( int i = 1; i <= dataCount; ++i ) {
+				sbFld = GiskardUtils.sbAppend(sbFld, ", ", true, ec[i]);
+				sbPar = GiskardUtils.sbAppend(sbPar, ", ", true, "?");
+				sbSet = GiskardUtils.sbAppend(sbSet, ", ", true, ec[i] + " = ?");
+			}
+			
+			sqlInsert = "INSERT INTO " + name() + " (" + sbFld + ") VALUES (" + sbPar + ")";
+			sqlUpdate = "UPDATE " + name() + " SET " + sbSet + " WHERE " + ec[0] + " = ?";
+		}
+		
+		public PreparedStatement getUpdateStatement(Connection conn) throws Exception {
+			return conn.prepareStatement(sqlUpdate);
+		}
+
+		public PreparedStatement getInsertStatement(Connection conn) throws Exception {
+			return conn.prepareStatement(sqlInsert, new String[] { fldEnum.getEnumConstants()[0].toString() });
 		}
 	}
 

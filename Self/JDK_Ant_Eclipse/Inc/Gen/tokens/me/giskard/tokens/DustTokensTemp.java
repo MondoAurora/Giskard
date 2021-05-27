@@ -8,6 +8,8 @@ public interface DustTokensTemp extends DustTokensMind {
 	MiNDToken MTTYPE_TEMP = Giskard.defineToken(MiNDTokenType.Type, "Temp", MTUNIT_TEMP);
 	MiNDToken MTMEMBER_TEMP_SERIALIZER = Giskard.defineToken(MiNDTokenType.Member, "Serializer", MTTYPE_TEMP, MiNDValType.Raw,
 			MiNDCollType.One);
+	MiNDToken MTMEMBER_TEMP_DBID = Giskard.defineToken(MiNDTokenType.Member, "DBId", MTTYPE_TEMP, MiNDValType.Int,
+			MiNDCollType.One);
 
 	MiNDToken MTTAG_SERIALIZEMODE = Giskard.defineToken(MiNDTokenType.Tag, "SerializeMode", MTUNIT_TEMP);
 	MiNDToken MTTAG_SERIALIZEMODE_LOAD = Giskard.defineToken(MiNDTokenType.Tag, "Load", MTTAG_SERIALIZEMODE);
