@@ -76,7 +76,9 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 	static Object testVisit() {
 		Object hDBConn = testDB();
-		
+
+		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+
 		Object hMain = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
 
 		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
@@ -103,7 +105,12 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INT_MAX);
 		Giskard.access(MiNDAccessCommand.Set, 500, hMain, MTMEMBER_RANGE_INT_MAX);
 		
-		return hMain;
+		
+		Giskard.access(MiNDAccessCommand.Add, hMain, hTop, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, hDBConn, hTop, MTMEMBER_LINK_ARR);
+
+		
+		return hTop;
 	}
 	
 //	static void testVisitTest() {

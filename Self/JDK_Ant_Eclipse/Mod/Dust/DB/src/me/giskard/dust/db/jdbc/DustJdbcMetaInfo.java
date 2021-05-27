@@ -49,7 +49,7 @@ public class DustJdbcMetaInfo implements DustJdbcConsts {
 
 		String dbName = catalog;
 
-		rs = dbMetaData.getTables(dbName, null, null, new String[] { JDBC_TABLE });
+		rs = dbMetaData.getTables(dbName, null, null, new String[] { JDBC_TABLE, JDBC_VIEW });
 		for (boolean ok = DustJdbcUtils.optFirst(rs); ok; ok = rs.next()) {
 			String tblName = rs.getString(JDBC_TABLE_NAME);
 			factTables.get(tblName);

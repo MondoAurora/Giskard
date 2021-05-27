@@ -18,16 +18,25 @@ public class DustJdbcAgentDBConn implements DustJdbcConsts, GiskardConsts.MiNDAg
 	public MiNDResultType mindAgentProcess() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
 
-		if ( null == conn ) {
-			hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DBUSER_CONN);
-			conn = DustJdbcUtils.optCreateConn(hDBConn, conn);
+		Object ser = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
 
-			firstTest();
-			getMetaInfo();
+		if ( null == ser ) {
+			if ( null == conn ) {
+				hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DBUSER_CONN);
+				conn = DustJdbcUtils.optCreateConn(hDBConn, conn);
 
-			serializer = new DustJdbcSerializer(metaInfo);
+				firstTest();
+				getMetaInfo();
+
+				serializer = new DustJdbcSerializer(metaInfo);
+				Giskard.access(MiNDAccessCommand.Set, serializer, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
+				Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_LOAD, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
+			}
+		} else {
+			serializer = (DustJdbcSerializer) ser;
+			Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_SAVE, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
 		}
-		
+
 		serializer.step(hDBConn, conn);
 
 		return ret;
@@ -40,7 +49,7 @@ public class DustJdbcAgentDBConn implements DustJdbcConsts, GiskardConsts.MiNDAg
 	@Override
 	public void mindAgentEnd() throws Exception {
 //		DustJdbcUtils.releaseConn(conn, null);
-		
+
 //		Giskard.log(MiNDEventLevel.Trace, " ---- Collected for serialisation ----", serializer);
 
 	}

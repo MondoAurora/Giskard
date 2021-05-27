@@ -96,11 +96,11 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		public String toString() {
 			StringBuilder sb = GiskardUtils.sbAppend(null, " ", true, "Token:", t, ", ValType:", mvt, ", CollType:", mct,
 					", Value: [", val, "]");
-			
+
 			if ( null != key ) {
 				GiskardUtils.sbAppend(null, " ", true, ", key: ", key);
 			}
-			
+
 			return sb.toString();
 		}
 	}
@@ -123,25 +123,65 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				}
 			});
 
+	
+	
+	
+	
 	public DustJdbcSerializer(DustJdbcMetaInfo metaInfo) throws Exception {
 		validateDB(metaInfo);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = null;
+		for (Object k : factEntities.keys()) {
+			sb = GiskardUtils.sbAppend(sb, "\n---------\n", true, factEntities.peek(k));
+		}
+		return sb.toString();
+	}
 
-	public void validateDB(DustJdbcMetaInfo metaInfo) throws Exception {
+	public void step(Object hDBConn, Connection conn) throws Exception {
+		Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_LINK_ONE);
+
+		if ( null == entity ) {
+			save(hDBConn, conn);
+		} else {
+			DBDeltaEntity de = getDeltaEntity(entity);
+
+			if ( null != de ) {
+				de.addData();
+			}
+		}
+	}
+
+	
+	/******** Meta validation ********/
+	
+	private void validateDB(DustJdbcMetaInfo metaInfo) throws Exception {
 		boolean error = false;
+
 		for (DbTable tbl : DbTable.values()) {
-			Object hTbl = metaInfo.peekTable(tbl.name());
-			if ( null == hTbl ) {
-				Giskard.log(MiNDEventLevel.Error, "Missing table", tbl);
+			String tblName = tbl.name();
+			if ( null == metaInfo.peekTable(tblName) ) {
+				Giskard.log(MiNDEventLevel.Error, "Missing table", tblName);
 				error = true;
 			} else {
-				for (Object col : tbl.fldEnum.getEnumConstants()) {
-					Object hCol = metaInfo.peekColumn(tbl.name(), col.toString());
-					if ( null == hCol ) {
-						Giskard.log(MiNDEventLevel.Error, "Missing column", col, "in table", tbl);
-						error = true;
-					}
+				error = checkColumns(metaInfo, error, tbl, tblName);
+			}
+		}
+
+		for (DBView view : DBView.values()) {
+			String viewName = view.name();
+
+			if ( null == metaInfo.peekTable(viewName) ) {
+				Giskard.log(MiNDEventLevel.Error, "Missing view", view);
+				error = true;
+			} else {
+				if ( null == metaInfo.peekColumn(viewName, "Unit") ) {
+					Giskard.log(MiNDEventLevel.Error, "Missing column Unit in", viewName);
+					error = true;
 				}
+				error = checkColumns(metaInfo, error, view.tbl, viewName);
 			}
 		}
 
@@ -152,7 +192,20 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		}
 	}
 
-	DBDeltaEntity getDeltaEntity(Object entity) {
+	private boolean checkColumns(DustJdbcMetaInfo metaInfo, boolean error, DbTable tbl, String tblName) {
+		for (Object col : tbl.fldEnum.getEnumConstants()) {
+			Object hCol = metaInfo.peekColumn(tblName, col.toString());
+			if ( null == hCol ) {
+				Giskard.log(MiNDEventLevel.Error, "Missing column", col, "in", tblName);
+				error = true;
+			}
+		}
+		return error;
+	}
+
+	/******** Collecting data ********/
+	
+	private DBDeltaEntity getDeltaEntity(Object entity) {
 		DBDeltaEntity de = null;
 
 		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_STOREUNIT);
@@ -166,65 +219,15 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		return de;
 	}
 
-	public void step(Object hDBConn, Connection conn) throws Exception {
-
-		Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_LINK_ONE);
-
-		DBDeltaEntity de = getDeltaEntity(entity);
-
-		if ( null != de ) {
-			de.addData();
-//			Giskard.log(MiNDEventLevel.Trace, this);
-		}
-//		Object token = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VISITINFO_TOKEN);
-//		
-//		Object vt = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VALUE_TYPE);
-//		Object ct = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VALUE_COLLTYPE);
-//		
-//		MiNDValType mvt = (MiNDValType) GisToolsTokenTranslator.toEnum((MiNDToken)vt);
-//		Object valKey = null;
-//		switch ( mvt ) {
-//		case Int:
-//			valKey = MTMEMBER_VALUE_INT;
-//			break;
-//		case Link:
-//			valKey = MTMEMBER_VALUE_LINK;
-//			break;
-//		case Raw:
-//			valKey = MTMEMBER_VALUE_RAW;
-//			break;
-//		case Real:
-//			valKey = MTMEMBER_VALUE_REAL;
-//			break;
-//		}
-//		Object val = Giskard.access(MiNDAccessCommand.Get, null, hRoot, valKey);
-//		
-//		MiNDCollType mct = (MiNDCollType) GisToolsTokenTranslator.toEnum((MiNDToken)ct);
-//		Object keyKey = null;
-//		switch ( mct ) {
-//		case Arr:
-//			keyKey = MTMEMBER_VISITINFO_KEYARR;
-//			break;
-//		case Map:
-//			keyKey = MTMEMBER_VISITINFO_KEYMAP;
-//			break;
-//		default:
-//			break;
-//		}
-//		
-//		Object key = (null == keyKey) ? "--" : Giskard.access(MiNDAccessCommand.Get, null, hRoot, keyKey);
-//
-//		Giskard.log(MiNDEventLevel.Trace, "Entity:", entity, ", Token:", token, ", ValType:", vt, ", CollType:", ct, 
-//				", Value: [", val, "], key: ", key);
+	/******** Loading ********/
+	
+	public void load(Object hDBConn, Connection conn) throws Exception {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = null;
-		for (Object k : factEntities.keys()) {
-			sb = GiskardUtils.sbAppend(sb, "\n---------\n", true, factEntities.peek(k));
-		}
-		return sb.toString();
+	/******** Saving ********/
+	public void save(Object hDBConn, Connection conn) throws Exception {
+		Giskard.log(MiNDEventLevel.Trace, this);
 	}
 
+	
 }
