@@ -21,21 +21,21 @@ DustTokensDB, DustTokensGuard, DustTokensTemp {
 	}
 	
 	enum DbData {
-		DataId, Entity, LastValid, Token, 
+		DataId, Entity, Token, OptKey, 
 		ValInteger, ValReal, ValLink,
-		OptKey
+		LastValid
 	}
 
 	enum DbEvent {
-		EventId, Entity, LastValid, Type, Level, Start, End
+		EventId, Entity, Type, Level, Start, End, LastValid
 	}
 
 	enum DbText {
-		TextId, Entity, LastValid, Language, Text
+		TextId, Entity,  Token, OptKey, Language, Text, LastValid
 	}
 
 	enum DbStream {
-		StreamId, Entity, LastValid, Type, Content
+		StreamId, Entity, Type, Content, LastValid
 	}
 
 	enum DbTable {

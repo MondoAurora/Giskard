@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS dust_entity, dust_data, dust_event, dust_text, dust_stream;
+DROP TABLE IF EXISTS dust_data, dust_event, dust_text, dust_stream, dust_entity;
 
 CREATE TABLE `dust_entity` (
   `EntityId` int NOT NULL AUTO_INCREMENT,
@@ -18,12 +18,12 @@ CREATE TABLE `dust_entity` (
 CREATE TABLE `dust_data` (
   `DataId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Token` int NOT NULL,
   `OptKey` int,
   `ValInteger` int,
   `ValReal` double,
   `ValLink` int,
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   PRIMARY KEY (`DataId`),
   KEY `DATA_ENTITY` (`Entity`),
   KEY `DATA_TOKEN` (`Token`),
@@ -38,11 +38,11 @@ CREATE TABLE `dust_data` (
 CREATE TABLE `dust_event` (
   `EventId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Type` int NOT NULL,
   `Level` int NOT NULL,
   `Start` DATETIME NOT NULL,
   `End` DATETIME,
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   PRIMARY KEY (`EventId`),
   KEY `EVENT_ENTITY` (`Entity`),
   KEY `FK_EVENT_CHANGE_idx` (`LastValid`),
@@ -52,9 +52,11 @@ CREATE TABLE `dust_event` (
 CREATE TABLE `dust_text` (
   `TextId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
+  `Token` int NOT NULL,
+  `OptKey` int,
   `Language` int NOT NULL,
   `Text` Text NOT NULL,
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   PRIMARY KEY (`TextId`),
   KEY `TEXT_ENTITY` (`Entity`),
   KEY `FK_TEXT_CHANGE_idx` (`LastValid`),
@@ -64,9 +66,9 @@ CREATE TABLE `dust_text` (
 CREATE TABLE `dust_stream` (
   `StreamId` int NOT NULL AUTO_INCREMENT,
   `Entity` int NOT NULL,
-  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   `Type` int NOT NULL,
   `Content` BLOB NOT NULL,
+  `LastValid` int COMMENT 'NULL for current, otherwise the last Change in which this was the value',
   PRIMARY KEY (`StreamId`),
   KEY `STREAM_ENTITY` (`Entity`),
   KEY `FK_STREAM_CHANGE_idx` (`LastValid`),

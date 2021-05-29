@@ -25,6 +25,11 @@ public interface DustTokensDB extends DustTokensMind {
 	MiNDToken MTMEMBER_COLUMN_FULLNAME = Giskard.defineToken(MiNDTokenType.Member, "FullName", MTTYPE_DBCOLUMN, MiNDValType.Raw,
 			MiNDCollType.One);
 	
+	MiNDToken MTTYPE_DBROW = Giskard.defineToken(MiNDTokenType.Type, "Row", MTUNIT_DB);
+	MiNDToken MTMEMBER_ROW_PRIMARYKEY = Giskard.defineToken(MiNDTokenType.Member, "PrimaryKey", MTTYPE_DBROW, MiNDValType.Int,
+			MiNDCollType.One);
+
+	
 	MiNDToken MTAGENT_DBTEST01 = Giskard.defineToken(MiNDTokenType.Agent, "DBTest01", MTUNIT_DB);
 
 }
