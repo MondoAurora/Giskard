@@ -3,8 +3,20 @@
 -- from dust_entity e
 -- where e.LastValid is null;
 
-select * 
-from dust_unit_res;
+select *
+from dust_unit_entities;
+
+select e.*, t.Text
+from dust_entity e, dust_text t
+where t.Token = 6 and e.EntityId = t.Entity;
+
+select distinct t.Entity
+from dust_text t
+where t.Text in ('DB', 'Montru');
+
+select distinct e.*
+from dust_unit_entities e, dust_unit_res r
+where r.Text in ('DB', 'Montru') and r.Entity = e.EntityId;
 
 select * 
 from dust_unit_state;

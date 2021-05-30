@@ -118,7 +118,15 @@ public class DustJdbcUtils implements DustJdbcConsts {
 	}
 
 	public static Map<String, Object> mapFromRS(ResultSet rsFrom, String... colNames) {
-		Map<String, Object> ret = new TreeMap<String, Object>();
+		return mapFromRS(rsFrom, null, colNames);
+	}
+
+	public static Map<String, Object> mapFromRS(ResultSet rsFrom, Map<String, Object> ret, String... colNames) {
+		if ( null == ret ) {
+			ret = new TreeMap<String, Object>();
+		} else {
+			ret.clear();
+		}
 
 		if ( null != colNames ) {
 			try {

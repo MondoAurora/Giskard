@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardException;
@@ -20,7 +22,9 @@ import me.giskard.tools.GisToolsTokenTranslator;
 public class DustJdbcSerializer implements DustJdbcConsts {
 	Object hDBConn;
 	Connection conn;
-
+	
+	String idKey;
+	
 	DustJdbcMetaInfo metaInfo;
 
 	class DBDeltaEntity {
@@ -223,11 +227,20 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 	Object hRoot = MTMEMBER_ACTION_DIALOG;
 
+	Map<String, DBDeltaEntity> mapEntities = new TreeMap<>();
+	
 	GisCollFactory<Object, DBDeltaEntity> factEntities = new GisCollFactory<Object, DBDeltaEntity>(true,
 			new MiNDCreator<Object, DBDeltaEntity>() {
 				@Override
 				public DBDeltaEntity create(Object key) {
-					return new DBDeltaEntity(key);
+					DBDeltaEntity de = new DBDeltaEntity(key);
+					
+					String si = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEMBER_ENTITY_STOREID);
+					if ( null != si ) {
+						mapEntities.put(si, de);
+					}
+					
+					return de;
 				}
 			});
 
@@ -238,6 +251,10 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 					return factEntities.get(key);
 				}
 			});
+	
+	public DustJdbcSerializer() {
+		idKey = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ENTITY_STOREID.getEntity(), MTMEMBER_ENTITY_STOREID);
+	}
 
 	@Override
 	public String toString() {
@@ -339,10 +356,13 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			boolean keyOK = true;
 
 			Statement stmt = conn.createStatement();
+			Map<String, Object> rowData = new TreeMap<>();
 			String sql;
 			ResultSet rs;
 
 			Giskard.log(MiNDEventLevel.Trace, "---- Loading units ----");
+			
+			Object idPK = null;
 
 			for (Object o : factUnits.keys()) {
 				unitIds.add(o);
@@ -358,7 +378,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				sbName = GiskardUtils.sbAppend(sbName, ", ", true, "'" + n + "'");
 //				Giskard.log(MiNDEventLevel.Trace, factEntities.peek(o));
 			}
-
+			
 			if ( !keyOK ) {
 				sql = "select distinct Entity from " + DbTable.dust_text + " WHERE Text in (" + sbName + ")";
 				Giskard.log(MiNDEventLevel.Trace, "SQL:", sql);
@@ -373,12 +393,34 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			}
 			
 			empty = (null == sbKey);
+			
+			sql = "select " + DbText.Entity + " from " + DbTable.dust_text + " WHERE Text like '" + idKey + "'";
+			rs = stmt.executeQuery(sql);
+			if ( rs.first() ) {
+				idPK = rs.getInt(1);
+			}				
+
+			sql = "select e.*, t.Text as Text from dust_entity e, dust_text t where t.Token = " + idPK + " and e.EntityId = t.Entity";
+			rs = stmt.executeQuery(sql);
+			if ( rs.first() ) {
+				do {
+					DustJdbcUtils.mapFromRS(rs, rowData);
+					
+					String si = (String) rowData.get("Text");
+					
+					DBDeltaEntity de = mapEntities.get(si);
+					
+					if ( null != de ) {
+						de.pKey = (Integer) rowData.get(DbEntity.EntityId.name());
+						Giskard.access(MiNDAccessCommand.Set, de.pKey, de.entity, MTMEMBER_ROW_PRIMARYKEY);
+					}
+				} while (rs.next());
+			}				
 
 			for (DBView v : views) {
 				sql = "SELECT * FROM " + v + " WHERE Unit in (" + sbKey + ")";
 				Giskard.log(MiNDEventLevel.Trace, "SQL:", sql);
 				rs = stmt.executeQuery(sql);
-				
 				DustJdbcUtils.dumpResultSet(rs);
 			}
 		}
@@ -407,7 +449,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 	public void save() throws Exception {
 		initConn();
 
-		DBContent dbc = new DBContent(conn, DBView.dust_unit_entities, DBView.dust_unit_state, DBView.dust_unit_dates,
+		DBContent dbc = new DBContent(conn, DBView.dust_unit_state, DBView.dust_unit_dates,
 				DBView.dust_unit_res);
 
 		boolean change = false;
@@ -417,9 +459,12 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		for (Object e : factEntities.keys()) {
 			DBDeltaEntity de = factEntities.peek(e);
 
-			if ( null == Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ROW_PRIMARYKEY) ) {
+			Object pk = Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ROW_PRIMARYKEY);
+			if ( null == pk ) {
 				change = true;
 				newEntities.add(de);
+			} else {
+				Giskard.log(MiNDEventLevel.Trace, "Known entity", e, "PKey", pk, Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_STOREID));
 			}
 
 			if ( !de.data.isEmpty() ) {
