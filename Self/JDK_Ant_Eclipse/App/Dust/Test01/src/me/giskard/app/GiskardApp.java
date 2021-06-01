@@ -4,6 +4,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.tokens.DustTokens;
 import me.giskard.tokens.DustTokensDB;
+import me.giskard.tokens.DustTokensDev;
 import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensGeometry;
 import me.giskard.tokens.DustTokensGuard;
@@ -15,7 +16,7 @@ import me.giskard.tokens.DustTokensText;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensMachine, DustTokensIO, DustTokensGuard,
-		DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui, DustTokensMontru {
+		DustTokensDB, DustTokensText, DustTokensGeometry, DustTokensGui, DustTokensMontru, DustTokensDev {
 
 	public static final MiNDResultType boot(String[] args) throws Exception {
 		Giskard.initRuntime("DustRuntime", "1.0");
@@ -25,12 +26,16 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		DustTokens.addModule("DustDB", "1.0");
 		DustTokens.addModule("DustTools", "1.0");
 		DustTokens.addModule("DustGuiSwing", "1.0");
+		DustTokens.addModule("DustDevJava", "1.0");
 		DustTokens.addModule("DustMontru", "1.0");
 		
-		String testId = (args.length > 0) ? args[0] : "visit";
+		String testId = (args.length > 0) ? args[0] : "src";
 		Object hTest = null;
 
 		switch ( testId ) {
+		case "src":
+			hTest = testSrc();
+			break;
 		case "visit":
 			hTest = testVisit();
 			break;
@@ -74,6 +79,26 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		}
 	}
 
+	static Object testSrc() {
+		Object hList = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_LISTALL);
+		Object hDevTokens = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DEV_GEN_TOKENS);
+
+		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);		
+		Giskard.access(MiNDAccessCommand.Add, hList, hS1, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, hDevTokens, hS1, MTMEMBER_LINK_ARR);
+
+		
+		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
+		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INT_MAX);
+		Giskard.access(MiNDAccessCommand.Set, hS1, hIter, MTMEMBER_LINK_ONE);
+		
+		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+		Giskard.access(MiNDAccessCommand.Add, hIter, hTop, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, hDevTokens, hTop, MTMEMBER_LINK_ARR);
+		
+		return hTop;
+	}
+	
 	static Object testVisit() {
 		Object hDBConn = testDB();
 
@@ -86,13 +111,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
 		Object hS2 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
 		Object hVisit = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_VISIT);
-//		Object hPrint = Giskard.access(MiNDAccessCommand.Get, MTAGENT_TEXT_FORMAT);
-//
-//		DustTokens.setupValFormatter(hPrint);
 		
 		Giskard.access(MiNDAccessCommand.Add, hVisit, hS2, MTMEMBER_LINK_ARR);
-//		Giskard.access(MiNDAccessCommand.Add, hPrint, hS2, MTMEMBER_LINK_ARR);
-
 		Giskard.access(MiNDAccessCommand.Add, hDBConn, hS2, MTMEMBER_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set, hS2, hIter, MTMEMBER_LINK_ONE);
@@ -108,62 +128,10 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		
 		Giskard.access(MiNDAccessCommand.Add, hMain, hTop, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, hDBConn, hTop, MTMEMBER_LINK_ARR);
-
 		
 		return hTop;
 	}
 	
-//	static void testVisitTest() {
-//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ENTITY_PRIMARYTYPE);
-//
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR04, MTAGENT_CTRL_SEQUENCE);
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR05, MTAGENT_DATA_VISIT);
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR06, MTAGENT_TEXT_FORMAT);
-//
-//		DustTokens.setupValFormatter(MTMEMBER_ACTION_GPR06);
-//		
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR05, MTMEMBER_LINK_ONE);
-//		
-//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR05, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
-//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR06, MTMEMBER_ACTION_GPR04, MTMEMBER_LINK_ARR);
-//
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_LINK_ONE);
-//	}
-//
-//	static void testVisit1() {
-//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ENTITY_PRIMARYTYPE);
-//
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR01, MTAGENT_CTRL_SEQUENCE);
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_LINK_ONE);
-//
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR02, MTAGENT_DATA_LISTALL);
-//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
-//
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR03, MTAGENT_CTRL_ITERATION);
-//		DustTokens.createAgent(MTMEMBER_ACTION_GPR04, MTAGENT_DATA_VISIT);
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR04, MTMEMBER_ACTION_GPR03, MTMEMBER_LINK_ONE);
-//		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_GPR03, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ARR);
-//	}
-//
-//	static void testVisit2() {
-//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_ITERATION, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ENTITY_PRIMARYTYPE);
-//
-//		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01);
-//
-////		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_LISTALL, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DATA_VISIT, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_PRIMARYTYPE);
-//
-//		Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR02);
-//		Giskard.access(MiNDAccessCommand.Set, MTAGENT_DUMP, MTMEMBER_ACTION_GPR02, MTMEMBER_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, "pompompom", MTMEMBER_ACTION_GPR02, MTMEMBER_VALUE_RAW);
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR02, MTMEMBER_ACTION_GPR01, MTMEMBER_LINK_ONE);
-//
-////		Giskard.access(MiNDAccessCommand.Set, 0, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MIN);
-////		Giskard.access(MiNDAccessCommand.Set, 10, MTMEMBER_CALL_TARGET, MTMEMBER_RANGE_INT_MAX);
-//
-//		Giskard.access(MiNDAccessCommand.Set, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_LINK_ONE);
-//	}
-
 	public static Object setCoords(Integer... coords) {
 		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYPE_GEODATA);
 

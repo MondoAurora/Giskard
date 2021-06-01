@@ -56,7 +56,7 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 		Object ret = getValue(MTMEMBER_PLAIN_STRING);
 		
 		if ( null == ret ) {
-			ret = getValue(MTMEMBER_ENTITY_STOREID);
+			ret = getValue(MTMEMBER_ENTITY_ID_GLOBAL);
 		}
 		
 		if ( null == ret ) {

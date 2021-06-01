@@ -12,6 +12,7 @@
 		<giskard-build-mod vendor="Dust" module="Text" ver="1.0" />
 		<giskard-build-mod vendor="Dust" module="Tools" ver="1.0" />
 		
+		<giskard-build-mod vendor="Dust" module="DevJava" ver="1.0"/>
 		<giskard-build-mod vendor="Dust" module="Montru" ver="1.0"/>
 		
 		<giskard-build-app vendor="Dust" module="Test01" ver="1.0"/>

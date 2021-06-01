@@ -5,6 +5,7 @@ import me.giskard.dust.runtime.DustRuntimeAgentControl;
 import me.giskard.dust.runtime.DustRuntimeAgentData;
 import me.giskard.dust.runtime.DustRuntimeConsts;
 import me.giskard.tokens.DustTokens;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustRuntimeBoot implements DustRuntimeConsts {
 	public static void boot() throws Exception {
@@ -27,6 +28,13 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		DustTokens.addModuleImpInfo(MTAGENT_DATA_READ, DustRuntimeAgentData.Read.class);
 //		DustTokens.addModuleImpInfo(MTAGENT_DATA_COLLECT, DustRuntimeAgentData.Collect.class);
 
+		//	enum MiNDTokenType { Unit, Type, Member, Tag, Service, Agent, Local	}
+		GisToolsTokenTranslator.register(MTTYPE_UNIT, MiNDTokenType.Unit);
+		GisToolsTokenTranslator.register(MTTYPE_TYPE, MiNDTokenType.Type);
+		GisToolsTokenTranslator.register(MTTYPE_MEMBER, MiNDTokenType.Member);
+		GisToolsTokenTranslator.register(MTTYPE_TAG, MiNDTokenType.Tag);
+		GisToolsTokenTranslator.register(MTTYPE_SERVICE, MiNDTokenType.Service);
+		GisToolsTokenTranslator.register(MTTYPE_AGENT, MiNDTokenType.Agent);
 	}
 
 }

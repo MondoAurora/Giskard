@@ -11,7 +11,8 @@
 
 	<property name="GISKARD_LIB" value="${GISKARD_SELF}/Ext/lib" />
 	<property name="GISKARD_INC_MOD" value="${GISKARD_SELF}/Inc/Mod/src" />
-	<property name="GISKARD_INC_GEN" value="${GISKARD_SELF}/Inc/Gen/tokens" />
+	<property name="GISKARD_INC_TOKENS" value="${GISKARD_SELF}/Inc/Gen/tokens" />
+	<property name="GISKARD_INC_UNITS" value="${GISKARD_SELF}/Inc/Gen/units" />
 
 	<property name="GISKARD_PATH_MOD" value="${GISKARD_SELF}/Inc/Mod/bin" />
 
@@ -47,7 +48,8 @@
 					<path path="${GISKARD_PATH_MOD}" />
 					<fileset dir="${prjdir}/lib" includes="**.*.jar" erroronmissingdir="false" />
 				</classpath>
-				<src path="${GISKARD_INC_GEN}" />
+				<src path="${GISKARD_INC_TOKENS}" />
+				<src path="${GISKARD_INC_UNITS}" />
 				<src path="${prjdir}/src" />
 			</javac>
 
@@ -85,7 +87,8 @@
 			       includeantruntime="false"
 			       source="${javac.source}"
 			       target="${javac.target}">
-				<src path="${GISKARD_INC_GEN}" />
+				<src path="${GISKARD_INC_TOKENS}" />
+				<src path="${GISKARD_INC_UNITS}" />
 				<src path="${GISKARD_INC_MOD}" />
 				<src path="${prjdir}/src" />
 			</javac>

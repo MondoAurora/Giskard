@@ -284,7 +284,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		this.knowledge = new DustRuntimeDataContext(null, HANDLE_MACHINE);
 
 		MiNDToken[] bootTokens = { MTMEMBER_PLAIN_STRING, MTMEMBER_CONN_OWNER, MTMEMBER_ENTITY_PRIMARYTYPE,
-				MTMEMBER_ENTITY_STOREID, MTMEMBER_ENTITY_STOREUNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
+				MTMEMBER_ENTITY_ID_GLOBAL, MTMEMBER_ENTITY_UNIT, MTTYPE_AGENT, MTTYPE_MEMBER, MTTYPE_TAG, MTTYPE_TYPE,
 				MTTYPE_UNIT };
 
 		Giskard.log(MiNDEventLevel.Trace, "Boot tokens registered", bootTokens);

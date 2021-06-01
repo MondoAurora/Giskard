@@ -4,7 +4,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
-	MiNDToken MTUNIT_MODEL = Giskard.defineToken(MiNDTokenType.Unit, "MiND_Model");
+	MiNDToken MTUNIT_MODEL = Giskard.defineToken(MiNDTokenType.Unit, "Model");
 
 	MiNDToken MTTYPE_UNIT = Giskard.defineToken(MiNDTokenType.Type, "Unit", MTUNIT_MODEL);
 	MiNDToken MTMEMBER_UNIT_SERVICES = Giskard.defineToken(MiNDTokenType.Member, "Services", MTTYPE_UNIT, MiNDValType.Link, MiNDCollType.Map);
@@ -14,12 +14,15 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTMEMBER_ENTITY_PRIMARYTYPE = Giskard.defineToken(MiNDTokenType.Member, "PrimaryType", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
 	MiNDToken MTMEMBER_ENTITY_TYPES = Giskard.defineToken(MiNDTokenType.Member, "Types", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
 	MiNDToken MTMEMBER_ENTITY_TAGS = Giskard.defineToken(MiNDTokenType.Member, "Tags", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.Set);
-	MiNDToken MTMEMBER_ENTITY_STOREUNIT = Giskard.defineToken(MiNDTokenType.Member, "StoreUnit", MTTYPE_ENTITY, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_ENTITY_STOREID = Giskard.defineToken(MiNDTokenType.Member, "StoreId", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEMBER_ENTITY_ID_GLOBAL = Giskard.defineToken(MiNDTokenType.Member, "IdGlobal", MTTYPE_ENTITY, MiNDValType.Raw, MiNDCollType.One);
+
+	MiNDToken MTMEMBER_ENTITY_UNIT = Giskard.defineToken(MiNDTokenType.Member, "Unit", MTTYPE_ENTITY, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEMBER_ENTITY_ID_UNIT = Giskard.defineToken(MiNDTokenType.Member, "IdUnit", MTTYPE_ENTITY, MiNDValType.Raw,
+			MiNDCollType.One);
 
 	
 	
-	MiNDToken MTUNIT_IDEA = Giskard.defineToken(MiNDTokenType.Unit, "MiND_Idea");
+	MiNDToken MTUNIT_IDEA = Giskard.defineToken(MiNDTokenType.Unit, "Idea");
 	
 	MiNDToken MTTYPE_TYPE = Giskard.defineToken(MiNDTokenType.Type, "Type", MTUNIT_IDEA);
 	MiNDToken MTTYPE_MEMBER = Giskard.defineToken(MiNDTokenType.Type, "Member", MTUNIT_IDEA);
@@ -46,7 +49,7 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_COLLTYPE_MAP = Giskard.defineToken(MiNDTokenType.Tag, "Map", MTTAG_COLLTYPE, MiNDCollType.Map);
 
 	
-	MiNDToken MTUNIT_DIALOG = Giskard.defineToken(MiNDTokenType.Unit, "MiND_Dialog");
+	MiNDToken MTUNIT_DIALOG = Giskard.defineToken(MiNDTokenType.Unit, "DialogX");
 	
 	MiNDToken MTTYPE_DIALOG = Giskard.defineToken(MiNDTokenType.Type, "Dialog", MTUNIT_DIALOG);
 	MiNDToken MTMEMBER_DIALOG_ACTIVITIES = Giskard.defineToken(MiNDTokenType.Member, "Activities", MTTYPE_DIALOG, MiNDValType.Link, MiNDCollType.Arr);
@@ -79,7 +82,7 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTMEMBER_VISITINFO_LINKNEW = Giskard.defineToken(MiNDTokenType.Member, "LinkNew", MTTYPE_VISITINFO, MiNDValType.Link, MiNDCollType.One);
 
 
-	MiNDToken MTUNIT_NARRATIVE = Giskard.defineToken(MiNDTokenType.Unit, "MiND_Narrative");
+	MiNDToken MTUNIT_NARRATIVE = Giskard.defineToken(MiNDTokenType.Unit, "Narrative");
 	
 	MiNDToken MTTYPE_AGENT = Giskard.defineToken(MiNDTokenType.Type, "Agent", MTUNIT_NARRATIVE);
 	MiNDToken MTTYPE_SERVICE = Giskard.defineToken(MiNDTokenType.Type, "Service", MTUNIT_NARRATIVE);

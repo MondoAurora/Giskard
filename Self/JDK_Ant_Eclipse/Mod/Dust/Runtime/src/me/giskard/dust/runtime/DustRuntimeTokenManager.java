@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.Giskard;
+import me.giskard.tools.GisToolsTokenTranslator;
 
 class DustRuntimeTokenManager implements DustRuntimeConsts {
 	DustRuntimeDataContext ctx;
@@ -81,11 +82,18 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 		DustRuntimeToken t = DustRuntimeUtils.getTypeToken(token);
 
 		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, MTMEMBER_ENTITY_PRIMARYTYPE, null);
+			te.access(MiNDAccessCommand.Set, t, MTMEMBER_ENTITY_PRIMARYTYPE, null);			
+		}
+		
+		if ( token.getType() == MiNDTokenType.Member ) {
+			MiNDToken o = GisToolsTokenTranslator.toToken(token.getCollType());
+			te.access(MiNDAccessCommand.Add, o, MTMEMBER_ENTITY_TAGS, null);
+			o = GisToolsTokenTranslator.toToken(token.getValType());
+			te.access(MiNDAccessCommand.Add, o, MTMEMBER_ENTITY_TAGS, null);
 		}
 
-		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_STOREID, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(this), MTMEMBER_ENTITY_STOREUNIT, null);
+		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_ID_GLOBAL, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(this), MTMEMBER_ENTITY_UNIT, null);
 	}
 
 	@Override

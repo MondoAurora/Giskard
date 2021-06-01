@@ -179,7 +179,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				@Override
 				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
-					value = factEntityData.get(value).get(MTMEMBER_ENTITY_STOREID);
+					value = factEntityData.get(value).get(MTMEMBER_ENTITY_ID_GLOBAL);
 					Component ret = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 					return ret;
 				}
@@ -252,10 +252,10 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		}
 	}
 
-	Object[] allColumns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_ENTITY_STOREID,
+	Object[] allColumns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_UNIT, MTMEMBER_ENTITY_ID_GLOBAL,
 			MTMEMBER_PLAIN_STRING };
 
-	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_PLAIN_STRING };
+	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_UNIT, MTMEMBER_PLAIN_STRING };
 
 	EnumMap<FilterInfo, Object> filterSettings = new EnumMap<>(FilterInfo.class);
 
@@ -386,7 +386,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 					if ( val instanceof Integer ) {
 						ed = factEntityData.peek(val);
 						if ( null != ed ) {
-							val = ed.get(MTMEMBER_ENTITY_STOREID);
+							val = ed.get(MTMEMBER_ENTITY_ID_GLOBAL);
 						}
 					}
 
@@ -516,7 +516,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			comp = fp;
 			break;
 		case 2:
-			fp = new FilterPanel(FilterInfo.units, i, MTTYPE_UNIT, MTMEMBER_ENTITY_STOREUNIT);
+			fp = new FilterPanel(FilterInfo.units, i, MTTYPE_UNIT, MTMEMBER_ENTITY_UNIT);
 			comp = fp;
 			break;
 		default:
@@ -552,7 +552,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			boolean add = true;
 
 			if ( chkTxt ) {
-				String str = (String) ed.get(MTMEMBER_ENTITY_STOREID);
+				String str = (String) ed.get(MTMEMBER_ENTITY_ID_GLOBAL);
 
 				if ( -1 == str.toLowerCase().indexOf(txt) ) {
 					add = false;

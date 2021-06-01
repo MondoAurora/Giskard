@@ -37,7 +37,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 		public DBDeltaEntity(Object entity_) {
 			this.entity = entity_;
-			pKey = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ROW_PRIMARYKEY);
+			pKey = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_ID_UNIT);
 		}
 
 		void addData() {
@@ -49,14 +49,14 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 			MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_PRIMARYTYPE);
 			Integer i = (null == pt) ? -1
-					: Giskard.access(MiNDAccessCommand.Get, -1, pt.getEntity(), MTMEMBER_ROW_PRIMARYKEY);
+					: Giskard.access(MiNDAccessCommand.Get, -1, pt.getEntity(), MTMEMBER_ENTITY_ID_UNIT);
 			ps.setInt(DbEntity.PrimaryType.ordinal(), i);
 
 			if ( -1 == i ) {
 				ret = false;
 			}
 
-			i = Giskard.access(MiNDAccessCommand.Get, -1, entity, MTMEMBER_ENTITY_STOREUNIT, MTMEMBER_ROW_PRIMARYKEY);
+			i = Giskard.access(MiNDAccessCommand.Get, -1, entity, MTMEMBER_ENTITY_UNIT, MTMEMBER_ENTITY_ID_UNIT);
 
 			ps.setInt(DbEntity.Unit.ordinal(), i);
 			if ( -1 == i ) {
@@ -76,7 +76,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 		Integer loadDbId(ResultSet res) throws Exception {
 			pKey = res.getInt(1);
-			Giskard.access(MiNDAccessCommand.Set, pKey, entity, MTMEMBER_ROW_PRIMARYKEY);
+			Giskard.access(MiNDAccessCommand.Set, pKey, entity, MTMEMBER_ENTITY_ID_UNIT);
 			return pKey;
 		}
 
@@ -235,7 +235,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				public DBDeltaEntity create(Object key) {
 					DBDeltaEntity de = new DBDeltaEntity(key);
 					
-					String si = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEMBER_ENTITY_STOREID);
+					String si = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEMBER_ENTITY_ID_GLOBAL);
 					if ( null != si ) {
 						mapEntities.put(si, de);
 					}
@@ -253,7 +253,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			});
 	
 	public DustJdbcSerializer() {
-		idKey = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ENTITY_STOREID.getEntity(), MTMEMBER_ENTITY_STOREID);
+		idKey = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ENTITY_ID_GLOBAL.getEntity(), MTMEMBER_ENTITY_ID_GLOBAL);
 	}
 
 	@Override
@@ -284,7 +284,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 	private DBDeltaEntity getDeltaEntity(Object entity) {
 		DBDeltaEntity de = null;
 
-		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_STOREUNIT);
+		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_UNIT);
 
 		if ( null != unit ) {
 			DBDeltaEntity du = factUnits.get(unit);
@@ -367,7 +367,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			for (Object o : factUnits.keys()) {
 				unitIds.add(o);
 				if ( keyOK ) {
-					Integer k = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEMBER_ROW_PRIMARYKEY);
+					Integer k = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEMBER_ENTITY_ID_UNIT);
 					if ( null == k ) {
 						keyOK = false;
 					} else {
@@ -412,7 +412,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 					
 					if ( null != de ) {
 						de.pKey = (Integer) rowData.get(DbEntity.EntityId.name());
-						Giskard.access(MiNDAccessCommand.Set, de.pKey, de.entity, MTMEMBER_ROW_PRIMARYKEY);
+						Giskard.access(MiNDAccessCommand.Set, de.pKey, de.entity, MTMEMBER_ENTITY_ID_UNIT);
 					}
 				} while (rs.next());
 			}				
@@ -459,12 +459,12 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		for (Object e : factEntities.keys()) {
 			DBDeltaEntity de = factEntities.peek(e);
 
-			Object pk = Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ROW_PRIMARYKEY);
+			Object pk = Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_ID_UNIT);
 			if ( null == pk ) {
 				change = true;
 				newEntities.add(de);
 			} else {
-				Giskard.log(MiNDEventLevel.Trace, "Known entity", e, "PKey", pk, Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_STOREID));
+				Giskard.log(MiNDEventLevel.Trace, "Known entity", e, "PKey", pk, Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_ID_GLOBAL));
 			}
 
 			if ( !de.data.isEmpty() ) {
@@ -518,7 +518,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 					PreparedStatement psEntUpdate = DbTable.dust_entity.getUpdateStatement(conn);
 
 					for (DBDeltaEntity de : entUpdate) {
-						Integer dbid = Giskard.access(MiNDAccessCommand.Get, -1, de.entity, MTMEMBER_ROW_PRIMARYKEY);
+						Integer dbid = Giskard.access(MiNDAccessCommand.Get, -1, de.entity, MTMEMBER_ENTITY_ID_UNIT);
 						if ( -1 != dbid ) {
 							de.setStParams(psEntUpdate, commitId);
 							psEntUpdate.setInt(5, dbid);

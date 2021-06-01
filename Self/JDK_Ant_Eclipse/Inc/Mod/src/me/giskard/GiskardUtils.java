@@ -109,4 +109,11 @@ public class GiskardUtils implements GiskardConsts {
 	public static boolean isAgentAccept(MiNDResultType res ) {
 		return (res == MiNDResultType.Accept) || (res == MiNDResultType.AcceptRead);
 	}
+
+	public static Object getIter(Object entity, MiNDToken token) {
+		for ( Object e = entity; null != e; e = Giskard.access(MiNDAccessCommand.Get, null, entity, token)) {
+			entity = e;
+		}
+		return entity;
+	}
 }
