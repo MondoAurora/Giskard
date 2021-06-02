@@ -23,7 +23,13 @@ public interface GiskardConsts {
 	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
 
 	enum MiNDTokenType {
-		Unit, Type, Member, Tag, Service, Agent, Local
+		Unit("UNI"), Type("TYP"), Member("MEM"), Tag("TAG"), Service("SVC"), Agent("AGN"), Local("LOC");
+		
+		public final String prefix;
+		
+		private MiNDTokenType(String prefix_) {
+			this.prefix = prefix_;
+		}
 	}
 
 	enum MiNDValType {

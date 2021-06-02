@@ -49,16 +49,14 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_COLLTYPE_MAP = Giskard.defineToken(MiNDTokenType.Tag, "Map", MTTAG_COLLTYPE, MiNDCollType.Map);
 
 	
-	MiNDToken MTUNIT_DIALOG = Giskard.defineToken(MiNDTokenType.Unit, "DialogX");
+	MiNDToken MTUNIT_DIALOG = Giskard.defineToken(MiNDTokenType.Unit, "Dialog");
 	
-	MiNDToken MTTYPE_DIALOG = Giskard.defineToken(MiNDTokenType.Type, "Dialog", MTUNIT_DIALOG);
-	MiNDToken MTMEMBER_DIALOG_ACTIVITIES = Giskard.defineToken(MiNDTokenType.Member, "Activities", MTTYPE_DIALOG, MiNDValType.Link, MiNDCollType.Arr);
-	MiNDToken MTMEMBER_DIALOG_CHANGE = Giskard.defineToken(MiNDTokenType.Member, "Change", MTTYPE_DIALOG, MiNDValType.Link, MiNDCollType.One);
-	
-	MiNDToken MTTYPE_COMMIT = Giskard.defineToken(MiNDTokenType.Type, "Commit", MTUNIT_DIALOG);
-
 	MiNDToken MTTYPE_CONTEXT = Giskard.defineToken(MiNDTokenType.Type, "Context", MTUNIT_DIALOG);
 	MiNDToken MTMEMBER_CONTEXT_TOKENS = Giskard.defineToken(MiNDTokenType.Member, "Tokens", MTTYPE_CONTEXT, MiNDValType.Link, MiNDCollType.Map);
+	MiNDToken MTMEMBER_CONTEXT_ACTIVITIES = Giskard.defineToken(MiNDTokenType.Member, "Activities", MTTYPE_CONTEXT, MiNDValType.Link, MiNDCollType.Arr);
+	MiNDToken MTMEMBER_CONTEXT_CHANGE = Giskard.defineToken(MiNDTokenType.Member, "Change", MTTYPE_CONTEXT, MiNDValType.Link, MiNDCollType.One);
+
+	MiNDToken MTTYPE_COMMIT = Giskard.defineToken(MiNDTokenType.Type, "Commit", MTUNIT_DIALOG);
 
 	MiNDToken MTTAG_ACCESSCOMMAND = Giskard.defineToken(MiNDTokenType.Tag, "AccessCommand", MTUNIT_DIALOG, MiNDAccessCommand.class);
 	MiNDToken MTTAG_ACCESSCOMMAND_CHK = Giskard.defineToken(MiNDTokenType.Tag, "Chk", MTTAG_ACCESSCOMMAND, MiNDAccessCommand.Chk);
@@ -96,13 +94,13 @@ public interface DustTokensMind extends GiskardConsts, DustTokensGeneric {
 	MiNDToken MTTAG_RESULTTYPE_READ = Giskard.defineToken(MiNDTokenType.Tag, "Read", MTTAG_RESULTTYPE, MiNDResultType.Read);
 	MiNDToken MTTAG_RESULTTYPE_WAIT = Giskard.defineToken(MiNDTokenType.Tag, "Wait", MTTAG_RESULTTYPE, MiNDResultType.Wait);
 	
-	MiNDToken MTAGENT_CTRL_ITERATION = Giskard.defineToken(MiNDTokenType.Agent, "Iteration", MTUNIT_NARRATIVE);
-	MiNDToken MTAGENT_CTRL_SEQUENCE = Giskard.defineToken(MiNDTokenType.Agent, "Sequence", MTUNIT_NARRATIVE);
-	MiNDToken MTAGENT_CTRL_SELECTION = Giskard.defineToken(MiNDTokenType.Agent, "Selection", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_CTRLITERATION = Giskard.defineToken(MiNDTokenType.Agent, "CtrlIteration", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_CTRLSEQUENCE = Giskard.defineToken(MiNDTokenType.Agent, "CtrlSequence", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_CTRLSELECTION = Giskard.defineToken(MiNDTokenType.Agent, "CtrlSelection", MTUNIT_NARRATIVE);
 
-	MiNDToken MTAGENT_DATA_LISTALL = Giskard.defineToken(MiNDTokenType.Agent, "FindAll", MTUNIT_NARRATIVE);
-	MiNDToken MTAGENT_DATA_VISIT = Giskard.defineToken(MiNDTokenType.Agent, "Visit", MTUNIT_NARRATIVE);
-	MiNDToken MTAGENT_DATA_READ = Giskard.defineToken(MiNDTokenType.Agent, "Read", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATALISTALL = Giskard.defineToken(MiNDTokenType.Agent, "DataListAll", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATAVISIT = Giskard.defineToken(MiNDTokenType.Agent, "DataVisit", MTUNIT_NARRATIVE);
+	MiNDToken MTAGENT_DATAREAD = Giskard.defineToken(MiNDTokenType.Agent, "DataRead", MTUNIT_NARRATIVE);
 //	MiNDToken MTAGENT_DATA_COLLECT = Giskard.defineToken(MiNDTokenType.Agent, "Collect", MTUNIT_NARRATIVE);
 
 	MiNDToken MTTAG_AGENTACTION = Giskard.defineToken(MiNDTokenType.Tag, "AgentAction", MTUNIT_NARRATIVE);

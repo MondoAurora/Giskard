@@ -1,5 +1,12 @@
 Brain dump
 
+Create a new project, source level included in all modules, contains util functions that require DustGen
+ - things in DustTokens
+ - text manipulation (and clean existing codes, export DB)
+ - event utilities
+ 
+Cleanup runtime, it's a mess now...
+
 DB
  - Text table should have a unit id. 
   > When loading a unit, all valid texts for a language can be loaded in one call, that's the resource of the unit.

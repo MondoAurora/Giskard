@@ -26,12 +26,12 @@ public interface DustRuntimeNotifier extends DustRuntimeConsts {
 			boolean ret = false;
 
 			if ( !listeners.isEmpty() ) {
-				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
+				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_CONTEXT_CHANGE);
 				
 				if ( null == chg ) {
 					// TODO replace with createIfMissing Tag on MTMEMBER_DIALOG_CHANGE
 					chg = Giskard.access(MiNDAccessCommand.Get, MTTYPE_VISITINFO);
-					Giskard.access(MiNDAccessCommand.Set, chg, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
+					Giskard.access(MiNDAccessCommand.Set, chg, MTMEMBER_ACTION_DIALOG, MTMEMBER_CONTEXT_CHANGE);
 				}
 
 				Giskard.access(MiNDAccessCommand.Set, block, chg, MTMEMBER_LINK_ONE);

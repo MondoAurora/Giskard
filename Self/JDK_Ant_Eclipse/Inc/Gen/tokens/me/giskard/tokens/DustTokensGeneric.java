@@ -47,8 +47,8 @@ public interface DustTokensGeneric extends GiskardConsts {
 	MiNDToken MTMEMBER_ITERATOR_INDEX = Giskard.defineToken(MiNDTokenType.Member, "Index", MTTYPE_ITERATOR, MiNDValType.Int, MiNDCollType.One);
 	
 	MiNDToken MTTYPE_RANGE = Giskard.defineToken(MiNDTokenType.Type, "Range", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_RANGE_INT_MIN = Giskard.defineToken(MiNDTokenType.Member, "IntMin", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
-	MiNDToken MTMEMBER_RANGE_INT_MAX = Giskard.defineToken(MiNDTokenType.Member, "IntMax", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTMEMBER_RANGE_INTMIN = Giskard.defineToken(MiNDTokenType.Member, "IntMin", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTMEMBER_RANGE_INTMAX = Giskard.defineToken(MiNDTokenType.Member, "IntMax", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
 	
 	MiNDToken MTTYPE_SPLIT = Giskard.defineToken(MiNDTokenType.Type, "Split", MTUNIT_GENERIC);
 	MiNDToken MTMEMBER_SPLIT_WEIGHT = Giskard.defineToken(MiNDTokenType.Member, "Weight", MTTYPE_SPLIT, MiNDValType.Real, MiNDCollType.Arr);

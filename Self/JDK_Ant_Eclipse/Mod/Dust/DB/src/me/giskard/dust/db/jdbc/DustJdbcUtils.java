@@ -19,7 +19,7 @@ public class DustJdbcUtils implements DustJdbcConsts {
 	public static Connection optCreateConn(Object hDBConn, Connection conn) throws Exception {
 		if ( (null == conn) || conn.isClosed() ) {
 			String dbName = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_PLAIN_STRING);
-			String dbUrl = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_URL);
+			String dbUrl = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_STREAM_URL);
 			if ( !GiskardUtils.isEmpty(dbName) && !dbUrl.endsWith(dbName) ) {
 				dbUrl += "/" + dbName;
 			}

@@ -19,13 +19,13 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		DustTokens.addModule(MODULE_NAME, MODULE_VER);
 
 		// Agent implementation data
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_ITERATION, DustRuntimeAgentControl.Iteration.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SEQUENCE, DustRuntimeAgentControl.Sequence.class);
-		DustTokens.addModuleImpInfo(MTAGENT_CTRL_SELECTION, DustRuntimeAgentControl.Selection.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRLITERATION, DustRuntimeAgentControl.Iteration.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRLSEQUENCE, DustRuntimeAgentControl.Sequence.class);
+		DustTokens.addModuleImpInfo(MTAGENT_CTRLSELECTION, DustRuntimeAgentControl.Selection.class);
 
-		DustTokens.addModuleImpInfo(MTAGENT_DATA_LISTALL, DustRuntimeAgentData.ListAll.class);
-		DustTokens.addModuleImpInfo(MTAGENT_DATA_VISIT, DustRuntimeAgentData.Visit.class);
-		DustTokens.addModuleImpInfo(MTAGENT_DATA_READ, DustRuntimeAgentData.Read.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATALISTALL, DustRuntimeAgentData.ListAll.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATAVISIT, DustRuntimeAgentData.Visit.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DATAREAD, DustRuntimeAgentData.Read.class);
 //		DustTokens.addModuleImpInfo(MTAGENT_DATA_COLLECT, DustRuntimeAgentData.Collect.class);
 
 		//	enum MiNDTokenType { Unit, Type, Member, Tag, Service, Agent, Local	}

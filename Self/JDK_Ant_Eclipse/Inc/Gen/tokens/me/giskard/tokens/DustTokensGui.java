@@ -31,18 +31,21 @@ public interface DustTokensGui extends DustTokensMind {
 	MiNDToken MTAGENT_PANEL = Giskard.defineToken(MiNDTokenType.Agent, "Panel", MTUNIT_GUI);
 	MiNDToken MTAGENT_LABEL = Giskard.defineToken(MiNDTokenType.Agent, "Label", MTUNIT_GUI);
 	
-	MiNDToken MTTAG_BORDER_LINE = Giskard.defineToken(MiNDTokenType.Tag, "BorderLine", MTUNIT_GUI);
-	MiNDToken MTTAG_BORDER_TEXT = Giskard.defineToken(MiNDTokenType.Tag, "BorderLine", MTUNIT_GUI);
+	MiNDToken MTTAG_BORDER = Giskard.defineToken(MiNDTokenType.Tag, "Border", MTUNIT_GUI);
+	MiNDToken MTTAG_BORDER_LINE = Giskard.defineToken(MiNDTokenType.Tag, "Line", MTTAG_BORDER);
+	MiNDToken MTTAG_BORDER_TEXT = Giskard.defineToken(MiNDTokenType.Tag, "Text", MTTAG_BORDER);
 
-	MiNDToken MTTAG_LAYOUT_PAGE = Giskard.defineToken(MiNDTokenType.Tag, "LayoutPage", MTUNIT_GUI);
-	MiNDToken MTTAG_LAYOUT_GRID = Giskard.defineToken(MiNDTokenType.Tag, "LayoutGrid", MTUNIT_GUI);
-	MiNDToken MTTAG_LAYOUT_FLOW = Giskard.defineToken(MiNDTokenType.Tag, "LayoutFlow", MTUNIT_GUI);
-	MiNDToken MTTAG_LAYOUT_FREE = Giskard.defineToken(MiNDTokenType.Tag, "LayoutFree", MTUNIT_GUI);
+	MiNDToken MTTAG_LAYOUT = Giskard.defineToken(MiNDTokenType.Tag, "Layout", MTUNIT_GUI);
+	MiNDToken MTTAG_LAYOUT_PAGE = Giskard.defineToken(MiNDTokenType.Tag, "Page", MTTAG_LAYOUT);
+	MiNDToken MTTAG_LAYOUT_GRID = Giskard.defineToken(MiNDTokenType.Tag, "Grid", MTTAG_LAYOUT);
+	MiNDToken MTTAG_LAYOUT_FLOW = Giskard.defineToken(MiNDTokenType.Tag, "Flow", MTTAG_LAYOUT);
+	MiNDToken MTTAG_LAYOUT_FREE = Giskard.defineToken(MiNDTokenType.Tag, "Free", MTTAG_LAYOUT);
 
-	MiNDToken MTTAG_LOC_PAGESTART = Giskard.defineToken(MiNDTokenType.Tag, "LocPageStart", MTUNIT_GUI);
-	MiNDToken MTTAG_LOC_PAGEEND = Giskard.defineToken(MiNDTokenType.Tag, "LocPageEnd", MTUNIT_GUI);
-	MiNDToken MTTAG_LOC_LINESTART = Giskard.defineToken(MiNDTokenType.Tag, "LocLineStart", MTUNIT_GUI);
-	MiNDToken MTTAG_LOC_LINEEND = Giskard.defineToken(MiNDTokenType.Tag, "LocLineEnd", MTUNIT_GUI);
-	MiNDToken MTTAG_LOC_CENTER = Giskard.defineToken(MiNDTokenType.Tag, "LocCenter", MTUNIT_GUI);
+	MiNDToken MTTAG_ALIGN = Giskard.defineToken(MiNDTokenType.Tag, "Align", MTUNIT_GUI);
+	MiNDToken MTTAG_ALIGN_PAGESTART = Giskard.defineToken(MiNDTokenType.Tag, "PageStart", MTTAG_ALIGN);
+	MiNDToken MTTAG_ALIGN_PAGEEND = Giskard.defineToken(MiNDTokenType.Tag, "PageEnd", MTTAG_ALIGN);
+	MiNDToken MTTAG_ALIGN_LINESTART = Giskard.defineToken(MiNDTokenType.Tag, "LineStart", MTTAG_ALIGN);
+	MiNDToken MTTAG_ALIGN_LINEEND = Giskard.defineToken(MiNDTokenType.Tag, "LineEnd", MTTAG_ALIGN);
+	MiNDToken MTTAG_ALIGN_CENTER = Giskard.defineToken(MiNDTokenType.Tag, "Center", MTTAG_ALIGN);
 	
 }

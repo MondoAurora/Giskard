@@ -31,6 +31,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 			MiNDTokenType tt;
 			TokenInfo pti;
+			String longName;
 			String key;
 			String line;
 
@@ -42,7 +43,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 			public void setTokenType(MiNDTokenType tt) {
 				this.tt = tt;
-				String keyName = name;
+				longName = name;
 
 				StringBuilder param = GiskardUtils.sbAppend(null, ", ", true, tt, "\"" + name + "\"");
 
@@ -54,14 +55,28 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 					if ( null != pti ) {
 						GiskardUtils.sbAppend(param, ", ", true, pti.key);
 
-						switch ( pti.tt ) {
-						case Tag:
-						case Type:
-							keyName = pti.name + "_" + keyName;
-							break;
-						default:
-							break;
-						}
+//						boolean addParent = false;
+//						switch ( pti.tt ) {
+//						case Tag:
+//						case Type:
+//							addParent = true;
+//							break;
+//						default:
+//							break;
+//						}
+//						
+//						switch ( tt ) {
+//						case Tag:
+//						case Type:
+//							addParent = true;
+//							break;
+//						default:
+//							break;
+//						}
+//						
+//						if ( addParent ) {
+						longName = pti.longName + "_" + longName;
+//						}
 					}
 				}
 
@@ -75,9 +90,14 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 					GiskardUtils.sbAppend(param, ", ", true, "MiNDValType." + mvt, "MiNDCollType." + mct);
 				}
 
-				key = MessageFormat.format(PATTERN_KEY, tt, keyName).toUpperCase();
+				key = MessageFormat.format(PATTERN_KEY, tt.prefix, longName).toUpperCase();
 
 				line = MessageFormat.format(PATTERN_TOKEN, key, param);
+			}
+			
+			@Override
+			public String toString() {
+				return line;
 			}
 		}
 
@@ -94,7 +114,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 			void add(TokenInfo ti) {
 				if ( ti != this.ti ) {
-					int lastRow = content.lastIndexOf(ti.pti.key);
+					int lastRow = content.indexOf(ti.pti.key);
 					lastRow = content.indexOf("\n", lastRow);
 					content.insert(lastRow, ti.line);
 				}
@@ -107,6 +127,9 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
         try {
             fw = new FileWriter(f);
             fw.write(content.toString());
+            
+    				Giskard.log(MiNDEventLevel.Info, "\n====== DustTokens" + ti.name + ".java ======\n" + content + "\n");
+
         } finally {
           if ( fw != null ) {
             fw.close();
@@ -116,7 +139,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 			@Override
 			public String toString() {
-				return "\n====== DustTokens" + ti.name + ".java ======\n" + content + "\n";
+				return content.toString();
 			}
 		}
 
@@ -181,7 +204,6 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 			for (Object unit : factUnits.keys()) {
 				SourceUnit u = factUnits.peek(unit);
 				u.save(rootDir);
-				Giskard.log(MiNDEventLevel.Info, u);
 			}
 		}
 	}

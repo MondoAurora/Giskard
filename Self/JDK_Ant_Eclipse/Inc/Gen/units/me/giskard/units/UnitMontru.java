@@ -59,9 +59,9 @@ public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensG
 
 		Object pnlLeft = Giskard.access(MiNDAccessCommand.Get, MTAGENT_PANEL);
 		Giskard.access(MiNDAccessCommand.Add, MTTAG_LAYOUT_PAGE, pnlLeft, MTMEMBER_ENTITY_TAGS);
-		Giskard.access(MiNDAccessCommand.Add, lblViewSel, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_LOC_PAGESTART);
-		Giskard.access(MiNDAccessCommand.Add, pnlFilter, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_LOC_CENTER);
-		Giskard.access(MiNDAccessCommand.Add, lblCtrl, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_LOC_PAGEEND);
+		Giskard.access(MiNDAccessCommand.Add, lblViewSel, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_ALIGN_PAGESTART);
+		Giskard.access(MiNDAccessCommand.Add, pnlFilter, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_ALIGN_CENTER);
+		Giskard.access(MiNDAccessCommand.Add, lblCtrl, pnlLeft, MTMEMBER_LINK_MAP, MTTAG_ALIGN_PAGEEND);
 		
 		Object pnlMain = Giskard.access(MiNDAccessCommand.Get, MTAGENT_PANEL);
 		Giskard.access(MiNDAccessCommand.Add, MTTAG_LAYOUT_GRID, pnlMain, MTMEMBER_ENTITY_TAGS);
@@ -72,7 +72,7 @@ public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensG
 		Giskard.access(MiNDAccessCommand.Add, 0.8, pnlMain, MTMEMBER_SPLIT_WEIGHT);
 
 
-		Giskard.access(MiNDAccessCommand.Set, pnlMain, MTUNIT_MONTRU, MTMEMBER_UNIT_SERVICES, MTSERVICE_GUI);
+		Giskard.access(MiNDAccessCommand.Set, pnlMain, MTUNIT_MONTRU, MTMEMBER_UNIT_SERVICES, MTSERVICE_GUIMAIN);
 
 	}
 }

@@ -27,9 +27,9 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 
 			// deep copy of all entities
 
-			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, hDlg, MTMEMBER_DIALOG_ACTIVITIES, KEY_SIZE);
+			int actCount = Giskard.access(MiNDAccessCommand.Get, 0, hDlg, MTMEMBER_CONTEXT_ACTIVITIES, KEY_SIZE);
 			for (int i = 0; i < actCount; ++i) {
-				Integer act = Giskard.access(MiNDAccessCommand.Get, null, hDlg, MTMEMBER_DIALOG_ACTIVITIES, i);
+				Integer act = Giskard.access(MiNDAccessCommand.Get, null, hDlg, MTMEMBER_CONTEXT_ACTIVITIES, i);
 				ctxDialog.rootBlock.access(MiNDAccessCommand.Set, act, MTMEMBER_ACTIVITY_INSTANCE, null);
 				activities.add(createActivity(this));
 			}
@@ -230,7 +230,7 @@ public class DustRuntimeMachine implements DustRuntimeConsts, DustRuntimeNotifie
 		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_DIALOG_CHANGE);
+				Object chg = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_CONTEXT_CHANGE);
 				Object pt = Giskard.access(MiNDAccessCommand.Get, null, chg, MTMEMBER_VISITINFO_TOKEN);
 
 				if ( GiskardUtils.isEqual(((DustRuntimeToken) MTMEMBER_MACHINE_MODULES).entityHandle, pt) ) {

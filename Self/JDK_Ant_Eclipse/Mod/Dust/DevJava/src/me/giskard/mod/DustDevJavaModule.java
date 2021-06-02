@@ -12,7 +12,7 @@ public class DustDevJavaModule implements GiskardConsts.MiNDAgent, DustTokensDev
 	public MiNDResultType mindAgentProcess() throws Exception {
 		Giskard.log(MiNDEventLevel.Trace, "DevJava module initializing");
 
-		DustTokens.addModuleImpInfo(MTAGENT_DEV_GEN_TOKENS, DustDevJavaAgentGenTokens.class);
+		DustTokens.addModuleImpInfo(MTAGENT_DEV_GENTOKENS, DustDevJavaAgentGenTokens.class);
 
 		return MiNDResultType.Accept;
 	}

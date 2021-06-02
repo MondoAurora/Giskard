@@ -71,8 +71,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		} else {
 			Giskard.log(MiNDEventLevel.Info, "Starting test", testId);
 
-			Object hDlg = Giskard.access(MiNDAccessCommand.Get, MTTYPE_DIALOG);
-			Giskard.access(MiNDAccessCommand.Add, hTest, hDlg, MTMEMBER_DIALOG_ACTIVITIES);
+			Object hDlg = Giskard.access(MiNDAccessCommand.Get, MTTYPE_CONTEXT);
+			Giskard.access(MiNDAccessCommand.Add, hTest, hDlg, MTMEMBER_CONTEXT_ACTIVITIES);
 			Giskard.access(MiNDAccessCommand.Add, hDlg, MTSHARED_MACHINE, MTMEMBER_MACHINE_DIALOGS);
 
 			return MiNDResultType.Accept;
@@ -80,19 +80,19 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	static Object testSrc() {
-		Object hList = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_LISTALL);
-		Object hDevTokens = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DEV_GEN_TOKENS);
+		Object hList = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATALISTALL);
+		Object hDevTokens = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DEV_GENTOKENS);
 
-		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);		
+		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);		
 		Giskard.access(MiNDAccessCommand.Add, hList, hS1, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, hDevTokens, hS1, MTMEMBER_LINK_ARR);
 
 		
-		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
-		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INT_MAX);
+		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLITERATION);
+		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INTMAX);
 		Giskard.access(MiNDAccessCommand.Set, hS1, hIter, MTMEMBER_LINK_ONE);
 		
-		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
 		Giskard.access(MiNDAccessCommand.Add, hIter, hTop, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, hDevTokens, hTop, MTMEMBER_LINK_ARR);
 		
@@ -102,15 +102,15 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	static Object testVisit() {
 		Object hDBConn = testDB();
 
-		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+		Object hTop = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
 
-		Object hMain = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
+		Object hMain = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLITERATION);
 
-		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
-		Object hList = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_LISTALL);
-		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
-		Object hS2 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
-		Object hVisit = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATA_VISIT);
+		Object hS1 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
+		Object hList = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATALISTALL);
+		Object hIter = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLITERATION);
+		Object hS2 = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
+		Object hVisit = Giskard.access(MiNDAccessCommand.Get, MTAGENT_DATAVISIT);
 		
 		Giskard.access(MiNDAccessCommand.Add, hVisit, hS2, MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, hDBConn, hS2, MTMEMBER_LINK_ARR);
@@ -122,8 +122,8 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 
 		Giskard.access(MiNDAccessCommand.Set, hS1, hMain, MTMEMBER_LINK_ONE);
 		
-		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INT_MAX);
-		Giskard.access(MiNDAccessCommand.Set, 500, hMain, MTMEMBER_RANGE_INT_MAX);
+		Giskard.access(MiNDAccessCommand.Set, 500, hIter, MTMEMBER_RANGE_INTMAX);
+		Giskard.access(MiNDAccessCommand.Set, 500, hMain, MTMEMBER_RANGE_INTMAX);
 		
 		
 		Giskard.access(MiNDAccessCommand.Add, hMain, hTop, MTMEMBER_LINK_ARR);
@@ -156,7 +156,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Giskard.access(MiNDAccessCommand.Set, setCoords(600, 400), hRet, MTMEMBER_AREA_CENTER);
 		Giskard.access(MiNDAccessCommand.Set, setCoords(1000, 600), hRet, MTMEMBER_AREA_SPAN);
 
-		Object hGui = Giskard.access(MiNDAccessCommand.Get, null, MTUNIT_MONTRU, MTMEMBER_UNIT_SERVICES, MTSERVICE_GUI);
+		Object hGui = Giskard.access(MiNDAccessCommand.Get, null, MTUNIT_MONTRU, MTMEMBER_UNIT_SERVICES, MTSERVICE_GUIMAIN);
 		Giskard.access(MiNDAccessCommand.Set, hGui, hRet, MTMEMBER_LINK_ONE);
 
 //		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_ACTION_THIS, MTSHARED_MACHINE, MTMEMBER_MACHINE_DIALOGS);
@@ -190,7 +190,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYPE_DBCONN);
 
 		Giskard.access(MiNDAccessCommand.Set, "com.mysql.cj.jdbc.Driver", hRet, MTMEMBER_DRIVER);
-		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", hRet, MTMEMBER_URL);
+		Giskard.access(MiNDAccessCommand.Set, "jdbc:mysql://localhost:3306", hRet, MTMEMBER_STREAM_URL);
 		Giskard.access(MiNDAccessCommand.Set, "dust", hRet, MTMEMBER_PLAIN_STRING);
 		Giskard.access(MiNDAccessCommand.Set, "serverTimezone=CET", hRet, MTMEMBER_DBCONN_OPTIONS);
 
@@ -211,10 +211,10 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static Object testIterator() throws Exception {
-		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_ITERATION);
+		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLITERATION);
 
-		Giskard.access(MiNDAccessCommand.Set, 0, hRet, MTMEMBER_RANGE_INT_MIN);
-		Giskard.access(MiNDAccessCommand.Set, 10, hRet, MTMEMBER_RANGE_INT_MAX);
+		Giskard.access(MiNDAccessCommand.Set, 0, hRet, MTMEMBER_RANGE_INTMIN);
+		Giskard.access(MiNDAccessCommand.Set, 10, hRet, MTMEMBER_RANGE_INTMAX);
 
 		linkDump(hRet, "Hey, world!", MTMEMBER_LINK_ONE);
 		
@@ -222,7 +222,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static Object testSequence() throws Exception {
-		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
 //		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SEQUENCE, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ENTITY_PRIMARYTYPE);
 
 		linkDump(hRet, "one", MiNDResultType.Accept);
@@ -234,7 +234,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static Object testSelect() throws Exception {
-		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SELECTION);
+		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSELECTION);
 		
 //		Giskard.access(MiNDAccessCommand.Set, MTAGENT_CTRL_SELECTION, MTMEMBER_ACTIVITY_INSTANCE, MTMEMBER_ENTITY_PRIMARYTYPE);
 
@@ -247,7 +247,7 @@ public class GiskardApp implements GiskardConsts, DustTokensGeneric, DustTokensM
 	}
 
 	public static Object testCtrl() throws Exception {
-		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRL_SEQUENCE);
+		Object hRet = Giskard.access(MiNDAccessCommand.Get, MTAGENT_CTRLSEQUENCE);
 
 		linkDump(hRet, "Testing Iterator", MTMEMBER_LINK_ARR);
 		Giskard.access(MiNDAccessCommand.Add, testIterator(), hRet, MTMEMBER_LINK_ARR);
