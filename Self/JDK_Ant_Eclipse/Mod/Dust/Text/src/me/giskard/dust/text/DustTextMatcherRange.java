@@ -16,7 +16,7 @@ public class DustTextMatcherRange implements DustTextConsts, GiskardConsts.MiNDA
 
 	@Override
 	public MiNDResultType mindAgentProcess() throws Exception {
-		int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VALUE_RAW);
+		int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEM_GENERIC_VALUE_RAW);
 		return ((rangeMin <= chr) && (chr <= rangeMax)) ? MiNDResultType.Accept : MiNDResultType.Reject;
 	}
 

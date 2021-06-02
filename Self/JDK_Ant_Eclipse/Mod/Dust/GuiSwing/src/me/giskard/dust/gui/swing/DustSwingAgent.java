@@ -33,7 +33,7 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 
 		@Override
 		public MiNDResultType mindAgentProcess() throws Exception {
-			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
+			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEM_GENERIC_ACTION_THIS, MTMEM_TEXT_PLAINTEXT_STRING);
 			comp.setText(label);
 			return MiNDResultType.Accept;
 		}
@@ -65,15 +65,15 @@ public abstract class DustSwingAgent<CompType> implements DustSwingConsts, Giska
 			comp.pack();
 			comp.setVisible(true);
 
-			Giskard.access(MiNDAccessCommand.Set, comp, MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
+			Giskard.access(MiNDAccessCommand.Set, comp, MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_VALUE_RAW);
 
 			mindAgentProcess();
 		}
 		
 		@Override
 		public MiNDResultType mindAgentProcess() throws Exception {
-			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
-			Rectangle rct = DustSwingUtils.toRect(MTMEMBER_ACTION_THIS);
+			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEM_GENERIC_ACTION_THIS, MTMEM_TEXT_PLAINTEXT_STRING);
+			Rectangle rct = DustSwingUtils.toRect(MTMEM_GENERIC_ACTION_THIS);
 
 			Giskard.log(MiNDEventLevel.Info, "Frame", label, ", rectangle (", rct, ")");
 

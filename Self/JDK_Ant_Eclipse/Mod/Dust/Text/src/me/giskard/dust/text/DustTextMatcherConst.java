@@ -28,14 +28,14 @@ public class DustTextMatcherConst implements DustTextConsts, GiskardConsts.MiNDA
 
 	@Override
 	public void mindAgentBegin() throws Exception {
-		String str = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_PLAIN_STRING);
+		String str = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_THIS, MTMEM_TEXT_PLAINTEXT_STRING);
 		load(str);
 		idx = 0;
 	}
 
 	@Override
 	public MiNDResultType mindAgentProcess() throws Exception {
-		int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_VALUE_RAW);
+		int chr = Giskard.access(MiNDAccessCommand.Get, -1, MTMEM_GENERIC_VALUE_RAW);
 		return (chr == cpArr[idx]) ? (++idx < size) ? MiNDResultType.Read : MiNDResultType.Accept : MiNDResultType.Reject;
 	}
 

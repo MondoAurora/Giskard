@@ -9,10 +9,10 @@ public class DustToolsDump implements DustToolsConsts, GiskardConsts.MiNDAgent {
 
 	@Override
 	public MiNDResultType mindAgentProcess() throws Exception {
-		Object val = Giskard.access(MiNDAccessCommand.Get, "Not configured.", MTMEMBER_ACTION_THIS, MTMEMBER_VALUE_RAW);
+		Object val = Giskard.access(MiNDAccessCommand.Get, "Not configured.", MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_VALUE_RAW);
 		
 		MiNDToken resp = Giskard.access(MiNDAccessCommand.Get, GisToolsTokenTranslator.toToken(MiNDResultType.Accept),
-				MTMEMBER_ACTION_THIS, MTMEMBER_ENTITY_TAGS);
+				MTMEM_GENERIC_ACTION_THIS, MTMEM_MODEL_ENTITY_TAGS);
 		MiNDResultType ret = (MiNDResultType) GisToolsTokenTranslator.toEnum(resp);
 		
 		if ( GiskardUtils.isAgentAccept(ret) ) {

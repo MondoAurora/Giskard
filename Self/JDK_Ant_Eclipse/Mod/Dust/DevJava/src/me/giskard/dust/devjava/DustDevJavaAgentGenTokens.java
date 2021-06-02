@@ -13,8 +13,10 @@ import me.giskard.tokens.DustTokensTemp;
 import me.giskard.tools.GisToolsTokenTranslator;
 
 public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensTemp, GiskardConsts.MiNDAgent {
+	
+	static boolean DEV = true;
 
-	static String GEN_PACKAGE = "me.giskard.gen.tokens";
+	static String GEN_PACKAGE = DEV ? "me.giskard.gen.tokens" : "me.giskard.tokens";
 
 	static String PATTERN_SRC = "package " + GEN_PACKAGE + ";\n\n" + "import me.giskard.Giskard;\n"
 			+ "import me.giskard.GiskardConsts;\n\n" + "public interface DustTokens%s extends GiskardConsts { %s \n}\n";
@@ -37,8 +39,8 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 			public TokenInfo(Object entity) {
 				this.entity = entity;
-				this.unit = GiskardUtils.getIter(entity, MTMEMBER_CONN_OWNER);
-				name = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_PLAIN_STRING);
+				this.unit = GiskardUtils.getIter(entity, MTMEM_GENERIC_CONN_OWNER);
+				name = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_TEXT_PLAINTEXT_STRING);
 			}
 
 			public void setTokenType(MiNDTokenType tt) {
@@ -47,42 +49,20 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 				StringBuilder param = GiskardUtils.sbAppend(null, ", ", true, tt, "\"" + name + "\"");
 
-				Object parent = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_CONN_OWNER);
+				Object parent = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_GENERIC_CONN_OWNER);
 
 				if ( null != parent ) {
 					pti = factTokens.get(parent);
 
 					if ( null != pti ) {
 						GiskardUtils.sbAppend(param, ", ", true, pti.key);
-
-//						boolean addParent = false;
-//						switch ( pti.tt ) {
-//						case Tag:
-//						case Type:
-//							addParent = true;
-//							break;
-//						default:
-//							break;
-//						}
-//						
-//						switch ( tt ) {
-//						case Tag:
-//						case Type:
-//							addParent = true;
-//							break;
-//						default:
-//							break;
-//						}
-//						
-//						if ( addParent ) {
 						longName = pti.longName + "_" + longName;
-//						}
 					}
 				}
 
 				if ( tt == MiNDTokenType.Member ) {
-					Object vt = Giskard.access(MiNDAccessCommand.Get, MTTAG_VALTYPE_RAW, entity, MTMEMBER_ENTITY_TAGS);
-					Object ct = Giskard.access(MiNDAccessCommand.Get, MTTAG_COLLTYPE_ONE, entity, MTMEMBER_ENTITY_TAGS);
+					Object vt = Giskard.access(MiNDAccessCommand.Get, MTTAG_IDEA_VALTYPE_RAW, entity, MTMEM_MODEL_ENTITY_TAGS);
+					Object ct = Giskard.access(MiNDAccessCommand.Get, MTTAG_IDEA_COLLTYPE_ONE, entity, MTMEM_MODEL_ENTITY_TAGS);
 
 					Object mvt = (MiNDValType) GisToolsTokenTranslator.toEnum((MiNDToken) vt);
 					Object mct = (MiNDCollType) GisToolsTokenTranslator.toEnum((MiNDToken) ct);
@@ -108,7 +88,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 			public SourceUnit(Object unit) {
 				this.ti = factTokens.get(unit);
 
-				String name = Giskard.access(MiNDAccessCommand.Get, null, unit, MTMEMBER_PLAIN_STRING);
+				String name = Giskard.access(MiNDAccessCommand.Get, null, unit, MTMEM_TEXT_PLAINTEXT_STRING);
 				content = new StringBuilder(String.format(PATTERN_SRC, name, ti.line));
 			}
 
@@ -143,7 +123,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 			}
 		}
 
-		Object hRoot = MTMEMBER_ACTION_DIALOG;
+		Object hRoot = MTMEM_GENERIC_ACTION_DIALOG;
 
 		SourceUnit currUnit;
 
@@ -161,7 +141,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 					public TokenInfo create(Object key) {
 						TokenInfo ret = null;
 
-						MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEMBER_ENTITY_PRIMARYTYPE);
+						MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEM_MODEL_ENTITY_PRIMARYTYPE);						
 						Object o = GisToolsTokenTranslator.toEnum(pt);
 
 						if ( o instanceof MiNDTokenType ) {
@@ -177,12 +157,12 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 				});
 
 		public void step() throws Exception {
-			Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_LINK_ONE);
+			Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEM_GENERIC_LINK_ONE);
 
 			if ( null == entity ) {
 				save();
 			} else {
-				MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_PRIMARYTYPE);
+				MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_MODEL_ENTITY_PRIMARYTYPE);
 				Object o = GisToolsTokenTranslator.toEnum(pt);
 
 				if ( o instanceof MiNDTokenType ) {
@@ -193,7 +173,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 		private void save() throws Exception {
 			String root = GEN_PACKAGE.replace('.', '/');
-			root = "Self/JDK_Ant_Eclipse/Inc/Gen/dev/" + root;
+			root = (DEV ? "Self/JDK_Ant_Eclipse/Inc/Gen/dev/" : "Self/JDK_Ant_Eclipse/Inc/Gen/tokens/" ) + root;
 			
 			File rootDir = new File(GiskardUtils.getRoot(), root);
 			
@@ -212,15 +192,15 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 	@Override
 	public MiNDResultType mindAgentProcess() throws Exception {
-		Object sw = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
+		Object sw = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_TEMP_TEMP_SERIALIZER);
 
 		if ( null == sw ) {
 			srcWriter = new SourceWriter();
-			Giskard.access(MiNDAccessCommand.Set, srcWriter, MTMEMBER_ACTION_DIALOG, MTMEMBER_TEMP_SERIALIZER);
-			Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_LOAD, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
+			Giskard.access(MiNDAccessCommand.Set, srcWriter, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_TEMP_TEMP_SERIALIZER);
+			Giskard.access(MiNDAccessCommand.Set, MTTAG_TEMP_SERIALIZEMODE_LOAD, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_MODEL_ENTITY_TAGS);
 		} else {
 			srcWriter = (SourceWriter) sw;
-			Giskard.access(MiNDAccessCommand.Set, MTTAG_SERIALIZEMODE_SAVE, MTMEMBER_ACTION_DIALOG, MTMEMBER_ENTITY_TAGS);
+			Giskard.access(MiNDAccessCommand.Set, MTTAG_TEMP_SERIALIZEMODE_SAVE, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_MODEL_ENTITY_TAGS);
 		}
 
 		srcWriter.step();

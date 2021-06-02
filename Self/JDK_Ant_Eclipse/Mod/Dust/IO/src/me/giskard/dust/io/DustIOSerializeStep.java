@@ -33,12 +33,12 @@ public class DustIOSerializeStep implements DustIOTokens {
 	}
 
 	public Object publish(MiNDToken target) {
-		Giskard.access(MiNDAccessCommand.Set, item, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
-		Object val = (item == DustIOConsts.MTTAG_VALTYPE_LINK) ? ((Map.Entry<?,?>) data).getKey()
-				: (item == DustIOConsts.MTTAG_VALTYPE_RAW) ? data : null;
-		Giskard.access(MiNDAccessCommand.Set, val, MTTYPE_SERIALIZEEVENT, DustIOConsts.MTMEMBER_VALUE_RAW);
-//		GisToolsTokenTranslator.setEnumToken(MTTYPE_SERIALIZEEVENT, action);
-		Giskard.access(MiNDAccessCommand.Set, action, MTTYPE_SERIALIZEEVENT, MTMEMBER_ENTITY_TAGS);
+		Giskard.access(MiNDAccessCommand.Set, item, MTTYP_IO_SERIALIZEEVENT, MTMEM_MODEL_ENTITY_TAGS);
+		Object val = (item == DustIOConsts.MTTAG_IDEA_VALTYPE_LINK) ? ((Map.Entry<?,?>) data).getKey()
+				: (item == DustIOConsts.MTTAG_IDEA_VALTYPE_RAW) ? data : null;
+		Giskard.access(MiNDAccessCommand.Set, val, MTTYP_IO_SERIALIZEEVENT, DustIOConsts.MTMEM_GENERIC_VALUE_RAW);
+//		GisToolsTokenTranslator.setEnumToken(MTTYP_SERIALIZEEVENT, action);
+		Giskard.access(MiNDAccessCommand.Set, action, MTTYP_IO_SERIALIZEEVENT, MTMEM_MODEL_ENTITY_TAGS);
 		return val;
 	}
 

@@ -115,7 +115,7 @@ public class DustRuntimeDataContext
 			case Get:
 				if ( val instanceof DustRuntimeToken ) {
 					DustRuntimeDataBlock e = createEntity();
-					e.access(MiNDAccessCommand.Set, val, MTMEMBER_ENTITY_PRIMARYTYPE, null);
+					e.access(MiNDAccessCommand.Set, val, MTMEM_MODEL_ENTITY_PRIMARYTYPE, null);
 					ret = e.getHandle();
 				}
 				break;
@@ -135,7 +135,7 @@ public class DustRuntimeDataContext
 					&& (((DustRuntimeToken) val).getType() != MiNDTokenType.Tag) ) {
 				Object block = rootBlock.access(MiNDAccessCommand.Get, null, (MiNDToken) val, null);
 				if ( null == block ) {
-					block = rootBlock.access(MiNDAccessCommand.Get, block, MTMEMBER_CONTEXT_TOKENS, val);
+					block = rootBlock.access(MiNDAccessCommand.Get, block, MTMEM_DIALOG_CONTEXT_TOKENS, val);
 				}
 				val = block;
 			}

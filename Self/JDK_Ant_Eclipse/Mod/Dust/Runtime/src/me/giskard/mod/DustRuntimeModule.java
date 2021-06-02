@@ -14,6 +14,8 @@ public class DustRuntimeModule implements GiskardConsts.MiNDAgentResource, DustR
 		runtime.init(this);
 		
 		Class.forName("me.giskard.mod.DustRuntimeBoot").getMethod("boot").invoke(null);
+		
+		runtime.afterBoot();
 	}
 
 	@Override

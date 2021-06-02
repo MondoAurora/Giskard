@@ -53,14 +53,14 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 	
 	@Override
 	public String getMiNDName() {
-		Object ret = getValue(MTMEMBER_PLAIN_STRING);
+		Object ret = getValue(MTMEM_TEXT_PLAINTEXT_STRING);
 		
 		if ( null == ret ) {
-			ret = getValue(MTMEMBER_ENTITY_ID_GLOBAL);
+			ret = getValue(MTMEM_MODEL_ENTITY_IDGLOBAL);
 		}
 		
 		if ( null == ret ) {
-			ret = getValue(MTMEMBER_ENTITY_HANDLE);
+			ret = getValue(MTMEM_MODEL_ENTITY_HANDLE);
 		}
 		
 		return GiskardUtils.toString(ret);
@@ -78,7 +78,7 @@ public class DustRuntimeDataBlock implements DustRuntimeConsts, MiNDNamed {
 	public <RetType> RetType access(DustNotifier notif, MiNDAccessCommand cmd, RetType val, MiNDToken mt, Object key) {
 		if ( null == mt ) {
 			return (RetType) this;
-		} else if ( MTMEMBER_ENTITY_HANDLE == mt ) {
+		} else if ( MTMEM_MODEL_ENTITY_HANDLE == mt ) {
 			return (RetType) handle;
 		}
 

@@ -28,7 +28,7 @@ public abstract class DustRuntimeDataCollection<CollectorType> implements DustRu
 		case Map:
 			return new ValMap(owner, token);
 		case Set:
-			return (MTMEMBER_ENTITY_TAGS == token) ? new TagManager(owner, token) : new ValSet(owner, token);
+			return (MTMEM_MODEL_ENTITY_TAGS == token) ? new TagManager(owner, token) : new ValSet(owner, token);
 		default:
 			return null;
 		}

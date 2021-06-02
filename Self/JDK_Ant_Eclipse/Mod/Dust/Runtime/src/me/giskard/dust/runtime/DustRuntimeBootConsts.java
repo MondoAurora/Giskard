@@ -15,6 +15,7 @@ public interface DustRuntimeBootConsts extends GiskardConsts {
 	
 	public interface DustGiskard {
 		void init(MiNDAgent agent) throws Exception;
+		void afterBoot();
 	}
 
 	public interface DustNotifier {

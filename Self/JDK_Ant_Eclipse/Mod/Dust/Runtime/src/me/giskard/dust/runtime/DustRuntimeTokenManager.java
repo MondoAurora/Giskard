@@ -70,30 +70,47 @@ class DustRuntimeTokenManager implements DustRuntimeConsts {
 		
 		Giskard.log(MiNDEventLevel.Info, "Registering token", id, "->", th);
 		
-		ctx.rootBlock.access(MiNDAccessCommand.Add, th, MTMEMBER_CONTEXT_TOKENS, token);
+		ctx.rootBlock.access(MiNDAccessCommand.Add, th, MTMEM_DIALOG_CONTEXT_TOKENS, token);
 
-		te.access(MiNDAccessCommand.Set, token.getName(), MTMEMBER_PLAIN_STRING, null);
+		te.access(MiNDAccessCommand.Set, token.getName(), MTMEM_TEXT_PLAINTEXT_STRING, null);
 
 		DustRuntimeToken p = token.getParent();
 		if ( null != p ) {
-			te.access(MiNDAccessCommand.Set, p.getEntityHandle(this), MTMEMBER_CONN_OWNER, null);
+			te.access(MiNDAccessCommand.Set, p.getEntityHandle(this), MTMEM_GENERIC_CONN_OWNER, null);
 		}
 
 		DustRuntimeToken t = DustRuntimeUtils.getTypeToken(token);
 
 		if ( null != t ) {
-			te.access(MiNDAccessCommand.Set, t, MTMEMBER_ENTITY_PRIMARYTYPE, null);			
+			te.access(MiNDAccessCommand.Set, t, MTMEM_MODEL_ENTITY_PRIMARYTYPE, null);			
 		}
 		
-		if ( token.getType() == MiNDTokenType.Member ) {
-			MiNDToken o = GisToolsTokenTranslator.toToken(token.getCollType());
-			te.access(MiNDAccessCommand.Add, o, MTMEMBER_ENTITY_TAGS, null);
-			o = GisToolsTokenTranslator.toToken(token.getValType());
-			te.access(MiNDAccessCommand.Add, o, MTMEMBER_ENTITY_TAGS, null);
-		}
+		optUpdateTokenEntity(token);
 
-		te.access(MiNDAccessCommand.Set, token.getId(), MTMEMBER_ENTITY_ID_GLOBAL, null);
-		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(this), MTMEMBER_ENTITY_UNIT, null);
+		te.access(MiNDAccessCommand.Set, token.getId(), MTMEM_MODEL_ENTITY_IDGLOBAL, null);
+		te.access(MiNDAccessCommand.Set, token.getRoot().getEntityHandle(this), MTMEM_MODEL_ENTITY_UNIT, null);
+	}
+
+	public void updateTokenEntities() {
+		for ( DustRuntimeToken drt : tokensByHandle.values() ) {
+			optUpdateTokenEntity(drt);
+		}
+	}
+
+	public void optUpdateTokenEntity(DustRuntimeToken token) {
+		if ( token.getType() == MiNDTokenType.Member ) {
+			int th = token.getEntityHandle(this);
+			DustRuntimeDataBlock te = ctx.getEntity(th);
+
+			MiNDToken o = GisToolsTokenTranslator.toToken(token.getCollType());
+			if ( null != o ) {
+				te.access(MiNDAccessCommand.Add, o, MTMEM_MODEL_ENTITY_TAGS, null);
+			}
+			o = GisToolsTokenTranslator.toToken(token.getValType());
+			if ( null != o ) {
+				te.access(MiNDAccessCommand.Add, o, MTMEM_MODEL_ENTITY_TAGS, null);
+			}			
+		}
 	}
 
 	@Override

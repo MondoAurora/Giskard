@@ -120,7 +120,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				g.setFont(factFont.get(10 + r));
 
 				Map<Object, Object> ed = factEntityData.get(selectedEntities.get(lbl));
-				String text = GiskardUtils.toString(ed.get(MTMEMBER_PLAIN_STRING));
+				String text = GiskardUtils.toString(ed.get(MTMEM_TEXT_PLAINTEXT_STRING));
 				g.drawString(text, px, py);
 			}
 
@@ -179,7 +179,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				@Override
 				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
-					value = factEntityData.get(value).get(MTMEMBER_ENTITY_ID_GLOBAL);
+					value = factEntityData.get(value).get(MTMEM_MODEL_ENTITY_IDGLOBAL);
 					Component ret = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 					return ret;
 				}
@@ -227,7 +227,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		}
 
 		void optAdd(Object handle, Map<Object, Object> ed) {
-			if ( type == ed.get(MTMEMBER_ENTITY_PRIMARYTYPE) ) {
+			if ( type == ed.get(MTMEM_MODEL_ENTITY_PRIMARYTYPE) ) {
 				if ( items.add(handle) ) {
 					lm.addElement(handle);
 				}
@@ -241,8 +241,8 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 				Object h = ed.get(key);
 				if ( h instanceof MiNDToken ) {
 					// TODO Should check this in debug
-					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_CONTEXT_TOKENS, h);
-//					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_DIALOG_CONTEXT_TOKENS, h);
+//					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_GPR01, MTMEM_MODEL_ENTITY_HANDLE);
 				}
 				if ( items.contains(h) ) {
 					return true;
@@ -252,10 +252,10 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		}
 	}
 
-	Object[] allColumns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_UNIT, MTMEMBER_ENTITY_ID_GLOBAL,
-			MTMEMBER_PLAIN_STRING };
+	Object[] allColumns = { MTMEM_MODEL_ENTITY_PRIMARYTYPE, MTMEM_MODEL_ENTITY_UNIT, MTMEM_MODEL_ENTITY_IDGLOBAL,
+			MTMEM_TEXT_PLAINTEXT_STRING };
 
-	Object[] columns = { MTMEMBER_ENTITY_PRIMARYTYPE, MTMEMBER_ENTITY_UNIT, MTMEMBER_PLAIN_STRING };
+	Object[] columns = { MTMEM_MODEL_ENTITY_PRIMARYTYPE, MTMEM_MODEL_ENTITY_UNIT, MTMEM_TEXT_PLAINTEXT_STRING };
 
 	EnumMap<FilterInfo, Object> filterSettings = new EnumMap<>(FilterInfo.class);
 
@@ -292,14 +292,14 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 		if ( null == pnlMain ) {
 			buildPanel();
 
-			JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
+			JFrame frm = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_VALUE_RAW);
 			frm.getContentPane().add(pnlMain, BorderLayout.CENTER);
 
 			selectView(DEFAULT_VIEW);
 			updateEntityList();
 		}
 
-		Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
+		Giskard.access(MiNDAccessCommand.Set, pnlMain, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_VALUE_RAW);
 
 		return ret;
 	}
@@ -386,7 +386,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 					if ( val instanceof Integer ) {
 						ed = factEntityData.peek(val);
 						if ( null != ed ) {
-							val = ed.get(MTMEMBER_ENTITY_ID_GLOBAL);
+							val = ed.get(MTMEM_MODEL_ENTITY_IDGLOBAL);
 						}
 					}
 
@@ -438,16 +438,16 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 //		};
 //		Giskard.access(MiNDAccessCommand.Use, reader);
 
-		entityCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, KEY_SIZE);
+		entityCount = Giskard.access(MiNDAccessCommand.Get, 0, MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_LINK_ARR, KEY_SIZE);
 
 		for (int idx = 0; idx < entityCount; ++idx) {
-//			Giskard.access(MiNDAccessCommand.Get, MTMEMBER_ACTION_GPR01, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
-//			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_GPR01, MTMEMBER_ENTITY_HANDLE);
-			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ARR, idx);
+//			Giskard.access(MiNDAccessCommand.Get, MTMEM_GENERIC_ACTION_GPR01, MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_LINK_ARR, idx);
+//			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEM_GENERIC_ACTION_GPR01, MTMEM_MODEL_ENTITY_HANDLE);
+			Object handle = Giskard.access(MiNDAccessCommand.Get, -1, MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_LINK_ARR, idx);
 
 			Map<Object, Object> ed = factEntityData.get(handle);
 			for (Object key : allColumns) {
-//				Object val = Giskard.access(MiNDAccessCommand.GetNew, null, MTMEMBER_ACTION_GPR01, key);
+//				Object val = Giskard.access(MiNDAccessCommand.GetNew, null, MTMEM_GENERIC_ACTION_GPR01, key);
 				Object val = Giskard.access(MiNDAccessCommand.Get, null, handle, key);
 				if ( null != val ) {
 					ed.put(key, val);
@@ -512,11 +512,11 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			comp = pnlTxt;
 			break;
 		case 1:
-			fp = new FilterPanel(FilterInfo.types, i, MTTYPE_TYPE, MTMEMBER_ENTITY_PRIMARYTYPE);
+			fp = new FilterPanel(FilterInfo.types, i, MTTYP_IDEA_TYPE, MTMEM_MODEL_ENTITY_PRIMARYTYPE);
 			comp = fp;
 			break;
 		case 2:
-			fp = new FilterPanel(FilterInfo.units, i, MTTYPE_UNIT, MTMEMBER_ENTITY_UNIT);
+			fp = new FilterPanel(FilterInfo.units, i, MTTYP_MODEL_UNIT, MTMEM_MODEL_ENTITY_UNIT);
 			comp = fp;
 			break;
 		default:
@@ -552,7 +552,7 @@ public class MontruGuiMainPanel implements MontruGuiConsts, GisCollConsts, Giska
 			boolean add = true;
 
 			if ( chkTxt ) {
-				String str = (String) ed.get(MTMEMBER_ENTITY_ID_GLOBAL);
+				String str = (String) ed.get(MTMEM_MODEL_ENTITY_IDGLOBAL);
 
 				if ( -1 == str.toLowerCase().indexOf(txt) ) {
 					add = false;

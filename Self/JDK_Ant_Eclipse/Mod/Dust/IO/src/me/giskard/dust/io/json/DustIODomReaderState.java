@@ -14,7 +14,7 @@ import me.giskard.tokens.DustTokensMind;
 
 @SuppressWarnings("rawtypes")
 public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
-	static final MiNDToken TC_ACTION = MTTAG_AGENTACTION;
+	static final MiNDToken TC_ACTION = MTTAG_NARRATIVE_AGENTACTION;
 
 	DustIOSerializeStep step;
 	GisCollStack<DustIOSerializeStep> procStack = new GisCollStack<DustIOSerializeStep>(DustIOSerializeStep.BUILDER);
@@ -29,21 +29,21 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	}
 
 	void setCurrOb(Object newOb) {
-		MiNDToken action = MTTAG_AGENTACTION_BEGIN;
+		MiNDToken action = MTTAG_NARRATIVE_AGENTACTION_BEGIN;
 		Object ob = newOb;
 		MiNDToken item;
 
 		if ( newOb instanceof List ) {
-			item = MTTAG_COLLTYPE_ARR;
+			item = MTTAG_IDEA_COLLTYPE_ARR;
 			ob = ((List) newOb).iterator();
 		} else if ( newOb instanceof Map ) {
-			item = MTTAG_COLLTYPE_MAP;
+			item = MTTAG_IDEA_COLLTYPE_MAP;
 			ob = ((Map) newOb).entrySet().iterator();
 		} else if ( newOb instanceof Map.Entry ) {
-			item = MTTAG_VALTYPE_LINK;
+			item = MTTAG_IDEA_VALTYPE_LINK;
 		} else {
-			item = MTTAG_VALTYPE_RAW;
-			action = MTTAG_AGENTACTION_PROCESS;
+			item = MTTAG_IDEA_VALTYPE_RAW;
+			action = MTTAG_NARRATIVE_AGENTACTION_PROCESS;
 		}
 
 		step = procStack.step(1);
@@ -53,26 +53,26 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 	public boolean step() {
 		boolean ret = true;
 
-		Object val = step.publish(MTTYPE_SERIALIZEEVENT);
+		Object val = step.publish(MTTYP_IO_SERIALIZEEVENT);
 		
-		if ( step.action == MTTAG_AGENTACTION_END) {
+		if ( step.action == MTTAG_NARRATIVE_AGENTACTION_END) {
 			indent.delete(0, 2);
 		}
 		Giskard.log(MiNDEventLevel.Trace, "SerEvent ", indent, step.action, step.item, val);
-		if ( step.action == MTTAG_AGENTACTION_BEGIN) {
+		if ( step.action == MTTAG_NARRATIVE_AGENTACTION_BEGIN) {
 			indent.append("  ");
 		}
 
-		if ( (step.item == MTTAG_VALTYPE_RAW) || (step.action == MTTAG_AGENTACTION_END) ) {
+		if ( (step.item == MTTAG_IDEA_VALTYPE_RAW) || (step.action == MTTAG_NARRATIVE_AGENTACTION_END) ) {
 			step = procStack.step(-1);
 		}
 		
 		if ( null == step ) {
 			ret = false;
 		} else {
-			if (step.item == MTTAG_VALTYPE_LINK) {
-				if ( step.action == MTTAG_AGENTACTION_BEGIN ) {
-					step.action = MTTAG_AGENTACTION_END;
+			if (step.item == MTTAG_IDEA_VALTYPE_LINK) {
+				if ( step.action == MTTAG_NARRATIVE_AGENTACTION_BEGIN ) {
+					step.action = MTTAG_NARRATIVE_AGENTACTION_END;
 					setCurrOb(((Map.Entry<?, ?>) step.data).getValue());
 				}
 			} else {
@@ -80,7 +80,7 @@ public class DustIODomReaderState implements DustIOJsonConsts, DustTokensMind {
 				if ( it.hasNext() ) {
 					setCurrOb(it.next());
 				} else {
-					step.action = MTTAG_AGENTACTION_END;
+					step.action = MTTAG_NARRATIVE_AGENTACTION_END;
 				}
 			}
 		}

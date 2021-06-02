@@ -7,33 +7,28 @@ import me.giskard.tools.GisToolsTranslator;
 public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokensGeneric, DustTokensText {
 
 	public static void addModule(String mod, String ver) throws Exception {
-		Object hMod = Giskard.access(MiNDAccessCommand.Get, MTTYPE_MODULE);
-		Giskard.access(MiNDAccessCommand.Set, hMod, MTMEMBER_ACTION_THIS);
-		Giskard.access(MiNDAccessCommand.Set, mod, hMod, MTMEMBER_PLAIN_STRING);
-		Giskard.access(MiNDAccessCommand.Set, ver, hMod, MTMEMBER_VERSIONED_SIGNATURE);
-		Giskard.access(MiNDAccessCommand.Add, hMod, MTSHARED_MACHINE, MTMEMBER_MACHINE_MODULES);		
+		Object hMod = Giskard.access(MiNDAccessCommand.Get, MTTYP_MACHINE_MODULE);
+		Giskard.access(MiNDAccessCommand.Set, hMod, MTMEM_GENERIC_ACTION_THIS);
+		Giskard.access(MiNDAccessCommand.Set, mod, hMod, MTMEM_TEXT_PLAINTEXT_STRING);
+		Giskard.access(MiNDAccessCommand.Set, ver, hMod, MTMEM_GENERIC_VERSIONED_SIGNATURE);
+		Giskard.access(MiNDAccessCommand.Add, hMod, MTLOC_MACHINE_THEMACHINE, MTMEM_MACHINE_MACHINE_MODULES);		
 	}
 
 	public static void addModuleImpInfo(MiNDToken agent, Class<?> c) throws Exception {
 		Giskard.log(MiNDEventLevel.Trace, "Registering implementation for agent", agent, "->", c.getName());
 
-		Object hNat = Giskard.access(MiNDAccessCommand.Get, MTTYPE_NATIVE);
-		Giskard.access(MiNDAccessCommand.Set, c, hNat, MTMEMBER_VALUE_RAW);
-		Giskard.access(MiNDAccessCommand.Add, hNat, MTMEMBER_ACTION_THIS, MTMEMBER_MODULE_NATIVES, agent);
+		Object hNat = Giskard.access(MiNDAccessCommand.Get, MTTYP_MACHINE_NATIVE);
+		Giskard.access(MiNDAccessCommand.Set, c, hNat, MTMEM_GENERIC_VALUE_RAW);
+		Giskard.access(MiNDAccessCommand.Add, hNat, MTMEM_GENERIC_ACTION_THIS, MTMEM_MACHINE_MODULE_NATIVES, agent);
 	}
-	
-//	public static void createAgent(MiNDToken target, MiNDToken agent) {
-//		Giskard.access(MiNDAccessCommand.Get, target);
-//		Giskard.access(MiNDAccessCommand.Set, agent, target, MTMEMBER_ENTITY_PRIMARYTYPE);
-//	}
 	
 	public static final GisToolsTranslator<MiNDValType, MiNDToken> TRANSLATE_VAL_TOKEN = new GisToolsTranslator<>();
 	
 	static {
-		TRANSLATE_VAL_TOKEN.add(MiNDValType.Int, MTMEMBER_VALUE_INT);
-		TRANSLATE_VAL_TOKEN.add(MiNDValType.Real, MTMEMBER_VALUE_REAL);
-		TRANSLATE_VAL_TOKEN.add(MiNDValType.Raw, MTMEMBER_VALUE_RAW);
-		TRANSLATE_VAL_TOKEN.add(MiNDValType.Link, MTMEMBER_VALUE_LINK);
+		TRANSLATE_VAL_TOKEN.add(MiNDValType.Int, MTMEM_GENERIC_VALUE_INT);
+		TRANSLATE_VAL_TOKEN.add(MiNDValType.Real, MTMEM_GENERIC_VALUE_REAL);
+		TRANSLATE_VAL_TOKEN.add(MiNDValType.Raw, MTMEM_GENERIC_VALUE_RAW);
+		TRANSLATE_VAL_TOKEN.add(MiNDValType.Link, MTMEM_GENERIC_VALUE_LINK);
 	}
 	
 	public static Object getValue(MiNDToken target, MiNDToken tok) {
@@ -45,10 +40,10 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 		switch ( tok.getCollType() ) {
 		case Arr:
 		case Set:
-			tk = MTMEMBER_VISITINFO_KEYARR;
+			tk = MTMEM_DIALOG_VISITINFO_KEYARR;
 			break;
 		case Map:
-			tk = MTMEMBER_VISITINFO_KEYMAP;
+			tk = MTMEM_DIALOG_VISITINFO_KEYMAP;
 			break;
 		default:
 			break;				
@@ -58,14 +53,14 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 	}
 	
 	public static void setValue(MiNDToken target, MiNDToken tok, Object val, Object key) {
-		Giskard.access(MiNDAccessCommand.Set, tok.getEntity(), target, MTMEMBER_VISITINFO_TOKEN);
-		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getValType()), target, MTMEMBER_VALUE_TYPE);
-		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getCollType()), target, MTMEMBER_VALUE_COLLTYPE);
+		Giskard.access(MiNDAccessCommand.Set, tok.getEntity(), target, MTMEM_DIALOG_VISITINFO_TOKEN);
+		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getValType()), target, MTMEM_GENERIC_VALUE_TYPE);
+		Giskard.access(MiNDAccessCommand.Set, GisToolsTokenTranslator.toToken(tok.getCollType()), target, MTMEM_GENERIC_VALUE_COLLTYPE);
 
-		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_INT);
-		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_REAL);
-		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_RAW);
-		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEMBER_VALUE_LINK);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEM_GENERIC_VALUE_INT);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEM_GENERIC_VALUE_REAL);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEM_GENERIC_VALUE_RAW);
+		Giskard.access(MiNDAccessCommand.Set, null, target, MTMEM_GENERIC_VALUE_LINK);
 		Giskard.access(MiNDAccessCommand.Set, val, target, DustTokens.TRANSLATE_VAL_TOKEN.getRight(tok.getValType()));
 
 		Object keyArr = null;
@@ -82,24 +77,24 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 			break;				
 		}
 		
-		Giskard.access(MiNDAccessCommand.Set, keyArr, target, MTMEMBER_VISITINFO_KEYARR);
-		Giskard.access(MiNDAccessCommand.Set, keyMap, target, MTMEMBER_VISITINFO_KEYMAP);
+		Giskard.access(MiNDAccessCommand.Set, keyArr, target, MTMEM_DIALOG_VISITINFO_KEYARR);
+		Giskard.access(MiNDAccessCommand.Set, keyMap, target, MTMEM_DIALOG_VISITINFO_KEYMAP);
 	}
 
 	public static void setupValFormatter(Object target) {
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_LINK_ONE, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_TOKEN, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_TYPE, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_INT, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_REAL, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_RAW, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VALUE_LINK, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYARR, target, MTMEMBER_LINK_ARR);
-		Giskard.access(MiNDAccessCommand.Add, MTMEMBER_VISITINFO_KEYMAP, target, MTMEMBER_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_LINK_ONE, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_DIALOG_VISITINFO_TOKEN, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_VALUE_TYPE, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_VALUE_INT, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_VALUE_REAL, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_VALUE_RAW, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_GENERIC_VALUE_LINK, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_DIALOG_VISITINFO_KEYARR, target, MTMEM_GENERIC_LINK_ARR);
+		Giskard.access(MiNDAccessCommand.Add, MTMEM_DIALOG_VISITINFO_KEYMAP, target, MTMEM_GENERIC_LINK_ARR);
 
 		Giskard.access(MiNDAccessCommand.Set,
 				"Entity: {0}, Token: {1}, Value type: {2}, Value(Int/Real/Raw/Link): ({3}, {4}, {5}, {6}), Key(Arr/Map): ({7}, {8})",
-				target, MTMEMBER_PLAIN_STRING);
+				target, MTMEM_TEXT_PLAINTEXT_STRING);
 	}
 	
 }

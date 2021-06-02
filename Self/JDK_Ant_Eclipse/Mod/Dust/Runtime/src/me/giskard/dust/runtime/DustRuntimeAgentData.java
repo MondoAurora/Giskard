@@ -45,7 +45,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 				h = it.next();
 
 				if ( (HANDLE_NULL < h) && visited.add(h) ) {
-					Giskard.access(MiNDAccessCommand.Set, h, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+					Giskard.access(MiNDAccessCommand.Set, h, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ONE);
 					ret = MiNDResultType.Accept;
 					break;
 				}
@@ -57,7 +57,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			}
 			
 			if ( MiNDResultType.Reject == ret ) {
-				Giskard.access(MiNDAccessCommand.Set, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);				
+				Giskard.access(MiNDAccessCommand.Set, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ONE);				
 				Giskard.log(MiNDEventLevel.Info, "List finished");				
 			} else {
 				Giskard.log(MiNDEventLevel.Info, "List returning", h, ret);				
@@ -138,9 +138,9 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			}
 
 			boolean step() {
-				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
+				Integer h = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ONE);
 				if ( null == h ) {
-					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_LINK_ONE);
+					h = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_THIS, MTMEM_GENERIC_LINK_ONE);
 				}
 
 				if ( !GiskardUtils.isEqual(current, h) ) {
@@ -179,7 +179,7 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 			}
 
 			public void store(MiNDEventLevel optLogLevel) {
-				DustTokens.setValue(MTMEMBER_ACTION_DIALOG, tok, val, key);
+				DustTokens.setValue(MTMEM_GENERIC_ACTION_DIALOG, tok, val, key);
 
 				if ( null != optLogLevel ) {
 					Giskard.log(MiNDEventLevel.Info, "VisitStep", current, tok.getId(), val, key);
@@ -217,15 +217,15 @@ public abstract class DustRuntimeAgentData extends DustRuntimeConsts.RuntimeAgen
 
 		@Override
 		public void mindAgentBegin() throws Exception {
-			Giskard.access(MiNDAccessCommand.Del, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+			Giskard.access(MiNDAccessCommand.Del, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ARR);
 		}
 
 		@Override
 		public MiNDResultType mindAgentProcess() throws Exception {
 			MiNDResultType ret = MiNDResultType.Accept;
 
-			Object o = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ONE);
-			Giskard.access(MiNDAccessCommand.Add, o, MTMEMBER_ACTION_DIALOG, MTMEMBER_LINK_ARR);
+			Object o = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ONE);
+			Giskard.access(MiNDAccessCommand.Add, o, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_LINK_ARR);
 			ret = MiNDResultType.AcceptRead;
 
 			return ret;

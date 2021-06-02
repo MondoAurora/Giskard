@@ -3,64 +3,41 @@ package me.giskard.tokens;
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
-public interface DustTokensGeneric extends GiskardConsts {
-	MiNDToken MTUNIT_GENERIC = Giskard.defineToken(MiNDTokenType.Unit, "Generic");
-
-	MiNDToken MTTYPE_TAG = Giskard.defineToken(MiNDTokenType.Type, "Tag", MTUNIT_GENERIC);
-
-	MiNDToken MTTYPE_ACTIVITY = Giskard.defineToken(MiNDTokenType.Type, "Activity", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_ACTIVITY_INSTANCE = Giskard.defineToken(MiNDTokenType.Member, "Instance", MTTYPE_ACTIVITY, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_CALL_PARAM = Giskard.defineToken(MiNDTokenType.Member, "Param", MTTYPE_CALL, MiNDValType.Link, MiNDCollType.One);
-
-	MiNDToken MTTYPE_ACTION = Giskard.defineToken(MiNDTokenType.Type, "Action", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_ACTION_THIS = Giskard.defineToken(MiNDTokenType.Member, "This", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_ACTION_DIALOG = Giskard.defineToken(MiNDTokenType.Member, "Dialog", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-
- //	MiNDToken MTMEMBER_ACTION_GPR01 = Giskard.defineToken(MiNDTokenType.Member, "GPR01", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR02 = Giskard.defineToken(MiNDTokenType.Member, "GPR02", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR03 = Giskard.defineToken(MiNDTokenType.Member, "GPR03", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR04 = Giskard.defineToken(MiNDTokenType.Member, "GPR04", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR05 = Giskard.defineToken(MiNDTokenType.Member, "GPR05", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR06 = Giskard.defineToken(MiNDTokenType.Member, "GPR06", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR07 = Giskard.defineToken(MiNDTokenType.Member, "GPR07", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR08 = Giskard.defineToken(MiNDTokenType.Member, "GPR08", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-//	MiNDToken MTMEMBER_ACTION_GPR09 = Giskard.defineToken(MiNDTokenType.Member, "GPR09", MTTYPE_ACTION, MiNDValType.Link, MiNDCollType.One);
-	
-	MiNDToken MTTYPE_VALUE = Giskard.defineToken(MiNDTokenType.Type, "Value", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_VALUE_TYPE = Giskard.defineToken(MiNDTokenType.Member, "Type", MTTYPE_VALUE, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_VALUE_COLLTYPE = Giskard.defineToken(MiNDTokenType.Member, "CollType", MTTYPE_VALUE, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_VALUE_INT = Giskard.defineToken(MiNDTokenType.Member, "Int", MTTYPE_VALUE, MiNDValType.Int, MiNDCollType.One);
-	MiNDToken MTMEMBER_VALUE_REAL = Giskard.defineToken(MiNDTokenType.Member, "Real", MTTYPE_VALUE, MiNDValType.Real, MiNDCollType.One);
-	MiNDToken MTMEMBER_VALUE_LINK = Giskard.defineToken(MiNDTokenType.Member, "Link", MTTYPE_VALUE, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_VALUE_RAW = Giskard.defineToken(MiNDTokenType.Member, "Raw", MTTYPE_VALUE, MiNDValType.Raw, MiNDCollType.One);
-
-	MiNDToken MTTYPE_VERSIONED = Giskard.defineToken(MiNDTokenType.Type, "Versioned", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_VERSIONED_SIGNATURE = Giskard.defineToken(MiNDTokenType.Member, "Signature", MTTYPE_VERSIONED, MiNDValType.Raw, MiNDCollType.One);
-
-	MiNDToken MTTYPE_CONN = Giskard.defineToken(MiNDTokenType.Type, "Conn", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_CONN_OWNER = Giskard.defineToken(MiNDTokenType.Member, "Owner", MTTYPE_CONN, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_CONN_REQUIRES = Giskard.defineToken(MiNDTokenType.Member, "Requires", MTTYPE_CONN, MiNDValType.Link, MiNDCollType.Set);
-	MiNDToken MTMEMBER_CONN_EXTENDS = Giskard.defineToken(MiNDTokenType.Member, "Extends", MTTYPE_CONN, MiNDValType.Link, MiNDCollType.Set);
-	MiNDToken MTMEMBER_CONN_PROVIDES = Giskard.defineToken(MiNDTokenType.Member, "Provides", MTTYPE_CONN, MiNDValType.Link, MiNDCollType.Set);
-	
-	MiNDToken MTTYPE_ITERATOR = Giskard.defineToken(MiNDTokenType.Type, "Iterator", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_ITERATOR_INDEX = Giskard.defineToken(MiNDTokenType.Member, "Index", MTTYPE_ITERATOR, MiNDValType.Int, MiNDCollType.One);
-	
-	MiNDToken MTTYPE_RANGE = Giskard.defineToken(MiNDTokenType.Type, "Range", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_RANGE_INTMIN = Giskard.defineToken(MiNDTokenType.Member, "IntMin", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
-	MiNDToken MTMEMBER_RANGE_INTMAX = Giskard.defineToken(MiNDTokenType.Member, "IntMax", MTTYPE_RANGE, MiNDValType.Int, MiNDCollType.One);
-	
-	MiNDToken MTTYPE_SPLIT = Giskard.defineToken(MiNDTokenType.Type, "Split", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_SPLIT_WEIGHT = Giskard.defineToken(MiNDTokenType.Member, "Weight", MTTYPE_SPLIT, MiNDValType.Real, MiNDCollType.Arr);
-	MiNDToken MTMEMBER_SPLIT_ABSOLUTE = Giskard.defineToken(MiNDTokenType.Member, "Absolute", MTTYPE_SPLIT, MiNDValType.Int, MiNDCollType.Arr);
-	
-	MiNDToken MTTYPE_LINK = Giskard.defineToken(MiNDTokenType.Type, "Link", MTUNIT_GENERIC);
-	MiNDToken MTMEMBER_LINK_TYPE = Giskard.defineToken(MiNDTokenType.Member, "Type", MTTYPE_LINK, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_LINK_ONE = Giskard.defineToken(MiNDTokenType.Member, "One", MTTYPE_LINK, MiNDValType.Link, MiNDCollType.One);
-	MiNDToken MTMEMBER_LINK_ARR = Giskard.defineToken(MiNDTokenType.Member, "Arr", MTTYPE_LINK, MiNDValType.Link, MiNDCollType.Arr);
-	MiNDToken MTMEMBER_LINK_SET = Giskard.defineToken(MiNDTokenType.Member, "Set", MTTYPE_LINK, MiNDValType.Link, MiNDCollType.Set);
-	MiNDToken MTMEMBER_LINK_MAP = Giskard.defineToken(MiNDTokenType.Member, "Map", MTTYPE_LINK, MiNDValType.Link, MiNDCollType.Map);
-	
-	MiNDToken MTAGENT_DUMP = Giskard.defineToken(MiNDTokenType.Agent, "Dump", MTUNIT_GENERIC);
-
+public interface DustTokensGeneric extends GiskardConsts { 
+	MiNDToken MTUNI_GENERIC = Giskard.defineToken(MiNDTokenType.Unit, "Generic"); 
+	MiNDToken MTTYP_GENERIC_VERSIONED = Giskard.defineToken(MiNDTokenType.Type, "Versioned", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_VERSIONED_SIGNATURE = Giskard.defineToken(MiNDTokenType.Member, "Signature", MTTYP_GENERIC_VERSIONED, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTTYP_GENERIC_VALUE = Giskard.defineToken(MiNDTokenType.Type, "Value", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_VALUE_TYPE = Giskard.defineToken(MiNDTokenType.Member, "Type", MTTYP_GENERIC_VALUE, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_VALUE_REAL = Giskard.defineToken(MiNDTokenType.Member, "Real", MTTYP_GENERIC_VALUE, MiNDValType.Real, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_VALUE_RAW = Giskard.defineToken(MiNDTokenType.Member, "Raw", MTTYP_GENERIC_VALUE, MiNDValType.Raw, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_VALUE_LINK = Giskard.defineToken(MiNDTokenType.Member, "Link", MTTYP_GENERIC_VALUE, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_VALUE_INT = Giskard.defineToken(MiNDTokenType.Member, "Int", MTTYP_GENERIC_VALUE, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_VALUE_COLLTYPE = Giskard.defineToken(MiNDTokenType.Member, "CollType", MTTYP_GENERIC_VALUE, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTTYP_GENERIC_TAG = Giskard.defineToken(MiNDTokenType.Type, "Tag", MTUNI_GENERIC);
+	MiNDToken MTTYP_GENERIC_SPLIT = Giskard.defineToken(MiNDTokenType.Type, "Split", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_SPLIT_WEIGHT = Giskard.defineToken(MiNDTokenType.Member, "Weight", MTTYP_GENERIC_SPLIT, MiNDValType.Real, MiNDCollType.Arr);
+	MiNDToken MTMEM_GENERIC_SPLIT_ABSOLUTE = Giskard.defineToken(MiNDTokenType.Member, "Absolute", MTTYP_GENERIC_SPLIT, MiNDValType.Int, MiNDCollType.Arr);
+	MiNDToken MTTYP_GENERIC_RANGE = Giskard.defineToken(MiNDTokenType.Type, "Range", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_RANGE_INTMIN = Giskard.defineToken(MiNDTokenType.Member, "IntMin", MTTYP_GENERIC_RANGE, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_RANGE_INTMAX = Giskard.defineToken(MiNDTokenType.Member, "IntMax", MTTYP_GENERIC_RANGE, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTTYP_GENERIC_LINK = Giskard.defineToken(MiNDTokenType.Type, "Link", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_LINK_TYPE = Giskard.defineToken(MiNDTokenType.Member, "Type", MTTYP_GENERIC_LINK, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_LINK_SET = Giskard.defineToken(MiNDTokenType.Member, "Set", MTTYP_GENERIC_LINK, MiNDValType.Link, MiNDCollType.Set);
+	MiNDToken MTMEM_GENERIC_LINK_ONE = Giskard.defineToken(MiNDTokenType.Member, "One", MTTYP_GENERIC_LINK, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_LINK_MAP = Giskard.defineToken(MiNDTokenType.Member, "Map", MTTYP_GENERIC_LINK, MiNDValType.Link, MiNDCollType.Map);
+	MiNDToken MTMEM_GENERIC_LINK_ARR = Giskard.defineToken(MiNDTokenType.Member, "Arr", MTTYP_GENERIC_LINK, MiNDValType.Link, MiNDCollType.Arr);
+	MiNDToken MTTYP_GENERIC_ITERATOR = Giskard.defineToken(MiNDTokenType.Type, "Iterator", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_ITERATOR_INDEX = Giskard.defineToken(MiNDTokenType.Member, "Index", MTTYP_GENERIC_ITERATOR, MiNDValType.Int, MiNDCollType.One);
+	MiNDToken MTAGN_GENERIC_DUMP = Giskard.defineToken(MiNDTokenType.Agent, "Dump", MTUNI_GENERIC);
+	MiNDToken MTTYP_GENERIC_ACTIVITY = Giskard.defineToken(MiNDTokenType.Type, "Activity", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_ACTIVITY_INSTANCE = Giskard.defineToken(MiNDTokenType.Member, "Instance", MTTYP_GENERIC_ACTIVITY, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTTYP_GENERIC_ACTION = Giskard.defineToken(MiNDTokenType.Type, "Action", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_ACTION_THIS = Giskard.defineToken(MiNDTokenType.Member, "This", MTTYP_GENERIC_ACTION, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTMEM_GENERIC_ACTION_DIALOG = Giskard.defineToken(MiNDTokenType.Member, "Dialog", MTTYP_GENERIC_ACTION, MiNDValType.Link, MiNDCollType.One);
+	MiNDToken MTTYP_GENERIC_CONN = Giskard.defineToken(MiNDTokenType.Type, "Conn", MTUNI_GENERIC);
+	MiNDToken MTMEM_GENERIC_CONN_REQUIRES = Giskard.defineToken(MiNDTokenType.Member, "Requires", MTTYP_GENERIC_CONN, MiNDValType.Link, MiNDCollType.Set);
+	MiNDToken MTMEM_GENERIC_CONN_PROVIDES = Giskard.defineToken(MiNDTokenType.Member, "Provides", MTTYP_GENERIC_CONN, MiNDValType.Link, MiNDCollType.Set);
+	MiNDToken MTMEM_GENERIC_CONN_EXTENDS = Giskard.defineToken(MiNDTokenType.Member, "Extends", MTTYP_GENERIC_CONN, MiNDValType.Link, MiNDCollType.Set);
+	MiNDToken MTMEM_GENERIC_CONN_OWNER = Giskard.defineToken(MiNDTokenType.Member, "Owner", MTTYP_GENERIC_CONN, MiNDValType.Link, MiNDCollType.One);
 }

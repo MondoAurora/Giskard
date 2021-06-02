@@ -18,12 +18,12 @@ public class DustJdbcUtils implements DustJdbcConsts {
 
 	public static Connection optCreateConn(Object hDBConn, Connection conn) throws Exception {
 		if ( (null == conn) || conn.isClosed() ) {
-			String dbName = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_PLAIN_STRING);
-			String dbUrl = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_STREAM_URL);
+			String dbName = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_TEXT_PLAINTEXT_STRING);
+			String dbUrl = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_IO_STREAM_URL);
 			if ( !GiskardUtils.isEmpty(dbName) && !dbUrl.endsWith(dbName) ) {
 				dbUrl += "/" + dbName;
 			}
-			String options = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_DBCONN_OPTIONS);
+			String options = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_DB_CONNECTION_OPTIONS);
 			if ( !GiskardUtils.isEmpty(options) ) {
 				dbUrl += "?" + options;
 			}
@@ -31,12 +31,12 @@ public class DustJdbcUtils implements DustJdbcConsts {
 			Giskard.log(MiNDEventLevel.Trace, "Connecting to database...", dbUrl);
 
 			try {
-				String driver = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_DRIVER);
+				String driver = Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_DB_CONNECTION_DRIVER);
 				Class.forName(driver);
 
 				conn = DriverManager.getConnection(dbUrl,
-						Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_ACCOUNTID),
-						Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEMBER_PASSWORD));
+						Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_GUARD_ACCOUNT_ID),
+						Giskard.access(MiNDAccessCommand.Get, null, hDBConn, MTMEM_GUARD_ACCOUNT_PASSWORD));
 
 				DustJdbcUtils.addConn(conn);
 

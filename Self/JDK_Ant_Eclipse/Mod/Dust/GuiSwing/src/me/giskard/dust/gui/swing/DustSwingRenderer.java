@@ -16,27 +16,17 @@ public class DustSwingRenderer implements DustSwingConsts, GiskardConsts.MiNDAge
 		MiNDResultType ret = MiNDResultType.Accept;
 
 		if ( null == frmMain ) {
-			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEMBER_ACTION_DIALOG, MTMEMBER_PLAIN_STRING);
+			String label = Giskard.access(MiNDAccessCommand.Get, "???", MTMEM_GENERIC_ACTION_DIALOG, MTMEM_TEXT_PLAINTEXT_STRING);
 
-			Rectangle rct = DustSwingUtils.toRect(MTMEMBER_ACTION_THIS);
-
-//			Integer cx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_CENTER,
-//					MTMEMBER_GEODATA_COORDS, 0);
-//			Integer cy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_CENTER,
-//					MTMEMBER_GEODATA_COORDS, 1);
-//			Integer sx = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_SPAN,
-//					MTMEMBER_GEODATA_COORDS, 0);
-//			Integer sy = Giskard.access(MiNDAccessCommand.Get, -1, MTMEMBER_ACTION_DIALOG, MTMEMBER_AREA_SPAN,
-//					MTMEMBER_GEODATA_COORDS, 1);
-//			Giskard.log(MiNDEventLevel.Info, "Frame", label, ", center (", cx, cy, "), size (", sx, sy, ")");
+			Rectangle rct = DustSwingUtils.toRect(MTMEM_GENERIC_ACTION_THIS);
 
 			frmMain = new JFrame();
 			frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frmMain.setTitle(label);
-			Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEMBER_ACTION_DIALOG, MTMEMBER_VALUE_RAW);
+			Giskard.access(MiNDAccessCommand.Set, frmMain, MTMEM_GENERIC_ACTION_DIALOG, MTMEM_GENERIC_VALUE_RAW);
 
-//				if ( null != Giskard.access(MiNDAccessCommand.GetNew, MTMEMBER_CALL_TARGET, MTMEMBER_ACTION_DIALOG,	MTMEMBER_LINK_ONE) ) {
-//					Giskard.access(MiNDAccessCommand.GetNew, MTMEMBER_CALL_PARAM, MTMEMBER_ACTION_DIALOG);					
+//				if ( null != Giskard.access(MiNDAccessCommand.GetNew, MTMEM_CALL_TARGET, MTMEM_GENERIC_ACTION_DIALOG,	MTMEM_GENERIC_LINK_ONE) ) {
+//					Giskard.access(MiNDAccessCommand.GetNew, MTMEM_CALL_PARAM, MTMEM_GENERIC_ACTION_DIALOG);					
 ////					Giskard.invoke();
 //				}
 

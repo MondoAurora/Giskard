@@ -37,7 +37,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 		public DBDeltaEntity(Object entity_) {
 			this.entity = entity_;
-			pKey = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_ID_UNIT);
+			pKey = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_MODEL_ENTITY_IDUNIT);
 		}
 
 		void addData() {
@@ -47,16 +47,16 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		boolean setStParams(PreparedStatement ps, Integer commitId) throws Exception {
 			boolean ret = true;
 
-			MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_PRIMARYTYPE);
+			MiNDToken pt = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_MODEL_ENTITY_PRIMARYTYPE);
 			Integer i = (null == pt) ? -1
-					: Giskard.access(MiNDAccessCommand.Get, -1, pt.getEntity(), MTMEMBER_ENTITY_ID_UNIT);
+					: Giskard.access(MiNDAccessCommand.Get, -1, pt.getEntity(), MTMEM_MODEL_ENTITY_IDUNIT);
 			ps.setInt(DbEntity.PrimaryType.ordinal(), i);
 
 			if ( -1 == i ) {
 				ret = false;
 			}
 
-			i = Giskard.access(MiNDAccessCommand.Get, -1, entity, MTMEMBER_ENTITY_UNIT, MTMEMBER_ENTITY_ID_UNIT);
+			i = Giskard.access(MiNDAccessCommand.Get, -1, entity, MTMEM_MODEL_ENTITY_UNIT, MTMEM_MODEL_ENTITY_IDUNIT);
 
 			ps.setInt(DbEntity.Unit.ordinal(), i);
 			if ( -1 == i ) {
@@ -76,7 +76,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 
 		Integer loadDbId(ResultSet res) throws Exception {
 			pKey = res.getInt(1);
-			Giskard.access(MiNDAccessCommand.Set, pKey, entity, MTMEMBER_ENTITY_ID_UNIT);
+			Giskard.access(MiNDAccessCommand.Set, pKey, entity, MTMEM_MODEL_ENTITY_IDUNIT);
 			return pKey;
 		}
 
@@ -102,27 +102,27 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		Object key;
 
 		public DBDeltaData() {
-			t = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VISITINFO_TOKEN);
+			t = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEM_DIALOG_VISITINFO_TOKEN);
 
 			token = getDeltaEntity(t);
 
-			Object vt = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VALUE_TYPE);
-			Object ct = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_VALUE_COLLTYPE);
+			Object vt = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEM_GENERIC_VALUE_TYPE);
+			Object ct = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEM_GENERIC_VALUE_COLLTYPE);
 
 			mvt = (MiNDValType) GisToolsTokenTranslator.toEnum((MiNDToken) vt);
 			Object valKey = null;
 			switch ( mvt ) {
 			case Int:
-				valKey = MTMEMBER_VALUE_INT;
+				valKey = MTMEM_GENERIC_VALUE_INT;
 				break;
 			case Link:
-				valKey = MTMEMBER_VALUE_LINK;
+				valKey = MTMEM_GENERIC_VALUE_LINK;
 				break;
 			case Raw:
-				valKey = MTMEMBER_VALUE_RAW;
+				valKey = MTMEM_GENERIC_VALUE_RAW;
 				break;
 			case Real:
-				valKey = MTMEMBER_VALUE_REAL;
+				valKey = MTMEM_GENERIC_VALUE_REAL;
 				break;
 			}
 			val = Giskard.access(MiNDAccessCommand.Get, null, hRoot, valKey);
@@ -131,10 +131,10 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			Object keyKey = null;
 			switch ( mct ) {
 			case Arr:
-				keyKey = MTMEMBER_VISITINFO_KEYARR;
+				keyKey = MTMEM_DIALOG_VISITINFO_KEYARR;
 				break;
 			case Map:
-				keyKey = MTMEMBER_VISITINFO_KEYMAP;
+				keyKey = MTMEM_DIALOG_VISITINFO_KEYMAP;
 				break;
 			default:
 				break;
@@ -225,7 +225,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		}
 	}
 
-	Object hRoot = MTMEMBER_ACTION_DIALOG;
+	Object hRoot = MTMEM_GENERIC_ACTION_DIALOG;
 
 	Map<String, DBDeltaEntity> mapEntities = new TreeMap<>();
 	
@@ -235,7 +235,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				public DBDeltaEntity create(Object key) {
 					DBDeltaEntity de = new DBDeltaEntity(key);
 					
-					String si = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEMBER_ENTITY_ID_GLOBAL);
+					String si = Giskard.access(MiNDAccessCommand.Get, null, key, MTMEM_MODEL_ENTITY_IDGLOBAL);
 					if ( null != si ) {
 						mapEntities.put(si, de);
 					}
@@ -253,7 +253,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			});
 	
 	public DustJdbcSerializer() {
-		idKey = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ENTITY_ID_GLOBAL.getEntity(), MTMEMBER_ENTITY_ID_GLOBAL);
+		idKey = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_MODEL_ENTITY_IDGLOBAL.getEntity(), MTMEM_MODEL_ENTITY_IDGLOBAL);
 	}
 
 	@Override
@@ -266,7 +266,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 	}
 
 	public void step() throws Exception {
-		Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEMBER_LINK_ONE);
+		Object entity = Giskard.access(MiNDAccessCommand.Get, null, hRoot, MTMEM_GENERIC_LINK_ONE);
 
 		if ( null == entity ) {
 			save();
@@ -284,7 +284,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 	private DBDeltaEntity getDeltaEntity(Object entity) {
 		DBDeltaEntity de = null;
 
-		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEMBER_ENTITY_UNIT);
+		Object unit = Giskard.access(MiNDAccessCommand.Get, null, entity, MTMEM_MODEL_ENTITY_UNIT);
 
 		if ( null != unit ) {
 			DBDeltaEntity du = factUnits.get(unit);
@@ -367,14 +367,14 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 			for (Object o : factUnits.keys()) {
 				unitIds.add(o);
 				if ( keyOK ) {
-					Integer k = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEMBER_ENTITY_ID_UNIT);
+					Integer k = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEM_MODEL_ENTITY_IDUNIT);
 					if ( null == k ) {
 						keyOK = false;
 					} else {
 						sbKey = GiskardUtils.sbAppend(sbKey, ", ", true, "'" + k + "'");
 					}
 				}
-				String n = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEMBER_PLAIN_STRING);
+				String n = Giskard.access(MiNDAccessCommand.Get, null, o, MTMEM_TEXT_PLAINTEXT_STRING);
 				sbName = GiskardUtils.sbAppend(sbName, ", ", true, "'" + n + "'");
 //				Giskard.log(MiNDEventLevel.Trace, factEntities.peek(o));
 			}
@@ -412,7 +412,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 					
 					if ( null != de ) {
 						de.pKey = (Integer) rowData.get(DbEntity.EntityId.name());
-						Giskard.access(MiNDAccessCommand.Set, de.pKey, de.entity, MTMEMBER_ENTITY_ID_UNIT);
+						Giskard.access(MiNDAccessCommand.Set, de.pKey, de.entity, MTMEM_MODEL_ENTITY_IDUNIT);
 					}
 				} while (rs.next());
 			}				
@@ -433,7 +433,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 	}
 
 	public void initConn() throws Exception {
-		hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEMBER_ACTION_THIS, MTMEMBER_DBUSER_CONN);
+		hDBConn = Giskard.access(MiNDAccessCommand.Get, null, MTMEM_GENERIC_ACTION_THIS, MTMEM_DB_USER_CONN);
 		conn = DustJdbcUtils.optCreateConn(hDBConn, conn);
 
 		if ( null == metaInfo ) {
@@ -459,12 +459,12 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 		for (Object e : factEntities.keys()) {
 			DBDeltaEntity de = factEntities.peek(e);
 
-			Object pk = Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_ID_UNIT);
+			Object pk = Giskard.access(MiNDAccessCommand.Get, null, e, MTMEM_MODEL_ENTITY_IDUNIT);
 			if ( null == pk ) {
 				change = true;
 				newEntities.add(de);
 			} else {
-				Giskard.log(MiNDEventLevel.Trace, "Known entity", e, "PKey", pk, Giskard.access(MiNDAccessCommand.Get, null, e, MTMEMBER_ENTITY_ID_GLOBAL));
+				Giskard.log(MiNDEventLevel.Trace, "Known entity", e, "PKey", pk, Giskard.access(MiNDAccessCommand.Get, null, e, MTMEM_MODEL_ENTITY_IDGLOBAL));
 			}
 
 			if ( !de.data.isEmpty() ) {
@@ -484,7 +484,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 				ResultSet res;
 
 				Integer commitId = -1;
-				Object chg = Giskard.access(MiNDAccessCommand.Get, MTTYPE_COMMIT);
+				Object chg = Giskard.access(MiNDAccessCommand.Get, MTTYP_DIALOG_COMMIT);
 				DBDeltaEntity deCommit = factEntities.get(chg);
 
 				deCommit.setStParams(psNewEntity, commitId);
@@ -518,7 +518,7 @@ public class DustJdbcSerializer implements DustJdbcConsts {
 					PreparedStatement psEntUpdate = DbTable.dust_entity.getUpdateStatement(conn);
 
 					for (DBDeltaEntity de : entUpdate) {
-						Integer dbid = Giskard.access(MiNDAccessCommand.Get, -1, de.entity, MTMEMBER_ENTITY_ID_UNIT);
+						Integer dbid = Giskard.access(MiNDAccessCommand.Get, -1, de.entity, MTMEM_MODEL_ENTITY_IDUNIT);
 						if ( -1 != dbid ) {
 							de.setStParams(psEntUpdate, commitId);
 							psEntUpdate.setInt(5, dbid);

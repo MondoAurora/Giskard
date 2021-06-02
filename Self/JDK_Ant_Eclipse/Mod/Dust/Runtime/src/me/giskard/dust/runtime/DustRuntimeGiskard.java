@@ -31,6 +31,11 @@ public class DustRuntimeGiskard extends Giskard
 	public void init(MiNDAgent agent) throws Exception {
 		machine.init(agent);
 	}
+	
+	@Override
+	public void afterBoot() {
+		machine.getContext().getTokenManager().updateTokenEntities();
+	}
 
 	@Override
 	protected MiNDToken defineToken_(MiNDTokenType type, Object id, Object... params) {

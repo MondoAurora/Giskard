@@ -18,8 +18,8 @@ public class DustJdbcMetaInfo implements DustJdbcConsts {
 	GisCollFactory<String, Object> factTables = new GisCollFactory<String, Object>(true, new MiNDCreator<String, Object>() {
 		@Override
 		public Object create(String key) {
-			Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYPE_DBTABLE);
-			Giskard.access(MiNDAccessCommand.Set, key, hRet, MTMEMBER_PLAIN_STRING);
+			Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYP_DB_TABLE);
+			Giskard.access(MiNDAccessCommand.Set, key, hRet, MTMEM_TEXT_PLAINTEXT_STRING);
 			return hRet;
 		}
 	});
@@ -27,8 +27,8 @@ public class DustJdbcMetaInfo implements DustJdbcConsts {
 	GisCollFactory<String, Object> factColumns = new GisCollFactory<String, Object>(true, new MiNDCreator<String, Object>() {
 		@Override
 		public Object create(String key) {
-			Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYPE_DBCOLUMN);
-			Giskard.access(MiNDAccessCommand.Set, key, hRet, MTMEMBER_COLUMN_FULLNAME);
+			Object hRet = Giskard.access(MiNDAccessCommand.Get, MTTYP_DB_COLUMN);
+			Giskard.access(MiNDAccessCommand.Set, key, hRet, MTMEM_DB_COLUMN_FULLNAME);
 			return hRet;
 		}
 	});
@@ -63,8 +63,8 @@ public class DustJdbcMetaInfo implements DustJdbcConsts {
 			if ( null != hTable ) {
 				String colName = rs.getString(JDBC_COLUMN_NAME);
 				Object hCol = factColumns.get(DustDBUtils.buildColId(tblName, colName));
-				Giskard.access(MiNDAccessCommand.Set, colName, hCol, MTMEMBER_PLAIN_STRING);
-				Giskard.access(MiNDAccessCommand.Add, hCol, hTable, MTMEMBER_TABLE_COLUMNS);
+				Giskard.access(MiNDAccessCommand.Set, colName, hCol, MTMEM_TEXT_PLAINTEXT_STRING);
+				Giskard.access(MiNDAccessCommand.Add, hCol, hTable, MTMEM_DB_TABLE_COLUMNS);
 			}
 		}
 	}
