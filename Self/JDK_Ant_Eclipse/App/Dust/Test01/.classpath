@@ -2,12 +2,13 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GiskardCore"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardGen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustRuntime"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustTools"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustDB"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustText"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustDevJava"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GiskardUtil"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

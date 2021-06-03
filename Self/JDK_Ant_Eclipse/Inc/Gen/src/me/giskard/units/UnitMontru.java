@@ -1,13 +1,14 @@
 package me.giskard.units;
 
 import me.giskard.Giskard;
+import me.giskard.tokens.DustTokensGeneric;
 import me.giskard.tokens.DustTokensGeometry;
 import me.giskard.tokens.DustTokensGui;
-import me.giskard.tokens.DustTokensMind;
+import me.giskard.tokens.DustTokensModel;
 import me.giskard.tokens.DustTokensMontru;
 import me.giskard.tokens.DustTokensText;
 
-public class UnitMontru implements DustTokensMind, DustTokensMontru, DustTokensGui, DustTokensText, DustTokensGeometry {
+public class UnitMontru implements DustTokensGeneric, DustTokensModel, DustTokensMontru, DustTokensGui, DustTokensText, DustTokensGeometry {
 	public static void init() throws Exception {
 
 		Giskard.log(MiNDEventLevel.Trace, UnitMontru.class, "init() called.");

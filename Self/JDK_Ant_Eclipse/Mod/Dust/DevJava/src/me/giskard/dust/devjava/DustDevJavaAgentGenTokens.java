@@ -173,7 +173,7 @@ public class DustDevJavaAgentGenTokens implements DustDevJavaConsts, DustTokensT
 
 		private void save() throws Exception {
 			String root = GEN_PACKAGE.replace('.', '/');
-			root = (DEV ? "Self/JDK_Ant_Eclipse/Inc/Gen/dev/" : "Self/JDK_Ant_Eclipse/Inc/Gen/tokens/" ) + root;
+			root = "Self/JDK_Ant_Eclipse/Inc/Gen/" + (DEV ? "dev/" : "src/" ) + root;
 			
 			File rootDir = new File(GiskardUtils.getRoot(), root);
 			
