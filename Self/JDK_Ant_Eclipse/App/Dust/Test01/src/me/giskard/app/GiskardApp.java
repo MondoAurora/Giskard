@@ -74,7 +74,7 @@ public class GiskardApp implements DustTokensMind, DustTokensMachine, DustTokens
 
 			Object hDlg = Giskard.access(MiNDAccessCommand.Get, MTTYP_DIALOG_CONTEXT);
 			Giskard.access(MiNDAccessCommand.Add, hTest, hDlg, MTMEM_DIALOG_CONTEXT_ACTIVITIES);
-			Giskard.access(MiNDAccessCommand.Add, hDlg, MTLOC_MACHINE_THEMACHINE, MTMEM_MACHINE_MACHINE_DIALOGS);
+			Giskard.access(MiNDAccessCommand.Add, hDlg, MTMEM_MACHINE_MACHINE_INSTANCE, MTMEM_MACHINE_MACHINE_DIALOGS);
 
 			return MiNDResultType.Accept;
 		}

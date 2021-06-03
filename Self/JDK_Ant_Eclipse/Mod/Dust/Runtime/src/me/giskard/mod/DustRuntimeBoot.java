@@ -13,7 +13,7 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 
 		// Machine
 		Object machine = Giskard.access(MiNDAccessCommand.Get, MTTYP_MACHINE_MACHINE);
-		Giskard.access(MiNDAccessCommand.Set, machine, MTLOC_MACHINE_THEMACHINE);
+		Giskard.access(MiNDAccessCommand.Set, machine, MTMEM_MACHINE_MACHINE_INSTANCE);
 
 		// Runtime module
 		DustTokens.addModule(MODULE_NAME, MODULE_VER);
@@ -47,7 +47,7 @@ public class DustRuntimeBoot implements DustRuntimeConsts {
 		GisToolsTokenTranslator.register(MTTAG_IDEA_TOKENTYPE_TAG, MiNDTokenType.Tag);
 		GisToolsTokenTranslator.register(MTTAG_IDEA_TOKENTYPE_SERVICE, MiNDTokenType.Service);
 		GisToolsTokenTranslator.register(MTTAG_IDEA_TOKENTYPE_AGENT, MiNDTokenType.Agent);
-		GisToolsTokenTranslator.register(MTTAG_IDEA_TOKENTYPE_LOCAL, MiNDTokenType.Local);
+//		GisToolsTokenTranslator.register(MTTAG_IDEA_TOKENTYPE_LOCAL, MiNDTokenType.Local);
 		
 		GisToolsTokenTranslator.register(MTTAG_IDEA_VALTYPE, MiNDValType.class);
 		GisToolsTokenTranslator.register(MTTAG_IDEA_VALTYPE_INT, MiNDValType.Int);

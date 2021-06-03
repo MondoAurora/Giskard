@@ -2,6 +2,8 @@ package me.giskard;
 
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GiskardUtils implements GiskardConsts {
 	
@@ -93,6 +95,20 @@ public class GiskardUtils implements GiskardConsts {
 		}
 	}
 	
+	public static String strTimestamp() {
+		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);
+		return sdf.format(new Date());
+	}
+
+	public static String strDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_DATE);
+		return sdf.format(new Date());
+	}
+
+	public static String strTimestamp(long time) {
+		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);
+		return sdf.format(new Date(time));
+	}
 	
 	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
 		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Add);

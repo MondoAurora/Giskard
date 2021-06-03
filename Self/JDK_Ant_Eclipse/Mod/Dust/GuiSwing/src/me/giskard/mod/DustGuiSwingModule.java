@@ -23,7 +23,7 @@ public class DustGuiSwingModule implements GiskardConsts.MiNDAgent, DustTokensGu
 		Object plt = Giskard.access(MiNDAccessCommand.Get, MTTYP_GUI_PLATFORM);
 		
 		Giskard.access(MiNDAccessCommand.Set, mgr, plt, MTMEM_GUI_PLATFORM_MANAGER);
-		Giskard.access(MiNDAccessCommand.Set, plt, MTLOC_MACHINE_THEMACHINE, MTMEM_GUI_GUIOWNER_PLATFORMS, MTTAG_GUI_PLATFORMTYPE_SWING);
+		Giskard.access(MiNDAccessCommand.Set, plt, MTMEM_MACHINE_MACHINE_INSTANCE, MTMEM_GUI_GUIOWNER_PLATFORMS, MTTAG_GUI_PLATFORMTYPE_SWING);
 
 		return MiNDResultType.Accept;
 	}

@@ -8,8 +8,7 @@ import me.giskard.tools.GisToolsTokenTranslator;
 
 abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 	public static String buildId(MiNDTokenType type, String name, Object... params) {
-		DustRuntimeToken parent = ((MiNDTokenType.Unit == type) || (MiNDTokenType.Local == type)) ? null
-				: (DustRuntimeToken) params[0];
+		DustRuntimeToken parent = (MiNDTokenType.Unit == type) ? null	: (DustRuntimeToken) params[0];
 		return (null == parent) ? name : parent.getId() + SEP_ID + name;
 	}
 
@@ -18,7 +17,6 @@ abstract class DustRuntimeToken implements MiNDToken, DustRuntimeBootConsts {
 
 		switch ( type ) {
 		case Unit:
-		case Local:
 			ret = new Container(type, name, null);
 			break;
 		case Member:

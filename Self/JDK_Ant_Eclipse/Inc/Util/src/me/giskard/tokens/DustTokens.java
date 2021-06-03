@@ -11,7 +11,7 @@ public class DustTokens implements DustTokensMind, DustTokensMachine, DustTokens
 		Giskard.access(MiNDAccessCommand.Set, hMod, MTMEM_GENERIC_ACTION_THIS);
 		Giskard.access(MiNDAccessCommand.Set, mod, hMod, MTMEM_TEXT_PLAINTEXT_STRING);
 		Giskard.access(MiNDAccessCommand.Set, ver, hMod, MTMEM_GENERIC_VERSIONED_SIGNATURE);
-		Giskard.access(MiNDAccessCommand.Add, hMod, MTLOC_MACHINE_THEMACHINE, MTMEM_MACHINE_MACHINE_MODULES);		
+		Giskard.access(MiNDAccessCommand.Add, hMod, MTMEM_MACHINE_MACHINE_INSTANCE, MTMEM_MACHINE_MACHINE_MODULES);		
 	}
 
 	public static void addModuleImpInfo(MiNDToken agent, Class<?> c) throws Exception {
