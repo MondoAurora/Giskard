@@ -1,5 +1,17 @@
 Brain dump
 
+The unit is in the Dialog - internal/external
+When talking, you open up units to discuss, and merge them with your internal units at the end
+Unit is about persistence vs the temporal nature of the talk/think
+Think is the internal part of a dialog, with or without a partner
+Thinking is a dialog with internal partners/observers
+Evaluation of internal MiND segments
+
+Wisdom is heating up and forging the idea models / intelligence is using them on "other" models.
+Wisdom is the self reflecting, evaluating and improving operation of intelligence
+
+
+
 Create a new project, source level included in all modules, contains util functions that require DustGen
  - things in DustTokens
  - text manipulation (and clean existing codes, export DB)
