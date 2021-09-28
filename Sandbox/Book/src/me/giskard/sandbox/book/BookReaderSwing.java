@@ -101,6 +101,10 @@ public class BookReaderSwing implements BookReaderConsts {
 
 		MouseMotionListener mml = new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
+				if ( null != grabPoint ) {
+					return;
+				}
+				
 				Point pt = e.getPoint();
 
 				rctCur.setBounds(pt.x - 5, pt.y - 5, 10, 10);
@@ -147,6 +151,7 @@ public class BookReaderSwing implements BookReaderConsts {
 				}
 				
 				Point pt = e.getPoint();
+				boolean dirChg = false;
 
 				int dx = pt.x - grabPoint.x;
 				int dy = pt.y - grabPoint.y;
@@ -154,21 +159,20 @@ public class BookReaderSwing implements BookReaderConsts {
 
 				rctSel.x += (mx * dx);
 				rctSel.width += (mw * dx);
-				rctSel.y += (my * dy);
-				rctSel.height += (mh * dy);
-				
-				boolean dirChg = false;
-				
+
 				if ( 0 > rctSel.width ) {
 					grabPoint.x -= (2*rctSel.width);
 					rctSel.x -= rctSel.width;
 					rctSel.width = -rctSel.width;
+					mx = (0 == mx) ? mw : 0;
 					mw = -mw;
-					mx = (0 == mx) ? 1 : 0;
 
 					dirChg = true;
 				}
 				
+				rctSel.y += (my * dy);
+				rctSel.height += (mh * dy);
+								
 				if ( 0 > rctSel.height ) {
 					grabPoint.y -= (2*rctSel.height);
 					rctSel.y -= rctSel.height;

@@ -165,25 +165,25 @@ public class BookReader implements BookReaderConsts {
 		mergeExceptions.add("TACKWON-DO");
 		mergeExceptions.add("AIKI-DO");
 		mergeExceptions.add("KICK-BOXING");
-		
+
 		mergeExceptions.add("SELF-CONTROL");
 		mergeExceptions.add("SELF-CONFIDENCE");
 		mergeExceptions.add("SELF-PROTECTION");
 		mergeExceptions.add("IN-CHIEF");
 		mergeExceptions.add("KOREA-JAPAN");
-		
+
 		mergeExceptions.add("EVER-INCREASING");
 		mergeExceptions.add("COUNTER-CLOCKWISE");
-		
+
 		mergeExceptions.add("E-SOOK");
 		mergeExceptions.add("MONG-YONG");
 		mergeExceptions.add("KAI-SHEK");
-		
+
 		mergeExceptions.add("KNIFE-HAND");
 		mergeExceptions.add("KNIFE-HANDS");
-		mergeExceptions.add("L-STANCE");		
+		mergeExceptions.add("L-STANCE");
 		mergeExceptions.add("X-STANCE");
-		mergeExceptions.add("L-STANCES");		
+		mergeExceptions.add("L-STANCES");
 		mergeExceptions.add("X-STANCES");
 		mergeExceptions.add("U-SHAPE");
 		mergeExceptions.add("W-SHAPE");
@@ -252,10 +252,10 @@ public class BookReader implements BookReaderConsts {
 
 							if ( m.matches() ) {
 								String lastWord = m.group(1).toUpperCase();
-								
+
 								Matcher n = ptHyphenNext.matcher(l);
 								String nextWord = (n.matches() ? n.group(1) : l).toUpperCase();
-								
+
 								String chk = lastWord + "-" + nextWord;
 
 								if ( !mergeExceptions.contains(chk) ) {
@@ -317,7 +317,7 @@ public class BookReader implements BookReaderConsts {
 
 	public static void main(String[] args) throws Exception {
 		BookReader rdr = new BookReader(args[0]);
-
+		
 //		RecRename rr =  new RecRename("Page_(\\d*)(.*)");
 //		rr.rename(rdr.dirOutRoot);
 //		System.out.println(rr);
