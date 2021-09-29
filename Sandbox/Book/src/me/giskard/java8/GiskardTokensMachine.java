@@ -1,10 +1,8 @@
 package me.giskard.java8;
 
-public interface GiskardMachineTokens {
+public interface GiskardTokensMachine {
 	public enum MachineNode {
 		OperatingSystem, Runtime, User, LaunchInfo,
-		
-		Units, Modules
 	}
 	
 	public enum MachineLaunchInfo {

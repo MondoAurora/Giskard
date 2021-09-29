@@ -3,7 +3,7 @@ package me.giskard;
 public class Giskard implements GiskardConsts {
 	
 	public static abstract class GiskardImplementation implements GiskardAgent {
-		protected abstract void init(String[] args);
+		protected abstract void init(String[] args) throws Exception;
 		
 		protected abstract <RetType> RetType get(GiskardGetMode mode, RetType defValue, Object... path);
 		protected abstract <RetType> RetType set(GiskardSetMode mode, RetType value, Object... path);

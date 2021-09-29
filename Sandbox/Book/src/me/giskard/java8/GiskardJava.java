@@ -1,22 +1,34 @@
 package me.giskard.java8;
 
+import java.io.PrintStream;
 import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardUtils;
 
 public class GiskardJava extends Giskard.GiskardImplementation implements GiskardJavaConsts {
 
+	PrintStream log;
+	
 	final GiskardJavaModel model;
 	final GiskardJavaIdea idea;
 
 	public GiskardJava() {
 		model = new GiskardJavaModel(this);
 		idea = new GiskardJavaIdea(this);
+		
+		log = System.out;
 	}
 
 	@Override
-	protected void init(String[] args) {
+	protected void init(String[] args) throws Exception {
+		
+		registerEnums();
+		
+		Giskard.log(GiskardLogLevel.Trace, "Enum registration", this);
+		
+		
 		model.access(MindNarrativeAccessCmd.Set, args, MachineNode.LaunchInfo, MachineLaunchInfo.Arguments);
 		model.access(MindNarrativeAccessCmd.Set, System.getenv(), MachineNode.LaunchInfo, MachineLaunchInfo.Environment);
 		model.access(MindNarrativeAccessCmd.Set, System.getProperties(), MachineNode.Runtime, MachineRuntime.Properties);
@@ -31,12 +43,39 @@ public class GiskardJava extends Giskard.GiskardImplementation implements Giskar
 			System.out.println("\t\"" + e.getKey() + "\": \"" + e.getValue() + "\",");
 		}
 		System.out.println("}");
+		
+		Giskard.log(GiskardLogLevel.Info, "Launch arguments", Giskard.get(GiskardGetMode.Peek, null, MachineNode.LaunchInfo, MachineLaunchInfo.Arguments));
+
+	}
+	
+	void registerEnums() throws Exception {
+		String pName = getClass().getPackage().getName();
+		for ( GiskardUnits gu : GiskardUnits.values() ) {
+			Class<?> cc = Class.forName(pName + ".GiskardTokens" + gu.name());
+
+			for ( Class<?> ec : cc.getClasses() ) {
+				for ( Object o : ec.getEnumConstants() ) {
+					idea.registerEnum(gu, (Enum<?>) o);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("{\n");
+		for (Map.Entry<?, ?> e : idea.mapAttributes.entrySet()) {
+			sb.append("\t\"" + e.getKey() + "\": \"" + model.getEntityData((GiskardEntity) e.getValue()) + "\",\n");
+		}
+		sb.append("}");
+		
+		return sb.toString();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected <RetType> RetType get(GiskardGetMode mode, RetType defValue, Object... path) {
-		// TODO Auto-generated method stub
-		return null;
+		return (RetType) model.access(MindNarrativeAccessCmd.Get, defValue, path);
 	}
 
 	@Override
@@ -59,8 +98,10 @@ public class GiskardJava extends Giskard.GiskardImplementation implements Giskar
 
 	@Override
 	protected void log(GiskardLogLevel level, Object... params) {
-		// TODO Auto-generated method stub
-
+		StringBuilder sb = GiskardUtils.sbAppend(null, " ", GiskardJavaUtils.tsNow(), level);
+		GiskardUtils.sbAppend(sb, " ", params);
+		
+		log.println(sb);
 	}
 
 	@Override

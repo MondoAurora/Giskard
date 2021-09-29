@@ -4,9 +4,11 @@ import java.util.Arrays;
 
 import me.giskard.GiskardConsts;
 
-public interface GiskardJavaConsts extends GiskardConsts {
+public interface GiskardJavaConsts extends GiskardConsts, GiskardTokensMind, GiskardTokensGeneric, GiskardTokensMachine {
 	
 	String SEP_TOKEN = "::";
+	
+	String FMT_TIMESTAMP = "yyyy.MM.dd_HH.mm.ss";
 	
 	enum GiskardUnits {
 		Model, Idea, Narrative, Dialog,
@@ -26,13 +28,18 @@ public interface GiskardJavaConsts extends GiskardConsts {
 		public GisJavaEntity() {
 			id = getId();
 		}
+		
+		@Override
+		public String toString() {
+			return getClass().getSimpleName() + ": " + id;
+		}
 	}
 	
 	abstract class GisJavaCoreAgent implements GiskardAgent {
-		protected final GiskardJava mind;
+		protected final GiskardJava gisJava;
 		
-		public GisJavaCoreAgent(GiskardJava mind) {
-			this.mind = mind;
+		public GisJavaCoreAgent(GiskardJava gisJava_) {
+			this.gisJava = gisJava_;
 		}
 	}	
 	

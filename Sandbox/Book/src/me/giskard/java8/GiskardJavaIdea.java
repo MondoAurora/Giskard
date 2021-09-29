@@ -8,7 +8,7 @@ public class GiskardJavaIdea extends GiskardJavaConsts.GisJavaCoreAgent implemen
 			new GiskardUtils.Creator<Object, GisJavaEntity>() {
 				@Override
 				public GisJavaEntity create(Object key, Object... params) {
-					return null;
+					return gisJava.model.createEntity();
 				}
 			});
 
@@ -16,12 +16,21 @@ public class GiskardJavaIdea extends GiskardJavaConsts.GisJavaCoreAgent implemen
 			new GiskardUtils.Creator<Enum<?>, GisJavaEntity>() {
 				@Override
 				public GisJavaEntity create(Enum<?> key, Object... params) {
-					return null;
+					String id = GiskardJavaUtils.enumToId((Enum<?>) params[0], key);
+					return mapAttributes.get(id);
 				}
 			});
 
 	public GiskardJavaIdea(GiskardJava mind) {
 		super(mind);
+	}
+	
+	public GisJavaEntity registerEnum(Enum<?> unit, Enum<?> key) {
+		return mapEnumToAtt.get(key, unit);
+	}
+
+	public GisJavaEntity resolveEnum(Enum<?> key) {
+		return mapEnumToAtt.peek(key);
 	}
 
 	@Override

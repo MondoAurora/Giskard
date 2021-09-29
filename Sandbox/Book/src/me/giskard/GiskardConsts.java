@@ -1,10 +1,10 @@
 package me.giskard;
 
-import me.giskard.java8.GiskardGenericTokens;
-import me.giskard.java8.GiskardMachineTokens;
-import me.giskard.java8.GiskardMindTokens;
+import me.giskard.java8.GiskardTokensGeneric;
+import me.giskard.java8.GiskardTokensMachine;
+import me.giskard.java8.GiskardTokensMind;
 
-public interface GiskardConsts extends GiskardMindTokens, GiskardMachineTokens, GiskardGenericTokens {
+public interface GiskardConsts extends GiskardTokensMind, GiskardTokensMachine, GiskardTokensGeneric {
 	enum GiskardGetMode {
 		Peek, Create, Update
 	}
