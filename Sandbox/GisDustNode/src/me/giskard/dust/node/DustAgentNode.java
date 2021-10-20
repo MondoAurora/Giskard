@@ -59,14 +59,22 @@ public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNo
 	@Override
 	public void gisAgentProcess() throws GiskardException {
 		// TODO Auto-generated method stub
-		
 	}
 
-	public void optInitRuntime(Giskard current) {
+	protected <ModAgent extends GiskardModule> ModAgent loadModule(String moduleName, String moduleVersion)
+			throws Exception {
+		return super.loadModule(moduleName, moduleVersion);
+	}
+
+	protected ClassLoader getCL(String moduleName, String moduleVersion) {
+		return super.getCL(moduleName, moduleVersion);
+	}
+
+	public void setRuntime(Giskard runtime) {
 //		Giskard.wrapException(null, null, "Test", "exception");
 		
-		if ( ! (current instanceof DustAgentNode) ) {
-			setRuntime(this);
+		if ( ! (runtime instanceof DustAgentNode) ) {
+			super.setRuntime(this);
 			
 			for ( BootEvent e : BOOT_EVENTS ) {
 				broadcastEvent_(e.eventType, e.params);

@@ -8,6 +8,37 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class GiskardMain extends Giskard implements GiskardConsts {
+	
+	private static GiskardMain BOOT;
+	protected static String[] ARGS;
+	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
+
+	public static void main(String[] args) {
+		Throwable launchException = null;
+
+		try {
+			ARGS = args;
+			RUNTIME = BOOT = new GiskardMain();
+			InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] mod = line.split("\\s+");
+				BOOT.loadModule(mod[0], mod[1]);
+			}
+
+		} catch (Throwable e) {
+			launchException = e;
+		}
+
+		for (BootEvent be : BOOT_EVENTS) {
+			System.out.println(be);
+		}
+
+		if ( null != launchException ) {
+			launchException.printStackTrace();
+		}
+	}
 
 	private static class BootException extends GiskardException {
 		private static final long serialVersionUID = 1L;
@@ -67,38 +98,7 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		return GiskardUtils.toString(GiskardUtils.sbAppend(null, "", "[", toString(ref.getUnit()), "]:", ref.getID()));
 	}
 
-	private static GiskardMain BOOT;
-	protected static String[] ARGS;
-	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
-
-	public static void main(String[] args) {
-		Throwable launchException = null;
-
-		try {
-			ARGS = args;
-			RUNTIME = BOOT = new GiskardMain();
-			InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String[] mod = line.split("\\s+");
-				loadModule(mod[0], mod[1]);
-			}
-
-		} catch (Throwable e) {
-			launchException = e;
-		}
-
-		for (BootEvent be : BOOT_EVENTS) {
-			System.out.println(be);
-		}
-
-		if ( null != launchException ) {
-			launchException.printStackTrace();
-		}
-	}
-
-	protected static void setRuntime(GiskardMain runtime) {
+	protected void setRuntime(Giskard runtime) {
 		if ( BOOT != RUNTIME ) {
 			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
 		}
@@ -106,7 +106,7 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected static <ModAgent extends GiskardModule> ModAgent loadModule(String moduleName, String moduleVersion)
+	protected <ModAgent extends GiskardModule> ModAgent loadModule(String moduleName, String moduleVersion)
 			throws Exception {
 		ModAgent ret = null;
 
@@ -116,19 +116,13 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 				.loadClass(GiskardConsts.class.getPackage().getName() + ".modules." + moduleName);
 		if ( null != ml ) {
 			ret = ml.newInstance();
-			
 			ret.initModule(RUNTIME);
-
-//			Method mm = ml.getDeclaredMethod("initModule", GiskardMain.class);
-//			if ( null != mm ) {
-//				mm.invoke(ret, RUNTIME);
-//			}
 		}
 
 		return ret;
 	}
 
-	protected static ClassLoader getCL(String moduleName, String moduleVersion) {
+	protected ClassLoader getCL(String moduleName, String moduleVersion) {
 		return ClassLoader.getSystemClassLoader();
 	}
 

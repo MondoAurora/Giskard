@@ -4,7 +4,7 @@ import me.giskard.GiskardConsts;
 
 public interface DustNodeConsts extends GiskardConsts {
 	
-	Dust DUST = new Dust();
+	DustBootLoader DUST = new DustBootLoader();
 
 	interface DustNode extends GiskardAgent {
 		DustEntity getAgentEntity();

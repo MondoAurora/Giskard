@@ -15,7 +15,7 @@ public interface GiskardConsts {
 	}
 	
 	public enum GiskardPathRoot {
-		This, Message, Response, Dialog
+		This, Message, Response, Dialog, Module
 	}
 	
 	enum GiskardAgentResponse {
@@ -54,7 +54,7 @@ public interface GiskardConsts {
 	}
 
 	public interface GiskardModule {
-		void initModule(Giskard runtime);
+		void initModule(Giskard runtime) throws Exception;
 	}
 
 }
