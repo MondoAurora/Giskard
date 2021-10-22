@@ -35,7 +35,7 @@ public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNo
 	@Override
 	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, Object... path) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.access_(cmd, val, path);
 	}
 
 	@Override

@@ -1,111 +1,90 @@
 package me.giskard.dust.node;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.GiskardMain;
+import me.giskard.GiskardUtils;
+import me.giskard.utils.GisUtilsConsts.Creator;
+import me.giskard.utils.GisUtilsFactory;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustBootLoader implements DustBootConsts, GiskardConsts {
 
-	static Class<? extends Map> CLASS_MAP;
-	static Map ROOT;
+	static Map<Enum, DustEntityRef> BOOT_REFS = new GisUtilsFactory<Enum, DustEntityRef>(
+			new Creator<Enum, DustEntityRef>() {
+				@Override
+				public DustEntityRef create(Enum key, Object... params) {
+					return new DustEntityRef(null, key.ordinal());
+				}
+			});
 
-	static Map NODE_UNITS;
+	static DustEntityRef ATT_NAME = BOOT_REFS.get(UnitUtilText.AttIdentifiedId);
+	static DustEntityRef ATT_ENTITYREF = BOOT_REFS.get(UnitMiNDModel.AttEntityRef);
+	static DustEntityRef ATT_ENTITYMAP = BOOT_REFS.get(UnitMiNDModel.AttUnitEntityMap);
 
-	static Map<Enum, DustEntityRef> BOOT_REFS = new HashMap<Enum, DustEntityRef>() {
-		private static final long serialVersionUID = 1L;
+	static Enum CURR_KEY;
 
+	static Creator<Object, Map> BOOT_CREATOR = new Creator<Object, Map>() {
 		@Override
-		public DustEntityRef get(Object key) {
-			DustEntityRef ret = super.get(key);
+		public Map create(Object key, Object... params) {
+			Map map = new GisUtilsFactory<>(BOOT_CREATOR);
 
-			if ( null == ret ) {
-				Enum k = (Enum) key;
-
-				ret = new DustEntityRef(null, k.ordinal());
-				put(k, ret);
+			if ( null != CURR_KEY ) {
+				initEntity(map, CURR_KEY);
+				CURR_KEY = null;
 			}
 
-			return ret;
+			return map;
 		}
 	};
 
-	public static Object getNodeEntity() {
-		return ROOT;
-	}
-
 	public static void boot() throws Exception {
-		if ( null != ROOT ) {
-			throw new IllegalStateException("boot is already called.");
-		}
+		GisUtilsFactory<Object, Map> factBootEntities = new GisUtilsFactory<>(BOOT_CREATOR);
+
+		GiskardMain.setBootUnitMap(factBootEntities);
 
 		String prefEnumName = UnitDustNode.class.getName();
 		prefEnumName = prefEnumName.substring(0, prefEnumName.lastIndexOf("$") + 1);
-
-		CLASS_MAP = (Class<? extends Map>) Class.forName(CLASSNAME_MAP);
-
-		ROOT = CLASS_MAP.newInstance();
-		NODE_UNITS = CLASS_MAP.newInstance();
-
-		ROOT.put(BOOT_REFS.get(UnitDustNode.AttModuleUnitMap), NODE_UNITS);
 
 		DustEntityRef nodeUnits = BOOT_REFS.get(UnitDustNode.UnitDustNode);
 
 		for (UnitDustNode key : UnitDustNode.values()) {
 			if ( isUnit(key) ) {
-				DustEntityRef refUnit = optRegisterEntity(key, NODE_UNITS);
+				CURR_KEY = key;
+				DustEntityRef refUnit = BOOT_REFS.get(key);
 				refUnit.unit = nodeUnits;
-				Map parent = (Map) ((Map) NODE_UNITS.get(key.ordinal())).get(BOOT_REFS.get(UnitMiNDModel.AttUnitEntityMap));
+				int unitId = key.ordinal();
+				Giskard.access(GiskardAccessCmd.Get, null, unitId);
 
 				Class ce = Class.forName(prefEnumName + key.name());
 				for (Object k2 : ce.getEnumConstants()) {
 					Enum eKey = (Enum) k2;
-					DustEntityRef r = optRegisterEntity(eKey, parent);
+					DustEntityRef r = BOOT_REFS.get(eKey);
 					r.unit = refUnit;
+					Map map = Giskard.access(GiskardAccessCmd.Get, null, unitId, ATT_ENTITYMAP, eKey.ordinal());
+					initEntity(map, eKey);
 				}
 			}
 		}
 
-		Giskard.broadcastEvent(null, ROOT);
-	}
-
-	public static DustEntityRef optRegisterEntity(Enum key, Map parent) throws Exception {
-		DustEntityRef ref = BOOT_REFS.get(key);
-
-		Object id = key.ordinal();
-		Map map = (Map) parent.get(id);
-
-		if ( null == map ) {
-			map = CLASS_MAP.newInstance();
-			map.put(BOOT_REFS.get(UnitMiNDModel.AttEntityRef), ref);
-			map.put(BOOT_REFS.get(UnitUtilText.AttIdentifiedId), key.getClass().getSimpleName() + "::" + key.name());
-
-			if ( isUnit(key) ) {
-				map.put(BOOT_REFS.get(UnitMiNDModel.AttUnitEntityMap), CLASS_MAP.newInstance());
-			}
-			parent.put(id, map);
-		}
-
-		return ref;
+		Giskard.broadcastEvent(null, factBootEntities);
 	}
 
 	public static boolean isUnit(Enum eKey) {
 		return eKey.name().startsWith("Unit");
 	}
 
+	public static void initEntity(Map map, Enum key) {
+		map.put(ATT_ENTITYREF, BOOT_REFS.get(key));
+		map.put(ATT_NAME, GiskardUtils.enumToKey(key));
+	}
+
 	public static String toString(DustEntityRef ref) {
-		Object nodeId = ref.getUnit().getID();
-
-		Map m = (Map) NODE_UNITS.get(nodeId);
-		String unitName = (String) m.get(BOOT_REFS.get(UnitUtilText.AttIdentifiedId));
-
-		m = (Map) m.get(BOOT_REFS.get(UnitMiNDModel.AttUnitEntityMap));
-		m = (Map) m.get(ref.getID());
-
-		String name = (String) m.get(BOOT_REFS.get(UnitUtilText.AttIdentifiedId));
-
-		return "[" + unitName + "->" + name + "]";
+		Object unitId = ref.getUnit().getID();
+		String unitName = Giskard.access(GiskardAccessCmd.Get, "??", unitId, ATT_NAME);
+		String name = Giskard.access(GiskardAccessCmd.Get, "??", unitId, ATT_ENTITYMAP, ref.getID(), ATT_NAME);
+		return "\"" + unitName + "->" + name + "\"";
 	}
 }

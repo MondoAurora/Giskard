@@ -6,12 +6,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 public class GiskardMain extends Giskard implements GiskardConsts {
-	
+
 	private static GiskardMain BOOT;
 	protected static String[] ARGS;
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
+
+	@SuppressWarnings("rawtypes")
+	protected static Map BOOT_UNITS;
 
 	public static void main(String[] args) {
 		Throwable launchException = null;
@@ -38,6 +42,14 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		if ( null != launchException ) {
 			launchException.printStackTrace();
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static void setBootUnitMap(Map bootUnitMap) {
+		if ( null != BOOT_UNITS ) {
+//			throw new IllegalStateException("setBootUnitMap is already called.");
+		}
+		BOOT_UNITS = bootUnitMap;
 	}
 
 	private static class BootException extends GiskardException {
@@ -77,8 +89,31 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, Object... path) {
-		return null;
+		int l = path.length;
+		int lastIdx = 0;
+		
+		Map m;
+		Object o;
+		
+		for ( lastIdx = 0, o = m = BOOT_UNITS; lastIdx < l; ++lastIdx) {
+			if (o instanceof Map ) {
+				m = (Map) o;
+				o = m.get(path[lastIdx]);
+			} else {
+				break;
+			}
+		}
+		
+		switch ( cmd ) {
+		case Get:
+			return (RetType) o;
+		case Set:
+			return (RetType) m.put(path[lastIdx], val);
+		default:
+			throw new IllegalAccessError("Illegal access command while booting");
+		}
 	}
 
 	protected <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
