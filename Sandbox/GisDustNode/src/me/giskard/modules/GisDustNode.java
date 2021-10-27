@@ -2,8 +2,7 @@ package me.giskard.modules;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts.GiskardModule;
-import me.giskard.dust.node.DustAgentNode;
-import me.giskard.dust.node.DustBootLoader;
+import me.giskard.dust.node.logic.DustBootLoader;
 
 public class GisDustNode implements GiskardModule {
 
@@ -15,12 +14,7 @@ public class GisDustNode implements GiskardModule {
 		
 		Giskard.broadcastEvent(null, "Registering boot refs...");
 		
-		DustBootLoader.boot();
-		
-		Giskard.broadcastEvent(null, "Creating node...");
-		DustAgentNode node = new DustAgentNode();
-		
-		node.setRuntime(runtime);
+		DustBootLoader.boot(runtime);
 		
 		Giskard.broadcastEvent(null, "SUCCESS initialization of runtime", modName);
 	}

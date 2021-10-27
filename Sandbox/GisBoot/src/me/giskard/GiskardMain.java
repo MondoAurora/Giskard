@@ -15,7 +15,7 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
 
 	@SuppressWarnings("rawtypes")
-	protected static Map BOOT_UNITS;
+	protected static Map BOOT_MODULE;
 
 	public static void main(String[] args) {
 		Throwable launchException = null;
@@ -36,20 +36,22 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 
 		for (BootEvent be : BOOT_EVENTS) {
-			System.out.println(be);
+			broadcastEvent(null, be);
 		}
 
 		if ( null != launchException ) {
 			launchException.printStackTrace();
+		} else {
+			broadcastEvent(null, "Giskard main() complete.");
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static void setBootUnitMap(Map bootUnitMap) {
-		if ( null != BOOT_UNITS ) {
-//			throw new IllegalStateException("setBootUnitMap is already called.");
+	public static void setBootModule(Map bootModule) {
+		if ( null != BOOT_MODULE ) {
+			throw new IllegalStateException("setBootUnitMap is already called.");
 		}
-		BOOT_UNITS = bootUnitMap;
+		BOOT_MODULE = bootModule;
 	}
 
 	private static class BootException extends GiskardException {
@@ -90,14 +92,18 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, Object... path) {
+	@Override
+	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+		if ( ctx != GiskardContext.Module ) {
+			throw new IllegalAccessError("Illegal access command while booting");
+		}
 		int l = path.length;
 		int lastIdx = 0;
 		
 		Map m;
 		Object o;
 		
-		for ( lastIdx = 0, o = m = BOOT_UNITS; lastIdx < l; ++lastIdx) {
+		for ( lastIdx = 0, o = m = BOOT_MODULE; lastIdx < l; ++lastIdx) {
 			if (o instanceof Map ) {
 				m = (Map) o;
 				o = m.get(path[lastIdx]);
@@ -107,15 +113,17 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 		
 		switch ( cmd ) {
+		case Peek:
 		case Get:
 			return (RetType) o;
 		case Set:
-			return (RetType) m.put(path[lastIdx], val);
+			return (RetType) m.put(path[lastIdx - 1], val);
 		default:
 			throw new IllegalAccessError("Illegal access command while booting");
 		}
 	}
 
+	@Override
 	protected <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException {
 		if ( exception instanceof GiskardException ) {
@@ -125,15 +133,17 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
+	@Override
 	protected void broadcastEvent_(GiskardEntityRef eventType, Object... params) {
 		BOOT_EVENTS.add(new BootEvent(eventType, params));
 	}
 
+	@Override
 	protected String toString_(GiskardEntityRef ref) {
 		return GiskardUtils.toString(GiskardUtils.sbAppend(null, "", "[", toString(ref.getUnit()), "]:", ref.getID()));
 	}
 
-	protected void setRuntime(Giskard runtime) {
+	public void setRuntime(Giskard runtime) {
 		if ( BOOT != RUNTIME ) {
 			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
 		}

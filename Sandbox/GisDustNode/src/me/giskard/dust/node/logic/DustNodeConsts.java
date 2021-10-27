@@ -1,11 +1,9 @@
-package me.giskard.dust.node;
+package me.giskard.dust.node.logic;
 
 import me.giskard.GiskardConsts;
 
 public interface DustNodeConsts extends GiskardConsts {
 	
-	DustBootLoader DUST = new DustBootLoader();
-
 	interface DustNode extends GiskardAgent {
 		DustEntity getAgentEntity();
 

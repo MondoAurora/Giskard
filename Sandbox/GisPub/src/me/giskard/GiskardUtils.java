@@ -32,6 +32,15 @@ public class GiskardUtils implements GiskardConsts {
 		return sb;
 	}
 
+	@SuppressWarnings({ "unchecked" })
+	public static <RetType> RetType instantiate(String className, Object... params) {
+		try {
+			return (RetType) instantiate(Class.forName(className), params);
+		} catch (Exception e) {
+			return Giskard.wrapException(e, null, params);
+		}
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <RetType> RetType instantiate(Class<RetType> rc, Object... params) {
 		try {

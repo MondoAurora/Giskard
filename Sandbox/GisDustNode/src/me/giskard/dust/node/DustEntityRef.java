@@ -2,7 +2,7 @@ package me.giskard.dust.node;
 
 import me.giskard.GiskardConsts.GiskardEntityRef;
 
-class DustEntityRef implements GiskardEntityRef {
+public class DustEntityRef implements GiskardEntityRef {
 	DustEntityRef unit;
 	final Object id;
 	
@@ -15,7 +15,11 @@ class DustEntityRef implements GiskardEntityRef {
 	public GiskardEntityRef getUnit() {
 		return unit;
 	}
-	
+
+	public void setUnit(DustEntityRef unit) {
+		this.unit = unit;
+	}
+
 	@Override
 	public Object getID() {
 		return id;
@@ -32,6 +36,6 @@ class DustEntityRef implements GiskardEntityRef {
 	
 	@Override
 	public String toString() {
-		return DustBootLoader.toString(this);
+		return DustBootUtils.toString(this);
 	}
 }

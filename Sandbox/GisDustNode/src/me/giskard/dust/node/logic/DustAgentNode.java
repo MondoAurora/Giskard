@@ -1,4 +1,4 @@
-package me.giskard.dust.node;
+package me.giskard.dust.node.logic;
 
 import java.io.PrintStream;
 import java.util.Date;
@@ -33,9 +33,8 @@ public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNo
 	}
 
 	@Override
-	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, Object... path) {
-		// TODO Auto-generated method stub
-		return super.access_(cmd, val, path);
+	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+		return super.access_(cmd, val, ctx, path);
 	}
 
 	@Override

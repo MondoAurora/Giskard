@@ -14,7 +14,7 @@ public interface GiskardConsts {
 		Init, Begin, Process, End, Release
 	}
 	
-	public enum GiskardPathRoot {
+	public enum GiskardContext {
 		This, Message, Response, Dialog, Module
 	}
 	
