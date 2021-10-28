@@ -1,4 +1,4 @@
-package me.giskard.dust.node.logic;
+package me.giskard.dust.node.agents;
 
 import me.giskard.GiskardConsts;
 

@@ -1,4 +1,4 @@
-package me.giskard.dust.node.logic;
+package me.giskard.dust.node.agents;
 
 import java.io.PrintStream;
 import java.util.Date;
@@ -7,7 +7,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardMain;
 import me.giskard.GiskardUtils;
 
-public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNodeConsts.DustNode {
+public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts, DustNodeConsts.DustNode {
 	
 	PrintStream out = System.out;
 	
@@ -33,8 +33,8 @@ public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNo
 	}
 
 	@Override
-	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-		return super.access_(cmd, val, ctx, path);
+	public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+		return super.accessData(cmd, val, ctx, path);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class DustAgentNode extends GiskardMain implements DustNodeConsts, DustNo
 	public void setRuntime(Giskard runtime) {
 //		Giskard.wrapException(null, null, "Test", "exception");
 		
-		if ( ! (runtime instanceof DustAgentNode) ) {
+		if ( ! (runtime instanceof DustNodeAgentRuntime) ) {
 			super.setRuntime(this);
 			
 			for ( BootEvent e : BOOT_EVENTS ) {

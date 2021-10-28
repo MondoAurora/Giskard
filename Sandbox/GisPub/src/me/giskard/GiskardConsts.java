@@ -56,5 +56,11 @@ public interface GiskardConsts {
 	public interface GiskardModule {
 		void initModule(Giskard runtime) throws Exception;
 	}
+	
+	public interface GiskardCloud {
+		 <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path);
+	}
+	
+
 
 }

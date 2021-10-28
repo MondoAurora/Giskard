@@ -9,11 +9,11 @@ import me.giskard.utils.GisUtilsFactory;
 public interface DustBootConsts extends GiskardConsts {
 	
 	String CLASSNAME_MAP = "java.util.HashMap";
-	String CLASSNAME_NODE = "me.giskard.dust.node.logic.DustAgentNode";
+	String CLASSNAME_RUNTIME = "me.giskard.dust.node.agents.DustNodeAgentRuntime";
 
 	enum UnitDustNode {
 		UnitDustNode, UnitMiNDModel, UnitMiNDIdea, UnitMiNDNarrative, UnitMiNDDialog, UnitUtilGeneric, UnitUtilText, UnitUtilStream,
-		TypeModule, TypeNode,
+		TypeModule, TypeRuntime,
 		AttModuleUnitMap, AttModuleNativeMap,
 	}
 

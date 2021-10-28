@@ -1,9 +1,9 @@
 package me.giskard;
 
-public abstract class Giskard implements GiskardConsts {
+public abstract class Giskard implements GiskardConsts, GiskardConsts.GiskardCloud {
 	
 	public static <RetType> RetType access(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-		return RUNTIME.access_(cmd, val, ctx, path);
+		return RUNTIME.accessData(cmd, val, ctx, path);
 	}
 
 	public static <RetType> RetType wrapException(Throwable exception, GiskardEntityRef exType, Object... params)
@@ -19,7 +19,6 @@ public abstract class Giskard implements GiskardConsts {
 		return RUNTIME.toString_(ref);
 	}
 
-	protected abstract <RetType> RetType access_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path);
 	protected abstract <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException;
 	protected abstract void broadcastEvent_(GiskardEntityRef eventType, Object... params);

@@ -9,51 +9,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class GiskardMain extends Giskard implements GiskardConsts {
-
-	private static GiskardMain BOOT;
-	protected static String[] ARGS;
-	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
-
-	@SuppressWarnings("rawtypes")
-	protected static Map BOOT_MODULE;
-
-	public static void main(String[] args) {
-		Throwable launchException = null;
-
-		try {
-			ARGS = args;
-			RUNTIME = BOOT = new GiskardMain();
-			InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String[] mod = line.split("\\s+");
-				BOOT.loadModule(mod[0], mod[1]);
-			}
-
-		} catch (Throwable e) {
-			launchException = e;
-		}
-
-		for (BootEvent be : BOOT_EVENTS) {
-			broadcastEvent(null, be);
-		}
-
-		if ( null != launchException ) {
-			launchException.printStackTrace();
-		} else {
-			broadcastEvent(null, "Giskard main() complete.");
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static void setBootModule(Map bootModule) {
-		if ( null != BOOT_MODULE ) {
-			throw new IllegalStateException("setBootUnitMap is already called.");
-		}
-		BOOT_MODULE = bootModule;
-	}
-
+	
 	private static class BootException extends GiskardException {
 		private static final long serialVersionUID = 1L;
 		Date time;
@@ -91,9 +47,63 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
+
+	private static GiskardMain BOOT;
+	protected static String[] ARGS;
+	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
+
+	@SuppressWarnings("rawtypes")
+	protected static Map BOOT_MODULE;
+	
+	@SuppressWarnings("rawtypes")
+	public static void setBootModule(Map bootModule) {
+		if ( null != BOOT_MODULE ) {
+			throw new IllegalStateException("setBootUnitMap is already called.");
+		}
+		BOOT_MODULE = bootModule;
+	}
+	
+	public void setRuntime(Giskard runtime) {
+		if ( BOOT != RUNTIME ) {
+			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
+		}
+		RUNTIME = runtime;
+	}
+
+
+
+	public static void main(String[] args) {
+		Throwable launchException = null;
+
+		try {
+			ARGS = args;
+			RUNTIME = BOOT = new GiskardMain();
+			InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] mod = line.split("\\s+");
+				BOOT.loadModule(mod[0], mod[1]);
+			}
+
+		} catch (Throwable e) {
+			launchException = e;
+		}
+
+		for (BootEvent be : BOOT_EVENTS) {
+			broadcastEvent(null, be);
+		}
+
+		if ( null != launchException ) {
+			launchException.printStackTrace();
+		} else {
+			broadcastEvent(null, "Giskard main() complete.");
+		}
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	protected <RetType> RetType access_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+	public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 		if ( ctx != GiskardContext.Module ) {
 			throw new IllegalAccessError("Illegal access command while booting");
 		}
@@ -141,13 +151,6 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	@Override
 	protected String toString_(GiskardEntityRef ref) {
 		return GiskardUtils.toString(GiskardUtils.sbAppend(null, "", "[", toString(ref.getUnit()), "]:", ref.getID()));
-	}
-
-	public void setRuntime(Giskard runtime) {
-		if ( BOOT != RUNTIME ) {
-			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
-		}
-		RUNTIME = runtime;
 	}
 
 	@SuppressWarnings("unchecked")
