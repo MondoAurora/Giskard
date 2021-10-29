@@ -6,28 +6,48 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardConsts.GiskardModule;
 import me.giskard.GiskardMain;
+import me.giskard.GiskardUtils;
 import me.giskard.dust.node.DustBootConsts;
 import me.giskard.dust.node.DustBootUtils;
 import me.giskard.dust.node.DustEntityRef;
-import me.giskard.utils.GisUtilsConsts.Creator;
-import me.giskard.utils.GisUtilsFactory;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class GisDustNode implements DustBootConsts, GiskardConsts, GiskardModule {
 
-	Enum CURR_KEY;
-
-	Creator<Object, Map> BOOT_CREATOR = new Creator<Object, Map>() {
+	Map bootModule;
+	GiskardCloud bootCloud = new GiskardCloud() {
 		@Override
-		public Map create(Object key, Object... params) {
-			Map map = new GisUtilsFactory<>(BOOT_CREATOR);
+		public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+			int l = path.length;
+			int lastIdx = 0;
 
-			if ( null != CURR_KEY ) {
-				initBootEntity(map, CURR_KEY);
-				CURR_KEY = null;
+			Object parent;
+			Object lastOb;
+
+			for (lastIdx = 0, lastOb = parent = bootModule; lastIdx < l; ++lastIdx) {
+				if ( null == lastOb ) {
+					lastOb = DustBootUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+				}
+				parent = lastOb;
+				lastOb = DustBootUtils.getValue(parent, path[lastIdx], null);
 			}
 
-			return map;
+			switch ( cmd ) {
+			case Peek:
+				break;
+			case Get:
+				if ( null == lastOb ) {
+					lastOb = DustBootUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+				}
+				break;
+			case Set:
+				lastOb = DustBootUtils.setValue(parent, path[lastIdx - 1], val);
+				break;
+			default:
+				throw new IllegalAccessError("Illegal access command while booting");
+			}
+
+			return (RetType) lastOb;
 		}
 	};
 
@@ -37,53 +57,75 @@ public class GisDustNode implements DustBootConsts, GiskardConsts, GiskardModule
 
 		Giskard.broadcastEvent(null, "Initializing runtime", modName, "...");
 
+//		Giskard.broadcastEvent(null, "UNIT_UTIL_STREAM", UNIT_UTIL_STREAM.getUnit().getID() , "::", UNIT_UTIL_STREAM.getID());
+
 		Giskard.broadcastEvent(null, "Registering boot refs...");
 
-		GisUtilsFactory<Object, Map> factBootModule = new GisUtilsFactory<>(BOOT_CREATOR);
+		bootModule = GiskardUtils.instantiate(CLASSNAME_MAP);
+		GiskardMain.setBootCloud(bootCloud);
+		
+//		DustEntityRef nodeUnits = BOOT_REFS.get(UnitDustNode.UnitDustNode);
+		DustEntityRef refTypeRuntime = TYPE_NODE_RUNTIME;// BOOT_REFS.get(UnitDustNode.TypeRuntime);
 
-		GiskardMain.setBootModule(factBootModule);
-		Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_UNITMAP);
 
-		String prefEnumName = UnitDustNode.class.getName();
-		prefEnumName = prefEnumName.substring(0, prefEnumName.lastIndexOf("$") + 1);
+		BootRefProcessor brp = new BootRefProcessor() {
+			@Override
+			public void processBootRef(DustEntityRef ref, int optUnitNextIdx) {
+				Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, ref.getUnit().getID(),
+						ATT_MODEL_UNIT_ENTITYMAP, ref.getID(), ATT_MODEL_ENTITY_REF);
 
-		DustEntityRef nodeUnits = BOOT_REFS.get(UnitDustNode.UnitDustNode);
-
-		for (UnitDustNode key : UnitDustNode.values()) {
-			if ( DustBootUtils.isUnit(key) ) {
-				CURR_KEY = key;
-				DustEntityRef refUnit = BOOT_REFS.get(key);
-				refUnit.setUnit(nodeUnits);
-				int unitId = key.ordinal();
-				Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_UNITMAP, unitId);
-
-				Class ce = Class.forName(prefEnumName + key.name());
-				for (Object k2 : ce.getEnumConstants()) {
-					Enum eKey = (Enum) k2;
-					DustEntityRef r = BOOT_REFS.get(eKey);
-					r.setUnit(refUnit);
-					Map map = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_UNITMAP, unitId,
-							ATT_ENTITYMAP, eKey.ordinal());
-					initBootEntity(map, eKey);
+				if ( 0 < optUnitNextIdx ) {
+					Giskard.access(GiskardAccessCmd.Set, optUnitNextIdx, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,
+							ref.getUnit().getID(), ATT_MODEL_UNIT_ENTITYMAP, ref.getID(), ATT_MODEL_UNIT_NEXTID);
 				}
 			}
-		}
+		};
 
-		DustEntityRef refTypeRuntime = BOOT_REFS.get(UnitDustNode.TypeRuntime);
-		Giskard.access(GiskardAccessCmd.Set, CLASSNAME_RUNTIME, GiskardContext.Module, ATT_NATIVEMAP, refTypeRuntime, ATT_TXT_ID);
+		DustEntityRef.finishBoot(brp);
 
-		Giskard.broadcastEvent(null, factBootModule);
+//		Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_UNITMAP);
+
+//		String prefEnumName = UnitDustNode.class.getName();
+//		prefEnumName = prefEnumName.substring(0, prefEnumName.lastIndexOf("$") + 1);
+//
+//
+//		for (UnitDustNode key : UnitDustNode.values()) {
+//			if ( DustBootUtils.isUnit(key) ) {
+//				DustEntityRef refUnit = BOOT_REFS.get(key);
+//				refUnit.setUnit(nodeUnits);
+//				int unitId = key.ordinal();
+////				Giskard.access(GiskardAccessCmd.Set, refUnit, GiskardContext.Module, ATT_UNITMAP, unitId, ATT_ENTITYREF);
+//				Giskard.access(GiskardAccessCmd.Set, GiskardUtils.enumToKey(key), GiskardContext.Module,
+//						ATT_NODE_MODULE_UNITMAP, unitId, ATT_TEXT_IDENTIFIED_ID);
+//
+//				Class ce = Class.forName(prefEnumName + key.name());
+//				for (Object k2 : ce.getEnumConstants()) {
+//					Enum eKey = (Enum) k2;
+//					DustEntityRef r = BOOT_REFS.get(eKey);
+//					r.setUnit(refUnit);
+////					Giskard.access(GiskardAccessCmd.Set, r, GiskardContext.Module, ATT_UNITMAP, unitId, ATT_ENTITYMAP,
+////							eKey.ordinal(), ATT_ENTITYREF);
+//					Giskard.access(GiskardAccessCmd.Set, GiskardUtils.enumToKey(eKey), GiskardContext.Module,
+//							ATT_NODE_MODULE_UNITMAP, unitId, ATT_MODEL_UNIT_ENTITYMAP, eKey.ordinal(), ATT_TEXT_IDENTIFIED_ID);
+//				}
+//			}
+//		}
+
+		Giskard.access(GiskardAccessCmd.Set, CLASSNAME_RUNTIME, GiskardContext.Module, ATT_NODE_MODULE_NATIVEMAP,
+				refTypeRuntime, ATT_TEXT_IDENTIFIED_ID);
+
+		Giskard.broadcastEvent(null, bootModule);
 
 		Giskard.broadcastEvent(null, "Creating runtime agent...");
 		GiskardMain node = DustBootUtils.createAgent(refTypeRuntime);
 
 		node.setRuntime(runtime);
-		
+
 		Giskard.broadcastEvent(null, "SUCCESS initialization of runtime", modName);
 	}
 
-	private void initBootEntity(Map map, Enum key) {
-		map.put(ATT_ENTITYREF, BOOT_REFS.get(key));
-//		map.put(ATT_TXT_ID, GiskardUtils.enumToKey(key));
-	}
+//	private void initBootEntity(Map map, Enum key) {
+//		map.put(ATT_ENTITYREF, BOOT_REFS.get(key));
+////		map.put(ATT_TXT_ID, GiskardUtils.enumToKey(key));
+//	}
 }

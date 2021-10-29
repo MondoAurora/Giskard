@@ -6,10 +6,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 
 public class GiskardMain extends Giskard implements GiskardConsts {
-	
+
 	private static class BootException extends GiskardException {
 		private static final long serialVersionUID = 1L;
 		Date time;
@@ -47,30 +46,36 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
-
 	private static GiskardMain BOOT;
 	protected static String[] ARGS;
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
 
-	@SuppressWarnings("rawtypes")
-	protected static Map BOOT_MODULE;
-	
-	@SuppressWarnings("rawtypes")
-	public static void setBootModule(Map bootModule) {
-		if ( null != BOOT_MODULE ) {
-			throw new IllegalStateException("setBootUnitMap is already called.");
+//	@SuppressWarnings("rawtypes")
+//	protected static Map BOOT_MODULE;
+//	
+//	@SuppressWarnings("rawtypes")
+//	public static void setBootModule(Map bootModule) {
+//		if ( null != BOOT_MODULE ) {
+//			throw new IllegalStateException("setBootUnitMap is already called.");
+//		}
+//		BOOT_MODULE = bootModule;
+//	}
+
+	protected static GiskardCloud BOOT_CLOUD;
+
+	public static void setBootCloud(GiskardCloud cloud) {
+		if ( null != BOOT_CLOUD ) {
+			throw new IllegalStateException("setBootCloud is already called.");
 		}
-		BOOT_MODULE = bootModule;
+		BOOT_CLOUD = cloud;
 	}
-	
+
 	public void setRuntime(Giskard runtime) {
 		if ( BOOT != RUNTIME ) {
 			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
 		}
 		RUNTIME = runtime;
 	}
-
-
 
 	public static void main(String[] args) {
 		Throwable launchException = null;
@@ -90,8 +95,8 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 			launchException = e;
 		}
 
-		for (BootEvent be : BOOT_EVENTS) {
-			broadcastEvent(null, be);
+		while (!BOOT_EVENTS.isEmpty()) {
+			broadcastEvent(null, BOOT_EVENTS.remove(0));
 		}
 
 		if ( null != launchException ) {
@@ -101,36 +106,13 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 		if ( ctx != GiskardContext.Module ) {
 			throw new IllegalAccessError("Illegal access command while booting");
 		}
-		int l = path.length;
-		int lastIdx = 0;
 		
-		Map m;
-		Object o;
-		
-		for ( lastIdx = 0, o = m = BOOT_MODULE; lastIdx < l; ++lastIdx) {
-			if (o instanceof Map ) {
-				m = (Map) o;
-				o = m.get(path[lastIdx]);
-			} else {
-				break;
-			}
-		}
-		
-		switch ( cmd ) {
-		case Peek:
-		case Get:
-			return (RetType) o;
-		case Set:
-			return (RetType) m.put(path[lastIdx - 1], val);
-		default:
-			throw new IllegalAccessError("Illegal access command while booting");
-		}
+		return BOOT_CLOUD.accessData(cmd, val, ctx, path);
 	}
 
 	@Override

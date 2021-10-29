@@ -7,24 +7,13 @@ import me.giskard.Giskard;
 import me.giskard.GiskardMain;
 import me.giskard.GiskardUtils;
 
-public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts, DustNodeConsts.DustNode {
+public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts, DustNodeConsts.DustRuntime {
 	
 	PrintStream out = System.out;
 	
 	Object nodeEntity;
 	
-	DustEntity aEntity;
-	DustRuntime aRuntime;
-
-	@Override
-	public DustEntity getAgentEntity() {
-		return aEntity;
-	}
-
-	@Override
-	public DustRuntime getAgentRuntime() {
-		return aRuntime;
-	}
+	DustNodeAgentCloud aCloud;
 
 	@Override
 	public Object resolve(GiskardEntityRef ref) {
@@ -70,8 +59,6 @@ public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts,
 	}
 
 	public void setRuntime(Giskard runtime) {
-//		Giskard.wrapException(null, null, "Test", "exception");
-		
 		if ( ! (runtime instanceof DustNodeAgentRuntime) ) {
 			super.setRuntime(this);
 			
