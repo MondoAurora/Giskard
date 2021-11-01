@@ -1,4 +1,6 @@
 package me.giskard.dust.node.agents;
 
-public interface DustNodeTokens extends DustNodeConsts {
+import me.giskard.dust.node.DustBootConsts;
+
+public interface DustNodeTokens extends DustBootConsts {
 }

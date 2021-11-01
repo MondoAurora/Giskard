@@ -50,23 +50,12 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	protected static String[] ARGS;
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
 
-//	@SuppressWarnings("rawtypes")
-//	protected static Map BOOT_MODULE;
-//	
-//	@SuppressWarnings("rawtypes")
-//	public static void setBootModule(Map bootModule) {
-//		if ( null != BOOT_MODULE ) {
-//			throw new IllegalStateException("setBootUnitMap is already called.");
-//		}
-//		BOOT_MODULE = bootModule;
-//	}
-
 	protected static GiskardCloud BOOT_CLOUD;
 
 	public static void setBootCloud(GiskardCloud cloud) {
-		if ( null != BOOT_CLOUD ) {
-			throw new IllegalStateException("setBootCloud is already called.");
-		}
+//		if ( null != BOOT_CLOUD ) {
+//			throw new IllegalStateException("setBootCloud is already called.");
+//		}
 		BOOT_CLOUD = cloud;
 	}
 
@@ -108,10 +97,6 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 
 	@Override
 	public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-		if ( ctx != GiskardContext.Module ) {
-			throw new IllegalAccessError("Illegal access command while booting");
-		}
-		
 		return BOOT_CLOUD.accessData(cmd, val, ctx, path);
 	}
 

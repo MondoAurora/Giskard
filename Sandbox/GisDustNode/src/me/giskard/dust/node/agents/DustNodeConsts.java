@@ -1,8 +1,6 @@
 package me.giskard.dust.node.agents;
 
-import me.giskard.GiskardConsts;
-
-public interface DustNodeConsts extends GiskardConsts {
+public interface DustNodeConsts extends DustNodeTokens {
 	
 	interface DustRuntime extends GiskardAgent {
 		Object resolve(GiskardEntityRef ref);
