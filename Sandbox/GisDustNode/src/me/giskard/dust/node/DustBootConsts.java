@@ -12,28 +12,52 @@ public interface DustBootConsts extends GiskardConsts {
 	String CLASSNAME_RUNTIME = "me.giskard.dust.node.agents.DustNodeAgentRuntime";
 	String CLASSNAME_CLOUD = "me.giskard.dust.node.agents.DustNodeAgentCloud";
 	
-	static DustEntityRef UNIT_DUST_NODE = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, null, null, -1);
-	static DustEntityRef ATT_NODE_MODULE_UNITMAP = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, null,UNIT_DUST_NODE, -1);
+	DustEntityRef GIS_UNI_UTIL_GENERIC = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
+	DustEntityRef GIS_UNI_UTIL_TEXT = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
+	DustEntityRef GIS_UNI_UTIL_STREAM = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
 
-	static DustEntityRef UNIT_MIND_MODEL = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_MIND_IDEA = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_MIND_NARRATIVE = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_MIND_DIALOG = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_UTIL_GENERIC = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_UTIL_TEXT = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef UNIT_UTIL_STREAM = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
+	DustEntityRef GIS_UNI_MIND_MODEL = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
+	DustEntityRef GIS_UNI_MIND_IDEA = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
+	DustEntityRef GIS_UNI_MIND_NARRATIVE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
+	DustEntityRef GIS_UNI_MIND_DIALOG = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
 
-	static DustEntityRef TYPE_NODE_MODULE = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef TYPE_NODE_RUNTIME = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
-	static DustEntityRef ATT_NODE_MODULE_NATIVEMAP = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_DUST_NODE, -1);
+	DustEntityRef GIS_UNI_DUST_DUST = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById);
 
-	static DustEntityRef TYPE_MODEL_ENTITY = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_MIND_MODEL, -1);
-	static DustEntityRef TYPE_MODEL_UNIT = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_MIND_MODEL, -1);
-	static DustEntityRef ATT_MODEL_ENTITY_REF = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_MIND_MODEL, -1);
-	static DustEntityRef ATT_MODEL_UNIT_NEXTID = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_MIND_MODEL, -1);
-	static DustEntityRef ATT_MODEL_UNIT_ENTITYMAP = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_MIND_MODEL, -1);
+	DustEntityRef GIS_TYP_DUST_NODE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_DUST);
+	DustEntityRef GIS_TYP_DUST_RUNTIME = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_DUST);
+	DustEntityRef GIS_ATT_DUST_NATIVES = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_DUST);
 
-	static DustEntityRef TYPE_TEXT_IDENTIFIED = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_UTIL_TEXT, -1);
-	static DustEntityRef ATT_TEXT_IDENTIFIED_ID = Giskard.access(GiskardAccessCmd.Get, null, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,UNIT_UTIL_TEXT, -1);
+	DustEntityRef GIS_TYP_MIND_UNIT = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TYP_MIND_TYPE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TYP_MIND_ATTRIBUTE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+
+	DustEntityRef GIS_TAG_MIND_VALTYPE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_VALTYPE_INT = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_VALTYPE_REAL = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_VALTYPE_REF = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_VALTYPE_RAW = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+
+	DustEntityRef GIS_TAG_MIND_COLLTYPE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_COLLTYPE_ONE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_COLLTYPE_ARR = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_COLLTYPE_MAP = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+	DustEntityRef GIS_TAG_MIND_COLLTYPE_SET = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_IDEA);
+
+	DustEntityRef GIS_TYP_MIND_ENTITY = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_SELFREF = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_PRIMTYPE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_ALLTYPES = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_TAGS = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_NEXTID = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+	DustEntityRef GIS_ATT_MIND_ENTITIES = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_MIND_MODEL);
+
+	DustEntityRef GIS_TYP_UTIL_IDENTIFIED = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_TEXT);
+	DustEntityRef GIS_ATT_UTIL_ID = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_TEXT);
+
+	DustEntityRef GIS_TYP_UTIL_TAG = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_GENERIC);
+
+	DustEntityRef GIS_TYP_UTIL_CONNECTED = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_GENERIC);
+	DustEntityRef GIS_ATT_UTIL_OWNER = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_GENERIC);
+	DustEntityRef GIS_ATT_UTIL_USES = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_UTIL_GENERIC);
 
 }

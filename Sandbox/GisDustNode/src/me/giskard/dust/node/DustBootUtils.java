@@ -41,7 +41,7 @@ public class DustBootUtils implements DustBootConsts {
 	public static Object createContainer(Object parent, Object key, String contClassName) {
 		Map o = GiskardUtils.instantiate(contClassName);
 		if ( key instanceof DustEntityRef ) {
-			o.put(ATT_MODEL_ENTITY_REF, key);
+			o.put(GIS_ATT_MIND_SELFREF, key);
 		}
 
 		setValue(parent, key, o);
@@ -58,38 +58,38 @@ public class DustBootUtils implements DustBootConsts {
 
 	public static DustEntityRef createNodeUnit() {
 		DustEntityRef ref = new DustEntityRef(null, 0);
-		Giskard.access(GiskardAccessCmd.Set, 1, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, 0, ATT_MODEL_UNIT_NEXTID);
+		Giskard.access(GiskardAccessCmd.Set, 1, GiskardContext.ById, GIS_ATT_UTIL_USES, 0, GIS_ATT_MIND_NEXTID);
 		return ref;
 	};
 
 
 	public static DustEntityRef createEntity(DustEntityRef refUnit) {
 		Object idUnit = (null == refUnit) ? 0 : refUnit.getID();
-		int id = incCount(GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, idUnit, ATT_MODEL_UNIT_NEXTID);
+		int id = incCount(GiskardContext.ById, GIS_ATT_UTIL_USES, idUnit, GIS_ATT_MIND_NEXTID);
 		DustEntityRef ref = new DustEntityRef(refUnit, id);
 		
-		Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, idUnit, ATT_MODEL_UNIT_ENTITYMAP, id, ATT_MODEL_ENTITY_REF);
+		Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.ById, GIS_ATT_UTIL_USES, idUnit, GIS_ATT_MIND_ENTITIES, id, GIS_ATT_MIND_SELFREF);
 		
 		return ref;
 	}
 
 	public static <RetType> RetType createAgent(DustEntityRef refType) {
-		String className = Giskard.access(GiskardAccessCmd.Peek, null, GiskardContext.Module, ATT_NODE_MODULE_NATIVEMAP, refType,
-				ATT_TEXT_IDENTIFIED_ID);
+		String className = Giskard.access(GiskardAccessCmd.Peek, null, GiskardContext.ById, GIS_ATT_DUST_NATIVES, refType,
+				GIS_ATT_UTIL_ID);
 
 		return GiskardUtils.instantiate(className);
 	}
 
-	public static boolean isUnit(Enum eKey) {
-		return eKey.name().startsWith("Unit");
-	}
+//	public static boolean isUnit(Enum eKey) {
+//		return eKey.name().startsWith("Unit");
+//	}
 
 	public static String toString(DustEntityRef ref) {
 //		Object unitId = ref.getUnit().getID();
-//		String unitName = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, unitId,
-//				ATT_TEXT_IDENTIFIED_ID);
-//		String name = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, unitId, ATT_MODEL_UNIT_ENTITYMAP,
-//				ref.getID(), ATT_TEXT_IDENTIFIED_ID);
+//		String unitName = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, GIS_ATT_DUST_UNITMAP, unitId,
+//				GIS_ATT_TEXT_IDENTIFIED_ID);
+//		String name = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, GIS_ATT_DUST_UNITMAP, unitId, GIS_ATT_MIND_GIS_UNI_ENTITYMAP,
+//				ref.getID(), GIS_ATT_TEXT_IDENTIFIED_ID);
 //		return "\"" + unitName + "->" + name + "\"";
 
 		return "\"" + ref.getUnit().getID() + "::" + ref.getID() + "\"";

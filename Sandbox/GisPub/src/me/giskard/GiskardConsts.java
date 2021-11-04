@@ -15,7 +15,7 @@ public interface GiskardConsts {
 	}
 	
 	public enum GiskardContext {
-		Relative, This, Message, Response, Dialog, Module, 
+		Relative, This, Message, Response, Dialog, ById, 
 	}
 	
 	enum GiskardAgentResponse {

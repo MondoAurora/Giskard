@@ -17,8 +17,8 @@ public class DustEntityRef implements GiskardConsts, GiskardConsts.GiskardEntity
 		@SuppressWarnings("unchecked")
 		@Override
 		public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-			DustEntityRef unit = (DustEntityRef) path[1];
-			int id = (int) path[2];
+			DustEntityRef unit = (path.length > 0) ? (DustEntityRef) path[0] : null;
+			int id = (int) val;
 			
 			if ( -1 == id ) {
 				id = (null == unit) ? 0 : BOOT_REF_UNITS.add(unit);

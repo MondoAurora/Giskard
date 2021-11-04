@@ -18,7 +18,7 @@ public class GisDustNode implements DustBootConsts, GiskardConsts.GiskardModule 
 	GiskardCloud bootCloud = new GiskardCloud() {
 		@Override
 		public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-			if ( ctx != GiskardContext.Module ) {
+			if ( ctx != GiskardContext.ById ) {
 				throw new IllegalAccessError("Illegal access command while booting");
 			}
 			
@@ -65,7 +65,7 @@ public class GisDustNode implements DustBootConsts, GiskardConsts.GiskardModule 
 
 		GiskardMain.setBootCloud(DustEntityRef.BOOT_CLOUD);
 
-		DustEntityRef refTypeRuntime = TYPE_NODE_RUNTIME;
+		DustEntityRef refTypeRuntime = GIS_TYP_DUST_RUNTIME;
 
 		bootModule = GiskardUtils.instantiate(CLASSNAME_MAP);
 		GiskardMain.setBootCloud(bootCloud);
@@ -73,20 +73,20 @@ public class GisDustNode implements DustBootConsts, GiskardConsts.GiskardModule 
 		EntityRefProcessor brp = new EntityRefProcessor() {
 			@Override
 			public void processEntityRef(DustEntityRef ref, int optUnitNextIdx) {
-				Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP, ref.getUnit().getID(),
-						ATT_MODEL_UNIT_ENTITYMAP, ref.getID(), ATT_MODEL_ENTITY_REF);
+				Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.ById, GIS_ATT_UTIL_USES, ref.getUnit().getID(),
+						GIS_ATT_MIND_ENTITIES, ref.getID(), GIS_ATT_MIND_SELFREF);
 
 				if ( 0 < optUnitNextIdx ) {
-					Giskard.access(GiskardAccessCmd.Set, optUnitNextIdx, GiskardContext.Module, ATT_NODE_MODULE_UNITMAP,
-							ref.getUnit().getID(), ATT_MODEL_UNIT_ENTITYMAP, ref.getID(), ATT_MODEL_UNIT_NEXTID);
+					Giskard.access(GiskardAccessCmd.Set, optUnitNextIdx, GiskardContext.ById, GIS_ATT_UTIL_USES,
+							ref.getUnit().getID(), GIS_ATT_MIND_ENTITIES, ref.getID(), GIS_ATT_MIND_NEXTID);
 				}
 			}
 		};
 
 		DustEntityRef.finishBoot(brp);
 
-		Giskard.access(GiskardAccessCmd.Set, CLASSNAME_RUNTIME, GiskardContext.Module, ATT_NODE_MODULE_NATIVEMAP,
-				refTypeRuntime, ATT_TEXT_IDENTIFIED_ID);
+		Giskard.access(GiskardAccessCmd.Set, CLASSNAME_RUNTIME, GiskardContext.ById, GIS_ATT_DUST_NATIVES,
+				refTypeRuntime, GIS_ATT_UTIL_ID);
 
 		Giskard.broadcastEvent(null, bootModule);
 
