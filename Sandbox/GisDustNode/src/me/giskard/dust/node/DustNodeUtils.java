@@ -7,7 +7,7 @@ import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustBootUtils implements DustBootConsts {
+public class DustNodeUtils implements DustNodeConsts {
 
 	public static Object setValue(Object parent, Object key, Object val) {
 		if ( parent instanceof Map ) {
@@ -40,7 +40,7 @@ public class DustBootUtils implements DustBootConsts {
 
 	public static Object createContainer(Object parent, Object key, String contClassName) {
 		Map o = GiskardUtils.instantiate(contClassName);
-		if ( key instanceof DustEntityRef ) {
+		if ( key instanceof DustNodeEntityRef ) {
 			o.put(GIS_ATT_MIND_SELFREF, key);
 		}
 
@@ -56,24 +56,24 @@ public class DustBootUtils implements DustBootConsts {
 	};
 
 
-	public static DustEntityRef createNodeUnit() {
-		DustEntityRef ref = new DustEntityRef(null, 0);
+	public static DustNodeEntityRef createNodeUnit() {
+		DustNodeEntityRef ref = new DustNodeEntityRef(null, 0);
 		Giskard.access(GiskardAccessCmd.Set, 1, GiskardContext.ById, GIS_ATT_UTIL_USES, 0, GIS_ATT_MIND_NEXTID);
 		return ref;
 	};
 
 
-	public static DustEntityRef createEntity(DustEntityRef refUnit) {
+	public static DustNodeEntityRef createEntity(DustNodeEntityRef refUnit) {
 		Object idUnit = (null == refUnit) ? 0 : refUnit.getID();
 		int id = incCount(GiskardContext.ById, GIS_ATT_UTIL_USES, idUnit, GIS_ATT_MIND_NEXTID);
-		DustEntityRef ref = new DustEntityRef(refUnit, id);
+		DustNodeEntityRef ref = new DustNodeEntityRef(refUnit, id);
 		
 		Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.ById, GIS_ATT_UTIL_USES, idUnit, GIS_ATT_MIND_ENTITIES, id, GIS_ATT_MIND_SELFREF);
 		
 		return ref;
 	}
 
-	public static <RetType> RetType createAgent(DustEntityRef refType) {
+	public static <RetType> RetType createAgent(DustNodeEntityRef refType) {
 		String className = Giskard.access(GiskardAccessCmd.Peek, null, GiskardContext.ById, GIS_ATT_DUST_NATIVES, refType,
 				GIS_ATT_UTIL_ID);
 
@@ -84,7 +84,7 @@ public class DustBootUtils implements DustBootConsts {
 //		return eKey.name().startsWith("Unit");
 //	}
 
-	public static String toString(DustEntityRef ref) {
+	public static String toString(DustNodeEntityRef ref) {
 //		Object unitId = ref.getUnit().getID();
 //		String unitName = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, GIS_ATT_DUST_UNITMAP, unitId,
 //				GIS_ATT_TEXT_IDENTIFIED_ID);

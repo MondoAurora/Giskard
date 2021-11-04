@@ -46,23 +46,23 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
-	private static GiskardMain BOOT;
+//	private static GiskardMain BOOT;
 	protected static String[] ARGS;
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
 
-	protected static GiskardCloud BOOT_CLOUD;
-
-	public static void setBootCloud(GiskardCloud cloud) {
-//		if ( null != BOOT_CLOUD ) {
-//			throw new IllegalStateException("setBootCloud is already called.");
-//		}
-		BOOT_CLOUD = cloud;
-	}
+//	protected static GiskardCloud BOOT_CLOUD;
+//
+//	public static void setBootCloud(GiskardCloud cloud) {
+////		if ( null != BOOT_CLOUD ) {
+////			throw new IllegalStateException("setBootCloud is already called.");
+////		}
+//		BOOT_CLOUD = cloud;
+//	}
 
 	public void setRuntime(Giskard runtime) {
-		if ( BOOT != RUNTIME ) {
-			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
-		}
+//		if ( BOOT != RUNTIME ) {
+//			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
+//		}
 		RUNTIME = runtime;
 	}
 
@@ -71,13 +71,13 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 
 		try {
 			ARGS = args;
-			RUNTIME = BOOT = new GiskardMain();
+			RUNTIME = new GiskardMain();
 			InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] mod = line.split("\\s+");
-				BOOT.loadModule(mod[0], mod[1]);
+				((GiskardMain) RUNTIME).loadModule(mod[0], mod[1]);
 			}
 
 		} catch (Throwable e) {
@@ -96,8 +96,9 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	}
 
 	@Override
-	public <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-		return BOOT_CLOUD.accessData(cmd, val, ctx, path);
+	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+		return wrapException(null, null, "Should not be here");
+//		return BOOT_CLOUD.accessData(cmd, val, ctx, path);
 	}
 
 	@Override
@@ -129,9 +130,12 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 
 		Class<ModAgent> ml = (Class<ModAgent>) cl
 				.loadClass(GiskardConsts.class.getPackage().getName() + ".modules." + moduleName);
+		Giskard.broadcastEvent(null, "Initializing module", moduleName, moduleVersion, "with loader class", ml.getName(), "...");
+
 		if ( null != ml ) {
 			ret = ml.newInstance();
 			ret.initModule(RUNTIME);
+			Giskard.broadcastEvent(null, "SUCCESS initialization of module", moduleName);
 		}
 
 		return ret;
