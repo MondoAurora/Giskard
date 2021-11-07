@@ -57,10 +57,7 @@ public interface GiskardConsts {
 		void initModule(Giskard runtime) throws Exception;
 	}
 	
-//	public interface GiskardCloud {
-//		 <RetType> RetType accessData(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path);
-//	}
 	
-
+	Integer GIS_CONST_IDX_ADD = -1;
 
 }

@@ -80,10 +80,6 @@ public class DustNodeUtils implements DustNodeConsts {
 		return GiskardUtils.instantiate(className);
 	}
 
-//	public static boolean isUnit(Enum eKey) {
-//		return eKey.name().startsWith("Unit");
-//	}
-
 	public static String toString(DustNodeEntityRef ref) {
 //		Object unitId = ref.getUnit().getID();
 //		String unitName = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, GIS_ATT_DUST_UNITMAP, unitId,
@@ -91,7 +87,9 @@ public class DustNodeUtils implements DustNodeConsts {
 //		String name = Giskard.access(GiskardAccessCmd.Get, "??", GiskardContext.Module, GIS_ATT_DUST_UNITMAP, unitId, GIS_ATT_MIND_GIS_UNI_ENTITYMAP,
 //				ref.getID(), GIS_ATT_TEXT_IDENTIFIED_ID);
 //		return "\"" + unitName + "->" + name + "\"";
+		
+		Object uid = (null == ref.getUnit()) ? ref.getID() : ref.getUnit().getID();
 
-		return "\"" + ref.getUnit().getID() + "::" + ref.getID() + "\"";
+		return "\"" + uid + "::" + ref.getID() + "\"";
 	}
 }

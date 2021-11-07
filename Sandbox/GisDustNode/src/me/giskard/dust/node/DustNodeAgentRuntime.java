@@ -2,6 +2,7 @@ package me.giskard.dust.node;
 
 import java.io.PrintStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.Giskard;
@@ -9,36 +10,98 @@ import me.giskard.GiskardMain;
 import me.giskard.GiskardUtils;
 import me.giskard.dust.node.DustNodeEntityRef.EntityRefProcessor;
 
-@SuppressWarnings({"rawtypes"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts, DustNodeConsts.DustRuntime {
-	
+
 	PrintStream out = System.out;
-	
-	Object nodeEntity;
-	
-	Map bootModule;
 
+	Map runtimeEntity;
+	Map loadedUnits;
 
-	@Override
-	public Object resolve(GiskardEntityRef ref) {
-		// TODO Auto-generated method stub
-		return null;
+	public DustNodeAgentRuntime() {
+		runtimeEntity = new HashMap<>();
+		loadedUnits = new HashMap<>();
+
+		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, loadedUnits);
 	}
 
-	@SuppressWarnings("unchecked")
+	@Override
+	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
+		Object ret = null;
+		Object id = ref.getID();
+
+		if ( null != id ) {
+			GiskardEntityRef uidRef = ref.getUnit();
+			Object uid = (null == uidRef) ? id : uidRef.getID();
+
+			Map unit = getEntity(uidRef, loadedUnits, uid, createIfMissing, GIS_TYP_MIND_UNIT);
+
+			if ( (null != uidRef) && (null != unit) ) {
+				ret = getEntity(ref, unit, id, createIfMissing, null);
+			} else {
+				ret = unit;
+			}
+		}
+
+		return ret;
+	}
+
+	Map getEntity(GiskardEntityRef ref, Map parent, Object id, boolean createIfMissing, GiskardEntityRef pType) {
+		Map ret = (Map) parent.get(id);
+		if ( (null == ret) && createIfMissing ) {
+			ret = new HashMap<>();
+			ret.put(GIS_ATT_MIND_SELFREF, ref);
+			if ( null != pType ) {
+				ret.put(GIS_ATT_MIND_PRIMTYPE, pType);
+			}
+			parent.put(id, ret);
+		}
+
+		return ret;
+	}
+
+	public void setRuntime(Giskard runtime) {
+		if ( !(runtime instanceof DustNodeAgentRuntime) ) {
+			super.setRuntime(this);
+
+			EntityRefProcessor brp = new EntityRefProcessor() {
+				@Override
+				public void processEntityRef(DustNodeEntityRef ref, int optUnitNextIdx) {
+					Object e = resolve(ref, true);
+					if ( 0 < optUnitNextIdx ) {
+						((Map) e).put(GIS_ATT_MIND_NEXTID, optUnitNextIdx);
+					}
+				}
+			};
+
+			DustNodeEntityRef.finishBoot(brp);
+
+			Giskard.access(GiskardAccessCmd.Set, getClass().getName(), GiskardContext.ById, GIS_ATT_DUST_NATIVES,
+					GIS_TYP_DUST_RUNTIME, GIS_ATT_UTIL_ID);
+
+			for (BootEvent e : BOOT_EVENTS) {
+				broadcastEvent_(e.eventType, e.params);
+			}
+
+			BOOT_EVENTS.clear();
+
+			Giskard.broadcastEvent(null, loadedUnits);
+		}
+	}
+
 	@Override
 	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 		if ( ctx != GiskardContext.ById ) {
 			throw new IllegalAccessError("Illegal access command while booting");
 		}
-		
+
 		int l = path.length;
-		
+
 		int lastIdx = 0;
 		Object parent;
 		Object lastOb;
 
-		for (lastIdx = 0, lastOb = parent = bootModule; lastIdx < l; ++lastIdx) {
+		for (lastIdx = 0, lastOb = parent = loadedUnits; lastIdx < l; ++lastIdx) {
 			if ( null == lastOb ) {
 				lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
 			}
@@ -96,43 +159,4 @@ public class DustNodeAgentRuntime extends GiskardMain implements DustNodeConsts,
 		return super.getCL(moduleName, moduleVersion);
 	}
 
-	public void setRuntime(Giskard runtime) {
-		if ( ! (runtime instanceof DustNodeAgentRuntime) ) {
-			if ( !DustNodeEntityRef.initBoot((GiskardMain) runtime) ) {
-				Giskard.wrapException(null, null, "Boot failure!");
-			}
-			
-			DustNodeEntityRef rt = GIS_TYP_DUST_RUNTIME;
-			
-			super.setRuntime(this);
-			
-			bootModule = GiskardUtils.instantiate(CLASSNAME_MAP);
-
-			EntityRefProcessor brp = new EntityRefProcessor() {
-				@Override
-				public void processEntityRef(DustNodeEntityRef ref, int optUnitNextIdx) {
-					Giskard.access(GiskardAccessCmd.Set, ref, GiskardContext.ById, GIS_ATT_UTIL_USES, ref.getUnit().getID(),
-							GIS_ATT_MIND_ENTITIES, ref.getID(), GIS_ATT_MIND_SELFREF);
-
-					if ( 0 < optUnitNextIdx ) {
-						Giskard.access(GiskardAccessCmd.Set, optUnitNextIdx, GiskardContext.ById, GIS_ATT_UTIL_USES,
-								ref.getUnit().getID(), GIS_ATT_MIND_ENTITIES, ref.getID(), GIS_ATT_MIND_NEXTID);
-					}
-				}
-			};
-
-			DustNodeEntityRef.finishBoot(brp);
-
-			Giskard.access(GiskardAccessCmd.Set, getClass().getName(), GiskardContext.ById, GIS_ATT_DUST_NATIVES,
-					rt, GIS_ATT_UTIL_ID);
-			
-			for ( BootEvent e : BOOT_EVENTS ) {
-				broadcastEvent_(e.eventType, e.params);
-			}
-			
-			BOOT_EVENTS.clear();
-			
-			Giskard.broadcastEvent(null, bootModule);
-		}
-	}
 }

@@ -23,12 +23,11 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		@Override
 		protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 			DustNodeEntityRef unit = (path.length > 0) ? (DustNodeEntityRef) path[0] : null;
-			int id = (int) val;
 
-			if ( -1 == id ) {
-				id = (null == unit) ? 0 : refUnits.add(unit);
+			if ( GIS_CONST_IDX_ADD.equals(val) ) {
+				val = (null == unit) ? 0 : refUnits.add(unit);
 			}
-			DustNodeEntityRef ret = new DustNodeEntityRef(unit, id);
+			DustNodeEntityRef ret = new DustNodeEntityRef(unit, val);
 
 			if ( null == unit ) {
 				refUnits.add(ret);
@@ -62,11 +61,11 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		BOOTLOADER.finishBoot(refProc);
 	}
 
-	DustNodeEntityRef unit;
-	final Object id;
+	private DustNodeEntityRef unit;
+	private Object id;
 
 	public DustNodeEntityRef(DustNodeEntityRef unit, Object id) {
-		this.unit = (null == unit) ? this : unit;
+		this.unit = unit;
 		this.id = id;
 	}
 
@@ -75,13 +74,17 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		return unit;
 	}
 
-	public void setUnit(DustNodeEntityRef unit) {
+	void setUnit(DustNodeEntityRef unit) {
 		this.unit = unit;
 	}
 
 	@Override
 	public Object getID() {
 		return id;
+	}
+	
+	void setId(Object id) {
+		this.id = id;
 	}
 
 	@Override

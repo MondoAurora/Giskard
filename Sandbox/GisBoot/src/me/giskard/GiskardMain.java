@@ -46,23 +46,10 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 		}
 	}
 
-//	private static GiskardMain BOOT;
 	protected static String[] ARGS;
 	protected static ArrayList<BootEvent> BOOT_EVENTS = new ArrayList<>();
 
-//	protected static GiskardCloud BOOT_CLOUD;
-//
-//	public static void setBootCloud(GiskardCloud cloud) {
-////		if ( null != BOOT_CLOUD ) {
-////			throw new IllegalStateException("setBootCloud is already called.");
-////		}
-//		BOOT_CLOUD = cloud;
-//	}
-
 	public void setRuntime(Giskard runtime) {
-//		if ( BOOT != RUNTIME ) {
-//			throw new IllegalStateException("Giskard.MAIN had already been initialized.");
-//		}
 		RUNTIME = runtime;
 	}
 
@@ -84,9 +71,11 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 			launchException = e;
 		}
 
-		while (!BOOT_EVENTS.isEmpty()) {
-			broadcastEvent(null, BOOT_EVENTS.remove(0));
+		for (Object e : BOOT_EVENTS.toArray() ) {
+			broadcastEvent(null, e);
 		}
+		
+		BOOT_EVENTS.clear();
 
 		if ( null != launchException ) {
 			launchException.printStackTrace();
@@ -98,7 +87,6 @@ public class GiskardMain extends Giskard implements GiskardConsts {
 	@Override
 	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 		return wrapException(null, null, "Should not be here");
-//		return BOOT_CLOUD.accessData(cmd, val, ctx, path);
 	}
 
 	@Override
