@@ -70,10 +70,11 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 			
 			EntityRefProcessor brp = new EntityRefProcessor() {
 				@Override
-				public void processEntityRef(DustNodeEntityRef ref, int optUnitNextIdx) {
-					Object e = resolve(ref, true);
+				public void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx) {
+					Map e = (Map) resolve(ref, true);
+					e.put(refAttId, id);
 					if ( 0 < optUnitNextIdx ) {
-						((Map) e).put(refAttNextId, optUnitNextIdx);
+						e.put(refAttNextId, optUnitNextIdx);
 					}
 				}
 			};
@@ -95,17 +96,35 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 
 	@Override
 	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-		if ( ctx != GiskardContext.ById ) {
-			throw new IllegalAccessError("Illegal access command while booting");
-		}
+//		if ( ctx != GiskardContext.ById ) {
+//			throw new IllegalAccessError("Illegal access command while booting");
+//		}
 
 		int l = path.length;
 
 		int lastIdx = 0;
 		Object parent;
-		Object lastOb;
+		Object lastOb = null;
+		
+		switch ( ctx ) {
+		case ById:
+			lastOb = loadedUnits;
+			break;
+		case Relative:
+			lastOb = resolve((GiskardEntityRef) path[0], false);
+			lastIdx = 1;
+			break;
+		case Dialog:
+			break;
+		case Message:
+			break;
+		case Response:
+			break;
+		case This:
+			break;
+		}
 
-		for (lastIdx = 0, lastOb = parent = loadedUnits; lastIdx < l; ++lastIdx) {
+		for (parent = lastOb; lastIdx < l; ++lastIdx) {
 			if ( null == lastOb ) {
 				lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
 			}

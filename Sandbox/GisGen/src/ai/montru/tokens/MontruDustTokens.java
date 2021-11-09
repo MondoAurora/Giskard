@@ -11,8 +11,8 @@ public interface MontruDustTokens extends GiskardConsts {
 
 	GiskardEntityRef GIS_UNI_DUST_RUNTIME = Giskard.access(GiskardAccessCmd.Get, "Montru/Dust/Runtime/1/0", GiskardContext.ById);
 
-	GiskardEntityRef GIS_TYP_DUST_NODE = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_TYP_DUST_RUNTIME = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.access(GiskardAccessCmd.Get, -1, GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_NODE = Giskard.access(GiskardAccessCmd.Get, "Node", GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_RUNTIME = Giskard.access(GiskardAccessCmd.Get, "Runtime", GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.access(GiskardAccessCmd.Get, "Natives", GiskardContext.ById, GIS_UNI_DUST_RUNTIME);
 
 }

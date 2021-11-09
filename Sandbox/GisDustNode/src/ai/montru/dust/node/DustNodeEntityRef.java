@@ -1,19 +1,24 @@
 package ai.montru.dust.node;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import ai.montru.MontruMain;
+import ai.montru.giskard.Giskard;
 import ai.montru.giskard.GiskardConsts;
+import ai.montru.utils.MontruUtils;
 import ai.montru.utils.MontruUtilsCounter;
 
 public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEntityRef {
 	public interface EntityRefProcessor {
-		void processEntityRef(DustNodeEntityRef ref, int optUnitNextIdx);
+		void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx);
 	}
 
 	private static class BootLoader extends MontruMain {
 		MontruUtilsCounter refUnits = new MontruUtilsCounter();
 		ArrayList<DustNodeEntityRef> refs = new ArrayList<>();
+		Map<DustNodeEntityRef, String> idMap = new HashMap<>();
 		
 		public BootLoader(MontruMain runtime) {
 			runtime.setRuntime(this);
@@ -23,9 +28,11 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		@Override
 		protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
 			DustNodeEntityRef unit = (path.length > 0) ? (DustNodeEntityRef) path[0] : null;
+			
+			String strId = (val instanceof String) ? (String) val : null;
 
-			if ( GIS_CONST_IDX_ADD.equals(val) ) {
-				val = (null == unit) ? 0 : refUnits.add(unit);
+			if ( GIS_CONST_IDX_ADD.equals(val) || (null != strId) ) {
+				val = (null == unit) ? 0 : refUnits.add(unit) - 1;
 			}
 			DustNodeEntityRef ret = new DustNodeEntityRef(unit, val);
 
@@ -33,13 +40,28 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 				refUnits.add(ret);
 			}
 			refs.add(ret);
+			
+			if ( null == strId ) {
+				strId = MontruUtils.toString(val);
+			}
+			if ( null != unit ) {
+				strId = idMap.get(unit) + "::" + strId;
+			} else {
+				strId = strId.split("/")[2];
+			}
+			
+			if ( idMap.containsValue(strId)) {
+				Giskard.wrapException(null, null, "Boot id conflict", strId);
+			}
+			idMap.put(ret, strId);
+//			System.out.println("Registering " + strId);
 
 			return (RetType) ret;
 		}
 		
 		void finishBoot(EntityRefProcessor refProc) {
 			for (DustNodeEntityRef ref : refs) {
-				refProc.processEntityRef(ref, refUnits.get(ref));
+				refProc.processEntityRef(ref, idMap.get(ref), refUnits.get(ref));
 			}
 
 			refUnits = null;

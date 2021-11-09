@@ -88,8 +88,12 @@ public class DustNodeUtils implements DustNodeConsts {
 //				ref.getID(), GIS_ATT_TEXT_IDENTIFIED_ID);
 //		return "\"" + unitName + "->" + name + "\"";
 		
-		Object uid = (null == ref.getUnit()) ? ref.getID() : ref.getUnit().getID();
-
-		return "\"" + uid + "::" + ref.getID() + "\"";
+		String name = Giskard.access(GiskardAccessCmd.Peek, "???", GiskardContext.Relative, ref, GIS_ATT_UTIL_ID);
+		
+		return name;
+		
+//		Object uid = (null == ref.getUnit()) ? ref.getID() : ref.getUnit().getID();
+//
+//		return "\"" + uid + "::" + ref.getID() + "\"";
 	}
 }
