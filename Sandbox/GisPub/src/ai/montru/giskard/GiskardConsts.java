@@ -6,20 +6,20 @@ package ai.montru.giskard;
 
 public interface GiskardConsts {
 	
-	public enum GiskardAccessCmd {
-		Visit, Check, Peek, Get, Update, Set, Insert, Delete
+	public enum GiskardAccess {
+		Check, Peek, Get, Update, Set, Insert, Delete,
 	}
 	
-	public enum GiskardAgentCmd {
-		Init, Begin, Process, End, Release
+	public enum GiskardAction {
+		Init, Begin, Process, End, Release,
 	}
 	
 	public enum GiskardContext {
-		Relative, This, Message, Response, Dialog, ById, 
+		 Process, Relative, Absolute,
 	}
 	
-	enum GiskardAgentResponse {
-		Reject, Accept, AcceptRead, Read
+	enum GiskardResponse {
+		Reject, Accept, AcceptRead, Read,
 	};
 	
 	/**
@@ -50,7 +50,7 @@ public interface GiskardConsts {
 	 * You must handle all exceptions at least by Giskard.wrapException that will re-throw a RuntimeException
 	 */
 	interface GiskardAgent {
-		void gisAgentProcess() throws GiskardException;
+		GiskardResponse gisAgentProcess(GiskardAction action) throws GiskardException;
 	}
 
 	public interface GiskardModule {

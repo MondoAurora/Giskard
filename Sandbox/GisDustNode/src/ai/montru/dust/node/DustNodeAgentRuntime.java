@@ -29,18 +29,13 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
 		Object ret = null;
 		Object id = ref.getID();
-
-		if ( null != id ) {
-			GiskardEntityRef uidRef = ref.getUnit();
-			Object uid = (null == uidRef) ? id : uidRef.getID();
-
-			Map unit = getEntity(uidRef, loadedUnits, uid, createIfMissing, GIS_TYP_MIND_UNIT);
-
-			if ( (null != uidRef) && (null != unit) ) {
-				ret = getEntity(ref, unit, id, createIfMissing, null);
-			} else {
-				ret = unit;
-			}
+		GiskardEntityRef uidRef = ref.getUnit();
+		
+		if ( null == uidRef ) {
+			ret = getEntity(ref, loadedUnits, id, createIfMissing, GIS_TYP_MIND_UNIT);
+		} else {
+			Map unit = (Map) getEntity(uidRef, loadedUnits, uidRef.getID(), createIfMissing, GIS_TYP_MIND_UNIT).get(GIS_ATT_MIND_ENTITIES);
+			ret = getEntity(ref, unit, id, createIfMissing, null);
 		}
 
 		return ret;
@@ -53,6 +48,7 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 			ret.put(GIS_ATT_MIND_SELFREF, ref);
 			if ( null != pType ) {
 				ret.put(GIS_ATT_MIND_PRIMTYPE, pType);
+				ret.put(GIS_ATT_MIND_ENTITIES, new HashMap<>());
 			}
 			parent.put(id, ret);
 		}
@@ -60,6 +56,7 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 		return ret;
 	}
 
+	@SuppressWarnings("unused")
 	public void setRuntime(Giskard runtime) {
 		if ( !(runtime instanceof DustNodeAgentRuntime) ) {
 			GiskardEntityRef refNodeType = GIS_TYP_DUST_RUNTIME;
@@ -67,7 +64,7 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 			GiskardEntityRef refAttId = GIS_ATT_UTIL_ID;
 
 			super.setRuntime(this);
-			
+
 			EntityRefProcessor brp = new EntityRefProcessor() {
 				@Override
 				public void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx) {
@@ -81,9 +78,6 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 
 			DustNodeEntityRef.finishBoot(brp);
 
-			Giskard.access(GiskardAccessCmd.Set, getClass().getName(), GiskardContext.ById, GIS_ATT_DUST_NATIVES,
-					refNodeType, refAttId);
-
 			for (BootEvent e : BOOT_EVENTS) {
 				broadcastEvent_(e.eventType, e.params);
 			}
@@ -95,32 +89,22 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 	}
 
 	@Override
-	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
-//		if ( ctx != GiskardContext.ById ) {
-//			throw new IllegalAccessError("Illegal access command while booting");
-//		}
-
+	protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
 		int l = path.length;
 
 		int lastIdx = 0;
 		Object parent;
 		Object lastOb = null;
-		
+
 		switch ( ctx ) {
-		case ById:
+		case Absolute:
 			lastOb = loadedUnits;
 			break;
 		case Relative:
 			lastOb = resolve((GiskardEntityRef) path[0], false);
 			lastIdx = 1;
 			break;
-		case Dialog:
-			break;
-		case Message:
-			break;
-		case Response:
-			break;
-		case This:
+		case Process:
 			break;
 		}
 
@@ -169,8 +153,8 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 	}
 
 	@Override
-	public void gisAgentProcess() throws GiskardException {
-		// TODO Auto-generated method stub
+	public GiskardResponse gisAgentProcess(GiskardAction action) throws GiskardException {
+		return GiskardResponse.Reject;
 	}
 
 	protected <ModAgent extends GiskardModule> ModAgent loadModule(String moduleName, String moduleVersion)

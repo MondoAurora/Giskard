@@ -89,7 +89,7 @@ public class MontruMain extends Giskard implements GiskardConsts {
 	}
 
 	@Override
-	protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+	protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
 		return wrapException(null, null, "Should not be here");
 	}
 

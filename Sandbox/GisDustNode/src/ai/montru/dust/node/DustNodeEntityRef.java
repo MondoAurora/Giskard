@@ -26,13 +26,13 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 
 		@SuppressWarnings("unchecked")
 		@Override
-		protected <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+		protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
 			DustNodeEntityRef unit = (path.length > 0) ? (DustNodeEntityRef) path[0] : null;
 			
 			String strId = (val instanceof String) ? (String) val : null;
 
-			if ( GIS_CONST_IDX_ADD.equals(val) || (null != strId) ) {
-				val = (null == unit) ? 0 : refUnits.add(unit) - 1;
+			if ( null != unit ) {
+				val = refUnits.add(unit) - 1;
 			}
 			DustNodeEntityRef ret = new DustNodeEntityRef(unit, val);
 

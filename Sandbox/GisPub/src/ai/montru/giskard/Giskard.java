@@ -2,7 +2,7 @@ package ai.montru.giskard;
 
 public abstract class Giskard implements GiskardConsts {//, GiskardConsts.GiskardCloud {
 	
-	public static <RetType> RetType access(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path) {
+	public static <RetType> RetType access(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
 		return RUNTIME.accessData_(cmd, val, ctx, path);
 	}
 
@@ -19,7 +19,7 @@ public abstract class Giskard implements GiskardConsts {//, GiskardConsts.Giskar
 		return RUNTIME.toString_(ref);
 	}
 	
-	protected abstract <RetType> RetType accessData_(GiskardAccessCmd cmd, Object val, GiskardContext ctx, Object... path);
+	protected abstract <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path);
 	protected abstract <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException;
 	protected abstract void broadcastEvent_(GiskardEntityRef eventType, Object... params);
