@@ -126,7 +126,7 @@ public class MontruMain extends Giskard implements GiskardConsts {
 
 		if ( null != ml ) {
 			ret = ml.newInstance();
-			ret.initModule(RUNTIME);
+			ret.initModule(RUNTIME, moduleName, moduleVersion);
 			Giskard.broadcastEvent(null, "SUCCESS initialization of module", moduleName);
 		}
 

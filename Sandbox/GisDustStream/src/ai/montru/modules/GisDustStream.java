@@ -6,6 +6,6 @@ import ai.montru.giskard.GiskardConsts;
 public class GisDustStream implements GiskardConsts.GiskardModule {
 	
 	@Override
-	public void initModule(Giskard runtime) throws Exception {}
+	public void initModule(Giskard runtime, String name, String version) throws Exception {}
 
 }

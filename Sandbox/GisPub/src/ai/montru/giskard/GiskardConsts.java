@@ -54,10 +54,12 @@ public interface GiskardConsts {
 	}
 
 	public interface GiskardModule {
-		void initModule(Giskard runtime) throws Exception;
+		void initModule(Giskard runtime, String name, String version) throws Exception;
 	}
 	
 	
-	Integer GIS_CONST_IDX_ADD = -1;
+	Integer GIS_CONST_KEY_ADDLAST = -1;
+	Integer GIS_CONST_KEY_ADDFIRST = -2;
+	
 
 }

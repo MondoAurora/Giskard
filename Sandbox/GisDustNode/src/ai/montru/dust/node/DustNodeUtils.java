@@ -16,8 +16,11 @@ public class DustNodeUtils implements DustNodeConsts {
 			int idx = (Integer) key;
 			List l = (List) parent;
 			
-			if ( key.equals(-1) ) {
+			if ( key.equals(GIS_CONST_KEY_ADDLAST) ) {
 				l.add(val);
+				return null;
+			} else if ( key.equals(GIS_CONST_KEY_ADDFIRST) ) {
+				l.add(0, val);
 				return null;
 			} else {
 				for ( int ii = l.size(); ii < idx; ++ii ) {

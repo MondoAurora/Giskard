@@ -15,8 +15,7 @@ public interface MontruMindTokens extends GiskardConsts {
 	GiskardEntityRef GIS_ATT_MIND_SELFREF = Giskard.access(GiskardAccess.Get, "EntitySelfRef", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
 	GiskardEntityRef GIS_ATT_MIND_PRIMTYPE = Giskard.access(GiskardAccess.Get, "EntityPrimaryType", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
 	GiskardEntityRef GIS_ATT_MIND_ALLTYPES = Giskard.access(GiskardAccess.Get, "EntityAllTypes", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
-	GiskardEntityRef GIS_ATT_MIND_TAGS = Giskard.access(GiskardAccess.Get, "EntityTags", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
-
+ 
 	GiskardEntityRef GIS_TYP_MIND_UNIT = Giskard.access(GiskardAccess.Get, "Unit", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
 	GiskardEntityRef GIS_ATT_MIND_NEXTID = Giskard.access(GiskardAccess.Get, "UnitNextId", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
 	GiskardEntityRef GIS_ATT_MIND_ENTITIES = Giskard.access(GiskardAccess.Get, "UnitEntities", GiskardContext.Absolute, GIS_UNI_MIND_MODEL);
@@ -24,6 +23,7 @@ public interface MontruMindTokens extends GiskardConsts {
 
 	GiskardEntityRef GIS_TYP_MIND_TYPE = Giskard.access(GiskardAccess.Get, "Type", GiskardContext.Absolute, GIS_UNI_MIND_IDEA);
 	GiskardEntityRef GIS_TYP_MIND_ATTRIBUTE = Giskard.access(GiskardAccess.Get, "Attribute", GiskardContext.Absolute, GIS_UNI_MIND_IDEA);
+	GiskardEntityRef GIS_ATT_MIND_REFTYPE = Giskard.access(GiskardAccess.Get, "AttributeRefType", GiskardContext.Absolute, GIS_UNI_MIND_IDEA);
 
 	GiskardEntityRef GIS_TAG_MIND_VALTYPE = Giskard.access(GiskardAccess.Get, "ValType", GiskardContext.Absolute, GIS_UNI_MIND_IDEA);
 	GiskardEntityRef GIS_TAG_MIND_VALTYPE_INT = Giskard.access(GiskardAccess.Get, "ValTypeInt", GiskardContext.Absolute, GIS_UNI_MIND_IDEA);

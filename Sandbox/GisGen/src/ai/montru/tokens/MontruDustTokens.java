@@ -12,6 +12,7 @@ public interface MontruDustTokens extends GiskardConsts {
 	GiskardEntityRef GIS_UNI_DUST_RUNTIME = Giskard.access(GiskardAccess.Get, "Montru/Dust/Runtime/1/0", GiskardContext.Absolute);
 
 	GiskardEntityRef GIS_TYP_DUST_RUNTIME = Giskard.access(GiskardAccess.Get, "Runtime", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_LOADEDUNITS = Giskard.access(GiskardAccess.Get, "RuntimeLoadedUnits", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_LOADEDMODULES = Giskard.access(GiskardAccess.Get, "RuntimeLoadedModules", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_PROCESSES = Giskard.access(GiskardAccess.Get, "RuntimeProcesses", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_THREADS = Giskard.access(GiskardAccess.Get, "RuntimeThreads", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
@@ -20,9 +21,13 @@ public interface MontruDustTokens extends GiskardConsts {
 	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.access(GiskardAccess.Get, "ModuleNatives", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 
 	GiskardEntityRef GIS_TYP_DUST_PROCESS = Giskard.access(GiskardAccess.Get, "Process", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_LOCALENTITIES = Giskard.access(GiskardAccess.Get, "LocalEntities", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_LOCALENTITIES = Giskard.access(GiskardAccess.Get, "ProcessLocalEntities", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_CURRENTAGENT = Giskard.access(GiskardAccess.Get, "ProcessCurrentAgent", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 
 	GiskardEntityRef GIS_TYP_DUST_THREAD = Giskard.access(GiskardAccess.Get, "Thread", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_PROCESS = Giskard.access(GiskardAccess.Get, "ThreadProcess", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+
+	GiskardEntityRef GIS_TYP_DUST_SELF = Giskard.access(GiskardAccess.Get, "Self", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_THISMODULE = Giskard.access(GiskardAccess.Get, "SelfThisModule", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
 
 }

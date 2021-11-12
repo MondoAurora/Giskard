@@ -8,7 +8,9 @@ public interface MontruUtilTokens extends GiskardConsts {
 	GiskardEntityRef GIS_UNI_UTIL_GENERIC = Giskard.access(GiskardAccess.Get, "Montru/Util/Generic/1/0", GiskardContext.Absolute);
 
 	GiskardEntityRef GIS_TYP_UTIL_TAG = Giskard.access(GiskardAccess.Get, "Tag", GiskardContext.Absolute, GIS_UNI_UTIL_GENERIC);
-	
+	GiskardEntityRef GIS_TYP_UTIL_TAGGED = Giskard.access(GiskardAccess.Get, "Tagged", GiskardContext.Absolute, GIS_UNI_UTIL_GENERIC);
+	GiskardEntityRef GIS_ATT_UTIL_TAGS = Giskard.access(GiskardAccess.Get, "TaggedTags", GiskardContext.Absolute, GIS_UNI_UTIL_GENERIC);
+
 	GiskardEntityRef GIS_TAG_UTIL_TEMPORAL = Giskard.access(GiskardAccess.Get, "Temporal", GiskardContext.Absolute, GIS_UNI_UTIL_GENERIC);
 
 	GiskardEntityRef GIS_TYP_UTIL_VALUE = Giskard.access(GiskardAccess.Get, "Value", GiskardContext.Absolute, GIS_UNI_UTIL_GENERIC);

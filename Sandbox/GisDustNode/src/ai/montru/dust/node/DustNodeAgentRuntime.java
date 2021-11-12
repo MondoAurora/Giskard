@@ -8,21 +8,26 @@ import java.util.Map;
 import ai.montru.MontruMain;
 import ai.montru.dust.node.DustNodeEntityRef.EntityRefProcessor;
 import ai.montru.giskard.Giskard;
+import ai.montru.modules.GisDustNode;
 import ai.montru.utils.MontruUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, DustNodeConsts.DustRuntime {
+public class DustNodeAgentRuntime extends MontruMain
+		implements DustNodeConsts, DustNodeConsts.DustRuntime, GisDustNode.BootModule {
 
 	PrintStream out = System.out;
 
 	Map runtimeEntity;
 	Map loadedUnits;
+	Map entities;
 
 	public DustNodeAgentRuntime() {
 		runtimeEntity = new HashMap<>();
 		loadedUnits = new HashMap<>();
+		entities = new HashMap<>();
 
-		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, loadedUnits);
+		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, entities);
+		runtimeEntity.put(GIS_ATT_DUST_LOADEDUNITS, loadedUnits);
 	}
 
 	@Override
@@ -30,11 +35,12 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 		Object ret = null;
 		Object id = ref.getID();
 		GiskardEntityRef uidRef = ref.getUnit();
-		
+
 		if ( null == uidRef ) {
-			ret = getEntity(ref, loadedUnits, id, createIfMissing, GIS_TYP_MIND_UNIT);
+			ret = getEntity(ref, entities, id, createIfMissing, GIS_TYP_MIND_UNIT);
 		} else {
-			Map unit = (Map) getEntity(uidRef, loadedUnits, uidRef.getID(), createIfMissing, GIS_TYP_MIND_UNIT).get(GIS_ATT_MIND_ENTITIES);
+			Map unit = (Map) getEntity(uidRef, entities, uidRef.getID(), createIfMissing, GIS_TYP_MIND_UNIT)
+					.get(GIS_ATT_MIND_ENTITIES);
 			ret = getEntity(ref, unit, id, createIfMissing, null);
 		}
 
@@ -48,7 +54,12 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 			ret.put(GIS_ATT_MIND_SELFREF, ref);
 			if ( null != pType ) {
 				ret.put(GIS_ATT_MIND_PRIMTYPE, pType);
-				ret.put(GIS_ATT_MIND_ENTITIES, new HashMap<>());
+				if ( GIS_TYP_MIND_UNIT == pType ) {
+					Map m = new HashMap<>();
+					ret.put(GIS_ATT_MIND_ENTITIES, m);
+//					m.put(0, ret);
+					loadedUnits.put(id, ref);
+				}
 			}
 			parent.put(id, ret);
 		}
@@ -57,35 +68,40 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 	}
 
 	@SuppressWarnings("unused")
-	public void setRuntime(Giskard runtime) {
-		if ( !(runtime instanceof DustNodeAgentRuntime) ) {
-			GiskardEntityRef refNodeType = GIS_TYP_DUST_RUNTIME;
-			GiskardEntityRef refAttNextId = GIS_ATT_MIND_NEXTID;
-			GiskardEntityRef refAttId = GIS_ATT_UTIL_ID;
-
-			super.setRuntime(this);
-
-			EntityRefProcessor brp = new EntityRefProcessor() {
-				@Override
-				public void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx) {
-					Map e = (Map) resolve(ref, true);
-					e.put(refAttId, id);
-					if ( 0 < optUnitNextIdx ) {
-						e.put(refAttNextId, optUnitNextIdx);
-					}
-				}
-			};
-
-			DustNodeEntityRef.finishBoot(brp);
-
-			for (BootEvent e : BOOT_EVENTS) {
-				broadcastEvent_(e.eventType, e.params);
-			}
-
-			BOOT_EVENTS.clear();
-
-			Giskard.broadcastEvent(null, loadedUnits);
+	@Override
+	public void boot(Giskard runtime, String name, String version) {
+		if ( runtime instanceof DustNodeAgentRuntime ) {
+			Giskard.wrapException(null, null, "Multiple boot calls?", name, version);
 		}
+
+		GiskardEntityRef refNodeType = GIS_TYP_DUST_RUNTIME;
+		GiskardEntityRef refAttNextId = GIS_ATT_MIND_NEXTID;
+		GiskardEntityRef refAttId = GIS_ATT_UTIL_ID;
+
+		super.setRuntime(this);
+
+		EntityRefProcessor brp = new EntityRefProcessor() {
+			@Override
+			public void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx) {
+				Map e = (Map) resolve(ref, true);
+				e.put(refAttId, id);
+				if ( 0 < optUnitNextIdx ) {
+					e.put(refAttNextId, optUnitNextIdx);
+				}
+			}
+		};
+
+		DustNodeEntityRef.finishBoot(brp);
+
+		for (BootEvent e : BOOT_EVENTS) {
+			broadcastEvent_(e.eventType, e.params);
+		}
+
+		BOOT_EVENTS.clear();
+		
+		
+
+		Giskard.broadcastEvent(null, entities);
 	}
 
 	@Override
@@ -98,7 +114,7 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 
 		switch ( ctx ) {
 		case Absolute:
-			lastOb = loadedUnits;
+			lastOb = entities;
 			break;
 		case Relative:
 			lastOb = resolve((GiskardEntityRef) path[0], false);
@@ -109,11 +125,12 @@ public class DustNodeAgentRuntime extends MontruMain implements DustNodeConsts, 
 		}
 
 		for (parent = lastOb; lastIdx < l; ++lastIdx) {
+			Object key = path[lastIdx];
 			if ( null == lastOb ) {
 				lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
 			}
-			parent = lastOb;
-			lastOb = DustNodeUtils.getValue(parent, path[lastIdx], null);
+			parent = (lastOb instanceof GiskardEntityRef) ? resolve((GiskardEntityRef) lastOb, true) : lastOb;
+			lastOb = DustNodeUtils.getValue(parent, key, null);
 		}
 
 		switch ( cmd ) {
