@@ -15,7 +15,7 @@ public class GisDustNode implements GiskardConsts.GiskardModule {
 	private static final String CLASSNAME_RUNTIME = "ai.montru.dust.node.DustNodeAgentRuntime";
 
 	@Override
-	public void initModule(Giskard runtime, String name, String version) throws Exception {
+	public void gisInitModule(Giskard runtime, String name, String version) throws Exception {
 		Giskard.broadcastEvent(null, "Creating runtime agent...");
 		DustNodeEntityRef.initBoot((MontruMain) runtime);
 		BootModule node = MontruUtils.instantiate(CLASSNAME_RUNTIME);

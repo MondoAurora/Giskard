@@ -4,30 +4,30 @@ import ai.montru.giskard.Giskard;
 import ai.montru.giskard.GiskardConsts;
 
 public interface MontruDustTokens extends GiskardConsts {
-	GiskardEntityRef GIS_UNI_DUST_REGISTRY = Giskard.access(GiskardAccess.Get, "Montru/Dust/Registry/1/0", GiskardContext.Absolute);
+	GiskardEntityRef GIS_UNI_DUST_REGISTRY = Giskard.getToken("Montru/Dust/Registry/1/0", null);
 
-	GiskardEntityRef GIS_UNI_DUST_DEVGEN = Giskard.access(GiskardAccess.Get, "Montru/Dust/DevGen/1/0", GiskardContext.Absolute);
-	GiskardEntityRef GIS_UNI_DUST_DEVJAVA = Giskard.access(GiskardAccess.Get, "Montru/Dust/DevJava/1/0", GiskardContext.Absolute);
+	GiskardEntityRef GIS_UNI_DUST_DEVGEN = Giskard.getToken("Montru/Dust/DevGen/1/0", null);
+	GiskardEntityRef GIS_UNI_DUST_DEVJAVA = Giskard.getToken("Montru/Dust/DevJava/1/0", null);
 
-	GiskardEntityRef GIS_UNI_DUST_RUNTIME = Giskard.access(GiskardAccess.Get, "Montru/Dust/Runtime/1/0", GiskardContext.Absolute);
+	GiskardEntityRef GIS_UNI_DUST_RUNTIME = Giskard.getToken("Montru/Dust/Runtime/1/0", null);
 
-	GiskardEntityRef GIS_TYP_DUST_RUNTIME = Giskard.access(GiskardAccess.Get, "Runtime", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_LOADEDUNITS = Giskard.access(GiskardAccess.Get, "RuntimeLoadedUnits", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_LOADEDMODULES = Giskard.access(GiskardAccess.Get, "RuntimeLoadedModules", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_PROCESSES = Giskard.access(GiskardAccess.Get, "RuntimeProcesses", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_THREADS = Giskard.access(GiskardAccess.Get, "RuntimeThreads", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_RUNTIME = Giskard.getToken("Runtime", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_LOADEDUNITS = Giskard.getToken("RuntimeLoadedUnits", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_LOADEDMODULES = Giskard.getToken("RuntimeLoadedModules", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_PROCESSES = Giskard.getToken("RuntimeProcesses", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_THREADS = Giskard.getToken("RuntimeThreads", GIS_UNI_DUST_RUNTIME);
 
-	GiskardEntityRef GIS_TYP_DUST_MODULE = Giskard.access(GiskardAccess.Get, "Module", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.access(GiskardAccess.Get, "ModuleNatives", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_MODULE = Giskard.getToken("Module", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.getToken("ModuleNatives", GIS_UNI_DUST_RUNTIME);
 
-	GiskardEntityRef GIS_TYP_DUST_PROCESS = Giskard.access(GiskardAccess.Get, "Process", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_LOCALENTITIES = Giskard.access(GiskardAccess.Get, "ProcessLocalEntities", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_CURRENTAGENT = Giskard.access(GiskardAccess.Get, "ProcessCurrentAgent", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_PROCESS = Giskard.getToken("Process", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_LOCALENTITIES = Giskard.getToken("ProcessLocalEntities", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_CURRENTAGENT = Giskard.getToken("ProcessCurrentAgent", GIS_UNI_DUST_RUNTIME);
 
-	GiskardEntityRef GIS_TYP_DUST_THREAD = Giskard.access(GiskardAccess.Get, "Thread", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_PROCESS = Giskard.access(GiskardAccess.Get, "ThreadProcess", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_THREAD = Giskard.getToken("Thread", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_PROCESS = Giskard.getToken("ThreadProcess", GIS_UNI_DUST_RUNTIME);
 
-	GiskardEntityRef GIS_TYP_DUST_SELF = Giskard.access(GiskardAccess.Get, "Self", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
-	GiskardEntityRef GIS_ATT_DUST_THISMODULE = Giskard.access(GiskardAccess.Get, "SelfThisModule", GiskardContext.Absolute, GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_TYP_DUST_SELF = Giskard.getToken("Self", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_THISMODULE = Giskard.getToken("SelfThisModule", GIS_UNI_DUST_RUNTIME);
 
 }

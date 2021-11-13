@@ -23,12 +23,9 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		public BootLoader(MontruMain runtime) {
 			runtime.setRuntime(this);
 		}
-
-		@SuppressWarnings("unchecked")
+		
 		@Override
-		protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
-			DustNodeEntityRef unit = (path.length > 0) ? (DustNodeEntityRef) path[0] : null;
-			
+		public GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object val) {
 			String strId = (val instanceof String) ? (String) val : null;
 
 			if ( null != unit ) {
@@ -56,7 +53,7 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 			idMap.put(ret, strId);
 //			System.out.println("Registering " + strId);
 
-			return (RetType) ret;
+			return ret;		
 		}
 		
 		void finishBoot(EntityRefProcessor refProc) {
@@ -86,13 +83,13 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 	private DustNodeEntityRef unit;
 	private Object id;
 
-	public DustNodeEntityRef(DustNodeEntityRef unit, Object id) {
-		this.unit = unit;
+	public DustNodeEntityRef(GiskardEntityRef unit, Object id) {
+		this.unit = (DustNodeEntityRef) unit;
 		this.id = id;
 	}
 
 	@Override
-	public GiskardEntityRef getUnit() {
+	public GiskardEntityRef gisGetUnit() {
 		return unit;
 	}
 
@@ -101,7 +98,7 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 	}
 
 	@Override
-	public Object getID() {
+	public Object gisGetID() {
 		return id;
 	}
 	

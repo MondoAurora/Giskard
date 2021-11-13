@@ -87,14 +87,19 @@ public class MontruMain extends Giskard implements GiskardConsts {
 			broadcastEvent(null, "Giskard main() complete.");
 		}
 	}
-
+	
 	@Override
-	protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
+	public GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object tokenId) {
 		return wrapException(null, null, "Should not be here");
 	}
 
 	@Override
-	protected <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
+	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
+		return wrapException(null, null, "Should not be here");
+	}
+
+	@Override
+	protected <RetType> RetType gisWrapException(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException {
 		if ( exception instanceof GiskardException ) {
 			throw (GiskardException) exception;
@@ -104,13 +109,13 @@ public class MontruMain extends Giskard implements GiskardConsts {
 	}
 
 	@Override
-	protected void broadcastEvent_(GiskardEntityRef eventType, Object... params) {
+	protected void gisBroadcastEvent(GiskardEntityRef eventType, Object... params) {
 		BOOT_EVENTS.add(new BootEvent(eventType, params));
 	}
 
 	@Override
-	protected String toString_(GiskardEntityRef ref) {
-		return MontruUtils.toString(MontruUtils.sbAppend(null, "", "[", toString(ref.getUnit()), "]:", ref.getID()));
+	protected String gisToString(GiskardEntityRef ref) {
+		return MontruUtils.toString(MontruUtils.sbAppend(null, "", "[", toString(ref.gisGetUnit()), "]:", ref.gisGetID()));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -126,7 +131,7 @@ public class MontruMain extends Giskard implements GiskardConsts {
 
 		if ( null != ml ) {
 			ret = ml.newInstance();
-			ret.initModule(RUNTIME, moduleName, moduleVersion);
+			ret.gisInitModule(RUNTIME, moduleName, moduleVersion);
 			Giskard.broadcastEvent(null, "SUCCESS initialization of module", moduleName);
 		}
 

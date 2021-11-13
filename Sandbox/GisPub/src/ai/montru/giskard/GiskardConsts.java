@@ -14,10 +14,6 @@ public interface GiskardConsts {
 		Init, Begin, Process, End, Release,
 	}
 	
-	public enum GiskardContext {
-		 Process, Relative, Absolute,
-	}
-	
 	enum GiskardResponse {
 		Reject, Accept, AcceptRead, Read,
 	};
@@ -26,8 +22,12 @@ public interface GiskardConsts {
 	 * You only get references, the actual data behind depends on your dialog context.
 	 */
 	interface GiskardEntityRef {
-		GiskardEntityRef getUnit();
-		Object getID();
+		GiskardEntityRef gisGetUnit();
+		Object gisGetID();
+	}
+	
+	interface GiskardMeta {
+		GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object tokenId);
 	}
 	
 	public abstract class GiskardException extends RuntimeException {
@@ -39,7 +39,7 @@ public interface GiskardConsts {
 			super(cause);
 		}
 		
-		public GiskardEntityRef getInfo() {
+		public GiskardEntityRef gisGetInfo() {
 			return refInfo;
 		}
 	}
@@ -54,12 +54,9 @@ public interface GiskardConsts {
 	}
 
 	public interface GiskardModule {
-		void initModule(Giskard runtime, String name, String version) throws Exception;
+		void gisInitModule(Giskard runtime, String name, String version) throws Exception;
 	}
-	
 	
 	Integer GIS_CONST_KEY_ADDLAST = -1;
 	Integer GIS_CONST_KEY_ADDFIRST = -2;
-	
-
 }

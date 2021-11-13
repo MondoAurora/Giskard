@@ -33,13 +33,13 @@ public class DustNodeAgentRuntime extends MontruMain
 	@Override
 	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
 		Object ret = null;
-		Object id = ref.getID();
-		GiskardEntityRef uidRef = ref.getUnit();
+		Object id = ref.gisGetID();
+		GiskardEntityRef uidRef = ref.gisGetUnit();
 
 		if ( null == uidRef ) {
 			ret = getEntity(ref, entities, id, createIfMissing, GIS_TYP_MIND_UNIT);
 		} else {
-			Map unit = (Map) getEntity(uidRef, entities, uidRef.getID(), createIfMissing, GIS_TYP_MIND_UNIT)
+			Map unit = (Map) getEntity(uidRef, entities, uidRef.gisGetID(), createIfMissing, GIS_TYP_MIND_UNIT)
 					.get(GIS_ATT_MIND_ENTITIES);
 			ret = getEntity(ref, unit, id, createIfMissing, null);
 		}
@@ -94,35 +94,21 @@ public class DustNodeAgentRuntime extends MontruMain
 		DustNodeEntityRef.finishBoot(brp);
 
 		for (BootEvent e : BOOT_EVENTS) {
-			broadcastEvent_(e.eventType, e.params);
+			gisBroadcastEvent(e.eventType, e.params);
 		}
 
 		BOOT_EVENTS.clear();
-		
-		
 
 		Giskard.broadcastEvent(null, entities);
 	}
 
 	@Override
-	protected <RetType> RetType accessData_(GiskardAccess cmd, Object val, GiskardContext ctx, Object... path) {
+	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
 		int l = path.length;
 
 		int lastIdx = 0;
 		Object parent;
-		Object lastOb = null;
-
-		switch ( ctx ) {
-		case Absolute:
-			lastOb = entities;
-			break;
-		case Relative:
-			lastOb = resolve((GiskardEntityRef) path[0], false);
-			lastIdx = 1;
-			break;
-		case Process:
-			break;
-		}
+		Object lastOb = (null == localRef) ? entities : resolve(localRef, false);
 
 		for (parent = lastOb; lastIdx < l; ++lastIdx) {
 			Object key = path[lastIdx];
@@ -152,21 +138,26 @@ public class DustNodeAgentRuntime extends MontruMain
 	}
 
 	@Override
-	protected <RetType> RetType wrapException_(Throwable exception, GiskardEntityRef exType, Object... params)
+	public GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object tokenId) {
+		return super.gisGetToken(unit, tokenId);
+	}
+
+	@Override
+	protected <RetType> RetType gisWrapException(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected void broadcastEvent_(GiskardEntityRef eventType, Object... params) {
+	protected void gisBroadcastEvent(GiskardEntityRef eventType, Object... params) {
 		out.println(MontruUtils.sbAppend(null, " ", "Normal event", eventType, "at", new Date(), "params [",
 				MontruUtils.sbAppend(null, ", ", params), "]"));
 	}
 
 	@Override
-	protected String toString_(GiskardEntityRef ref) {
-		return super.toString_(ref);
+	protected String gisToString(GiskardEntityRef ref) {
+		return super.gisToString(ref);
 	}
 
 	@Override
