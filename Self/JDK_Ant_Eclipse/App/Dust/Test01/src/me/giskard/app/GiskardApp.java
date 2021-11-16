@@ -30,7 +30,7 @@ public class GiskardApp implements DustTokensMind, DustTokensMachine, DustTokens
 		DustTokens.addModule("DustDevJava", "1.0");
 		DustTokens.addModule("DustMontru", "1.0");
 		
-		String testId = (args.length > 0) ? args[0] : "src";
+		String testId = (args.length > 0) ? args[0] : "pdf";
 		Object hTest = null;
 
 		switch ( testId ) {
@@ -58,11 +58,11 @@ public class GiskardApp implements DustTokensMind, DustTokensMachine, DustTokens
 		case "ctrl":
 			hTest = testCtrl();
 			break;
-//		case "gui":
-//			hTest = testGui();
-//			break;
 		case "gui2":
 			hTest = testGui2();
+			break;
+		case "pdf":
+			hTest = testPdf();
 			break;
 		}
 
@@ -78,6 +78,13 @@ public class GiskardApp implements DustTokensMind, DustTokensMachine, DustTokens
 
 			return MiNDResultType.Accept;
 		}
+	}
+
+	static Object testPdf() {
+		Object hPdfReader = Giskard.access(MiNDAccessCommand.Get, MTAGN_IO_PDF);
+		
+		return hPdfReader;
+
 	}
 
 	static Object testSrc() {

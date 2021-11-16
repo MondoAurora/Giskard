@@ -1,14 +1,12 @@
 package me.giskard.mod;
 
-import java.io.FileReader;
-import java.io.Reader;
-
 import org.json.simple.parser.JSONParser;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 import me.giskard.GiskardUtils;
 import me.giskard.dust.io.DustIOConsts;
+import me.giskard.dust.io.DustIOUtils;
 import me.giskard.dust.io.abnf.AbnfParserPrototype;
 import me.giskard.dust.io.json.DustIODomReaderState;
 import me.giskard.dust.io.json.DustIOJsonReader;
@@ -37,33 +35,16 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 		TestIOReader.testReader("test.txt", "UTF8");
 	}
 
-	public String extendName(String fileName) {
-		if ( !fileName.startsWith("/") ) {
-			String root = GiskardUtils.getRoot();
-
-			if ( !GiskardUtils.isEmpty(root) ) {
-				fileName = root + "/" + fileName;
-			}
-		}
-		return fileName;
-	}
-
-	public Reader getReader(String fName) throws Exception {
-		fName = extendName(fName);
-		Giskard.log(MiNDEventLevel.Trace, "Start reading file", fName, "...");
-		return new FileReader(fName);
-	}
-
 	public Object testSax(String fName) throws Exception {
 		JSONParser p = new JSONParser();
 		DustIOJsonReader.JsonContentDispatcher h = new DustIOJsonReader.JsonContentDispatcher(GiskardUtils.LOGGER);
 
-		p.parse(getReader(fName), h);
+		p.parse(DustIOUtils. getReader(fName), h);
 		return h;
 	}
 
 	public Object testDom(String fName) throws Exception {
-		DustIODomReaderState rs = new DustIODomReaderState(getReader(fName));
+		DustIODomReaderState rs = new DustIODomReaderState(DustIOUtils.getReader(fName));
 
 		while (rs.step()) {
 
@@ -73,7 +54,7 @@ public class DustIOTest01 implements DustIOConsts, GiskardConsts.MiNDAgent {
 	}
 
 	public Object testAbnf(String fName) throws Exception {
-		fName = extendName(fName);
+		fName = DustIOUtils.extendName(fName);
 
 		Giskard.log(MiNDEventLevel.Trace, "Start reading file", fName, "...");
 		AbnfParserPrototype pp = new AbnfParserPrototype(fName);

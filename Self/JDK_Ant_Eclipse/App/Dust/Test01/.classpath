@@ -10,5 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/DustText"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DustDevJava"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardUtil"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DustIO"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

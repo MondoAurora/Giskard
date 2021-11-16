@@ -1,8 +1,10 @@
 package me.giskard.dust.io;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 
 public class DustIOUtils extends GiskardUtils implements DustIOConsts {
@@ -38,4 +40,22 @@ public class DustIOUtils extends GiskardUtils implements DustIOConsts {
 	  
 	  return true;
 	}
+	
+	public static String extendName(String fileName) {
+		if ( !fileName.startsWith("/") ) {
+			String root = GiskardUtils.getRoot();
+
+			if ( !GiskardUtils.isEmpty(root) ) {
+				fileName = root + "/" + fileName;
+			}
+		}
+		return fileName;
+	}
+
+	public static Reader getReader(String fName) throws Exception {
+		fName = extendName(fName);
+		Giskard.log(MiNDEventLevel.Trace, "Start reading file", fName, "...");
+		return new FileReader(fName);
+	}
+
 }
