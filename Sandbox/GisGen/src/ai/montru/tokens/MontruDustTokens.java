@@ -20,6 +20,12 @@ public interface MontruDustTokens extends GiskardConsts {
 	GiskardEntityRef GIS_TYP_DUST_MODULE = Giskard.getToken("Module", GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_NATIVES = Giskard.getToken("ModuleNatives", GIS_UNI_DUST_RUNTIME);
 
+	GiskardEntityRef GIS_TYP_DUST_NATIVEAGENT = Giskard.getToken("NativeAgent", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_ASSIGNMENT = Giskard.getToken("NativeAgentAssignment", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_INSTANCE = Giskard.getToken("NativeAgentInstance", GIS_UNI_DUST_RUNTIME);
+
+	GiskardEntityRef GIS_TYP_DUST_NATIVEASSIGNMENT = Giskard.getToken("NativeAssignment", GIS_UNI_DUST_RUNTIME);
+
 	GiskardEntityRef GIS_TYP_DUST_PROCESS = Giskard.getToken("Process", GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_LOCALENTITIES = Giskard.getToken("ProcessLocalEntities", GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_CURRENTAGENT = Giskard.getToken("ProcessCurrentAgent", GIS_UNI_DUST_RUNTIME);

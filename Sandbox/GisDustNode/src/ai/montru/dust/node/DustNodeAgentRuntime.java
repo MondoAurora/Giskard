@@ -17,55 +17,19 @@ public class DustNodeAgentRuntime extends MontruMain
 
 	PrintStream out = System.out;
 
-	Map runtimeEntity;
-	Map loadedUnits;
-	Map entities;
+//	Map runtimeEntity = new HashMap<>();
+	Map loadedUnits = new HashMap<>();
+	Map ctxRoot = new HashMap<>();
 
-	public DustNodeAgentRuntime() {
-		runtimeEntity = new HashMap<>();
-		loadedUnits = new HashMap<>();
-		entities = new HashMap<>();
-
-		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, entities);
-		runtimeEntity.put(GIS_ATT_DUST_LOADEDUNITS, loadedUnits);
-	}
-
-	@Override
-	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
-		Object ret = null;
-		Object id = ref.gisGetID();
-		GiskardEntityRef uidRef = ref.gisGetUnit();
-
-		if ( null == uidRef ) {
-			ret = getEntity(ref, entities, id, createIfMissing, GIS_TYP_MIND_UNIT);
-		} else {
-			Map unit = (Map) getEntity(uidRef, entities, uidRef.gisGetID(), createIfMissing, GIS_TYP_MIND_UNIT)
-					.get(GIS_ATT_MIND_ENTITIES);
-			ret = getEntity(ref, unit, id, createIfMissing, null);
+	EntityInitializer unitInit = new EntityInitializer() {
+		@Override
+		public void initNewEntity(GiskardEntityRef ref, Map eData) {
+			eData.put(GIS_ATT_MIND_PRIMTYPE, GIS_TYP_MIND_UNIT);
+			Map m = new HashMap<>();
+			eData.put(GIS_ATT_MIND_ENTITIES, m);
+			loadedUnits.put(ref.gisGetID(), ref);
 		}
-
-		return ret;
-	}
-
-	Map getEntity(GiskardEntityRef ref, Map parent, Object id, boolean createIfMissing, GiskardEntityRef pType) {
-		Map ret = (Map) parent.get(id);
-		if ( (null == ret) && createIfMissing ) {
-			ret = new HashMap<>();
-			ret.put(GIS_ATT_MIND_SELFREF, ref);
-			if ( null != pType ) {
-				ret.put(GIS_ATT_MIND_PRIMTYPE, pType);
-				if ( GIS_TYP_MIND_UNIT == pType ) {
-					Map m = new HashMap<>();
-					ret.put(GIS_ATT_MIND_ENTITIES, m);
-//					m.put(0, ret);
-					loadedUnits.put(id, ref);
-				}
-			}
-			parent.put(id, ret);
-		}
-
-		return ret;
-	}
+	};
 
 	@SuppressWarnings("unused")
 	@Override
@@ -91,7 +55,21 @@ public class DustNodeAgentRuntime extends MontruMain
 			}
 		};
 
+//		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, entities);
+//		runtimeEntity.put(GIS_ATT_DUST_LOADEDUNITS, loadedUnits);
+
 		DustNodeEntityRef.finishBoot(brp);
+
+		DustNodeUtils.createContainer(resolve(GIS_ATT_UTIL_TAGS, false), GIS_ATT_UTIL_TAGS, CLASSNAME_SET);
+		Giskard.access(GiskardAccess.Set, GIS_TAG_MIND_COLLTYPE_SET, GIS_ATT_UTIL_TAGS, GIS_ATT_UTIL_TAGS);
+		
+//		GiskardEntityRef rMod = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_MODULE, null);
+//		gisAccessData(GiskardAccess.Set, name, rMod, GIS_ATT_UTIL_ID);
+//
+//		GiskardEntityRef rNA = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_NATIVEASSIGNMENT, null);
+//
+//		gisAccessData(GiskardAccess.Set, getClass().getName(), rNA, GIS_ATT_UTIL_ID);
+//		gisAccessData(GiskardAccess.Set, rNA, GIS_TYP_DUST_RUNTIME, GIS_ATT_DUST_ASSIGNMENT);
 
 		for (BootEvent e : BOOT_EVENTS) {
 			gisBroadcastEvent(e.eventType, e.params);
@@ -99,39 +77,84 @@ public class DustNodeAgentRuntime extends MontruMain
 
 		BOOT_EVENTS.clear();
 
-		Giskard.broadcastEvent(null, entities);
+		Giskard.broadcastEvent(null, ctxRoot);
+	}
+
+	@Override
+	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
+		Object ret = null;
+		Object id = ref.gisGetID();
+		GiskardEntityRef uidRef = ref.gisGetUnit();
+
+		if ( null == uidRef ) {
+			ret = getEntity(ref, ctxRoot, id, true, unitInit);
+		} else {
+			Map unit = (Map) getEntity(uidRef, ctxRoot, uidRef.gisGetID(), true, unitInit).get(GIS_ATT_MIND_ENTITIES);
+			ret = getEntity(ref, unit, id, createIfMissing, null);
+		}
+
+		return ret;
+	}
+
+	Map getEntity(GiskardEntityRef ref, Map parent, Object id, boolean createIfMissing, EntityInitializer init) {
+		Map ret = (Map) parent.get(id);
+		if ( (null == ret) && createIfMissing ) {
+			ret = new HashMap<>();
+			ret.put(GIS_ATT_MIND_SELFREF, ref);
+			if ( null != init ) {
+				init.initNewEntity(ref, ret);
+			}
+			parent.put(id, ret);
+		}
+
+		return ret;
 	}
 
 	@Override
 	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
-		int l = path.length;
+		Object root = (null == localRef) ? ctxRoot : resolve(localRef, false);
+		return gisAccessData(cmd, val, root, path);
+	}
 
-		int lastIdx = 0;
-		Object parent;
-		Object lastOb = (null == localRef) ? entities : resolve(localRef, false);
+	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, Object root, Object... path) {
+		int pLen = path.length;
+		Object lastOb = root;
 
-		for (parent = lastOb; lastIdx < l; ++lastIdx) {
-			Object key = path[lastIdx];
-			if ( null == lastOb ) {
-				lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+		if ( 0 == pLen ) {
+			switch ( cmd ) {
+			case Insert:
+				break;
+			default:
+				throw new IllegalAccessError("Unhandled access command");
 			}
-			parent = (lastOb instanceof GiskardEntityRef) ? resolve((GiskardEntityRef) lastOb, true) : lastOb;
-			lastOb = DustNodeUtils.getValue(parent, key, null);
-		}
+		} else {
 
-		switch ( cmd ) {
-		case Peek:
-			break;
-		case Get:
-			if ( null == lastOb ) {
-				lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+			int lastIdx = 0;
+			Object parent;
+
+			for (parent = lastOb; lastIdx < pLen; ++lastIdx) {
+				Object key = path[lastIdx];
+				if ( null == lastOb ) {
+					lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+				}
+				parent = (lastOb instanceof GiskardEntityRef) ? resolve((GiskardEntityRef) lastOb, true) : lastOb;
+				lastOb = DustNodeUtils.getValue(parent, key, null);
 			}
-			break;
-		case Set:
-			lastOb = DustNodeUtils.setValue(parent, path[lastIdx - 1], val);
-			break;
-		default:
-			throw new IllegalAccessError("Illegal access command while booting");
+
+			switch ( cmd ) {
+			case Peek:
+				break;
+			case Get:
+				if ( null == lastOb ) {
+					lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], CLASSNAME_MAP);
+				}
+				break;
+			case Set:
+				lastOb = DustNodeUtils.setValue(lastOb, path[lastIdx - 1], val);
+				break;
+			default:
+				throw new IllegalAccessError("Unhandled access command");
+			}
 		}
 
 		return (RetType) lastOb;

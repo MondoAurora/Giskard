@@ -1,7 +1,9 @@
 package ai.montru.dust.node;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ai.montru.giskard.Giskard;
 import ai.montru.utils.MontruUtils;
@@ -12,7 +14,7 @@ public class DustNodeUtils implements DustNodeConsts {
 	public static Object setValue(Object parent, Object key, Object val) {
 		if ( parent instanceof Map ) {
 			return ((Map) parent).put(key, val);
-		} else {
+		} else if ( parent instanceof ArrayList ) {
 			int idx = (Integer) key;
 			List l = (List) parent;
 			
@@ -28,6 +30,8 @@ public class DustNodeUtils implements DustNodeConsts {
 				}
 				return l.set(idx, val);
 			}
+		} else {
+			return ((Set) parent).add(val);
 		}
 	};
 
@@ -42,10 +46,10 @@ public class DustNodeUtils implements DustNodeConsts {
 	};
 
 	public static Object createContainer(Object parent, Object key, String contClassName) {
-		Map o = MontruUtils.instantiate(contClassName);
-		if ( key instanceof DustNodeEntityRef ) {
-			o.put(GIS_ATT_MIND_SELFREF, key);
-		}
+		Object o = MontruUtils.instantiate(contClassName);
+//		if ( key instanceof DustNodeEntityRef ) {
+//			o.put(GIS_ATT_MIND_SELFREF, key);
+//		}
 
 		setValue(parent, key, o);
 
