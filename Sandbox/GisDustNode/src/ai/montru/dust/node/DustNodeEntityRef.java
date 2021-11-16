@@ -26,32 +26,23 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 		
 		@Override
 		public GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object val) {
-			String strId = (val instanceof String) ? (String) val : null;
-
-			if ( null != unit ) {
-				val = refUnits.add(unit) - 1;
-			}
-			DustNodeEntityRef ret = new DustNodeEntityRef(unit, val);
+			Object id = refUnits.add(unit) - 1;
+			DustNodeEntityRef ret = new DustNodeEntityRef(unit, id);
+			String strId = (val instanceof String) ? (String) val : MontruUtils.toString(id);
 
 			if ( null == unit ) {
 				refUnits.add(ret);
+				strId = strId.split("/")[2];
+			} else {
+				strId = idMap.get(unit) + "::" + strId;	
 			}
 			refs.add(ret);
-			
-			if ( null == strId ) {
-				strId = MontruUtils.toString(val);
-			}
-			if ( null != unit ) {
-				strId = idMap.get(unit) + "::" + strId;
-			} else {
-				strId = strId.split("/")[2];
-			}
-			
+						
+			System.out.println("Registering " + strId);
 			if ( idMap.containsValue(strId)) {
 				Giskard.wrapException(null, null, "Boot id conflict", strId);
 			}
 			idMap.put(ret, strId);
-//			System.out.println("Registering " + strId);
 
 			return ret;		
 		}
@@ -89,7 +80,7 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 	}
 
 	@Override
-	public GiskardEntityRef gisGetUnit() {
+	public DustNodeEntityRef gisGetUnit() {
 		return unit;
 	}
 

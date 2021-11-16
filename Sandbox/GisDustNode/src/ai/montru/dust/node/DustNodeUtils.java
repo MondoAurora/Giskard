@@ -89,6 +89,6 @@ public class DustNodeUtils implements DustNodeConsts {
 
 	public static String toString(DustNodeEntityRef ref) {
 		String name = Giskard.access(GiskardAccess.Peek, "???", ref, GIS_ATT_UTIL_ID);
-		return name;
+		return name + "[" + ref.gisGetID() + "]";
 	}
 }

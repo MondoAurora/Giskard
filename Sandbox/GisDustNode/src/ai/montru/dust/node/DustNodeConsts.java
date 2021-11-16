@@ -13,8 +13,7 @@ public interface DustNodeConsts extends DustNodeTokens {
 	}
 
 	public interface EntityInitializer {
-		@SuppressWarnings("rawtypes")
-		void initNewEntity(GiskardEntityRef ref, Map eData);
+		void initNewEntity(DustNodeEntityRef ref, Map<Object, Object> eData);
 	}
 
 }

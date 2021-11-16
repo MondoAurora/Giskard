@@ -11,21 +11,19 @@ import ai.montru.giskard.Giskard;
 import ai.montru.modules.GisDustNode;
 import ai.montru.utils.MontruUtils;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustNodeAgentRuntime extends MontruMain
 		implements DustNodeConsts, DustNodeConsts.DustRuntime, GisDustNode.BootModule {
 
 	PrintStream out = System.out;
 
-//	Map runtimeEntity = new HashMap<>();
-	Map loadedUnits = new HashMap<>();
-	Map ctxRoot = new HashMap<>();
+	Map<Object, DustNodeEntityRef> loadedUnits = new HashMap<>();
+	Map<DustNodeEntityRef, Map<Object, Object>> ctxRoot = new HashMap<>();
 
 	EntityInitializer unitInit = new EntityInitializer() {
 		@Override
-		public void initNewEntity(GiskardEntityRef ref, Map eData) {
+		public void initNewEntity(DustNodeEntityRef ref, Map<Object, Object> eData) {
 			eData.put(GIS_ATT_MIND_PRIMTYPE, GIS_TYP_MIND_UNIT);
-			Map m = new HashMap<>();
+			Map<DustNodeEntityRef, Map<Object, Object>> m = new HashMap<>();
 			eData.put(GIS_ATT_MIND_ENTITIES, m);
 			loadedUnits.put(ref.gisGetID(), ref);
 		}
@@ -47,16 +45,14 @@ public class DustNodeAgentRuntime extends MontruMain
 		EntityRefProcessor brp = new EntityRefProcessor() {
 			@Override
 			public void processEntityRef(DustNodeEntityRef ref, String id, int optUnitNextIdx) {
-				Map e = (Map) resolve(ref, true);
+				@SuppressWarnings("unchecked")
+				Map<Object, Object> e = (Map<Object, Object>) resolve(ref, true);
 				e.put(refAttId, id);
 				if ( 0 < optUnitNextIdx ) {
 					e.put(refAttNextId, optUnitNextIdx);
 				}
 			}
 		};
-
-//		runtimeEntity.put(GIS_ATT_MIND_ENTITIES, entities);
-//		runtimeEntity.put(GIS_ATT_DUST_LOADEDUNITS, loadedUnits);
 
 		DustNodeEntityRef.finishBoot(brp);
 
@@ -83,28 +79,29 @@ public class DustNodeAgentRuntime extends MontruMain
 	@Override
 	public Object resolve(GiskardEntityRef ref, boolean createIfMissing) {
 		Object ret = null;
-		Object id = ref.gisGetID();
-		GiskardEntityRef uidRef = ref.gisGetUnit();
+		DustNodeEntityRef entRef = (DustNodeEntityRef) ref;
+		DustNodeEntityRef uidRef = entRef.gisGetUnit();
 
 		if ( null == uidRef ) {
-			ret = getEntity(ref, ctxRoot, id, true, unitInit);
+			ret = getEntity(entRef, ctxRoot, true, unitInit);
 		} else {
-			Map unit = (Map) getEntity(uidRef, ctxRoot, uidRef.gisGetID(), true, unitInit).get(GIS_ATT_MIND_ENTITIES);
-			ret = getEntity(ref, unit, id, createIfMissing, null);
+			@SuppressWarnings("unchecked")
+			Map<DustNodeEntityRef,  Map<Object, Object>> unit = (Map<DustNodeEntityRef,  Map<Object, Object>>) getEntity(uidRef, ctxRoot, true, unitInit).get(GIS_ATT_MIND_ENTITIES);
+			ret = getEntity(entRef, unit, createIfMissing, null);
 		}
 
 		return ret;
 	}
 
-	Map getEntity(GiskardEntityRef ref, Map parent, Object id, boolean createIfMissing, EntityInitializer init) {
-		Map ret = (Map) parent.get(id);
+	Map<Object, Object> getEntity(DustNodeEntityRef ref, Map<DustNodeEntityRef,  Map<Object, Object>> parent, boolean createIfMissing, EntityInitializer init) {
+		Map<Object, Object> ret = (Map<Object, Object>) parent.get(ref);
+		
 		if ( (null == ret) && createIfMissing ) {
 			ret = new HashMap<>();
-			ret.put(GIS_ATT_MIND_SELFREF, ref);
 			if ( null != init ) {
 				init.initNewEntity(ref, ret);
 			}
-			parent.put(id, ret);
+			parent.put(ref, ret);
 		}
 
 		return ret;
@@ -116,6 +113,7 @@ public class DustNodeAgentRuntime extends MontruMain
 		return gisAccessData(cmd, val, root, path);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, Object root, Object... path) {
 		int pLen = path.length;
 		Object lastOb = root;
