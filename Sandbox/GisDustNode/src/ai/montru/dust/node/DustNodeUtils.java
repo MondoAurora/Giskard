@@ -47,10 +47,6 @@ public class DustNodeUtils implements DustNodeConsts {
 
 	public static Object createContainer(Object parent, Object key, String contClassName) {
 		Object o = MontruUtils.instantiate(contClassName);
-//		if ( key instanceof DustNodeEntityRef ) {
-//			o.put(GIS_ATT_MIND_SELFREF, key);
-//		}
-
 		setValue(parent, key, o);
 
 		return o;

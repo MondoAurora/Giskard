@@ -8,9 +8,9 @@ public interface DustNodeConsts extends DustNodeTokens {
 	String CLASSNAME_ARR = "java.util.ArrayList";
 	String CLASSNAME_SET = "java.util.HashSet";
 
-	interface DustRuntime extends GiskardAgent {
-		Object resolve(GiskardEntityRef ref, boolean createIfMissing);
-	}
+//	interface DustRuntime extends GiskardAgent {
+//		Object resolve(GiskardEntityRef ref, boolean createIfMissing);
+//	}
 
 	public interface EntityInitializer {
 		void initNewEntity(DustNodeEntityRef ref, Map<Object, Object> eData);

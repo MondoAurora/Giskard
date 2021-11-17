@@ -32,13 +32,12 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 
 			if ( null == unit ) {
 				refUnits.add(ret);
-				strId = strId.split("/")[2];
 			} else {
-				strId = idMap.get(unit) + "::" + strId;	
+				strId = idMap.get(unit).split("/")[2] + "::" + strId;	
 			}
 			refs.add(ret);
 						
-			System.out.println("Registering " + strId);
+//			System.out.println("Registering " + strId);
 			if ( idMap.containsValue(strId)) {
 				Giskard.wrapException(null, null, "Boot id conflict", strId);
 			}
