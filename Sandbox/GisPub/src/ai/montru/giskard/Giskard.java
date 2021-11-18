@@ -15,6 +15,14 @@ public abstract class Giskard implements GiskardConsts, GiskardConsts.GiskardMet
 		return RUNTIME.gisWrapException(exception, exType, params);
 	}
 
+	public static void registerNative(GiskardEntityRef type, String className){
+		RUNTIME.gisRegisterNative(type, className);
+	}
+
+	public static void initiateProcess(GiskardEntityRef proc){
+		RUNTIME.gisInitiateProcess(proc);
+	}
+
 	public static void broadcastEvent(GiskardEntityRef eventType, Object... params) {
 		RUNTIME.gisBroadcastEvent(eventType, params);
 	}
@@ -26,7 +34,10 @@ public abstract class Giskard implements GiskardConsts, GiskardConsts.GiskardMet
 	protected abstract <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path);
 	protected abstract <RetType> RetType gisWrapException(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException;
+	protected abstract void gisRegisterNative(GiskardEntityRef type, String className);
+	protected abstract void gisInitiateProcess(GiskardEntityRef proc);
 	protected abstract void gisBroadcastEvent(GiskardEntityRef eventType, Object... params);
+	
 	protected abstract String gisToString(GiskardEntityRef ref);
 
 	protected static Giskard RUNTIME;

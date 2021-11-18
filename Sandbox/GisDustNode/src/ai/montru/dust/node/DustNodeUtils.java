@@ -52,6 +52,18 @@ public class DustNodeUtils implements DustNodeConsts {
 		return o;
 	}
 
+	public static GiskardResponse call(GiskardEntityRef target, GiskardAction action) {
+		GiskardAgent a = Giskard.access(GiskardAccess.Peek, null, target, GIS_ATT_DUST_INSTANCE);
+		
+		if ( null == a ) {
+			String cName = Giskard.access(GiskardAccess.Peek, null, target, GIS_ATT_MIND_PRIMTYPE, GIS_ATT_DUST_ASSIGNMENT, GIS_ATT_UTIL_ID);
+			a = MontruUtils.instantiate(cName);
+			Giskard.access(GiskardAccess.Set, a, target, GIS_ATT_DUST_INSTANCE);
+		}
+		
+		return a.gisAgentProcess(action);
+	}
+
 	public static int incCount(GiskardEntityRef localRef, Object... path) {
 		int idx = Giskard.access(GiskardAccess.Peek, 0, localRef, path);
 		Giskard.access(GiskardAccess.Set, idx + 1, localRef, path);

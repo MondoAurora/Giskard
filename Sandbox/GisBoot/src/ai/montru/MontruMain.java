@@ -70,6 +70,8 @@ public class MontruMain extends Giskard implements GiskardConsts {
 				String[] mod = line.split("\\s+");
 				((MontruMain) RUNTIME).loadModule(mod[0], mod[1]);
 			}
+			
+			((GiskardAgent)RUNTIME).gisAgentProcess(GiskardAction.Begin);
 
 		} catch (Throwable e) {
 			launchException = e;
@@ -107,7 +109,17 @@ public class MontruMain extends Giskard implements GiskardConsts {
 			throw new BootException(exception, params);
 		}
 	}
+	
+	@Override
+	protected void gisRegisterNative(GiskardEntityRef type, String className) {
+		 wrapException(null, null, "Should not be here");
+	}
 
+	@Override
+	protected void gisInitiateProcess(GiskardEntityRef proc) {
+		 wrapException(null, null, "Should not be here");
+	}
+	
 	@Override
 	protected void gisBroadcastEvent(GiskardEntityRef eventType, Object... params) {
 		BOOT_EVENTS.add(new BootEvent(eventType, params));
