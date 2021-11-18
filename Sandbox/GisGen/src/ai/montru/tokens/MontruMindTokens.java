@@ -51,6 +51,10 @@ public interface MontruMindTokens extends GiskardConsts {
 	GiskardEntityRef GIS_TAG_MIND_RESPONSE_ACCEPTREAD = Giskard.getToken("ResponseAcceptRead", GIS_UNI_MIND_NARRATIVE);
 	GiskardEntityRef GIS_TAG_MIND_RESPONSE_READ = Giskard.getToken("ResponseRead", GIS_UNI_MIND_NARRATIVE);
 
+	GiskardEntityRef GIS_TYP_MIND_ITERATOR = Giskard.getToken("Iterator", GIS_UNI_MIND_NARRATIVE);
+	GiskardEntityRef GIS_TYP_MIND_SEQUENCE = Giskard.getToken("Sequence", GIS_UNI_MIND_NARRATIVE);
+	GiskardEntityRef GIS_TYP_MIND_SELECTION = Giskard.getToken("Selection", GIS_UNI_MIND_NARRATIVE);
+	
 	GiskardEntityRef GIS_TYP_MIND_VISITOR = Giskard.getToken("Visitor", GIS_UNI_MIND_NARRATIVE);
 	GiskardEntityRef GIS_ATT_MIND_ITERKEY = Giskard.getToken("VisitorIterKey", GIS_UNI_MIND_NARRATIVE);
 	GiskardEntityRef GIS_ATT_MIND_ITERVAL = Giskard.getToken("VisitorIterVal", GIS_UNI_MIND_NARRATIVE);

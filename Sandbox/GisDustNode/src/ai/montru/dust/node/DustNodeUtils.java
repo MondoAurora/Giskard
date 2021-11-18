@@ -52,7 +52,7 @@ public class DustNodeUtils implements DustNodeConsts {
 		return o;
 	}
 
-	public static GiskardResponse call(GiskardEntityRef target, GiskardAction action) {
+	public static GiskardAgent selectAgent(GiskardEntityRef target) {
 		GiskardAgent a = Giskard.access(GiskardAccess.Peek, null, target, GIS_ATT_DUST_INSTANCE);
 		
 		if ( null == a ) {
@@ -60,8 +60,26 @@ public class DustNodeUtils implements DustNodeConsts {
 			a = MontruUtils.instantiate(cName);
 			Giskard.access(GiskardAccess.Set, a, target, GIS_ATT_DUST_INSTANCE);
 		}
+		Giskard.access(GiskardAccess.Set, target, null, GIS_ATT_DUST_THISINSTANCE);
 		
-		return a.gisAgentProcess(action);
+		return a;
+	}
+
+	public static GiskardResponse call(GiskardEntityRef target, GiskardAction action) {		
+		return selectAgent(target).gisAgentProcess(action);
+	}
+
+	public static GiskardResponse execute(GiskardEntityRef target) {	
+		GiskardAgent a = selectAgent(target);
+		GiskardResponse resp;
+		
+		for ( resp = a.gisAgentProcess(GiskardAction.Begin); GiskardResponse.Read == resp; ) {
+			resp = a.gisAgentProcess(GiskardAction.Process);
+		}
+		
+		a.gisAgentProcess(GiskardAction.End);
+		
+		return resp;
 	}
 
 	public static int incCount(GiskardEntityRef localRef, Object... path) {

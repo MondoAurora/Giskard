@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ai.montru.MontruMain;
+import ai.montru.dust.node.DustNodeAgentCtrl.DustIterator;
 import ai.montru.dust.node.DustNodeEntityRef.EntityRefProcessor;
 import ai.montru.giskard.Giskard;
 import ai.montru.modules.GisDustNode;
@@ -70,6 +71,8 @@ public class DustNodeAgentRuntime extends MontruMain
 		setBootMod(name, version);
 		
 		registerNative(GIS_TYP_DUST_RUNTIME, getClass().getName());
+		
+		registerNative(GIS_TYP_MIND_ITERATOR, DustIterator.class.getName());
 
 		for (BootEvent e : BOOT_EVENTS) {
 			gisBroadcastEvent(e.eventType, e.params);
@@ -236,7 +239,7 @@ public class DustNodeAgentRuntime extends MontruMain
 		case Begin:
 			Iterable<GiskardEntityRef> iProc = gisAccessData(GiskardAccess.Peek, Collections.EMPTY_SET, rRuntime, GIS_ATT_DUST_PROCESSES);
 			for ( GiskardEntityRef rProc : iProc ) {
-				DustNodeUtils.call(rProc, GiskardAction.Process);
+				DustNodeUtils.execute(rProc);
 			}
 			break;
 		case Process:

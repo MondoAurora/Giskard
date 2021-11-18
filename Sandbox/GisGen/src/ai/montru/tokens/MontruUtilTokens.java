@@ -11,6 +11,14 @@ public interface MontruUtilTokens extends GiskardConsts {
 	GiskardEntityRef GIS_TYP_UTIL_TAGGED = Giskard.getToken("Tagged", GIS_UNI_UTIL_GENERIC);
 	GiskardEntityRef GIS_ATT_UTIL_TAGS = Giskard.getToken("TaggedTags", GIS_UNI_UTIL_GENERIC);
 
+	GiskardEntityRef GIS_TYP_UTIL_GENERIC = Giskard.getToken("Generic", GIS_UNI_UTIL_GENERIC);
+	GiskardEntityRef GIS_ATT_UTIL_GENERICCOUNT = Giskard.getToken("GenericCount", GIS_UNI_UTIL_GENERIC);
+	GiskardEntityRef GIS_ATT_UTIL_GENERICINDEX = Giskard.getToken("GenericIndex", GIS_UNI_UTIL_GENERIC);
+
+	GiskardEntityRef GIS_TYP_UTIL_RANGE = Giskard.getToken("Range", GIS_UNI_UTIL_GENERIC);
+	GiskardEntityRef GIS_ATT_UTIL_RANGEINTMIN = Giskard.getToken("RangeIntMin", GIS_UNI_UTIL_GENERIC);
+	GiskardEntityRef GIS_ATT_UTIL_RANGEINTMAX = Giskard.getToken("RangeIntMax", GIS_UNI_UTIL_GENERIC);
+
 	GiskardEntityRef GIS_TAG_UTIL_TEMPORAL = Giskard.getToken("Temporal", GIS_UNI_UTIL_GENERIC);
 
 	GiskardEntityRef GIS_TYP_UTIL_VALUE = Giskard.getToken("Value", GIS_UNI_UTIL_GENERIC);

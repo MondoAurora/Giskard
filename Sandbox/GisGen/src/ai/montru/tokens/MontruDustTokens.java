@@ -34,6 +34,7 @@ public interface MontruDustTokens extends GiskardConsts {
 	GiskardEntityRef GIS_ATT_DUST_PROCESS = Giskard.getToken("ThreadProcess", GIS_UNI_DUST_RUNTIME);
 
 	GiskardEntityRef GIS_TYP_DUST_SELF = Giskard.getToken("Self", GIS_UNI_DUST_RUNTIME);
+	GiskardEntityRef GIS_ATT_DUST_THISINSTANCE = Giskard.getToken("SelfThisInstance", GIS_UNI_DUST_RUNTIME);
 	GiskardEntityRef GIS_ATT_DUST_THISMODULE = Giskard.getToken("SelfThisModule", GIS_UNI_DUST_RUNTIME);
 
 }
