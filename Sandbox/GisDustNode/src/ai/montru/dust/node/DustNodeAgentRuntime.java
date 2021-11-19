@@ -9,6 +9,7 @@ import java.util.Set;
 
 import ai.montru.MontruMain;
 import ai.montru.dust.node.DustNodeAgentCtrl.DustIterator;
+import ai.montru.dust.node.DustNodeAgentCtrl.DustVisitor;
 import ai.montru.dust.node.DustNodeEntityRef.EntityRefProcessor;
 import ai.montru.giskard.Giskard;
 import ai.montru.modules.GisDustNode;
@@ -22,7 +23,7 @@ public class DustNodeAgentRuntime extends MontruMain
 	Map<Object, Object> ctxRoot = new HashMap<>();
 	Map<Object, DustNodeEntityRef> loadedUnits = new HashMap<>();
 	Map<DustNodeEntityRef, Map<Object, Object>> ctxRootEntities = new HashMap<>();
-	
+
 	GiskardEntityRef rRuntime;
 	GiskardEntityRef rCurrMod;
 
@@ -62,17 +63,17 @@ public class DustNodeAgentRuntime extends MontruMain
 
 		DustNodeUtils.createContainer(resolve(GIS_ATT_UTIL_TAGS, null, false), GIS_ATT_UTIL_TAGS, CLASSNAME_SET);
 		Giskard.access(GiskardAccess.Set, GIS_TAG_MIND_COLLTYPE_SET, GIS_ATT_UTIL_TAGS, GIS_ATT_UTIL_TAGS);
-		
-		
+
 		rRuntime = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_RUNTIME, null);
 		gisAccessData(GiskardAccess.Set, this, rRuntime, GIS_ATT_DUST_INSTANCE);
 		gisAccessData(GiskardAccess.Set, loadedUnits, rRuntime, GIS_ATT_DUST_LOADEDUNITS);
 
 		setBootMod(name, version);
-		
+
 		registerNative(GIS_TYP_DUST_RUNTIME, getClass().getName());
-		
+
 		registerNative(GIS_TYP_MIND_ITERATOR, DustIterator.class.getName());
+		registerNative(GIS_TYP_MIND_VISITOR, DustVisitor.class.getName());
 
 		for (BootEvent e : BOOT_EVENTS) {
 			gisBroadcastEvent(e.eventType, e.params);
@@ -82,11 +83,15 @@ public class DustNodeAgentRuntime extends MontruMain
 
 		Giskard.broadcastEvent(null, loadedUnits);
 		Giskard.broadcastEvent(null, ctxRootEntities);
-				
+
 	}
 
 	public Object resolve(GiskardEntityRef ref, GiskardEntityRef type, boolean forceLocal) {
 		return getEntity((DustNodeEntityRef) ref, type, (null != ref.gisGetUnit()) && forceLocal);
+	}
+
+	static DustNodeAgentRuntime getRuntime() {
+		return (DustNodeAgentRuntime) RUNTIME;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,7 +165,8 @@ public class DustNodeAgentRuntime extends MontruMain
 			for (parent = lastOb; lastIdx < pLen; ++lastIdx) {
 				Object key = path[lastIdx];
 				if ( null == lastOb ) {
-					lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1], (key instanceof Integer) ? CLASSNAME_ARR : CLASSNAME_MAP);
+					lastOb = DustNodeUtils.createContainer(parent, path[lastIdx - 1],
+							(key instanceof Integer) ? CLASSNAME_ARR : CLASSNAME_MAP);
 				}
 				parent = (lastOb instanceof GiskardEntityRef) ? resolve((GiskardEntityRef) lastOb, null, false) : lastOb;
 				lastOb = DustNodeUtils.getValue(parent, key, null);
@@ -192,9 +198,9 @@ public class DustNodeAgentRuntime extends MontruMain
 	@Override
 	public GiskardEntityRef gisGetToken(GiskardEntityRef unit, Object tokenId) {
 		// TODO - lookup by id!
-		
+
 		GiskardEntityRef refToken = gisAccessData(GiskardAccess.Insert, null, unit);
-		gisAccessData(GiskardAccess.Set, tokenId, refToken, GIS_ATT_UTIL_ID);		
+		gisAccessData(GiskardAccess.Set, tokenId, refToken, GIS_ATT_UTIL_ID);
 		return refToken;
 	}
 
@@ -204,17 +210,17 @@ public class DustNodeAgentRuntime extends MontruMain
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	protected void gisRegisterNative(GiskardEntityRef type, String className) {
 		GiskardEntityRef rNA = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_NATIVEASSIGNMENT, null);
-		gisAccessData(GiskardAccess.Set, className, rNA, GIS_ATT_UTIL_ID);		
+		gisAccessData(GiskardAccess.Set, className, rNA, GIS_ATT_UTIL_ID);
 		gisAccessData(GiskardAccess.Set, rNA, type, GIS_ATT_DUST_ASSIGNMENT);
-		
+
 		gisAccessData(GiskardAccess.Set, rNA, rCurrMod, GIS_ATT_DUST_NATIVES, type);
 
 	}
-	
+
 	@Override
 	protected void gisInitiateProcess(GiskardEntityRef rProc) {
 		gisAccessData(GiskardAccess.Insert, rProc, rRuntime, GIS_ATT_DUST_PROCESSES, GIS_CONST_KEY_ADDLAST);
@@ -237,8 +243,9 @@ public class DustNodeAgentRuntime extends MontruMain
 		case Init:
 			break;
 		case Begin:
-			Iterable<GiskardEntityRef> iProc = gisAccessData(GiskardAccess.Peek, Collections.EMPTY_SET, rRuntime, GIS_ATT_DUST_PROCESSES);
-			for ( GiskardEntityRef rProc : iProc ) {
+			Iterable<GiskardEntityRef> iProc = gisAccessData(GiskardAccess.Peek, Collections.EMPTY_SET, rRuntime,
+					GIS_ATT_DUST_PROCESSES);
+			for (GiskardEntityRef rProc : iProc) {
 				DustNodeUtils.execute(rProc);
 			}
 			break;
@@ -254,7 +261,7 @@ public class DustNodeAgentRuntime extends MontruMain
 
 	protected <ModAgent extends GiskardModule> ModAgent loadModule(String moduleName, String moduleVersion)
 			throws Exception {
-		
+
 		setBootMod(moduleName, moduleVersion);
 
 		return super.loadModule(moduleName, moduleVersion);

@@ -1,5 +1,6 @@
 package ai.montru.utils;
 
+import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
 
@@ -18,6 +19,22 @@ public class MontruUtils implements GiskardConsts {
 
 	public static String enumToKey(Enum<?> key) {
 		return key.getClass().getSimpleName() + "::" + key.name();
+	}
+
+	public static void dumpLine(Object... objects) {
+		dumpLine(System.out, " ", objects);
+	}
+
+	public static void dumpLine(String sep, Object... objects) {
+		dumpLine(System.out, sep, objects);
+	}
+
+	public static void dumpLine(PrintStream ps, String sep, Object... objects) {
+		StringBuilder sb = sbAppend(null, sep, objects);
+		
+		if ( null != sb ) {
+			ps.println(sb);
+		}
 	}
 
 	public static StringBuilder sbAppend(StringBuilder sb, String sep, Object... objects) {

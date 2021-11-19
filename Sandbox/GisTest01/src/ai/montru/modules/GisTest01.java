@@ -25,6 +25,11 @@ public class GisTest01 implements T01Consts, GiskardConsts.GiskardModule {
 		Giskard.access(GiskardAccess.Set, 15, refProc, GIS_ATT_UTIL_RANGEINTMAX);		
 		Giskard.initiateProcess(refProc);
 		
+		refProc = Giskard.access(GiskardAccess.Insert, GIS_TYP_MIND_VISITOR, null);
+		Giskard.access(GiskardAccess.Set, "Simple visitor", refProc, GIS_ATT_UTIL_ID);		
+		Giskard.access(GiskardAccess.Set, refProc, refProc, GIS_ATT_UTIL_TARGET);		
+		Giskard.initiateProcess(refProc);
+		
 		Giskard.broadcastEvent(null, getClass().getSimpleName(), "says: Hello, world!");
 	}
 
