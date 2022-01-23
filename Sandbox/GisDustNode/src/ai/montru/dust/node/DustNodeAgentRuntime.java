@@ -64,7 +64,7 @@ public class DustNodeAgentRuntime extends MontruMain
 		DustNodeUtils.createContainer(resolve(GIS_ATT_UTIL_TAGS, null, false), GIS_ATT_UTIL_TAGS, CLASSNAME_SET);
 		Giskard.access(GiskardAccess.Set, GIS_TAG_MIND_COLLTYPE_SET, GIS_ATT_UTIL_TAGS, GIS_ATT_UTIL_TAGS);
 
-		rRuntime = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_RUNTIME, null);
+		rRuntime = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_RUNTIME);
 		gisAccessData(GiskardAccess.Set, this, rRuntime, GIS_ATT_DUST_INSTANCE);
 		gisAccessData(GiskardAccess.Set, loadedUnits, rRuntime, GIS_ATT_DUST_LOADEDUNITS);
 
@@ -144,11 +144,12 @@ public class DustNodeAgentRuntime extends MontruMain
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
+	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, Object... path) {
 		int pLen = path.length;
+		GiskardEntityRef localRef = (0 == path.length) ? null : (GiskardEntityRef) path[0];
 		Object lastOb = val;
 
-		if ( 0 == pLen ) {
+		if ( 2 > pLen ) {
 			switch ( cmd ) {
 			case Insert:
 				lastOb = resolve(new DustNodeEntityRef(localRef, null), (GiskardEntityRef) val, false);
@@ -159,7 +160,7 @@ public class DustNodeAgentRuntime extends MontruMain
 			}
 		} else {
 			lastOb = (null == localRef) ? ctxRootEntities : resolve(localRef, null, false);
-			int lastIdx = 0;
+			int lastIdx = (0 == path.length) ? 0 : 1;
 			Object parent;
 
 			for (parent = lastOb; lastIdx < pLen; ++lastIdx) {
@@ -213,7 +214,7 @@ public class DustNodeAgentRuntime extends MontruMain
 
 	@Override
 	protected void gisRegisterNative(GiskardEntityRef type, String className) {
-		GiskardEntityRef rNA = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_NATIVEASSIGNMENT, null);
+		GiskardEntityRef rNA = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_NATIVEASSIGNMENT);
 		gisAccessData(GiskardAccess.Set, className, rNA, GIS_ATT_UTIL_ID);
 		gisAccessData(GiskardAccess.Set, rNA, type, GIS_ATT_DUST_ASSIGNMENT);
 
@@ -268,7 +269,7 @@ public class DustNodeAgentRuntime extends MontruMain
 	}
 
 	private void setBootMod(String moduleName, String version) {
-		rCurrMod = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_MODULE, null);
+		rCurrMod = gisAccessData(GiskardAccess.Insert, GIS_TYP_DUST_MODULE);
 		gisAccessData(GiskardAccess.Set, moduleName, rCurrMod, GIS_ATT_UTIL_ID);
 		gisAccessData(GiskardAccess.Set, rCurrMod, rRuntime, GIS_ATT_DUST_LOADEDMODULES, moduleName);
 	}

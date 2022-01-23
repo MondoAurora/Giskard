@@ -6,8 +6,8 @@ public abstract class Giskard implements GiskardConsts, GiskardConsts.GiskardMet
 		return RUNTIME.gisGetToken(unit, tokenId);
 	}
 	
-	public static <RetType> RetType access(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
-		return RUNTIME.gisAccessData(cmd, val, localRef, path);
+	public static <RetType> RetType access(GiskardAccess cmd, Object val, Object... path) {
+		return RUNTIME.gisAccessData(cmd, val, path);
 	}
 
 	public static <RetType> RetType wrapException(Throwable exception, GiskardEntityRef exType, Object... params)
@@ -31,7 +31,7 @@ public abstract class Giskard implements GiskardConsts, GiskardConsts.GiskardMet
 		return RUNTIME.gisToString(ref);
 	}
 	
-	protected abstract <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path);
+	protected abstract <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, Object... path);
 	protected abstract <RetType> RetType gisWrapException(Throwable exception, GiskardEntityRef exType, Object... params)
 			throws GiskardException;
 	protected abstract void gisRegisterNative(GiskardEntityRef type, String className);

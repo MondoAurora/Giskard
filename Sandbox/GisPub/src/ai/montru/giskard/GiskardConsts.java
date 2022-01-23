@@ -14,8 +14,16 @@ public interface GiskardConsts {
 		Init, Begin, Process, End, Release,
 	}
 	
+	enum GiskardLogicState {
+		Idle, Processing, Waiting, Completed, Exception,
+	}
+	
 	enum GiskardResponse {
 		Reject, Accept, AcceptRead, Read,
+	};
+	
+	enum GiskardChange {
+		Created, ChgValue, ChgEntity, ChgCommit, Deleted
 	};
 	
 	/**

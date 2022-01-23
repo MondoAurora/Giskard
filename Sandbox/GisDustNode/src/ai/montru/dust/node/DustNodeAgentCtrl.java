@@ -112,6 +112,7 @@ public abstract class DustNodeAgentCtrl implements DustNodeConsts, GiskardAgent 
 
 				ref = Giskard.access(GiskardAccess.Peek, null, null, GIS_ATT_DUST_THISINSTANCE, GIS_ATT_UTIL_TARGET);
 				if ( null != ref ) {
+					seen.add(ref);
 					callStack.push(new VisitCursor(ref));
 				} else {
 					ret = GiskardResponse.Reject;
@@ -152,6 +153,13 @@ public abstract class DustNodeAgentCtrl implements DustNodeConsts, GiskardAgent 
 						callStack.push(new VisitCursor((DustNodeEntityRef) vc.val));
 					}
 				} else {
+					if ( null != ref ) {
+						if ( isColl ) {
+							MontruUtils.dumpLine(prefix, "collClose");
+						}
+						MontruUtils.dumpLine(prefix, "keyClose", ref);
+					}
+
 					callStack.pop();
 					if ( callStack.isEmpty() ) {
 						ret = GiskardResponse.Accept;

@@ -96,7 +96,7 @@ public class MontruMain extends Giskard implements GiskardConsts {
 	}
 
 	@Override
-	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, GiskardEntityRef localRef, Object... path) {
+	protected <RetType> RetType gisAccessData(GiskardAccess cmd, Object val, Object... path) {
 		return wrapException(null, null, "Should not be here");
 	}
 

@@ -37,7 +37,7 @@ public class DustNodeEntityRef implements GiskardConsts, GiskardConsts.GiskardEn
 			}
 			refs.add(ret);
 						
-//			System.out.println("Registering " + strId);
+ 			System.out.println("Registering " + strId);
 			if ( idMap.containsValue(strId)) {
 				Giskard.wrapException(null, null, "Boot id conflict", strId);
 			}
