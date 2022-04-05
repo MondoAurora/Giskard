@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,6 +32,7 @@ import me.giskard.sandbox.utils.GSBUtils;
 
 public class BookReader implements BookReaderConsts {
 
+	private static final Pattern PT_PAGEID = Pattern.compile("Page_(\\d+).*");
 	String bookName;
 	File dirOutRoot;
 
@@ -101,7 +103,7 @@ public class BookReader implements BookReaderConsts {
 		}
 
 		if ( !d.exists() ) {
-			d.mkdirs();
+			d.getParentFile().mkdirs();
 			update = 0 < rs.ordinal();
 		}
 
@@ -140,13 +142,28 @@ public class BookReader implements BookReaderConsts {
 			target = getDir(rs, null, false);
 			mergeTexts(source, target, fName);
 			break;
+		case PageContents:
+//			source = getDir(ReadStep.MergePageText, fName, false);
+//			target = getDir(rs, null, false);
+//			optCopyContent(source, target, fName);
+			break;
 		case Translate:
 			break;
 		}
 	}
 
+//	private void optCopyContent(File source, File target, String fName) throws Exception {
+//		File fTarget = new File(target, fName);
+//		if ( fTarget.exists() ) {
+//			System.out.println("Page content EXISTS, abandone " + fName);
+//		} else {
+//			Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//		}
+//	}
+
 	private void mergeTexts(File source, File target, String fName) throws Exception {
-		PrintStream out = new PrintStream(new FileOutputStream(new File(target, fName.replace(EXT_PDF, EXT_TXT))));
+//		PrintStream out = new PrintStream(new FileOutputStream(new File(target, fName.replace(EXT_PDF, EXT_TXT))));
+		PrintStream out = new PrintStream(new FileOutputStream(new File(target, fName.replace(EXT_PDF, EXT_HTML))));
 
 		String[] fNames = source.list();
 		Arrays.sort(fNames);
@@ -193,17 +210,35 @@ public class BookReader implements BookReaderConsts {
 		boolean skipping = false;
 		StringBuilder sbPara = new StringBuilder();
 
+		out.append("<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n");
+//		out.append("<!DOCTYPE html>\n<html lang=\"en\">\n<head><style> ." + PREF_PAGE + " { visibility: hidden; } </style></head><body>\n");
+		
+		// h2.b { visibility: hidden; }
+		int idxPara = 0;
+		String paraHead = null;
+
 		for (String fn : fNames) {
 			List<String> ll = Files.readAllLines(Paths.get(source.getAbsolutePath(), fn));
 
-			out.append("<< PAGE " + fn + " >>\n");
+			Matcher mp = PT_PAGEID.matcher(fn);
+
+			String pageId = mp.matches() ? mp.group(1) : "???";
+
+			out.append("\n<span hidden class=\"" + PREF_PAGE + "\" id=\"" + PREF_PAGE + "-" + pageId + "\"><br/>Page " + Integer.valueOf(pageId)
+					+ "<br/> </span>\n");
+			paraHead = null;
 
 			boolean lastIsEmpty = false;
 			boolean readHdr = true;
 			boolean collector = true;
+			idxPara = 0;
 
 			for (String l : ll) {
 				l = l.trim();
+				
+				if ( null == paraHead ) {
+					paraHead = String.format("\n<p class=\"" + PREF_PARA + "\" id=\"" + PREF_PARA + "-%s-%04d\">", pageId, ++idxPara);
+				}
 
 				if ( GSBUtils.isEmpty(l) || ptSingleNum.matcher(l).matches() ) {
 					if ( lastIsEmpty ) {
@@ -243,7 +278,8 @@ public class BookReader implements BookReaderConsts {
 							}
 						}
 
-						out.append(strPara).append("\n\n");
+						out.append(paraHead).append(strPara).append("</p>\n");
+						paraHead = null;
 					}
 				} else {
 					if ( collector ) {
@@ -268,7 +304,8 @@ public class BookReader implements BookReaderConsts {
 						}
 						sbPara.append(l);
 					} else {
-						out.append(l).append("\n");
+						out.append(paraHead).append(l).append("</p>\n");
+						paraHead = null;
 					}
 				}
 			}
@@ -276,7 +313,8 @@ public class BookReader implements BookReaderConsts {
 			out.flush();
 		}
 
-		out.append(sbPara).append("\n");
+		out.append(paraHead).append(sbPara).append("</p>\n");
+		out.append("</body>\n</html>");
 
 		out.close();
 	}
@@ -317,7 +355,7 @@ public class BookReader implements BookReaderConsts {
 
 	public static void main(String[] args) throws Exception {
 		BookReader rdr = new BookReader(args[0]);
-		
+
 //		RecRename rr =  new RecRename("Page_(\\d*)(.*)");
 //		rr.rename(rdr.dirOutRoot);
 //		System.out.println(rr);
@@ -331,16 +369,35 @@ public class BookReader implements BookReaderConsts {
 	@SuppressWarnings("unchecked")
 	public void getVolumeInfo(int idx, Map<BookData, Object> volumeData) throws Exception {
 		String f = fileNames.get(idx);
+		String ft = f.replace(EXT_PDF, EXT_TXT);
 
-		File dir = getDir(ReadStep.MergePageText, null, false);
-		File src = new File(dir, f.replace(EXT_PDF, EXT_TXT));
-
-		volumeData.put(BookData.VolumeText, src);
-
-		dir = getDir(ReadStep.OrigFiles, null, false);
-		src = new File(dir, f);
-
-		volumeData.put(BookData.VolumeFile, src);
+		File fMerged = getDir(ReadStep.MergePageText, f, false);
+		
+		File fDir = getDir(ReadStep.PageContents, null, false);
+		ft = f.replace(EXT_PDF, EXT_HTML);
+		File fContent = new File(fDir, ft);
+		File fAttach = new File(fDir, ft.replace(EXT_HTML, ""));
+		
+		if ( !fContent.exists()) {
+			fDir.mkdirs();
+			Files.copy(fMerged.toPath(), fContent.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			fAttach.mkdir();
+		}
+//		File src = new File(dir, f.replace(EXT_PDF, EXT_TXT));
+//		File src = new File(dir, ft);
+//		
+//		if ( !src.exists() ) {
+//			process(ReadStep.PageContents, src.getName());
+//		}
+//
+//		volumeData.put(BookData.VolumeText, src);
+//
+//		dir = getDir(ReadStep.OrigFiles, null, false);
+//		src = new File(dir, f);
+//
+		volumeData.put(BookData.VolumeFile, fContent);
+		volumeData.put(BookData.VolumeImages, fAttach);
+		volumeData.put(BookData.VolumeText, fContent);
 
 		ArrayList<Map<BookData, Object>> pages = (ArrayList<Map<BookData, Object>>) volumeData.get(BookData.VolumePages);
 		pages.clear();
@@ -358,6 +415,10 @@ public class BookReader implements BookReaderConsts {
 
 			pd.put(BookData.PageImage, new File(dirImgs, imgs[i]));
 			pd.put(BookData.PageText, new File(dirTxts, txts[i]));
+			
+			Matcher mp = PT_PAGEID.matcher(imgs[i]);
+			String pageId = mp.matches() ? mp.group(1) : "???";
+			pd.put(BookData.PageId, pageId);
 
 			pages.add(pd);
 		}

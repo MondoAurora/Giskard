@@ -1,41 +1,38 @@
 package me.giskard.sandbox.book;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -44,7 +41,11 @@ import me.giskard.sandbox.utils.GSBSwingUtils;
 
 public class BookReaderSwing implements BookReaderConsts {
 	enum GuiCommand {
-		RebuildText, Test1, Test2
+		RebuildText// , Test1
+	}
+
+	enum TextCommand {
+		Save, ReplacePara, ProcImg, ScanTxt
 	}
 
 	BookReader book;
@@ -54,6 +55,7 @@ public class BookReaderSwing implements BookReaderConsts {
 	Map<BookData, Object> volumeData = new HashMap<>();
 
 	ArrayList<Map<BookData, Object>> pages = new ArrayList<>();
+	File dirImg;
 
 	AbstractTableModel tmPages = new AbstractTableModel() {
 		private static final long serialVersionUID = 1L;
@@ -83,205 +85,15 @@ public class BookReaderSwing implements BookReaderConsts {
 		};
 	};
 
-	class PageView extends JLabel {
-		Map<Rectangle, Color> rects = new HashMap<>();
-				
-		Rectangle rctSel;
-		Rectangle rctCur = new Rectangle();
-		
-		Rectangle rctImg;
-
-		int mode = Cursor.DEFAULT_CURSOR;
-		int mx, my, mh, mw;
-		Point grabPoint;
-
-		int[][] CURSOR_MODES = { { Cursor.NW_RESIZE_CURSOR, Cursor.N_RESIZE_CURSOR, Cursor.NE_RESIZE_CURSOR },
-				{ Cursor.W_RESIZE_CURSOR, Cursor.HAND_CURSOR, Cursor.E_RESIZE_CURSOR },
-				{ Cursor.SW_RESIZE_CURSOR, Cursor.S_RESIZE_CURSOR, Cursor.SE_RESIZE_CURSOR } };
-
-		MouseMotionListener mml = new MouseMotionAdapter() {
-			public void mouseMoved(MouseEvent e) {
-				if ( null != grabPoint ) {
-					return;
-				}
-				
-				Point pt = e.getPoint();
-
-				rctCur.setBounds(pt.x - 5, pt.y - 5, 10, 10);
-
-				mx = my = mh = mw = 0;
-				rctSel = null;
-				
-				for ( Rectangle rct : rects.keySet()) {
-					if ( rct.intersects(rctCur) ) {
-						rctSel = rct;
-						
-						if ( rct.contains(rctCur) ) {
-							mx = 1;
-							my = 1;
-						} else {
-							if ( rctCur.contains(pt.x, rct.y) ) {
-								my = 1;
-								mh = -1;
-							} else if ( rctCur.contains(pt.x, rct.y + rct.height) ) {
-								mh = 1;
-							}
-
-							if ( rctCur.contains(rct.x, pt.y) ) {
-								mx = 1;
-								mw = -1;
-							} else if ( rctCur.contains(rct.x + rct.width, pt.y) ) {
-								mw = 1;
-							}
-						}
-						optUpdateMode();
-						break;
-					}
-				}
-
-				if ( null == rctSel ) {
-					resetMode();
-				}
-			};
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				if ( null == grabPoint ) {
-					return;
-				}
-				
-				Point pt = e.getPoint();
-				boolean dirChg = false;
-
-				int dx = pt.x - grabPoint.x;
-				int dy = pt.y - grabPoint.y;
-				grabPoint.setLocation(pt);
-
-				rctSel.x += (mx * dx);
-				rctSel.width += (mw * dx);
-
-				if ( 0 > rctSel.width ) {
-					grabPoint.x -= (2*rctSel.width);
-					rctSel.x -= rctSel.width;
-					rctSel.width = -rctSel.width;
-					mx = (0 == mx) ? mw : 0;
-					mw = -mw;
-
-					dirChg = true;
-				}
-				
-				rctSel.y += (my * dy);
-				rctSel.height += (mh * dy);
-								
-				if ( 0 > rctSel.height ) {
-					grabPoint.y -= (2*rctSel.height);
-					rctSel.y -= rctSel.height;
-					rctSel.height = -rctSel.height;
-					mh = -mh;
-					my = (0 == my) ? 1 : 0;
-
-					dirChg = true;
-				}
-				
-				if ( dirChg ) {
-					optUpdateMode();
-				}
-
-				System.out.println(rctSel);
-
-				repaint();
-			}
-		};
-
-		MouseListener ml = new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				grabPoint = new Point(e.getPoint());
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				resetMode();
-			};
-
-			public void mouseEntered(MouseEvent e) {
-			};
-
-			public void mouseExited(MouseEvent e) {
-				resetMode();
-			};
-		};
-
-		private static final long serialVersionUID = 1L;
-
-		public PageView() {
-			addMouseListener(ml);
-			addMouseMotionListener(mml);
-			
-			rctImg = new Rectangle(10, 10, 100, 100);
-			rects.put(rctImg, Color.red);
-			rects.put(new Rectangle(20, 20, 200, 50), Color.green);
-		}
-		
-		void resetMode() {
-			grabPoint = null;
-			optUpdateMode(Cursor.DEFAULT_CURSOR);
-		}
-		
-		void optUpdateMode() {
-			int m = CURSOR_MODES[mh + 1][mw + 1];
-			optUpdateMode(m);
-		}
-		
-		void optUpdateMode(int m) {
-			if ( mode != m ) {
-				mode = m;
-				setCursor(Cursor.getPredefinedCursor(mode));
-				repaint();
-			}
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			Graphics2D g2 = (Graphics2D) g;
-
-			Color c = g.getColor();
-			
-			for ( Map.Entry<Rectangle, Color> re : rects.entrySet() ) {
-				Rectangle rct = re.getKey();
-				
-				g.setColor(re.getValue());
-				g2.draw(rct);
-				
-				if ( rct == rctSel ) {
-					int r = 8;
-					
-					int x = rct.x - r/2;
-					int y = rct.y - r/2;
-					int xx = x + rct.width;
-					int yy = y + rct.height;
-					
-					g2.drawOval(x, y, r, r);
-					g2.drawOval(x, yy, r, r);
-					g2.drawOval(xx, y, r, r);
-					g2.drawOval(xx, yy, r, r);
-				}
-			}			
-			
-			g.setColor(c);
-		}
-
-	}
-
 	JFrame frm;
 
 	JPanel pnlMain;
-	JComboBox<String> cbVolumes;
+	JList<String> lstVolumes;
 	JTable tblPages;
-	JTextArea taPageText;
-	PageView lblPageImage;
+//	JTextArea taPageText;
+	BookReaderPageImage pageImage;
 	JTextArea taVolumeText;
+	String strVolume;
 
 	ActionListener alCmd = new ActionListener() {
 		@Override
@@ -290,6 +102,89 @@ public class BookReaderSwing implements BookReaderConsts {
 		}
 	};
 
+	ActionListener alTxt = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				strVolume = taVolumeText.getText();
+
+				switch ( TextCommand.valueOf(e.getActionCommand()) ) {
+				case Save:
+					File f = (File) volumeData.get(BookData.VolumeFile);
+					if ( f.exists() ) {
+						Files.move(f.toPath(),
+								new File(f.getParentFile(), f.getName().replace(EXT_HTML, "." + System.currentTimeMillis() + EXT_HTML))
+										.toPath());
+					}
+
+					Files.write(f.toPath(), strVolume.getBytes());
+					break;
+				case ReplacePara:
+					TextTag rt = (TextTag) JOptionPane.showInputDialog(pnlMain, "Select Tag", "Replace Paragraph",
+							JOptionPane.QUESTION_MESSAGE, null, TextTag.values(), null);
+
+					if ( null != rt ) {
+						int ss = taVolumeText.getSelectionStart();
+						int se = taVolumeText.getSelectionEnd();
+						String st = taVolumeText.getSelectedText();
+						String txtNew = rt.apply(st);
+
+						taVolumeText.replaceRange(txtNew, ss, se);
+
+						strVolume = taVolumeText.getText();
+					}
+					break;
+				case ProcImg:
+					int rc = pageImage.getRctCount();
+					for (int i = 0; i < rc; ++i) {
+						String imgName = PREF_IMG + "-" + pageId;
+						Pattern ptImgName = Pattern.compile(imgName + "-(\\d+).*");
+
+						int imgIdx = 0;
+						for (String fn : dirImg.list()) {
+							if ( fn.startsWith(imgName) ) {
+								Matcher m = ptImgName.matcher(fn);
+								if ( m.matches() ) {
+									int idx = Integer.parseInt(m.group(1));
+									if ( idx > imgIdx ) {
+										imgIdx = idx;
+									}
+								}
+							}
+						}
+
+						imgName += String.format("-%04d.png", imgIdx + 1);
+
+						String sel = taVolumeText.getSelectedText();
+
+						Rectangle rct = pageImage.storeSelImg(new File(dirImg, imgName), i);
+						String strRect = MessageFormat.format(FMT_AREA, rct.x, rct.y, rct.width, rct.height);
+
+						String strTxt = "<figure id=\"" + imgName + "\">\n" + "  <img src=\""
+								+ URLEncoder.encode(dirImg.getName(), "UTF-8").replace("+", "%20") + "/" + imgName + "\" " + strRect
+								+ " >\n" + "  <figcaption>" + ((null == sel) ? "" : sel) + "</figcaption>\n" + "</figure>\n\n";
+
+						if ( null == sel ) {
+							taVolumeText.insert(strTxt, taVolumeText.getCaretPosition());
+						} else {
+							taVolumeText.replaceRange(strTxt, taVolumeText.getSelectionStart(), taVolumeText.getSelectionEnd());
+						}
+					}
+
+					strVolume = taVolumeText.getText();
+
+					break;
+				case ScanTxt:
+					break;
+				}
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+		}
+
+	};
+	private String pageId;
+
 	public BookReaderSwing(BookReader br) {
 		book = br;
 
@@ -297,11 +192,14 @@ public class BookReaderSwing implements BookReaderConsts {
 
 		book.getFileNames(volumes);
 
-		cbVolumes = new JComboBox<>(volumes);
-		cbVolumes.addActionListener(new ActionListener() {
+		lstVolumes = new JList<>(volumes);
+		lstVolumes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		lstVolumes.addListSelectionListener(new ListSelectionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				selectVolume(cbVolumes.getSelectedIndex());
+			public void valueChanged(ListSelectionEvent e) {
+				if ( !e.getValueIsAdjusting() ) {
+					selectVolume(lstVolumes.getSelectedIndex());
+				}
 			}
 		});
 
@@ -311,7 +209,7 @@ public class BookReaderSwing implements BookReaderConsts {
 		for (GuiCommand gc : GuiCommand.values()) {
 			GSBSwingUtils.addActionComp(gc, alCmd, pnlCmds);
 		}
-		pnlMain.add(pnlCmds, BorderLayout.SOUTH);
+//		pnlMain.add(pnlCmds, BorderLayout.SOUTH);
 
 		JSplitPane splMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		pnlMain.add(splMain, BorderLayout.CENTER);
@@ -333,36 +231,64 @@ public class BookReaderSwing implements BookReaderConsts {
 		});
 
 		JPanel pnlLeft = new JPanel(new BorderLayout());
-		pnlLeft.add(GSBSwingUtils.wrapComp(cbVolumes, "Volumes", false), BorderLayout.NORTH);
+		pnlLeft.add(GSBSwingUtils.wrapComp(lstVolumes, "Volumes", true), BorderLayout.NORTH);
 		pnlLeft.add(GSBSwingUtils.wrapComp(tblPages, "Pages", true), BorderLayout.CENTER);
+		pnlLeft.add(pnlCmds, BorderLayout.SOUTH);
 
 		splMain.setLeftComponent(pnlLeft);
 
-		JSplitPane splVolume = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splMain.setRightComponent(splVolume);
+//		JSplitPane splVolume = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+//		splMain.setRightComponent(splVolume);
 
 		JSplitPane splPage = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		lblPageImage = new PageView();
-		splPage.setLeftComponent(GSBSwingUtils.wrapComp(lblPageImage, "Page Image", true));
-		taPageText = new JTextArea();
-		taPageText.setEditable(false);
-		splPage.setRightComponent(GSBSwingUtils.wrapComp(taPageText, "Page Text", true));
+		splMain.setRightComponent(splPage);
+		pageImage = new BookReaderPageImage();
+		splPage.setLeftComponent(GSBSwingUtils.wrapComp(pageImage, "Page Image", true));
+//		taPageText = new JTextArea();
+//		taPageText.setEditable(false);
+//		splPage.setRightComponent(GSBSwingUtils.wrapComp(taPageText, "Page Text", true));
 
-		splVolume.setLeftComponent(splPage);
+//		splVolume.setLeftComponent(splPage);
 
 		taVolumeText = new JTextArea();
-		taVolumeText.setEditable(false);
-		splVolume.setRightComponent(GSBSwingUtils.wrapComp(taVolumeText, "Volume Text", true));
+		taVolumeText.setLineWrap(true);
+		taVolumeText.setWrapStyleWord(true);
+//		taVolumeText.setEditable(false);
+//		splVolume.setRightComponent(GSBSwingUtils.wrapComp(taVolumeText, "Volume Text", true));
+		JScrollPane cmp = (JScrollPane) GSBSwingUtils.wrapComp(taVolumeText, "Volume Text", true);
+		cmp.getViewport().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JViewport viewport = (JViewport) e.getSource();
+				Rectangle viewRect = viewport.getViewRect();
+
+				Point p = viewRect.getLocation();
+				int startIndex = taVolumeText.viewToModel(p);
+
+//				System.out.println("Area idx " + startIndex);
+			}
+		});
+
+		JPanel pnlTxts = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		for (TextCommand tc : TextCommand.values()) {
+			GSBSwingUtils.addActionComp(tc, alTxt, pnlTxts);
+		}
+
+		JPanel pnlR = new JPanel(new BorderLayout());
+		pnlR.add(cmp, BorderLayout.CENTER);
+		pnlR.add(pnlTxts, BorderLayout.SOUTH);
+
+		splPage.setRightComponent(pnlR);
 
 		splMain.setResizeWeight(0);
-		splMain.setDividerLocation(100);
+		splMain.setDividerLocation(200);
 
-		splVolume.setResizeWeight(0.3);
-		splVolume.setDividerLocation(0.3);
+//		splVolume.setResizeWeight(0.3);
+//		splVolume.setDividerLocation(0.3);
 		splPage.setResizeWeight(0.5);
 		splPage.setDividerLocation(0.5);
 
-		selectVolume(0);
+		lstVolumes.setSelectedIndex(0);
 	}
 
 	private void doAction(GuiCommand gc) {
@@ -374,18 +300,17 @@ public class BookReaderSwing implements BookReaderConsts {
 		try {
 			switch ( gc ) {
 			case RebuildText:
-				book.getDir(ReadStep.MergePageText, selectedVolume, true);
+				book.getDir(ReadStep.PageContents, selectedVolume, true);
 				updateVolumeText();
 				break;
-			case Test1:
-				ImageIcon ii = (ImageIcon) lblPageImage.getIcon();
-				
-				
-				Rectangle r = lblPageImage.rctImg;
-				BufferedImage clip = ((BufferedImage) ii.getImage()).getSubimage(r.x, r.y, r.width, r.height);
-				
-				ImageIO.write(clip, "png", new File("tmp.png"));
-				break;
+			/*
+			 * case Test1: ImageIcon ii = (ImageIcon) pageImage.getIcon();
+			 * 
+			 * Rectangle r = pageImage.rctSel; BufferedImage clip = ((BufferedImage)
+			 * ii.getImage()).getSubimage(r.x, r.y, r.width, r.height);
+			 * 
+			 * ImageIO.write(clip, "png", new File("tmp.png")); break;
+			 */
 			default:
 				msg = gc.name();
 				break;
@@ -399,19 +324,18 @@ public class BookReaderSwing implements BookReaderConsts {
 		if ( null != msg ) {
 			JOptionPane.showMessageDialog(pnlMain, msg, "BookReader Action", msgType);
 		}
-
 	}
 
 	private void updateVolumeText() {
-		String content = "???";
+		strVolume = "???";
 
 		try {
-			content = new String(Files.readAllBytes(((File) volumeData.get(BookData.VolumeText)).toPath()));
+			strVolume = new String(Files.readAllBytes(((File) volumeData.get(BookData.VolumeText)).toPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		taVolumeText.setText(content);
+		taVolumeText.setText(strVolume);
 		taVolumeText.setCaretPosition(0);
 	}
 
@@ -427,6 +351,13 @@ public class BookReaderSwing implements BookReaderConsts {
 		try {
 			book.getVolumeInfo(i, volumeData);
 			updateVolumeText();
+
+			File f = (File) volumeData.get(BookData.VolumeFile);
+			dirImg = new File(f.getParent(), f.getName().replace(EXT_HTML, ""));
+			if ( !dirImg.exists() ) {
+				dirImg.mkdir();
+			}
+
 			tmPages.fireTableDataChanged();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -447,17 +378,25 @@ public class BookReaderSwing implements BookReaderConsts {
 				o = new String(Files.readAllBytes(((File) o).toPath()));
 				pd.put(BookData.PageText, o);
 			}
-			taPageText.setText((String) o);
-			taPageText.setCaretPosition(0);
+//			taPageText.setText((String) o);
+//			taPageText.setCaretPosition(0);
 
 			o = pd.get(BookData.PageImage);
 			if ( o instanceof File ) {
 				o = new ImageIcon(ImageIO.read((File) o));
 				pd.put(BookData.PageImage, o);
 			}
-			lblPageImage.setIcon((Icon) o);
+			pageImage.rctSel = null;
+			pageImage.setIcon((Icon) o);
 
-//			System.out.println("Page " + selectedRow + " selected: " + pd);
+			pageImage.findImages();
+
+			pageId = (String) pd.get(BookData.PageId);
+
+			int idx = strVolume.indexOf(PREF_PAGE + "-" + pageId);
+			if ( -1 != idx ) {
+				taVolumeText.setCaretPosition(idx);
+			}
 		}
 	}
 
