@@ -2,40 +2,42 @@ package me.giskard.sandbox.book;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.AbstractListModel;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JViewport;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
 
 import me.giskard.sandbox.utils.GSBSwingUtils;
 
@@ -45,154 +47,125 @@ public class BookReaderSwing implements BookReaderConsts {
 	}
 
 	enum TextCommand {
-		Save, ReplacePara, ProcImg, ScanTxt
+		Save, ReplacePara, ProcImg, Rescan
+	}
+
+	private final Map<Integer, Action> HOTKEYS = new HashMap<>();
+
+	private void addHotkey(Integer key, Enum<?> cmd) {
+		HOTKEYS.put(key, new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if ( cmd instanceof TextTag ) {
+						applyTextTag((TextTag) cmd);
+					} else if ( cmd instanceof TextCommand ) {
+						applyTextCommand((TextCommand) cmd);
+					}
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		});
 	}
 
 	BookReader book;
-	Vector<String> volumes = new Vector<>();
+	Vector<String> volumeNames = new Vector<>();
+	String volumeId;
+	String volumeText;
 
-	String selectedVolume;
-	Map<BookData, Object> volumeData = new HashMap<>();
-
-	ArrayList<Map<BookData, Object>> pages = new ArrayList<>();
 	File dirImg;
 
-	AbstractTableModel tmPages = new AbstractTableModel() {
+	class PageListModel extends AbstractListModel<String> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			switch ( columnIndex ) {
-			case 0:
-				return "Page " + (rowIndex + 1);
-			default:
-				return null;
-			}
+		public int getSize() {
+			return pageCount;
 		}
 
 		@Override
-		public int getRowCount() {
-			return pages.size();
+		public String getElementAt(int index) {
+			return BookReaderUtils.getPageId(index);
 		}
 
-		@Override
-		public int getColumnCount() {
-			return 1;
+		public void update() {
+			fireContentsChanged(this, 0, pageCount);
 		}
-
-		public String getColumnName(int column) {
-			return "Page";
-		};
 	};
+
+	PageListModel lmPages = new PageListModel();
+
+	int pageCount;
+	private String pageId;
 
 	JFrame frm;
 
 	JPanel pnlMain;
 	JList<String> lstVolumes;
-	JTable tblPages;
-//	JTextArea taPageText;
+	JList<String> lstPages;
 	BookReaderPageImage pageImage;
+
+	JTabbedPane tpResult;
 	JTextArea taVolumeText;
-	String strVolume;
+	JEditorPane jepVolume;
+//	WebView jfxWebView;
 
-	ActionListener alCmd = new ActionListener() {
+//	ActionListener alCmd = new ActionListener() {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			applyGuiCommand(GuiCommand.valueOf(e.getActionCommand()));
+//		}
+//	};
+
+	ActionListener alCmdDispatcher = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			doAction(GuiCommand.valueOf(e.getActionCommand()));
+			dispatchCommand(e.getActionCommand());
 		}
 	};
 
-	ActionListener alTxt = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				strVolume = taVolumeText.getText();
-
-				switch ( TextCommand.valueOf(e.getActionCommand()) ) {
-				case Save:
-					File f = (File) volumeData.get(BookData.VolumeFile);
-					if ( f.exists() ) {
-						Files.move(f.toPath(),
-								new File(f.getParentFile(), f.getName().replace(EXT_HTML, "." + System.currentTimeMillis() + EXT_HTML))
-										.toPath());
-					}
-
-					Files.write(f.toPath(), strVolume.getBytes());
-					break;
-				case ReplacePara:
-					TextTag rt = (TextTag) JOptionPane.showInputDialog(pnlMain, "Select Tag", "Replace Paragraph",
-							JOptionPane.QUESTION_MESSAGE, null, TextTag.values(), null);
-
-					if ( null != rt ) {
-						int ss = taVolumeText.getSelectionStart();
-						int se = taVolumeText.getSelectionEnd();
-						String st = taVolumeText.getSelectedText();
-						String txtNew = rt.apply(st);
-
-						taVolumeText.replaceRange(txtNew, ss, se);
-
-						strVolume = taVolumeText.getText();
-					}
-					break;
-				case ProcImg:
-					int rc = pageImage.getRctCount();
-					for (int i = 0; i < rc; ++i) {
-						String imgName = PREF_IMG + "-" + pageId;
-						Pattern ptImgName = Pattern.compile(imgName + "-(\\d+).*");
-
-						int imgIdx = 0;
-						for (String fn : dirImg.list()) {
-							if ( fn.startsWith(imgName) ) {
-								Matcher m = ptImgName.matcher(fn);
-								if ( m.matches() ) {
-									int idx = Integer.parseInt(m.group(1));
-									if ( idx > imgIdx ) {
-										imgIdx = idx;
-									}
-								}
-							}
-						}
-
-						imgName += String.format("-%04d.png", imgIdx + 1);
-
-						String sel = taVolumeText.getSelectedText();
-
-						Rectangle rct = pageImage.storeSelImg(new File(dirImg, imgName), i);
-						String strRect = MessageFormat.format(FMT_AREA, rct.x, rct.y, rct.width, rct.height);
-
-						String strTxt = "<figure id=\"" + imgName + "\">\n" + "  <img src=\""
-								+ URLEncoder.encode(dirImg.getName(), "UTF-8").replace("+", "%20") + "/" + imgName + "\" " + strRect
-								+ " >\n" + "  <figcaption>" + ((null == sel) ? "" : sel) + "</figcaption>\n" + "</figure>\n\n";
-
-						if ( null == sel ) {
-							taVolumeText.insert(strTxt, taVolumeText.getCaretPosition());
-						} else {
-							taVolumeText.replaceRange(strTxt, taVolumeText.getSelectionStart(), taVolumeText.getSelectionEnd());
-						}
-					}
-
-					strVolume = taVolumeText.getText();
-
-					break;
-				case ScanTxt:
-					break;
-				}
-			} catch (Throwable t) {
-				t.printStackTrace();
+	private void dispatchCommand(String cmd) {
+		try {
+			TextCommand tc = TextCommand.valueOf(cmd);
+			if ( null != tc ) {
+				applyTextCommand(tc);
+				return;
 			}
+
+			GuiCommand gc = GuiCommand.valueOf(cmd);
+			if ( null != gc ) {
+				applyGuiCommand(gc);
+				return;
+			}
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 
 	};
-	private String pageId;
 
 	public BookReaderSwing(BookReader br) {
+
+		addHotkey(KeyEvent.VK_1, TextTag.h1);
+		addHotkey(KeyEvent.VK_2, TextTag.h2);
+		addHotkey(KeyEvent.VK_3, TextTag.h3);
+		addHotkey(KeyEvent.VK_4, TextTag.h4);
+
+		addHotkey(KeyEvent.VK_O, TextTag.ol);
+		addHotkey(KeyEvent.VK_U, TextTag.ul);
+		addHotkey(KeyEvent.VK_T, TextTag.table);
+
+		addHotkey(KeyEvent.VK_S, TextCommand.Save);
+		addHotkey(KeyEvent.VK_I, TextCommand.ProcImg);
+		addHotkey(KeyEvent.VK_R, TextCommand.Rescan);
+
 		book = br;
 
-		volumeData.put(BookData.VolumePages, pages);
+		book.getVolumeNames(volumeNames);
 
-		book.getFileNames(volumes);
-
-		lstVolumes = new JList<>(volumes);
+		lstVolumes = new JList<String>(volumeNames);
 		lstVolumes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstVolumes.addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -205,77 +178,71 @@ public class BookReaderSwing implements BookReaderConsts {
 
 		pnlMain = new JPanel(new BorderLayout());
 
-		JPanel pnlCmds = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		for (GuiCommand gc : GuiCommand.values()) {
-			GSBSwingUtils.addActionComp(gc, alCmd, pnlCmds);
-		}
-//		pnlMain.add(pnlCmds, BorderLayout.SOUTH);
-
 		JSplitPane splMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		pnlMain.add(splMain, BorderLayout.CENTER);
 
-		tblPages = new JTable(tmPages);
-		ListSelectionModel tsm = tblPages.getSelectionModel();
+		lstPages = new JList<String>(lmPages);
+		ListSelectionModel tsm = lstPages.getSelectionModel();
 		tsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tsm.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if ( !e.getValueIsAdjusting() ) {
-					try {
-						selectPage(tblPages.getSelectedRow());
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					selectPage();
 				}
 			}
 		});
 
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		pnlLeft.add(GSBSwingUtils.wrapComp(lstVolumes, "Volumes", true), BorderLayout.NORTH);
-		pnlLeft.add(GSBSwingUtils.wrapComp(tblPages, "Pages", true), BorderLayout.CENTER);
+		pnlLeft.add(GSBSwingUtils.wrapComp(lstPages, "Pages", true), BorderLayout.CENTER);
+
+		JPanel pnlCmds = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		for (GuiCommand gc : GuiCommand.values()) {
+			GSBSwingUtils.addActionComp(gc, alCmdDispatcher, pnlCmds);
+		}
 		pnlLeft.add(pnlCmds, BorderLayout.SOUTH);
 
 		splMain.setLeftComponent(pnlLeft);
-
-//		JSplitPane splVolume = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-//		splMain.setRightComponent(splVolume);
 
 		JSplitPane splPage = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splMain.setRightComponent(splPage);
 		pageImage = new BookReaderPageImage();
 		splPage.setLeftComponent(GSBSwingUtils.wrapComp(pageImage, "Page Image", true));
-//		taPageText = new JTextArea();
-//		taPageText.setEditable(false);
-//		splPage.setRightComponent(GSBSwingUtils.wrapComp(taPageText, "Page Text", true));
-
-//		splVolume.setLeftComponent(splPage);
 
 		taVolumeText = new JTextArea();
 		taVolumeText.setLineWrap(true);
 		taVolumeText.setWrapStyleWord(true);
-//		taVolumeText.setEditable(false);
-//		splVolume.setRightComponent(GSBSwingUtils.wrapComp(taVolumeText, "Volume Text", true));
-		JScrollPane cmp = (JScrollPane) GSBSwingUtils.wrapComp(taVolumeText, "Volume Text", true);
-		cmp.getViewport().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				JViewport viewport = (JViewport) e.getSource();
-				Rectangle viewRect = viewport.getViewRect();
 
-				Point p = viewRect.getLocation();
-				int startIndex = taVolumeText.viewToModel(p);
+		InputMap im = taVolumeText.getInputMap();
+		ActionMap am = taVolumeText.getActionMap();
+		for (Map.Entry<Integer, Action> e : HOTKEYS.entrySet()) {
+			String keyStrokeAndKey = "control " + e.getKey();
+			KeyStroke keyStroke = KeyStroke.getKeyStroke(e.getKey(), InputEvent.CTRL_DOWN_MASK);
+			im.put(keyStroke, keyStrokeAndKey);
+			am.put(keyStrokeAndKey, e.getValue());
+		}
 
-//				System.out.println("Area idx " + startIndex);
-			}
-		});
+		jepVolume = new JEditorPane();
+
+//		JFXPanel jfxPanel = new JFXPanel();
+//		Platform.runLater(() -> {
+//			jfxWebView = new WebView();
+//			jfxPanel.setScene(new Scene(jfxWebView));
+//		});
+
+		tpResult = new JTabbedPane();
+		tpResult.add("Volume Text", new JScrollPane(taVolumeText));
+		tpResult.add("Volume Html", new JScrollPane(jepVolume));
+//		tpResult.add("Volume Html", jfxPanel);
 
 		JPanel pnlTxts = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		for (TextCommand tc : TextCommand.values()) {
-			GSBSwingUtils.addActionComp(tc, alTxt, pnlTxts);
+			GSBSwingUtils.addActionComp(tc, alCmdDispatcher, pnlTxts);
 		}
 
 		JPanel pnlR = new JPanel(new BorderLayout());
-		pnlR.add(cmp, BorderLayout.CENTER);
+		pnlR.add(tpResult, BorderLayout.CENTER);
 		pnlR.add(pnlTxts, BorderLayout.SOUTH);
 
 		splPage.setRightComponent(pnlR);
@@ -283,15 +250,13 @@ public class BookReaderSwing implements BookReaderConsts {
 		splMain.setResizeWeight(0);
 		splMain.setDividerLocation(200);
 
-//		splVolume.setResizeWeight(0.3);
-//		splVolume.setDividerLocation(0.3);
 		splPage.setResizeWeight(0.5);
 		splPage.setDividerLocation(0.5);
 
 		lstVolumes.setSelectedIndex(0);
 	}
 
-	private void doAction(GuiCommand gc) {
+	private void applyGuiCommand(GuiCommand gc) {
 		String msg = null;
 		int msgType = JOptionPane.INFORMATION_MESSAGE;
 
@@ -300,17 +265,9 @@ public class BookReaderSwing implements BookReaderConsts {
 		try {
 			switch ( gc ) {
 			case RebuildText:
-				book.getDir(ReadStep.PageContents, selectedVolume, true);
+//				book.getDir(ReadStep.PageContents, selectedVolume, true);
 				updateVolumeText();
 				break;
-			/*
-			 * case Test1: ImageIcon ii = (ImageIcon) pageImage.getIcon();
-			 * 
-			 * Rectangle r = pageImage.rctSel; BufferedImage clip = ((BufferedImage)
-			 * ii.getImage()).getSubimage(r.x, r.y, r.width, r.height);
-			 * 
-			 * ImageIO.write(clip, "png", new File("tmp.png")); break;
-			 */
 			default:
 				msg = gc.name();
 				break;
@@ -327,76 +284,71 @@ public class BookReaderSwing implements BookReaderConsts {
 	}
 
 	private void updateVolumeText() {
-		strVolume = "???";
+		volumeText = "???";
 
 		try {
-			strVolume = new String(Files.readAllBytes(((File) volumeData.get(BookData.VolumeText)).toPath()));
-		} catch (IOException e) {
+			File f = book.getFile(EXT_HTML, ReadStep.PageContents, volumeId);
+			if ( !f.isFile() ) {
+				f = book.getMergedContent(volumeId);
+			}
+			volumeText = new String(Files.readAllBytes(f.toPath()));
+
+			URL location = f.toURI().toURL();
+			jepVolume.setPage(location);
+
+//			String location = f.toURI().toURL().toExternalForm();
+//			Platform.runLater(() -> {
+//					jfxWebView.getEngine().load(location);
+//			});
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 
-		taVolumeText.setText(strVolume);
+		taVolumeText.setText(volumeText);
 		taVolumeText.setCaretPosition(0);
 	}
 
 	private void updateTitle() {
 		if ( null != frm ) {
-			frm.setTitle("Book: " + book.bookName + " / " + selectedVolume);
+			frm.setTitle("Book: " + book.bookName + " / " + volumeId);
 		}
 	}
 
 	private void selectVolume(int i) {
-		selectedVolume = volumes.get(i);
-
-		try {
-			book.getVolumeInfo(i, volumeData);
-			updateVolumeText();
-
-			File f = (File) volumeData.get(BookData.VolumeFile);
-			dirImg = new File(f.getParent(), f.getName().replace(EXT_HTML, ""));
-			if ( !dirImg.exists() ) {
-				dirImg.mkdir();
-			}
-
-			tmPages.fireTableDataChanged();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		volumeId = volumeNames.get(i);
 		updateTitle();
-		tblPages.setRowSelectionInterval(0, 0);
+
+		updateVolumeText();
+
+		pageCount = book.getPageCount(volumeId);
+		lmPages.update();
+		if ( 0 == lstPages.getSelectedIndex() ) {
+			selectPage();
+		} else {
+			lstPages.setSelectedIndex(0);
+		}
 	}
 
-	private void selectPage(int selectedRow) throws Exception {
-		if ( (0 <= selectedRow) && (selectedRow < pages.size()) ) {
-			Map<BookData, Object> pd = pages.get(selectedRow);
+	private void selectPage() {
+		pageId = lstPages.getSelectedValue();
 
-			Object o;
+		File fImg = book.getPageImage(volumeId, pageId);
 
-			o = pd.get(BookData.PageText);
-			if ( o instanceof File ) {
-				o = new String(Files.readAllBytes(((File) o).toPath()));
-				pd.put(BookData.PageText, o);
-			}
-//			taPageText.setText((String) o);
-//			taPageText.setCaretPosition(0);
+		try {
+			Icon i = (null == fImg) ? null : new ImageIcon(ImageIO.read(fImg));
+			pageImage.setIcon(i);
 
-			o = pd.get(BookData.PageImage);
-			if ( o instanceof File ) {
-				o = new ImageIcon(ImageIO.read((File) o));
-				pd.put(BookData.PageImage, o);
-			}
-			pageImage.rctSel = null;
-			pageImage.setIcon((Icon) o);
-
-			pageImage.findImages();
-
-			pageId = (String) pd.get(BookData.PageId);
-
-			int idx = strVolume.indexOf(PREF_PAGE + "-" + pageId);
+			String montruId = PREF_PAGE + "-" + pageId.substring(pageId.length() - 4);
+			int idx = volumeText.indexOf(montruId);
 			if ( -1 != idx ) {
+//				taVolumeText.setCaretPosition(volumeText.length() - 1);
+				int h = taVolumeText.getHeight();
+				taVolumeText.scrollRectToVisible(new Rectangle(0, h - 20, 10, h - 10));
 				taVolumeText.setCaretPosition(idx);
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -412,6 +364,63 @@ public class BookReaderSwing implements BookReaderConsts {
 
 		updateTitle();
 		frm.setVisible(true);
+	}
+
+	private void applyTextTag(TextTag rt) {
+		int ss = taVolumeText.getSelectionStart();
+		int se = taVolumeText.getSelectionEnd();
+		String st = taVolumeText.getSelectedText();
+		String txtNew = rt.apply(st);
+
+		taVolumeText.replaceRange(txtNew, ss, se);
+
+		volumeText = taVolumeText.getText();
+	}
+
+	private void applyTextCommand(TextCommand tc) throws Exception {
+		volumeText = taVolumeText.getText();
+
+		switch ( tc ) {
+		case Save:
+			book.update(ReadStep.PageContents, volumeId, volumeText);
+			jepVolume.setText(volumeText);
+			break;
+		case ReplacePara:
+			TextTag rt = (TextTag) JOptionPane.showInputDialog(pnlMain, "Select Tag", "Replace Paragraph",
+					JOptionPane.QUESTION_MESSAGE, null, TextTag.values(), null);
+
+			if ( null != rt ) {
+				applyTextTag(rt);
+			}
+			break;
+		case ProcImg:
+			int rc = pageImage.getRctCount();
+			for (int i = 0; i < rc; ++i) {
+				File fImg = book.getChildImage(volumeId, pageId, null);
+
+				String sel = taVolumeText.getSelectedText();
+
+				Rectangle rct = pageImage.storeSelImg(fImg, i);
+				String strRect = MessageFormat.format(FMT_AREA, rct.x, rct.y, rct.width, rct.height);
+
+				String imgName = fImg.getName();
+				String strTxt = "<figure id=\"" + imgName + "\">\n" + "  <img src=\""
+						+ URLEncoder.encode(fImg.getParentFile().getName(), "UTF-8").replace("+", "%20") + "/" + imgName + "\" "
+						+ strRect + " >\n" + "  <figcaption>" + ((null == sel) ? "" : sel) + "</figcaption>\n" + "</figure>\n\n";
+
+				if ( null == sel ) {
+					taVolumeText.insert(strTxt, taVolumeText.getCaretPosition());
+				} else {
+					taVolumeText.replaceRange(strTxt, taVolumeText.getSelectionStart(), taVolumeText.getSelectionEnd());
+				}
+			}
+
+			volumeText = taVolumeText.getText();
+
+			break;
+		case Rescan:
+			break;
+		}
 	}
 
 }

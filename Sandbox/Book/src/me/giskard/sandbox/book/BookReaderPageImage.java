@@ -2,6 +2,7 @@ package me.giskard.sandbox.book;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -21,8 +22,6 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import com.sun.javafx.geom.Line2D;
 
 public class BookReaderPageImage extends JLabel {
 	ArrayList<Rectangle> rctArr = new ArrayList<>();
@@ -129,14 +128,14 @@ public class BookReaderPageImage extends JLabel {
 
 				dirChg = true;
 			}
-			
-			for ( int i = rctArr.size(); i --> 0; ) {
+
+			for (int i = rctArr.size(); i-- > 0;) {
 				Rectangle r = rctArr.get(i);
-				
+
 				if ( rctSel != r ) {
-					if ( rctSel.intersects(r)) {
+					if ( rctSel.intersects(r) ) {
 						rctArr.remove(i);
-						
+
 						if ( e.isShiftDown() ) {
 							rctSel.add(r);
 							rctSel = null;
@@ -176,17 +175,17 @@ public class BookReaderPageImage extends JLabel {
 						int h = rctSel.height;
 						int y = e.getY();
 						rctSel.height = y - rctSel.y;
-						
+
 						rctNew = new Rectangle(rctSel.x, y + 5, rctSel.width, h - rctSel.height - 5);
 					} else {
 						int w = rctSel.width;
 						int x = e.getX();
 						rctSel.width = x - rctSel.x;
-						
+
 						rctNew = new Rectangle(x + 5, rctSel.y, w - rctSel.width - 5, rctSel.height);
 					}
-					
-					rctArr.add(idx+1, rctNew);
+
+					rctArr.add(idx + 1, rctNew);
 				}
 			}
 			grabPoint = new Point(e.getPoint());
@@ -198,7 +197,7 @@ public class BookReaderPageImage extends JLabel {
 				rctArr.remove(rctSel);
 				rctArr.add(0, rctSel);
 			}
-			
+
 			resetMode();
 		};
 
@@ -265,6 +264,11 @@ public class BookReaderPageImage extends JLabel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		Font fnt = g.getFont();
+
+		Font f1 = fnt.deriveFont(Font.BOLD, fnt.getSize());
+		g.setFont(f1);
+
 		Graphics2D g2 = (Graphics2D) g;
 		super.paintComponent(g);
 
@@ -273,6 +277,9 @@ public class BookReaderPageImage extends JLabel {
 		int i = 0;
 
 		for (Rectangle rct : rctArr) {
+//			g.setColor(Color.blue);
+//			g.fillRect(rct.x, rct.y, 20, 20);
+
 			if ( rct == rctSel ) {
 				g.setColor(Color.red);
 
@@ -291,9 +298,12 @@ public class BookReaderPageImage extends JLabel {
 				g.setColor(Color.blue);
 			}
 
-			g2.draw(rct);
+			g.fillRect(rct.x, rct.y, 20, 20);
 
-			g2.drawString(Integer.toString(++i), rct.x + rct.width + 5, rct.y + rct.height - 5);
+			g2.draw(rct);
+						
+			g.setColor(Color.pink);
+			g2.drawString(Integer.toString(++i), rct.x + 5, rct.y + 15);
 		}
 
 		g.setColor(c);
@@ -376,7 +386,7 @@ public class BookReaderPageImage extends JLabel {
 					break;
 				}
 			}
-			
+
 			if ( (null != rr) && (rr.height < 30) ) {
 				rctArr.remove(ri);
 			}

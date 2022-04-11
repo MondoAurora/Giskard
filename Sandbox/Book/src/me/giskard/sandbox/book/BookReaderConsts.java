@@ -1,14 +1,16 @@
 package me.giskard.sandbox.book;
 
+import java.util.regex.Pattern;
+
 public interface BookReaderConsts {
 	enum ReadStep {
 		OrigFiles, PdfScan, PageTexts, MergePageText, PageContents, Translate
 	}
 
-	enum BookData {
-		VolumeFile, VolumeText, VolumePages, VolumeImages,
-		PageImage, PageText, PageId,
-	}
+//	enum BookData {
+//		VolumeFile, VolumeText, VolumePages, VolumeImages,
+//		PageImage, PageText, PageId,
+//	}
 
 	enum TextTag {
 		h1, h2, h3, h4, ol("li"), ul("li"), table("tr", "td");
@@ -64,6 +66,7 @@ public interface BookReaderConsts {
 
 	public static final String WDIR = "work";
 	public static final String EXT_PDF = ".pdf";
+	public static final String EXT_PNG = ".png";
 	public static final String EXT_TXT = ".txt";
 	public static final String EXT_HTML = ".html";
 	
@@ -71,4 +74,7 @@ public interface BookReaderConsts {
 	public static final String PREF_PARA = "montru-text-statement";
 	public static final String PREF_IMG = "montru-bin-img";
 	public static final String FMT_AREA = "data-montru-graph-area=\"({0},{1},{2},{3})\"";
+	
+	String FMT_PAGE = "Page_%04d";
+	Pattern PT_PAGEID = Pattern.compile("Page_(\\d+).*");
 }
