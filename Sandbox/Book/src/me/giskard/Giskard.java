@@ -10,7 +10,7 @@ public class Giskard implements GiskardConsts {
 		protected abstract boolean del(Object... path);
 		protected abstract void visit(GiskardVisitMode mode, GiskardEntity visitor, Object... path);
 		
-		protected abstract void log(GiskardLogLevel level, Object... params);
+		protected abstract void log(GiskardEventLevel level, Object... params);
 		protected abstract <RetType> RetType wrapException(Throwable orig, Object... params);
 	}
 
@@ -44,7 +44,7 @@ public class Giskard implements GiskardConsts {
 		return GIS_IMPL.wrapException(orig, params);
 	}
 
-	public static void log(GiskardLogLevel level, Object... params) {
+	public static void log(GiskardEventLevel level, Object... params) {
 		GIS_IMPL.log(level, params);
 	}
 

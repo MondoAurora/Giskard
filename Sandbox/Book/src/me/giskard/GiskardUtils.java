@@ -1,97 +1,71 @@
 package me.giskard;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class GiskardUtils implements GiskardConsts {
-
-	public static String toString(Object o) {
-		return (null == o) ? null : o.toString();
-	}
-
 	public static boolean isEmpty(String str) {
 		return (null == str) ? true : (0 == str.trim().length());
 	}
 
-	public static StringBuilder sbAppend(StringBuilder sb, String sep, Object... objects) {
-		for ( Object o : objects ) {
-			String str = toString(o);
-			if ( !isEmpty(str) ) {
+	public static boolean endsWithNoCase(String str, String end) {
+		return str.toLowerCase().endsWith(end.toLowerCase());
+	}
+
+	public static String optCutEnd(String str, String end) {
+		return endsWithNoCase(str, end) ? str.substring(0, str.length() - end.length()) : str;
+	}
+	
+	public static String toString(Object ob, String sep) {
+		if ( null == ob ) {
+			return "";
+		} else if ( ob.getClass().isArray() ) {
+			StringBuilder sb = null;
+			for ( Object oo : (Object[]) ob) {
+				sb = sbAppend(sb, sep, false, oo);
+			}
+			return ( null == sb ) ? "" : sb.toString();
+		} else { 
+			return ob.toString();
+		}
+	}
+	
+	public static String toString(Object ob) {
+		return toString(ob, ", ");
+	}
+
+	public static StringBuilder sbAppend(StringBuilder sb, Object sep, boolean strict, Object... objects) {
+		for (Object ob : objects) {
+			String str = toString(ob);
+
+			if ( strict || (0 < str.length()) ) {
 				if ( null == sb ) {
 					sb = new StringBuilder(str);
 				} else {
-					sb.append(sep).append(str);
+					if ( 0 < sb.length() ) {
+						sb.append(sep);
+					}
+					sb.append(str);
 				}
 			}
 		}
-		
 		return sb;
 	}
 
-	public static interface Creator<KeyType, ValType> {
-		ValType create(KeyType key, Object... params);
-
-		default void init(ValType val, KeyType key, Object... params) {
-		};
+	public static File optBackup(File ret) throws IOException {
+		return optBackup(ret, System.currentTimeMillis());
 	}
 
-	public static class ClassCreator<KeyType, ValType> implements Creator<KeyType, ValType> {
-		Class<? extends ValType> c;
+	public static File optBackup(File ret, Object ts) throws IOException {
+		if ( ret.isFile() ) {
+			String backupName = ret.getName();
+			int dot = backupName.lastIndexOf(".");
 
-		public ClassCreator(Class<? extends ValType> c) {
-			this.c = c;
+			backupName = (-1 == dot) ? backupName + "." + ts : backupName.substring(0, dot) + "." + ts + backupName.substring(dot);
+			Files.move(ret.toPath(), new File(ret.getParentFile(), backupName).toPath());
 		}
 
-		public ValType create(KeyType key, Object... params) {
-			try {
-				return c.newInstance();
-			} catch (Throwable e) {
-				return Giskard.wrapException(e, key, params);
-			}
-		}
-	}
-
-	public static class HashFactory<KeyType, ValType> extends HashMap<KeyType, ValType> {
-		private static final long serialVersionUID = 1L;
-
-		Creator<KeyType, ValType> creator;
-
-		public HashFactory(Creator<KeyType, ValType> creator) {
-			this.creator = creator;
-		}
-
-		public HashFactory(Class<? extends ValType> c) {
-			this.creator = new ClassCreator<KeyType, ValType>(c);
-		}
-
-		public ValType peek(Object key) {
-			return super.get(key);
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public ValType get(Object key) {
-			ValType v = super.get(key);
-
-			if ( null == v ) {
-				KeyType k = (KeyType) key;
-				v = creator.create(k);
-				put(k, v);
-				creator.init(v, k);
-			}
-
-			return v;
-		}
-
-		public synchronized ValType get(KeyType key, Object... params) {
-			ValType v = super.get(key);
-
-			if ( null == v ) {
-				v = creator.create(key, params);
-				put(key, v);
-				creator.init(v, key, params);
-			}
-
-			return v;
-		}
+		return ret;
 	}
 }

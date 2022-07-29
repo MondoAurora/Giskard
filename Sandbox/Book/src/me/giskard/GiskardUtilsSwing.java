@@ -1,7 +1,6 @@
-package me.giskard.sandbox.utils;
+package me.giskard;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -10,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class GSBSwingUtils {
+public class GiskardUtilsSwing implements GiskardUtilsConsts {
 
 	public static JComponent wrapComp(JComponent comp, String title, boolean scroll) {
 		JComponent ret = scroll ? new JScrollPane(comp) : comp;
@@ -20,16 +19,13 @@ public class GSBSwingUtils {
 		return ret;
 	}
 
-	public static JComponent addActionComp(Enum<?> cmd, ActionListener al, JPanel panel) {
+	public static JComponent addActionComp(Enum<?> cmd, GiskardUtilsSwingCommandCenter scc, JPanel panel) {
 		JButton btn = new JButton(cmd.name());
-
-		btn.setActionCommand(cmd.name());
-		btn.addActionListener(al);
 		btn.setFocusable(false);
-
+		
+		btn.setAction(scc.getAction(cmd));
 		panel.add(btn);
 
 		return btn;
 	}
-
 }

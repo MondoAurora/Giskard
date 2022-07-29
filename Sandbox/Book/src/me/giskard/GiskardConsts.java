@@ -17,7 +17,7 @@ public interface GiskardConsts extends GiskardTokensMind, GiskardTokensMachine, 
 		Flat, Cut, Free
 	}
 
-	enum GiskardLogLevel {
+	enum GiskardEventLevel {
 		Critical, Error, Warning, Info, Trace, Debug
 	};
 

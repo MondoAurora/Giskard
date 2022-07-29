@@ -3,7 +3,6 @@ package me.giskard.sandbox.book;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,7 +25,8 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import me.giskard.sandbox.utils.GSBUtils;
+import me.giskard.Giskard;
+import me.giskard.GiskardUtils;
 
 public class BookReader implements BookReaderConsts {
 
@@ -42,11 +42,11 @@ public class BookReader implements BookReaderConsts {
 
 		if ( src.isFile() ) {
 			docFiles.add(src);
-			bookName = GSBUtils.optCutEnd(bookName, EXT_PDF);
+			bookName = GiskardUtils.optCutEnd(bookName, EXT_PDF);
 		} else {
 			for (File f : src.listFiles()) {
 				String fn = f.getName();
-				if ( GSBUtils.endsWithNoCase(fn, EXT_PDF) ) {
+				if ( GiskardUtils.endsWithNoCase(fn, EXT_PDF) ) {
 					docFiles.add(f);
 				}
 			}
@@ -81,16 +81,16 @@ public class BookReader implements BookReaderConsts {
 			coll.clear();
 		}
 		for (File fn : docFiles) {
-			coll.add(GSBUtils.optCutEnd(fn.getName(), EXT_PDF));
+			coll.add(GiskardUtils.optCutEnd(fn.getName(), EXT_PDF));
 		}
 
 		return coll;
 	}
 
 	public File getFile(String ext, Object... path) {
-		StringBuilder sb = GSBUtils.sbAppend(null, "/", false, path);
+		StringBuilder sb = GiskardUtils.sbAppend(null, "/", false, path);
 
-		sb = GSBUtils.sbAppend(sb, "", false, ext);
+		sb = GiskardUtils.sbAppend(sb, "", false, ext);
 
 		return new File(dirOutRoot, sb.toString());
 	}
@@ -180,26 +180,11 @@ public class BookReader implements BookReaderConsts {
 		}
 	}
 
-//	private void optCopyContent(File source, File target, String fName) throws Exception {
-//		File fTarget = new File(target, fName);
-//		if ( fTarget.exists() ) {
-//			System.out.println("Page content EXISTS, abandone " + fName);
-//		} else {
-//			Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//		}
-//	}
-
 	public File getMergedContent(String volumeId) throws Exception {
 		File src = getFile(null, ReadStep.PageTexts, volumeId);
 		File ret = getFile(EXT_HTML, ReadStep.PageContents, volumeId);
 
-		if ( ret.isFile() ) {
-			Files.move(ret.toPath(),
-					new File(ret.getParentFile(), ret.getName().replace(EXT_HTML, "." + System.currentTimeMillis() + EXT_HTML))
-							.toPath());
-		}
-
-		mergeTexts(src, ret);
+		mergeTexts(src, GiskardUtils.optBackup(ret));
 
 		return ret;
 	}
@@ -284,7 +269,7 @@ public class BookReader implements BookReaderConsts {
 							++idxPara);
 				}
 
-				if ( GSBUtils.isEmpty(l) || ptSingleNum.matcher(l).matches() ) {
+				if ( GiskardUtils.isEmpty(l) || ptSingleNum.matcher(l).matches() ) {
 					if ( lastIsEmpty ) {
 						continue;
 					} else {
@@ -386,18 +371,38 @@ public class BookReader implements BookReaderConsts {
 		}
 	}
 
-	void ocrDir(File dirImages, File dirTarget) throws Exception {
-		String[] cmd = new String[] { "/usr/local/bin/tesseract", "", "" };
+	public static String ocrFileDirect(File fImage) throws Exception {
+		File fTarget = new File("ocr");
+		ocrFile(fImage, fTarget).waitFor();
+		
+		StringBuilder sb = null;		
+		for ( String l : Files.readAllLines(new File("ocr.txt").toPath()) ) {
+			sb = GiskardUtils.sbAppend(sb, " ", false, l);
+		}
+
+		return GiskardUtils.toString(sb);
+	}
+
+	public static Process ocrFile(File fImage, File fTarget) throws Exception {
+		String[] cmd = new String[] { "/usr/local/bin/tesseract", fImage.getAbsolutePath(), fTarget.getAbsolutePath() };
+		return Runtime.getRuntime().exec(cmd);
+	}
+
+	public static void ocrDir(File dirImages, File dirTarget) throws Exception {
+//		String[] cmd = new String[] { "/usr/local/bin/tesseract", "", "" };
 
 		for (File f : dirImages.listFiles()) {
-			cmd[1] = f.getAbsolutePath();
-			cmd[2] = new File(dirTarget, f.getName()).getAbsolutePath();
-
-			Runtime.getRuntime().exec(cmd);
+			ocrFile(f, new File(dirTarget, f.getName()));
+//			cmd[1] = f.getAbsolutePath();
+//			cmd[2] = new File(dirTarget, f.getName()).getAbsolutePath();
+//
+//			Runtime.getRuntime().exec(cmd);
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
+		Giskard.main(args);
+		
 		BookReader rdr = new BookReader(args[0]);
 
 //		RecRename rr =  new RecRename("Page_(\\d*)(.*)");
@@ -411,23 +416,15 @@ public class BookReader implements BookReaderConsts {
 	}
 
 	public void update(ReadStep step, String volumeId, Object content) {
-		File ret = getFile(EXT_HTML, step, volumeId);
+		try {
+			File ret = GiskardUtils.optBackup(getFile(EXT_HTML, step, volumeId));
 
-		if ( ret.isFile() ) {
-			try {
-				Files.move(ret.toPath(),
-						new File(ret.getParentFile(), ret.getName().replace(EXT_HTML, "." + System.currentTimeMillis() + EXT_HTML))
-								.toPath());
-
-				if ( content instanceof String ) {
-					Files.write(ret.toPath(), ((String) content).getBytes());
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if ( content instanceof String ) {
+				Files.write(ret.toPath(), ((String) content).getBytes());
 			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	public File getChildImage(String volumeId, String pageId, String imgName) {
@@ -458,63 +455,5 @@ public class BookReader implements BookReaderConsts {
 
 		return new File(dirImg, imgName);
 	}
-
-//	@SuppressWarnings("unchecked")
-//	public void getVolumeInfo(int idx, Map<BookData, Object> volumeData) throws Exception {
-//		String f = fileNames.get(idx);
-//		String ft = f.replace(EXT_PDF, EXT_TXT);
-//
-//		File fMerged = getDir(ReadStep.MergePageText, f, false);
-//		
-//		File fDir = getDir(ReadStep.PageContents, null, false);
-//		ft = f.replace(EXT_PDF, EXT_HTML);
-//		File fContent = new File(fDir, ft);
-//		File fAttach = new File(fDir, ft.replace(EXT_HTML, ""));
-//		
-//		if ( !fContent.exists()) {
-//			fDir.mkdirs();
-//			Files.copy(fMerged.toPath(), fContent.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//			fAttach.mkdir();
-//		}
-////		File src = new File(dir, f.replace(EXT_PDF, EXT_TXT));
-////		File src = new File(dir, ft);
-////		
-////		if ( !src.exists() ) {
-////			process(ReadStep.PageContents, src.getName());
-////		}
-////
-////		volumeData.put(BookData.VolumeText, src);
-////
-////		dir = getDir(ReadStep.OrigFiles, null, false);
-////		src = new File(dir, f);
-////
-//		volumeData.put(BookData.VolumeFile, fContent);
-//		volumeData.put(BookData.VolumeImages, fAttach);
-//		volumeData.put(BookData.VolumeText, fContent);
-//
-//		ArrayList<Map<BookData, Object>> pages = (ArrayList<Map<BookData, Object>>) volumeData.get(BookData.VolumePages);
-//		pages.clear();
-//
-//		File dirImgs = getDir(ReadStep.PdfScan, f, false);
-//		String[] imgs = dirImgs.list();
-//		File dirTxts = getDir(ReadStep.PageTexts, f, false);
-//		String[] txts = dirTxts.list();
-//
-//		Arrays.sort(imgs);
-//		Arrays.sort(txts);
-//
-//		for (int i = 0; i < imgs.length; ++i) {
-//			Map<BookData, Object> pd = new HashMap<>();
-//
-//			pd.put(BookData.PageImage, new File(dirImgs, imgs[i]));
-//			pd.put(BookData.PageText, new File(dirTxts, txts[i]));
-//			
-//			Matcher mp = PT_PAGEID.matcher(imgs[i]);
-//			String pageId = mp.matches() ? mp.group(1) : "???";
-//			pd.put(BookData.PageId, pageId);
-//
-//			pages.add(pd);
-//		}
-//	}
 
 }

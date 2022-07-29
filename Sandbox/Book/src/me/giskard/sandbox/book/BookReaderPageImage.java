@@ -23,7 +23,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class BookReaderPageImage extends JLabel {
+import me.giskard.GiskardException;
+
+public class BookReaderPageImage extends JLabel implements BookReaderConsts {
+	ImageEventProcessor evtProc;
+
 	ArrayList<Rectangle> rctArr = new ArrayList<>();
 	int selIdx;
 	Rectangle rctSel;
@@ -193,9 +197,19 @@ public class BookReaderPageImage extends JLabel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if ( e.isControlDown() && (null != rctSel) ) {
-				rctArr.remove(rctSel);
-				rctArr.add(0, rctSel);
+			if ( null != rctSel ) {
+				if ( e.isControlDown() ) {
+					rctArr.remove(rctSel);
+					rctArr.add(0, rctSel);
+				} else if ( e.isMetaDown() ) {
+					try {
+						String txt = scanRct(rctSel);
+						evtProc.textScanned(txt);
+						rctArr.remove(rctSel);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 
 			resetMode();
@@ -217,7 +231,9 @@ public class BookReaderPageImage extends JLabel {
 	private int pixelLength;
 	private byte[] pixels;
 
-	public BookReaderPageImage() {
+	public BookReaderPageImage(ImageEventProcessor evtProc) {
+		this.evtProc = evtProc;
+
 		addMouseListener(ml);
 		addMouseMotionListener(mml);
 	}
@@ -301,7 +317,7 @@ public class BookReaderPageImage extends JLabel {
 			g.fillRect(rct.x, rct.y, 20, 20);
 
 			g2.draw(rct);
-						
+
 			g.setColor(Color.pink);
 			g2.drawString(Integer.toString(++i), rct.x + 5, rct.y + 15);
 		}
@@ -313,19 +329,32 @@ public class BookReaderPageImage extends JLabel {
 		return rctArr.size();
 	}
 
-	public Rectangle storeSelImg(File fTarget, int idx) throws IOException {
-		ImageIcon ii = (ImageIcon) getIcon();
+	public Rectangle getRct(int idx) {
+		return rctArr.get(idx);
+	}
 
+	public Rectangle storeSelImg(File fTarget, int idx) throws IOException {
 		Rectangle r = rctArr.get(idx);
-		BufferedImage clip = ((BufferedImage) ii.getImage()).getSubimage(r.x, r.y, r.width, r.height);
-		String type = fTarget.getName();
-		type = type.substring(type.lastIndexOf(".") + 1);
-		ImageIO.write(clip, type, fTarget);
+
+		storeImg(fTarget, r);
 
 		rctSel = null;
 		repaint();
 
 		return r;
+	}
+
+	public void storeImg(File fTarget, Rectangle r) throws IOException {
+		ImageIcon ii = (ImageIcon) getIcon();
+
+		try {
+			BufferedImage clip = ((BufferedImage) ii.getImage()).getSubimage(r.x, r.y, r.width, r.height);
+			String type = fTarget.getName();
+			type = type.substring(type.lastIndexOf(".") + 1);
+			ImageIO.write(clip, type, fTarget);
+		} catch (Throwable e) {
+			GiskardException.wrap(e, "StoreImage");
+		}
 	}
 
 	static int PX_OFF = -1;
@@ -409,6 +438,13 @@ public class BookReaderPageImage extends JLabel {
 		}
 
 		return gray;
+	}
+
+	public String scanRct(Rectangle rct) throws IOException, Exception {
+		File f = new File("scan.png");
+		storeImg(f, rct);
+		String txt = BookReader.ocrFileDirect(f);
+		return txt;
 	}
 
 }

@@ -26,7 +26,7 @@ public class GiskardJava extends Giskard.GiskardImplementation implements Giskar
 		
 		registerEnums();
 		
-		Giskard.log(GiskardLogLevel.Trace, "Enum registration", this);
+		Giskard.log(GiskardEventLevel.Trace, "Enum registration", this);
 		
 		
 		model.access(MindNarrativeAccessCmd.Set, args, MachineNode.LaunchInfo, MachineLaunchInfo.Arguments);
@@ -44,7 +44,7 @@ public class GiskardJava extends Giskard.GiskardImplementation implements Giskar
 		}
 		System.out.println("}");
 		
-		Giskard.log(GiskardLogLevel.Info, "Launch arguments", Giskard.get(GiskardGetMode.Peek, null, MachineNode.LaunchInfo, MachineLaunchInfo.Arguments));
+		Giskard.log(GiskardEventLevel.Info, "Launch arguments", Giskard.get(GiskardGetMode.Peek, null, MachineNode.LaunchInfo, MachineLaunchInfo.Arguments));
 
 	}
 	
@@ -97,9 +97,9 @@ public class GiskardJava extends Giskard.GiskardImplementation implements Giskar
 	}
 
 	@Override
-	protected void log(GiskardLogLevel level, Object... params) {
-		StringBuilder sb = GiskardUtils.sbAppend(null, " ", GiskardJavaUtils.tsNow(), level);
-		GiskardUtils.sbAppend(sb, " ", params);
+	protected void log(GiskardEventLevel level, Object... params) {
+		StringBuilder sb = GiskardUtils.sbAppend(null, " ", false, GiskardJavaUtils.tsNow(), level);
+		GiskardUtils.sbAppend(sb, " ", false, params);
 		
 		log.println(sb);
 	}

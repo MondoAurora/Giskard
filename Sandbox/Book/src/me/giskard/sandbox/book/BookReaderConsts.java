@@ -3,17 +3,16 @@ package me.giskard.sandbox.book;
 import java.util.regex.Pattern;
 
 public interface BookReaderConsts {
+	public interface ImageEventProcessor {
+		void textScanned(String txt);
+	}
+
 	enum ReadStep {
 		OrigFiles, PdfScan, PageTexts, MergePageText, PageContents, Translate
 	}
 
-//	enum BookData {
-//		VolumeFile, VolumeText, VolumePages, VolumeImages,
-//		PageImage, PageText, PageId,
-//	}
-
 	enum TextTag {
-		h1, h2, h3, h4, ol("li"), ul("li"), table("tr", "td");
+		h1, h2, h3, h4, h5, ol("li"), ul("li"), table("tr", "td");
 		
 		public final String[] repl;
 		
