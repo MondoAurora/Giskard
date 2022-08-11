@@ -46,10 +46,18 @@ public class GiskardUtils implements GiskardConsts {
 				}
 			}
 		}
+		
 		return sb;
 	}
-
 	
+	public static void dump(Object sep, boolean strict, Object... objects) {
+		StringBuilder sb = sbAppend(null, sep, strict, objects);
+		
+		if ( null != sb ) {
+			System.out.println(sb);
+		}
+	}
+
 	public static String strTimestamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(DEF_FORMAT_TIMESTAMP);
 		return sdf.format(new Date());
@@ -66,7 +74,7 @@ public class GiskardUtils implements GiskardConsts {
 	}
 	
 	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
-		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Add);
+		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Insert);
 	}
 
 	public static boolean isAgentReject(MiNDResultType res ) {

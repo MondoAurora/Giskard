@@ -12,11 +12,15 @@ public interface GiskardConsts {
 	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
 
 	enum MiNDAccessCommand {
-		Chk, Peek, Get, Set, Add, Del, Visit, Broadcast,
+		Check, Peek, Get, Set, Insert, Delete, Visit, Broadcast,
+	};
+
+	enum MiNDAction {
+		Init, Begin, Process, End, Release
 	};
 
 	enum MiNDResultType {
-		Notimplemented, Reject, Accept, AcceptRead, Read, Wait
+		Notimplemented, Processing, Reject, Accept, AcceptRead, Read
 	};
 
 	public interface MiNDEntity {

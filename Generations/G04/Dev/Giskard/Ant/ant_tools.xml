@@ -3,15 +3,11 @@
 
 	<echo message="Starting ANT build in root ${GISKARD}" />
 
-	<property name="GISKARD_SELF" value="${GISKARD}/Dev" />
-	<property name="GISKARD_BRAIN" value="${GISKARD}/Bin" />
+	<property name="GISKARD_DEV" value="${GISKARD}/Dev" />
+	<property name="GISKARD_BIN" value="${GISKARD}/Bin" />
 
-	<property name="GISKARD_LIB" value="${GISKARD_SELF}/Ext/lib" />
-	<property name="GISKARD_INC_CORE" value="${GISKARD_SELF}/Inc/Core/src" />
-	<property name="GISKARD_INC_GEN" value="${GISKARD_SELF}/Inc/Gen/src" />
-	<property name="GISKARD_INC_UTIL" value="${GISKARD_SELF}/Inc/UTIL/src" />
-
-	<property name="GISKARD_PATH_CORE" value="${GISKARD_SELF}/Inc/Core/bin" />
+	<property name="GISKARD_INC_MOD" value="${GISKARD_DEV}/Giskard/Mod/src" />
+	<property name="GISKARD_INC_APP" value="${GISKARD_DEV}/Giskard/App/src" />
 
 	<property name="javac.debuglevel" value="source,lines,vars" />
 	<property name="javac.target" value="1.8" />
@@ -28,7 +24,7 @@
 			<local name="prjdir" />
 			<local name="bindir" />
 			
-			<property name="prjdir" value="${GISKARD_SELF}/Mod/@{vendor}/@{module}" />
+			<property name="prjdir" value="${GISKARD_DEV}/Mod/@{vendor}/@{module}" />
 			<property name="bindir" value="${prjdir}/${javac.bindir}" />
 			<property name="targetname" value="@{vendor}_@{module}_@{ver}" />
 
@@ -45,16 +41,15 @@
 					<path path="${GISKARD_PATH_CORE}" />
 					<fileset dir="${prjdir}/lib" includes="**.*.jar" erroronmissingdir="false" />
 				</classpath>
-				<src path="${GISKARD_INC_GEN}" />
-				<src path="${GISKARD_INC_UTIL}" />
+				<src path="${GISKARD_INC_MOD}" />
 				<src path="${prjdir}/src" />
 			</javac>
 
-			<jar destfile="${GISKARD_BRAIN}/Mod/${targetname}.jar">
+			<jar destfile="${GISKARD_BIN}/Mod/${targetname}.jar">
 				<fileset dir="${bindir}" />
 			</jar>
 
-			<copy todir="${GISKARD_BRAIN}/Ext/@{targetname}" failonerror="false">
+			<copy todir="${GISKARD_BIN}/Ext/@{targetname}" failonerror="false">
 				<fileset dir="${prjdir}/lib" erroronmissingdir="false" />
 			</copy>
 
@@ -71,7 +66,7 @@
 			<local name="targetname" />
 			<local name="prjdir" />
 			<local name="bindir" />
-			<property name="prjdir" value="${GISKARD_SELF}/App/@{vendor}/@{module}" />
+			<property name="prjdir" value="${GISKARD_DEV}/App/@{vendor}/@{module}" />
 			<property name="bindir" value="${prjdir}/${javac.bindir}" />
 			<property name="targetname" value="@{vendor}@{module}-@{ver}" />
 
@@ -84,13 +79,12 @@
 			       includeantruntime="false"
 			       source="${javac.source}"
 			       target="${javac.target}">
-				<src path="${GISKARD_INC_CORE}" />
-				<src path="${GISKARD_INC_GEN}" />
-				<src path="${GISKARD_INC_UTIL}" />
+				<src path="${GISKARD_INC_MOD}" />
+				<src path="${GISKARD_INC_APP}" />
 				<src path="${prjdir}/src" />
 			</javac>
 
-			<jar destfile="${GISKARD_BRAIN}/App/${targetname}.jar">
+			<jar destfile="${GISKARD_BIN}/App/${targetname}.jar">
 				<manifest>
 					<attribute name="Main-Class" value="me.giskard.Giskard" />
 					<attribute name="Class-Path" value="." />

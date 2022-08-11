@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_jar" name="ModDust">
+
+	<include file="${GISKARD}/Dev/Giskard/Ant/ant_tools.xml" />
+	
+	<target name="create_jar">
+		<giskard-build-mod vendor="Montru" module="Dust" ver="1.0" />
+	</target>
+	
+</project>
