@@ -30,4 +30,8 @@ public interface GiskardConsts {
 		MiNDResultType mindAgentProcess() throws Exception;
 	}
 
+	public interface GiskardImpl {
+		<RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath);
+	}
+
 }

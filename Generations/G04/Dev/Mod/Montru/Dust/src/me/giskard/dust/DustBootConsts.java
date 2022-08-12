@@ -23,11 +23,11 @@ public interface DustBootConsts extends GiskardConsts {
 		}
 	}
 
-	interface DustStore {
-		<RetType> RetType access(MiNDAccessCommand cmd, Object val, Object... valPath);
-	}
+//	interface DustStore {
+//		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDEntity token, Object key);
+//	}
 
-	interface DustRuntime extends DustStore {
+	interface DustRuntime extends GiskardImpl {
 		void initBootHandles(GisCollFactory<Long, DustEntity> bootFact);
 	}
 
