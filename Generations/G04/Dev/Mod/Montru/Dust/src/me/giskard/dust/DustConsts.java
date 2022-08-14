@@ -64,6 +64,7 @@ public interface DustConsts extends DustBootConsts {
 	
 	/////////
 	MiNDHandle HANDLE_UNIT_GENERIC = Giskard.access(MiNDAccessCommand.Get, HANDLE_STORE_ROOT);
+	MiNDHandle HANDLE_ATT_ENTITY_OWNER = Giskard.access(MiNDAccessCommand.Get, HANDLE_STORE_ROOT);
 
 	MiNDHandle HANDLE_TAG_LENIENT = Giskard.access(MiNDAccessCommand.Get, HANDLE_STORE_ROOT);
 
