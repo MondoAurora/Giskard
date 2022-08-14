@@ -12,11 +12,11 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 	class BootRuntime implements GiskardImpl {
 		long lastId = -1;
 
-		GisCollFactory<Long, DustEntity> bootFact = new GisCollFactory<Long, DustEntity>(true,
-				new MiNDCreator<Long, DustEntity>() {
+		GisCollFactory<Long, DustHandle> bootFact = new GisCollFactory<Long, DustHandle>(true,
+				new MiNDCreator<Long, DustHandle>() {
 					@Override
-					public DustEntity create(Long key) {
-						return new DustEntity(key);
+					public DustHandle create(Long key) {
+						return new DustHandle(key);
 					}
 				});
 
@@ -25,7 +25,6 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 		public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
 			if ( cmd == MiNDAccessCommand.Get ) {
 				int l = valPath.length;
-//				MiNDEntity token = (0 < l) ? (MiNDEntity) valPath[0] : null;
 				Object key = (1 < l) ? valPath[1] : null;
 
 				long eid = (key instanceof Integer) ? (long) (int) key : ++lastId;
@@ -46,10 +45,12 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 		BootRuntime bs = new BootRuntime();
 		runtime = bs;
 
-		DustRuntime rt = (DustRuntime) Class.forName("me.giskard.dust.brain.DustBrainGiskard").newInstance();
+		DustGiskard rt = (DustGiskard) Class.forName("me.giskard.dust.brain.DustBrainGiskard").newInstance();
 		rt.initBootHandles(bs.bootFact);
 
 		runtime = rt;
+		
+		rt.initBrain();
 	}
 
 	@Override

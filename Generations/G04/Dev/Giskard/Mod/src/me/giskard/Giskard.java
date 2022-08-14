@@ -4,7 +4,7 @@ public abstract class Giskard implements GiskardConsts {
 	
 	protected static GiskardImpl GISKARD;
 
-	public static void log(MiNDEntity e, Object... obs) {
+	public static void log(MiNDHandle e, Object... obs) {
 		if ( null != GISKARD ) {
 			GISKARD.access_(MiNDAccessCommand.Broadcast, e, obs);
 		} else {

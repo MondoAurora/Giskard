@@ -5,15 +5,15 @@ import me.giskard.coll.GisCollFactory;
 
 public interface DustBootConsts extends GiskardConsts {
 
-	class DustEntity implements MiNDEntity, Comparable<DustEntity> {
+	class DustHandle implements MiNDHandle, Comparable<DustHandle> {
 		public final Long id;
 
-		public DustEntity(long id) {
+		public DustHandle(long id) {
 			this.id = id;
 		}
 
 		@Override
-		public int compareTo(DustEntity o) {
+		public int compareTo(DustHandle o) {
 			return id.compareTo(o.id);
 		}
 		
@@ -23,12 +23,9 @@ public interface DustBootConsts extends GiskardConsts {
 		}
 	}
 
-//	interface DustStore {
-//		<RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDEntity token, Object key);
-//	}
-
-	interface DustRuntime extends GiskardImpl {
-		void initBootHandles(GisCollFactory<Long, DustEntity> bootFact);
+	interface DustGiskard extends GiskardImpl {
+		void initBootHandles(GisCollFactory<Long, DustHandle> bootFact);
+		void initBrain();
 	}
 
 }

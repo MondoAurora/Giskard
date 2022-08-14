@@ -5,22 +5,26 @@ import java.util.Map;
 
 public class DustBrainEntity implements DustBrainConsts {
 	
-	private final Map<MiNDEntity, Object> data = new HashMap<>();
+	private final Map<MiNDHandle, Object> data = new HashMap<>();
 	
-	public DustBrainEntity(MiNDEntity handle) {
-		data.put(TOKEN_ATT_ENTITY_HANDLE, handle);
+	public DustBrainEntity(MiNDHandle handle) {
+		data.put(HANDLE_ATT_ENTITY_HANDLE, handle);
+	}
+
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle) {
+		return access(cmd, val, handle, null);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDEntity token, Object key) {
-		Object attVal = data.get(token);
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle, Object key) {
+		Object attVal = data.get(handle);
 		Object ret = null;
 		
 		switch ( cmd ) {
 		case Insert:
 			if ( null == attVal ) {
 				attVal = new HashMap<>();
-				data.put(token, attVal);
+				data.put(handle, attVal);
 			}
 			
 			ret = ((Map)attVal).put(key, val);
@@ -35,8 +39,12 @@ public class DustBrainEntity implements DustBrainConsts {
 		case Get:
 			break;
 		case Peek:
+			if ( attVal instanceof Map ) {
+				ret = ((Map)attVal).get(key);
+			}
 			break;
 		case Set:
+			ret = data.put(handle, val);
 			break;
 		case Visit:
 			break;

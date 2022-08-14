@@ -23,7 +23,7 @@ public interface GiskardConsts {
 		Notimplemented, Processing, Reject, Accept, AcceptRead, Read
 	};
 
-	public interface MiNDEntity {
+	public interface MiNDHandle {
 	};
 
 	public interface MiNDAgent extends GiskardConsts {
