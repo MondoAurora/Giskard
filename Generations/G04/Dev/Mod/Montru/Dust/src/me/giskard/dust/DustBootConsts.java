@@ -25,7 +25,7 @@ public interface DustBootConsts extends GiskardConsts {
 
 	interface DustGiskard extends GiskardImpl {
 		void initBootHandles(GisCollFactory<Long, DustHandle> bootFact);
-		void initBrain();
+		void initBrain() throws Exception;
 	}
 
 }

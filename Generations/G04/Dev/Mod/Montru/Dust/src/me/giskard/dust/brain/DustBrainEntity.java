@@ -16,7 +16,7 @@ public class DustBrainEntity implements DustBrainConsts {
 	private Map<MiNDHandle, MiNDHandle> singleTags;
 
 	public DustBrainEntity(MiNDHandle handle) {
-		data.put(HANDLE_ATT_ENTITY_HANDLE, handle);
+		data.put(GIS_MEM_MODEL_ENTITY_HANDLE, handle);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -83,7 +83,7 @@ public class DustBrainEntity implements DustBrainConsts {
 		case Get:
 			break;
 		case Peek:
-			if ( HANDLE_ATT_ENTITY_TAGS == handle ) {
+			if ( GIS_MEM_MODEL_ENTITY_TAGS == handle ) {
 				ret = (null == singleTags) ? val : singleTags.getOrDefault(key, (MiNDHandle) val);
 			} else if ( attVal instanceof Map ) {
 				ret = ((Map) attVal).get(key);
@@ -103,8 +103,8 @@ public class DustBrainEntity implements DustBrainConsts {
 		if ( changed ) {
 
 			// single tag management
-			if ( HANDLE_ATT_ENTITY_TAGS == handle ) {
-				MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, val, HANDLE_ATT_ENTITY_OWNER);
+			if ( GIS_MEM_MODEL_ENTITY_TAGS == handle ) {
+				MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, val, GIS_MEM_MODEL_ENTITY_OWNER);
 				if ( null != tagClass ) {
 					if ( null == singleTags ) {
 						singleTags = new HashMap<>();
