@@ -4,8 +4,21 @@ import me.giskard.GiskardConsts;
 import me.giskard.coll.GisCollFactory;
 
 public interface DustBootConsts extends GiskardConsts {
+	
+	interface DustHandleFormatter {
+		public String toString(DustHandle h);
+	}
+	
+	DustHandleFormatter DEF_FMT = new DustHandleFormatter() {
+		@Override
+		public String toString(DustHandle h) {
+			return "Entity(" + h.id + ")";
+		}
+	};
 
 	class DustHandle implements MiNDHandle, Comparable<DustHandle> {
+		public static DustHandleFormatter FMT = DEF_FMT;
+		
 		public final Long id;
 
 		public DustHandle(long id) {
@@ -19,7 +32,7 @@ public interface DustBootConsts extends GiskardConsts {
 		
 		@Override
 		public String toString() {
-			return "Entity(" + id + ")";
+			return FMT.toString(this);
 		}
 	}
 

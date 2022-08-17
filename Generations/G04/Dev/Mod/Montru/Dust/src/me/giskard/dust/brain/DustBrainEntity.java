@@ -19,6 +19,22 @@ public class DustBrainEntity implements DustBrainConsts {
 		data.put(GIS_MEM_MODEL_ENTITY_HANDLE, handle);
 	}
 
+	boolean inToString = false;
+
+	@Override
+	public String toString() {
+		try {
+			if ( inToString ) {
+				return GiskardUtils.toString(data.get(GIS_MEM_MODEL_ENTITY_HANDLE));
+			} else {
+				inToString = true;
+				return data.toString();
+			}
+		} finally {
+			inToString = false;
+		}
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle, CollType ct, Object key) {
 		Object attVal = data.get(handle);
@@ -67,7 +83,7 @@ public class DustBrainEntity implements DustBrainConsts {
 				switch ( ct ) {
 				case Arr:
 				case Set:
-					ret = (( Collection)attVal).contains(val);
+					ret = ((Collection) attVal).contains(val);
 					break;
 				case Map:
 					ret = ((Map) attVal).containsValue(val);
@@ -110,7 +126,7 @@ public class DustBrainEntity implements DustBrainConsts {
 						singleTags = new HashMap<>();
 					} else {
 						MiNDHandle prev = singleTags.get(tagClass);
-							((Set) attVal).remove(prev);
+						((Set) attVal).remove(prev);
 					}
 					singleTags.put(tagClass, (MiNDHandle) val);
 				}

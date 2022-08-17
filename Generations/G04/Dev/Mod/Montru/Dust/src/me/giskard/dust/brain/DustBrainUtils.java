@@ -1,9 +1,11 @@
 package me.giskard.dust.brain;
 
 public class DustBrainUtils implements DustBrainConsts {
-	
+
 	public static CollType guessCollType(MiNDAccessCommand cmd, Object key) {
-		return ( null == key ) ? (cmd == MiNDAccessCommand.Set) ? CollType.One : null : (key instanceof Number) ? CollType.Arr : CollType.Map;
+		return (null == key)
+				? (cmd == MiNDAccessCommand.Set) ? CollType.One : (cmd == MiNDAccessCommand.Insert) ? CollType.Set : null
+				: (key instanceof Number) ? CollType.Arr : CollType.Map;
 	}
 
 	public static ValType guessValType(Object val) {

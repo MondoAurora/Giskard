@@ -14,6 +14,27 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 	final GisToolsTranslator<MiNDHandle, CollType> H2COLLTYPE = new GisToolsTranslator<>();
 	final GisToolsTranslator<MiNDHandle, ValType> H2VALTYPE = new GisToolsTranslator<>();
+	
+	DustHandleFormatter HFMT = new DustHandleFormatter() {
+		
+		@Override
+		public String toString(DustHandle h) {
+			StringBuilder sb = null;
+			DustBrainEntity e = eRootStore.access(MiNDAccessCommand.Peek, null, GIS_MEM_DIALOG_CONTEXT_ENTITIES, CollType.Map, h);
+			
+			if ( null != e ) {
+				String name = e.access(MiNDAccessCommand.Peek, null, GIS_MEM_TEXT_NAME, CollType.One, null);
+//				String pt = null;
+//				
+//				e = e.access(MiNDAccessCommand.Peek, null, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE, CollType.One, null);
+//				if ( null != e ) {
+//					
+//				}
+				sb = GiskardUtils.sbAppend(sb, "", true, name);
+			}
+			return (null == sb) ? DEF_FMT.toString(h) : sb.toString();
+		}
+	};
 
 	public boolean isLearning(MiNDHandle hMember) {
 		Boolean learning = eBrain.access(MiNDAccessCommand.Check, GIS_TAG_GENERIC_LENIENT, GIS_MEM_MODEL_ENTITY_TAGS, CollType.Set,
@@ -98,29 +119,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		H2COLLTYPE.add(GIS_TAG_IDEA_COLLTYPE_SET, CollType.Set);
 		H2COLLTYPE.add(GIS_TAG_IDEA_COLLTYPE_MAP, CollType.Map);
 
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_COLLTYPE, GIS_TAG_IDEA_COLLTYPE_ONE, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_COLLTYPE, GIS_TAG_IDEA_COLLTYPE_ARR, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_COLLTYPE, GIS_TAG_IDEA_COLLTYPE_MAP, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_COLLTYPE, GIS_TAG_IDEA_COLLTYPE_SET, GIS_MEM_MODEL_ENTITY_OWNER);
-
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_VALTYPE, GIS_TAG_IDEA_VALTYPE_INT, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_VALTYPE, GIS_TAG_IDEA_VALTYPE_LINK, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_VALTYPE, GIS_TAG_IDEA_VALTYPE_RAW, GIS_MEM_MODEL_ENTITY_OWNER);
-		Giskard.access(MiNDAccessCommand.Set, GIS_TAG_IDEA_VALTYPE, GIS_TAG_IDEA_VALTYPE_REAL, GIS_MEM_MODEL_ENTITY_OWNER);
-
 		eBrain.access(MiNDAccessCommand.Insert, GIS_TAG_GENERIC_LENIENT, GIS_MEM_MODEL_ENTITY_TAGS, CollType.Set, null);
-
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_IDEA_TYPE, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_IDEA_MEMBER, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_IDEA_TAG, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_MODEL_UNIT, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_MODEL_STORE, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_MODEL_ENTITY, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_MODEL_HANDLE, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_DUST_BRAIN, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-//		Giskard.access(MiNDAccessCommand.Set, GIS_TYP_IDEA_TYPE, GIS_TYP_DIALOG_CONTEXT, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
 
 		DustBrainUtilsDev.loadHandles(DustConsts.class, GIS_STO_ROOT);
 
@@ -128,6 +127,8 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 //		Giskard.access(MiNDAccessCommand.Insert, GIS_TAG_IDEA_VALTYPE_LINK, GIS_MEM_MODEL_ENTITY_HANDLE, GIS_MEM_MODEL_ENTITY_TAGS);
 //		Giskard.access(MiNDAccessCommand.Insert, GIS_TAG_IDEA_COLLTYPE_ONE, GIS_MEM_MODEL_ENTITY_HANDLE, GIS_MEM_MODEL_ENTITY_TAGS);
 
+		DustHandle.FMT = HFMT;
+		
 		Giskard.log(null, "initBrain complete", eBrain);
 	}
 }
