@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." name="GiskardAnt">
+<project basedir="." name="G04GiskardAnt">
 
 	<echo message="Starting ANT build in root ${GISKARD}" />
 
 	<property name="GISKARD_DEV" value="${GISKARD}/Dev" />
 	<property name="GISKARD_BIN" value="${GISKARD}/Bin" />
 
-	<property name="GISKARD_INC_MOD" value="${GISKARD_DEV}/Giskard/Mod/src" />
-	<property name="GISKARD_INC_APP" value="${GISKARD_DEV}/Giskard/App/src" />
-
 	<property name="javac.debuglevel" value="source,lines,vars" />
 	<property name="javac.target" value="1.8" />
 	<property name="javac.source" value="1.8" />
 	<property name="javac.bindir" value="ant" />
 	
+	<property name="GISKARD_MOD" value="${GISKARD_DEV}/Giskard/Mod" />
+	<property name="GISKARD_MOD_BIN" value="${GISKARD_MOD}/${javac.bindir}" />
+	<property name="GISKARD_APP_SRC" value="${GISKARD_DEV}/Giskard/App/src" />
+
 	<macrodef name="giskard-build-mod">
 		<attribute name="vendor" />
 		<attribute name="module" />
 		<attribute name="ver" />
 
 		<sequential>
+			
+			<delete dir="${GISKARD_MOD_BIN}" />
+			<mkdir dir="${GISKARD_MOD_BIN}" />
+			
+			<javac debug="true"
+			       debuglevel="${javac.debuglevel}"
+			       destdir="${GISKARD_MOD_BIN}"
+			       includeantruntime="false"
+			       source="${javac.source}"
+			       target="${javac.target}">
+				<src path="${GISKARD_MOD}/src" />
+			</javac>
+
 			<local name="targetname" />
 			<local name="prjdir" />
 			<local name="bindir" />
@@ -30,7 +44,7 @@
 
 			<delete dir="${bindir}" />
 			<mkdir dir="${bindir}" />
-
+			
 			<javac debug="true"
 			       debuglevel="${javac.debuglevel}"
 			       destdir="${bindir}"
@@ -38,10 +52,9 @@
 			       source="${javac.source}"
 			       target="${javac.target}">
 				<classpath>
-					<path path="${GISKARD_PATH_CORE}" />
+					<path path="${GISKARD_MOD_BIN}" />
 					<fileset dir="${prjdir}/lib" includes="**.*.jar" erroronmissingdir="false" />
 				</classpath>
-				<src path="${GISKARD_INC_MOD}" />
 				<src path="${prjdir}/src" />
 			</javac>
 
@@ -79,18 +92,19 @@
 			       includeantruntime="false"
 			       source="${javac.source}"
 			       target="${javac.target}">
-				<src path="${GISKARD_INC_MOD}" />
-				<src path="${GISKARD_INC_APP}" />
+				<src path="${GISKARD_MOD}" />
+				<src path="${GISKARD_APP_SRC}" />
 				<src path="${prjdir}/src" />
 			</javac>
 
 			<jar destfile="${GISKARD_BIN}/App/${targetname}.jar">
 				<manifest>
-					<attribute name="Main-Class" value="me.giskard.Giskard" />
+					<attribute name="Main-Class" value="me.giskard.app.GiskardApp" />
 					<attribute name="Class-Path" value="." />
 				</manifest>
 
 				<fileset dir="${bindir}" />
+				<fileset dir="${prjdir}/cfg" />
 			</jar>
 		</sequential>
 

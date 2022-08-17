@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_jar" name="G04ModTest01">
+<project default="create_jar" name="G04AppTest01">
 
 	<include file="${GISKARD}/Dev/Giskard/Ant/ant_tools.xml" />
 	
 	<target name="create_jar">
-		<giskard-build-mod vendor="Montru" module="Test01" ver="1.0" />
+		<giskard-build-app vendor="Montru" module="Test01" ver="1.0" />
 	</target>
 	
 </project>
