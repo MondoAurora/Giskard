@@ -23,7 +23,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 			DustBrainEntity e = eRootStore.access(MiNDAccessCommand.Peek, null, GIS_MEM_DIALOG_CONTEXT_ENTITIES, CollType.Map, h);
 			
 			if ( null != e ) {
-				String name = e.access(MiNDAccessCommand.Peek, null, GIS_MEM_TEXT_NAME, CollType.One, null);
+				String name = e.access(MiNDAccessCommand.Peek, null, GIS_MEM_TEXT_TEXT_NAME, CollType.One, null);
 //				String pt = null;
 //				
 //				e = e.access(MiNDAccessCommand.Peek, null, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE, CollType.One, null);

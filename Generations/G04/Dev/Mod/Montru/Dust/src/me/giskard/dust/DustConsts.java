@@ -74,8 +74,15 @@ public interface DustConsts extends DustBootConsts {
 	/////////
 	MiNDHandle GIS_UNI_TEXT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
-	MiNDHandle GIS_TYP_TEXT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_MEM_TEXT_NAME = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_TEXT_LANGTYPE_PRG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_TEXT_LANGTYPE_DSL = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_TEXT_LANGTYPE_NAT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+
+	MiNDHandle GIS_TYP_TEXT_LANG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_TEXT_LANG_INDEX = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+
+	MiNDHandle GIS_TYP_TEXT_TEXT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_TEXT_TEXT_NAME = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
 	
 	/////////

@@ -73,20 +73,4 @@ public class GiskardUtils implements GiskardConsts {
 		return sdf.format(new Date(time));
 	}
 	
-	public static boolean isAccessCreator(MiNDAccessCommand cmd) {
-		return (cmd == MiNDAccessCommand.Set) || (cmd == MiNDAccessCommand.Insert);
-	}
-
-	public static boolean isAgentReject(MiNDResultType res ) {
-		return (res == MiNDResultType.Reject) || (res == MiNDResultType.Notimplemented);
-	}
-
-	public static boolean isAgentRead(MiNDResultType res ) {
-		return (res == MiNDResultType.Read) || (res == MiNDResultType.AcceptRead);
-	}
-
-	public static boolean isAgentAccept(MiNDResultType res ) {
-		return (res == MiNDResultType.Accept) || (res == MiNDResultType.AcceptRead);
-	}
-
 }

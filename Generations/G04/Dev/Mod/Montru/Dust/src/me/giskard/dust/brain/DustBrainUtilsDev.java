@@ -45,7 +45,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				if ( null != hT ) {
 					factMeta.get(ps[1]).put(hn, h);
 					Giskard.access(MiNDAccessCommand.Set, hT, h, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-					Giskard.access(MiNDAccessCommand.Set, hn, h, GIS_MEM_TEXT_NAME);
+					Giskard.access(MiNDAccessCommand.Set, hn, h, GIS_MEM_TEXT_TEXT_NAME);
 				}
 			}
 		}

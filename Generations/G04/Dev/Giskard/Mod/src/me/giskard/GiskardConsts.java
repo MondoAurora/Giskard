@@ -12,7 +12,15 @@ public interface GiskardConsts {
 	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
 
 	enum MiNDAccessCommand {
-		Check, Peek, Get, Set, Insert, Delete, Visit, Broadcast,
+		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), Visit(false), Broadcast(false),
+		
+		;
+		
+		public final boolean creator;
+
+		private MiNDAccessCommand(boolean creator) {
+			this.creator = creator;
+		}
 	};
 
 	enum MiNDAction {
@@ -20,7 +28,17 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDResultType {
-		Notimplemented, Processing, Reject, Accept, AcceptRead, Read
+		Notimplemented(false, false), Reject(false, false), Accept(true, false), AcceptRead(true, true), Read(false, true), Processing(false, true),
+		
+		;
+		
+		boolean accept;
+		boolean read;
+		
+		private MiNDResultType(boolean accept, boolean read) {
+			this.accept = accept;
+			this.read = read;
+		}
 	};
 
 	public interface MiNDHandle {

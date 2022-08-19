@@ -1,0 +1,11 @@
+language to the MiND, update the loader
+pool, queue, stack
+path resolution
+improve access in Entity
+xml reader, serializer?
+text reader / writer
+binary reader/writer
+DB?
+GUI?
+console / socket / http?
+notification - logging
