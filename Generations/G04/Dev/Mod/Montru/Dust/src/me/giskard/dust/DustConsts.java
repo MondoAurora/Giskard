@@ -73,17 +73,19 @@ public interface DustConsts extends DustBootConsts {
 
 	
 	/////////
-	MiNDHandle GIS_UNI_TEXT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_UNI_LANG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
-	MiNDHandle GIS_TAG_TEXT_LANGTYPE_PRG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_TAG_TEXT_LANGTYPE_DSL = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_TAG_TEXT_LANGTYPE_NAT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_LANG_LANGTYPE_PRG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_LANG_LANGTYPE_DSL = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TAG_LANG_LANGTYPE_NAT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
-	MiNDHandle GIS_TYP_TEXT_LANG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_MEM_TEXT_LANG_INDEX = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TYP_LANG_LANG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_LANG_LANG_GLOSSARY = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_LANG_LANG_TERMINOLOGY = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
-	MiNDHandle GIS_TYP_TEXT_TEXT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_MEM_TEXT_TEXT_NAME = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_TYP_LANG_TERM = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_LANG_TERM_STRING = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_LANG_TERM_MEANING = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
 	
 	/////////
@@ -93,5 +95,8 @@ public interface DustConsts extends DustBootConsts {
 
 	MiNDHandle GIS_MEM_DUST_BRAIN_ROOTSTORE = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 	MiNDHandle GIS_MEM_DUST_BRAIN_IMPL = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_DUST_BRAIN_DEF_LANG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+
+	MiNDHandle GIS_LANG_DUST_BOOT = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 
 }

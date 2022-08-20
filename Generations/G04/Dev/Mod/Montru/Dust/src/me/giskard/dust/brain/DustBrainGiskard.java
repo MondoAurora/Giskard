@@ -19,8 +19,10 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 		@Override
 		public String toString(DustHandle h) {
-			String hn = access_(MiNDAccessCommand.Peek, null, h, GIS_MEM_TEXT_TEXT_NAME);
-			String ptn = access_(MiNDAccessCommand.Peek, "???", h, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE, GIS_MEM_TEXT_TEXT_NAME);
+			String hn = access_(MiNDAccessCommand.Peek, null, GIS_LANG_DUST_BOOT, GIS_MEM_LANG_LANG_TERMINOLOGY, h);
+			DustHandle hpt = access_(MiNDAccessCommand.Peek, null, h, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
+			String ptn = (null == hpt) ? "???" : access_(MiNDAccessCommand.Peek, "???", GIS_LANG_DUST_BOOT, GIS_MEM_LANG_LANG_TERMINOLOGY, hpt);
+			
 			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
 		}
 	};
@@ -81,7 +83,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 				for (int i = 1; i <= last;) {
 					DustBrainEntity e = resolveHandle((MiNDHandle) ret);
 					MiNDHandle h = (DustHandle) valPath[i++];
-					Object key = (i < last) ? valPath[i + 1] : null;
+					Object key = (i <= last) ? valPath[i] : null;
 					
 					CollType ct = getCollType(h, MiNDAccessCommand.Peek, key);
 					if ( (null != ct) && ct.indexed ) {
@@ -122,8 +124,11 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		H2COLLTYPE.add(GIS_TAG_IDEA_COLLTYPE_MAP, CollType.Map);
 
 		eBrain.access(MiNDAccessCommand.Insert, GIS_TAG_GENERIC_LENIENT, GIS_MEM_MODEL_ENTITY_TAGS, CollType.Set, null);
+		
+		eBrain.access(MiNDAccessCommand.Set, GIS_LANG_DUST_BOOT, GIS_MEM_DUST_BRAIN_DEF_LANG, CollType.One, null);
+				
 
-		DustBrainUtilsDev.loadHandles(DustConsts.class, GIS_STO_ROOT);
+		DustBrainUtilsDev.loadHandles(DustConsts.class, GIS_STO_ROOT, GIS_LANG_DUST_BOOT);
 
 		DustHandle.FMT = HFMT;
 

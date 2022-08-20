@@ -22,7 +22,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void loadHandles(Class<?> handleContainer, MiNDHandle hStore) throws Exception {
+	public static void loadHandles(Class<?> handleContainer, MiNDHandle hStore, MiNDHandle hLang) throws Exception {
 		GisCollFactory<String, Map> factMeta = new GisCollFactory<>(true, HashMap.class);
 
 		for (Field f : DustConsts.class.getDeclaredFields()) {
@@ -45,7 +45,9 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				if ( null != hT ) {
 					factMeta.get(ps[1]).put(hn, h);
 					Giskard.access(MiNDAccessCommand.Set, hT, h, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-					Giskard.access(MiNDAccessCommand.Set, hn, h, GIS_MEM_TEXT_TEXT_NAME);
+					
+					Giskard.access(MiNDAccessCommand.Insert, hn, hLang, GIS_MEM_LANG_LANG_TERMINOLOGY, h);
+					Giskard.access(MiNDAccessCommand.Insert, h, hLang, GIS_MEM_LANG_LANG_GLOSSARY, hn);
 				}
 			}
 		}

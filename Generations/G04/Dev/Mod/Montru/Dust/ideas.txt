@@ -1,5 +1,4 @@
 [[Tasks]]
-language to the MiND, update the loader
 pool, queue, stack
 improve access in Entity
 xml reader, serializer?
@@ -14,6 +13,7 @@ notification - logging
 [[Boiling]]
 
 path resolution
+language to the MiND, update the loader
 
 
 [[Settled]]
