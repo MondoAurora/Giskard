@@ -29,6 +29,7 @@ public abstract class GiskardApp implements GiskardAppConsts {
 				GiskardAppModuleServices.loadModule(mod[0], mod[1], mod[2]);
 			} catch (Exception e) {
 				Giskard.log(null, "exception", e);
+				e.printStackTrace();
 			}
 		}
 

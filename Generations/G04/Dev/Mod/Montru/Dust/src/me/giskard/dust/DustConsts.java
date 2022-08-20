@@ -19,8 +19,9 @@ public interface DustConsts extends DustBootConsts {
 	
 	MiNDHandle GIS_MEM_MODEL_ENTITY_PRIMARYTYPE = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 	MiNDHandle GIS_MEM_MODEL_ENTITY_TYPES = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_MEM_MODEL_ENTITY_TAGS = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_MODEL_ENTITY_TAGS = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT); // 10
 	
+
 	MiNDHandle GIS_MEM_MODEL_ENTITY_OWNER = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 	
 	MiNDHandle GIS_TYP_MODEL_STORE = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
@@ -37,7 +38,7 @@ public interface DustConsts extends DustBootConsts {
 	
 	MiNDHandle GIS_TYP_IDEA_MEMBER = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 	MiNDHandle GIS_MEM_IDEA_MEMBER_TYPE = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
-	MiNDHandle GIS_MEM_IDEA_MEMBER_REVLINK = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
+	MiNDHandle GIS_MEM_IDEA_MEMBER_REVLINK = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT); // 20
 	
 	MiNDHandle GIS_TYP_IDEA_TAG = Giskard.access(MiNDAccessCommand.Get, GIS_STO_ROOT);
 	

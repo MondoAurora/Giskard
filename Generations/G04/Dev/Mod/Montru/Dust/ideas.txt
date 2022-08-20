@@ -1,6 +1,6 @@
+[[Tasks]]
 language to the MiND, update the loader
 pool, queue, stack
-path resolution
 improve access in Entity
 xml reader, serializer?
 text reader / writer
@@ -9,3 +9,11 @@ DB?
 GUI?
 console / socket / http?
 notification - logging
+
+
+[[Boiling]]
+
+path resolution
+
+
+[[Settled]]
