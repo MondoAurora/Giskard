@@ -21,8 +21,9 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		public String toString(DustHandle h) {
 			String hn = access_(MiNDAccessCommand.Peek, null, GIS_LANG_DUST_BOOT, GIS_MEM_LANG_LANG_TERMINOLOGY, h);
 			DustHandle hpt = access_(MiNDAccessCommand.Peek, null, h, GIS_MEM_MODEL_ENTITY_PRIMARYTYPE);
-			String ptn = (null == hpt) ? "???" : access_(MiNDAccessCommand.Peek, "???", GIS_LANG_DUST_BOOT, GIS_MEM_LANG_LANG_TERMINOLOGY, hpt);
-			
+			String ptn = (null == hpt) ? "???"
+					: access_(MiNDAccessCommand.Peek, "???", GIS_LANG_DUST_BOOT, GIS_MEM_LANG_LANG_TERMINOLOGY, hpt);
+
 			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
 		}
 	};
@@ -73,28 +74,64 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	@Override
 	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
 		Object ret = null;
+		int last = valPath.length - 1;
+		int i = -1;
+
 		if ( cmd != MiNDAccessCommand.Broadcast ) {
-			if ( 0 == valPath.length ) {
+			if ( 0 > last ) {
 				// probably create a temporary entity?
 			} else {
 				ret = valPath[0];
-				int last = valPath.length - 1;
 
-				for (int i = 1; i <= last;) {
+				for (i = 1; i <= last;) {
 					DustBrainEntity e = resolveHandle((MiNDHandle) ret);
 					MiNDHandle h = (DustHandle) valPath[i++];
 					Object key = (i <= last) ? valPath[i] : null;
-					
+
 					CollType ct = getCollType(h, MiNDAccessCommand.Peek, key);
-					if ( (null != ct) && ct.indexed ) {
+					if ( (null != ct) && ct.hasKey ) {
 						++i;
 					}
 
-					ret = (i < last) ? e.access(MiNDAccessCommand.Peek, null, h, ct, key) : e.access(cmd, val, h, getCollType(h, cmd, key), key);
+					if ( null == e ) {
+						break;
+					} else {
+						ret = (i < last) ? e.access(MiNDAccessCommand.Peek, null, h, ct, key)
+								: e.access(cmd, val, h, getCollType(h, cmd, key), key);
+					}
 				}
 			}
 		} else {
 			GiskardUtils.dump(" ", false, "DustBrainGiskard.access", cmd, val, valPath);
+		}
+
+		if ( null == ret ) {
+			switch ( cmd ) {
+			case Broadcast:
+			case Check:
+			case Delete:
+				ret = false;
+				break;
+			case Get:
+				if ( i == last ) {
+					// also, put?
+				} else {
+					ret = val;
+				}
+				break;
+			case Insert:
+				ret = null;
+				break;
+			case Peek:
+				ret = val;
+				break;
+			case Set:
+				ret = null;
+				break;
+			case Visit:
+				ret = null;
+				break;
+			}
 		}
 
 		return (RetType) ret;
@@ -124,9 +161,8 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		H2COLLTYPE.add(GIS_TAG_IDEA_COLLTYPE_MAP, CollType.Map);
 
 		eBrain.access(MiNDAccessCommand.Insert, GIS_TAG_GENERIC_LENIENT, GIS_MEM_MODEL_ENTITY_TAGS, CollType.Set, null);
-		
+
 		eBrain.access(MiNDAccessCommand.Set, GIS_LANG_DUST_BOOT, GIS_MEM_DUST_BRAIN_DEF_LANG, CollType.One, null);
-				
 
 		DustBrainUtilsDev.loadHandles(DustConsts.class, GIS_STO_ROOT, GIS_LANG_DUST_BOOT);
 

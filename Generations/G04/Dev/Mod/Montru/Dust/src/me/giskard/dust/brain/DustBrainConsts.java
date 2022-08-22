@@ -5,17 +5,18 @@ import me.giskard.dust.DustConsts;
 public interface DustBrainConsts extends DustConsts {
 
 	enum CollType {
-		One(false), Arr(true), Map(true), Set(false), // Stack, Queue, Pool?
-		
+		One, Arr(true), Map(true), Set, Stack, Queue, Pool,
 		;
 		
-		public final boolean indexed;
+		public final boolean hasKey;
 
-		private CollType(boolean indexed) {
-			this.indexed = indexed;
+		private CollType(boolean hasKey) {
+			this.hasKey = hasKey;
 		}
 		
-		
+		private CollType() {
+			this(false);
+		}
 	}
 	
 	enum ValType {

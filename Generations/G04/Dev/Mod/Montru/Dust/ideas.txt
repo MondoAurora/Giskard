@@ -1,3 +1,8 @@
+[[Urgent]]
+
+Split language by units (DSL), unit loader to keep in Brain/Boot
+
+
 [[Tasks]]
 pool, queue, stack
 improve access in Entity
