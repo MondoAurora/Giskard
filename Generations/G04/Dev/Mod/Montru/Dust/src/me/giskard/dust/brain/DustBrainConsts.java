@@ -1,8 +1,8 @@
 package me.giskard.dust.brain;
 
-import me.giskard.dust.DustConsts;
+import me.giskard.dust.DustTokens;
 
-public interface DustBrainConsts extends DustConsts {
+public interface DustBrainConsts extends DustTokens {
 
 	enum CollType {
 		One, Arr(true), Map(true), Set, Stack, Queue, Pool,
