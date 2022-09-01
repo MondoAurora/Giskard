@@ -1,12 +1,12 @@
+[[Incoming]]
+
 [[Urgent]]
 
-Split language by units (DSL), unit loader to keep in Brain/Boot
-
+visitor
+xml reader, serializer?
 
 [[Tasks]]
-pool, queue, stack
-improve access in Entity
-xml reader, serializer?
+Split language by units (DSL), unit loader to keep in Brain/Boot
 text reader / writer
 binary reader/writer
 DB?
@@ -14,12 +14,19 @@ GUI?
 console / socket / http?
 notification - logging
 
+[[Typing]]
+
 
 [[Boiling]]
 
-token name refactor to <unit>_<type>_<name>; update loader
+improve access in Entity
 path resolution
 language to the MiND, update the loader
 
 
 [[Settled]]
++ drop entity
++ the key is "information", the possible forms of "value": follow CollType
+- pool, queue, stack
++ entity - tag management to be self containing -> store in map, key is parent
++ token name refactor to <unit>_<type>_<name>; update loader

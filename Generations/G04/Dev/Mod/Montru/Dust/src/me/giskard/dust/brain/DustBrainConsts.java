@@ -5,7 +5,7 @@ import me.giskard.dust.DustTokens;
 public interface DustBrainConsts extends DustTokens {
 
 	enum CollType {
-		One, Arr(true), Map(true), Set, Stack, Queue, Pool,
+		One, Arr(true), Map(true), Set, //SStack, Queue, Pool,
 		;
 		
 		public final boolean hasKey;
@@ -20,7 +20,7 @@ public interface DustBrainConsts extends DustTokens {
 	}
 	
 	enum ValType {
-		Int, Real, Link, Raw
+		Unset, Int, Real, Link, Raw
 	}
 	
 }

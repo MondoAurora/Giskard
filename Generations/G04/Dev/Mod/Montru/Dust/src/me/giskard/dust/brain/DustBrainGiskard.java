@@ -9,8 +9,8 @@ import me.giskard.tools.GisToolsTranslator;
 
 public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGiskard {
 
-	final DustBrainEntity eBrain;
-	final DustBrainEntity eRootStore;
+	final DustBrainKnowledge eBrain;
+	final DustBrainKnowledge eRootStore;
 
 	final GisToolsTranslator<MiNDHandle, CollType> H2COLLTYPE = new GisToolsTranslator<>();
 	final GisToolsTranslator<MiNDHandle, ValType> H2VALTYPE = new GisToolsTranslator<>();
@@ -40,7 +40,12 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	}
 
 	public CollType getCollType(MiNDHandle hMember, MiNDAccessCommand cmd, Object key) {
-		DustBrainEntity eMember = eRootStore.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_CONTEXT_ENTITIES,
+		
+		if ((null == key) && (cmd == MiNDAccessCommand.Peek) ) {
+			return CollType.One;
+		}
+		
+		DustBrainKnowledge eMember = eRootStore.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_CONTEXT_ENTITIES,
 				CollType.Map, hMember);
 		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_ENTITY_TAGS, CollType.Set,
 				IDEA_TAG_COLLTYPE);
@@ -62,11 +67,11 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	}
 
 	public DustBrainGiskard() {
-		eBrain = new DustBrainEntity(null);
-		eRootStore = new DustBrainEntity(DUST_STO_ROOT);
+		eBrain = new DustBrainKnowledge(null);
+		eRootStore = new DustBrainKnowledge(DUST_STO_ROOT);
 	}
 
-	public DustBrainEntity resolveHandle(MiNDHandle h) {
+	public DustBrainKnowledge resolveHandle(MiNDHandle h) {
 		return eRootStore.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_CONTEXT_ENTITIES, CollType.Map, h);
 	}
 
@@ -84,7 +89,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 				ret = valPath[0];
 
 				for (i = 1; i <= last;) {
-					DustBrainEntity e = resolveHandle((MiNDHandle) ret);
+					DustBrainKnowledge e = resolveHandle((MiNDHandle) ret);
 					MiNDHandle h = (DustHandle) valPath[i++];
 					Object key = (i <= last) ? valPath[i] : null;
 
@@ -142,7 +147,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 		for (Long k : bootFact.keys()) {
 			DustHandle dh = (DustHandle) bootFact.peek(k);
-			DustBrainEntity be = (DUST_STO_ROOT == dh) ? eRootStore : new DustBrainEntity(dh);
+			DustBrainKnowledge be = (DUST_STO_ROOT == dh) ? eRootStore : new DustBrainKnowledge(dh);
 			eRootStore.access(MiNDAccessCommand.Insert, dh, MODEL_MEM_STORE_HANDLES, CollType.Map, k);
 			eRootStore.access(MiNDAccessCommand.Insert, be, DIALOG_MEM_CONTEXT_ENTITIES, CollType.Map, dh);
 

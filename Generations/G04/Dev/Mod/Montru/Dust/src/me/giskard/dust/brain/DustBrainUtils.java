@@ -10,7 +10,7 @@ public class DustBrainUtils implements DustBrainConsts {
 
 	public static ValType guessValType(Object val) {
 		if ( null == val ) {
-			return null;
+			return ValType.Unset;
 		} else if ( val instanceof Number ) {
 			return Long.class.isAssignableFrom(val.getClass()) ? ValType.Int : ValType.Real;
 		} else {
