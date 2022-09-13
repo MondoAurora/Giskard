@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -96,7 +97,7 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			case Insert:
 				break;
 			case Peek:
-				ret = GiskardUtils.isEqual(key, this.key) ? this.val : val;				
+				ret = GiskardUtils.isEqual(key, this.key) ? this.val : val;
 				break;
 			case Set:
 				break;
@@ -114,16 +115,45 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 	}
 
 	public static abstract class Container<ContType> extends DustBrainInformation {
-		protected final ContType container;
+		final ContType container;
+		Single current;
+		Iterator iterator;
 
 		protected Container(ContType container) {
 			this.container = container;
 		}
-		
+
 		@Override
 		public String toString() {
 			return container.toString();
 		}
+
+		void readNext() {
+			current.val = iterator.next();
+			current.key = ((Integer) current.key).intValue() + 1;
+		}
+
+		boolean next() {
+			if ( null == iterator ) {
+				if ( null == current ) {
+					current = new Single(null, -1);
+				} else {
+					current.key = -1;
+				}
+				iterator = getIterator();
+			}
+			
+			if ( iterator.hasNext() ) {
+				readNext();
+				return true;
+			} else {
+				iterator = null;
+				return false;
+			}
+		}
+
+		protected abstract Iterator getIterator();
+
 	}
 
 	public static class ContArr extends Container<ArrayList> {
@@ -135,6 +165,11 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		@Override
 		public CollType getCollType() {
 			return CollType.Arr;
+		}
+
+		@Override
+		protected Iterator getIterator() {
+			return container.iterator();
 		}
 
 		@Override
@@ -181,6 +216,11 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		}
 
 		@Override
+		protected Iterator getIterator() {
+			return container.iterator();
+		}
+
+		@Override
 		protected <RetType> RetType accessImpl(MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = null;
 
@@ -212,6 +252,18 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 
 		public ContMap() {
 			super(new HashMap());
+		}
+
+		@Override
+		protected Iterator getIterator() {
+			return container.entrySet().iterator();
+		}
+		
+		@Override
+		void readNext() {
+			Map.Entry e = (Map.Entry) iterator.next();
+			current.key = e.getKey();
+			current.val = e.getValue();
 		}
 
 		@Override

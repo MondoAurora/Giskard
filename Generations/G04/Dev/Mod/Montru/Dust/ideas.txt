@@ -1,18 +1,42 @@
-[[Incoming]]
-
-[[Urgent]]
-
-visitor
-xml reader, serializer?
-
 [[Tasks]]
 Split language by units (DSL), unit loader to keep in Brain/Boot
+xml reader, serializer?
 text reader / writer
 binary reader/writer
 DB?
 GUI?
 console / socket / http?
 notification - logging
+
+[[Incoming]]
+
+Narrative
+ types: source, journey, agent, variant?
+ tags: state, response
+ Agent instance - BAU, agent clone in Journey if state changes
+ 
+Event
+ agents: clock
+ tags: year, month, day, hour, ...
+ formatter?
+ 
+ISO
+ date format
+
+Drop "visit" access? no callback (i.e. function) on my side?
+The state machine representation of a Turing machine is simple: the answer to "what next"
+that is, 
+ -> sequence (algorithm step), 
+ -> iterate (follow the content of a collection) or 
+ -> select (jump table)
+ 
+ flat visitor as a separate logic with stack. OMG.
+ and it seems I can't serialize without it.
+
+[[Next]]
+
+visitor
+json serializer (xml is not self containing, text only)
 
 [[Typing]]
 
