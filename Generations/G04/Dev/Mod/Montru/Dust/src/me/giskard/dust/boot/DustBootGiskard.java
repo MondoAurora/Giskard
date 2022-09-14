@@ -35,6 +35,11 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 
 			return null;
 		}
+		
+		@Override
+		public void broadcast_(MiNDHandle event, Object... params) {
+			GiskardUtils.dump(" ", false, "DustBootGiskard.access", event, params);			
+		}
 	};
 
 	GiskardImpl runtime;
@@ -51,6 +56,11 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 		runtime = rt;
 		
 		rt.initBrain();
+	}
+	
+	@Override
+	public void broadcast_(MiNDHandle event, Object... params) {
+		runtime.broadcast_(event, params);
 	}
 
 	@Override

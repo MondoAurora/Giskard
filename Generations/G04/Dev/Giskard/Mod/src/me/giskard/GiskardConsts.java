@@ -12,7 +12,7 @@ public interface GiskardConsts {
 	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
 
 	enum MiNDAccessCommand {
-		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), Visit(false), Broadcast(false),
+		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), //Visit(false), Broadcast(false),
 		
 		;
 		
@@ -28,7 +28,10 @@ public interface GiskardConsts {
 	};
 
 	enum MiNDResultType {
-		Notimplemented(false, false), Reject(false, false), Accept(true, false), AcceptRead(true, true), Read(false, true), Processing(false, true),
+		Notimplemented(false, false), 
+		Reject(false, false), Accept(true, false), 
+		AcceptRead(true, true), Read(false, true), 
+		Processing(false, true), Waiting(false, true),
 		
 		;
 		
@@ -50,6 +53,7 @@ public interface GiskardConsts {
 
 	public interface GiskardImpl {
 		<RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath);
+		void broadcast_(MiNDHandle event, Object... params);
 	}
 
 }

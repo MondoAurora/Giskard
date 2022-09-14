@@ -2,18 +2,16 @@ package me.giskard.dust.brain;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
+import me.giskard.GiskardConsts.MiNDAccessCommand;
+import me.giskard.GiskardConsts.MiNDHandle;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustBootConsts;
 import me.giskard.dust.DustTokens;
-import me.giskard.tools.GisToolsTranslator;
 
 public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGiskard {
 
 	final DustBrainKnowledge eBrain;
 	final DustBrainKnowledge eRootStore;
-
-	final GisToolsTranslator<MiNDHandle, CollType> H2COLLTYPE = new GisToolsTranslator<>();
-	final GisToolsTranslator<MiNDHandle, ValType> H2VALTYPE = new GisToolsTranslator<>();
 
 	DustHandleFormatter HFMT = new DustHandleFormatter() {
 
@@ -45,7 +43,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 			return CollType.One;
 		}
 		
-		DustBrainKnowledge eMember = eRootStore.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_CONTEXT_ENTITIES,
+		DustBrainKnowledge eMember = eRootStore.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_ENTITIES,
 				CollType.Map, hMember);
 		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_ENTITY_TAGS, CollType.Set,
 				IDEA_TAG_COLLTYPE);
@@ -56,11 +54,11 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 			ret = DustBrainUtils.guessCollType(cmd, key);
 
 			if ( (null != ret) && isLearning(hMember) ) {
-				h = H2COLLTYPE.getLeft(ret);
+				h = HANDLE2ENUM.getLeft(ret);
 				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_ENTITY_TAGS, CollType.Set, IDEA_TAG_COLLTYPE);
 			}
 		} else {
-			ret = H2COLLTYPE.getRight(h);
+			ret = HANDLE2ENUM.getRight(h);
 		}
 
 		return ret;
@@ -72,7 +70,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	}
 
 	public DustBrainKnowledge resolveHandle(MiNDHandle h) {
-		return eRootStore.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_CONTEXT_ENTITIES, CollType.Map, h);
+		return eRootStore.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_ENTITIES, CollType.Map, h);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,7 +80,6 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		int last = valPath.length - 1;
 		int i = -1;
 
-		if ( cmd != MiNDAccessCommand.Broadcast ) {
 			if ( 0 > last ) {
 				// probably create a temporary entity?
 			} else {
@@ -106,13 +103,9 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 					}
 				}
 			}
-		} else {
-			GiskardUtils.dump(" ", false, "DustBrainGiskard.access", cmd, val, valPath);
-		}
 
 		if ( null == ret ) {
 			switch ( cmd ) {
-			case Broadcast:
 			case Check:
 			case Delete:
 				ret = false;
@@ -133,13 +126,15 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 			case Set:
 				ret = null;
 				break;
-			case Visit:
-				ret = null;
-				break;
 			}
 		}
 
 		return (RetType) ret;
+	}
+	
+	@Override
+	public void broadcast_(MiNDHandle event, Object... params) {
+		GiskardUtils.dump(" ", false, "DustBrainGiskard.access", event, params);	
 	}
 
 	@Override
@@ -148,8 +143,8 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		for (Long k : bootFact.keys()) {
 			DustHandle dh = (DustHandle) bootFact.peek(k);
 			DustBrainKnowledge be = (DUST_STO_ROOT == dh) ? eRootStore : new DustBrainKnowledge(dh);
-			eRootStore.access(MiNDAccessCommand.Insert, dh, MODEL_MEM_STORE_HANDLES, CollType.Map, k);
-			eRootStore.access(MiNDAccessCommand.Insert, be, DIALOG_MEM_CONTEXT_ENTITIES, CollType.Map, dh);
+			eRootStore.access(MiNDAccessCommand.Insert, dh, MODEL_MEM_SOURCE_HANDLES, CollType.Map, k);
+			eRootStore.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_ENTITIES, CollType.Map, dh);
 
 			be.access(MiNDAccessCommand.Set, DUST_STO_ROOT, MODEL_MEM_ENTITY_STORE, CollType.One, null);
 			be.access(MiNDAccessCommand.Set, DUST_STO_ROOT, MODEL_MEM_ENTITY_CONTEXT, CollType.One, null);
@@ -160,10 +155,22 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 	@Override
 	public void initBrain() throws Exception {
-		H2COLLTYPE.add(IDEA_TAG_COLLTYPE_ARR, CollType.Arr);
-		H2COLLTYPE.add(IDEA_TAG_COLLTYPE_ONE, CollType.One);
-		H2COLLTYPE.add(IDEA_TAG_COLLTYPE_SET, CollType.Set);
-		H2COLLTYPE.add(IDEA_TAG_COLLTYPE_MAP, CollType.Map);
+//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_ARR, CollType.Arr);
+//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_ONE, CollType.One);
+//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_SET, CollType.Set);
+//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_MAP, CollType.Map);
+//
+//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_INT, ValType.Int);
+//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_LINK, ValType.Link);
+//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_REAL, ValType.Real);
+//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_RAW, ValType.Raw);
+		
+		DustBrainUtilsDev.loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
+		DustBrainUtilsDev.loadEnums(DustTokens.class, CollType.class, "IDEA_TAG_COLLTYPE");
+		
+		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDAccessCommand.class, "NARRATIVE_TAG_ACCESS");
+		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDAction.class, "NARRATIVE_TAG_ACTION");
+		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
 
 		eBrain.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_ENTITY_TAGS, CollType.Set, null);
 

@@ -1,6 +1,7 @@
 package me.giskard.dust.brain;
 
 import me.giskard.dust.DustTokens;
+import me.giskard.tools.GisToolsTranslator;
 
 public interface DustBrainConsts extends DustTokens {
 
@@ -23,4 +24,7 @@ public interface DustBrainConsts extends DustTokens {
 		Unset, Int, Real, Link, Raw
 	}
 	
+	@SuppressWarnings("rawtypes")
+	final GisToolsTranslator<MiNDHandle, Enum> HANDLE2ENUM = new GisToolsTranslator<>();
+
 }

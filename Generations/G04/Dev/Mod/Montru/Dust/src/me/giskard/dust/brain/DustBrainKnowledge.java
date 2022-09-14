@@ -39,11 +39,8 @@ public class DustBrainKnowledge implements DustBrainConsts {
 			case Peek:
 				ret = val;
 				break;
-			case Broadcast:
 			case Insert:
 			case Set:
-				break;
-			case Visit:
 				break;
 			}
 		} else {

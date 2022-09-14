@@ -1,7 +1,5 @@
 package me.giskard;
 
-import me.giskard.GiskardConsts.MiNDAccessCommand;
-
 public final class GiskardException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
@@ -10,7 +8,7 @@ public final class GiskardException extends RuntimeException {
 	}
 
 	public static void swallow(Throwable src, Object... params) {
-		Giskard.access(MiNDAccessCommand.Broadcast, src, params);
+		Giskard.log(src, params);
 		src.printStackTrace();
 	}
 
@@ -19,7 +17,7 @@ public final class GiskardException extends RuntimeException {
 			throw (GiskardException) src;
 		}
 	
-		Giskard.access(MiNDAccessCommand.Broadcast, src, params);
+		Giskard.log(src, params);
 		throw new GiskardException(src);
 	}
 }

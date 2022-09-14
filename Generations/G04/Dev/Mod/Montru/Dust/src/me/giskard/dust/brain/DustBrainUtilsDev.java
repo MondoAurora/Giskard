@@ -6,7 +6,6 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.coll.GisCollFactory;
-import me.giskard.dust.DustTokens;
 import me.giskard.tools.GisToolsTranslator;
 
 public class DustBrainUtilsDev implements DustBrainConsts {
@@ -14,18 +13,33 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 	private static final GisToolsTranslator<String, MiNDHandle> HANDLETYPE = new GisToolsTranslator<>();
 
 	static {
-		HANDLETYPE.add("STO", MODEL_TYP_STORE);
 		HANDLETYPE.add("UNI", IDEA_TYP_UNIT);
 		HANDLETYPE.add("TYP", IDEA_TYP_TYPE);
 		HANDLETYPE.add("MEM", IDEA_TYP_MEMBER);
 		HANDLETYPE.add("TAG", IDEA_TYP_TAG);
+		HANDLETYPE.add("STO", MODEL_TYP_SOURCE);
+		HANDLETYPE.add("AGT", NARRATIVE_TYP_AGENT);
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	public static void loadEnums(Class<?> handleContainer, Class<?> cEnum, String prefix) throws Exception {
+		for (Object e : cEnum.getEnumConstants()) {
+			String n = ((Enum) e).name().toUpperCase();
+			try {
+				Field f = handleContainer.getDeclaredField(prefix + "_" + n);
+				MiNDHandle h = (MiNDHandle) f.get(null);
+				HANDLE2ENUM.add(h, (Enum) e);
+			} catch (Throwable ex) {
+				Giskard.log(ex, cEnum, n);
+			}
+		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void loadHandles(Class<?> handleContainer, MiNDHandle hStore, MiNDHandle hLang) throws Exception {
 		GisCollFactory<String, Map> factMeta = new GisCollFactory<>(true, HashMap.class);
 
-		for (Field f : DustTokens.class.getDeclaredFields()) {
+		for (Field f : handleContainer.getDeclaredFields()) {
 			Class<?> ft = f.getType();
 			if ( MiNDHandle.class.isAssignableFrom(ft) ) {
 				String hn = f.getName();
@@ -41,14 +55,14 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				if ( null != hT ) {
 					factMeta.get(ps[1]).put(hn, h);
 					Giskard.access(MiNDAccessCommand.Set, hT, h, MODEL_MEM_ENTITY_PRIMARYTYPE);
-					
+
 					Giskard.access(MiNDAccessCommand.Insert, hn, hLang, LANG_MEM_LANG_TERMINOLOGY, h);
 					Giskard.access(MiNDAccessCommand.Insert, h, hLang, LANG_MEM_LANG_GLOSSARY, hn);
 				}
 			}
 		}
 
-		for (Field f : DustTokens.class.getDeclaredFields()) {
+		for (Field f : handleContainer.getDeclaredFields()) {
 			Class<?> ft = f.getType();
 			if ( MiNDHandle.class.isAssignableFrom(ft) ) {
 				String hn = f.getName();
@@ -65,7 +79,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 						Giskard.access(MiNDAccessCommand.Set, hU, h, MODEL_MEM_ENTITY_UNIT);
 					}
 				} else if ( "UNI".equals(ps[1]) ) {
-					Giskard.access(MiNDAccessCommand.Set, h, h, MODEL_MEM_ENTITY_UNIT);					
+					Giskard.access(MiNDAccessCommand.Set, h, h, MODEL_MEM_ENTITY_UNIT);
 				}
 
 				switch ( ps[1] ) {
@@ -77,6 +91,9 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 					break;
 				case "MEM":
 					MiNDHandle hT = (MiNDHandle) factMeta.get("TYP").get(prefix.replace("MEM", "TYP"));
+					if ( null == hT ) {
+						hT = (MiNDHandle) factMeta.get("AGT").get(prefix.replace("MEM", "AGT"));
+					}
 					if ( null != hT ) {
 						Giskard.access(MiNDAccessCommand.Insert, h, hT, IDEA_MEM_TYPE_MEMBERS);
 						Giskard.access(MiNDAccessCommand.Set, hT, h, MODEL_MEM_ENTITY_OWNER);

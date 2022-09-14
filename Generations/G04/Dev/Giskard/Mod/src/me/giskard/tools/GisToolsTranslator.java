@@ -2,6 +2,7 @@ package me.giskard.tools;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unchecked")
 public class GisToolsTranslator<Left, Right> {
     HashMap<Left, Right> l2r = new HashMap<>();
     HashMap<Right, Left> r2l = new HashMap<>();
@@ -25,12 +26,12 @@ public class GisToolsTranslator<Left, Right> {
         r2l.put(r, l);
     }
     
-    public Left getLeft(Right r) {
-        return r2l.get(r);
+    public <RetType> RetType getLeft(Right r) {
+        return (RetType) r2l.get(r);
     }
     
-    public Right getRight(Left l) {
-        return l2r.get(l);
+		public <RetType> RetType  getRight(Left l) {
+        return (RetType) l2r.get(l);
     } 
     
     public boolean contains(Object o) {

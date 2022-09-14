@@ -11,8 +11,6 @@ notification - logging
 [[Incoming]]
 
 Narrative
- types: source, journey, agent, variant?
- tags: state, response
  Agent instance - BAU, agent clone in Journey if state changes
  
 Event
@@ -42,6 +40,13 @@ json serializer (xml is not self containing, text only)
 
 
 [[Boiling]]
+
+Model
+ types: source, reference
+
+Narrative
+ types: journey, agent, variant
+ tags: cmd, state, response
 
 improve access in Entity
 path resolution

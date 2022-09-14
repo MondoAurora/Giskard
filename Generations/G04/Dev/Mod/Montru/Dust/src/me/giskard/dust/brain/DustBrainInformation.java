@@ -85,8 +85,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			Object ret = null;
 
 			switch ( cmd ) {
-			case Broadcast:
-				break;
 			case Check:
 				ret = GiskardUtils.isEqual(val, this.val) && GiskardUtils.isEqual(key, this.key);
 				break;
@@ -100,8 +98,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = GiskardUtils.isEqual(key, this.key) ? this.val : val;
 				break;
 			case Set:
-				break;
-			case Visit:
 				break;
 			}
 
@@ -179,8 +175,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			boolean in = (null != k) && (0 <= k) && (k < container.size());
 
 			switch ( cmd ) {
-			case Broadcast:
-				break;
 			case Get:
 				ret = in ? container.get(k) : val;
 				break;
@@ -191,8 +185,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = in ? container.get(k) : val;
 				break;
 			case Set:
-				break;
-			case Visit:
 				break;
 			case Check:
 				break;
@@ -225,8 +217,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			Object ret = null;
 
 			switch ( cmd ) {
-			case Broadcast:
-				break;
 			case Get:
 				break;
 			case Insert:
@@ -235,8 +225,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			case Peek:
 				break;
 			case Set:
-				break;
-			case Visit:
 				break;
 			case Check:
 				break;
@@ -291,10 +279,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				break;
 			case Peek:
 				ret = container.getOrDefault(key, val);
-				break;
-			case Visit:
-				break;
-			case Broadcast:
 				break;
 			}
 
