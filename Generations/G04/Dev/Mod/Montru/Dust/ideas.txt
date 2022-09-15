@@ -21,7 +21,6 @@ Event
 ISO
  date format
 
-Drop "visit" access? no callback (i.e. function) on my side?
 The state machine representation of a Turing machine is simple: the answer to "what next"
 that is, 
  -> sequence (algorithm step), 
@@ -33,13 +32,14 @@ that is,
 
 [[Next]]
 
-visitor
-json serializer (xml is not self containing, text only)
+serializer format TBD. json: self containing to Idea level / xml is Java internal
 
 [[Typing]]
 
 
 [[Boiling]]
+
+Drop "visit" access? no callback (i.e. function) on my side?
 
 Model
  types: source, reference
@@ -54,8 +54,12 @@ language to the MiND, update the loader
 
 
 [[Settled]]
+- XML: having native support in Java is less important vs the fact that JSON is a perfect match. 
+- visitor: NO such thing, Attention Agent took over.
+
 + drop entity
 + the key is "information", the possible forms of "value": follow CollType
 - pool, queue, stack
 + entity - tag management to be self containing -> store in map, key is parent
 + token name refactor to <unit>_<type>_<name>; update loader
+

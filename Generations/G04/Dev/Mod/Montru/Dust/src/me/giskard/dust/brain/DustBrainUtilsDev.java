@@ -17,7 +17,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 		HANDLETYPE.add("TYP", IDEA_TYP_TYPE);
 		HANDLETYPE.add("MEM", IDEA_TYP_MEMBER);
 		HANDLETYPE.add("TAG", IDEA_TYP_TAG);
-		HANDLETYPE.add("STO", MODEL_TYP_SOURCE);
+		HANDLETYPE.add("SRC", MODEL_TYP_SOURCE);
 		HANDLETYPE.add("AGT", NARRATIVE_TYP_AGENT);
 	}
 

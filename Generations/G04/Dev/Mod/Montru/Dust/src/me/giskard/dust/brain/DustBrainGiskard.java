@@ -2,8 +2,6 @@ package me.giskard.dust.brain;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
-import me.giskard.GiskardConsts.MiNDAccessCommand;
-import me.giskard.GiskardConsts.MiNDHandle;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustBootConsts;
 import me.giskard.dust.DustTokens;
@@ -66,7 +64,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 	public DustBrainGiskard() {
 		eBrain = new DustBrainKnowledge(null);
-		eRootStore = new DustBrainKnowledge(DUST_STO_ROOT);
+		eRootStore = new DustBrainKnowledge(DUST_SRC_ROOT);
 	}
 
 	public DustBrainKnowledge resolveHandle(MiNDHandle h) {
@@ -142,12 +140,12 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 		for (Long k : bootFact.keys()) {
 			DustHandle dh = (DustHandle) bootFact.peek(k);
-			DustBrainKnowledge be = (DUST_STO_ROOT == dh) ? eRootStore : new DustBrainKnowledge(dh);
+			DustBrainKnowledge be = (DUST_SRC_ROOT == dh) ? eRootStore : new DustBrainKnowledge(dh);
 			eRootStore.access(MiNDAccessCommand.Insert, dh, MODEL_MEM_SOURCE_HANDLES, CollType.Map, k);
 			eRootStore.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_ENTITIES, CollType.Map, dh);
 
-			be.access(MiNDAccessCommand.Set, DUST_STO_ROOT, MODEL_MEM_ENTITY_STORE, CollType.One, null);
-			be.access(MiNDAccessCommand.Set, DUST_STO_ROOT, MODEL_MEM_ENTITY_CONTEXT, CollType.One, null);
+			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_ENTITY_STORE, CollType.One, null);
+			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_ENTITY_CONTEXT, CollType.One, null);
 		}
 
 		Giskard.log(null, this.getClass().getName(), "BELLO...", IDEA_UNI);
@@ -176,7 +174,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 		eBrain.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
 
-		DustBrainUtilsDev.loadHandles(DustTokens.class, DUST_STO_ROOT, DUST_LANG_BOOT);
+		DustBrainUtilsDev.loadHandles(DustTokens.class, DUST_SRC_ROOT, DUST_LANG_BOOT);
 
 		DustHandle.FMT = HFMT;
 
