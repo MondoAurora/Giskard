@@ -12,7 +12,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 	private final Map<MiNDHandle, DustBrainInformation> mappedInfo = new HashMap<>();
 
 	public DustBrainKnowledge(MiNDHandle handle) {
-		mappedInfo.put(MODEL_MEM_ENTITY_HANDLE, new DustBrainInformation.Single(handle, null));
+		mappedInfo.put(MODEL_MEM_KNOWLEDGE_HANDLE, new DustBrainInformation.Single(handle, null));
 	}
 
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle, CollType ct, Object key) {
@@ -20,8 +20,8 @@ public class DustBrainKnowledge implements DustBrainConsts {
 		Object ret = null;
 		boolean changed = false;
 
-		if ( MODEL_MEM_ENTITY_TAGS == handle ) {
-			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, val, MODEL_MEM_ENTITY_OWNER);
+		if ( MODEL_MEM_KNOWLEDGE_TAGS == handle ) {
+			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, val, GENERIC_MEM_GEN_OWNER);
 			key = (null == tagClass) ? val : tagClass;
 		}
 
@@ -67,7 +67,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 	public String toString() {
 		try {
 			if ( inToString ) {
-				return GiskardUtils.toString(mappedInfo.get(MODEL_MEM_ENTITY_HANDLE));
+				return GiskardUtils.toString(mappedInfo.get(MODEL_MEM_KNOWLEDGE_HANDLE));
 			} else {
 				inToString = true;
 				return mappedInfo.toString();

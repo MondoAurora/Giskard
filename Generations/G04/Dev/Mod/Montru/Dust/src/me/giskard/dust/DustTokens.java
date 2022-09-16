@@ -12,26 +12,35 @@ public interface DustTokens extends DustBootConsts {
 	MiNDHandle MODEL_TYP_SOURCE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	MiNDHandle MODEL_MEM_SOURCE_HANDLES = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 
-	MiNDHandle MODEL_TYP_REFERENCE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_TYP_UNIT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_UNIT_STORE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+
+// I don't understand this
+//	MiNDHandle MODEL_TYP_REFERENCE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+//	MiNDHandle MODEL_MEM_REFERENCE_STORE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+//	MiNDHandle MODEL_MEM_REFERENCE_HANDLE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	
 	MiNDHandle MODEL_TYP_HANDLE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	
-	MiNDHandle MODEL_TYP_ENTITY = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_HANDLE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_STORE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_UNIT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_CONTEXT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_TYP_KNOWLEDGE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_JOURNEY = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_UNIT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_STORE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_HANDLE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	
-	MiNDHandle MODEL_MEM_ENTITY_PRIMARYTYPE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_TYPES = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_TAGS = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle MODEL_MEM_ENTITY_OWNER = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_PRIMARYTYPE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_TYPES = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_INFORMATION = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_TAGS = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+
+	MiNDHandle MODEL_TYP_INFORMATION = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_INFORMATION_MEMBER = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_INFORMATION_KEY = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	MiNDHandle MODEL_MEM_INFORMATION_VALUE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 		
 	
 	/////////
 	MiNDHandle IDEA_UNI = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	
-	MiNDHandle IDEA_TYP_UNIT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	
 	MiNDHandle IDEA_TYP_TYPE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	MiNDHandle IDEA_MEM_TYPE_MEMBERS = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
@@ -66,12 +75,6 @@ public interface DustTokens extends DustBootConsts {
 	MiNDHandle NARRATIVE_AGT_REACH = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	MiNDHandle NARRATIVE_AGT_ATTENTION = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 
-	MiNDHandle NARRATIVE_TYP_VARIANT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle NARRATIVE_MEM_VARIANT_ENTITY = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle NARRATIVE_MEM_VARIANT_MEMBER = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle NARRATIVE_MEM_VARIANT_KEY = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-	MiNDHandle NARRATIVE_MEM_VARIANT_VALUE = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
-
 	MiNDHandle NARRATIVE_TAG_ACCESS = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	MiNDHandle NARRATIVE_TAG_ACCESS_CHECK = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 	MiNDHandle NARRATIVE_TAG_ACCESS_PEEK = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
@@ -102,6 +105,10 @@ public interface DustTokens extends DustBootConsts {
 	
 	/////////
 	MiNDHandle GENERIC_UNI = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+	
+	MiNDHandle GENERIC_TYP_GEN = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
+
+	MiNDHandle GENERIC_MEM_GEN_OWNER = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 
 	MiNDHandle GENERIC_TAG_LENIENT = Giskard.access(MiNDAccessCommand.Get, DUST_SRC_ROOT);
 

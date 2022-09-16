@@ -16,7 +16,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		@Override
 		public String toString(DustHandle h) {
 			String hn = access_(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
-			DustHandle hpt = access_(MiNDAccessCommand.Peek, null, h, MODEL_MEM_ENTITY_PRIMARYTYPE);
+			DustHandle hpt = access_(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE);
 			String ptn = (null == hpt) ? "???"
 					: access_(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
 
@@ -25,7 +25,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	};
 
 	public boolean isLearning(MiNDHandle hMember) {
-		Boolean learning = eBrain.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_ENTITY_TAGS,
+		Boolean learning = eBrain.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS,
 				CollType.Set, null);
 
 		if ( Boolean.TRUE.equals(learning) ) {
@@ -43,7 +43,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		
 		DustBrainKnowledge eMember = eRootStore.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_ENTITIES,
 				CollType.Map, hMember);
-		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_ENTITY_TAGS, CollType.Set,
+		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set,
 				IDEA_TAG_COLLTYPE);
 
 		CollType ret = null;
@@ -53,7 +53,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 			if ( (null != ret) && isLearning(hMember) ) {
 				h = HANDLE2ENUM.getLeft(ret);
-				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_ENTITY_TAGS, CollType.Set, IDEA_TAG_COLLTYPE);
+				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, IDEA_TAG_COLLTYPE);
 			}
 		} else {
 			ret = HANDLE2ENUM.getRight(h);
@@ -144,25 +144,15 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 			eRootStore.access(MiNDAccessCommand.Insert, dh, MODEL_MEM_SOURCE_HANDLES, CollType.Map, k);
 			eRootStore.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_ENTITIES, CollType.Map, dh);
 
-			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_ENTITY_STORE, CollType.One, null);
-			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_ENTITY_CONTEXT, CollType.One, null);
+			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_KNOWLEDGE_STORE, CollType.One, null);
+			be.access(MiNDAccessCommand.Set, DUST_SRC_ROOT, MODEL_MEM_KNOWLEDGE_JOURNEY, CollType.One, null);
 		}
 
 		Giskard.log(null, this.getClass().getName(), "BELLO...", IDEA_UNI);
 	}
 
 	@Override
-	public void initBrain() throws Exception {
-//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_ARR, CollType.Arr);
-//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_ONE, CollType.One);
-//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_SET, CollType.Set);
-//		HANDLE2ENUM.add(IDEA_TAG_COLLTYPE_MAP, CollType.Map);
-//
-//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_INT, ValType.Int);
-//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_LINK, ValType.Link);
-//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_REAL, ValType.Real);
-//		HANDLE2ENUM.add(IDEA_TAG_VALTYPE_RAW, ValType.Raw);
-		
+	public void initBrain() throws Exception {		
 		DustBrainUtilsDev.loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
 		DustBrainUtilsDev.loadEnums(DustTokens.class, CollType.class, "IDEA_TAG_COLLTYPE");
 		
@@ -170,7 +160,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDAction.class, "NARRATIVE_TAG_ACTION");
 		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
 
-		eBrain.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_ENTITY_TAGS, CollType.Set, null);
+		eBrain.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
 
 		eBrain.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
 

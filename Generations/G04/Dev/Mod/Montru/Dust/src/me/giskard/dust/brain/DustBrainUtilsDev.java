@@ -13,7 +13,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 	private static final GisToolsTranslator<String, MiNDHandle> HANDLETYPE = new GisToolsTranslator<>();
 
 	static {
-		HANDLETYPE.add("UNI", IDEA_TYP_UNIT);
+		HANDLETYPE.add("UNI", MODEL_TYP_UNIT);
 		HANDLETYPE.add("TYP", IDEA_TYP_TYPE);
 		HANDLETYPE.add("MEM", IDEA_TYP_MEMBER);
 		HANDLETYPE.add("TAG", IDEA_TYP_TAG);
@@ -46,7 +46,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				MiNDHandle h = (MiNDHandle) f.get(null);
 
 				if ( null != hStore ) {
-					Giskard.access(MiNDAccessCommand.Set, hStore, h, MODEL_MEM_ENTITY_STORE);
+					Giskard.access(MiNDAccessCommand.Set, hStore, h, MODEL_MEM_KNOWLEDGE_STORE);
 				}
 
 				String[] ps = hn.split(SEP_ID);
@@ -54,7 +54,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				MiNDHandle hT = HANDLETYPE.getRight(ps[1]);
 				if ( null != hT ) {
 					factMeta.get(ps[1]).put(hn, h);
-					Giskard.access(MiNDAccessCommand.Set, hT, h, MODEL_MEM_ENTITY_PRIMARYTYPE);
+					Giskard.access(MiNDAccessCommand.Set, hT, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE);
 
 					Giskard.access(MiNDAccessCommand.Insert, hn, hLang, LANG_MEM_LANG_TERMINOLOGY, h);
 					Giskard.access(MiNDAccessCommand.Insert, h, hLang, LANG_MEM_LANG_GLOSSARY, hn);
@@ -76,17 +76,17 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				if ( 2 < ps.length ) {
 					MiNDHandle hU = (MiNDHandle) factMeta.get("UNI").get(ps[0] + "_UNI");
 					if ( null != hU ) {
-						Giskard.access(MiNDAccessCommand.Set, hU, h, MODEL_MEM_ENTITY_UNIT);
+						Giskard.access(MiNDAccessCommand.Set, hU, h, MODEL_MEM_KNOWLEDGE_UNIT);
 					}
 				} else if ( "UNI".equals(ps[1]) ) {
-					Giskard.access(MiNDAccessCommand.Set, h, h, MODEL_MEM_ENTITY_UNIT);
+					Giskard.access(MiNDAccessCommand.Set, h, h, MODEL_MEM_KNOWLEDGE_UNIT);
 				}
 
 				switch ( ps[1] ) {
 				case "TAG":
 					MiNDHandle hClass = (MiNDHandle) factMeta.get("TAG").get(prefix);
 					if ( null != hClass ) {
-						Giskard.access(MiNDAccessCommand.Set, hClass, h, MODEL_MEM_ENTITY_OWNER);
+						Giskard.access(MiNDAccessCommand.Set, hClass, h, GENERIC_MEM_GEN_OWNER);
 					}
 					break;
 				case "MEM":
@@ -96,7 +96,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 					}
 					if ( null != hT ) {
 						Giskard.access(MiNDAccessCommand.Insert, h, hT, IDEA_MEM_TYPE_MEMBERS);
-						Giskard.access(MiNDAccessCommand.Set, hT, h, MODEL_MEM_ENTITY_OWNER);
+						Giskard.access(MiNDAccessCommand.Set, hT, h, GENERIC_MEM_GEN_OWNER);
 					}
 					break;
 				}
