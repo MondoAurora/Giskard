@@ -45,6 +45,7 @@ public interface GiskardConsts {
 	};
 
 	public interface MiNDHandle {
+		Object getId();
 	};
 
 	public interface MiNDAgent extends GiskardConsts {

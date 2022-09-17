@@ -36,7 +36,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void loadHandles(Class<?> handleContainer, MiNDHandle hStore, MiNDHandle hLang) throws Exception {
+	public static void loadHandles(Class<?> handleContainer, MiNDHandle hLang) throws Exception {
 		GisCollFactory<String, Map> factMeta = new GisCollFactory<>(true, HashMap.class);
 
 		for (Field f : handleContainer.getDeclaredFields()) {
@@ -45,9 +45,11 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				String hn = f.getName();
 				MiNDHandle h = (MiNDHandle) f.get(null);
 
-				if ( null != hStore ) {
-					Giskard.access(MiNDAccessCommand.Set, hStore, h, MODEL_MEM_KNOWLEDGE_STORE);
-				}
+				Giskard.access(MiNDAccessCommand.Set, h.getId(), h, MODEL_MEM_KNOWLEDGE_STOREID);
+				
+//				if ( null != hStore ) {
+//					Giskard.access(MiNDAccessCommand.Set, hStore, h, MODEL_MEM_KNOWLEDGE_STORE);
+//				}
 
 				String[] ps = hn.split(SEP_ID);
 

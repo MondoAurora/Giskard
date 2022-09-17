@@ -24,6 +24,11 @@ public interface DustBootConsts extends GiskardConsts {
 		public DustHandle(long id) {
 			this.id = id;
 		}
+		
+		@Override
+		public Object getId() {
+			return id;
+		}
 
 		@Override
 		public int compareTo(DustHandle o) {
