@@ -50,12 +50,12 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 		BootRuntime bs = new BootRuntime();
 		runtime = bs;
 
-		DustGiskard rt = (DustGiskard) Class.forName("me.giskard.dust.brain.DustBrainGiskard").newInstance();
-		rt.initBootHandles(bs.bootFact);
+		DustJourney rt = (DustJourney) Class.forName("me.giskard.dust.brain.DustBrainJourney").newInstance();
+		rt.loadBootHandles(bs.bootFact);
 
 		runtime = rt;
 		
-		rt.initBrain();
+		rt.initJourney();
 	}
 	
 	@Override
