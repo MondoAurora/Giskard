@@ -6,9 +6,30 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.coll.GisCollFactory;
+import me.giskard.dust.DustTokens;
 import me.giskard.tools.GisToolsTranslator;
 
 public class DustBrainUtilsDev implements DustBrainConsts {
+	
+	
+	static class JourneyHandleFormatter implements DustHandleFormatter {
+		DustBrainJourney journey;
+		
+		public JourneyHandleFormatter(DustBrainJourney journey) {
+			this.journey = journey;
+		}
+		
+		@Override
+		public String toString(DustHandle h) {
+			String hn = journey.access_(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
+			DustHandle hpt = journey.access_(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE);
+			String ptn = (null == hpt) ? "???"
+					: journey.access_(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
+
+			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
+		}
+	};
+
 
 	private static final GisToolsTranslator<String, MiNDHandle> HANDLETYPE = new GisToolsTranslator<>();
 
@@ -19,6 +40,35 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 		HANDLETYPE.add("TAG", IDEA_TYP_TAG);
 		HANDLETYPE.add("SRC", MODEL_TYP_SOURCE);
 		HANDLETYPE.add("AGT", NARRATIVE_TYP_AGENT);
+	}
+
+	public static void initBootJourney(GisCollFactory<Long, DustHandle> bootFact, DustBrainJourney e) throws Exception {
+		for (Long k : bootFact.keys()) {
+			DustHandle dh = (DustHandle) bootFact.peek(k);
+			DustBrainKnowledge be = new DustBrainKnowledge(dh);
+			e.eJourney.access(MiNDAccessCommand.Insert, dh, NARRATIVE_MEM_JOURNEY_HANDLES, CollType.Map, k);
+			e.eJourney.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, dh);
+		}
+
+		Giskard.log(null, e.getClass().getName(), "BELLO...", IDEA_UNI);
+
+
+		loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
+		loadEnums(DustTokens.class, CollType.class, "IDEA_TAG_COLLTYPE");
+
+		loadEnums(DustTokens.class, MiNDAccessCommand.class, "NARRATIVE_TAG_ACCESS");
+		loadEnums(DustTokens.class, MiNDAction.class, "NARRATIVE_TAG_ACTION");
+		loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
+
+		e.eJourney.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
+
+		e.eJourney.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
+
+		loadHandles(DustTokens.class, DUST_LANG_BOOT);
+
+		DustHandle.FMT = new JourneyHandleFormatter(e);
+
+		Giskard.log(null, "initBrain complete", e.eJourney);
 	}
 
 	@SuppressWarnings({ "rawtypes" })
@@ -46,10 +96,6 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				MiNDHandle h = (MiNDHandle) f.get(null);
 
 				Giskard.access(MiNDAccessCommand.Set, h.getId(), h, MODEL_MEM_KNOWLEDGE_STOREID);
-				
-//				if ( null != hStore ) {
-//					Giskard.access(MiNDAccessCommand.Set, hStore, h, MODEL_MEM_KNOWLEDGE_STORE);
-//				}
 
 				String[] ps = hn.split(SEP_ID);
 

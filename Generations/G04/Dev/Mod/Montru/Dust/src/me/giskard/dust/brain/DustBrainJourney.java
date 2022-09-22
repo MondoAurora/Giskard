@@ -1,27 +1,9 @@
 package me.giskard.dust.brain;
 
-import me.giskard.Giskard;
-import me.giskard.GiskardUtils;
-import me.giskard.coll.GisCollFactory;
-import me.giskard.dust.DustBootConsts;
-import me.giskard.dust.DustTokens;
-
-public class DustBrainJourney implements DustBrainConsts, DustBootConsts.DustJourney {
+public class DustBrainJourney implements DustBrainConsts {
 
 	final DustBrainKnowledge eJourney;
 	
-	DustHandleFormatter HFMT = new DustHandleFormatter() {
-		@Override
-		public String toString(DustHandle h) {
-			String hn = access_(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
-			DustHandle hpt = access_(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE);
-			String ptn = (null == hpt) ? "???"
-					: access_(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
-
-			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
-		}
-	};
-
 	public boolean isLearning(MiNDHandle hMember) {
 		Boolean learning = eJourney.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS,
 				CollType.Set, null);
@@ -69,7 +51,6 @@ public class DustBrainJourney implements DustBrainConsts, DustBootConsts.DustJou
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
 		Object ret = null;
 		int last = valPath.length - 1;
@@ -125,43 +106,5 @@ public class DustBrainJourney implements DustBrainConsts, DustBootConsts.DustJou
 		}
 
 		return (RetType) ret;
-	}
-	
-	@Override
-	public void broadcast_(MiNDHandle event, Object... params) {
-		GiskardUtils.dump(" ", false, "DustBrainGiskard.access", event, params);	
-	}
-
-	@Override
-	public void loadBootHandles(GisCollFactory<Long, DustHandle> bootFact) {
-
-		for (Long k : bootFact.keys()) {
-			DustHandle dh = (DustHandle) bootFact.peek(k);
-			DustBrainKnowledge be = new DustBrainKnowledge(dh);
-			eJourney.access(MiNDAccessCommand.Insert, dh, NARRATIVE_MEM_JOURNEY_HANDLES, CollType.Map, k);
-			eJourney.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, dh);
-		}
-
-		Giskard.log(null, this.getClass().getName(), "BELLO...", IDEA_UNI);
-	}
-
-	@Override
-	public void initJourney() throws Exception {		
-		DustBrainUtilsDev.loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
-		DustBrainUtilsDev.loadEnums(DustTokens.class, CollType.class, "IDEA_TAG_COLLTYPE");
-		
-		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDAccessCommand.class, "NARRATIVE_TAG_ACCESS");
-		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDAction.class, "NARRATIVE_TAG_ACTION");
-		DustBrainUtilsDev.loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
-
-		eJourney.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
-
-		eJourney.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
-
-		DustBrainUtilsDev.loadHandles(DustTokens.class, DUST_LANG_BOOT);
-
-		DustHandle.FMT = HFMT;
-
-		Giskard.log(null, "initBrain complete", eJourney);
 	}
 }

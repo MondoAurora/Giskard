@@ -41,9 +41,8 @@ public interface DustBootConsts extends GiskardConsts {
 		}
 	}
 
-	interface DustJourney extends GiskardImpl {
-		void loadBootHandles(GisCollFactory<Long, DustHandle> bootFact);
-		void initJourney() throws Exception;
+	interface DustGiskard extends GiskardImpl {
+		void initBootJourney(GisCollFactory<Long, DustHandle> bootFact) throws Exception;
 	}
 
 }

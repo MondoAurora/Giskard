@@ -10,6 +10,15 @@ notification - logging
 
 [[Incoming]]
 
+Dust: (? or still narrative?)
+ - boot,
+ - processJourney(journey, agent): while reading try setjourney, step, finally setjourney(parent)
+
+Dust:
+ - classloader
+ - call
+ - thread management
+
 Narrative
  Agent instance - BAU, agent clone in Journey if state changes
  
