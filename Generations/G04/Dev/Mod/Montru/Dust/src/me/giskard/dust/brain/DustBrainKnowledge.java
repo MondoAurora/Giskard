@@ -21,7 +21,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 		boolean changed = false;
 
 		if ( MODEL_MEM_KNOWLEDGE_TAGS == handle ) {
-			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, val, GENERIC_MEM_GEN_OWNER);
+			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, (MiNDHandle) val, GENERIC_MEM_GEN_OWNER);
 			key = (null == tagClass) ? val : tagClass;
 		}
 

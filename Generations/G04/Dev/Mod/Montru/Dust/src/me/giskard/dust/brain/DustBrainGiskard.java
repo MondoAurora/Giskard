@@ -13,8 +13,8 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	}
 
 	@Override
-	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
-		return journey.access_(cmd, val, valPath);
+	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
+		return journey.access(cmd, val, ref, att, key);
 	}
 	
 	@Override

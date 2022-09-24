@@ -92,7 +92,7 @@ public class GiskardAppModuleServices implements GiskardAppConsts {
 			Class<?> cMod = cl.loadClass(getModClassName(mod));
 			if ( null != cMod ) {
 				modAgent = (MiNDAgent) cMod.newInstance();
-				modAgent.mindAgentProcess();
+				modAgent.mindAgentStep();
 			}
 		}
 		

@@ -3,7 +3,7 @@ package me.giskard.dust.brain;
 public class DustBrainJourney implements DustBrainConsts {
 
 	final DustBrainKnowledge eJourney;
-	
+
 	public boolean isLearning(MiNDHandle hMember) {
 		Boolean learning = eJourney.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS,
 				CollType.Set, null);
@@ -16,14 +16,13 @@ public class DustBrainJourney implements DustBrainConsts {
 	}
 
 	public CollType getCollType(MiNDHandle hMember, MiNDAccessCommand cmd, Object key) {
-		
-		if ((null == key) && (cmd == MiNDAccessCommand.Peek) ) {
+
+		if ( (null == key) && (cmd == MiNDAccessCommand.Peek) ) {
 			return CollType.One;
 		}
-		
-		DustBrainKnowledge eMember = eJourney.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE,
-				CollType.Map, hMember);
-		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set,
+
+		DustBrainKnowledge eMember = resolveHandle(hMember);
+		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map,
 				IDEA_TAG_COLLTYPE);
 
 		CollType ret = null;
@@ -33,7 +32,7 @@ public class DustBrainJourney implements DustBrainConsts {
 
 			if ( (null != ret) && isLearning(hMember) ) {
 				h = HANDLE2ENUM.getLeft(ret);
-				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, IDEA_TAG_COLLTYPE);
+				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map, IDEA_TAG_COLLTYPE);
 			}
 		} else {
 			ret = HANDLE2ENUM.getRight(h);
@@ -51,60 +50,37 @@ public class DustBrainJourney implements DustBrainConsts {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
+	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
 		Object ret = null;
-		int last = valPath.length - 1;
-		int i = -1;
+		CollType ct = getCollType(att, cmd, key);
+		DustBrainKnowledge e = resolveHandle(ref);
+		boolean call = true;
 
-			if ( 0 > last ) {
-				// probably create a temporary entity?
-			} else {
-				ret = valPath[0];
-
-				for (i = 1; i <= last;) {
-					DustBrainKnowledge e = resolveHandle((MiNDHandle) ret);
-					MiNDHandle h = (DustHandle) valPath[i++];
-					Object key = (i <= last) ? valPath[i] : null;
-
-					CollType ct = getCollType(h, MiNDAccessCommand.Peek, key);
-					if ( (null != ct) && ct.hasKey ) {
-						++i;
-					}
-
-					if ( null == e ) {
-						break;
-					} else {
-						ret = (i < last) ? e.access(MiNDAccessCommand.Peek, null, h, ct, key)
-								: e.access(cmd, val, h, getCollType(h, cmd, key), key);
-					}
-				}
-			}
-
-		if ( null == ret ) {
+		if ( null == e ) {
+			call = false;
 			switch ( cmd ) {
+			case Peek:
+				ret = val;
+				break;
 			case Check:
 			case Delete:
 				ret = false;
 				break;
 			case Get:
-				if ( i == last ) {
-					// also, put?
-				} else {
-					ret = val;
-				}
-				break;
 			case Insert:
-				ret = null;
-				break;
-			case Peek:
-				ret = val;
-				break;
 			case Set:
-				ret = null;
+				e = new DustBrainKnowledge(ref);
+				eJourney.access(MiNDAccessCommand.Insert, e, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
+				call = true;
 				break;
 			}
 		}
 
+		if ( call ) {
+			ret = e.access(cmd, val, att, ct, key);
+		}
+		
 		return (RetType) ret;
 	}
+
 }

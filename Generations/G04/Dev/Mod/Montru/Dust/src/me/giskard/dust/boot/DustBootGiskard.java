@@ -22,16 +22,13 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
+		public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
 			if ( cmd == MiNDAccessCommand.Get ) {
-				int l = valPath.length;
-				Object key = (1 < l) ? valPath[1] : null;
-
 				long eid = (key instanceof Integer) ? (long) (int) key : ++lastId;
 				return (RetType) bootFact.get(eid);
 			}
 
-			GiskardUtils.dump(" ", false, "DustBootGiskard.access", cmd, val, valPath);
+			GiskardUtils.dump(" ", false, "DustBootGiskard.access", cmd, val, ref, att, key);
 
 			return null;
 		}
@@ -63,8 +60,8 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 	}
 
 	@Override
-	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath) {
-		return runtime.access_(cmd, val, valPath);
+	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
+		return runtime.access_(cmd, val, ref, att, key);
 	}
 
 }

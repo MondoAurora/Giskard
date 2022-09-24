@@ -21,10 +21,10 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 		
 		@Override
 		public String toString(DustHandle h) {
-			String hn = journey.access_(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
-			DustHandle hpt = journey.access_(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE);
+			String hn = journey.access(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
+			DustHandle hpt = journey.access(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, null);
 			String ptn = (null == hpt) ? "???"
-					: journey.access_(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
+					: journey.access(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
 
 			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
 		}

@@ -49,11 +49,11 @@ public interface GiskardConsts {
 	};
 
 	public interface MiNDAgent extends GiskardConsts {
-		MiNDResultType mindAgentProcess() throws Exception;
+		MiNDResultType mindAgentStep() throws Exception;
 	}
 
 	public interface GiskardImpl {
-		<RetType> RetType access_(MiNDAccessCommand cmd, Object val, Object... valPath);
+		<RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key);
 		void broadcast_(MiNDHandle event, Object... params);
 	}
 

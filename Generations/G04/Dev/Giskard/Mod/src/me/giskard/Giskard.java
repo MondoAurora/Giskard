@@ -16,12 +16,16 @@ public abstract class Giskard implements GiskardConsts {
 		}
 	}
 	
-	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, Object... valPath) {
+	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att) {
+		return access(cmd, val, ref, att, null);
+	}
+	
+	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att, Object key) {
 		if ( null == GISKARD ) {
-			GiskardUtils.dump(" ", false, "Giskard.access", cmd, val, valPath);
+			GiskardUtils.dump(" ", false, "Giskard.access", cmd, val, ref, att, key);
 			return null;
 		}
-		return GISKARD.access_(cmd, val, valPath);
+		return GISKARD.access_(cmd, val, ref, att, key);
 	}
 	
 	protected void setImpl(GiskardImpl impl) {
