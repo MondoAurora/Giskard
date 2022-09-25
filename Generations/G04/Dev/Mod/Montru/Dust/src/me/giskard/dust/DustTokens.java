@@ -63,7 +63,11 @@ public interface DustTokens extends DustBootConsts {
 	MiNDHandle NARRATIVE_MEM_JOURNEY_SOURCES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_HANDLES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_JOURNEY_ACTIVITY = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	
+	MiNDHandle NARRATIVE_MEM_JOURNEY_AGENTS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_JOURNEY_START = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_JOURNEY_END = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_JOURNEY_CURRENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle NARRATIVE_AGT_REACH = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 

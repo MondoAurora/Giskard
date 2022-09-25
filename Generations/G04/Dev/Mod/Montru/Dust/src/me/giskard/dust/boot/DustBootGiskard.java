@@ -37,6 +37,11 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 		public void broadcast_(MiNDHandle event, Object... params) {
 			GiskardUtils.dump(" ", false, "DustBootGiskard.access", event, params);			
 		}
+		
+		@Override
+		public MiNDResultType mindAgentStep() throws Exception {
+			return null;
+		}
 	};
 
 	GiskardImpl runtime;
@@ -62,6 +67,11 @@ public class DustBootGiskard extends Giskard implements DustBootConsts, GisCollC
 	@Override
 	public <RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
 		return runtime.access_(cmd, val, ref, att, key);
+	}
+	
+	@Override
+	public MiNDResultType mindAgentStep() throws Exception {
+		return runtime.mindAgentStep();
 	}
 
 }

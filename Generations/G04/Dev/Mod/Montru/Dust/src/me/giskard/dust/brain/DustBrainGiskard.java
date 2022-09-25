@@ -26,4 +26,9 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 	public void initBootJourney(GisCollFactory<Long, DustHandle> bootFact) throws Exception {		
 		DustBrainUtilsDev.initBootJourney(bootFact, journey);
 	}
+	
+	@Override
+	public MiNDResultType mindAgentStep() throws Exception {
+		return journey.mindAgentStep();
+	}
 }

@@ -1,45 +1,10 @@
 package me.giskard.dust.brain;
 
-public class DustBrainJourney implements DustBrainConsts {
+import me.giskard.GiskardConsts;
+
+public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgent {
 
 	final DustBrainKnowledge eJourney;
-
-	public boolean isLearning(MiNDHandle hMember) {
-		Boolean learning = eJourney.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS,
-				CollType.Set, null);
-
-		if ( Boolean.TRUE.equals(learning) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public CollType getCollType(MiNDHandle hMember, MiNDAccessCommand cmd, Object key) {
-
-		if ( (null == key) && (cmd == MiNDAccessCommand.Peek) ) {
-			return CollType.One;
-		}
-
-		DustBrainKnowledge eMember = resolveHandle(hMember);
-		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map,
-				IDEA_TAG_COLLTYPE);
-
-		CollType ret = null;
-
-		if ( null == h ) {
-			ret = DustBrainUtils.guessCollType(cmd, key);
-
-			if ( (null != ret) && isLearning(hMember) ) {
-				h = HANDLE2ENUM.getLeft(ret);
-				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map, IDEA_TAG_COLLTYPE);
-			}
-		} else {
-			ret = HANDLE2ENUM.getRight(h);
-		}
-
-		return ret;
-	}
 
 	public DustBrainJourney() {
 		eJourney = new DustBrainKnowledge(null);
@@ -52,7 +17,6 @@ public class DustBrainJourney implements DustBrainConsts {
 	@SuppressWarnings("unchecked")
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key) {
 		Object ret = null;
-		CollType ct = getCollType(att, cmd, key);
 		DustBrainKnowledge e = resolveHandle(ref);
 		boolean call = true;
 
@@ -77,10 +41,16 @@ public class DustBrainJourney implements DustBrainConsts {
 		}
 
 		if ( call ) {
+			DustBrainKnowledge a = resolveHandle(att);
+			CollType ct = DustBrainUtils.getCollType(eJourney, a, cmd, key);
 			ret = e.access(cmd, val, att, ct, key);
 		}
 		
 		return (RetType) ret;
 	}
 
+	@Override
+	public MiNDResultType mindAgentStep() throws Exception {
+		return MiNDResultType.Accept;
+	}
 }

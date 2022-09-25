@@ -18,4 +18,39 @@ public class DustBrainUtils implements DustBrainConsts {
 		}
 	}
 
+	public static boolean isLearning(DustBrainKnowledge eJourney, DustBrainKnowledge eMember) {
+		Boolean learning = eJourney.access(MiNDAccessCommand.Check, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS,
+				CollType.Set, null);
+
+		if ( Boolean.TRUE.equals(learning) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static CollType getCollType(DustBrainKnowledge eJourney, DustBrainKnowledge eMember, MiNDAccessCommand cmd, Object key) {
+
+		if ( (null == key) && (cmd == MiNDAccessCommand.Peek) ) {
+			return CollType.One;
+		}
+
+		MiNDHandle h = eMember.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map,
+				IDEA_TAG_COLLTYPE);
+
+		CollType ret = null;
+
+		if ( null == h ) {
+			ret = DustBrainUtils.guessCollType(cmd, key);
+
+			if ( (null != ret) && isLearning(eJourney, eMember) ) {
+				h = HANDLE2ENUM.getLeft(ret);
+				eMember.access(MiNDAccessCommand.Insert, h, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Map, IDEA_TAG_COLLTYPE);
+			}
+		} else {
+			ret = HANDLE2ENUM.getRight(h);
+		}
+
+		return ret;
+	}
 }

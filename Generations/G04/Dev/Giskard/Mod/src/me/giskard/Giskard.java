@@ -1,13 +1,13 @@
 package me.giskard;
 
 public abstract class Giskard implements GiskardConsts {
-	
+
 	protected static GiskardImpl GISKARD;
 
 	public static void log(Object... obs) {
 		broadcast(null, obs);
 	}
-	
+
 	public static void broadcast(MiNDHandle event, Object... params) {
 		if ( null != GISKARD ) {
 			GISKARD.broadcast_(event, params);
@@ -15,19 +15,30 @@ public abstract class Giskard implements GiskardConsts {
 			GiskardUtils.dump(" ", false, "Giskard.log", event, params);
 		}
 	}
-	
+
 	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att) {
 		return access(cmd, val, ref, att, null);
 	}
-	
-	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att, Object key) {
+
+	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att,
+			Object key) {
 		if ( null == GISKARD ) {
 			GiskardUtils.dump(" ", false, "Giskard.access", cmd, val, ref, att, key);
 			return null;
 		}
 		return GISKARD.access_(cmd, val, ref, att, key);
 	}
-	
+
+	public static boolean run() throws Exception {
+		MiNDResultType ret;
+		
+		do {
+			ret = GISKARD.mindAgentStep();
+		} while (ret.read);
+
+		return ret.accept;
+	}
+
 	protected void setImpl(GiskardImpl impl) {
 		GISKARD = impl;
 	}

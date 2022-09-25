@@ -50,9 +50,6 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 			e.eJourney.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, dh);
 		}
 
-		Giskard.log(null, e.getClass().getName(), "BELLO...", IDEA_UNI);
-
-
 		loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
 		loadEnums(DustTokens.class, CollType.class, "IDEA_TAG_COLLTYPE");
 
@@ -61,7 +58,6 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 		loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
 
 		e.eJourney.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
-
 		e.eJourney.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
 
 		loadHandles(DustTokens.class, DUST_LANG_BOOT);

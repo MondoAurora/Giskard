@@ -32,8 +32,10 @@ public abstract class GiskardApp implements GiskardAppConsts {
 				e.printStackTrace();
 			}
 		}
+		
+		String ret = Giskard.run() ? "Success" : "Reject";
 
-		Giskard.log(null, "Success. Or at least, no exception, exiting Giskard.main() :-)");
+		Giskard.log(null, ret, "no exception, exiting GiskardApp.main() :-)");
 	}
 
 }
