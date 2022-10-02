@@ -11,13 +11,14 @@ public interface DustTokens extends DustBootConsts {
 
 	MiNDHandle MODEL_TYP_SOURCE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_SOURCE_KNOWLEDGE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle MODEL_MEM_SOURCE_LASTID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle MODEL_TYP_UNIT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle MODEL_MEM_UNIT_STORE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle MODEL_MEM_UNIT_SOURCE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle MODEL_TYP_KNOWLEDGE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_UNIT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle MODEL_MEM_KNOWLEDGE_STOREID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle MODEL_MEM_KNOWLEDGE_SOURCEID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_HANDLE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_PRIMARYTYPE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_TYPES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
@@ -58,17 +59,14 @@ public interface DustTokens extends DustBootConsts {
 
 	MiNDHandle NARRATIVE_TYP_AGENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_AGENT_REQUEST = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_AGENT_PAR_REFS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle NARRATIVE_AGT_JOURNEY = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_SOURCES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_HANDLES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_JOURNEY_AGENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	
-	MiNDHandle NARRATIVE_MEM_JOURNEY_AGENTS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_JOURNEY_START = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_JOURNEY_END = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_JOURNEY_CURRENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-
 	MiNDHandle NARRATIVE_AGT_REACH = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle NARRATIVE_AGT_ATTENTION = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
@@ -107,6 +105,10 @@ public interface DustTokens extends DustBootConsts {
 
 	/////////
 	MiNDHandle DIALOG_UNI = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	
+	MiNDHandle DIALOG_AGT_IO = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle DIALOG_MEM_IO_STREAM = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle DIALOG_MEM_IO_MESSAGE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	/////////
 	MiNDHandle GENERIC_UNI = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
@@ -118,7 +120,7 @@ public interface DustTokens extends DustBootConsts {
 
 	MiNDHandle GENERIC_TYP_REFERENCE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle GENERIC_MEM_REFERENCE_UNIT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle GENERIC_MEM_REFERENCE_STOREID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle GENERIC_MEM_REFERENCE_SOURCEID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle GENERIC_TAG_LENIENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
@@ -142,11 +144,17 @@ public interface DustTokens extends DustBootConsts {
 	/////////
 	MiNDHandle DUST_UNI = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
+	MiNDHandle DUST_AGT_STREAM = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle DUST_MEM_STREAM_IN = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle DUST_MEM_STREAM_OUT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+
 	MiNDHandle DUST_TYP_BRAIN = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
-	MiNDHandle DUST_MEM_BRAIN_ROOTSTORE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle DUST_MEM_BRAIN_ROOTSOURCE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle DUST_MEM_BRAIN_IMPL = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle DUST_MEM_BRAIN_DEF_LANG = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+
+	MiNDHandle DUST_BRAIN = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle DUST_LANG_BOOT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 

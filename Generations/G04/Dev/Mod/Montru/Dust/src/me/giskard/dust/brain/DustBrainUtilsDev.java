@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustTokens;
 import me.giskard.tools.GisToolsTranslator;
@@ -91,7 +92,7 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				String hn = f.getName();
 				MiNDHandle h = (MiNDHandle) f.get(null);
 
-				Giskard.access(MiNDAccessCommand.Set, h.getId(), h, MODEL_MEM_KNOWLEDGE_STOREID);
+				Giskard.access(MiNDAccessCommand.Set, h.getId(), h, MODEL_MEM_KNOWLEDGE_SOURCEID);
 
 				String[] ps = hn.split(SEP_ID);
 
@@ -146,6 +147,28 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 				}
 			}
 		}
+	}
+
+	public static MiNDAgent getAgent() {
+		MiNDAgent ret = null;
+		
+		MiNDHandle hA = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
+		
+		if ( null != hA ) {
+			MiNDHandle hT = Giskard.access(MiNDAccessCommand.Peek, null, hA, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, null);
+			
+			String cn = Giskard.access(MiNDAccessCommand.Peek, null, DUST_BRAIN, DUST_MEM_BRAIN_IMPL, hT);
+			if ( !GiskardUtils.isEmpty(cn) ) {
+				try {
+					ret = (MiNDAgent) Class.forName(cn).newInstance();
+				} catch (Exception e) {
+					Giskard.log("Failed to create agent", cn);
+				}
+			}
+		}
+		
+		// TODO Auto-generated method stub
+		return ret;
 	}
 
 }

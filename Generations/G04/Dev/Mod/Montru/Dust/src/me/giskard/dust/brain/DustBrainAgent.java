@@ -1,8 +1,21 @@
 package me.giskard.dust.brain;
 
+import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.MiNDAgent {
+
+	public static class DialogIO extends DustBrainAgent {
+
+		@Override
+		public MiNDResultType mindAgentStep() throws Exception {
+			String str = Giskard.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_IO_MESSAGE, LANG_MEM_TEXT_STRING);
+			Giskard.log(str);
+
+			return MiNDResultType.Accept;
+		}
+
+	}
 
 //	public static class Reach extends DustBrainAgent {
 //
