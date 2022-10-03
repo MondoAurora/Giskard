@@ -16,11 +16,15 @@ public abstract class Giskard implements GiskardConsts {
 		}
 	}
 
-	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att) {
+	public static MiNDHandle create(MiNDHandle type) {
+		return access(MiNDAccessCommand.Get, null, null, null, type);
+	}
+
+	public static <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att) {
 		return access(cmd, val, ref, att, null);
 	}
 
-	public static <RetType> RetType access(MiNDAccessCommand cmd, RetType val, MiNDHandle ref, MiNDHandle att,
+	public static <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att,
 			Object key) {
 		if ( null == GISKARD ) {
 			GiskardUtils.dump(" ", false, "Giskard.access", cmd, val, ref, att, key);

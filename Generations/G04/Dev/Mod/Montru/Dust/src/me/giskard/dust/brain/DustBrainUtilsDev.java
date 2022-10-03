@@ -6,20 +6,20 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
+import me.giskard.coll.GisCollConsts;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustTokens;
 import me.giskard.tools.GisToolsTranslator;
 
-public class DustBrainUtilsDev implements DustBrainConsts {
-	
-	
+public class DustBrainUtilsDev implements DustBrainConsts, GisCollConsts {
+
 	static class JourneyHandleFormatter implements DustHandleFormatter {
 		DustBrainJourney journey;
-		
+
 		public JourneyHandleFormatter(DustBrainJourney journey) {
 			this.journey = journey;
 		}
-		
+
 		@Override
 		public String toString(DustHandle h) {
 			String hn = journey.access(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
@@ -30,7 +30,6 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
 		}
 	};
-
 
 	private static final GisToolsTranslator<String, MiNDHandle> HANDLETYPE = new GisToolsTranslator<>();
 
@@ -149,25 +148,35 @@ public class DustBrainUtilsDev implements DustBrainConsts {
 		}
 	}
 
+	private static GisCollFactory<String, MiNDAgent> FACT_AGENTS = new GisCollFactory<String, MiNDAgent>(true,
+			new MiNDCreator<String, MiNDAgent>() {
+
+				@Override
+				public MiNDAgent create(String key) {
+					try {
+						return (MiNDAgent) Class.forName(key).newInstance();
+					} catch (Exception e) {
+						Giskard.log("Failed to create agent", key);
+					}
+					return null;
+				}
+
+			});
+
 	public static MiNDAgent getAgent() {
 		MiNDAgent ret = null;
-		
+
 		MiNDHandle hA = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
-		
+
 		if ( null != hA ) {
 			MiNDHandle hT = Giskard.access(MiNDAccessCommand.Peek, null, hA, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, null);
-			
+
 			String cn = Giskard.access(MiNDAccessCommand.Peek, null, DUST_BRAIN, DUST_MEM_BRAIN_IMPL, hT);
 			if ( !GiskardUtils.isEmpty(cn) ) {
-				try {
-					ret = (MiNDAgent) Class.forName(cn).newInstance();
-				} catch (Exception e) {
-					Giskard.log("Failed to create agent", cn);
-				}
+				ret = FACT_AGENTS.get(cn);
 			}
 		}
-		
-		// TODO Auto-generated method stub
+
 		return ret;
 	}
 

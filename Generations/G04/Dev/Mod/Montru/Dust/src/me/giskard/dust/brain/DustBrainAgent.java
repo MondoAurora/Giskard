@@ -17,6 +17,54 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 
 	}
 
+	public static class NarrativeFlow extends DustBrainAgent {
+
+		@Override
+		public MiNDResultType mindAgentStep() throws Exception {
+			MiNDResultType ret;
+			boolean endState = true;
+
+			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT);
+			MiNDHandle hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_FLOW_CURRENT);
+
+			if ( null == hA ) {
+				hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_FLOW_START);
+			}
+
+			Giskard.access(MiNDAccessCommand.Set, hA, null, NARRATIVE_MEM_JOURNEY_AGENT);
+			MiNDAgent a = DustBrainUtilsDev.getAgent();
+
+			if ( null != a ) {
+				try {
+					Giskard.log("Executing agent", a);
+					ret = a.mindAgentStep();
+
+					if ( ret.accept ) {
+						endState = Giskard.access(MiNDAccessCommand.Check, hA, hSelf, NARRATIVE_MEM_FLOW_END);
+						
+						if ( endState ) {
+							ret = MiNDResultType.Accept;							
+						} else {
+							hA = Giskard.access(MiNDAccessCommand.Peek, hA, hA, NARRATIVE_MEM_FLOW_NEXT);
+							Giskard.access(MiNDAccessCommand.Set, hA, hSelf, NARRATIVE_MEM_FLOW_CURRENT);
+							ret = MiNDResultType.Read;
+						}
+					}
+
+				} catch (Throwable t) {
+
+				} finally {
+				}
+			} else {
+				Giskard.log("No agent in the journey");
+			}
+			Giskard.access(MiNDAccessCommand.Set, hSelf, null, NARRATIVE_MEM_JOURNEY_AGENT);
+
+			return endState ? MiNDResultType.Accept : MiNDResultType.Read;
+		}
+
+	}
+
 //	public static class Reach extends DustBrainAgent {
 //
 //		public boolean isLearning(MiNDHandle hMember) {

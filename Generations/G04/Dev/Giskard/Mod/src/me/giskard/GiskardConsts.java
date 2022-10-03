@@ -35,8 +35,8 @@ public interface GiskardConsts {
 		
 		;
 		
-		boolean accept;
-		boolean read;
+		public final boolean accept;
+		public final boolean read;
 		
 		private MiNDResultType(boolean accept, boolean read) {
 			this.accept = accept;

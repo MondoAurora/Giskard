@@ -6,7 +6,6 @@ import me.giskard.GiskardConsts;
 public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgent {
 
 	final DustBrainKnowledge eJourney;
-	DustBrainKnowledge eAgent;
 
 	public DustBrainJourney() {
 		eJourney = new DustBrainKnowledge(null);
@@ -15,18 +14,18 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 	private DustBrainKnowledge resolveHandle(MiNDHandle h) {
 		DustBrainKnowledge ret = null;
 
-//		DustBrainKnowledge from = eJourney.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE,
-//				CollType.Map, NARRATIVE_MEM_JOURNEY_AGENT);
+		MiNDHandle hA = eJourney.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_AGENT, null, null);
 
-		if ( null != eAgent ) {
+		if ( (null != hA) && (h != hA) ) {
+			DustBrainKnowledge eAgent = resolveHandle(hA);
 			MiNDHandle o = eAgent.access(MiNDAccessCommand.Peek, null, h, CollType.One, null);
 			if ( null != o ) {
 				h = o;
 			}
 		}
 
-		for (DustBrainKnowledge from = eJourney; (null == ret) && (null != from); from = from.access(MiNDAccessCommand.Peek,
-				null, GENERIC_MEM_GEN_OWNER, CollType.One, null)) {
+		for (DustBrainKnowledge from = eJourney; (null == ret) && (null != from); from = from.access(MiNDAccessCommand.Peek, null, GENERIC_MEM_GEN_OWNER,
+				CollType.One, null)) {
 			ret = from.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, h);
 		}
 
@@ -47,12 +46,13 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 					ret = e = new DustBrainKnowledge(ref);
 					eJourney.access(MiNDAccessCommand.Insert, ret, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
 					if ( null != key ) {
-						e.access(MiNDAccessCommand.Set, key, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, CollType.One, null);						
+						e.access(MiNDAccessCommand.Set, key, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, CollType.One, null);
 					}
 				}
 				return (RetType) ref;
 			} else {
 				e = eJourney;
+//				e = resolveHandle(att);
 			}
 		} else {
 			e = resolveHandle(ref);
@@ -95,14 +95,6 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 	@Override
 	public MiNDResultType mindAgentStep() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
-
-		if ( null == eAgent ) {
-			MiNDHandle hA = eJourney.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_AGENT, null, null);
-
-			if ( null != hA ) {
-				eAgent = resolveHandle(hA);
-			}
-		}
 
 		MiNDAgent a = DustBrainUtilsDev.getAgent();
 

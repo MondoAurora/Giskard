@@ -66,7 +66,7 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 					}
 
 					if ( null != ret ) {
-						ret.access(MiNDAccessCommand.Set, val, key);
+						ret.access(MiNDAccessCommand.Set, this.val, this.key);
 					}
 				}
 			}
@@ -92,12 +92,12 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				break;
 			case Get:
 				break;
-			case Insert:
-				break;
 			case Peek:
 				ret = GiskardUtils.isEqual(key, this.key) ? this.val : val;
 				break;
+			case Insert:
 			case Set:
+				set(val, key);
 				break;
 			}
 
