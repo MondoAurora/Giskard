@@ -69,15 +69,19 @@ public interface DustTokens extends DustBootConsts {
 	
 	MiNDHandle NARRATIVE_AGT_REACH = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
-	MiNDHandle NARRATIVE_AGT_ATTENTION = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-
 	MiNDHandle NARRATIVE_AGT_FLOW = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_FLOW_AGENTS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_FLOW_START = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_FLOW_END = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_FLOW_CURRENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_FLOW_NEXT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_FLOW_ERRORHANDLERS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+
+	MiNDHandle NARRATIVE_AGT_VISITOR = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_VISITOR_TOVISIT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_VISITOR_INFO = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_VISITOR_ITER_MEM = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_VISITOR_ITER_VAL = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle NARRATIVE_MEM_VISITOR_SEEN = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle NARRATIVE_TAG_ACCESS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_TAG_ACCESS_CHECK = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
@@ -117,12 +121,14 @@ public interface DustTokens extends DustBootConsts {
 
 	MiNDHandle GENERIC_MEM_GEN_OWNER = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle GENERIC_MEM_GEN_REQUIRES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle GENERIC_MEM_GEN_CURSOR = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle GENERIC_TYP_REFERENCE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle GENERIC_MEM_REFERENCE_UNIT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle GENERIC_MEM_REFERENCE_SOURCEID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle GENERIC_TAG_LENIENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle GENERIC_TAG_CONTINUED = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	/////////
 	MiNDHandle LANG_UNI = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);

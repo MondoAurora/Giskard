@@ -10,6 +10,7 @@ public interface GiskardConsts {
 	final int KEY_APPEND = -1;
 	final int KEY_SIZE = -2; // return the item count of a member
 	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
+	final int KEY_ITERATOR = -4;
 
 	enum MiNDAccessCommand {
 		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), //Visit(false), Broadcast(false),

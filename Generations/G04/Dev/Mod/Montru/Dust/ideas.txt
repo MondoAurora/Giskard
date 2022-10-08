@@ -41,7 +41,17 @@ that is,
 
 [[Next]]
 
-serializer format TBD. json: self containing to Idea level / xml is Java internal
+visitor with json export
+ - separate the visit and log format code (there use only the Info)
+ - "continued" flag (for comma)
+ - examine self (info) state when setpping, there you have the needed state info
+ - lock the info; if locked then you are the only logic that can change its content
+
+debug:
+ event level constants with numeric value
+ limit / classification: compare the number
+ agent: set debug level, 
+ create static function to compare level, now return true when asked
 
 [[Typing]]
 
