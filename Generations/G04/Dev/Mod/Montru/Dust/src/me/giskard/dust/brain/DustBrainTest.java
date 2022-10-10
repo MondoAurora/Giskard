@@ -13,6 +13,11 @@ public class DustBrainTest implements DustBrainConsts {
 				DUST_MEM_BRAIN_IMPL, NARRATIVE_AGT_VISITOR);
 	}
 
+	public static void initTest() {
+		initFlow();
+//		initVisit();
+	}
+
 	public static void initHelloWorld() {
 		Giskard.log("DustBrainTest.initHelloWorld()");
 		
@@ -56,7 +61,14 @@ public class DustBrainTest implements DustBrainConsts {
 		
 		MiNDHandle hAgent = Giskard.create(NARRATIVE_AGT_VISITOR);
 		
-		Giskard.access(MiNDAccessCommand.Set, IDEA_UNI, hAgent, NARRATIVE_MEM_VISITOR_TOVISIT);
+		MiNDHandle hMsg1 = Giskard.create(LANG_TYP_TEXT);
+		Giskard.access(MiNDAccessCommand.Set, "Hello, world from MiND! 1111", hMsg1, LANG_MEM_TEXT_STRING);
+		
+		MiNDHandle hMsg2 = Giskard.create(LANG_TYP_TEXT);
+		Giskard.access(MiNDAccessCommand.Set, "Hello, world from MiND! 2222", hMsg2, LANG_MEM_TEXT_STRING);
+
+		Giskard.access(MiNDAccessCommand.Insert, hMsg1, hAgent, NARRATIVE_MEM_VISITOR_TOVISIT, 0);
+		Giskard.access(MiNDAccessCommand.Insert, hMsg2, hAgent, NARRATIVE_MEM_VISITOR_TOVISIT, 1);
 
 		Giskard.access(MiNDAccessCommand.Set, hAgent, null, NARRATIVE_MEM_JOURNEY_AGENT);
 	}

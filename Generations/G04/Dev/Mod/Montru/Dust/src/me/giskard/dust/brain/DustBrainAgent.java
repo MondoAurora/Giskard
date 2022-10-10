@@ -70,6 +70,8 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 	public static class NarrativeVisitor extends DustBrainAgent {
 		@Override
 		public MiNDResultType mindAgentStep() throws Exception {
+			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT);
+
 			Iterator vi = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_ITER_VAL);
 
 			if ( null != vi ) {
@@ -110,7 +112,7 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 
 			if ( null == mi ) {
 				while (null == hCurrent) {
-					hCurrent = Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_TOVISIT, 0);
+					hCurrent = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_VISITOR_TOVISIT, 0);
 					if ( null == hCurrent ) {
 						return MiNDResultType.Reject;
 					}

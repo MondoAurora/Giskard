@@ -1,7 +1,7 @@
 package me.giskard.dust.brain;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,12 +28,68 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 
 	public final <RetType> RetType access(MiNDAccessCommand cmd, Object val, Object key) {
 		changed = false;
-		return accessImpl(cmd, val, key);
+		Object ret = null;
+
+		if ( (cmd == MiNDAccessCommand.Peek) && (key instanceof Integer)
+				&& (0 < Integer.compare(KEY_INFO, (Integer) key)) ) {
+			switch ( (Integer) key ) {
+			case KEY_FORMAT_STRING:
+				ret = toString();
+				break;
+			case KEY_SIZE:
+				ret = getSize();
+				break;
+			case KEY_ITERATOR:
+				ret = getIterator();
+				break;
+			}
+		} else {
+			if ( cmd.creator && (null != val) ) {
+				ValType vt = DustBrainUtils.guessValType(val);
+
+				if ( null == valType ) {
+					valType = vt;
+				} else if ( valType != vt ) {
+					throw new IllegalArgumentException();
+				}
+			}
+
+			ret = accessImpl(cmd, val, key);
+		}
+
+		return (RetType) ret;
 	}
+
+	protected abstract int getSize();
+
+	protected abstract Iterator getIterator();
 
 	protected abstract <RetType> RetType accessImpl(MiNDAccessCommand cmd, Object val, Object key);
 
-	public static class Single extends DustBrainInformation {
+
+	public static class Single extends DustBrainInformation implements Map.Entry {
+		static class SingleIterator implements Iterator {
+			Single single;
+
+			public SingleIterator(Single single) {
+				this.single = single;
+			}
+
+			@Override
+			public boolean hasNext() {
+				return null != single;
+			}
+
+			@Override
+			public Object next() {
+				Object ret = single;
+				single = null;
+				return ret;
+			}
+		}
+
+		private static final Iterator NO_VAL = Collections.emptyIterator();
+
 		Object val;
 		Object key;
 
@@ -44,6 +100,31 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		@Override
 		public CollType getCollType() {
 			return CollType.One;
+		}
+
+		@Override
+		protected int getSize() {
+			return (NO_VAL == val) ? 0 : 1;
+		}
+
+		@Override
+		protected Iterator getIterator() {
+			return (NO_VAL == val) ? NO_VAL : new SingleIterator(this);
+		}
+
+		@Override
+		public Object getKey() {
+			return key;
+		}
+
+		@Override
+		public Object getValue() {
+			return val;
+		}
+
+		@Override
+		public Object setValue(Object value) {
+			throw new IllegalAccessError();
 		}
 
 		public DustBrainInformation optExtend(MiNDAccessCommand cmd, Object val, Object key, CollType ct) {
@@ -89,11 +170,11 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = GiskardUtils.isEqual(val, this.val) && GiskardUtils.isEqual(key, this.key);
 				break;
 			case Delete:
+				val = NO_VAL;
 				break;
 			case Get:
-				break;
 			case Peek:
-				ret = GiskardUtils.isEqual(key, this.key) ? this.val : val;
+				ret = ((NO_VAL == val) || !GiskardUtils.isEqual(key, this.key)) ? val : this.val;
 				break;
 			case Insert:
 			case Set:
@@ -112,8 +193,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 
 	public static abstract class Container<ContType> extends DustBrainInformation {
 		final ContType container;
-		Single current;
-		Iterator iterator;
 
 		protected Container(ContType container) {
 			this.container = container;
@@ -123,32 +202,6 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		public String toString() {
 			return container.toString();
 		}
-
-		void readNext() {
-			current.val = iterator.next();
-			current.key = ((Integer) current.key).intValue() + 1;
-		}
-
-		boolean next() {
-			if ( null == iterator ) {
-				if ( null == current ) {
-					current = new Single(null, -1);
-				} else {
-					current.key = -1;
-				}
-				iterator = getIterator();
-			}
-			
-			if ( iterator.hasNext() ) {
-				readNext();
-				return true;
-			} else {
-				iterator = null;
-				return false;
-			}
-		}
-
-		protected abstract Iterator getIterator();
 
 	}
 
@@ -164,31 +217,68 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		}
 
 		@Override
+		protected int getSize() {
+			return container.size();
+		}
+
+		@Override
 		protected Iterator getIterator() {
 			return container.iterator();
+		}
+
+		private void append(int skipCount, Object val) {
+			for (int i = 0; i < skipCount; ++i) {
+				container.add(null);
+			}
+			container.add(val);
 		}
 
 		@Override
 		protected <RetType> RetType accessImpl(MiNDAccessCommand cmd, Object val, Object key) {
 			Object ret = null;
 			Integer k = (Integer) key;
-			boolean in = (null != k) && (0 <= k) && (k < container.size());
+			int missing = (null == k) ? 0 : k - container.size();
+			boolean in = (null != k) && (0 <= k) && (missing < 0);
 
 			switch ( cmd ) {
 			case Get:
-				ret = in ? container.get(k) : val;
+				if ( in ) {
+					ret = container.get(k);
+				} else {
+					append(missing, val);
+					ret = val;
+				}
 				break;
 			case Insert:
-				container.add(val);
+				if ( in ) {
+					container.add(k, val);
+				} else {
+					append(missing, val);
+				}
 				break;
 			case Peek:
 				ret = in ? container.get(k) : val;
 				break;
 			case Set:
+				if ( in ) {
+					container.set(k, val);
+				} else {
+					append(missing, val);
+				}
 				break;
 			case Check:
+				ret = in && GiskardUtils.isEqual(val, container.get(k));
 				break;
 			case Delete:
+				if ( !container.isEmpty() ) {
+					if ( null == key ) {
+						changed = true;
+						container.clear();
+					} else if ( in ) {
+						changed = true;
+						ret = container.remove(k);
+					}
+				}
 				break;
 			}
 
@@ -208,6 +298,11 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		}
 
 		@Override
+		protected int getSize() {
+			return container.size();
+		}
+
+		@Override
 		protected Iterator getIterator() {
 			return container.iterator();
 		}
@@ -218,17 +313,24 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 
 			switch ( cmd ) {
 			case Get:
-				break;
+			case Set:
 			case Insert:
-				container.add(val);
+				changed = container.add(val);
+				ret = val;
 				break;
 			case Peek:
-				break;
-			case Set:
-				break;
 			case Check:
+				ret = container.contains(val);
 				break;
 			case Delete:
+				if ( !container.isEmpty() ) {
+					if ( null == val ) {
+						changed = true;
+						container.clear();
+					} else {
+						ret = changed = container.remove(val);
+					}
+				}
 				break;
 			}
 
@@ -243,20 +345,18 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		}
 
 		@Override
-		protected Iterator getIterator() {
-			return container.entrySet().iterator();
-		}
-		
-		@Override
-		void readNext() {
-			Map.Entry e = (Map.Entry) iterator.next();
-			current.key = e.getKey();
-			current.val = e.getValue();
+		public CollType getCollType() {
+			return CollType.Map;
 		}
 
 		@Override
-		public CollType getCollType() {
-			return CollType.Map;
+		protected int getSize() {
+			return container.size();
+		}
+
+		@Override
+		protected Iterator getIterator() {
+			return container.entrySet().iterator();
 		}
 
 		@Override
@@ -268,14 +368,29 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = GiskardUtils.isEqual(val, container.get(key));
 				break;
 			case Delete:
-				ret = ((Collection) container).remove(val);
+				if ( !container.isEmpty() ) {
+					if ( null == key ) {
+						changed = true;
+						container.clear();
+					} else {
+						ret = container.remove(key);
+						changed = (null != ret);
+					}
+				}
 				break;
 			case Get:
-				ret = container.get(key);
+				if ( container.containsKey(key) ) {
+					ret = container.get(key);
+				} else {
+					container.put(key, val);
+					ret = val;
+					changed = true;
+				}
 				break;
 			case Set:
 			case Insert:
 				ret = container.put(key, val);
+				changed = !GiskardUtils.isEqual(val, ret);
 				break;
 			case Peek:
 				ret = container.getOrDefault(key, val);
@@ -285,5 +400,4 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			return (RetType) ret;
 		}
 	}
-
 }

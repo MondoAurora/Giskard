@@ -8,9 +8,10 @@ public interface GiskardConsts {
 	String DEF_FORMAT_TIMESTAMP = "YYYYMMdd_HHmmss_SSS";
 
 	final int KEY_APPEND = -1;
-	final int KEY_SIZE = -2; // return the item count of a member
-	final int KEY_FORMAT_STRING = -3; // "toString" of the current member (formatters should be sent into the runtime)
-	final int KEY_ITERATOR = -4;
+	final int KEY_INFO = -10;
+	final int KEY_SIZE = KEY_INFO - 1; // return the item count of a member
+	final int KEY_FORMAT_STRING = KEY_INFO - 2; // "toString" of the current member (formatters should be sent into the runtime)
+	final int KEY_ITERATOR = KEY_INFO - 3;
 
 	enum MiNDAccessCommand {
 		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), //Visit(false), Broadcast(false),
