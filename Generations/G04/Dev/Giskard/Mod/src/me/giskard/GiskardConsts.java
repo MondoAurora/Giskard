@@ -6,13 +6,7 @@ public interface GiskardConsts {
 	String DEF_ENCODING = "UTF-8";
 	String DEF_FORMAT_DATE = "YYYYMMdd";
 	String DEF_FORMAT_TIMESTAMP = "YYYYMMdd_HHmmss_SSS";
-
-	final int KEY_APPEND = -1;
-	final int KEY_INFO = -10;
-	final int KEY_SIZE = KEY_INFO - 1; // return the item count of a member
-	final int KEY_FORMAT_STRING = KEY_INFO - 2; // "toString" of the current member (formatters should be sent into the runtime)
-	final int KEY_ITERATOR = KEY_INFO - 3;
-
+	
 	enum MiNDAccessCommand {
 		Check(false), Peek(false), Get(true), Set(true), Insert(true), Delete(false), //Visit(false), Broadcast(false),
 		
@@ -58,5 +52,22 @@ public interface GiskardConsts {
 		<RetType> RetType access_(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att, Object key);
 		void broadcast_(MiNDHandle event, Object... params);
 	}
+
+	public static class MiNDSpecKey {
+		public final String key;
+		
+		public MiNDSpecKey(String key) {
+			this.key = "SpecKey_" + key;
+		}
+
+		@Override
+		public String toString() {
+			return key;
+		}
+	};
+	
+	final MiNDSpecKey KEY_APPEND = new MiNDSpecKey("Append");
+	final MiNDSpecKey KEY_SIZE = new MiNDSpecKey("Size");
+	final MiNDSpecKey KEY_FORMAT_STRING = new MiNDSpecKey("FormatString");
 
 }

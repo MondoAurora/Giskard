@@ -4,28 +4,28 @@ import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
 
 public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgent {
-
-	final DustBrainKnowledge eJourney;
+	final DustBrainKnowledge localKnowledge;
 
 	public DustBrainJourney() {
-		eJourney = new DustBrainKnowledge(null);
+		localKnowledge = new DustBrainKnowledge(null);
+//		localKnowledge.access(MiNDAccessCommand.Set, localKnowledge, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.One, null);
 	}
 
-	private DustBrainKnowledge resolveHandle(MiNDHandle h) {
+	private DustBrainKnowledge handleToKnowledge(MiNDHandle h) {
 		DustBrainKnowledge ret = null;
 
-		MiNDHandle hA = eJourney.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_AGENT, null, null);
+//		MiNDHandle hAgent = localKnowledge.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_AGENT, null, null);
+		MiNDHandle hAgent = localKnowledge.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_AGENT, CollType.One, null);
 
-		if ( (null != hA) && (h != hA) ) {
-			DustBrainKnowledge eAgent = resolveHandle(hA);
-			MiNDHandle o = eAgent.access(MiNDAccessCommand.Peek, null, h, CollType.One, null);
-			if ( null != o ) {
-				h = o;
+		if ( (null != hAgent) && (h != hAgent) ) {
+			DustBrainKnowledge eAgent = handleToKnowledge(hAgent);
+			Object o = eAgent.access(MiNDAccessCommand.Peek, null, h, CollType.One, null);
+			if ( o instanceof MiNDHandle) {
+				h = (MiNDHandle) o;
 			}
 		}
 
-		for (DustBrainKnowledge from = eJourney; (null == ret) && (null != from); from = from.access(MiNDAccessCommand.Peek, null, GENERIC_MEM_GEN_OWNER,
-				CollType.One, null)) {
+		for (DustBrainKnowledge from = localKnowledge; (null == ret) && (null != from); from = from.access(MiNDAccessCommand.Peek, null, GENERIC_MEM_GEN_OWNER, CollType.One, null)) {
 			ret = from.access(MiNDAccessCommand.Peek, null, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, h);
 		}
 
@@ -40,22 +40,22 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 		if ( null == ref ) {
 			if ( null == att ) {
 				if ( cmd == MiNDAccessCommand.Get ) {
-					long li = eJourney.access(MiNDAccessCommand.Peek, 0L, MODEL_MEM_SOURCE_LASTID, CollType.One, null);
+					long li = localKnowledge.access(MiNDAccessCommand.Peek, 0L, MODEL_MEM_SOURCE_LASTID, CollType.One, null);
 					ref = new DustHandle(--li);
-					eJourney.access(MiNDAccessCommand.Set, li, MODEL_MEM_SOURCE_LASTID, CollType.One, null);
+					localKnowledge.access(MiNDAccessCommand.Set, li, MODEL_MEM_SOURCE_LASTID, CollType.One, null);
 					ret = e = new DustBrainKnowledge(ref);
-					eJourney.access(MiNDAccessCommand.Insert, ret, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
+					localKnowledge.access(MiNDAccessCommand.Insert, ret, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
 					if ( null != key ) {
 						e.access(MiNDAccessCommand.Set, key, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, CollType.One, null);
 					}
 				}
 				return (RetType) ref;
 			} else {
-				e = eJourney;
-//				e = resolveHandle(att);
+				e = localKnowledge;
+//				e = handleToKnowledge(att);
 			}
 		} else {
-			e = resolveHandle(ref);
+			e = handleToKnowledge(ref);
 		}
 
 		boolean call = true;
@@ -76,7 +76,7 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 				e = new DustBrainKnowledge(ref);
 //				if ( null != ref ) 
 			{
-				eJourney.access(MiNDAccessCommand.Insert, e, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
+				localKnowledge.access(MiNDAccessCommand.Insert, e, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, ref);
 			}
 				call = true;
 				break;
@@ -84,8 +84,8 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 		}
 
 		if ( call ) {
-			DustBrainKnowledge a = resolveHandle(att);
-			CollType ct = DustBrainUtils.getCollType(eJourney, a, cmd, key);
+			DustBrainKnowledge a = handleToKnowledge(att);
+			CollType ct = DustBrainUtils.getCollType(localKnowledge, a, cmd, key);
 			ret = e.access(cmd, val, att, ct, key);
 		}
 

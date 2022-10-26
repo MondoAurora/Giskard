@@ -1,24 +1,25 @@
 package me.giskard.dust.brain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 
 @SuppressWarnings({ "unchecked" })
 public class DustBrainKnowledge implements DustBrainConsts {
-
-	private final Map<MiNDHandle, DustBrainInformation> mappedInfo = new HashMap<>();
+	DustBrainInformation.ContMap infoMap = new DustBrainInformation.ContMap();
 
 	public DustBrainKnowledge(MiNDHandle handle) {
-		mappedInfo.put(MODEL_MEM_KNOWLEDGE_HANDLE, new DustBrainInformation.Single(handle, null));
+		infoMap.setValType(ValType.Raw);
+		infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(handle, null), MODEL_MEM_KNOWLEDGE_HANDLE);
 	}
 
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle, CollType ct, Object key) {
-		DustBrainInformation info = mappedInfo.get(handle);
+		DustBrainInformation info = infoMap.access(MiNDAccessCommand.Peek, null, handle);
 		Object ret = null;
 		boolean changed = false;
+
+		if ( null == handle ) {
+			return infoMap.access(cmd, val, key);
+		}
 
 		if ( MODEL_MEM_KNOWLEDGE_TAGS == handle ) {
 			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, (MiNDHandle) val, GENERIC_MEM_GEN_OWNER);
@@ -27,7 +28,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 
 		if ( null == info ) {
 			if ( cmd.creator && (null != val) ) {
-				mappedInfo.put(handle, new DustBrainInformation.Single(val, key));
+				infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(val, key), handle);
 				changed = true;
 			}
 			switch ( cmd ) {
@@ -46,7 +47,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 		} else {
 			DustBrainInformation i2 = info.optExtend(cmd, val, key, ct);
 			if ( null != i2 ) {
-				mappedInfo.put(handle, i2);
+				infoMap.access(MiNDAccessCommand.Set, i2, handle);
 				info = i2;
 			}
 
@@ -55,6 +56,12 @@ public class DustBrainKnowledge implements DustBrainConsts {
 		}
 
 		if ( changed ) {
+//			if ( cmd.creator ) {
+//				access(MiNDAccessCommand.Insert, handle, MODEL_MEM_KNOWLEDGE_MEMBERS);
+//				if ( changed ) {
+//					
+//				}
+//			}
 			// listener notification
 		}
 
@@ -67,10 +74,10 @@ public class DustBrainKnowledge implements DustBrainConsts {
 	public String toString() {
 		try {
 			if ( inToString ) {
-				return GiskardUtils.toString(mappedInfo.get(MODEL_MEM_KNOWLEDGE_HANDLE));
+				return GiskardUtils.toString(infoMap.access(MiNDAccessCommand.Peek, null, MODEL_MEM_KNOWLEDGE_HANDLE));
 			} else {
 				inToString = true;
-				return mappedInfo.toString();
+				return infoMap.toString();
 			}
 		} finally {
 			inToString = false;

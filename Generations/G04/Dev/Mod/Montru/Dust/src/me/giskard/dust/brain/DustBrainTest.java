@@ -14,6 +14,7 @@ public class DustBrainTest implements DustBrainConsts {
 	}
 
 	public static void initTest() {
+//		initHelloWorld();
 		initFlow();
 //		initVisit();
 	}

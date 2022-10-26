@@ -1,6 +1,14 @@
 package me.giskard.dust.brain;
 
+import me.giskard.tools.GisToolsTranslator;
+
 public class DustBrainUtils implements DustBrainConsts {
+	@SuppressWarnings("rawtypes")
+	static final GisToolsTranslator<MiNDHandle, Enum> HANDLE2ENUM = new GisToolsTranslator<>();
+	
+	static void addEnum(MiNDHandle h, Enum<?> e) {
+		HANDLE2ENUM.add(h, e);
+	}
 
 	public static CollType guessCollType(MiNDAccessCommand cmd, Object key) {
 		return (null == key)
@@ -10,7 +18,7 @@ public class DustBrainUtils implements DustBrainConsts {
 
 	public static ValType guessValType(Object val) {
 		if ( null == val ) {
-			return ValType.Unset;
+			return ValType.Any;
 		} else if ( val instanceof Number ) {
 			return Long.class.isAssignableFrom(val.getClass()) ? ValType.Int : ValType.Real;
 		} else {

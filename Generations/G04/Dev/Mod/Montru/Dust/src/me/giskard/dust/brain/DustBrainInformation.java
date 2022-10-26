@@ -21,6 +21,10 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 	public ValType getValType() {
 		return valType;
 	}
+	
+	public void setValType(ValType valType) {
+		this.valType = valType;
+	}
 
 	public DustBrainInformation optExtend(MiNDAccessCommand cmd, Object val, Object key, CollType ct) {
 		return null;
@@ -30,26 +34,32 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 		changed = false;
 		Object ret = null;
 
-		if ( (cmd == MiNDAccessCommand.Peek) && (key instanceof Integer)
-				&& (0 < Integer.compare(KEY_INFO, (Integer) key)) ) {
-			switch ( (Integer) key ) {
-			case KEY_FORMAT_STRING:
-				ret = toString();
-				break;
-			case KEY_SIZE:
+		if ( (cmd == MiNDAccessCommand.Peek) && (key instanceof MiNDSpecKey) ) {
+			if ( KEY_SIZE == key ) {
 				ret = getSize();
-				break;
-			case KEY_ITERATOR:
+			} else if ( KEY_FORMAT_STRING == key ) {
+				ret = toString();
+			} else if ( KEY_ITERATOR == key ) {
 				ret = getIterator();
-				break;
-			}
+			} 
+//			switch ( key ) {
+//			case KEY_FORMAT_STRING:
+//				ret = toString();
+//				break;
+//			case KEY_SIZE:
+//				ret = getSize();
+//				break;
+//			case KEY_ITERATOR:
+//				ret = getIterator();
+//				break;
+//			}
 		} else {
-			if ( cmd.creator && (null != val) ) {
+			if ( cmd.creator && (null != val) && ( valType != ValType.Any ) ) {
 				ValType vt = DustBrainUtils.guessValType(val);
 
 				if ( null == valType ) {
 					valType = vt;
-				} else if ( valType != vt ) {
+				} else if ( valType != vt ){
 					throw new IllegalArgumentException();
 				}
 			}

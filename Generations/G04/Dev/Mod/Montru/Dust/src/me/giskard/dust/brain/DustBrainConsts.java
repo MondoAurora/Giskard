@@ -1,9 +1,11 @@
 package me.giskard.dust.brain;
 
 import me.giskard.dust.DustTokens;
-import me.giskard.tools.GisToolsTranslator;
 
 public interface DustBrainConsts extends DustTokens {
+	
+	final MiNDSpecKey KEY_ITERATOR = new MiNDSpecKey("Iterator");
+
 
 	enum CollType {
 		One, Arr(true), Map(true), Set, //SStack, Queue, Pool,
@@ -21,10 +23,7 @@ public interface DustBrainConsts extends DustTokens {
 	}
 	
 	enum ValType {
-		Unset, Int, Real, Link, Raw
+		Int, Real, Link, Raw, Any
 	}
 	
-	@SuppressWarnings("rawtypes")
-	final GisToolsTranslator<MiNDHandle, Enum> HANDLE2ENUM = new GisToolsTranslator<>();
-
 }

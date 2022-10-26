@@ -21,7 +21,8 @@ public interface DustTokens extends DustBootConsts {
 	MiNDHandle MODEL_MEM_KNOWLEDGE_SOURCEID = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_HANDLE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_PRIMARYTYPE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle MODEL_MEM_KNOWLEDGE_TYPES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+//	MiNDHandle MODEL_MEM_KNOWLEDGE_MEMBERS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+//	MiNDHandle MODEL_MEM_KNOWLEDGE_TYPES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_INFORMATION = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle MODEL_MEM_KNOWLEDGE_TAGS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
@@ -47,6 +48,7 @@ public interface DustTokens extends DustBootConsts {
 	MiNDHandle IDEA_TAG_VALTYPE_RAW = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle IDEA_TAG_VALTYPE_LINK = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle IDEA_TAG_VALTYPE_INT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+	MiNDHandle IDEA_TAG_VALTYPE_ANY = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle IDEA_TAG_COLLTYPE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle IDEA_TAG_COLLTYPE_ONE = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
@@ -59,7 +61,7 @@ public interface DustTokens extends DustBootConsts {
 
 	MiNDHandle NARRATIVE_TYP_AGENT = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_AGENT_REQUEST = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
-	MiNDHandle NARRATIVE_MEM_AGENT_PAR_REFS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
+//	MiNDHandle NARRATIVE_MEM_AGENT_PARAMS = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 
 	MiNDHandle NARRATIVE_AGT_JOURNEY = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
 	MiNDHandle NARRATIVE_MEM_JOURNEY_SOURCES = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);

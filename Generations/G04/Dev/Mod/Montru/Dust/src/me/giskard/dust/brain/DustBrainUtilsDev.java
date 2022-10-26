@@ -43,11 +43,13 @@ public class DustBrainUtilsDev implements DustBrainConsts, GisCollConsts {
 	}
 
 	public static void initBootJourney(GisCollFactory<Long, DustHandle> bootFact, DustBrainJourney e) throws Exception {
+		DustBrainKnowledge journeyKnowledge = e.localKnowledge;
+		
 		for (Long k : bootFact.keys()) {
 			DustHandle dh = (DustHandle) bootFact.peek(k);
 			DustBrainKnowledge be = new DustBrainKnowledge(dh);
-			e.eJourney.access(MiNDAccessCommand.Insert, dh, NARRATIVE_MEM_JOURNEY_HANDLES, CollType.Map, k);
-			e.eJourney.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, dh);
+			journeyKnowledge.access(MiNDAccessCommand.Insert, dh, NARRATIVE_MEM_JOURNEY_HANDLES, CollType.Map, k);
+			journeyKnowledge.access(MiNDAccessCommand.Insert, be, NARRATIVE_MEM_JOURNEY_LOCALKNOWLEDGE, CollType.Map, dh);
 		}
 
 		loadEnums(DustTokens.class, ValType.class, "IDEA_TAG_VALTYPE");
@@ -57,14 +59,14 @@ public class DustBrainUtilsDev implements DustBrainConsts, GisCollConsts {
 		loadEnums(DustTokens.class, MiNDAction.class, "NARRATIVE_TAG_ACTION");
 		loadEnums(DustTokens.class, MiNDResultType.class, "NARRATIVE_TAG_RESULT");
 
-		e.eJourney.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
-		e.eJourney.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
+		journeyKnowledge.access(MiNDAccessCommand.Insert, GENERIC_TAG_LENIENT, MODEL_MEM_KNOWLEDGE_TAGS, CollType.Set, null);
+		journeyKnowledge.access(MiNDAccessCommand.Set, DUST_LANG_BOOT, DUST_MEM_BRAIN_DEF_LANG, CollType.One, null);
 
 		loadHandles(DustTokens.class, DUST_LANG_BOOT);
 
 		DustHandle.FMT = new JourneyHandleFormatter(e);
 
-		Giskard.log(null, "initBrain complete", e.eJourney);
+		Giskard.log(null, "initBrain complete", e);
 	}
 
 	@SuppressWarnings({ "rawtypes" })
@@ -74,7 +76,7 @@ public class DustBrainUtilsDev implements DustBrainConsts, GisCollConsts {
 			try {
 				Field f = handleContainer.getDeclaredField(prefix + "_" + n);
 				MiNDHandle h = (MiNDHandle) f.get(null);
-				HANDLE2ENUM.add(h, (Enum) e);
+				DustBrainUtils.addEnum(h, (Enum) e);
 			} catch (Throwable ex) {
 				Giskard.log(ex, cEnum, n);
 			}
