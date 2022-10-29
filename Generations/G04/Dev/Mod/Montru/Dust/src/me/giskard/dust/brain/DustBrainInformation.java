@@ -1,7 +1,6 @@
 package me.giskard.dust.brain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,18 +40,9 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = toString();
 			} else if ( KEY_ITERATOR == key ) {
 				ret = getIterator();
+			} else if ( KEY_COLLTYPE == key ) {
+				ret = getCollType();
 			} 
-//			switch ( key ) {
-//			case KEY_FORMAT_STRING:
-//				ret = toString();
-//				break;
-//			case KEY_SIZE:
-//				ret = getSize();
-//				break;
-//			case KEY_ITERATOR:
-//				ret = getIterator();
-//				break;
-//			}
 		} else {
 			if ( cmd.creator && (null != val) && ( valType != ValType.Any ) ) {
 				ValType vt = DustBrainUtils.guessValType(val);
@@ -60,7 +50,8 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				if ( null == valType ) {
 					valType = vt;
 				} else if ( valType != vt ){
-					throw new IllegalArgumentException();
+					valType = vt;
+//					throw new IllegalArgumentException();
 				}
 			}
 
@@ -98,18 +89,18 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			}
 		}
 
-		private static final Iterator NO_VAL = Collections.emptyIterator();
-
 		Object val;
 		Object key;
+		CollType ct;
 
-		public Single(Object val, Object key) {
+		public Single(Object val, Object key, CollType ct) {
 			set(val, key);
+			this.ct = ct;
 		}
 
 		@Override
 		public CollType getCollType() {
-			return CollType.One;
+			return ct;
 		}
 
 		@Override
@@ -141,7 +132,7 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			DustBrainInformation ret = null;
 
 			if ( cmd.creator ) {
-				if ( !GiskardUtils.isEqual(val, this.val) || !GiskardUtils.isEqual(key, this.key) ) {
+				if ( !((NO_VAL == this.val) || GiskardUtils.isEqual(val, this.val)) || !GiskardUtils.isEqual(key, this.key) ) {
 					switch ( ct ) {
 					case Arr:
 						ret = new ContArr();
@@ -165,10 +156,14 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			return ret;
 		}
 
-		public void set(Object val, Object key) {
+		public boolean set(Object val, Object key) {
+			if ( GiskardUtils.isEqual(val, this.val) && GiskardUtils.isEqual(key, this.key) ) {
+				return false;
+			}
 			this.val = val;
 			this.key = key;
 			valType = DustBrainUtils.guessValType(val);
+			return true;
 		}
 
 		@Override
@@ -180,15 +175,16 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 				ret = GiskardUtils.isEqual(val, this.val) && GiskardUtils.isEqual(key, this.key);
 				break;
 			case Delete:
-				val = NO_VAL;
+				this.val = NO_VAL;
 				break;
 			case Get:
 			case Peek:
-				ret = ((NO_VAL == val) || !GiskardUtils.isEqual(key, this.key)) ? val : this.val;
+				ret = ((NO_VAL == this.val) || !GiskardUtils.isEqual(key, this.key)) ? val : this.val;
 				break;
 			case Insert:
 			case Set:
-				set(val, key);
+				ret = set(val, key);
+//				ret = true;
 				break;
 			}
 
@@ -286,7 +282,8 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 						container.clear();
 					} else if ( in ) {
 						changed = true;
-						ret = container.remove(k);
+						ret = container.get(k);
+						container.remove((int)k);
 					}
 				}
 				break;
@@ -326,7 +323,7 @@ public abstract class DustBrainInformation implements DustBrainConsts {
 			case Set:
 			case Insert:
 				changed = container.add(val);
-				ret = val;
+				ret = (cmd == MiNDAccessCommand.Insert) ? changed : val ;
 				break;
 			case Peek:
 			case Check:

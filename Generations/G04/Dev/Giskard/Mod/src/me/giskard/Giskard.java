@@ -20,10 +20,6 @@ public abstract class Giskard implements GiskardConsts {
 		return access(MiNDAccessCommand.Get, null, null, null, type);
 	}
 
-	public static <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att) {
-		return access(cmd, val, ref, att, null);
-	}
-
 	public static <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle ref, MiNDHandle att,
 			Object key) {
 		if ( null == GISKARD ) {

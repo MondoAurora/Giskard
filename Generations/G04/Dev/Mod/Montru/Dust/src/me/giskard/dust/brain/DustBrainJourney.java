@@ -84,8 +84,7 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 		}
 
 		if ( call ) {
-			DustBrainKnowledge a = handleToKnowledge(att);
-			CollType ct = DustBrainUtils.getCollType(localKnowledge, a, cmd, key);
+			CollType ct = (null == att) ? CollType.Map : DustBrainUtils.getCollType(localKnowledge, handleToKnowledge(att), cmd, key);
 			ret = e.access(cmd, val, att, ct, key);
 		}
 
@@ -103,7 +102,8 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 				Giskard.log("Executing agent", a);
 				ret = a.mindAgentStep();
 			} catch (Throwable t) {
-
+				Giskard.log("Exception in agent", a);
+				t.printStackTrace();
 			} finally {
 
 			}

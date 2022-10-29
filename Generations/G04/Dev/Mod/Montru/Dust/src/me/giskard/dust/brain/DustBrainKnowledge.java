@@ -9,7 +9,7 @@ public class DustBrainKnowledge implements DustBrainConsts {
 
 	public DustBrainKnowledge(MiNDHandle handle) {
 		infoMap.setValType(ValType.Raw);
-		infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(handle, null), MODEL_MEM_KNOWLEDGE_HANDLE);
+		infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(handle, null, CollType.One), MODEL_MEM_KNOWLEDGE_HANDLE);
 	}
 
 	public <RetType> RetType access(MiNDAccessCommand cmd, Object val, MiNDHandle handle, CollType ct, Object key) {
@@ -18,41 +18,42 @@ public class DustBrainKnowledge implements DustBrainConsts {
 		boolean changed = false;
 
 		if ( null == handle ) {
-			return infoMap.access(cmd, val, key);
-		}
-
-		if ( MODEL_MEM_KNOWLEDGE_TAGS == handle ) {
-			MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, (MiNDHandle) val, GENERIC_MEM_GEN_OWNER);
-			key = (null == tagClass) ? val : tagClass;
-		}
-
-		if ( null == info ) {
-			if ( cmd.creator && (null != val) ) {
-				infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(val, key), handle);
-				changed = true;
-			}
-			switch ( cmd ) {
-			case Check:
-			case Delete:
-				ret = false;
-				break;
-			case Get:
-			case Peek:
-				ret = val;
-				break;
-			case Insert:
-			case Set:
-				break;
-			}
+			ret = (KEY_ITERATOR == key) ? infoMap.container.keySet().iterator() : infoMap.access(cmd, val, key);
 		} else {
-			DustBrainInformation i2 = info.optExtend(cmd, val, key, ct);
-			if ( null != i2 ) {
-				infoMap.access(MiNDAccessCommand.Set, i2, handle);
-				info = i2;
+			if ( (MODEL_MEM_KNOWLEDGE_TAGS == handle) && !(key instanceof MiNDSpecKey) ) {
+				MiNDHandle tagClass = Giskard.access(MiNDAccessCommand.Peek, null, (MiNDHandle) val, GENERIC_MEM_GEN_OWNER, null);
+				key = (null == tagClass) ? val : tagClass;
 			}
 
-			ret = info.access(cmd, val, key);
-			changed = info.changed;
+			if ( null == info ) {
+				if ( cmd.creator && (null != val) ) {
+					infoMap.access(MiNDAccessCommand.Set, new DustBrainInformation.Single(val, key, ct), handle);
+					changed = true;
+				}
+				switch ( cmd ) {
+				case Check:
+				case Delete:
+					ret = false;
+					break;
+				case Get:
+				case Peek:
+					ret = val;
+					break;
+				case Insert:
+				case Set:
+					ret = true;
+					break;
+				}
+			} else {
+				DustBrainInformation i2 = info.optExtend(cmd, val, key, ct);
+				if ( null != i2 ) {
+					infoMap.access(MiNDAccessCommand.Set, i2, handle);
+					info = i2;
+				}
+
+				ret = info.access(cmd, val, key);
+				changed = info.changed;
+			}
 		}
 
 		if ( changed ) {

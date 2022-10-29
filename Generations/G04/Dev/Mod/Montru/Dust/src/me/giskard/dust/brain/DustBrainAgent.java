@@ -12,7 +12,7 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 
 		@Override
 		public MiNDResultType mindAgentStep() throws Exception {
-			String str = Giskard.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_IO_MESSAGE, LANG_MEM_TEXT_STRING);
+			String str = Giskard.access(MiNDAccessCommand.Peek, null, DIALOG_MEM_IO_MESSAGE, LANG_MEM_TEXT_STRING, null);
 			Giskard.log(str);
 
 			return MiNDResultType.Accept;
@@ -26,14 +26,14 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 			MiNDResultType ret;
 			boolean endState = true;
 
-			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT);
-			MiNDHandle hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, GENERIC_MEM_GEN_CURSOR);
+			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
+			MiNDHandle hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, GENERIC_MEM_GEN_CURSOR, null);
 
 			if ( null == hA ) {
-				hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_FLOW_START);
+				hA = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_FLOW_START, null);
 			}
 
-			Giskard.access(MiNDAccessCommand.Set, hA, null, NARRATIVE_MEM_JOURNEY_AGENT);
+			Giskard.access(MiNDAccessCommand.Set, hA, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
 			MiNDAgent a = DustBrainUtilsDev.getAgent();
 
 			if ( null != a ) {
@@ -42,13 +42,13 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 					ret = a.mindAgentStep();
 
 					if ( ret.accept ) {
-						endState = Giskard.access(MiNDAccessCommand.Check, hA, hSelf, NARRATIVE_MEM_FLOW_END);
+						endState = Giskard.access(MiNDAccessCommand.Check, hA, hSelf, NARRATIVE_MEM_FLOW_END, null);
 
 						if ( endState ) {
 							ret = MiNDResultType.Accept;
 						} else {
-							hA = Giskard.access(MiNDAccessCommand.Peek, hA, hA, NARRATIVE_MEM_FLOW_NEXT);
-							Giskard.access(MiNDAccessCommand.Set, hA, hSelf, GENERIC_MEM_GEN_CURSOR);
+							hA = Giskard.access(MiNDAccessCommand.Peek, hA, hA, NARRATIVE_MEM_FLOW_NEXT, null);
+							Giskard.access(MiNDAccessCommand.Set, hA, hSelf, GENERIC_MEM_GEN_CURSOR, null);
 							ret = MiNDResultType.Read;
 						}
 					}
@@ -60,7 +60,7 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 			} else {
 				Giskard.log("No agent in the journey");
 			}
-			Giskard.access(MiNDAccessCommand.Set, hSelf, null, NARRATIVE_MEM_JOURNEY_AGENT);
+			Giskard.access(MiNDAccessCommand.Set, hSelf, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
 
 			return endState ? MiNDResultType.Accept : MiNDResultType.Read;
 		}
@@ -70,17 +70,19 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 	public static class NarrativeVisitor extends DustBrainAgent {
 		@Override
 		public MiNDResultType mindAgentStep() throws Exception {
-			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT);
+			MiNDResultType ret = MiNDResultType.Reject;
+			MiNDHandle hCmd = null;
 
-			Iterator vi = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_ITER_VAL);
+			MiNDHandle hSelf = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
+			Iterator vi = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_VISITOR_ITER_VAL, null);
 
 			if ( null != vi ) {
 				if ( vi.hasNext() ) {
-					Boolean first = Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_PROCESS,
-							NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
-					if ( !first ) {
-						Giskard.access(MiNDAccessCommand.Insert, GENERIC_TAG_CONTINUED, NARRATIVE_MEM_VISITOR_INFO,
-								MODEL_MEM_KNOWLEDGE_TAGS);
+					Boolean cont = Giskard.access(MiNDAccessCommand.Check, NARRATIVE_TAG_ACTION_PROCESS, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+					if ( cont ) {
+						Giskard.access(MiNDAccessCommand.Insert, GENERIC_TAG_CONTINUED, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+					} else {
+						Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_PROCESS, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
 					}
 
 					Object o = vi.next();
@@ -91,67 +93,108 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 						k = e.getKey();
 						o = e.getValue();
 					} else {
-						Long idx = Giskard.access(MiNDAccessCommand.Peek, -1L, NARRATIVE_MEM_VISITOR_INFO,
-								MODEL_MEM_INFORMATION_KEY);
+						Long idx = Giskard.access(MiNDAccessCommand.Peek, -1L, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
 						k = idx + 1;
 					}
 
-					Giskard.access(MiNDAccessCommand.Set, k, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
-					Giskard.access(MiNDAccessCommand.Set, o, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
+					Giskard.access(MiNDAccessCommand.Set, k, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
+					Giskard.access(MiNDAccessCommand.Set, o, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
 				} else {
-					Giskard.access(MiNDAccessCommand.Set, null, null, NARRATIVE_MEM_VISITOR_ITER_VAL);
-					Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_END, NARRATIVE_MEM_VISITOR_INFO,
-							MODEL_MEM_KNOWLEDGE_TAGS);
+					Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
+					Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
+					Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_END, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+					Giskard.access(MiNDAccessCommand.Delete, null, hSelf, NARRATIVE_MEM_VISITOR_ITER_VAL, null);
 				}
-				return MiNDResultType.AcceptRead;
-			}
 
-			Iterator mi = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_ITER_MEM);
-			MiNDHandle hCurrent = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_INFO,
-					GENERIC_MEM_GEN_OWNER);
-
-			if ( null == mi ) {
-				while (null == hCurrent) {
-					hCurrent = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_VISITOR_TOVISIT, 0);
-					if ( null == hCurrent ) {
-						return MiNDResultType.Reject;
-					}
-
-					Boolean newItem = Giskard.access(MiNDAccessCommand.Insert, hCurrent, null, NARRATIVE_MEM_VISITOR_SEEN);
-					if ( !newItem ) {
-						hCurrent = null;
-					} else {
-						Giskard.access(MiNDAccessCommand.Set, hCurrent, null, NARRATIVE_MEM_VISITOR_INFO, GENERIC_MEM_GEN_OWNER);
-						Giskard.access(MiNDAccessCommand.Set, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_MEMBER);
-						Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_BEGIN, NARRATIVE_MEM_VISITOR_INFO,
-								MODEL_MEM_KNOWLEDGE_TAGS);
-
-						mi = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, null, KEY_ITERATOR);
-						Giskard.access(MiNDAccessCommand.Set, mi, null, NARRATIVE_MEM_VISITOR_ITER_MEM);
-
-						return MiNDResultType.AcceptRead;
-					}
-				}
+				ret = MiNDResultType.AcceptRead;
 			} else {
-				MiNDHandle hMember = (MiNDHandle) mi.next();
-				Giskard.access(MiNDAccessCommand.Set, hMember, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_MEMBER);
-				vi = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, hMember, KEY_ITERATOR);
+				Iterator mi = Giskard.access(MiNDAccessCommand.Peek, null, hSelf, NARRATIVE_MEM_VISITOR_ITER_MEM, null);
+				MiNDHandle hCurrent = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_INFO, GENERIC_MEM_GEN_OWNER);
 
-				MiNDHandle hCmd;
-				if ( null == vi ) {
-					Object o = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, hMember);
-					Giskard.access(MiNDAccessCommand.Set, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
-					Giskard.access(MiNDAccessCommand.Set, o, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
-					hCmd = NARRATIVE_TAG_ACTION_PROCESS;
+				boolean toInit = (null == hCurrent);
+
+				if ( null == mi ) {
+					while ((null == mi) && (0 < (Integer) Giskard.access(MiNDAccessCommand.Peek, 0, hSelf, NARRATIVE_MEM_VISITOR_TOVISIT, KEY_SIZE))) {
+						if ( null == hCurrent ) {
+							hCurrent = Giskard.access(MiNDAccessCommand.Delete, null, hSelf, NARRATIVE_MEM_VISITOR_TOVISIT, 0);
+						}
+						
+						Boolean newItem = Giskard.access(MiNDAccessCommand.Insert, hCurrent, hSelf, NARRATIVE_MEM_VISITOR_SEEN, null);
+						if ( newItem ) {
+							mi = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, null, KEY_ITERATOR);
+
+							if ( mi.hasNext() ) {
+								Giskard.access(MiNDAccessCommand.Set, hCurrent, null, NARRATIVE_MEM_VISITOR_INFO, GENERIC_MEM_GEN_OWNER);
+								Giskard.access(MiNDAccessCommand.Set, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_MEMBER);
+
+								if ( toInit ) {
+									hCmd = NARRATIVE_TAG_ACTION_INIT;
+									Giskard.access(MiNDAccessCommand.Delete, hCurrent, hSelf, NARRATIVE_MEM_VISITOR_SEEN, null);
+								} else {
+									hCmd = NARRATIVE_TAG_ACTION_BEGIN;
+									Giskard.access(MiNDAccessCommand.Set, mi, hSelf, NARRATIVE_MEM_VISITOR_ITER_MEM, null);
+								}
+								Giskard.access(MiNDAccessCommand.Insert, hCmd, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+
+								ret = MiNDResultType.AcceptRead;
+							} else {
+								mi = null;
+							}
+						} else {
+							hCurrent = null;
+						}
+					}
+
+					if ( !toInit && (null == mi) ) {
+						Giskard.access(MiNDAccessCommand.Set, null, null, NARRATIVE_MEM_VISITOR_INFO, GENERIC_MEM_GEN_OWNER);
+						Giskard.access(MiNDAccessCommand.Insert, NARRATIVE_TAG_ACTION_RELEASE, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+
+						ret = MiNDResultType.Accept;
+					}
 				} else {
-					Giskard.access(MiNDAccessCommand.Set, vi, null, NARRATIVE_MEM_VISITOR_ITER_VAL);
-					hCmd = NARRATIVE_TAG_ACTION_BEGIN;
-				}
+					ret = MiNDResultType.AcceptRead;
+					MiNDHandle hMember = null;
+					Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_KEY);
 
-				Giskard.access(MiNDAccessCommand.Insert, hCmd, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+					while (mi.hasNext() && (null == hCmd)) {
+						hMember = (MiNDHandle) mi.next();
+						CollType ct = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, hMember, KEY_COLLTYPE);
+
+						if ( ct == CollType.One ) {
+							Object o = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, hMember, null);
+
+							if ( NO_VAL != o ) {
+								Giskard.access(MiNDAccessCommand.Set, o, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
+								hCmd = NARRATIVE_TAG_ACTION_PROCESS;
+							}
+						} else {
+							vi = Giskard.access(MiNDAccessCommand.Peek, null, hCurrent, hMember, KEY_ITERATOR);
+							if ( vi.hasNext() ) {
+								Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
+								Giskard.access(MiNDAccessCommand.Set, vi, hSelf, NARRATIVE_MEM_VISITOR_ITER_VAL, null);
+								hCmd = NARRATIVE_TAG_ACTION_BEGIN;
+							}
+						}
+					}
+
+					if ( null == hCmd ) {
+						Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_VALUE);
+						Giskard.access(MiNDAccessCommand.Delete, null, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_MEMBER);
+						Giskard.access(MiNDAccessCommand.Delete, null, hSelf, NARRATIVE_MEM_VISITOR_ITER_MEM, null);
+						hCmd = NARRATIVE_TAG_ACTION_END;
+					} else {
+						Giskard.access(MiNDAccessCommand.Set, hMember, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_INFORMATION_MEMBER);
+					}
+
+					Giskard.access(MiNDAccessCommand.Insert, hCmd, null, NARRATIVE_MEM_VISITOR_INFO, MODEL_MEM_KNOWLEDGE_TAGS);
+				}
 			}
 
-			return MiNDResultType.Reject;
+			String str = Giskard.access(MiNDAccessCommand.Peek, null, null, NARRATIVE_MEM_VISITOR_INFO, KEY_FORMAT_STRING);
+
+			Giskard.log(str);
+
+			return ret;
 		}
 	}
 

@@ -24,9 +24,7 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 	@Override
 	public void initBootJourney(GisCollFactory<Long, DustHandle> bootFact) throws Exception {
-		DustBrainUtilsDev.initBootJourney(bootFact, journey);
-		
-		DustBrainTest.initTest();		
+		DustBrainUtilsDev.initBootJourney(bootFact, journey);		
 	}
 	
 	@Override
