@@ -1,6 +1,5 @@
-[[Tasks]]
+\\\ BACKLOG \\\
 Split language by units (DSL), unit loader to keep in Brain/Boot
-xml reader, serializer?
 text reader / writer
 binary reader/writer
 DB?
@@ -8,7 +7,21 @@ GUI?
 console / socket / http?
 notification - logging
 
-[[Incoming]]
+Event
+ agents: clock
+ tags: year, month, day, hour, ...
+ formatter?
+ 
+ISO
+ date format
+
+debug:
+ event level constants with numeric value
+ limit / classification: compare the number
+ agent: set debug level, 
+ create static function to compare level, now return true when asked
+
+\\\\\ INCOMING \\\\\
 
 Dust: (? or still narrative?)
  - boot,
@@ -22,43 +35,52 @@ Dust:
 Narrative
  Agent instance - BAU, agent clone in Journey if state changes
  
-Event
- agents: clock
- tags: year, month, day, hour, ...
- formatter?
- 
-ISO
- date format
-
 The state machine representation of a Turing machine is simple: the answer to "what next"
 that is, 
  -> sequence (algorithm step), 
  -> iterate (follow the content of a collection) or 
  -> select (jump table)
- 
- flat visitor as a separate logic with stack. OMG.
- and it seems I can't serialize without it.
+  
+Information, Knowledge, Journey - all should become Agents 
+  > single entry "access" = agent.process
+  > single state (map)
 
-[[Next]]
+Lock the info; if locked then you are the only logic that can change its content
 
-visitor with json export
+Json export - as a text renderer?
  - separate the visit and log format code (there use only the Info)
+
+=====================================<<<<<< EDGE >>>>>>
+
+[ Semantic net viewer in Swing ]
+Geometry
+ - info for free drawing
+ 
+Layout
+ - GridBag as the source
+ 
+UI core
+ - General DSL without Swing dependency
+ - Window
+ - Tab panel
+ - TableMode
+ - Geometry-based drawing panel
+ 
+Montru
+ - Property panel: displays the selected knowledge node
+ 
+[ Separate modules ]
+ -> token sources to a separate shared resource(!) project (like ExtLib before)
+ -> project dependency on that project, otherwise independent
+ -> ant scripts to copy referred tokens only
+ ??? versioning ??? - should be done by separate folders with internal class path
+ can be done BEFORE Montru
+ 
+////// BOILING ////////
+
+Visitor as a separate logic with pool.
  - "continued" flag (for comma)
- - examine self (info) state when setpping, there you have the needed state info
- - lock the info; if locked then you are the only logic that can change its content
-
-debug:
- event level constants with numeric value
- limit / classification: compare the number
- agent: set debug level, 
- create static function to compare level, now return true when asked
-
-[[Typing]]
-
-
-[[Boiling]]
-
-Drop "visit" access? no callback (i.e. function) on my side?
+ - self contains state info
 
 Model
  types: source, reference
@@ -67,18 +89,21 @@ Narrative
  types: journey, agent, variant
  tags: cmd, state, response
 
-improve access in Entity
-path resolution
 language to the MiND, update the loader
 
 
-[[Settled]]
+/// SETTLED ///
++ the key is "information", the possible forms of "value": follow CollType
++ entity - tag management to be self containing -> store in map, key is parent
++ token name refactor to <unit>_<type>_<name>; update loader
+
+
+====== DROPPED ======
+- improve access in Entity, path resolution
+- "visit" access (no callback (i.e. function) on my side!)
+- entity
+- pool, queue, stack
 - XML: having native support in Java is less important vs the fact that JSON is a perfect match. 
 - visitor: NO such thing, Attention Agent took over.
 
-+ drop entity
-+ the key is "information", the possible forms of "value": follow CollType
-- pool, queue, stack
-+ entity - tag management to be self containing -> store in map, key is parent
-+ token name refactor to <unit>_<type>_<name>; update loader
 
