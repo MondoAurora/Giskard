@@ -14,7 +14,7 @@ public abstract class GiskardApp implements GiskardAppConsts {
 	public static void main(String[] args) throws Exception {
 		ARGS = Arrays.copyOf(args, args.length);
 		
-		InputStream is = ClassLoader.getSystemResourceAsStream("GiskardBootModules.cfg");
+		InputStream is = ClassLoader.getSystemResourceAsStream(GISKARD_APP_CONFIG_NAME);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		String line;
 		while ((line = reader.readLine()) != null) {

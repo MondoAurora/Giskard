@@ -2,6 +2,7 @@ package me.giskard.dust.brain;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.dust.dev.DustDevUtils;
 
 public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgent {
 	final DustBrainKnowledge localKnowledge;
@@ -95,7 +96,7 @@ public class DustBrainJourney implements DustBrainConsts, GiskardConsts.MiNDAgen
 	public MiNDResultType mindAgentStep() throws Exception {
 		MiNDResultType ret = MiNDResultType.Accept;
 
-		MiNDAgent a = DustBrainUtilsDev.getAgent();
+		MiNDAgent a = DustDevUtils.getAgent();
 
 		if ( null != a ) {
 			try {

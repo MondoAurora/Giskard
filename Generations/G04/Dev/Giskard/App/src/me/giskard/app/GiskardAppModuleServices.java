@@ -44,8 +44,8 @@ public class GiskardAppModuleServices implements GiskardAppConsts {
 
 		try {
 			if ( null == fMod ) {
-				fMod = GiskardAppUtils.getBrainFolder(GISKARD_SEGMENT_MOD);
-				fExt = GiskardAppUtils.getBrainFolder(GISKARD_SEGMENT_EXT);
+				fMod = GiskardAppUtils.getLocalFolder(GISKARD_PATH_BRAIN, GISKARD_SEGMENT_MOD);
+				fExt = GiskardAppUtils.getLocalFolder(GISKARD_PATH_BRAIN, GISKARD_SEGMENT_EXT);
 			}
 
 			URL urlModMain = GiskardAppUtils.optGetFileUrl(fMod, moduleId + EXT_JAR);

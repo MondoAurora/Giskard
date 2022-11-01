@@ -3,10 +3,28 @@ package me.giskard.dust.brain;
 import me.giskard.tools.GisToolsTranslator;
 
 public class DustBrainUtils implements DustBrainConsts {
+	static class JourneyHandleFormatter implements DustHandleFormatter {
+		DustBrainJourney journey;
+
+		public JourneyHandleFormatter(DustBrainJourney journey) {
+			this.journey = journey;
+		}
+
+		@Override
+		public String toString(DustHandle h) {
+			String hn = journey.access(MiNDAccessCommand.Peek, null, DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, h);
+			DustHandle hpt = journey.access(MiNDAccessCommand.Peek, null, h, MODEL_MEM_KNOWLEDGE_PRIMARYTYPE, null);
+			String ptn = (null == hpt) ? "???"
+					: journey.access(MiNDAccessCommand.Peek, "???", DUST_LANG_BOOT, LANG_MEM_LANG_TERMINOLOGY, hpt);
+
+			return (null == hn) ? DEF_FMT.toString(h) : ptn + ":" + hn;
+		}
+	};
+
 	@SuppressWarnings("rawtypes")
 	static final GisToolsTranslator<MiNDHandle, Enum> HANDLE2ENUM = new GisToolsTranslator<>();
 	
-	static void addEnum(MiNDHandle h, Enum<?> e) {
+	public static void addEnum(MiNDHandle h, Enum<?> e) {
 		HANDLE2ENUM.add(h, e);
 	}
 

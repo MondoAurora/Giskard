@@ -13,11 +13,11 @@ public class GiskardAppUtils extends GiskardUtils implements GiskardAppConsts {
 		return isEmpty(root) ? System.getenv("GISKARD_ECLIPSE") : root;
 	}
 	
-	public static File getBrainFolder(String segment) {
+	public static File getLocalFolder(String role, String segment) {
 		String root = GiskardAppUtils.getRoot();
 
 		if ( !GiskardAppUtils.isEmpty(root) ) {
-			return new File(root + GISKARD_PATH_BRAIN + segment);
+			return new File(root + role + segment);
 		} else {
 			throw new RuntimeException("GISKARD local filesystem root not found!");
 		}

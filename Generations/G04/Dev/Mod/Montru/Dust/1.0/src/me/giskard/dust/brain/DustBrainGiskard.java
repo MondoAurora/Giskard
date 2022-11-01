@@ -1,8 +1,10 @@
 package me.giskard.dust.brain;
 
+import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustBootConsts;
+import me.giskard.dust.dev.DustDevUtils;
 
 public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGiskard {
 
@@ -24,7 +26,9 @@ public class DustBrainGiskard implements DustBrainConsts, DustBootConsts.DustGis
 
 	@Override
 	public void initBootJourney(GisCollFactory<Long, DustHandle> bootFact) throws Exception {
-		DustBrainUtilsDev.initBootJourney(bootFact, journey);		
+		DustDevUtils.initBootJourney(bootFact, journey.localKnowledge);		
+		DustHandle.FMT = new DustBrainUtils.JourneyHandleFormatter(journey);
+		Giskard.log(null, "initBrain complete", journey.localKnowledge);
 	}
 	
 	@Override

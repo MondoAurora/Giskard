@@ -5,6 +5,7 @@ import java.util.Map;
 
 import me.giskard.Giskard;
 import me.giskard.GiskardConsts;
+import me.giskard.dust.dev.DustDevUtils;
 
 public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.MiNDAgent {
 
@@ -34,7 +35,7 @@ public abstract class DustBrainAgent implements DustBrainConsts, GiskardConsts.M
 			}
 
 			Giskard.access(MiNDAccessCommand.Set, hA, null, NARRATIVE_MEM_JOURNEY_AGENT, null);
-			MiNDAgent a = DustBrainUtilsDev.getAgent();
+			MiNDAgent a = DustDevUtils.getAgent();
 
 			if ( null != a ) {
 				try {

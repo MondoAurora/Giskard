@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GiskardApp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MontruModDust"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MontruModTest01"/>
+	<classpathentry kind="lib" path="/Users/lkedves/git/Giskard/Generations/G04/Bin/Mod/Montru_Dust_1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/lkedves/git/Giskard/Generations/G04/Bin/Mod/Montru_Test01_1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/lkedves/git/Giskard/Generations/G04/Bin/App/Montru_Test01_1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
