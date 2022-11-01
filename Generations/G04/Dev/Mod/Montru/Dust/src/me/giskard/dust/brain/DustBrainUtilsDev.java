@@ -1,11 +1,19 @@
 package me.giskard.dust.brain;
 
+import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+
 import me.giskard.Giskard;
 import me.giskard.GiskardUtils;
+import me.giskard.app.GiskardAppModuleServices;
 import me.giskard.coll.GisCollConsts;
 import me.giskard.coll.GisCollFactory;
 import me.giskard.dust.DustTokens;
@@ -181,5 +189,25 @@ public class DustBrainUtilsDev implements DustBrainConsts, GisCollConsts {
 
 		return ret;
 	}
+	
+	public static void compile(String vendor, String mod, String ver) {
+		String modId = GiskardAppModuleServices.getModuleId(vendor, mod, ver);
+		
+    // Get a compiler tool
+    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+    
+    String srcdir = System.getProperty("test.src");
+    File source = new File(srcdir, "T6378728.java");
+    StandardJavaFileManager fm = compiler.getStandardFileManager(null, null, null);
 
+    CompilationTask task =
+        compiler.getTask(null,
+                         fm,
+                         null,
+                         Arrays.asList("-proc:only"),
+                         null,
+                         fm.getJavaFileObjectsFromFiles(Arrays.asList(source)));
+    if (!task.call())
+        throw new RuntimeException("Unexpected compilation failure");
+}
 }

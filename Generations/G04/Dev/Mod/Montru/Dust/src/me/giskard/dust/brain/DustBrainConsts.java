@@ -3,9 +3,10 @@ package me.giskard.dust.brain;
 import java.util.Collections;
 import java.util.Iterator;
 
+import me.giskard.dust.DustBootConsts;
 import me.giskard.dust.DustTokens;
 
-public interface DustBrainConsts extends DustTokens {
+public interface DustBrainConsts extends DustTokens, DustBootConsts {
 	
 	final MiNDSpecKey KEY_ITERATOR = new MiNDSpecKey("Iterator");
 	final MiNDSpecKey KEY_COLLTYPE = new MiNDSpecKey("CollType");

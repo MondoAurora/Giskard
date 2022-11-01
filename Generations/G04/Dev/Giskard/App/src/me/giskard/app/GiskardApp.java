@@ -33,6 +33,12 @@ public abstract class GiskardApp implements GiskardAppConsts {
 			}
 		}
 		
+		@SuppressWarnings("unchecked")
+		Class<MiNDAgent> appAgent = (Class<MiNDAgent>) Class.forName("me.giskard.app.GiskardAppAgent");
+		if ( null != appAgent ) {
+			appAgent.newInstance().mindAgentStep();
+		}
+		
 		String ret = Giskard.run() ? "Success" : "Reject";
 
 		Giskard.log(null, ret, "no exception, exiting GiskardApp.main() :-)");

@@ -21,8 +21,6 @@ public class DustModule implements DustTokens, GiskardConsts.MiNDAgent {
 		Giskard.access(MiNDAccessCommand.Insert, DustBrainAgent.NarrativeVisitor.class.getName(), DUST_BRAIN, 
 				DUST_MEM_BRAIN_IMPL, NARRATIVE_AGT_VISITOR);
 
-		DustBrainTest.initTest();		
-
 		return MiNDResultType.Accept;
 	}
 

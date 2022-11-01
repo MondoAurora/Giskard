@@ -1,8 +1,9 @@
 package me.giskard.dust;
 
 import me.giskard.Giskard;
+import me.giskard.GiskardConsts;
 
-public interface DustTokens extends DustBootConsts {
+public interface DustTokens extends GiskardConsts {
 
 	//////////
 	MiNDHandle MODEL_UNI = Giskard.access(MiNDAccessCommand.Get, null, null, null, null);
