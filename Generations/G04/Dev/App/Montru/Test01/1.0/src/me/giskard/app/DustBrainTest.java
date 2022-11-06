@@ -1,10 +1,9 @@
 package me.giskard.app;
 
 import me.giskard.Giskard;
-import me.giskard.dust.DustBootConsts;
-import me.giskard.dust.DustTokens;
+import me.giskard.dust.brain.DustBrainTokens;
 
-public class DustBrainTest implements DustTokens, DustBootConsts {
+public class DustBrainTest implements DustBrainTokens {
 	
 	public static void initTest() {
 //		initHelloWorld();

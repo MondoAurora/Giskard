@@ -4,8 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardApp"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MontruModTest01"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MontruModForge"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MontruModBrain"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
