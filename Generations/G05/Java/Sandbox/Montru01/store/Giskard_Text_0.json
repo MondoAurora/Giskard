@@ -1,0 +1,29 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0",
+		"references": {
+			"mind": "Giskard_MiND_0"
+		}
+	},
+	{
+		"uniText": {
+			"memKnowledgeType": "typUnit",
+			"memKnowledgeUnit": "uniText"
+		},
+		"typText": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniText"
+		},
+		"memTextString": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typText",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			},
+			"memKnowledgeUnit": "uniText"
+		},
+
+		"___": {}
+	}
+]

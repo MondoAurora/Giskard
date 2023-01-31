@@ -1,0 +1,406 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"uniModel": {
+			"memKnowledgeType": "typUnit",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"typReference": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memRefSource": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typReference",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memRefId": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typReference",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"typVar": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memMemberVarValue": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typVar",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"typKnowledge": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memKnowledgeType": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memKnowledgeUnit": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memKnowledgeTags": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memKnowledgeOwner": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memKnowledgeRequires": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"typContext": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniModel"
+		},
+		"memContextLocal": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typContext",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniModel"
+		},
+		"typUnit": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeRequires": [
+				"typContext"
+			],
+			"memKnowledgeUnit": "uniModel"
+		},
+		
+		"uniIdea": {
+			"memKnowledgeType": "typUnit",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"typType": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"typMember": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"memMemberLinkType": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typMember",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typType",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"memMemberDefVal": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typMember",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typVar",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"typTag": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniIdea"
+		},
+
+		"tagMandatory": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		
+		"tagValtype": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagValtypeInt": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagValtype",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagValtypeReal": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagValtype",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagValtypeLink": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagValtype",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagValtypeBin": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagValtype",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		
+		"tagColl": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagCollSet": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagColl",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagCollArr": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagColl",
+			"memKnowledgeUnit": "uniIdea"
+		},
+		"tagCollMap": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagColl",
+			"memKnowledgeUnit": "uniIdea"
+		},
+				
+		"uniNarrative": {
+			"memKnowledgeType": "typUnit",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"typAgentLogic": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"typAgent": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"memAgentLogic": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typAgent",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typAgentLogic",
+			"memKnowledgeUnit": "uniModel"
+		},
+
+		"typCall": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeRequires": [
+				"typContext"
+			],
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		
+		"tagAcccess": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessCheck": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessPeek": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessCommit": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessGet": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessSet": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessInsert": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagAcccessDelete": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAccess",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		
+		"tagAction": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagActionInit": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAction",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagActionBegin": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAction",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagActionProcess": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAction",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagActionEnd": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAction",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagActionRelease": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagAction",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+
+		"tagStatus": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusWaiting": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusProcessing": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusReject": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusRead": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusReadAccept": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusAccept": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+		"tagStatusError": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus",
+			"memKnowledgeUnit": "uniNarrative"
+		},
+
+		"uniDialog": {
+			"memKnowledgeType": "typUnit",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"typCommit": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memCommitId": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typCommit",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			},
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"typListener": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memListenerTarget": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typListener",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memListenerHandler": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typListener",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typCall",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"typDialog": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memDialogAgents": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typDialog",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typAgent",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memDialogListeners": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typDialog",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typListener",
+			"memKnowledgeUnit": "uniDialog"
+		},
+		"memDialogLaunch": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typDialog",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typCall",
+			"memKnowledgeUnit": "uniDialog"
+		},
+
+		"___": {}
+	}
+]
