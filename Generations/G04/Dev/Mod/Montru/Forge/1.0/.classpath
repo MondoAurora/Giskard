@@ -5,5 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardMod"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GiskardApp"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MontruModBrain"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

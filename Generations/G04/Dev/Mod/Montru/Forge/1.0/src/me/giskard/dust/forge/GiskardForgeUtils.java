@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,6 +67,18 @@ public class GiskardForgeUtils implements GiskardForgeConsts {
 
 		File fModRoot = GiskardAppUtils.getLocalFolder(GISKARD_PATH_DEV, segment);
 		File fModDir = new File(fModRoot, modPath);
+
+		File dLib = new File(fModDir, "lib");
+		
+		if ( dLib.isDirectory() ) {
+			File fExt = new File(GiskardAppUtils.getLocalFolder(GISKARD_PATH_BRAIN, GISKARD_SEGMENT_EXT), modId);
+			
+			fExt.mkdirs();
+
+			for ( File f : dLib.listFiles() ) {
+				Files.copy(f.toPath(), new File(fExt, f.getName()).toPath());
+			}
+		}
 
 		File dSrc = new File(fModDir, "src");
 

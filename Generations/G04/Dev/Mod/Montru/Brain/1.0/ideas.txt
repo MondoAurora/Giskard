@@ -49,6 +49,21 @@ Lock the info; if locked then you are the only logic that can change its content
 
 Json export - as a text renderer?
  - separate the visit and log format code (there use only the Info)
+ 
+Seeing the power of the Forge
+ - describe the current module structure as knowledge
+ - Forge: create the ForgeJava agent(s?), visit the network, check file system
+ - Text: generate from constant fragments + formatter + renderer + narrative (meaning, in a Flow)
+ - create and update Eclipse project structure
+ - generate Java code into a "gen" source folder (avoid all other input sources and parsing at boot)
+
+Listener types
+ - Interceptor: online change by member, synch, can block downstream
+ - Monitor: online, by member, asynch, passive
+ - Processor: on Commit, synch, may update ("function call")
+ - Follower: on Commit, asynch, passive
+-> automatic commit on exit if changed
+-> begin/end pair on the listener side depending on its state (read / ready)
 
 =====================================<<<<<< EDGE >>>>>>
 
