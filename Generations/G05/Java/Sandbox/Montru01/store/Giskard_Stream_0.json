@@ -8,7 +8,39 @@
 		}
 	},
 	{
+		"typStream": {
+			"memKnowledgeType": "typType"
+		},
+		"tagStreamType": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagStreamTypeChar": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStreamType"
+		},
+		"tagStreamTypeBin": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStreamType"
+		},
 		
+		"streamOut": {
+			"memKnowledgeType": "typStream",
+			"memKnowledgeTags": {
+				"tagStreamType": "tagStreamTypeChar"
+			}
+		},
+
+		"agtWriter": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memWriterTarget": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtWriter",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			}
+		},
+
 
 		"___": {}
 	}

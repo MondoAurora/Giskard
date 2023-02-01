@@ -4,58 +4,40 @@
 		"version": "1.0"
 	},
 	{
-		"uniModel": {
-			"memKnowledgeType": "typUnit",
-			"memKnowledgeUnit": "uniModel"
-		},
+		"_Model_": "=======================_Model_=======================",
 		"typReference": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniModel"
+			"memKnowledgeType": "typType"
 		},
 		"memRefSource": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typReference",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"memRefId": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typReference",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeBin"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"typVar": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniModel"
+			"memKnowledgeType": "typType"
 		},
 		"memMemberVarValue": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typVar",
-			"memKnowledgeUnit": "uniModel"
+			"memKnowledgeOwner": "typVar"
 		},
 		"typKnowledge": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniModel"
+			"memKnowledgeType": "typType"
 		},
 		"memKnowledgeType": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
-		},
-		"memKnowledgeUnit": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typKnowledge",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"memKnowledgeTags": {
 			"memKnowledgeType": "typMember",
@@ -63,16 +45,14 @@
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"memKnowledgeOwner": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"memKnowledgeRequires": {
 			"memKnowledgeType": "typMember",
@@ -80,40 +60,17 @@
 			"memKnowledgeTags": {
 				"tagColl": "tagCollSet",
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
+			}
 		},
 		"typContext": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniModel"
+			"memKnowledgeType": "typType"
 		},
-		"memContextLocal": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typContext",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniModel"
-		},
-		"typUnit": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeRequires": [
-				"typContext"
-			],
-			"memKnowledgeUnit": "uniModel"
-		},
-		
-		"uniIdea": {
-			"memKnowledgeType": "typUnit",
-			"memKnowledgeUnit": "uniIdea"
-		},
+		"_Idea_": "=======================_Idea_=======================",
 		"typType": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typType"
 		},
 		"typMember": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typType"
 		},
 		"memMemberLinkType": {
 			"memKnowledgeType": "typMember",
@@ -121,8 +78,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typType",
-			"memKnowledgeUnit": "uniIdea"
+			"memMemberLinkType": "typType"
 		},
 		"memMemberDefVal": {
 			"memKnowledgeType": "typMember",
@@ -130,75 +86,54 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typVar",
-			"memKnowledgeUnit": "uniIdea"
+			"memMemberLinkType": "typVar"
 		},
 		"typTag": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typType"
 		},
-
 		"tagMandatory": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typTag"
 		},
-		
 		"tagValtype": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typTag"
 		},
 		"tagValtypeInt": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagValtype",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagValtype"
 		},
 		"tagValtypeReal": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagValtype",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagValtype"
 		},
 		"tagValtypeLink": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagValtype",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagValtype"
 		},
 		"tagValtypeBin": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagValtype",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagValtype"
 		},
-		
 		"tagColl": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeType": "typTag"
 		},
 		"tagCollSet": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagColl",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagColl"
 		},
 		"tagCollArr": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagColl",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagColl"
 		},
 		"tagCollMap": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagColl",
-			"memKnowledgeUnit": "uniIdea"
+			"memKnowledgeOwner": "tagColl"
 		},
-				
-		"uniNarrative": {
-			"memKnowledgeType": "typUnit",
-			"memKnowledgeUnit": "uniNarrative"
-		},
-		"typAgentLogic": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniNarrative"
+		"_Narrative_": "===================_Narrative_===========================",
+		"typLogic": {
+			"memKnowledgeType": "typType"
 		},
 		"typAgent": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeType": "typType"
 		},
 		"memAgentLogic": {
 			"memKnowledgeType": "typMember",
@@ -206,155 +141,114 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typAgentLogic",
-			"memKnowledgeUnit": "uniModel"
-		},
-
-		"typCall": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeRequires": [
-				"typContext"
-			],
-			"memKnowledgeUnit": "uniNarrative"
+			"memMemberLinkType": "typLogic"
 		},
 		
 		"tagAcccess": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeType": "typTag"
 		},
 		"tagAcccessCheck": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessPeek": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessCommit": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessGet": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessSet": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessInsert": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
 		"tagAcccessDelete": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAccess",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAccess"
 		},
-		
 		"tagAction": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeType": "typTag"
 		},
 		"tagActionInit": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAction",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAction"
 		},
 		"tagActionBegin": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAction",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAction"
 		},
 		"tagActionProcess": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAction",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAction"
 		},
 		"tagActionEnd": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAction",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAction"
 		},
 		"tagActionRelease": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagAction",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagAction"
 		},
-
 		"tagStatus": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeType": "typTag"
 		},
 		"tagStatusWaiting": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusProcessing": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusReject": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusRead": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusReadAccept": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusAccept": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
 		"tagStatusError": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagStatus",
-			"memKnowledgeUnit": "uniNarrative"
+			"memKnowledgeOwner": "tagStatus"
 		},
-
-		"uniDialog": {
-			"memKnowledgeType": "typUnit",
-			"memKnowledgeUnit": "uniDialog"
-		},
+		"_Dialog_": "======================_Dialog_========================",
 		"typCommit": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniDialog"
+			"memKnowledgeType": "typType"
 		},
 		"memCommitId": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typCommit",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeInt"
-			},
-			"memKnowledgeUnit": "uniDialog"
+			}
 		},
 		"typListener": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniDialog"
+			"memKnowledgeType": "typType"
 		},
 		"memListenerTarget": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typListener",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
-			},
-			"memKnowledgeUnit": "uniDialog"
+			}
 		},
 		"memListenerHandler": {
 			"memKnowledgeType": "typMember",
@@ -363,22 +257,19 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typCall",
-			"memKnowledgeUnit": "uniDialog"
+			"memMemberLinkType": "typCall"
 		},
 		"typDialog": {
-			"memKnowledgeType": "typType",
-			"memKnowledgeUnit": "uniDialog"
+			"memKnowledgeType": "typType"
 		},
 		"memDialogAgents": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typDialog",
 			"memKnowledgeTags": {
-				"tagColl": "tagCollMap",
+				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typAgent",
-			"memKnowledgeUnit": "uniDialog"
+			"memMemberLinkType": "typAgent"
 		},
 		"memDialogListeners": {
 			"memKnowledgeType": "typMember",
@@ -387,8 +278,7 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typListener",
-			"memKnowledgeUnit": "uniDialog"
+			"memMemberLinkType": "typListener"
 		},
 		"memDialogLaunch": {
 			"memKnowledgeType": "typMember",
@@ -397,10 +287,8 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "typCall",
-			"memKnowledgeUnit": "uniDialog"
+			"memMemberLinkType": "typCall"
 		},
-
-		"___": {}
+		"_End_": "____________"
 	}
 ]

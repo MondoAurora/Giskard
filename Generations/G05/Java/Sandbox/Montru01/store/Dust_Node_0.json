@@ -8,6 +8,66 @@
 		}
 	},
 	{
+		"typImplementation": {
+			"memKnowledgeType": "typType"
+		},
+		"memImplementationLogic": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typImplementation",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typLogic"
+		},
+		"memImplementationBinary": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typImplementation",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			}
+		},
 		
+		"typModule": {
+			"memKnowledgeType": "typType"
+		},
+		"memModuleImplementations": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typModule",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typImplementation"
+		},
+
+		"agtResolver": {
+			"memKnowledgeType": "typLogic"
+		},
+
+		"agtApp": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typDialog"
+			]
+		},
+		"memAppResolver": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "agtResolver"
+		},
+		"memAppModules": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typModule"
+		},
+
+		"_End_": "____________"
 	}
 ]
