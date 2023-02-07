@@ -1,0 +1,33 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Giskard"
+		},
+		"ctxMiND": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "MiND",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"typText": {
+			"memKnowledgeType": "typType"
+		},
+		"memTextString": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typText",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
+		"___": {}
+	}
+]

@@ -5,23 +5,11 @@
 	},
 	{
 		"_Model_": "=======================_Model_=======================",
-		"typReference": {
+		
+		"typContext": {
 			"memKnowledgeType": "typType"
 		},
-		"memRefSource": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typReference",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			}
-		},
-		"memRefId": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typReference",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
-		},
+
 		"typVar": {
 			"memKnowledgeType": "typType"
 		},
@@ -29,14 +17,29 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typVar"
 		},
+
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
+		},
+		"memKnowledgeCommit": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			}
 		},
 		"memKnowledgeType": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
+			}
+		},
+		"memKnowledgeToken": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
 			}
 		},
 		"memKnowledgeTags": {
@@ -62,8 +65,62 @@
 				"tagValtype": "tagValtypeLink"
 			}
 		},
-		"typContext": {
+		
+		"typPublisher": {
 			"memKnowledgeType": "typType"
+		},
+		
+		"typPublished": {
+			"memKnowledgeType": "typType"
+		},
+		"memKnowledgePublisher": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typPublisher"
+		},
+		"memPublishedVersionMajor": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			}
+		},
+		"memPublishedVersionMinor": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			}
+		},
+		
+		"tagPubtype": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagPubtypeContext": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagPubtype"
+		},
+				
+		"typRef": {
+			"memKnowledgeType": "typType"
+		},
+		"memRefRemoteContext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typRef",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typContext"
+		},
+		"memRefRemoteId": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typRef",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
 		},
 		"_Idea_": "=======================_Idea_=======================",
 		"typType": {
@@ -230,16 +287,7 @@
 			"memKnowledgeOwner": "tagStatus"
 		},
 		"_Dialog_": "======================_Dialog_========================",
-		"typCommit": {
-			"memKnowledgeType": "typType"
-		},
-		"memCommitId": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typCommit",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeInt"
-			}
-		},
+
 		"typListener": {
 			"memKnowledgeType": "typType"
 		},

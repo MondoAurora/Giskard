@@ -1,0 +1,117 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Giskard"
+		},
+		"ctxMiND": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "MiND",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"ctxStream": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Stream",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+
+		"typImplementation": {
+			"memKnowledgeType": "typType"
+		},
+		"memImplementationLogic": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typImplementation",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typLogic"
+		},
+		"memImplementationBinary": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typImplementation",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			}
+		},
+		
+		"typModule": {
+			"memKnowledgeType": "typType"
+		},
+		"memModuleImplementations": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typModule",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typImplementation"
+		},
+		"tagPubtypeModule": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagPubtype"
+		},
+
+
+		"agtApp": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typDialog"
+			]
+		},
+		"memAppConfig": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memAppStreamProvider": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "agtStreamProvider"
+		},
+		"memAppStreamPortal": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "agtStreamPortal"
+		},
+		"memAppApi": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typModule"
+		},
+		"memAppModules": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typModule"
+		},
+
+		"_End_": "____________"
+	}
+]

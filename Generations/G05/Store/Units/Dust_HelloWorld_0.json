@@ -1,0 +1,138 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Giskard"
+		},
+		"ctxMiND": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "MiND",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"ctxStream": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Stream",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"ctxText": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Text",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		
+		"pubDust": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Dust"
+		},
+		"ctxBrain": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "Brain",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"ctxBrainJava": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "BrainJava",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"modApi": {
+			"memKnowledgeType": "typModule",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "Api",
+			"memPublishedVersionMajor": 1,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeModule"
+			}
+		},
+		"modBrain": {
+			"memKnowledgeType": "typModule",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "Brain",
+			"memPublishedVersionMajor": 1,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeModule"
+			}
+		},
+		
+		"appStreamRoot": {
+			"memKnowledgeType": "typStream",
+			"memStreamPath": "../../Store/Units"
+		},
+		"appStreamProv": {
+			"memKnowledgeType": "agtStreamProviderLocal",
+			"memStreamProviderLocalRoot": "appStreamRoot"
+		},
+		
+		"appJson": {
+			"memKnowledgeType": "agtStreamEndpointJson",
+			"memStreamEndpointCondition":"*.json"
+		},
+		"appStreamPort": {
+			"memKnowledgeType": "agtStreamPortal",
+			"memStreamPortalEndpoints": [
+				"appJson"
+			]
+		},
+		
+		"message": {
+			"memKnowledgeType": "typText",
+			"memTextString": "Hello, World!"
+		},
+		"appLog": {
+			"memKnowledgeType": "typAgent",
+			"memAgentDef": "agtStreamEndpointTextLine",
+			"memStreamEndpointStream": "streamOut"
+		},
+		"lsnrLog": {
+			"memKnowledgeType": "typListener",
+			"memListenerTarget": "message",
+			"memListenerHandler": [
+				"appLog"
+			]
+		},
+		
+		"main": {
+			"memKnowledgeType": "agtApp",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "HelloWorld",
+			"memPublishedVersionMajor": 1,
+			"memAppStreamProvider" : "appStreamProv",
+			"memAppStreamPortal": "appStreamPort",
+			"memAppApi" : "modApi",
+			"memAppModules": [
+				"modBrain"
+			],
+			"memDialogAgents": [
+				"agtLog"
+			],
+			"memDialogListeners": [
+				"lsnrLog"
+			]
+		},
+		
+		"___": {}
+	}
+]

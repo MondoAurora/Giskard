@@ -1,0 +1,145 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Giskard"
+		},
+		"ctxMiND": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "MiND",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		"ctxStream": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Stream",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		
+		"pubDust": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Dust"
+		},
+		"ctxBrain": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubDust",
+			"memKnowledgeToken": "Brain",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		
+		"typJavaClass": {
+			"memKnowledgeType": "typType"
+		},
+		"memJavaClassName": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typJavaClass",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
+		"javaApp": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		"implApp": {
+			"memKnowledgeType": "typImplementation",
+			"memImplementationLogic": "agtApp",
+			"memImplementationBinary": "javaApp"
+		},
+		
+		"javaLog": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		"implLog": {
+			"memKnowledgeType": "typImplementation",
+			"memImplementationLogic": "agtLog",
+			"memImplementationBinary": "javaLog"
+		},
+		
+		"agtStreamProviderLocal": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires": [
+				"agtStreamProvider"
+			]
+		},
+		"memStreamProviderLocalRoot": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtStreamProviderLocal",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typStream"
+		},
+
+		"javaStreamProviderLocal": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		"implStreamProviderLocal": {
+			"memKnowledgeType": "typImplementation",
+			"memImplementationLogic": "agtStreamProvider",
+			"memImplementationBinary": "javaStreamProviderLocal"
+		},
+		
+		"agtStreamEndpointJson": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires": [
+				"agtStreamEndpoint"
+			]
+		},
+		"javaStreamEndpointJson": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		"implStreamEndpointJson": {
+			"memKnowledgeType": "typImplementation",
+			"memImplementationLogic": "agtStreamEndpointJson",
+			"memImplementationBinary": "javaStreamEndpointJson"
+		},
+		
+		"agtStreamEndpointTextLine": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires": [
+				"agtStreamEndpoint"
+			]
+		},
+		"javaStreamEndpointTextLine": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		"implStreamEndpointTextLine": {
+			"memKnowledgeType": "typImplementation",
+			"memImplementationLogic": "agtStreamEndpointTextLine",
+			"memImplementationBinary": "javaStreamEndpointTextLine"
+		},
+		
+		"modDustJava": {
+			"memKnowledgeType": "typModule",
+			"memModuleImplementations": [
+				"implApp",
+				"implLog",
+				"implStreamProviderLocal",
+				"implStreamEndpointJson",
+				"implStreamEndpointTextLine"
+			]
+		},
+		
+		"_End_": "____________"
+	}
+]

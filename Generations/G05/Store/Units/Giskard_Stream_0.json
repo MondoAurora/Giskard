@@ -1,0 +1,97 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeToken": "Giskard"
+		},
+		"ctxMiND": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "MiND",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+		
+		"typStream": {
+			"memKnowledgeType": "typType"
+		},
+		"memStreamRoot": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typStream",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typStream"
+		},
+		"memStreamPath": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typStream",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		
+		"tagStreamType": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagStreamTypeChar": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStreamType"
+		},
+		"tagStreamTypeBin": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStreamType"
+		},
+		
+		"streamOut": {
+			"memKnowledgeType": "typStream",
+			"memKnowledgeTags": {
+				"tagStreamType": "tagStreamTypeChar"
+			}
+		},
+		
+		"agtStreamProvider": {
+			"memKnowledgeType": "typLogic"
+		},
+
+		
+		"agtStreamEndpoint": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memStreamEndpointStream": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtStreamEndpoint",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typStream"
+		},
+		"memStreamEndpointCondition": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typEndpointAssignment",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+				
+		"agtStreamPortal": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memStreamPortalEndpoints": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtStreamPortal",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "agtStreamEndpoint"
+		},
+		"___": {}
+	}
+]
