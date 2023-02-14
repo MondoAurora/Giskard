@@ -77,9 +77,13 @@
 			}
 		},
 		
+		"localStoreFolder": {
+			"memKnowledgeType": "typVar",
+			"memMemberVarValue": "../../Store/Units"
+		},
 		"appStreamRoot": {
 			"memKnowledgeType": "typStream",
-			"memStreamPath": "../../Store/Units"
+			"memStreamPath": "localStoreFolder"
 		},
 		"appStreamProv": {
 			"memKnowledgeType": "agtStreamProviderLocal",
