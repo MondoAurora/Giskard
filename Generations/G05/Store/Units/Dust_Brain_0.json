@@ -26,25 +26,6 @@
 				"tagPubtype": "tagPubtypeContext"
 			}
 		},
-
-		"typImplementation": {
-			"memKnowledgeType": "typType"
-		},
-		"memImplementationLogic": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typImplementation",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			},
-			"memMemberLinkType": "typLogic"
-		},
-		"memImplementationBinary": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typImplementation",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			}
-		},
 		
 		"typModule": {
 			"memKnowledgeType": "typType"
@@ -53,9 +34,10 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typModule",
 			"memKnowledgeTags": {
-				"tagColl": "tagCollSet",
+				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeLink"
 			},
+			"memMemberKeyType": "typAgent",
 			"memMemberLinkType": "typImplementation"
 		},
 		"tagPubtypeModule": {
@@ -64,23 +46,35 @@
 		},
 
 
-		"agtApp": {
-			"memKnowledgeType": "typLogic",
+		"agtBrain": {
+			"memKnowledgeType": "typLogic"
+		},
+
+		"typApp": {
+			"memKnowledgeType": "typType",
 			"memKnowledgeRequires" : [
 				"typDialog"
 			]
 		},
 		"memAppConfig": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeBin"
 			}
 		},
+		"memAppBrain": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typApp",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "agtBrain"
+		},
 		"memAppStreamProvider": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
@@ -88,7 +82,7 @@
 		},
 		"memAppStreamPortal": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
@@ -96,7 +90,7 @@
 		},
 		"memAppApi": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
@@ -104,7 +98,7 @@
 		},
 		"memAppModules": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtApp",
+			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollSet",
 				"tagValtype": "tagValtypeLink"

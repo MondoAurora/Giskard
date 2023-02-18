@@ -137,6 +137,14 @@
 			},
 			"memMemberLinkType": "typType"
 		},
+		"memMemberKeyType": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typMember",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typType"
+		},
 		"memMemberDefVal": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typMember",
@@ -307,6 +315,27 @@
 			},
 			"memMemberLinkType": "typCall"
 		},
+		
+		"tagListener": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagListenerInterceptor": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagListener"
+		},
+		"tagListenerMonitor": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagListener"
+		},
+		"tagListenerProcessor": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagListener"
+		},
+		"tagListenerFollower": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagListener"
+		},
+		
 		"typDialog": {
 			"memKnowledgeType": "typType"
 		},

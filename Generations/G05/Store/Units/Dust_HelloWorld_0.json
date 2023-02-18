@@ -67,10 +67,10 @@
 				"tagPubtype": "tagPubtypeModule"
 			}
 		},
-		"modBrain": {
+		"modBrainJava": {
 			"memKnowledgeType": "typModule",
 			"memKnowledgePublisher": "pubDust",
-			"memKnowledgeToken": "Brain",
+			"memKnowledgeToken": "BrainJava",
 			"memPublishedVersionMajor": 1,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeModule"
@@ -79,22 +79,26 @@
 		
 		"localStoreFolder": {
 			"memKnowledgeType": "typVar",
-			"memMemberVarValue": "../../Store/Units"
+			"memMemberVarValue": "../../Store"
 		},
 		"appStreamRoot": {
 			"memKnowledgeType": "typStream",
 			"memStreamPath": "localStoreFolder"
 		},
-		"appStreamProv": {
+		"appStreamProvider": {
 			"memKnowledgeType": "agtStreamProviderLocal",
-			"memStreamProviderLocalRoot": "appStreamRoot"
+			"memStreamProviderLocalRoot": "appStreamRoot",
+			"memStreamProviderContentRoots": {
+				"typContext" : "Units",
+				"typModule" : "Impl/Java/lib"
+			}
 		},
 		
 		"appJson": {
 			"memKnowledgeType": "agtStreamEndpointJson",
 			"memStreamEndpointCondition":"*.json"
 		},
-		"appStreamPort": {
+		"appStreamPortal": {
 			"memKnowledgeType": "agtStreamPortal",
 			"memStreamPortalEndpoints": [
 				"appJson"
@@ -119,15 +123,16 @@
 		},
 		
 		"main": {
-			"memKnowledgeType": "agtApp",
+			"memKnowledgeType": "typApp",
 			"memKnowledgePublisher": "pubDust",
 			"memKnowledgeToken": "HelloWorld",
 			"memPublishedVersionMajor": 1,
-			"memAppStreamProvider" : "appStreamProv",
-			"memAppStreamPortal": "appStreamPort",
+			"memAppBrain": "agtBrain",
+			"memAppStreamProvider" : "appStreamProvider",
+			"memAppStreamPortal": "appStreamPortal",
 			"memAppApi" : "modApi",
 			"memAppModules": [
-				"modBrain"
+				"modBrainJava"
 			],
 			"memDialogAgents": [
 				"agtLog"

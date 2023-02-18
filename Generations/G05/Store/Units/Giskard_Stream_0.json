@@ -59,6 +59,13 @@
 		"agtStreamProvider": {
 			"memKnowledgeType": "typLogic"
 		},
+		"memStreamProviderContentRoots": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtStreamProvider",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap"
+			}
+		},
 
 		
 		"agtStreamEndpoint": {

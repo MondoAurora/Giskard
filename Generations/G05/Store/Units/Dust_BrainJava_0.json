@@ -52,24 +52,33 @@
 			}
 		},
 
-		"javaApp": {
-			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+		"typJavaObject": {
+			"memKnowledgeType": "typType"
 		},
-		"implApp": {
-			"memKnowledgeType": "typImplementation",
-			"memImplementationLogic": "agtApp",
-			"memImplementationBinary": "javaApp"
+		"memJavaObClass": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typJavaObject",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typJavaClass"
+		},
+		"memJavaObInstance": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typJavaObject",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
+		"javaBrain": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "me.giskard.dust.mod.brain.DustBrain"
 		},
 		
 		"javaLog": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
-		},
-		"implLog": {
-			"memKnowledgeType": "typImplementation",
-			"memImplementationLogic": "agtLog",
-			"memImplementationBinary": "javaLog"
 		},
 		
 		"agtStreamProviderLocal": {
@@ -91,11 +100,6 @@
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
-		"implStreamProviderLocal": {
-			"memKnowledgeType": "typImplementation",
-			"memImplementationLogic": "agtStreamProvider",
-			"memImplementationBinary": "javaStreamProviderLocal"
-		},
 		
 		"agtStreamEndpointJson": {
 			"memKnowledgeType": "typLogic",
@@ -106,11 +110,6 @@
 		"javaStreamEndpointJson": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
-		},
-		"implStreamEndpointJson": {
-			"memKnowledgeType": "typImplementation",
-			"memImplementationLogic": "agtStreamEndpointJson",
-			"memImplementationBinary": "javaStreamEndpointJson"
 		},
 		
 		"agtStreamEndpointTextLine": {
@@ -123,21 +122,22 @@
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
-		"implStreamEndpointTextLine": {
-			"memKnowledgeType": "typImplementation",
-			"memImplementationLogic": "agtStreamEndpointTextLine",
-			"memImplementationBinary": "javaStreamEndpointTextLine"
+		
+		"javaStreamPortal": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
 		},
 		
 		"modDustJava": {
 			"memKnowledgeType": "typModule",
-			"memModuleImplementations": [
-				"implApp",
-				"implLog",
-				"implStreamProviderLocal",
-				"implStreamEndpointJson",
-				"implStreamEndpointTextLine"
-			]
+			"memModuleImplementations": {
+				"agtBrain" : "javaBrain",
+				"agtLog": "javaLog",
+				"agtStreamPortal": "javaStreamPortal",
+				"agtStreamProvider": "javaStreamProviderLocal",
+				"agtStreamEndpointJson" : "javaStreamEndpointJson",
+				"agtStreamEndpointTextLine" : "javaStreamEndpointTextLine"
+			}
 		},
 		
 		"_End_": "____________"
