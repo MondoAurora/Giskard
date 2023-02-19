@@ -2,6 +2,7 @@ package me.giskard.mind;
 
 public interface GiskardConsts {
 	String EXT_JAR = ".jar";
+	String SEP = "_";
 	
 	enum MindValType {
 		Int, Real, Link, Bin,
@@ -32,6 +33,8 @@ public interface GiskardConsts {
 	};
 
 	interface MindHandle {
+		Object getId();
+		String getAlias();
 	};
 
 	interface MindAgent {

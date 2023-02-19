@@ -9,6 +9,29 @@
 		"typContext": {
 			"memKnowledgeType": "typType"
 		},
+		"memContextHandles": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typContext",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memContextNextId": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typContext",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memContextLocalKnowledge": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typContext",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeLink"
+			}
+		},
 
 		"typVar": {
 			"memKnowledgeType": "typType"
@@ -33,6 +56,13 @@
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
+			}
+		},
+		"memKnowledgeHandle": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
 			}
 		},
 		"memKnowledgeToken": {
@@ -152,6 +182,14 @@
 				"tagValtype": "tagValtypeLink"
 			},
 			"memMemberLinkType": "typVar"
+		},
+		"memMemberAgent": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typMember",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typAgent"
 		},
 		"typTag": {
 			"memKnowledgeType": "typType"
@@ -334,6 +372,14 @@
 		"tagListenerFollower": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagListener"
+		},
+		
+		"agtMediator": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memMediatorMedium": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtMediator"
 		},
 		
 		"typDialog": {

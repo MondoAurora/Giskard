@@ -95,12 +95,12 @@
 		},
 		
 		"appJson": {
-			"memKnowledgeType": "agtStreamEndpointJson",
-			"memStreamEndpointCondition":"*.json"
+			"memKnowledgeType": "agtStreamMediatorJson",
+			"memStreamMediatorCondition":"*.json"
 		},
 		"appStreamPortal": {
 			"memKnowledgeType": "agtStreamPortal",
-			"memStreamPortalEndpoints": [
+			"memStreamPortalMediators": [
 				"appJson"
 			]
 		},
@@ -111,8 +111,8 @@
 		},
 		"appLog": {
 			"memKnowledgeType": "typAgent",
-			"memAgentDef": "agtStreamEndpointTextLine",
-			"memStreamEndpointStream": "streamOut"
+			"memAgentDef": "agtStreamMediatorTextLine",
+			"memStreamMediatorStream": "streamOut"
 		},
 		"lsnrLog": {
 			"memKnowledgeType": "typListener",
@@ -141,7 +141,14 @@
 				"lsnrLog"
 			]
 		},
+				
+		"theBrain" : {
+			"memBrainDialogs": [
+				"main"
+			]
+		},
 		
+
 		"___": {}
 	}
 ]

@@ -68,20 +68,23 @@
 		},
 
 		
-		"agtStreamEndpoint": {
-			"memKnowledgeType": "typLogic"
+		"agtStreamMediator": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires": [
+				"agtMediator"
+			]
 		},
-		"memStreamEndpointStream": {
+		"memStreamMediatorStream": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtStreamEndpoint",
+			"memKnowledgeOwner": "agtStreamMediator",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeLink"
 			},
 			"memMemberLinkType": "typStream"
 		},
-		"memStreamEndpointCondition": {
+		"memStreamMediatorCondition": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typEndpointAssignment",
+			"memKnowledgeOwner": "typMediatorAssignment",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeBin"
 			}
@@ -90,14 +93,14 @@
 		"agtStreamPortal": {
 			"memKnowledgeType": "typLogic"
 		},
-		"memStreamPortalEndpoints": {
+		"memStreamPortalMediators": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "agtStreamPortal",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeLink"
 			},
-			"memMemberLinkType": "agtStreamEndpoint"
+			"memMemberLinkType": "agtStreamMediator"
 		},
 		"___": {}
 	}

@@ -27,6 +27,46 @@
 			}
 		},
 		
+		"typThread": {
+			"memKnowledgeType": "typType"
+		},
+		"memThreadContext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typThread",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memThreadStack": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typThread",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr",
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
+		"agtBrain": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memBrainDialogs": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtBrain",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			},
+			"memMemberLinkType": "typDialog"
+		},
+		"memBrainThreads": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "agtBrain",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
 		"typModule": {
 			"memKnowledgeType": "typType"
 		},
@@ -43,11 +83,6 @@
 		"tagPubtypeModule": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagPubtype"
-		},
-
-
-		"agtBrain": {
-			"memKnowledgeType": "typLogic"
 		},
 
 		"typApp": {
@@ -106,6 +141,10 @@
 			"memMemberLinkType": "typModule"
 		},
 
+		"theBrain" : {
+			"memKnowledgeType": "agtJavaBrain"
+		},
+		
 		"_End_": "____________"
 	}
 ]

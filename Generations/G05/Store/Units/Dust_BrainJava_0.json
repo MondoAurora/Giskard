@@ -101,24 +101,24 @@
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"agtStreamEndpointJson": {
+		"agtStreamMediatorJson": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeRequires": [
-				"agtStreamEndpoint"
+				"agtStreamMediator"
 			]
 		},
-		"javaStreamEndpointJson": {
+		"javaStreamMediatorJson": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"agtStreamEndpointTextLine": {
+		"agtStreamMediatorTextLine": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeRequires": [
-				"agtStreamEndpoint"
+				"agtStreamMediator"
 			]
 		},
-		"javaStreamEndpointTextLine": {
+		"javaStreamMediatorTextLine": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
@@ -135,8 +135,8 @@
 				"agtLog": "javaLog",
 				"agtStreamPortal": "javaStreamPortal",
 				"agtStreamProvider": "javaStreamProviderLocal",
-				"agtStreamEndpointJson" : "javaStreamEndpointJson",
-				"agtStreamEndpointTextLine" : "javaStreamEndpointTextLine"
+				"agtStreamMediatorJson" : "javaStreamMediatorJson",
+				"agtStreamMediatorTextLine" : "javaStreamMediatorTextLine"
 			}
 		},
 		

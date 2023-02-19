@@ -1,10 +1,5 @@
 package me.giskard.mind;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-
 public class GiskardUtils implements GiskardConsts {
 	
 	public static boolean isEqual(Object o1, Object o2) {
@@ -58,28 +53,6 @@ public class GiskardUtils implements GiskardConsts {
 		if ( null != sb ) {
 			System.out.println(sb);
 		}
-	}
-
-
-	public static ClassLoader getClassLoader(String brainModuleName, String modulePath) throws Exception {
-		ArrayList<URL> urls = new ArrayList<>();
-	
-		File f = new File(modulePath, brainModuleName + EXT_JAR);
-		urls.add(f.toURI().toURL());
-	
-		File dir = new File(modulePath, brainModuleName);
-		if ( dir.isDirectory() ) {
-			for (File fLib : dir.listFiles()) {
-				if ( fLib.isFile() && fLib.getName().endsWith(EXT_JAR) ) {
-					urls.add(fLib.toURI().toURL());
-				}
-			}
-		}
-	
-		URL[] uu = new URL[urls.size()];
-		uu = urls.toArray(uu);
-	
-		return new URLClassLoader(uu, ClassLoader.getSystemClassLoader());
 	}
 
 }

@@ -4,28 +4,28 @@ public class GiskardMind implements GiskardConsts {
 
 	private static MindBrain BRAIN = null;
 
-	@SuppressWarnings("unchecked")
-	public static void initBrain(String publisher, String module, int version, String modulePath, String brainClassName) throws Exception {
+	static void initBrain(MindBrain brain) throws Exception {
 		if ( null != BRAIN ) {
 			GiskardException.wrap(null, "Brain already set");
+		} else {
+			BRAIN = brain;
+			
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				@Override
+				public void run() {
+					releaseBrain();
+				}
+			});
 		}
-
-		Class<MindBrain> cBrain = null;
-
-		try {
-			cBrain = (Class<MindBrain>) Class.forName(brainClassName);
-		} catch (Throwable e) {
-			ClassLoader cl = GiskardUtils.getClassLoader(module, modulePath);
-			cBrain = (Class<MindBrain>) cl.loadClass(brainClassName);
-		}
-		
-		BRAIN = cBrain.getConstructor().newInstance();
-		
-		BRAIN.agentExecAction(MindAction.Init);
 	}
-
-	public static void launch() {
-		BRAIN.agentExecAction(MindAction.Begin);
+	
+	public static synchronized void releaseBrain() {
+		if ( null != BRAIN ) {
+			BRAIN.agentExecAction(MindAction.End);
+			BRAIN.agentExecAction(MindAction.Release);
+			
+			BRAIN = null;
+		}
 	}
 
 	public static <RetType> RetType access(MindAccess cmd, Object val, Object root, Object... path) {
