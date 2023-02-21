@@ -122,12 +122,11 @@
 			]
 		},
 		
-		"main": {
+		"appMain": {
 			"memKnowledgeType": "typApp",
 			"memKnowledgePublisher": "pubDust",
 			"memKnowledgeToken": "HelloWorld",
 			"memPublishedVersionMajor": 1,
-			"memAppBrain": "agtBrain",
 			"memAppStreamProvider" : "appStreamProvider",
 			"memAppStreamPortal": "appStreamPortal",
 			"memAppApi" : "modApi",
@@ -144,7 +143,7 @@
 				
 		"theBrain" : {
 			"memBrainDialogs": [
-				"main"
+				"appMain"
 			]
 		},
 		

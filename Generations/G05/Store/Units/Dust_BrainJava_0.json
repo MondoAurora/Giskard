@@ -83,7 +83,7 @@
 		
 		"agtStreamProviderLocal": {
 			"memKnowledgeType": "typLogic",
-			"memKnowledgeRequires": [
+			"memKnowledgeExtends": [
 				"agtStreamProvider"
 			]
 		},
@@ -103,7 +103,7 @@
 		
 		"agtStreamMediatorJson": {
 			"memKnowledgeType": "typLogic",
-			"memKnowledgeRequires": [
+			"memKnowledgeExtends": [
 				"agtStreamMediator"
 			]
 		},
@@ -114,7 +114,7 @@
 		
 		"agtStreamMediatorTextLine": {
 			"memKnowledgeType": "typLogic",
-			"memKnowledgeRequires": [
+			"memKnowledgeExtends": [
 				"agtStreamMediator"
 			]
 		},

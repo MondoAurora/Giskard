@@ -70,7 +70,7 @@
 		
 		"agtStreamMediator": {
 			"memKnowledgeType": "typLogic",
-			"memKnowledgeRequires": [
+			"memKnowledgeExtends": [
 				"agtMediator"
 			]
 		},

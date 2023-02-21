@@ -87,6 +87,14 @@
 				"tagValtype": "tagValtypeLink"
 			}
 		},
+		"memKnowledgeExtends": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeLink"
+			}
+		},
 		"memKnowledgeRequires": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",

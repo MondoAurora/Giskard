@@ -87,7 +87,7 @@
 
 		"typApp": {
 			"memKnowledgeType": "typType",
-			"memKnowledgeRequires" : [
+			"memKnowledgeExtends" : [
 				"typDialog"
 			]
 		},
@@ -98,14 +98,6 @@
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeBin"
 			}
-		},
-		"memAppBrain": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typApp",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
-			},
-			"memMemberLinkType": "agtBrain"
 		},
 		"memAppStreamProvider": {
 			"memKnowledgeType": "typMember",

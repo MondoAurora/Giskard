@@ -3,7 +3,7 @@ package me.giskard.dust.mod.brain;
 import me.giskard.mind.GiskardConsts;
 import me.giskard.mind.GiskardUtils;
 
-public class DustBrain implements DustConsts, GiskardConsts.MindBrain {
+public class DustBrain implements DustBrainConsts, GiskardConsts.MindBrain {
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) {
