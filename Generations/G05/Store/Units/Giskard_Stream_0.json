@@ -27,7 +27,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typStream"
+			"memMemberHandleType": "typStream"
 		},
 		"memStreamPath": {
 			"memKnowledgeType": "typMember",
@@ -71,7 +71,7 @@
 		"logStreamMediator": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"typMediator"
+				"logMediator"
 			]
 		},
 		"memStreamMediatorStream": {
@@ -80,11 +80,11 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typStream"
+			"memMemberHandleType": "typStream"
 		},
 		"memStreamMediatorCondition": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typMediatorAssignment",
+			"memKnowledgeOwner": "logMediatorAssignment",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeBin"
 			}
@@ -100,7 +100,7 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "logStreamMediator"
+			"memMemberHandleType": "logStreamMediator"
 		},
 		"___": {}
 	}

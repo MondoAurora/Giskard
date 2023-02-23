@@ -61,7 +61,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typJavaClass"
+			"memMemberHandleType": "typJavaClass"
 		},
 		"memJavaObInstance": {
 			"memKnowledgeType": "typMember",
@@ -105,7 +105,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typStream"
+			"memMemberHandleType": "typStream"
 		},
 
 		"javaStreamProviderLocal": {

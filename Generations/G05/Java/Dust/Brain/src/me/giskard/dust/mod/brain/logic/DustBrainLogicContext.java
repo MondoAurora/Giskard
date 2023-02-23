@@ -1,9 +1,9 @@
-package me.giskard.dust.mod.brain.agents;
+package me.giskard.dust.mod.brain.logic;
 
 import me.giskard.dust.mod.brain.DustBrainConsts;
 import me.giskard.mind.GiskardConsts;
 
-public class DustBrainAgentContext implements DustBrainAgentConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainContext {
+public class DustBrainLogicContext implements DustBrainLogicConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainContext {
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) {

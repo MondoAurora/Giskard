@@ -1,4 +1,4 @@
-package me.giskard.dust.mod.brain.agents;
+package me.giskard.dust.mod.brain.logic;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import me.giskard.dust.mod.brain.DustBrainConsts;
 import me.giskard.mind.GiskardConsts;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustBrainAgentKnowledge implements DustBrainAgentConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainKnowledge {
+public class DustBrainLogicKnowledge implements DustBrainLogicConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainKnowledge {
 	
 	class Tuple {
 		Object key;

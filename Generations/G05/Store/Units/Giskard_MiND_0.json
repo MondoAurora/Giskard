@@ -34,23 +34,24 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typType"
+			"memMemberHandleType": "typType"
 		},
 		"memKnowledgeAllTypes": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
-				"tagColl": "tagCollMap",
+				"tagColl": "tagCollSet",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typType"
+			"memMemberHandleType": "typType"
 		},
 		"memKnowledgeHandle": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
-			}
+			},
+			"memMemberHandleType": "typHandle"
 		},
 		"memKnowledgeToken": {
 			"memKnowledgeType": "typMember",
@@ -65,7 +66,9 @@
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeHandle"
-			}
+			},
+			"memMemberKeyType": "typTag",
+			"memMemberHandleType": "typTag"
 		},
 		"memKnowledgeCommit": {
 			"memKnowledgeType": "typMember",
@@ -113,8 +116,9 @@
 			"memKnowledgeOwner": "typContext",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeBin"
-			}
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typType"
 		},
 		"memContextLocalKnowledge": {
 			"memKnowledgeType": "typMember",
@@ -138,7 +142,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typPublisher"
+			"memMemberHandleType": "typPublisher"
 		},
 		"memPublishedVersionMajor": {
 			"memKnowledgeType": "typMember",
@@ -163,20 +167,31 @@
 			"memKnowledgeOwner": "tagPubtype"
 		},
 				
-		"typRef": {
+		"typReference": {
 			"memKnowledgeType": "typType"
 		},
-		"memRefRemoteContext": {
+		"memReferencePath": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typRef",
+			"memKnowledgeOwner": "typReference",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollArr"
+			}
+		},
+				
+		"typProxy": {
+			"memKnowledgeType": "typType"
+		},
+		"memProxyContext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typProxy",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typContext"
+			"memMemberHandleType": "typContext"
 		},
-		"memRefRemoteId": {
+		"memProxyId": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typRef",
+			"memKnowledgeOwner": "typProxy",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeBin"
 			}
@@ -189,13 +204,13 @@
 		"typMember": {
 			"memKnowledgeType": "typType"
 		},
-		"memMemberLinkType": {
+		"memMemberHandleType": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typMember",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typType"
+			"memMemberHandleType": "typType"
 		},
 		"memMemberKeyType": {
 			"memKnowledgeType": "typMember",
@@ -203,7 +218,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typType"
+			"memMemberHandleType": "typType"
 		},
 		"memMemberDefVal": {
 			"memKnowledgeType": "typMember",
@@ -211,7 +226,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typVar"
+			"memMemberHandleType": "typVar"
 		},
 		"memMemberAgent": {
 			"memKnowledgeType": "typMember",
@@ -219,7 +234,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typAgent"
+			"memMemberHandleType": "typAgent"
 		},
 		"typTag": {
 			"memKnowledgeType": "typType"
@@ -274,8 +289,105 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typLogic"
+			"memMemberHandleType": "typLogic"
 		},
+		"memAgentNext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typAgent",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typAgent"
+		},
+		
+		"logResolver": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typReference", "typValue"
+			]
+		},
+		"memResolverCursor": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logResolver",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
+		"logOrchestrator": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memOrchestratorAgents": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logOrchestrator",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typAgent"
+		},
+		"memOrchestratorCurrent": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logOrchestrator",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typAgent"
+		},
+		"memOrchestratorCatch": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logOrchestrator",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typAgent"
+		},
+		
+		"logSelect": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
+		},
+		"memSelectLogic": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logSelect",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typAgent"
+		},
+		"logFork": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
+		},
+		"logJoin": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
+		},
+		"logFlow": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
+		},
+
+		"tagFlowState": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagFlowStateEntry": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagFlowState"
+		},
+		"tagFlowStateExit": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagFlowState"
+		},
+
 		
 		"tagAcccess": {
 			"memKnowledgeType": "typTag"
@@ -381,7 +493,7 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typCall"
+			"memMemberHandleType": "typCall"
 		},
 		
 		"tagListener": {
@@ -404,44 +516,38 @@
 			"memKnowledgeOwner": "tagListener"
 		},
 		
-		"typMediator": {
+		"logMediator": {
 			"memKnowledgeType": "typLogic"
 		},
 		"memMediatorMedium": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typMediator"
+			"memKnowledgeOwner": "logMediator"
 		},
 		
-		"typDialog": {
-			"memKnowledgeType": "typType"
-		},
-		"memDialogAgents": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typDialog",
-			"memKnowledgeTags": {
-				"tagColl": "tagCollArr",
-				"tagValtype": "tagValtypeHandle"
-			},
-			"memMemberLinkType": "typAgent"
+		"logDialog": {
+			"memKnowledgeType": "typType",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
 		},
 		"memDialogListeners": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typDialog",
+			"memKnowledgeOwner": "logDialog",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "typListener"
+			"memMemberHandleType": "typListener"
 		},
 		"memDialogLaunch": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typDialog",
+			"memKnowledgeOwner": "logDialog",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
-			},
-			"memMemberLinkType": "typCall"
+			}
 		},
+		
 		"_End_": "____________"
 	}
 ]

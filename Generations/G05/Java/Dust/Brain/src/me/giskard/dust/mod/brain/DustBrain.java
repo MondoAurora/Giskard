@@ -11,9 +11,9 @@ public class DustBrain implements DustBrainConsts, DustBrainImpl, GiskardConsts.
 	
 	Map brainRoot = new HashMap();
 	
-	BrainKnowledge agtKnowledge;
-	BrainContext agtContext;
-	BrainDialog agtDialog;
+	BrainKnowledge logKnowledge;
+	BrainContext logContext;
+	BrainDialog logDialog;
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) throws Exception {
@@ -51,9 +51,9 @@ public class DustBrain implements DustBrainConsts, DustBrainImpl, GiskardConsts.
 	}
 	
 	public void initBrain() throws Exception {
-		agtKnowledge = (BrainKnowledge) Class.forName(CN_KNOWLEDGE).getConstructor().newInstance();
-		agtContext = (BrainContext) Class.forName(CN_CONTEXT).getConstructor().newInstance();
-		agtDialog = (BrainDialog) Class.forName(CN_DIALOG).getConstructor().newInstance();
+		logKnowledge = (BrainKnowledge) Class.forName(CN_KNOWLEDGE).getConstructor().newInstance();
+		logContext = (BrainContext) Class.forName(CN_CONTEXT).getConstructor().newInstance();
+		logDialog = (BrainDialog) Class.forName(CN_DIALOG).getConstructor().newInstance();
 	}
 
 }

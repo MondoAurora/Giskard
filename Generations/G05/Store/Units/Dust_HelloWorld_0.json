@@ -122,10 +122,25 @@
 			"memListenerTarget": "message",
 			"memListenerHandler": [
 				"appLog"
-			]
+			],
+			"memKnowledgeTags": {
+				"tagListener": "tagListenerProcessor"
+			}
 		},
 		
-		"appMain": {
+		"dlgMain": {
+			"memOrchestratorAgents": [
+				"appLog"
+			],
+			"memDialogListeners": [
+				"lsnrLog"
+			],
+			"memDialogLaunch": [
+				"message"
+			]
+		},
+				
+		"app": {
 			"memKnowledgeType": "typApp",
 			"memKnowledgePublisher": "pubDust",
 			"memKnowledgeToken": "HelloWorld",
@@ -136,17 +151,12 @@
 			"memAppModules": [
 				"modBrainJava"
 			],
-			"memDialogAgents": [
-				"appLog"
-			],
-			"memDialogListeners": [
-				"lsnrLog"
-			]
+			"memAppMain": "dlgMain"
 		},
 				
 		"theBrain" : {
 			"memBrainDialogs": [
-				"appMain"
+				"dlgMain"
 			]
 		},
 		
