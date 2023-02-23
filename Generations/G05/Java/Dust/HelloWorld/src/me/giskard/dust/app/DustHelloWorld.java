@@ -24,8 +24,12 @@ public class DustHelloWorld extends GiskardApp {
 		MindHandle memStreamPath = GiskardMind.access(MindAccess.Get, null, null, "memStreamPath");
 		GiskardMind.access(MindAccess.Set, localStoreFolder, appStreamRoot, memStreamPath);
 
-		MindHandle agtStreamProviderLocal = GiskardMind.access(MindAccess.Get, null, null, "agtStreamProviderLocal");
-		MindHandle appStreamProvider = GiskardMind.access(MindAccess.Get, agtStreamProviderLocal, null, "appStreamProvider");
+		MindHandle typAgent = GiskardMind.access(MindAccess.Get, null, null, "typAgent");
+		MindHandle memAgentLogic = GiskardMind.access(MindAccess.Get, null, null, "memAgentLogic");
+
+		MindHandle logStreamProviderLocal = GiskardMind.access(MindAccess.Get, null, null, "logStreamProviderLocal");
+		MindHandle appStreamProvider = GiskardMind.access(MindAccess.Get, typAgent, null, "appStreamProvider");
+		GiskardMind.access(MindAccess.Set, logStreamProviderLocal, appStreamProvider, memAgentLogic);
 		MindHandle memStreamProviderLocalRoot = GiskardMind.access(MindAccess.Get, null, null, "memStreamProviderLocalRoot");
 		GiskardMind.access(MindAccess.Set, appStreamRoot, appStreamProvider, memStreamProviderLocalRoot);
 		MindHandle memStreamProviderContentRoots = GiskardMind.access(MindAccess.Get, null, null, "memStreamProviderContentRoots");
@@ -34,13 +38,15 @@ public class DustHelloWorld extends GiskardApp {
 		GiskardMind.access(MindAccess.Insert, "Units", appStreamProvider, memStreamProviderContentRoots, typContext);
 		GiskardMind.access(MindAccess.Insert, "Impl/Java/lib", appStreamProvider, memStreamProviderContentRoots, typModule);
 
-		MindHandle agtStreamMediatorJson = GiskardMind.access(MindAccess.Get, null, null, "agtStreamMediatorJson");
-		MindHandle appJson = GiskardMind.access(MindAccess.Get, agtStreamMediatorJson, null, "appJson");
+		MindHandle logStreamMediatorJson = GiskardMind.access(MindAccess.Get, null, null, "logStreamMediatorJson");
+		MindHandle appJson = GiskardMind.access(MindAccess.Get, typAgent, null, "appJson");
+		GiskardMind.access(MindAccess.Set, logStreamMediatorJson, appJson, memAgentLogic);
 		MindHandle memStreamMediatorCondition = GiskardMind.access(MindAccess.Get, null, null, "memStreamMediatorCondition");
 		GiskardMind.access(MindAccess.Set, "*.json", appJson, memStreamMediatorCondition);
 
-		MindHandle agtStreamPortal = GiskardMind.access(MindAccess.Get, null, null, "agtStreamPortal");
-		MindHandle appStreamPortal = GiskardMind.access(MindAccess.Get, agtStreamPortal, null, "appStreamPortal");
+		MindHandle logStreamPortal = GiskardMind.access(MindAccess.Get, null, null, "logStreamPortal");
+		MindHandle appStreamPortal = GiskardMind.access(MindAccess.Get, typAgent, null, "appStreamPortal");
+		GiskardMind.access(MindAccess.Set, logStreamPortal, appStreamPortal, memAgentLogic);
 		MindHandle memStreamPortalMediators = GiskardMind.access(MindAccess.Get, null, null, "memStreamPortalMediators");
 		GiskardMind.access(MindAccess.Insert, appJson, appStreamPortal, memStreamPortalMediators);
 
@@ -65,9 +71,9 @@ public class DustHelloWorld extends GiskardApp {
 		GiskardMind.access(MindAccess.Set, "", javaStreamPortal, memJavaClassName);
 
 		MindHandle memModuleImplementations = GiskardMind.access(MindAccess.Get, null, null, "memModuleImplementations");
-		GiskardMind.access(MindAccess.Insert, javaStreamProviderLocal, modBrainJava, memModuleImplementations, agtStreamProviderLocal);
-		GiskardMind.access(MindAccess.Insert, javaStreamMediatorJson, modBrainJava, memModuleImplementations, agtStreamMediatorJson);
-		GiskardMind.access(MindAccess.Insert, javaStreamPortal, modBrainJava, memModuleImplementations, agtStreamPortal);
+		GiskardMind.access(MindAccess.Insert, javaStreamProviderLocal, modBrainJava, memModuleImplementations, logStreamProviderLocal);
+		GiskardMind.access(MindAccess.Insert, javaStreamMediatorJson, modBrainJava, memModuleImplementations, logStreamMediatorJson);
+		GiskardMind.access(MindAccess.Insert, javaStreamPortal, modBrainJava, memModuleImplementations, logStreamPortal);
 
 		MindHandle typApp = GiskardMind.access(MindAccess.Get, null, null, "typApp");
 		MindHandle main = GiskardMind.access(MindAccess.Get, typApp, null, "main");

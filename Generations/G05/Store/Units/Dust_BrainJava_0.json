@@ -59,7 +59,7 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typJavaObject",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typJavaClass"
 		},
@@ -75,23 +75,35 @@
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "me.giskard.dust.mod.brain.DustBrain"
 		},
+		"javaKnowledge": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentKnowledge"
+		},
+		"javaContext": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentContext"
+		},
+		"javaDialog": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentDialog"
+		},
 		
 		"javaLog": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"agtStreamProviderLocal": {
+		"logStreamProviderLocal": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"agtStreamProvider"
+				"logStreamProvider"
 			]
 		},
 		"memStreamProviderLocalRoot": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtStreamProviderLocal",
+			"memKnowledgeOwner": "logStreamProviderLocal",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typStream"
 		},
@@ -101,10 +113,10 @@
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"agtStreamMediatorJson": {
+		"logStreamMediatorJson": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"agtStreamMediator"
+				"logStreamMediator"
 			]
 		},
 		"javaStreamMediatorJson": {
@@ -112,10 +124,10 @@
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"agtStreamMediatorTextLine": {
+		"logStreamMediatorTextLine": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"agtStreamMediator"
+				"logStreamMediator"
 			]
 		},
 		"javaStreamMediatorTextLine": {
@@ -131,13 +143,19 @@
 		"modDustJava": {
 			"memKnowledgeType": "typModule",
 			"memModuleImplementations": {
-				"agtBrain" : "javaBrain",
-				"agtLog": "javaLog",
-				"agtStreamPortal": "javaStreamPortal",
-				"agtStreamProvider": "javaStreamProviderLocal",
-				"agtStreamMediatorJson" : "javaStreamMediatorJson",
-				"agtStreamMediatorTextLine" : "javaStreamMediatorTextLine"
+				"logBrain" : "javaBrain",
+				"logKnowledge" : "javaKnowledge",
+				"logContext" : "javaContext",
+				"logDialog" : "javaDialog",
+				"logStreamPortal": "javaStreamPortal",
+				"logStreamProvider": "javaStreamProviderLocal",
+				"logStreamMediatorJson" : "javaStreamMediatorJson",
+				"logStreamMediatorTextLine" : "javaStreamMediatorTextLine"
 			}
+		},
+		
+		"theBrain" : {
+			"memKnowledgeType": "logBrain"
 		},
 		
 		"_End_": "____________"

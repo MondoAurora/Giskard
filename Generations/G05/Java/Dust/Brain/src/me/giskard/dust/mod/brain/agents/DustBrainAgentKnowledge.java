@@ -6,7 +6,7 @@ import me.giskard.dust.mod.brain.DustBrainConsts;
 import me.giskard.mind.GiskardConsts;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustBrainAgentKnowledge implements DustBrainConsts, GiskardConsts.MindAgent {
+public class DustBrainAgentKnowledge implements DustBrainAgentConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainKnowledge {
 	
 	class Tuple {
 		Object key;
@@ -55,6 +55,13 @@ public class DustBrainAgentKnowledge implements DustBrainConsts, GiskardConsts.M
 		}
 		
 		return (RetType) ret;
+	}
+
+
+	@Override
+	public <RetType> RetType access(BrainContext ctx, MindAccess cmd, Object val, Object root, Object... path) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

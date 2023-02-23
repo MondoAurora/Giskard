@@ -3,7 +3,7 @@ package me.giskard.dust.mod.brain.agents;
 import me.giskard.dust.mod.brain.DustBrainConsts;
 import me.giskard.mind.GiskardConsts;
 
-public class DustBrainAgentContext implements DustBrainConsts, GiskardConsts.MindAgent {
+public class DustBrainAgentContext implements DustBrainAgentConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainContext {
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) {
@@ -23,6 +23,19 @@ public class DustBrainAgentContext implements DustBrainConsts, GiskardConsts.Min
 		
 		return MindStatus.Accept;
 	}
+
+	@Override
+	public MindColl getMemberColl(MindHandle hMember) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MindHandle getTagParent(MindHandle hTag) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

@@ -3,7 +3,7 @@ package me.giskard.dust.mod.brain.agents;
 import me.giskard.dust.mod.brain.DustBrainConsts;
 import me.giskard.mind.GiskardConsts;
 
-public class DustBrainAgentDialog implements DustBrainConsts, GiskardConsts.MindAgent {
+public class DustBrainAgentDialog implements DustBrainAgentConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainDialog {
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) {

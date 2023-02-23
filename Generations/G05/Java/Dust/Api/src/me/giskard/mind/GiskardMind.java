@@ -21,8 +21,16 @@ public class GiskardMind implements GiskardConsts {
 	
 	public static synchronized void releaseBrain() {
 		if ( null != BRAIN ) {
-			BRAIN.agentExecAction(MindAction.End);
-			BRAIN.agentExecAction(MindAction.Release);
+			try {
+				BRAIN.agentExecAction(MindAction.End);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				BRAIN.agentExecAction(MindAction.Release);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			BRAIN = null;
 		}

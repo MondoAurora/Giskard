@@ -1,12 +1,22 @@
 package me.giskard.dust.mod.brain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import me.giskard.mind.GiskardConsts;
 import me.giskard.mind.GiskardUtils;
 
-public class DustBrain implements DustBrainConsts, GiskardConsts.MindBrain {
+@SuppressWarnings("rawtypes")
+public class DustBrain implements DustBrainConsts, DustBrainImpl, GiskardConsts.MindBrain {
+	
+	Map brainRoot = new HashMap();
+	
+	BrainKnowledge agtKnowledge;
+	BrainContext agtContext;
+	BrainDialog agtDialog;
 
 	@Override
-	public MindStatus agentExecAction(MindAction action) {
+	public MindStatus agentExecAction(MindAction action) throws Exception {
 		log(action);
 		
 		switch ( action ) {
@@ -40,8 +50,10 @@ public class DustBrain implements DustBrainConsts, GiskardConsts.MindBrain {
 		GiskardUtils.dump(", ", false, event, params);
 	}
 	
-	public void initBrain() {
-
+	public void initBrain() throws Exception {
+		agtKnowledge = (BrainKnowledge) Class.forName(CN_KNOWLEDGE).getConstructor().newInstance();
+		agtContext = (BrainContext) Class.forName(CN_CONTEXT).getConstructor().newInstance();
+		agtDialog = (BrainDialog) Class.forName(CN_DIALOG).getConstructor().newInstance();
 	}
 
 }

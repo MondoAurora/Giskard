@@ -46,21 +46,59 @@
 			}
 		},
 
-		"agtBrain": {
-			"memKnowledgeType": "typLogic"
+		"logKnowledge": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typKnowledge"
+			]
+		},
+		"logContext": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typContext"
+			]
+		},
+		"memContextCollInfo": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logContext",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			}
+		},
+		"memContextTagParent": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logContext",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			}
+		},
+		"logDialog": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typDialog"
+			]
+		},
+
+		"logBrain": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeRequires" : [
+				"typBrain"
+			]
 		},
 		"memBrainDialogs": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtBrain",
+			"memKnowledgeOwner": "logBrain",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollSet",
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typDialog"
 		},
 		"memBrainThreads": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtBrain",
+			"memKnowledgeOwner": "logBrain",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeBin"
@@ -75,7 +113,7 @@
 			"memKnowledgeOwner": "typModule",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberKeyType": "typAgent",
 			"memMemberLinkType": "typImplementation"
@@ -103,23 +141,23 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "agtStreamProvider"
+			"memMemberLinkType": "typStreamProvider"
 		},
 		"memAppStreamPortal": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "agtStreamPortal"
+			"memMemberLinkType": "typStreamPortal"
 		},
 		"memAppApi": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typModule"
 		},
@@ -128,15 +166,11 @@
 			"memKnowledgeOwner": "typApp",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollSet",
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typModule"
 		},
 
-		"theBrain" : {
-			"memKnowledgeType": "agtJavaBrain"
-		},
-		
 		"_End_": "____________"
 	}
 ]

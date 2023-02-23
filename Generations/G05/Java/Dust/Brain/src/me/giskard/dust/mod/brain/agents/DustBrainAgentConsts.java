@@ -1,27 +1,7 @@
 package me.giskard.dust.mod.brain.agents;
 
-import me.giskard.mind.GiskardConsts;
+import me.giskard.dust.mod.brain.DustBrainConsts;
 
-public interface DustBrainAgentConsts extends GiskardConsts {
+public interface DustBrainAgentConsts extends DustBrainConsts {
 
-	class BrainHandle implements MindHandle {
-		final Object id;
-		final String alias;
-		
-		public BrainHandle(Object id, String alias) {
-			this.id = id;
-			this.alias = alias;
-		}
-
-		@Override
-		public Object getId() {
-			return id;
-		}
-
-		@Override
-		public String getAlias() {
-			return alias;
-		}
-		
-	}
 }

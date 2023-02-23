@@ -25,7 +25,7 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typStream",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typStream"
 		},
@@ -56,29 +56,29 @@
 			}
 		},
 		
-		"agtStreamProvider": {
+		"logStreamProvider": {
 			"memKnowledgeType": "typLogic"
 		},
 		"memStreamProviderContentRoots": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtStreamProvider",
+			"memKnowledgeOwner": "logStreamProvider",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap"
 			}
 		},
 
 		
-		"agtStreamMediator": {
+		"logStreamMediator": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"agtMediator"
+				"typMediator"
 			]
 		},
 		"memStreamMediatorStream": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtStreamMediator",
+			"memKnowledgeOwner": "logStreamMediator",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberLinkType": "typStream"
 		},
@@ -90,17 +90,17 @@
 			}
 		},
 				
-		"agtStreamPortal": {
+		"logStreamPortal": {
 			"memKnowledgeType": "typLogic"
 		},
 		"memStreamPortalMediators": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "agtStreamPortal",
+			"memKnowledgeOwner": "logStreamPortal",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollArr",
-				"tagValtype": "tagValtypeLink"
+				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberLinkType": "agtStreamMediator"
+			"memMemberLinkType": "logStreamMediator"
 		},
 		"___": {}
 	}

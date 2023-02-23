@@ -6,22 +6,27 @@ public interface DustBrainConsts extends GiskardConsts {
 
 	class BrainHandle implements MindHandle {
 		final Object id;
-		final String alias;
 		
-		public BrainHandle(Object id, String alias) {
+		public BrainHandle(Object id) {
 			this.id = id;
-			this.alias = alias;
 		}
 
 		@Override
 		public Object getId() {
 			return id;
 		}
-
-		@Override
-		public String getAlias() {
-			return alias;
-		}
+	}
+	
+	interface BrainKnowledge {
+		<RetType> RetType access(BrainContext ctx, MindAccess cmd, Object val, Object root, Object... path);
+	}
+	
+	interface BrainContext {
+		MindColl getMemberColl(MindHandle hMember);
+		MindHandle getTagParent(MindHandle hTag);
+	}
+	
+	interface BrainDialog {
 		
 	}
 }

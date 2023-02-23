@@ -86,7 +86,8 @@
 			"memStreamPath": "localStoreFolder"
 		},
 		"appStreamProvider": {
-			"memKnowledgeType": "agtStreamProviderLocal",
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logStreamProviderLocal",
 			"memStreamProviderLocalRoot": "appStreamRoot",
 			"memStreamProviderContentRoots": {
 				"typContext" : "Units",
@@ -95,11 +96,13 @@
 		},
 		
 		"appJson": {
-			"memKnowledgeType": "agtStreamMediatorJson",
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logStreamMediatorJson",
 			"memStreamMediatorCondition":"*.json"
 		},
 		"appStreamPortal": {
-			"memKnowledgeType": "agtStreamPortal",
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logStreamPortal",
 			"memStreamPortalMediators": [
 				"appJson"
 			]
@@ -111,7 +114,7 @@
 		},
 		"appLog": {
 			"memKnowledgeType": "typAgent",
-			"memAgentDef": "agtStreamMediatorTextLine",
+			"memAgentLogic": "logStreamMediatorTextLine",
 			"memStreamMediatorStream": "streamOut"
 		},
 		"lsnrLog": {
@@ -134,7 +137,7 @@
 				"modBrainJava"
 			],
 			"memDialogAgents": [
-				"agtLog"
+				"appLog"
 			],
 			"memDialogListeners": [
 				"lsnrLog"

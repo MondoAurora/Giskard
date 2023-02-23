@@ -5,7 +5,7 @@ public interface GiskardConsts {
 	String SEP = "_";
 	
 	enum MindValType {
-		Int, Real, Link, Bin,
+		Int, Real, Handle, Bin,
 	};
 
 	enum MindColl {
@@ -34,11 +34,10 @@ public interface GiskardConsts {
 
 	interface MindHandle {
 		Object getId();
-		String getAlias();
 	};
 
 	interface MindAgent {
-		MindStatus agentExecAction(MindAction action);
+		MindStatus agentExecAction(MindAction action) throws Exception;
 	}
 
 	interface MindBrain extends MindAgent {
