@@ -1,0 +1,1 @@
+Create language and vocabulary in Text, use it immediately on the first import of JSONs.

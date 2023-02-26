@@ -4,12 +4,16 @@ public interface GiskardConsts {
 	String EXT_JAR = ".jar";
 	String SEP = "_";
 	
+	int KEY_ADD = -1;
+	int KEY_SIZE = -2;
+	int KEY_ITER = -3;
+	
 	enum MindValType {
 		Int, Real, Handle, Bin,
 	};
 
 	enum MindColl {
-		Set, Arr, Map,
+		One, Set, Arr, Map,
 	};
 
 	enum MindRoot {

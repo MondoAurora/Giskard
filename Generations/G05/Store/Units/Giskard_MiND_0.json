@@ -53,13 +53,6 @@
 			},
 			"memMemberHandleType": "typHandle"
 		},
-		"memKnowledgeToken": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typKnowledge",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
-		},
 		"memKnowledgeTags": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
@@ -263,6 +256,10 @@
 		},
 		"tagColl": {
 			"memKnowledgeType": "typTag"
+		},
+		"tagCollOne": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagColl"
 		},
 		"tagCollSet": {
 			"memKnowledgeType": "typTag",
@@ -493,7 +490,7 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typCall"
+			"memMemberHandleType": "typAgent"
 		},
 		
 		"tagListener": {

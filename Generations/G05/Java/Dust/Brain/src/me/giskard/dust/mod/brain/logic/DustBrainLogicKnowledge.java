@@ -8,10 +8,6 @@ import me.giskard.mind.GiskardConsts;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustBrainLogicKnowledge implements DustBrainLogicConsts, GiskardConsts.MindAgent, DustBrainConsts.BrainKnowledge {
 	
-	class Tuple {
-		Object key;
-		Object value;
-	}
 
 	@Override
 	public MindStatus agentExecAction(MindAction action) {
