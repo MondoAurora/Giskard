@@ -1,9 +1,0 @@
-package me.giskard.dust.mod.brain;
-
-public interface DustBrainImpl {
-
-	String CN_KNOWLEDGE = "me.giskard.dust.mod.brain.logic.DustBrainLogicKnowledge";
-	String CN_CONTEXT = "me.giskard.dust.mod.brain.logic.DustBrainLogicContext";
-	String CN_DIALOG = "me.giskard.dust.mod.brain.logic.DustBrainLogicDialog";
-
-}

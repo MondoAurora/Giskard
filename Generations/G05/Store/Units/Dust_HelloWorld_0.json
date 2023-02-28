@@ -108,7 +108,7 @@
 			]
 		},
 		
-		"message": {
+		"appMsg": {
 			"memKnowledgeType": "typText",
 			"memTextString": "Hello, World!"
 		},
@@ -128,7 +128,15 @@
 			}
 		},
 		
+		"ctxMain": {
+			"memKnowledgeType": "typContext",
+			"message": "appMsg"
+		},
+		
 		"dlgMain": {
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logDialog",
+			"memDialogContext": "ctxMain",
 			"memOrchestratorAgents": [
 				"appLog"
 			],

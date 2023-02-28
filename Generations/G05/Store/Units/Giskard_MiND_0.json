@@ -527,6 +527,14 @@
 				"logOrchestrator"
 			]
 		},
+		"memDialogContext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logDialog",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typContext"
+		},
 		"memDialogListeners": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "logDialog",

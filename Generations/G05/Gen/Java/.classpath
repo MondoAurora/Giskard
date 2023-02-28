@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Dust/HelloWorld"/>
+	<classpathentry kind="src" path="Dust/Brain"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/G05DustApi"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
