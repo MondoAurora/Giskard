@@ -97,8 +97,8 @@
 		
 		"appJson": {
 			"memKnowledgeType": "typAgent",
-			"memAgentLogic": "logStreamMediatorJson",
-			"memStreamMediatorCondition":"*.json"
+			"memAgentLogic": "logStreamSerializerJson",
+			"memStreamSerializerCondition":"*.json"
 		},
 		"appStreamPortal": {
 			"memKnowledgeType": "typAgent",
@@ -114,8 +114,8 @@
 		},
 		"appLog": {
 			"memKnowledgeType": "typAgent",
-			"memAgentLogic": "logStreamMediatorTextLine",
-			"memStreamMediatorStream": "streamOut"
+			"memAgentLogic": "logStreamSerializerTextLine",
+			"memStreamSerializerStream": "streamOut"
 		},
 		"lsnrLog": {
 			"memKnowledgeType": "typListener",

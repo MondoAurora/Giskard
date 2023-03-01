@@ -26,6 +26,15 @@
 				"tagPubtype": "tagPubtypeContext"
 			}
 		},
+		"ctxText": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Text",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
 		
 		"pubDust": {
 			"memKnowledgeType": "typPublisher",
@@ -113,24 +122,24 @@
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"logStreamMediatorJson": {
+		"logStreamSerializerJson": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"logStreamMediator"
+				"logStreamSerializer"
 			]
 		},
-		"javaStreamMediatorJson": {
+		"javaStreamSerializerJson": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
 		
-		"logStreamMediatorTextLine": {
+		"logStreamSerializerTextLine": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
-				"logStreamMediator"
+				"logStreamSerializer"
 			]
 		},
-		"javaStreamMediatorTextLine": {
+		"javaStreamSerializerTextLine": {
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
@@ -139,6 +148,51 @@
 			"memKnowledgeType": "typJavaClass",
 			"memJavaClassName": "a.b.c"
 		},
+		
+		"javaBootMediator": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		
+		"javaBootTokens": {
+			"memKnowledgeType": "typJavaClass",
+			"memJavaClassName": "a.b.c"
+		},
+		
+		
+		"bootContext": {
+			"memKnowledgeType": "typContext"
+		},
+		"bootVocabulary": {
+			"memKnowledgeType": "typVocabulary"
+		},
+		"bootMediator": {
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logBootMediator",
+			"memBootMediatorSources" : [
+				"javaBootTokens"
+			]
+		},
+		"bootSerializer": {
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logStreamSerializer",
+			"memMediatorRemote":"bootVocabulary",
+			"memStreamSerializerMediator" : "bootMediator"
+		},
+		
+		"bootDialog": {
+			"memKnowledgeType": "typAgent",
+			"memAgentLogic": "logDialog",
+			"memDialogContext": "bootContext",
+			"memOrchestratorAgents": [
+			],
+			"memDialogListeners": [
+			],
+			"memDialogLaunch": [
+			]
+		},
+
+
 		
 		"modDustJava": {
 			"memKnowledgeType": "typModule",
@@ -149,8 +203,9 @@
 				"logDialog" : "javaDialog",
 				"logStreamPortal": "javaStreamPortal",
 				"logStreamProvider": "javaStreamProviderLocal",
-				"logStreamMediatorJson" : "javaStreamMediatorJson",
-				"logStreamMediatorTextLine" : "javaStreamMediatorTextLine"
+				"logStreamSerializerJson" : "javaStreamSerializerJson",
+				"logStreamSerializerTextLine" : "javaStreamSerializerTextLine",
+				"logBootMediator" : "javaBootMediator"
 			}
 		},
 		

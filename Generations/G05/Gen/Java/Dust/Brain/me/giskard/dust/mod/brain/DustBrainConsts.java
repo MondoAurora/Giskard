@@ -36,9 +36,14 @@ public interface DustBrainConsts extends GiskardConsts {
 	}
 
 	interface LogicContext {
-		MindColl getMemberColl(MindHandle hMember);
+		MindHandle createItem(MindHandle hTag);
 
+		MindColl getMemberColl(MindHandle hMember);
 		MindHandle getTagParent(MindHandle hTag);
+	}
+
+	interface LogicMediator {
+		MindHandle getHandleByToken(Object token, KnowledgeItem kMediator, KnowledgeItem kContext);
 	}
 
 	interface LogicDialog {

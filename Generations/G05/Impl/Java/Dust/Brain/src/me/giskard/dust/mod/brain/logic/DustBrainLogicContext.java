@@ -36,6 +36,12 @@ public class DustBrainLogicContext implements DustBrainLogicConsts, GiskardConst
 		return null;
 	}
 
+	@Override
+	public MindHandle createItem(MindHandle hTag) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

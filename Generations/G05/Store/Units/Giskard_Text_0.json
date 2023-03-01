@@ -28,6 +28,19 @@
 			}
 		},
 
+		"typVocabulary": {
+			"memKnowledgeType": "typType"
+		},
+		"memVocabularyWords": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typVocabulary",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typText"
+		},
+
 		"___": {}
 	}
 ]

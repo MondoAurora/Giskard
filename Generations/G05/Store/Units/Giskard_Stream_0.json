@@ -17,6 +17,15 @@
 				"tagPubtype": "tagPubtypeContext"
 			}
 		},
+		"ctxText": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeToken": "Text",
+			"memKnowledgeCommit": 0,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
 		
 		"typStream": {
 			"memKnowledgeType": "typType"
@@ -68,21 +77,34 @@
 		},
 
 		
-		"logStreamMediator": {
-			"memKnowledgeType": "typLogic",
-			"memKnowledgeExtends": [
-				"logMediator"
-			]
+		"logStreamSerializer": {
+			"memKnowledgeType": "typLogic"
 		},
-		"memStreamMediatorStream": {
+		"memStreamSerializerMediator": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "logStreamMediator",
+			"memKnowledgeOwner": "logStreamSerializer",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "logMediator"
+		},
+		"memStreamSerializerTokenResolver": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logStreamSerializer",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typVocabulary"
+		},
+		"memStreamSerializerStream": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logStreamSerializer",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberHandleType": "typStream"
 		},
-		"memStreamMediatorCondition": {
+		"memStreamSerializerCondition": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "logMediatorAssignment",
 			"memKnowledgeTags": {
@@ -100,7 +122,7 @@
 				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "logStreamMediator"
+			"memMemberHandleType": "logStreamSerializer"
 		},
 		"___": {}
 	}

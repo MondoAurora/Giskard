@@ -516,9 +516,31 @@
 		"logMediator": {
 			"memKnowledgeType": "typLogic"
 		},
-		"memMediatorMedium": {
+		"memMediatorRemote": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "logMediator"
+			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typContext"
+		},
+		"memMediatorLocalToRemote": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberKeyType": "typHandle"
+		},
+		"memMediatorRemoteToLocal": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typHandle"
 		},
 		
 		"logDialog": {

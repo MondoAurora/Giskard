@@ -38,11 +38,11 @@ public class DustAppBootstrap extends GiskardApp {
 		GiskardMind.access(MindAccess.Insert, "Units", appStreamProvider, memStreamProviderContentRoots, typContext);
 		GiskardMind.access(MindAccess.Insert, "Impl/Java/lib", appStreamProvider, memStreamProviderContentRoots, typModule);
 
-		MindHandle logStreamMediatorJson = GiskardMind.access(MindAccess.Get, null, null, "logStreamMediatorJson");
+		MindHandle logStreamSerializerJson = GiskardMind.access(MindAccess.Get, null, null, "logStreamSerializerJson");
 		MindHandle appJson = GiskardMind.access(MindAccess.Get, typAgent, null, "appJson");
-		GiskardMind.access(MindAccess.Set, logStreamMediatorJson, appJson, memAgentLogic);
-		MindHandle memStreamMediatorCondition = GiskardMind.access(MindAccess.Get, null, null, "memStreamMediatorCondition");
-		GiskardMind.access(MindAccess.Set, "*.json", appJson, memStreamMediatorCondition);
+		GiskardMind.access(MindAccess.Set, logStreamSerializerJson, appJson, memAgentLogic);
+		MindHandle memStreamSerializerCondition = GiskardMind.access(MindAccess.Get, null, null, "memStreamSerializerCondition");
+		GiskardMind.access(MindAccess.Set, "*.json", appJson, memStreamSerializerCondition);
 
 		MindHandle logStreamPortal = GiskardMind.access(MindAccess.Get, null, null, "logStreamPortal");
 		MindHandle appStreamPortal = GiskardMind.access(MindAccess.Get, typAgent, null, "appStreamPortal");
@@ -65,14 +65,14 @@ public class DustAppBootstrap extends GiskardApp {
 
 		MindHandle javaStreamProviderLocal = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamProviderLocal");
 		GiskardMind.access(MindAccess.Set, "", javaStreamProviderLocal, memJavaClassName);
-		MindHandle javaStreamMediatorJson = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamMediatorJson");
-		GiskardMind.access(MindAccess.Set, "", javaStreamMediatorJson, memJavaClassName);
+		MindHandle javaStreamSerializerJson = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamSerializerJson");
+		GiskardMind.access(MindAccess.Set, "", javaStreamSerializerJson, memJavaClassName);
 		MindHandle javaStreamPortal = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamPortal");
 		GiskardMind.access(MindAccess.Set, "", javaStreamPortal, memJavaClassName);
 
 		MindHandle memModuleImplementations = GiskardMind.access(MindAccess.Get, null, null, "memModuleImplementations");
 		GiskardMind.access(MindAccess.Insert, javaStreamProviderLocal, modBrainJava, memModuleImplementations, logStreamProviderLocal);
-		GiskardMind.access(MindAccess.Insert, javaStreamMediatorJson, modBrainJava, memModuleImplementations, logStreamMediatorJson);
+		GiskardMind.access(MindAccess.Insert, javaStreamSerializerJson, modBrainJava, memModuleImplementations, logStreamSerializerJson);
 		GiskardMind.access(MindAccess.Insert, javaStreamPortal, modBrainJava, memModuleImplementations, logStreamPortal);
 
 		MindHandle typApp = GiskardMind.access(MindAccess.Get, null, null, "typApp");
