@@ -4,11 +4,16 @@ import me.giskard.mind.GiskardConsts;
 
 public interface DustBrainConsts extends GiskardConsts {
 	
-	class BrainHandle implements MindHandle, Comparable<BrainHandle> {
+	final class BrainHandle implements MindHandle, Comparable<BrainHandle> {
+		static Object idlock = new Object();
+		static long nextId = 0;
+		
 		final Long id;
 
-		public BrainHandle(Long id) {
-			this.id = id;
+		public BrainHandle() {
+			synchronized (idlock) {
+				this.id = nextId ++;
+			}
 		}
 
 		@Override
@@ -19,6 +24,11 @@ public interface DustBrainConsts extends GiskardConsts {
 		@Override
 		public int compareTo(BrainHandle o) {
 			return id.compareTo(o.id);
+		}
+		
+		@Override
+		public String toString() {
+			return "BH(" + id + ")";
 		}
 	}
 

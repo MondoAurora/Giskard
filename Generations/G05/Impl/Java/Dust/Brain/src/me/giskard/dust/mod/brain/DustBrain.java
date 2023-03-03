@@ -3,6 +3,13 @@ package me.giskard.dust.mod.brain;
 import me.giskard.mind.GiskardUtils;
 
 public class DustBrain extends DustBrainBase {
+		
+	@Override
+	protected void loadBootTokens() {
+		for ( BootToken bt : BootToken.values() ) {
+			bootHandles.put(bt, new BrainHandle());
+		}
+	}
 	
 	@Override
 	public MindStatus agentExecAction(MindAction action) throws Exception {

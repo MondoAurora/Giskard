@@ -55,4 +55,9 @@ public class GiskardUtils implements GiskardConsts {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <RetType> RetType createInstance(String className) throws Exception {
+		return (RetType) Class.forName(className).getConstructor().newInstance();
+	}
+
 }

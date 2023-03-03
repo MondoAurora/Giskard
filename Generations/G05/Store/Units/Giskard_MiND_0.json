@@ -14,17 +14,6 @@
 			"memKnowledgeOwner": "typVar"
 		},
 
-		"typHandle": {
-			"memKnowledgeType": "typType"
-		},
-		"memMemberHandleId": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typHandle",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
-		},
-
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
 		},
@@ -96,22 +85,6 @@
 		
 		"typContext": {
 			"memKnowledgeType": "typType"
-		},
-		"memContextNextId": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typContext",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
-		},
-		"memContextHandles": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typContext",
-			"memKnowledgeTags": {
-				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeHandle"
-			},
-			"memMemberHandleType": "typType"
 		},
 		"memContextLocalKnowledge": {
 			"memKnowledgeType": "typMember",

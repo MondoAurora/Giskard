@@ -14,6 +14,11 @@ import me.giskard.mind.GiskardUtils;
 public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.KnowledgeItem {
 
 	Map<BrainHandle, Object> data = new TreeMap<>();
+	
+	@Override
+	public String toString() {
+		return data.toString();
+	}
 
 	public <RetType> RetType access(MindAccess cmd, BrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc) {
 		Object ret = data.get(hMember);
@@ -232,7 +237,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 				break;
 			}
 
-			if ( changed ) {
+			if ( changed && (null != kc) ) {
 				kc.notifyChange(cmd, hMember, key, old, ret);
 			}
 		}
