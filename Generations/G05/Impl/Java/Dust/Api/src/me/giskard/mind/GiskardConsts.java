@@ -2,6 +2,7 @@ package me.giskard.mind;
 
 public interface GiskardConsts {
 	String EXT_JAR = ".jar";
+	String EXT_JSON = ".json";
 	String SEP = "_";
 	
 	int KEY_ADD = -1;
@@ -21,7 +22,17 @@ public interface GiskardConsts {
 	};
 
 	enum MindAccess {
-		Check, Peek, Commit, Get, Set, Insert, Delete,
+		Check(false), Peek(false), Commit(false), Get(true), Set(true), Insert(true), Delete(false),
+		
+		;
+		
+		public final boolean add;
+
+		private MindAccess(boolean add) {
+			this.add = add;
+		}
+		
+		
 	};
 
 	enum MindAction {

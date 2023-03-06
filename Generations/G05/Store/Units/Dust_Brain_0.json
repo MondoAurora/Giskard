@@ -6,12 +6,12 @@
 	{
 		"pubGiskard": {
 			"memKnowledgeType": "typPublisher",
-			"memKnowledgeToken": "Giskard"
+			"memTextIdentifier": "Giskard"
 		},
 		"ctxMiND": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "MiND",
+			"memTextIdentifier": "MiND",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
@@ -20,7 +20,7 @@
 		"ctxStream": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "Stream",
+			"memTextIdentifier": "Stream",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"

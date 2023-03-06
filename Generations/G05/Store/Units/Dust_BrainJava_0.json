@@ -6,12 +6,12 @@
 	{
 		"pubGiskard": {
 			"memKnowledgeType": "typPublisher",
-			"memKnowledgeToken": "Giskard"
+			"memTextIdentifier": "Giskard"
 		},
 		"ctxMiND": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "MiND",
+			"memTextIdentifier": "MiND",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
@@ -20,7 +20,7 @@
 		"ctxStream": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "Stream",
+			"memTextIdentifier": "Stream",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
@@ -29,7 +29,7 @@
 		"ctxText": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "Text",
+			"memTextIdentifier": "Text",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
@@ -38,12 +38,12 @@
 		
 		"pubDust": {
 			"memKnowledgeType": "typPublisher",
-			"memKnowledgeToken": "Dust"
+			"memTextIdentifier": "Dust"
 		},
 		"ctxBrain": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubDust",
-			"memKnowledgeToken": "Brain",
+			"memTextIdentifier": "Brain",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
@@ -52,13 +52,6 @@
 		
 		"typJavaClass": {
 			"memKnowledgeType": "typType"
-		},
-		"memJavaClassName": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typJavaClass",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
 		},
 
 		"typJavaObject": {
@@ -82,24 +75,24 @@
 
 		"javaBrain": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "me.giskard.dust.mod.brain.DustBrain"
+			"memTextIdentifier": "me.giskard.dust.mod.brain.DustBrain"
 		},
 		"javaKnowledge": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentKnowledge"
+			"memTextIdentifier": "me.giskard.dust.mod.brain.agents.DustBrainAgentKnowledge"
 		},
 		"javaContext": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentContext"
+			"memTextIdentifier": "me.giskard.dust.mod.brain.agents.DustBrainAgentContext"
 		},
 		"javaDialog": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "me.giskard.dust.mod.brain.agents.DustBrainAgentDialog"
+			"memTextIdentifier": "me.giskard.dust.mod.brain.agents.DustBrainAgentDialog"
 		},
 		
 		"javaLog": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"logStreamProviderLocal": {
@@ -119,7 +112,7 @@
 
 		"javaStreamProviderLocal": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"logStreamSerializerJson": {
@@ -130,7 +123,7 @@
 		},
 		"javaStreamSerializerJson": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"logStreamSerializerTextLine": {
@@ -141,22 +134,22 @@
 		},
 		"javaStreamSerializerTextLine": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"javaStreamPortal": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"javaBootMediator": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		"javaBootTokens": {
 			"memKnowledgeType": "typJavaClass",
-			"memJavaClassName": "a.b.c"
+			"memTextIdentifier": "a.b.c"
 		},
 		
 		
@@ -211,8 +204,7 @@
 		
 		"theBrain" : {
 			"memKnowledgeType": "logBrain"
-		},
+		}
 		
-		"_End_": "____________"
 	}
 ]

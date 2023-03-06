@@ -47,7 +47,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 				break;
 			}
 
-			if ( (cmd != MindAccess.Peek) && (null != ret) ) {
+			if ( cmd.add && (null != ret) ) {
 				Object o;
 
 				switch ( coll ) {
@@ -148,7 +148,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 
 				switch ( cmd ) {
 				case Peek:
-					ret = m.values().iterator().next();
+					ret = m.getOrDefault(key, val);
 					break;
 				case Check:
 					ret = GiskardUtils.isEqual(val, m.get(key));

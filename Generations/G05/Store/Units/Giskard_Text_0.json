@@ -6,19 +6,27 @@
 	{
 		"pubGiskard": {
 			"memKnowledgeType": "typPublisher",
-			"memKnowledgeToken": "Giskard"
+			"memTextIdentifier": "Giskard"
 		},
 		"ctxMiND": {
 			"memKnowledgeType": "typContext",
 			"memKnowledgePublisher": "pubGiskard",
-			"memKnowledgeToken": "MiND",
+			"memTextIdentifier": "MiND",
 			"memKnowledgeCommit": 0,
 			"memKnowledgeTags": {
 				"tagPubtype": "tagPubtypeContext"
 			}
 		},
+
 		"typText": {
 			"memKnowledgeType": "typType"
+		},
+		"memTextIdentifier": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typText",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
 		},
 		"memTextString": {
 			"memKnowledgeType": "typMember",

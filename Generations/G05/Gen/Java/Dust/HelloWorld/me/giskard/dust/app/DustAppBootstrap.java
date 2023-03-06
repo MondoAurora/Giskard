@@ -52,23 +52,22 @@ public class DustAppBootstrap extends GiskardApp {
 
 		MindHandle typPublisher = GiskardMind.access(MindAccess.Get, null, null, "typPublisher");
 		MindHandle pubDust = GiskardMind.access(MindAccess.Get, typPublisher, null, "pubDust");
-		MindHandle memKnowledgeToken = GiskardMind.access(MindAccess.Get, null, null, "memKnowledgeToken");
-		GiskardMind.access(MindAccess.Set, "Dust", pubDust, memKnowledgeToken);
+		MindHandle memTextIdentifier = GiskardMind.access(MindAccess.Get, null, null, "memTextIdentifier");
+		GiskardMind.access(MindAccess.Set, "Dust", pubDust, memTextIdentifier);
 
 		MindHandle modBrainJava = GiskardMind.access(MindAccess.Get, typModule, null, "modBrainJava");
 		MindHandle memKnowledgePublisher = GiskardMind.access(MindAccess.Get, null, null, "memKnowledgePublisher");
 		GiskardMind.access(MindAccess.Set, pubDust, modBrainJava, memKnowledgePublisher);
-		GiskardMind.access(MindAccess.Set, "BrainJava", modBrainJava, memKnowledgeToken);
+		GiskardMind.access(MindAccess.Set, "BrainJava", modBrainJava, memTextIdentifier);
 
 		MindHandle typJavaClass = GiskardMind.access(MindAccess.Get, null, null, "typJavaClass");
-		MindHandle memJavaClassName = GiskardMind.access(MindAccess.Get, null, null, "memJavaClassName");
 
 		MindHandle javaStreamProviderLocal = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamProviderLocal");
-		GiskardMind.access(MindAccess.Set, "", javaStreamProviderLocal, memJavaClassName);
+		GiskardMind.access(MindAccess.Set, "", javaStreamProviderLocal, memTextIdentifier);
 		MindHandle javaStreamSerializerJson = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamSerializerJson");
-		GiskardMind.access(MindAccess.Set, "", javaStreamSerializerJson, memJavaClassName);
+		GiskardMind.access(MindAccess.Set, "", javaStreamSerializerJson, memTextIdentifier);
 		MindHandle javaStreamPortal = GiskardMind.access(MindAccess.Get, typJavaClass, null, "javaStreamPortal");
-		GiskardMind.access(MindAccess.Set, "", javaStreamPortal, memJavaClassName);
+		GiskardMind.access(MindAccess.Set, "", javaStreamPortal, memTextIdentifier);
 
 		MindHandle memModuleImplementations = GiskardMind.access(MindAccess.Get, null, null, "memModuleImplementations");
 		GiskardMind.access(MindAccess.Insert, javaStreamProviderLocal, modBrainJava, memModuleImplementations, logStreamProviderLocal);
@@ -86,7 +85,7 @@ public class DustAppBootstrap extends GiskardApp {
 		GiskardMind.access(MindAccess.Set, appStreamPortal, main, memAppStreamPortal);
 		MindHandle memPublishedVersionMajor = GiskardMind.access(MindAccess.Get, null, null, "memPublishedVersionMajor");
 		GiskardMind.access(MindAccess.Set, 1, main, memPublishedVersionMajor);
-		GiskardMind.access(MindAccess.Set, "HelloWorld", main, memKnowledgeToken);
+		GiskardMind.access(MindAccess.Set, "HelloWorld", main, memTextIdentifier);
 		
 		MindHandle theBrain = GiskardMind.access(MindAccess.Get, null, null, "theBrain");
 		MindHandle memBrainDialogs = GiskardMind.access(MindAccess.Get, null, null, "memBrainDialogs");

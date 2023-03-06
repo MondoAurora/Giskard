@@ -1,14 +1,33 @@
 package me.giskard.dust.mod.brain;
 
+import java.io.File;
+import java.io.FileReader;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+
+import me.giskard.mind.GiskardMind;
 import me.giskard.mind.GiskardUtils;
 
+@SuppressWarnings("rawtypes")
 public class DustBrain extends DustBrainBase {
+	File root;
+
+	public void setRoot(File root) throws Exception {
+		this.root = root;
 		
+		GiskardMind.dump(root.getCanonicalPath(), root.isDirectory());
+	}
+	
 	@Override
-	protected void loadBootTokens() {
-		for ( BootToken bt : BootToken.values() ) {
-			bootHandles.put(bt, new BrainHandle());
-		}
+	protected Map loadContext(String token) throws Exception {
+		File f = new File(root, token + EXT_JSON);
+
+		JSONParser p = new JSONParser();
+		JSONArray a = (JSONArray) p.parse(new FileReader(f));
+		
+		return (Map) a.get(1);
 	}
 	
 	@Override
