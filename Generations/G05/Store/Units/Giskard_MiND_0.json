@@ -359,34 +359,34 @@
 		},
 
 		
-		"tagAcccess": {
+		"tagAccess": {
 			"memKnowledgeType": "typTag"
 		},
-		"tagAcccessCheck": {
+		"tagAccessCheck": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessPeek": {
+		"tagAccessPeek": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessCommit": {
+		"tagAccessCommit": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessGet": {
+		"tagAccessGet": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessSet": {
+		"tagAccessSet": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessInsert": {
+		"tagAccessInsert": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},
-		"tagAcccessDelete": {
+		"tagAccessDelete": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagAccess"
 		},

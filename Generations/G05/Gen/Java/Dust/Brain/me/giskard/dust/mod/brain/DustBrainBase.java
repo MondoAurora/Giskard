@@ -22,14 +22,20 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 	protected LogicKnowledge logKnowledge;
 	protected LogicContext logContext;
 	protected LogicDialog logDialog;
+	
+	protected BootConn bootConn;
 
 	protected abstract void setRoot(File root) throws Exception;
 
 	protected abstract Map loadContext(String token) throws Exception;
 
+	protected void testSomething() throws Exception {
+		GiskardMind.dump("Vocabulary", bootConn.bootVoc);
+		GiskardMind.dump("Boot context", bootConn.bootCtx);
+	}
+
 	public KnowledgeItem createKnowledgeItem() throws Exception {
 		KnowledgeItem ki = GiskardUtils.createInstance(CN_KNOWLEDGE_ITEM);
-
 		return ki;
 	}
 
@@ -152,8 +158,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		bootConn.wrapUp();
 
-		GiskardMind.dump("Vocabulary", bootVoc);
-		GiskardMind.dump("Boot context", bootCtx);
+		testSomething();
 	}
 	
 	class BootConn implements KnowledgeConnector {
@@ -170,22 +175,18 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 		HandleFormatter hfmt = new HandleFormatter() {
 			@Override
 			public String formatLabel(BrainHandle h) {
-				String ret = DEF_FORMATTER.formatLabel(h);
+				String ret = null;
 				
 				BrainHandle hToken = bootMed.access(MindAccess.Peek, BootToken.memMediatorLocalToRemote.getHandle(), MindColl.Map, h, null, null);
 
 				if ( null != hToken ) {
 					KnowledgeItem token = langCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, hToken, null, null);
 					if ( null != token ) {
-						String lbl = token.access(MindAccess.Peek, BootToken.memTextString.getHandle(), MindColl.One, null, null, null);
-						
-						if ( null != lbl ) {
-							ret = GiskardUtils.sbAppend(null, "", false, "[", lbl, " ", ret, "]").toString();
-						}
+						ret = token.access(MindAccess.Peek, BootToken.memTextString.getHandle(), MindColl.One, null, null, null);
 					}
 				}
 
-				return ret;
+				return (null == ret) ?  DEF_FORMATTER.formatLabel(h) : ret;
 			}
 		};
 
@@ -371,7 +372,5 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			return ret;
 		}
 	};
-
-	BootConn bootConn;
 
 }

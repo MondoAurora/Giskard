@@ -8,6 +8,7 @@ public interface GiskardConsts {
 	int KEY_ADD = -1;
 	int KEY_SIZE = -2;
 	int KEY_ITER = -3;
+	int KEY_KEYS = -4;
 	
 	enum MindValType {
 		Int, Real, Handle, Bin,

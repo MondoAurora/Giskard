@@ -31,6 +31,12 @@ public class DustBrain extends DustBrainBase {
 	}
 	
 	@Override
+	protected void testSomething() throws Exception {
+		super.testSomething();
+		BootGui.showGui(bootConn);
+	}
+	
+	@Override
 	public MindStatus agentExecAction(MindAction action) throws Exception {
 		log(action);
 		
