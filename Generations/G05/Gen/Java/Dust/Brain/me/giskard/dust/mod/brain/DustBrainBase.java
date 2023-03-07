@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import me.giskard.mind.GiskardConsts;
 import me.giskard.mind.GiskardException;
@@ -149,9 +150,12 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		bootConn.loadCtx("Dust", "BrainJava", 0);
 
-		GiskardMind.dump(bootVoc);
-	}
+		bootConn.wrapUp();
 
+		GiskardMind.dump("Vocabulary", bootVoc);
+		GiskardMind.dump("Boot context", bootCtx);
+	}
+	
 	class BootConn implements KnowledgeConnector {
 		KnowledgeItem bootCtx;
 
@@ -161,12 +165,68 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		Map<String, Map> bootFiles = new HashMap<>();
 		Set<String> toBoot = new HashSet<>();
+		Set<String> lateItems = new TreeSet<>();
+
+		HandleFormatter hfmt = new HandleFormatter() {
+			@Override
+			public String formatLabel(BrainHandle h) {
+				String ret = DEF_FORMATTER.formatLabel(h);
+				
+				BrainHandle hToken = bootMed.access(MindAccess.Peek, BootToken.memMediatorLocalToRemote.getHandle(), MindColl.Map, h, null, null);
+
+				if ( null != hToken ) {
+					KnowledgeItem token = langCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, hToken, null, null);
+					if ( null != token ) {
+						String lbl = token.access(MindAccess.Peek, BootToken.memTextString.getHandle(), MindColl.One, null, null, null);
+						
+						if ( null != lbl ) {
+							ret = GiskardUtils.sbAppend(null, "", false, "[", lbl, " ", ret, "]").toString();
+						}
+					}
+				}
+
+				return ret;
+			}
+		};
 
 		public BootConn(KnowledgeItem bootCtx, KnowledgeItem langCtx, KnowledgeItem bootVoc, KnowledgeItem bootMed) {
 			this.bootCtx = bootCtx;
 			this.langCtx = langCtx;
 			this.bootVoc = bootVoc;
 			this.bootMed = bootMed;
+		}
+		
+		public void wrapUp() throws Exception {
+			for (String memId : lateItems) {
+				KnowledgeItem member = getByToken(memId);
+				boolean knownMember = member.access(MindAccess.Check, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, BootToken.typMember.getHandle(), null);
+				GiskardMind.dump("Late member", memId, knownMember);
+			}
+
+			for (Map content : bootFiles.values()) {
+				for (Object o : content.entrySet()) {
+					Map.Entry e = (Map.Entry) o;
+					String id = (String) e.getKey();
+					Map data = (Map) e.getValue();
+
+					KnowledgeItem item = null;
+
+					for (Object o1 : data.entrySet()) {
+						Map.Entry e1 = (Map.Entry) o1;
+						String memId = (String) e1.getKey();
+
+						if ( lateItems.contains(memId) ) {
+							if ( null == item ) {
+								item = getByToken(id);
+							}
+							loadMember(item, memId, e1.getValue());
+							GiskardMind.dump("Post loading", id, e1, item);
+						}
+					}
+				}
+			}
+			
+			BrainHandle.FORMATTER = hfmt;
 		}
 
 		protected BrainHandle getHandleByToken(String tokenStr) throws Exception {
@@ -183,8 +243,14 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			return ki;
 		};
 
+		public String getCtxId(String publisher, String ctx, Number commit) {
+			return GiskardUtils.sbAppend(null, SEP, true, publisher, ctx, commit).toString();
+		}
+
 		public void loadCtx(String publisher, String ctx, Number commit) throws Exception {
-			String token = GiskardUtils.sbAppend(null, SEP, true, publisher, ctx, commit).toString();
+			String token = getCtxId(publisher, ctx, commit);
+
+			GiskardMind.dump("Loading context", publisher, ctx, commit, token);
 
 			Map content = bootFiles.get(token);
 			if ( null == content ) {
@@ -193,59 +259,35 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			}
 
 			Set<KnowledgeItem> refs = new HashSet<>();
+			Set<String> comments = new HashSet<>();
 
 			for (Object o : content.entrySet()) {
 				Map.Entry e = (Map.Entry) o;
 				String id = (String) e.getKey();
-				Map data = (Map) e.getValue();
-				
+				Object ob = e.getValue();
+
+				if ( !(ob instanceof Map) ) {
+					GiskardMind.dump("Comment", id, ob);
+					comments.add(id);
+					continue;
+				}
+				Map data = (Map) ob;
+
 				KnowledgeItem item = getByToken(id);
 
 				for (Object o1 : data.entrySet()) {
 					Map.Entry e1 = (Map.Entry) o1;
-					String memId = (String) e1.getKey();
-
-					KnowledgeItem member = getByToken(memId);
-					boolean knownMember = member.access(MindAccess.Check, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, BootToken.typMember.getHandle(), null);
-
-					if ( knownMember ) {
-						boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags.getHandle(), MindColl.Map, BootToken.tagValtype.getHandle(), BootToken.tagValtypeHandle.getHandle(), null);
-						BrainHandle hMember = member.access(MindAccess.Peek, BootToken.memKnowledgeHandle.getHandle(), MindColl.One, null, null, null);
-
-						Object value = e1.getValue();
-
-						if ( value instanceof Map ) {
-							boolean keyNotHandle = member.access(MindAccess.Check, BootToken.memMemberKeyType.getHandle(), MindColl.One, null, null, null);
-
-							for (Object v : ((Map) value).entrySet()) {
-								Map.Entry ev = (Map.Entry) v;
-								Object val = valHandle ? getHandleByToken((String) ev.getValue()) : ev.getValue();
-								Object key = keyNotHandle ? ev.getKey() : getHandleByToken((String) ev.getKey());
-								item.access(MindAccess.Insert, hMember, MindColl.Map, key, val, null);
-							}
-						} else if ( value instanceof Collection ) {
-							for (Object v : (Collection) value) {
-								if ( valHandle ) {
-									v = getHandleByToken((String) v);
-								}
-								item.access(MindAccess.Insert, hMember, MindColl.Arr, KEY_ADD, v, null);
-							}
-						} else {
-
-							if ( "typPublisher".equals(value) && "memKnowledgeType".equals(memId) ) {
-								GiskardMind.dump("Publisher found", id, data);
-							}
-
-							Object v = valHandle ? getHandleByToken((String) value) : value;
-							item.access(MindAccess.Set, hMember, MindColl.One, null, v, null);
-						}
-					}
+					loadMember(item, (String) e1.getKey(), e1.getValue());
 				}
 
 				boolean ctxref = item.access(MindAccess.Check, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, BootToken.typContext.getHandle(), this);
 				if ( ctxref ) {
 					refs.add(item);
 				}
+			}
+
+			for (String cid : comments) {
+				content.remove(cid);
 			}
 
 			for (KnowledgeItem item : refs) {
@@ -255,18 +297,53 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					KnowledgeItem kPub = bootCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, hPub, null, null);
 					String refPub = kPub.access(MindAccess.Peek, BootToken.memTextIdentifier.getHandle(), MindColl.One, null, null, null);
 
-					Number refCommit = item.access(MindAccess.Peek, BootToken.memKnowledgeCommit.getHandle(), MindColl.One, null, null, null);
 					String refId = item.access(MindAccess.Peek, BootToken.memTextIdentifier.getHandle(), MindColl.One, null, null, null);
+					Number refCommit = item.access(MindAccess.Peek, BootToken.memKnowledgeCommit.getHandle(), MindColl.One, null, null, null);
 
-					GiskardMind.dump("Context ref found", refPub, refId, refCommit);
+					String ctxId = getCtxId(refPub, refId, refCommit);
+
+					if ( !bootFiles.containsKey(ctxId) ) {
+						loadCtx(refPub, refId, refCommit);
+					}
 				}
+			}
+		}
+
+		public void loadMember(KnowledgeItem item, String memId, Object value) throws Exception {
+			KnowledgeItem member = getByToken(memId);
+			boolean knownMember = member.access(MindAccess.Check, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, BootToken.typMember.getHandle(), null);
+
+			if ( knownMember ) {
+				boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags.getHandle(), MindColl.Map, BootToken.tagValtype.getHandle(), BootToken.tagValtypeHandle.getHandle(), null);
+				BrainHandle hMember = member.access(MindAccess.Peek, BootToken.memKnowledgeHandle.getHandle(), MindColl.One, null, null, null);
+
+				if ( value instanceof Map ) {
+					boolean keyNotHandle = member.access(MindAccess.Check, BootToken.memMemberKeyType.getHandle(), MindColl.One, null, null, null);
+
+					for (Object v : ((Map) value).entrySet()) {
+						Map.Entry ev = (Map.Entry) v;
+						Object val = valHandle ? getHandleByToken((String) ev.getValue()) : ev.getValue();
+						Object key = keyNotHandle ? ev.getKey() : getHandleByToken((String) ev.getKey());
+						item.access(MindAccess.Insert, hMember, MindColl.Map, key, val, null);
+					}
+				} else if ( value instanceof Collection ) {
+					for (Object v : (Collection) value) {
+						if ( valHandle ) {
+							v = getHandleByToken((String) v);
+						}
+						item.access(MindAccess.Insert, hMember, MindColl.Arr, KEY_ADD, v, null);
+					}
+				} else {
+					Object v = valHandle ? getHandleByToken((String) value) : value;
+					item.access(MindAccess.Set, hMember, MindColl.One, null, v, null);
+				}
+			} else {
+				lateItems.add(memId);
 			}
 		}
 
 		@Override
 		public void notifyChange(MindAccess cmd, BrainHandle hMember, Object key, Object old, Object curr) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -286,9 +363,6 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					ret = new BrainHandle();
 					createKnowledgeItem(bootCtx, (BrainHandle) ret);
 					bootMed.access(MindAccess.Insert, BootToken.memMediatorLocalToRemote.getHandle(), MindColl.Map, ret, key, null);
-
-//					KnowledgeItem ki = createKnowledgeItem(bootCtx, null);
-//					ret = ki.access(MindAccess.Peek, BootToken.memKnowledgeHandle.getHandle(), MindColl.One, null, null, null);
 				}
 			} catch (Throwable t) {
 				GiskardException.wrap(t);

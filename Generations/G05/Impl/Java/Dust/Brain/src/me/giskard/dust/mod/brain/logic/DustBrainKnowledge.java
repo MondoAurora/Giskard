@@ -219,18 +219,18 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 							ret = kc.create(hMember, key);
 							if ( null != ret ) {
 								old = null;
-								changed = extendArr(cmd, a, idxValid, idx, ret);
+								changed = extendArr(cmd, a, idxValid, idx, val);
 							}
 						}
 					}
 					break;
 				case Insert:
 					old = null;
-					changed = extendArr(cmd, a, idxValid, idx, ret);
+					changed = extendArr(cmd, a, idxValid, idx, val);
 					break;
 				case Set:
 					old = idxValid ? a.get(idx) : null;
-					changed = extendArr(cmd, a, idxValid, idx, ret);
+					changed = extendArr(cmd, a, idxValid, idx, val);
 					break;
 				}
 			}

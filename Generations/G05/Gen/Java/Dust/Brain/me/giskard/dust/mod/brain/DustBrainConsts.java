@@ -4,9 +4,22 @@ import me.giskard.mind.GiskardConsts;
 
 public interface DustBrainConsts extends GiskardConsts {
 	
+	interface HandleFormatter {
+		String formatLabel(BrainHandle h);
+	}
+	
+	HandleFormatter DEF_FORMATTER = new HandleFormatter() {
+		@Override
+		public String formatLabel(BrainHandle h) {
+			return "BH(" + h.id + ")";
+		}
+	};
+	
 	final class BrainHandle implements MindHandle, Comparable<BrainHandle> {
 		static Object idlock = new Object();
 		static long nextId = 0;
+		
+		static HandleFormatter FORMATTER = DEF_FORMATTER;
 		
 		final Long id;
 
@@ -28,7 +41,7 @@ public interface DustBrainConsts extends GiskardConsts {
 		
 		@Override
 		public String toString() {
-			return "BH(" + id + ")";
+			return FORMATTER.formatLabel(this);
 		}
 	}
 
