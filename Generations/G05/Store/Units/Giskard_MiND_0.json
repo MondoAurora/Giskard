@@ -6,6 +6,10 @@
 	{
 		"_Model_": "=======================_Model_=======================",
 		
+		"typHandle": {
+			"memKnowledgeType": "typType"
+		},
+
 		"typVar": {
 			"memKnowledgeType": "typType"
 		},
@@ -41,6 +45,14 @@
 				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberHandleType": "typHandle"
+		},
+		"memKnowledgeContext": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typContext"
 		},
 		"memKnowledgeTags": {
 			"memKnowledgeType": "typMember",

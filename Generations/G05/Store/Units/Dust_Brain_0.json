@@ -85,6 +85,15 @@
 				"typBrain"
 			]
 		},
+		"memBrainContexts": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logBrain",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollMap",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typContext"
+		},
 		"memBrainDialogs": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "logBrain",

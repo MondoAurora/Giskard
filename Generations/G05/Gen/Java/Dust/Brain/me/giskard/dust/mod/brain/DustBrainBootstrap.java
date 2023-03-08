@@ -11,18 +11,11 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	String CN_DIALOG = "me.giskard.dust.mod.brain.logic.DustBrainLogicDialog";
 
 	enum BootToken {
-		typTag,
-		tagValtype, tagValtypeInt, tagValtypeReal, tagValtypeHandle, tagValtypeBin,
-		tagColl, tagCollOne, tagCollSet, tagCollArr, tagCollMap,
+		typTag, tagValtype, tagValtypeInt, tagValtypeReal, tagValtypeHandle, tagValtypeBin, tagColl, tagCollOne, tagCollSet, tagCollArr, tagCollMap,
 
-		typContext, memContextLocalKnowledge, 
-		typKnowledge, memKnowledgeHandle, memKnowledgeType, memKnowledgeTags, memKnowledgeCommit, memKnowledgeOwner, 
-		typType, 
-		typMember, memMemberHandleType, memMemberKeyType,
-		typPublished, memKnowledgePublisher, 
-		logMediator, memMediatorRemote, memMediatorLocalToRemote, memMediatorRemoteToLocal, 
-		typText, memTextString, memTextIdentifier, 
-		typVocabulary, memVocabularyWords,
+		typContext, memContextLocalKnowledge, typKnowledge, memKnowledgeHandle, memKnowledgeContext, memKnowledgeType, memKnowledgeTags, memKnowledgeCommit, memKnowledgeOwner, typType, typMember,
+		memMemberHandleType, memMemberKeyType, typPublished, memKnowledgePublisher, logMediator, memMediatorRemote, memMediatorLocalToRemote, memMediatorRemoteToLocal, typText, memTextString,
+		memTextIdentifier, typVocabulary, memVocabularyWords,
 
 		;
 
@@ -30,6 +23,22 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 
 		public BrainHandle getHandle() {
 			return handle;
+		}
+
+		public static BootToken fromHandle(BrainHandle handle) {
+			return fromHandle(handle, null);
+		}
+
+		public static BootToken fromHandle(BrainHandle handle, BootToken def) {
+			if ( null != handle ) {
+				for (BootToken bt : values()) {
+					if ( bt.handle == handle ) {
+						return bt;
+					}
+				}
+			}
+
+			return def;
 		}
 
 		public void setHandle(BrainHandle handle) {

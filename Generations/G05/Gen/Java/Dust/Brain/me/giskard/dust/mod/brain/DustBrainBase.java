@@ -153,8 +153,11 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				}
 			}
 		}
+		
+		BrainHandle bh = new BrainHandle();
+		bootCtx.access(MindAccess.Set, BootToken.memKnowledgeHandle.getHandle(), MindColl.One, null, bh, null);
 
-		bootConn.loadCtx("Dust", "BrainJava", 0);
+		bootConn.loadCtx("Dust", "BrainJava", 0, bh);
 
 		bootConn.wrapUp();
 
@@ -248,7 +251,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			return GiskardUtils.sbAppend(null, SEP, true, publisher, ctx, commit).toString();
 		}
 
-		public void loadCtx(String publisher, String ctx, Number commit) throws Exception {
+		public void loadCtx(String publisher, String ctx, Number commit, BrainHandle bh) throws Exception {
 			String token = getCtxId(publisher, ctx, commit);
 
 			GiskardMind.dump("Loading context", publisher, ctx, commit, token);
@@ -275,7 +278,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				Map data = (Map) ob;
 
 				KnowledgeItem item = getByToken(id);
-
+				
 				for (Object o1 : data.entrySet()) {
 					Map.Entry e1 = (Map.Entry) o1;
 					loadMember(item, (String) e1.getKey(), e1.getValue());
@@ -284,6 +287,8 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				boolean ctxref = item.access(MindAccess.Check, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, BootToken.typContext.getHandle(), this);
 				if ( ctxref ) {
 					refs.add(item);
+				} else {
+					item.access(MindAccess.Set, BootToken.memKnowledgeContext.getHandle(), MindColl.One, null, bh, null);
 				}
 			}
 
@@ -304,7 +309,8 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					String ctxId = getCtxId(refPub, refId, refCommit);
 
 					if ( !bootFiles.containsKey(ctxId) ) {
-						loadCtx(refPub, refId, refCommit);
+						BrainHandle ch = item.access(MindAccess.Peek, BootToken.memKnowledgeHandle.getHandle(), MindColl.One, null, null, null);
+						loadCtx(refPub, refId, refCommit, ch);
 					}
 				}
 			}

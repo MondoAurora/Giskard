@@ -16,6 +16,22 @@ public interface GiskardConsts {
 
 	enum MindColl {
 		One, Set, Arr, Map,
+		;
+		
+		public String wrapSize(Number size) {
+			switch (this) {
+			case Arr:
+				return "[" + size + "]";
+			case Map:
+				return "{" + size + "}";
+			case One:
+				return  size.toString() ;
+			case Set:
+				return "(" + size + ")";			
+			}
+			
+			return "?";
+		}
 	};
 
 	enum MindRoot {
