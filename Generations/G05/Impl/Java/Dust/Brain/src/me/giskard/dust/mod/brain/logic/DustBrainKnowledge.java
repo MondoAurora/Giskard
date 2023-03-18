@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import me.giskard.dust.mod.brain.DustBrainConsts;
+import me.giskard.dust.mod.brain.DustBrainHandle;
 import me.giskard.mind.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -43,14 +44,14 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 		
 	}
 
-	Map<BrainHandle, Object> data = new TreeMap<>();
+	Map<DustBrainHandle, Object> data = new TreeMap<>();
 
 	@Override
 	public String toString() {
 		return data.toString();
 	}
 
-	public <RetType> RetType access(MindAccess cmd, BrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc) {
+	public <RetType> RetType access(MindAccess cmd, DustBrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params) {
 		Object ret = (null == hMember) ? data.keySet() : data.get(hMember);
 		Object old = ret;
 		boolean changed = false;
@@ -92,7 +93,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 					// do nothing
 					break;
 				case Get:
-					ret = kc.create(hMember, key);
+					ret = kc.create(this, hMember, key, params);
 					break;
 				case Insert:
 				case Set:
@@ -219,7 +220,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 					case Get:
 						ret = m.get(key);
 						if ( null == ret ) {
-							ret = kc.create(hMember, key);
+							ret = kc.create(this, hMember, key, params);
 							if ( null != ret ) {
 								m.put(key, ret);
 								old = null;
@@ -269,7 +270,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 							if ( idxValid ) {
 								ret = a.get(idx);
 							} else {
-								ret = kc.create(hMember, key);
+								ret = kc.create(this, hMember, key, params);
 								if ( null != ret ) {
 									old = null;
 									changed = extendArr(cmd, a, idxValid, idx, val);
@@ -326,5 +327,11 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 		}
 
 		return change;
+	}
+
+	@Override
+	public void visit(DustBrainHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor) {
+		// TODO Auto-generated method stub
+		
 	}
 }

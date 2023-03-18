@@ -3,55 +3,32 @@ package me.giskard.dust.mod.brain;
 import me.giskard.mind.GiskardConsts;
 
 public interface DustBrainConsts extends GiskardConsts {
-	
+
 	interface HandleFormatter {
-		String formatLabel(BrainHandle h);
+		String formatLabel(DustBrainHandle h);
 	}
-	
+
 	HandleFormatter DEF_FORMATTER = new HandleFormatter() {
 		@Override
-		public String formatLabel(BrainHandle h) {
+		public String formatLabel(DustBrainHandle h) {
 			return "BH(" + h.id + ")";
 		}
 	};
-	
-	final class BrainHandle implements MindHandle, Comparable<BrainHandle> {
-		static Object idlock = new Object();
-		static long nextId = 0;
-		
-		static HandleFormatter FORMATTER = DEF_FORMATTER;
-		
-		final Long id;
-
-		public BrainHandle() {
-			synchronized (idlock) {
-				this.id = nextId ++;
-			}
-		}
-
-		@Override
-		public Object getId() {
-			return id;
-		}
-
-		@Override
-		public int compareTo(BrainHandle o) {
-			return id.compareTo(o.id);
-		}
-		
-		@Override
-		public String toString() {
-			return FORMATTER.formatLabel(this);
-		}
-	}
 
 	interface KnowledgeConnector {
-		Object create(BrainHandle hMember, Object key);
-		void notifyChange(MindAccess cmd, BrainHandle hMember, Object key, Object old, Object curr);
+		Object create(KnowledgeItem ctx, DustBrainHandle hMember, Object key, Object... params);
+
+		void notifyChange(MindAccess cmd, DustBrainHandle hMember, Object key, Object old, Object curr);
+	}
+
+	interface KnowledgeVisitor {
+		public <RetType> RetType access(MindAction action, KnowledgeItem item, DustBrainHandle hMember, MindColl coll, Object key, Object val);
 	}
 
 	interface KnowledgeItem {
-		public <RetType> RetType access(MindAccess cmd, BrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc);
+		public <RetType> RetType access(MindAccess cmd, DustBrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params);
+
+		public void visit(DustBrainHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor);
 	}
 
 	interface LogicKnowledge {
@@ -62,6 +39,7 @@ public interface DustBrainConsts extends GiskardConsts {
 		MindHandle createItem(MindHandle hTag);
 
 		MindColl getMemberColl(MindHandle hMember);
+
 		MindHandle getTagParent(MindHandle hTag);
 	}
 

@@ -21,19 +21,13 @@ public class DustBrain extends DustBrainBase {
 	}
 	
 	@Override
-	protected Map loadContext(String token) throws Exception {
-		File f = new File(root, token + EXT_JSON);
+	protected Map loadContextContent(String token, String lang) throws Exception {
+		File f = new File(root, token + SEP + lang + EXT_JSON);
 
 		JSONParser p = new JSONParser();
 		JSONArray a = (JSONArray) p.parse(new FileReader(f));
 		
 		return (Map) a.get(1);
-	}
-	
-	@Override
-	protected void testSomething() throws Exception {
-		super.testSomething();
-		BootGui.showGui(bootConn);
 	}
 	
 	@Override
@@ -47,6 +41,7 @@ public class DustBrain extends DustBrainBase {
 			break;
 		case Init:
 			initBrain();
+			BootGui.showGui(brain);
 			break;
 		case Process:
 			break;

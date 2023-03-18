@@ -1,0 +1,188 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Giskard"
+		},
+		"ctxMiND": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "MiND",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxStream": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Stream",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxText": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Text",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		
+		"pubDust": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Dust"
+		},
+		"ctxBrain": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "Brain",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxBrainJava": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "BrainJava",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "HelloWorld",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			},
+			"ctxMiND.memKnowledgeRequires": [
+				"ctxMiND", "ctxStream", "ctxText", "ctxBrain", "ctxBrainJava"
+			]
+		},
+		
+		"modApi": {
+			"ctxMiND.memKnowledgeType": "ctxBrain.typModule",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "Api",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxBrain.tagPubtypeModule"
+			}
+		},
+		"modBrainJava": {
+			"ctxMiND.memKnowledgeType": "ctxBrain.typModule",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "BrainJava",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxBrain.tagPubtypeModule"
+			}
+		},
+		
+		"localStoreFolder": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typVar",
+			"ctxMiND.memMemberVarValue": "../../Store"
+		},
+		"appStreamRoot": {
+			"ctxMiND.memKnowledgeType": "ctxStream.typStream",
+			"ctxStream.memStreamPath": "localStoreFolder"
+		},
+		"appStreamProvider": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typAgent",
+			"ctxMiND.memAgentLogic": "ctxStream.logStreamProvider",
+			"ctxStream.memStreamProviderLocalRoot": "appStreamRoot",
+			"ctxStream.memStreamProviderContentRoots": {
+				"ctxMiND.typContext" : "Units",
+				"ctxBrain.typModule" : "Impl/Java/lib"
+			}
+		},
+		
+		"appJson": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typAgent",
+			"ctxMiND.memAgentLogic": "ctxBrainJava.logStreamSerializerJson",
+			"ctxStream.memStreamSerializerCondition":"*.json"
+		},
+		"appStreamPortal": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typAgent",
+			"ctxMiND.memAgentLogic": "ctxStream.logStreamPortal",
+			"ctxStream.memStreamPortalMediators": [
+				"appJson"
+			]
+		},
+		
+		"appMsg": {
+			"ctxMiND.memKnowledgeType": "ctxText.typText",
+			"ctxText.memTextString": "Hello, World!"
+		},
+		"appLog": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typAgent",
+			"ctxMiND.memAgentLogic": "ctxBrainJava.logStreamSerializerTextLine",
+			"ctxStream.memStreamSerializerStream": "streamOut"
+		},
+		"lsnrLog": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typListener",
+			"ctxMiND.memListenerTarget": "message",
+			"ctxMiND.memListenerHandler": [
+				"appLog"
+			],
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagListener": "ctxMiND.tagListenerProcessor"
+			}
+		},
+		
+		"ctxMain": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"message": "appMsg"
+		},
+		
+		"dlgMain": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typAgent",
+			"ctxMiND.memAgentLogic": "ctxMiND.logDialog",
+			"ctxMiND.memDialogContext": "ctxMain",
+			"ctxMiND.memOrchestratorAgents": [
+				"appLog"
+			],
+			"ctxMiND.memDialogListeners": [
+				"lsnrLog"
+			],
+			"ctxMiND.memDialogLaunch": [
+				"message"
+			]
+		},
+				
+		"app": {
+			"ctxMiND.memKnowledgeType": "ctxBrain.typApp",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "HelloWorld",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxBrain.memAppStreamProvider" : "appStreamProvider",
+			"ctxBrain.memAppStreamPortal": "appStreamPortal",
+			"ctxBrain.memAppApi" : "modApi",
+			"ctxBrain.memAppModules": [
+				"modBrainJava"
+			],
+			"ctxBrain.memAppMain": "dlgMain"
+		},
+				
+		"theBrain" : {
+			"ctxBrain.memBrainDialogs": [
+				"dlgMain"
+			]
+		},
+		
+
+		"_End_": "____________"
+
+	}
+]

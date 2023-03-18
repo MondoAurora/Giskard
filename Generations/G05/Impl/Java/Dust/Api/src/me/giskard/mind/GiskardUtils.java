@@ -1,5 +1,9 @@
 package me.giskard.mind;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@SuppressWarnings("unchecked")
 public class GiskardUtils implements GiskardConsts {
 	
 	public static boolean isEqual(Object o1, Object o2) {
@@ -55,9 +59,31 @@ public class GiskardUtils implements GiskardConsts {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <RetType> RetType createInstance(String className) throws Exception {
-		return (RetType) Class.forName(className).getConstructor().newInstance();
+	public static <RetType> RetType createInstance(String className) {
+		try {
+			return (RetType) Class.forName(className).getConstructor().newInstance();
+		} catch (Throwable e) {
+			return GiskardException.wrap(e);
+		}
 	}
 
+	private static Map<Enum<?>, MindHandle> enumToHandle = new HashMap<>();
+	private static Map<MindHandle, Enum<?>> handleToEnum = new HashMap<>();
+	
+	public static void setEnumHandle(Enum<?> e, MindHandle h) {
+		enumToHandle.put(e, h);
+		handleToEnum.put(h, e);
+	}
+	public static <RetType extends Enum<?>> RetType getEnum(MindHandle h, RetType def) {
+		return (RetType) handleToEnum.getOrDefault(h, def);
+	}
+	public static <RetType extends Enum<?>> RetType getEnum(MindHandle h) {
+		return (RetType) handleToEnum.get(h);
+	}
+	public static <RetType extends MindHandle> RetType getHandle(Enum<?> e, MindHandle def) {
+		return (RetType) enumToHandle.getOrDefault(e, def);
+	}
+	public static <RetType extends MindHandle> RetType  getHandle(Enum<?> e) {
+		return (RetType) enumToHandle.get(e);
+	}
 }

@@ -1,0 +1,79 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Giskard"
+		},
+		"ctxMiND": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "MiND",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Text",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			},
+			"ctxMiND.memKnowledgeRequires": [
+				"ctxMiND"
+			]
+		},
+
+		"typText": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType"
+		},
+		"memTextString": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typText",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+		
+		"typVocabulary": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType",
+			"ctxMiND.memKnowledgeExtends": [
+				"ctxMiND.typMediator"
+			]
+		},
+
+		"typLanguage": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType",
+			"ctxMiND.memKnowledgeExtends": [
+				"ctxMiND.typContext"
+			]
+		},
+		"memLanguageWords": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typLanguage",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typText"
+		},
+		"memLanguageVocabularies": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typLanguage",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typVocabulary",
+			"ctxMiND.memMemberKeyType": "ctxMiND.typContext"
+		},
+
+		"_End_": "____________"
+	}
+]

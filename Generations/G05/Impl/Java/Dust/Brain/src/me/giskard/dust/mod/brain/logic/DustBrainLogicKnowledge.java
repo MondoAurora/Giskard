@@ -3,6 +3,7 @@ package me.giskard.dust.mod.brain.logic;
 import java.util.Map;
 
 import me.giskard.dust.mod.brain.DustBrainConsts;
+import me.giskard.dust.mod.brain.DustBrainHandle;
 import me.giskard.mind.GiskardConsts;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -29,7 +30,7 @@ public class DustBrainLogicKnowledge implements DustBrainLogicConsts, GiskardCon
 	}
 
 	
-	public <RetType> RetType access(MindAccess cmd, Object val, Map knowledge, BrainHandle member, MindColl coll, Object key) {
+	public <RetType> RetType access(MindAccess cmd, Object val, Map knowledge, DustBrainHandle member, MindColl coll, Object key) {
 		Object ret = val;
 		
 		

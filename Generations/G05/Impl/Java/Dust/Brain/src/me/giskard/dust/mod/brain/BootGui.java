@@ -200,9 +200,9 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 			addMouseListener(ma);
 
 			def_border = new LineBorder(Color.GRAY, 2);
-			borders.put(BootToken.typType.getHandle(), new LineBorder(Color.RED, 2));
-			borders.put(BootToken.typTag.getHandle(), new LineBorder(Color.GREEN, 2));
-			borders.put(BootToken.typMember.getHandle(), new LineBorder(Color.BLUE, 2));
+			borders.put(GiskardUtils.getHandle(BootToken.typType), new LineBorder(Color.RED, 2));
+			borders.put(GiskardUtils.getHandle(BootToken.typTag), new LineBorder(Color.GREEN, 2));
+			borders.put(GiskardUtils.getHandle(BootToken.typMember), new LineBorder(Color.BLUE, 2));
 
 			cDef = new JLabel().getBackground();
 			cFocus = Color.ORANGE;
@@ -213,12 +213,12 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		}
 
 		public void loadHandles() {
-			localKnowledge = bootConn.bootCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
 
 			Font f = getFont();
 			FontRenderContext frc = new FontRenderContext(null, true, false);
 
-			MindHandle hh = BootToken.memKnowledgeHandle.getHandle();
+			MindHandle hh = GiskardUtils.getHandle(BootToken.memKnowledgeHandle);
 
 			for (MindHandle mh : localKnowledge) {
 				if ( hh == mh ) {
@@ -239,12 +239,12 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 				labels.put(mh, lbl);
 
-				KnowledgeItem ki = bootConn.bootCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, mh, null, null);
-				MindHandle th = ki.access(MindAccess.Peek, BootToken.memKnowledgeType.getHandle(), MindColl.One, null, null, null);
+				KnowledgeItem ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, mh, null, null);
+				MindHandle th = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, null, null);
 
-				Iterable<BrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
+				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
 
-				for (BrainHandle hMem : members) {
+				for (DustBrainHandle hMem : members) {
 					if ( hh == hMem ) {
 						continue;
 					}
@@ -380,9 +380,9 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 			Number count;
 			KnowledgeItem item;
-			BrainHandle hMem;
+			DustBrainHandle hMem;
 
-			MultiValue(KnowledgeItem item, BrainHandle hMem, BootToken bt) {
+			MultiValue(KnowledgeItem item, DustBrainHandle hMem, BootToken bt) {
 				this.item = item;
 				this.hMem = hMem;
 				switch ( bt ) {
@@ -521,18 +521,21 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 				Object[] val = new Object[3];
 
 				lblHeader.setText(hItem.toString());
-				ki = bootConn.bootCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, hItem, null, null);
+				ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, hItem, null, null);
 
-				Iterable<BrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
-				for (BrainHandle hMem : members) {
-					KnowledgeItem mi = bootConn.bootCtx.access(MindAccess.Peek, BootToken.memContextLocalKnowledge.getHandle(), MindColl.Map, hMem, null, null);
+				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
+				for (DustBrainHandle hMem : members) {
+					KnowledgeItem mi = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, hMem, null, null);
 
-					val[0] = mi.access(MindAccess.Peek, BootToken.memKnowledgeOwner.getHandle(), MindColl.One, null, null, null);
+					if ( null == mi ) {
+						continue;
+					}
+					val[0] = mi.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeOwner), MindColl.One, null, null, null);
 					val[1] = hMem;
 
-					BrainHandle coll = mi.access(MindAccess.Peek, BootToken.memKnowledgeTags.getHandle(), MindColl.Map, BootToken.tagColl.getHandle(), BootToken.tagCollOne.getHandle(), null);
+					DustBrainHandle coll = mi.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeTags), MindColl.Map, GiskardUtils.getHandle(BootToken.tagColl), GiskardUtils.getHandle(BootToken.tagCollOne), null);
 
-					BootToken bt = BootToken.fromHandle(coll, BootToken.tagCollOne);
+					BootToken bt =  GiskardUtils.getEnum(coll, BootToken.tagCollOne);
 					
 					val[2] = ( bt == BootToken.tagCollOne ) 
 							? ki.access(MindAccess.Peek, hMem, MindColl.One, null, null, null)
@@ -561,7 +564,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		}
 	}
 
-	DustBrainBase.BootConn bootConn;
+	KnowledgeItem brain;
 
 	Iterable<MindHandle> localKnowledge;
 
@@ -583,11 +586,11 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 	Map<GuiCmd, AbstractButton> cmds = new HashMap<>();
 
-	public BootGui(DustBrainBase.BootConn bootConn) {
+	public BootGui(KnowledgeItem brain) {
 		super("Montru PoC");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.bootConn = bootConn;
+		this.brain = brain;
 
 		pnlGraph = new GraphPanel();
 
@@ -745,11 +748,6 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 		cp.add(splMain, BorderLayout.CENTER);
 
-//		JPanel pnlMain = new JPanel(new BorderLayout());
-//		pnlMain.add(splMain, BorderLayout.CENTER);
-//
-//		setContentPane(pnlMain);
-
 		Dimension paneSize = new Dimension(1000, 800);
 		pnlGraph.setPreferredSize(paneSize);
 
@@ -788,9 +786,9 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		return (MindHandle) ((JComponent) c).getClientProperty(CP_HANDLE);
 	}
 
-	public static void showGui(DustBrainBase.BootConn bootConn) {
+	public static void showGui(KnowledgeItem brain) {
 
-		BootGui bootGui = new BootGui(bootConn);
+		BootGui bootGui = new BootGui(brain);
 
 		bootGui.init();
 	}

@@ -1,0 +1,235 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Giskard"
+		},
+		"ctxText": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Text",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxMiND": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "MiND",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxStream": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Stream",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		
+		"pubDust": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Dust"
+		},
+		"": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubDust",
+			"ctxMiND.memKnowledgeIdentifier": "Brain",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			},
+			"ctxMiND.memKnowledgeRequires": [
+				"ctxMiND", "ctxStream", "ctxText"
+			]
+		},
+
+		
+		"typThread": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType"
+		},
+		"memThreadContext": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typThread",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+		"memThreadStack": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typThread",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollArr",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+
+		"logKnowledge": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic",
+			"ctxMiND.memKnowledgeRequires" : [
+				"ctxMiND.typKnowledge"
+			]
+		},
+		"logContext": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic",
+			"ctxMiND.memKnowledgeRequires" : [
+				"ctxMiND.typContext"
+			]
+		},
+		"memContextCollInfo": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logContext",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberKeyType": "ctxMiND.typMember",
+			"ctxMiND.memMemberHandleType": "ctxMiND.typTag"
+		},
+		"memContextTagParent": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logContext",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberKeyType": "ctxMiND.typTag",
+			"ctxMiND.memMemberHandleType": "ctxMiND.typTag"
+		},
+
+		"logBrain": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic"
+		},
+		"memBrainContexts": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logBrain",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxMiND.typContext"
+		},
+		"memBrainLanguages": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logBrain",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxText.typLanguage"
+		},
+		"memBrainDialogs": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logBrain",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollSet",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "logDialog"
+		},
+		"memBrainThreads": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logBrain",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+
+		"typModule": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType"
+		},
+		"memModuleImplementations": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typModule",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberKeyType": "ctxMiND.typAgent"
+		},
+		"tagPubtypeModule": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typTag",
+			"ctxMiND.memKnowledgeOwner": "ctxMiND.tagPubtype"
+		},
+
+		"typApp": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType"
+		},
+		"memAppConfig": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+		"memAppStreamProvider": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxStream.typStreamProvider"
+		},
+		"memAppStreamPortal": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxStream.typStreamPortal"
+		},
+		"memAppApi": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typModule"
+		},
+		"memAppModules": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollSet",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typModule"
+		},
+		"memAppMain": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typApp",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxMiND.logDialog"
+		},
+
+		"logBootMediator": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic",
+			"ctxMiND.memKnowledgeExtends": [
+				"ctxMiND.typMediator"
+			]
+		},
+		"memBootMediatorSources": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logBootMediator",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollSet",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+
+		"_End_": "____________"
+	}
+]

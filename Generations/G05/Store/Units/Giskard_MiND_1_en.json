@@ -4,6 +4,20 @@
 		"version": "1.0"
 	},
 	{
+		"pubGiskard": {
+			"memKnowledgeType": "typPublisher",
+			"memKnowledgeIdentifier": "Giskard"
+		},
+		"": {
+			"memKnowledgeType": "typContext",
+			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeIdentifier": "MiND",
+			"memPublishedVersionMajor": 1,
+			"memKnowledgeTags": {
+				"tagPubtype": "tagPubtypeContext"
+			}
+		},
+
 		"_Model_": "=======================_Model_=======================",
 		
 		"typHandle": {
@@ -21,6 +35,13 @@
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
 		},
+		"memKnowledgeIdentifier": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
 		"memKnowledgeType": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
@@ -37,6 +58,15 @@
 				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberHandleType": "typType"
+		},
+		"memKnowledgeMembers": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagColl": "tagCollSet",
+				"tagValtype": "tagValtypeHandle"
+			},
+			"memMemberHandleType": "typMember"
 		},
 		"memKnowledgeHandle": {
 			"memKnowledgeType": "typMember",
@@ -478,6 +508,16 @@
 			"memMemberHandleType": "typAgent"
 		},
 		
+		"tagChangedVal": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagChangedMember": {
+			"memKnowledgeType": "typTag"
+		},
+		"tagChangedType": {
+			"memKnowledgeType": "typTag"
+		},
+		
 		"tagListener": {
 			"memKnowledgeType": "typTag"
 		},
@@ -498,12 +538,12 @@
 			"memKnowledgeOwner": "tagListener"
 		},
 		
-		"logMediator": {
+		"typMediator": {
 			"memKnowledgeType": "typLogic"
 		},
 		"memMediatorRemote": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeOwner": "typMediator",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
@@ -511,7 +551,7 @@
 		},
 		"memMediatorLocalToRemote": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeOwner": "typMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeHandle"
@@ -520,7 +560,7 @@
 		},
 		"memMediatorRemoteToLocal": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "logMediator",
+			"memKnowledgeOwner": "typMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeHandle"

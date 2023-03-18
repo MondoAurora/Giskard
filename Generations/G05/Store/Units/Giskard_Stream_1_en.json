@@ -1,0 +1,142 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1.0"
+	},
+	{
+		"pubGiskard": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typPublisher",
+			"ctxMiND.memKnowledgeIdentifier": "Giskard"
+		},
+		"ctxMiND": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "MiND",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"ctxText": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Text",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			}
+		},
+		"": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typContext",
+			"ctxMiND.memKnowledgePublisher": "pubGiskard",
+			"ctxMiND.memKnowledgeIdentifier": "Stream",
+			"ctxMiND.memPublishedVersionMajor": 1,
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagPubtype": "ctxMiND.tagPubtypeContext"
+			},
+			"ctxMiND.memKnowledgeRequires": [
+				"ctxMiND", "ctxText"
+			]
+		},
+		
+		"typStream": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typType"
+		},
+		"memStreamRoot": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typStream",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typStream"
+		},
+		"memStreamPath": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typStream",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+		
+		"tagStreamType": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typTag"
+		},
+		"tagStreamTypeChar": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typTag",
+			"ctxMiND.memKnowledgeOwner": "tagStreamType"
+		},
+		"tagStreamTypeBin": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typTag",
+			"ctxMiND.memKnowledgeOwner": "tagStreamType"
+		},
+		
+		"streamOut": {
+			"ctxMiND.memKnowledgeType": "typStream",
+			"ctxMiND.memKnowledgeTags": {
+				"tagStreamType": "tagStreamTypeChar"
+			}
+		},
+		
+		"logStreamProvider": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic"
+		},
+		"memStreamProviderContentRoots": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logStreamProvider",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollMap"
+			}
+		},
+
+		
+		"logStreamSerializer": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic"
+		},
+		"memStreamSerializerMediator": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logStreamSerializer",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typMediator"
+		},
+		"memStreamSerializerTokenResolver": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logStreamSerializer",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "ctxText.typLanguage"
+		},
+		"memStreamSerializerStream": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logStreamSerializer",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "typStream"
+		},
+		"memStreamSerializerCondition": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "typMediatorAssignment",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeBin"
+			}
+		},
+				
+		"logStreamPortal": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typLogic"
+		},
+		"memStreamPortalMediators": {
+			"ctxMiND.memKnowledgeType": "ctxMiND.typMember",
+			"ctxMiND.memKnowledgeOwner": "logStreamPortal",
+			"ctxMiND.memKnowledgeTags": {
+				"ctxMiND.tagColl": "ctxMiND.tagCollArr",
+				"ctxMiND.tagValtype": "ctxMiND.tagValtypeHandle"
+			},
+			"ctxMiND.memMemberHandleType": "logStreamSerializer"
+		},
+		
+		"_End_": "____________"
+	}
+]
