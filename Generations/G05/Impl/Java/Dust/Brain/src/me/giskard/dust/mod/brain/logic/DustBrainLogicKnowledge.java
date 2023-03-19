@@ -56,7 +56,7 @@ public class DustBrainLogicKnowledge implements DustBrainLogicConsts, GiskardCon
 
 
 	@Override
-	public <RetType> RetType access(LogicContext ctx, MindAccess cmd, Object val, Object root, Object... path) {
+	public <RetType> RetType access(LogicUnit unit, MindAccess cmd, Object val, Object root, Object... path) {
 		// TODO Auto-generated method stub
 		return null;
 	}

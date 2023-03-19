@@ -16,7 +16,7 @@ public interface DustBrainConsts extends GiskardConsts {
 	};
 
 	interface KnowledgeConnector {
-		Object create(KnowledgeItem ctx, DustBrainHandle hMember, Object key, Object... params);
+		Object create(KnowledgeItem unit, DustBrainHandle hMember, Object key, Object... params);
 
 		void notifyChange(MindAccess cmd, DustBrainHandle hMember, Object key, Object old, Object curr);
 	}
@@ -32,10 +32,10 @@ public interface DustBrainConsts extends GiskardConsts {
 	}
 
 	interface LogicKnowledge {
-		<RetType> RetType access(LogicContext ctx, MindAccess cmd, Object val, Object root, Object... path);
+		<RetType> RetType access(LogicUnit unit, MindAccess cmd, Object val, Object root, Object... path);
 	}
 
-	interface LogicContext {
+	interface LogicUnit {
 		MindHandle createItem(MindHandle hTag);
 
 		MindColl getMemberColl(MindHandle hMember);
@@ -44,7 +44,7 @@ public interface DustBrainConsts extends GiskardConsts {
 	}
 
 	interface LogicMediator {
-		MindHandle getHandleByToken(Object token, KnowledgeItem kMediator, KnowledgeItem kContext);
+		MindHandle getHandleByToken(Object token, KnowledgeItem kMediator, KnowledgeItem kUnit);
 	}
 
 	interface LogicDialog {

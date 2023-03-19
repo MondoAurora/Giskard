@@ -21,7 +21,7 @@ public class DustBrain extends DustBrainBase {
 	}
 	
 	@Override
-	protected Map loadContextContent(String token, String lang) throws Exception {
+	protected Map loadUnitContent(String token, String lang) throws Exception {
 		File f = new File(root, token + SEP + lang + EXT_JSON);
 
 		JSONParser p = new JSONParser();

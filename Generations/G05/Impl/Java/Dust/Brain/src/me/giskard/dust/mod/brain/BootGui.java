@@ -213,7 +213,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		}
 
 		public void loadHandles() {
-			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
 
 			Font f = getFont();
 			FontRenderContext frc = new FontRenderContext(null, true, false);
@@ -239,7 +239,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 				labels.put(mh, lbl);
 
-				KnowledgeItem ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, mh, null, null);
+				KnowledgeItem ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, mh, null, null);
 				MindHandle th = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, null, null);
 
 				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
@@ -521,11 +521,11 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 				Object[] val = new Object[3];
 
 				lblHeader.setText(hItem.toString());
-				ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, hItem, null, null);
+				ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, hItem, null, null);
 
 				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
 				for (DustBrainHandle hMem : members) {
-					KnowledgeItem mi = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memContextLocalKnowledge), MindColl.Map, hMem, null, null);
+					KnowledgeItem mi = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, hMem, null, null);
 
 					if ( null == mi ) {
 						continue;

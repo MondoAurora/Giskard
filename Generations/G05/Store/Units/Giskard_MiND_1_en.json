@@ -4,17 +4,17 @@
 		"version": "1.0"
 	},
 	{
-		"pubGiskard": {
-			"memKnowledgeType": "typPublisher",
+		"authGiskard": {
+			"memKnowledgeType": "typAuthor",
 			"memKnowledgeIdentifier": "Giskard"
 		},
 		"": {
-			"memKnowledgeType": "typContext",
-			"memKnowledgePublisher": "pubGiskard",
+			"memKnowledgeType": "typUnit",
+			"memUnitAuthor": "authGiskard",
 			"memKnowledgeIdentifier": "MiND",
-			"memPublishedVersionMajor": 1,
+			"memUnitVersionMajor": 1,
 			"memKnowledgeTags": {
-				"tagPubtype": "tagPubtypeContext"
+				"tagUtype": "tagUtypeUnit"
 			}
 		},
 
@@ -76,13 +76,13 @@
 			},
 			"memMemberHandleType": "typHandle"
 		},
-		"memKnowledgeContext": {
+		"memKnowledgeUnit": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typContext"
+			"memMemberHandleType": "typUnit"
 		},
 		"memKnowledgeTags": {
 			"memKnowledgeType": "typMember",
@@ -125,54 +125,50 @@
 			}
 		},
 		
-		"typContext": {
+		"typAuthor": {
 			"memKnowledgeType": "typType"
 		},
-		"memContextLocalKnowledge": {
+		
+		"typUnit": {
+			"memKnowledgeType": "typType"
+		},
+		"memUnitLocalKnowledge": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typContext",
+			"memKnowledgeOwner": "typUnit",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeBin"
 			}
 		},
-
-		"typPublisher": {
-			"memKnowledgeType": "typType"
-		},
-		
-		"typPublished": {
-			"memKnowledgeType": "typType"
-		},
-		"memKnowledgePublisher": {
+		"memUnitAuthor": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeOwner": "typUnit",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typPublisher"
+			"memMemberHandleType": "typAuthor"
 		},
-		"memPublishedVersionMajor": {
+		"memUnitVersionMajor": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeOwner": "typUnit",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeInt"
 			}
 		},
-		"memPublishedVersionMinor": {
+		"memUnitVersionMinor": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typPublished",
+			"memKnowledgeOwner": "typUnit",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeInt"
 			}
 		},
 		
-		"tagPubtype": {
+		"tagUtype": {
 			"memKnowledgeType": "typTag"
 		},
-		"tagPubtypeContext": {
+		"tagUtypeUnit": {
 			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagPubtype"
+			"memKnowledgeOwner": "tagUtype"
 		},
 				
 		"typReference": {
@@ -189,13 +185,13 @@
 		"typProxy": {
 			"memKnowledgeType": "typType"
 		},
-		"memProxyContext": {
+		"memProxyUnit": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typProxy",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typContext"
+			"memMemberHandleType": "typUnit"
 		},
 		"memProxyId": {
 			"memKnowledgeType": "typMember",
@@ -547,7 +543,7 @@
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typContext"
+			"memMemberHandleType": "typUnit"
 		},
 		"memMediatorLocalToRemote": {
 			"memKnowledgeType": "typMember",
@@ -574,13 +570,13 @@
 				"logOrchestrator"
 			]
 		},
-		"memDialogContext": {
+		"memDialogUnit": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "logDialog",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
-			"memMemberHandleType": "typContext"
+			"memMemberHandleType": "typUnit"
 		},
 		"memDialogListeners": {
 			"memKnowledgeType": "typMember",

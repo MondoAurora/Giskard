@@ -9,7 +9,7 @@ public final class DustBrainHandle implements DustBrainConsts, GiskardConsts.Min
 	static HandleFormatter FORMATTER = DustBrainConsts.DEF_FORMATTER;
 
 	final Long id;
-	Object ctxToken;
+	Object unitToken;
 
 	public DustBrainHandle() {
 		synchronized (idlock) {
@@ -22,12 +22,12 @@ public final class DustBrainHandle implements DustBrainConsts, GiskardConsts.Min
 		return id;
 	}
 	
-	public Object getCtxToken() {
-		return ctxToken;
+	public Object getUnitToken() {
+		return unitToken;
 	}
 	
-	public void setCtxToken(Object ctxToken) {
-		this.ctxToken = ctxToken;
+	public void setUnitToken(Object unitToken) {
+		this.unitToken = unitToken;
 	}
 
 	@Override

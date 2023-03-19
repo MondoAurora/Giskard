@@ -20,9 +20,9 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 	protected abstract void setRoot(File root) throws Exception;
 
-	protected abstract Map loadContextContent(String token, String lang) throws Exception;
+	protected abstract Map loadUnitContent(String token, String lang) throws Exception;
 
-	Set<String> ctxToRead = new TreeSet<>();
+	Set<String> unitToRead = new TreeSet<>();
 	Map<String, Map> bootContent = new HashMap<>();
 	Map<String, DustBrainLangConn> loadConn = new HashMap<>();
 
@@ -31,7 +31,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		for (BootToken bt : BootToken.values()) {
 			DustBrainHandle bh = new DustBrainHandle();
-			bh.setCtxToken(bt.context.getToken());
+			bh.setUnitToken(bt.unit.getToken());
 			GiskardUtils.setEnumHandle(bt, bh);
 		}
 
@@ -52,16 +52,16 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 		DustBrainHandle hMemTags = GiskardUtils.getHandle(BootToken.memKnowledgeTags);
 		DustBrainHandle hMemOwner = GiskardUtils.getHandle(BootToken.memKnowledgeOwner);
 
-		DustBrainLangConn langConn = new DustBrainLangConn(brain, LANG_BOOT, BootToken.theBrain.context.getToken());
+		DustBrainLangConn langConn = new DustBrainLangConn(brain, LANG_BOOT, BootToken.theBrain.unit.getToken());
 
 		for (BootToken bt : BootToken.values()) {
-			String ctxToken = bt.context.getToken();
-			if ( langConn.addRefCtx(bt.context.id, ctxToken) ) {
-				optAddCtx(ctxToken);
+			String unitToken = bt.unit.getToken();
+			if ( langConn.addRefUnit(bt.unit.id, unitToken) ) {
+				optAddUnit(unitToken);
 			}
 
 			String name = bt.name();
-			KnowledgeItem ki = langConn.getByToken(bt.context.id, name, GiskardUtils.getHandle(bt));
+			KnowledgeItem ki = langConn.getByToken(bt.unit.id, name, GiskardUtils.getHandle(bt));
 
 			String pfx = name.substring(0, 3);
 			DustBrainHandle th = bootType.get(pfx);
@@ -73,11 +73,11 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				case "mem": {
 					tags.clear();
 					switch ( bt ) {
-					case memContextLocalKnowledge:
+					case memUnitLocalKnowledge:
 						tags.put(BootToken.tagColl, BootToken.tagCollMap);
 						break;
 					case memKnowledgeOwner:
-					case memKnowledgePublisher:
+					case memUnitAuthor:
 					case memKnowledgeType:
 					case memMediatorRemote:
 					case memMemberHandleType:
@@ -115,41 +115,41 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		DustBrainHandle.FORMATTER = new DustBrainLangFormatter(brain, LANG_BOOT);
 
-		while (!ctxToRead.isEmpty()) {
-			Iterator<String> it = ctxToRead.iterator();
-			String ctxToken = it.next();
+		while (!unitToRead.isEmpty()) {
+			Iterator<String> it = unitToRead.iterator();
+			String unitToken = it.next();
 			it.remove();
 
-			loadCtx(ctxToken);
+			loadUnit(unitToken);
 		}
 
 		while (!bootContent.isEmpty()) {
 			for (Iterator<String> itContent = bootContent.keySet().iterator(); itContent.hasNext();) {
-				if ( loadCtx(itContent.next()) ) {
+				if ( loadUnit(itContent.next()) ) {
 					itContent.remove();
 				}
 			}
 		}
 	}
 
-	public void optAddCtx(String ctxToken) throws Exception {
-		if ( !bootContent.containsKey(ctxToken) ) {
-			ctxToRead.add(ctxToken);
+	public void optAddUnit(String unitToken) throws Exception {
+		if ( !bootContent.containsKey(unitToken) ) {
+			unitToRead.add(unitToken);
 		}
 	}
 
-	public boolean loadCtx(String ctxToken) throws Exception {
-		GiskardMind.dump("Loading context", ctxToken);
+	public boolean loadUnit(String unitToken) throws Exception {
+		GiskardMind.dump("Loading unit", unitToken);
 
 		DustBrainLangConn langConn;
 
-		Map content = bootContent.get(ctxToken);
+		Map content = bootContent.get(unitToken);
 		if ( null == content ) {
-			langConn = new DustBrainLangConn(brain, LANG_BOOT, ctxToken);
-			loadConn.put(ctxToken, langConn);
+			langConn = new DustBrainLangConn(brain, LANG_BOOT, unitToken);
+			loadConn.put(unitToken, langConn);
 			
-			content = loadContextContent(ctxToken, LANG_BOOT);
-			bootContent.put(ctxToken, content);
+			content = loadUnitContent(unitToken, LANG_BOOT);
+			bootContent.put(unitToken, content);
 
 			Map data = (Map) content.get("");
 
@@ -157,17 +157,17 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			if ( null != refs ) {
 				for (String refId : refs) {
 					data = (Map) content.get(refId);
-					Map pub = (Map) content.get(data.get(BootToken.memKnowledgePublisher.toString()));
+					Map author = (Map) content.get(data.get(BootToken.memUnitAuthor.toString()));
 
-					String refCtxId = BootContext.getToken(pub.get(BootToken.memKnowledgeIdentifier.toString()), data.get(BootToken.memKnowledgeIdentifier.toString()),
-							data.get(BootToken.memPublishedVersionMajor.toString()));
+					String refUnitId = BootUnit.getToken(author.get(BootToken.memKnowledgeIdentifier.toString()), data.get(BootToken.memKnowledgeIdentifier.toString()),
+							data.get(BootToken.memUnitVersionMajor.toString()));
 
-					langConn.addRefCtx(refId, refCtxId);
-					optAddCtx(refCtxId);
+					langConn.addRefUnit(refId, refUnitId);
+					optAddUnit(refUnitId);
 				}
 			}
 		} else {
-			langConn = loadConn.get(ctxToken);
+			langConn = loadConn.get(unitToken);
 		}
 
 		for (Iterator itData = content.entrySet().iterator(); itData.hasNext();) {

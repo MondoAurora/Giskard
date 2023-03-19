@@ -6,14 +6,14 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 
 public class GiskardApp implements GiskardConsts {
-	protected static class PublishedBean {
-		public final String publisher;
+	protected static class UnitBean {
+		public final String author;
 		public final String token;
 		public final Integer verMajor;
 		public final Integer verMinor;
 		
-		public PublishedBean(String publisher, String token, Integer verMajor, Integer verMinor) {
-			this.publisher = publisher;
+		public UnitBean(String author, String token, Integer verMajor, Integer verMinor) {
+			this.author = author;
 			this.token = token;
 			this.verMajor = verMajor;
 			this.verMinor = verMinor;
@@ -21,27 +21,27 @@ public class GiskardApp implements GiskardConsts {
 		
 		@Override
 		public String toString() {
-			StringBuilder sb = GiskardUtils.sbAppend(null, SEP, false, publisher, token, verMajor, verMinor);
+			StringBuilder sb = GiskardUtils.sbAppend(null, SEP, false, author, token, verMajor, verMinor);
 			return sb.toString();			
 		}
 	}
 	
 	protected static class BrainBean {
-		public final PublishedBean pubInfo;
+		public final UnitBean unitInfo;
 		public final String libPath;
 		public final String brainClass;
 		
-		public BrainBean(PublishedBean pubInfo, String libPath, String brainClass) {
-			this.pubInfo = pubInfo;
+		public BrainBean(UnitBean unitInfo, String libPath, String brainClass) {
+			this.unitInfo = unitInfo;
 			this.libPath = libPath;
 			this.brainClass = brainClass;
 		}
 	}
 	
 	protected final BrainBean brainBean;
-	protected final PublishedBean appBean;
+	protected final UnitBean appBean;
 	
-	protected GiskardApp(BrainBean brainBean, PublishedBean appBean) {
+	protected GiskardApp(BrainBean brainBean, UnitBean appBean) {
 		this.brainBean = brainBean;
 		this.appBean = appBean;
 	}
@@ -52,7 +52,7 @@ public class GiskardApp implements GiskardConsts {
 	
 	@SuppressWarnings("unchecked")
 	protected final void boot() throws Exception {
-		PublishedBean pb = brainBean.pubInfo;
+		UnitBean pb = brainBean.unitInfo;
 		
 		Class<MindBrain> cBrain = null;
 
@@ -73,7 +73,7 @@ public class GiskardApp implements GiskardConsts {
 		brain.agentExecAction(MindAction.Begin);
 	}
 	
-	public static ClassLoader getClassLoader(PublishedBean moduleBean, String modulePath) throws Exception {
+	public static ClassLoader getClassLoader(UnitBean moduleBean, String modulePath) throws Exception {
 		ArrayList<URL> urls = new ArrayList<>();
 	
 		String brainModuleName = moduleBean.toString();
