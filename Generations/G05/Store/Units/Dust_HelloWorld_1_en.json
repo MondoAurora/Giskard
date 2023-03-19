@@ -4,13 +4,13 @@
 		"version": "1.0"
 	},
 	{
-		"authGiskard": {
+		"unitMiND.authGiskard": {
 			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
 			"unitMiND.memKnowledgeIdentifier": "Giskard"
 		},
 		"unitMiND": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "MiND",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -19,7 +19,7 @@
 		},
 		"unitStream": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "Stream",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -28,7 +28,7 @@
 		},
 		"unitText": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "Text",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -36,13 +36,13 @@
 			}
 		},
 		
-		"authDust": {
+		"unitBrain.authDust": {
 			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
 			"unitMiND.memKnowledgeIdentifier": "Dust"
 		},
 		"unitBrain": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "Brain",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -51,7 +51,7 @@
 		},
 		"unitBrainJava": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "BrainJava",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -60,7 +60,7 @@
 		},
 		"": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "HelloWorld",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -73,7 +73,7 @@
 		
 		"modApi": {
 			"unitMiND.memKnowledgeType": "unitBrain.typModule",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "Api",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -82,7 +82,7 @@
 		},
 		"modBrainJava": {
 			"unitMiND.memKnowledgeType": "unitBrain.typModule",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "BrainJava",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -163,7 +163,7 @@
 				
 		"app": {
 			"unitMiND.memKnowledgeType": "unitBrain.typApp",
-			"unitMiND.memUnitAuthor": "authDust",
+			"unitMiND.memUnitAuthor": "unitBrain.authDust",
 			"unitMiND.memKnowledgeIdentifier": "HelloWorld",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitBrain.memAppStreamProvider" : "appStreamProvider",

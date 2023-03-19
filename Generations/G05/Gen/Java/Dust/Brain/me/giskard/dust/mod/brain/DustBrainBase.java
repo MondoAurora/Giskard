@@ -86,9 +86,12 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 						break;
 					case memKnowledgeTags:
 						ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMemberKeyType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typTag), null);
+					case memKnowledgeRequires:
 					case memMediatorLocalToRemote:
 					case memMediatorRemoteToLocal:
 					case memLanguageWords:
+					case memBrainLanguages:
+					case memLanguageVocabularies:
 						tags.put(BootToken.tagColl, BootToken.tagCollMap);
 						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
 						break;

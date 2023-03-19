@@ -8,12 +8,12 @@ import me.giskard.mind.GiskardException;
 import me.giskard.mind.GiskardUtils;
 
 public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, DustBrainConsts.KnowledgeConnector {
-	
+
 	private static class UnitInfo {
 		final String token;
 		final KnowledgeItem voc;
 		final KnowledgeItem unit;
-		
+
 		public UnitInfo(String token, KnowledgeItem voc, KnowledgeItem unit) {
 			this.token = token;
 			this.voc = voc;
@@ -22,6 +22,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 	}
 
 	final KnowledgeItem brain;
+	MindHandle hBrain;
 
 	String lang;
 	KnowledgeItem langUnit;
@@ -34,10 +35,12 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		this.lang = lang;
 		this.defUnit = defUnit;
 
+		hBrain = GiskardUtils.getHandle(BootToken.theBrain);
+
 		unitInfos.clear();
-		DustBrainHandle handle = brain.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memBrainLanguages), MindColl.Map, LANG_BOOT, null, this);
+		DustBrainHandle handle = brain.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memBrainLanguages), MindColl.Map, lang, null, this);
 		langUnit = DustBrainBootUtils.resolveHandle(brain, handle, null);
-		
+
 		addRefUnit(null, defUnit);
 	}
 
@@ -45,15 +48,15 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		if ( !unitInfos.containsKey(refId) ) {
 			DustBrainHandle hUnit = brain.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memBrainUnits), MindColl.Map, unitId, null, this);
 			KnowledgeItem unit = DustBrainBootUtils.resolveHandle(brain, hUnit, this);
-			
+
 			DustBrainHandle hVoc = langUnit.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memLanguageVocabularies), MindColl.Map, unitId, null, this, hUnit);
 			KnowledgeItem voc = DustBrainBootUtils.resolveHandle(langUnit, hVoc, this);
 
 			unitInfos.put(refId, new UnitInfo(unitId, voc, unit));
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -72,7 +75,11 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		try {
 			switch ( bt ) {
 			case memUnitLocalKnowledge:
-				ret = DustBrainBootUtils.createKnowledgeItem(unit, (DustBrainHandle) key);
+				if ( key == hBrain ) {
+					ret = brain;
+				} else {
+					ret = DustBrainBootUtils.createKnowledgeItem(unit, (DustBrainHandle) key);
+				}
 				break;
 			case memBrainLanguages:
 			case memBrainUnits:
@@ -80,9 +87,9 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 				ret = hItem = DustBrainBootUtils.createKnowledgeItem(unit);
 				item = DustBrainBootUtils.resolveHandle(unit, hItem, null);
 				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, key, null);
-				
+
 				if ( bt == BootToken.memLanguageVocabularies ) {
-					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemote), MindColl.One, null, params[0], null);					
+					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemote), MindColl.One, null, params[0], null);
 				}
 				break;
 			case memLanguageWords:
@@ -110,24 +117,24 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 	}
 
 	public MindHandle getHandleByToken(String id) {
-		KnowledgeItem item = getByToken( id);
+		KnowledgeItem item = getByToken(id);
 		return DustBrainBootUtils.getHandle(item);
 	}
 
 	public KnowledgeItem getByToken(String id) {
 		KnowledgeItem item;
-		
-		if ( GiskardUtils.isEmpty(id)) {
+
+		if ( GiskardUtils.isEmpty(id) ) {
 			item = getByToken(null, null, null);
-		} else if ( unitInfos.containsKey(id)) {
+		} else if ( unitInfos.containsKey(id) ) {
 			item = getByToken(id, null, null);
 		} else {
 			int sep = id.indexOf('.');
-			
+
 			if ( -1 == sep ) {
 				item = getByToken(null, id, null);
 			} else {
-				item = getByToken(id.substring(0, sep), id.substring(sep + 1), null);					
+				item = getByToken(id.substring(0, sep), id.substring(sep + 1), null);
 			}
 		}
 
@@ -138,20 +145,20 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		if ( GiskardUtils.isEmpty(name) ) {
 			return unitInfos.get(unitRef).unit;
 		}
-		
+
 		UnitInfo ui = unitInfos.get(unitRef);
-		
+
 		MindHandle hWord = langUnit.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memLanguageWords), MindColl.Map, name, null, this);
 
 		MindHandle hItem = ui.voc.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memMediatorLocalToRemote), MindColl.Map, hWord, null, this, ui.token, handle);
-		
+
 		return DustBrainBootUtils.resolveHandle(ui.unit, hItem, this);
 	}
 
 	public KnowledgeItem getUnitByToken(String id) {
 		return unitInfos.get(id).unit;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public boolean loadMember(KnowledgeItem item, KnowledgeItem member, Object value) throws Exception {
 		boolean knownMember = member.access(MindAccess.Check, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typMember), null);
@@ -182,7 +189,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 				item.access(MindAccess.Set, hMember, MindColl.One, null, v, null);
 			}
 		}
-		
+
 		return knownMember;
-	}	
+	}
 }

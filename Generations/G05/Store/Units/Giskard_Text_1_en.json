@@ -4,13 +4,13 @@
 		"version": "1.0"
 	},
 	{
-		"authGiskard": {
+		"unitMiND.authGiskard": {
 			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
 			"unitMiND.memKnowledgeIdentifier": "Giskard"
 		},
 		"unitMiND": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "MiND",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -19,7 +19,7 @@
 		},
 		"": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "Text",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {

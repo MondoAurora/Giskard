@@ -4,9 +4,12 @@ import me.giskard.mind.GiskardUtils;
 
 public class DustBrainLangFormatter implements DustBrainConsts, DustBrainBootstrap, DustBrainConsts.HandleFormatter {
 
+	final KnowledgeItem brain;
 	final KnowledgeItem unitLang;
 
 	public DustBrainLangFormatter(KnowledgeItem brain, String lang) {
+		this.brain = brain;
+
 		DustBrainHandle handle = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memBrainLanguages), MindColl.Map, lang, null, null);
 		unitLang = DustBrainBootUtils.resolveHandle(brain, handle, null);
 	}
@@ -17,7 +20,20 @@ public class DustBrainLangFormatter implements DustBrainConsts, DustBrainBootstr
 
 		Object unitToken = h.getUnitToken();
 
-		if ( null != unitToken ) {
+		if ( null == unitToken ) {
+			KnowledgeItem item = DustBrainBootUtils.resolveHandle(brain, h, null);
+			if ( null != item ) {
+				ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, null, null);
+			} else {
+				item = DustBrainBootUtils.resolveHandle(unitLang, h, null);
+				if ( null != item ) {
+					ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, null, null);
+					if ( null == ret ) {
+						ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memTextString), MindColl.One, null, null, null);
+					}
+				}
+			}
+		} else {
 			DustBrainHandle vocHandle = unitLang.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memLanguageVocabularies), MindColl.Map, unitToken, null, null);
 			KnowledgeItem voc = DustBrainBootUtils.resolveHandle(unitLang, vocHandle, null);
 

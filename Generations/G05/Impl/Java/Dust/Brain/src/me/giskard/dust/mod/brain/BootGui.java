@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
@@ -44,6 +45,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import me.giskard.mind.GiskardMind;
 import me.giskard.mind.GiskardUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -192,6 +194,8 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		Set<JLabel> lbSel = new HashSet<>();
 
 		Set<MindHandle> dispConnTypes = new HashSet<>();
+		
+		MindHandle hh = GiskardUtils.getHandle(BootToken.memKnowledgeHandle);
 
 		public GraphPanel() {
 			super(null);
@@ -212,22 +216,24 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 			loadHandles();
 		}
 
-		public void loadHandles() {
-			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
-
+		public void loadHandles(KnowledgeItem unit, Iterable<MindHandle> localKnowledge ) {
 			Font f = getFont();
 			FontRenderContext frc = new FontRenderContext(null, true, false);
 
-			MindHandle hh = GiskardUtils.getHandle(BootToken.memKnowledgeHandle);
-
 			for (MindHandle mh : localKnowledge) {
-				if ( hh == mh ) {
+				if ( (hh == mh) || labels.containsKey(mh) ) {
 					continue;
 				}
+				
 				String txt = mh.toString();
 				if ( txt.startsWith("BH(") ) {
 					continue;
 				}
+				
+				if ( !names.add(txt)) {
+					GiskardMind.dump("Duplicate name", txt);
+				}
+				
 				Rectangle rct = f.getStringBounds(txt, frc).getBounds();
 				rct.width += 10;
 				rct.height += 6;
@@ -239,11 +245,11 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 				labels.put(mh, lbl);
 
-				KnowledgeItem ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, mh, null, null);
+				KnowledgeItem ki = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, mh, null, null);
 				MindHandle th = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, null, null);
+				lbl.setBorder(borders.getOrDefault(th, def_border)); // Set a border for clarity.
 
 				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
-
 				for (DustBrainHandle hMem : members) {
 					if ( hh == hMem ) {
 						continue;
@@ -257,9 +263,29 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 					}
 				}
 
-				lbl.setBorder(borders.getOrDefault(th, def_border)); // Set a border for clarity.
-
 				add(lbl);
+			}
+		}
+		
+		Set<String> names = new TreeSet<>();
+
+		public void loadHandles() {
+			Iterable<MindHandle> localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+
+			names.clear();
+			
+			loadHandles(brain, localKnowledge);
+			
+			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memBrainUnits), MindColl.Map, KEY_ITER, null, null);
+
+			for (MindHandle mh : localKnowledge) {
+				KnowledgeItem item = DustBrainBootUtils.resolveBrainHandle(brain, mh);
+				
+				Iterable<MindHandle> li = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+				
+				if ( null != li ) {
+					loadHandles(item, li);
+				}
 			}
 
 			for (Iterator<Conn> ci = conns.iterator(); ci.hasNext();) {
@@ -521,12 +547,12 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 				Object[] val = new Object[3];
 
 				lblHeader.setText(hItem.toString());
-				ki = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, hItem, null, null);
+				ki = DustBrainBootUtils.resolveBrainHandle(brain, hItem);
 
 				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
 				for (DustBrainHandle hMem : members) {
-					KnowledgeItem mi = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, hMem, null, null);
-
+					KnowledgeItem mi = DustBrainBootUtils.resolveBrainHandle(brain, hMem);
+					
 					if ( null == mi ) {
 						continue;
 					}
@@ -565,8 +591,6 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 	}
 
 	KnowledgeItem brain;
-
-	Iterable<MindHandle> localKnowledge;
 
 	MindHandle hFocus;
 	Map<MindHandle, Direction> hSel = new HashMap<>();
@@ -739,8 +763,12 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		splRight.setDividerLocation(0.7);
 
 		JSplitPane splMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		splMain.setLeftComponent(splLeft);
-		splMain.setRightComponent(splRight);
+		JPanel p1 = new JPanel(new BorderLayout());
+		p1.add(splLeft, BorderLayout.CENTER);
+		splMain.setLeftComponent(p1);
+		p1 = new JPanel(new BorderLayout());
+		p1.add(splRight, BorderLayout.CENTER);
+		splMain.setRightComponent(p1);
 		splMain.setResizeWeight(0.3);
 		splMain.setDividerLocation(0.3);
 

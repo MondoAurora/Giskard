@@ -3,7 +3,7 @@ package me.giskard.dust.mod.brain;
 import me.giskard.mind.GiskardUtils;
 
 public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts, DustBrainBootstrap {
-	
+
 	public static DustBrainHandle createKnowledgeItem(KnowledgeItem unit) {
 		KnowledgeItem ki = createInstance(CN_KNOWLEDGE_ITEM);
 
@@ -37,6 +37,20 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 
 	public static KnowledgeItem resolveHandle(KnowledgeItem unit, MindHandle handle, KnowledgeConnector conn) {
 		return unit.access((null == conn) ? MindAccess.Peek : MindAccess.Get, getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, handle, null, conn);
+	}
+
+	public static KnowledgeItem resolveBrainHandle(KnowledgeItem brain, MindHandle handle) {
+		KnowledgeItem unit;
+
+		Object unitToken = ((DustBrainHandle) handle).getUnitToken();
+		if ( null == unitToken ) {
+			unit = brain;
+		} else {
+			DustBrainHandle hUnit = brain.access(MindAccess.Peek, getHandle(BootToken.memBrainUnits), MindColl.Map, unitToken, null, null);
+			unit = resolveHandle(brain, hUnit, null);
+		}
+		
+		return (null == unit) ? null : resolveHandle(unit, handle, null);
 	}
 
 }

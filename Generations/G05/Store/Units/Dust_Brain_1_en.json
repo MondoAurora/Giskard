@@ -4,13 +4,13 @@
 		"version": "1.0"
 	},
 	{
-		"authGiskard": {
+		"unitMiND.authGiskard": {
 			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
 			"unitMiND.memKnowledgeIdentifier": "Giskard"
 		},
 		"unitText": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "Text",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -19,7 +19,7 @@
 		},
 		"unitMiND": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "MiND",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -28,7 +28,7 @@
 		},
 		"unitStream": {
 			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authGiskard",
+			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
 			"unitMiND.memKnowledgeIdentifier": "Stream",
 			"unitMiND.memUnitVersionMajor": 1,
 			"unitMiND.memKnowledgeTags": {
@@ -134,7 +134,7 @@
 				"unitMiND.tagColl": "unitMiND.tagCollSet",
 				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "logDialog"
+			"unitMiND.memMemberHandleType": "unitMiND.logDialog"
 		},
 		"memBrainThreads": {
 			"unitMiND.memKnowledgeType": "unitMiND.typMember",
