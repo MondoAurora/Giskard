@@ -23,11 +23,11 @@ public class DustBrainLangFormatter implements DustBrainConsts, DustBrainBootstr
 		if ( null == unitToken ) {
 			KnowledgeItem item = DustBrainBootUtils.resolveHandle(brain, h, null);
 			if ( null != item ) {
-				ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, null, null);
+				ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, null, null);
 			} else {
 				item = DustBrainBootUtils.resolveHandle(unitLang, h, null);
 				if ( null != item ) {
-					ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, null, null);
+					ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, null, null);
 					if ( null == ret ) {
 						ret = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memTextString), MindColl.One, null, null, null);
 					}

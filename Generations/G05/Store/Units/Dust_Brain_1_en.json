@@ -6,12 +6,12 @@
 	{
 		"unitMiND_authGiskard": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeIdentifier": "Giskard"
+			"unitMiND_memKnowledgeToken": "Giskard"
 		},
 		"unitText": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "Text",
+			"unitMiND_memKnowledgeToken": "Text",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -20,7 +20,7 @@
 		"unitMiND": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "MiND",
+			"unitMiND_memKnowledgeToken": "MiND",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -29,7 +29,7 @@
 		"unitStream": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "Stream",
+			"unitMiND_memKnowledgeToken": "Stream",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -38,12 +38,12 @@
 		
 		"authDust": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeIdentifier": "Dust"
+			"unitMiND_memKnowledgeToken": "Dust"
 		},
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "authDust",
-			"unitMiND_memKnowledgeIdentifier": "Brain",
+			"unitMiND_memKnowledgeToken": "Brain",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -179,7 +179,7 @@
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND_memMemberHandleType": "unitStream_typStreamProvider"
+			"unitMiND_memMemberHandleType": "unitStream_logStreamProvider"
 		},
 		"memAppStreamPortal": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",
@@ -187,7 +187,7 @@
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND_memMemberHandleType": "unitStream_typStreamPortal"
+			"unitMiND_memMemberHandleType": "unitStream_logStreamPortal"
 		},
 		"memAppApi": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",

@@ -492,6 +492,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 			add(lblHeader, BorderLayout.NORTH);
 
 			tbMembers = new JTable(tmMembers);
+			tbMembers.setAutoCreateRowSorter(true);
 			tbMembers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tbMembers.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override
@@ -506,6 +507,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 			pnlValues = new JPanel(new BorderLayout());
 			pnlValues.add(lblSingle, BorderLayout.CENTER);
 			tbMultiVal = new JTable(tmMultiVal);
+			tbMultiVal.setAutoCreateRowSorter(true);
 			scMultiVal = new JScrollPane(tbMultiVal);
 
 			JSplitPane splMain = new JSplitPane();

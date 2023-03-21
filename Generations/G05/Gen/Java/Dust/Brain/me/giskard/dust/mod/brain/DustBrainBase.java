@@ -81,6 +81,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					case memKnowledgeType:
 					case memMediatorRemote:
 					case memMemberHandleType:
+					case memKnowledgeUnit:
 					case memMemberKeyType:
 						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
 						break;
@@ -162,7 +163,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					data = (Map) content.get(refId);
 					Map author = (Map) content.get(data.get(BootToken.memUnitAuthor.toString()));
 
-					String refUnitId = BootUnit.getToken(author.get(BootToken.memKnowledgeIdentifier.toString()), data.get(BootToken.memKnowledgeIdentifier.toString()),
+					String refUnitId = BootUnit.getToken(author.get(BootToken.memKnowledgeToken.toString()), data.get(BootToken.memKnowledgeToken.toString()),
 							data.get(BootToken.memUnitVersionMajor.toString()));
 
 					langConn.addRefUnit(refId, refUnitId);
@@ -172,6 +173,9 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 		} else {
 			langConn = loadConn.get(unitToken);
 		}
+		
+		KnowledgeItem unit = langConn.getUnit();
+		KnowledgeItem item = null;
 
 		for (Iterator itData = content.entrySet().iterator(); itData.hasNext();) {
 			boolean processed = true;
@@ -183,7 +187,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			if ( !(ob instanceof Map) ) {
 				GiskardMind.dump("Comment", id, ob);
 			} else {
-				KnowledgeItem item = langConn.getByToken(id);
+				item = langConn.getByToken(id);
 
 				for (Iterator itValues = ((Map) ob).entrySet().iterator(); itValues.hasNext();) {
 					Map.Entry e1 = (Map.Entry) itValues.next();
@@ -196,6 +200,9 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			}
 
 			if ( processed ) {
+				if ( -1 == id.indexOf(SEP)) {
+					DustBrainBootUtils.optAssignID(unit, item);
+				}
 				itData.remove();
 			}
 		}

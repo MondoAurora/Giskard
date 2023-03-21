@@ -6,12 +6,12 @@
 	{
 		"authGiskard": {
 			"memKnowledgeType": "typAuthor",
-			"memKnowledgeIdentifier": "Giskard"
+			"memKnowledgeToken": "Giskard"
 		},
 		"": {
 			"memKnowledgeType": "typUnit",
 			"memUnitAuthor": "authGiskard",
-			"memKnowledgeIdentifier": "MiND",
+			"memKnowledgeToken": "MiND",
 			"memUnitVersionMajor": 1,
 			"memKnowledgeTags": {
 				"tagUtype": "tagUtypeUnit"
@@ -35,7 +35,7 @@
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
 		},
-		"memKnowledgeIdentifier": {
+		"memKnowledgeID": {
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
@@ -124,7 +124,14 @@
 				"tagValtype": "tagValtypeHandle"
 			}
 		},
-		
+		"memKnowledgeToken": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typKnowledge",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+
 		"typAuthor": {
 			"memKnowledgeType": "typType"
 		},
@@ -138,6 +145,13 @@
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memUnitNextId": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typUnit",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
 			}
 		},
 		"memUnitAuthor": {
@@ -311,7 +325,7 @@
 		"logResolver": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeRequires" : [
-				"typReference", "typValue"
+				"typReference", "typVar"
 			]
 		},
 		"memResolverCursor": {

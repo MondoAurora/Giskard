@@ -45,10 +45,19 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 	}
 
 	Map<DustBrainHandle, Object> data = new TreeMap<>();
+	
+	private static final Set<DustBrainKnowledge> SEEN = new HashSet<>();
 
 	@Override
 	public String toString() {
-		return data.toString();
+		if ( SEEN.add(this) ) {
+			try {
+				return data.toString();			
+			} finally {
+				SEEN.remove(this);
+			}
+		}
+		return "";
 	}
 
 	public <RetType> RetType access(MindAccess cmd, DustBrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params) {

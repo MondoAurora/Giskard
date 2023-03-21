@@ -1,4 +1,3 @@
-replace ID SEP from '.' to '_'
 
 On load, set UnitID, nextID
  -> write unit JSONs with IDs, replace?
@@ -9,3 +8,13 @@ On load, set UnitID, nextID
 create static data access 
  -> use in Montru activities
    -> text services?
+   
+===== BOILING ======
+
+Set UnitID, nextID
+
+===== SETTLED ======
+
+replace ID SEP from '.' to '_'
+
+===== DROPPED ======

@@ -6,12 +6,12 @@
 	{
 		"unitMiND_authGiskard": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeIdentifier": "Giskard"
+			"unitMiND_memKnowledgeToken": "Giskard"
 		},
 		"unitMiND": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "MiND",
+			"unitMiND_memKnowledgeToken": "MiND",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -20,7 +20,7 @@
 		"unitText": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "Text",
+			"unitMiND_memKnowledgeToken": "Text",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -29,7 +29,7 @@
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
-			"unitMiND_memKnowledgeIdentifier": "Stream",
+			"unitMiND_memKnowledgeToken": "Stream",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
@@ -118,7 +118,7 @@
 		},
 		"memStreamSerializerCondition": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",
-			"unitMiND_memKnowledgeOwner": "typMediatorAssignment",
+			"unitMiND_memKnowledgeOwner": "logStreamSerializer",
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}

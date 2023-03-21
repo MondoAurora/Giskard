@@ -27,6 +27,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 	String lang;
 	KnowledgeItem langUnit;
 	String defUnit;
+	KnowledgeItem unit;
 
 	Map<String, UnitInfo> unitInfos = new HashMap<>();
 
@@ -42,6 +43,8 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		langUnit = DustBrainBootUtils.resolveHandle(brain, handle, null);
 
 		addRefUnit(null, defUnit);
+		
+		unit = unitInfos.get(null).unit;
 	}
 
 	public boolean addRefUnit(String refId, String unitId) {
@@ -86,8 +89,8 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 			case memLanguageVocabularies:
 				ret = hItem = DustBrainBootUtils.createKnowledgeItem(unit);
 				item = DustBrainBootUtils.resolveHandle(unit, hItem, null);
-				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeIdentifier), MindColl.One, null, key, null);
-
+				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, key, null);
+				DustBrainBootUtils.optAssignID(unit, item);
 				if ( bt == BootToken.memLanguageVocabularies ) {
 					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemote), MindColl.One, null, params[0], null);
 				}
@@ -96,6 +99,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 				ret = hItem = DustBrainBootUtils.createKnowledgeItem(unit);
 				item = DustBrainBootUtils.resolveHandle(unit, hItem, null);
 				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memTextString), MindColl.One, null, key, null);
+				DustBrainBootUtils.optAssignID(unit, item);
 				break;
 			case memMediatorLocalToRemote:
 				ret = params[1];
@@ -191,5 +195,9 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		}
 
 		return knownMember;
+	}
+
+	public KnowledgeItem getUnit() {
+		return unit;
 	}
 }

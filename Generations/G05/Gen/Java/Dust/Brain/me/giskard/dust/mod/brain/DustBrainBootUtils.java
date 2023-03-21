@@ -29,6 +29,18 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 	public static void initKnowledgeItem(KnowledgeItem unit, KnowledgeItem ki, MindHandle handle) {
 		ki.access(MindAccess.Insert, getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, handle, null);
 		unit.access(MindAccess.Insert, getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, handle, ki, null);
+		DustBrainHandle hUnit = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, null, null);
+		ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeUnit), MindColl.One, null, hUnit, null);
+	}
+
+	public static void optAssignID(KnowledgeItem unit, KnowledgeItem ki) {
+		Long id = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeID), MindColl.One, null, null, null);
+
+		if ( null == id ) {
+			id = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitNextId), MindColl.One, null, 1L, null);
+			ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeID), MindColl.One, null, id, null);
+			unit.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memUnitNextId), MindColl.One, null, ++id, null);
+		}
 	}
 
 	public static MindHandle getHandle(KnowledgeItem item) {
@@ -49,7 +61,7 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 			DustBrainHandle hUnit = brain.access(MindAccess.Peek, getHandle(BootToken.memBrainUnits), MindColl.Map, unitToken, null, null);
 			unit = resolveHandle(brain, hUnit, null);
 		}
-		
+
 		return (null == unit) ? null : resolveHandle(unit, handle, null);
 	}
 
