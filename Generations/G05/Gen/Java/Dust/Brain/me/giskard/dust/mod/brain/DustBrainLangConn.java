@@ -129,7 +129,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		} else if ( unitInfos.containsKey(id) ) {
 			item = getByToken(id, null, null);
 		} else {
-			int sep = id.indexOf('.');
+			int sep = id.indexOf(SEP);
 
 			if ( -1 == sep ) {
 				item = getByToken(null, id, null);

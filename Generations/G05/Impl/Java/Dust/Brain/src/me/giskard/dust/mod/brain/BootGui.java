@@ -295,6 +295,13 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 					ci.remove();
 				}
 			}
+			
+//			GiskardMind.dump("------- all names --------");
+//			for (String n : names) {
+//				GiskardMind.dump(n);
+//			}
+//			GiskardMind.dump("-------  --------");
+			
 		}
 
 		public void updateSelection() {
@@ -506,6 +513,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 			splMain.setRightComponent(pnlValues);
 			splMain.setResizeWeight(0.5);
 			splMain.setDividerLocation(0.5);
+			splMain.setContinuousLayout(true);
 
 			add(splMain, BorderLayout.CENTER);
 
@@ -755,12 +763,15 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		splLeft.setBottomComponent(pnlBottom);
 		splLeft.setResizeWeight(0.7);
 		splLeft.setDividerLocation(0.7);
+		splLeft.setContinuousLayout(true);
+
 
 		JSplitPane splRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splRight.setTopComponent(scpGraph = new JScrollPane(pnlGraph));
 		splRight.setBottomComponent(pnlProp);
 		splRight.setResizeWeight(0.7);
 		splRight.setDividerLocation(0.7);
+		splRight.setContinuousLayout(true);
 
 		JSplitPane splMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JPanel p1 = new JPanel(new BorderLayout());
@@ -771,6 +782,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		splMain.setRightComponent(p1);
 		splMain.setResizeWeight(0.3);
 		splMain.setDividerLocation(0.3);
+		splMain.setContinuousLayout(true);
 
 		Container cp = getContentPane();
 

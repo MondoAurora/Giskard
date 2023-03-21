@@ -1,140 +1,140 @@
 [
 	{
 		"syntax": "dust_json",
-		"version": "1.0"
+		"version": "1_0"
 	},
 	{
-		"unitMiND.authGiskard": {
-			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
-			"unitMiND.memKnowledgeIdentifier": "Giskard"
+		"unitMiND_authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
+			"unitMiND_memKnowledgeIdentifier": "Giskard"
 		},
 		"unitMiND": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "MiND",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "MiND",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		"unitText": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "Text",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "Text",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		"": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "Stream",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "Stream",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			},
-			"unitMiND.memKnowledgeRequires": [
+			"unitMiND_memKnowledgeRequires": [
 				"unitMiND", "unitText"
 			]
 		},
 		
 		"typStream": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType"
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
 		"memStreamRoot": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typStream",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typStream",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typStream"
+			"unitMiND_memMemberHandleType": "typStream"
 		},
 		"memStreamPath": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typStream",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typStream",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 		
 		"tagStreamType": {
-			"unitMiND.memKnowledgeType": "unitMiND.typTag"
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
 		},
 		"tagStreamTypeChar": {
-			"unitMiND.memKnowledgeType": "unitMiND.typTag",
-			"unitMiND.memKnowledgeOwner": "tagStreamType"
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagStreamType"
 		},
 		"tagStreamTypeBin": {
-			"unitMiND.memKnowledgeType": "unitMiND.typTag",
-			"unitMiND.memKnowledgeOwner": "tagStreamType"
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagStreamType"
 		},
 		
 		"streamOut": {
-			"unitMiND.memKnowledgeType": "typStream",
-			"unitMiND.memKnowledgeTags": {
+			"unitMiND_memKnowledgeType": "typStream",
+			"unitMiND_memKnowledgeTags": {
 				"tagStreamType": "tagStreamTypeChar"
 			}
 		},
 		
 		"logStreamProvider": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
 		"memStreamProviderContentRoots": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logStreamProvider",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logStreamProvider",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap"
 			}
 		},
 
 		
 		"logStreamSerializer": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
 		"memStreamSerializerMediator": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logStreamSerializer",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logStreamSerializer",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitMiND.typMediator"
+			"unitMiND_memMemberHandleType": "unitMiND_typMediator"
 		},
 		"memStreamSerializerTokenResolver": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logStreamSerializer",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logStreamSerializer",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitText.typLanguage"
+			"unitMiND_memMemberHandleType": "unitText_typLanguage"
 		},
 		"memStreamSerializerStream": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logStreamSerializer",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logStreamSerializer",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typStream"
+			"unitMiND_memMemberHandleType": "typStream"
 		},
 		"memStreamSerializerCondition": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typMediatorAssignment",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typMediatorAssignment",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 				
 		"logStreamPortal": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
 		"memStreamPortalMediators": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logStreamPortal",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollArr",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logStreamPortal",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollArr",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "logStreamSerializer"
+			"unitMiND_memMemberHandleType": "logStreamSerializer"
 		},
 		
 		"_End_": "____________"

@@ -1,0 +1,11 @@
+replace ID SEP from '.' to '_'
+
+On load, set UnitID, nextID
+ -> write unit JSONs with IDs, replace?
+ -> write separate resource units for "en" content
+   -> text persistence?
+ -> move code away from using names internally, use IDs instead
+
+create static data access 
+ -> use in Montru activities
+   -> text services?

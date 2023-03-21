@@ -1,232 +1,232 @@
 [
 	{
 		"syntax": "dust_json",
-		"version": "1.0"
+		"version": "1_0"
 	},
 	{
-		"unitMiND.authGiskard": {
-			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
-			"unitMiND.memKnowledgeIdentifier": "Giskard"
+		"unitMiND_authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
+			"unitMiND_memKnowledgeIdentifier": "Giskard"
 		},
 		"unitText": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "Text",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "Text",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		"unitMiND": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "MiND",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "MiND",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		"unitStream": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "Stream",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "Stream",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		
 		"authDust": {
-			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
-			"unitMiND.memKnowledgeIdentifier": "Dust"
+			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
+			"unitMiND_memKnowledgeIdentifier": "Dust"
 		},
 		"": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "authDust",
-			"unitMiND.memKnowledgeIdentifier": "Brain",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "authDust",
+			"unitMiND_memKnowledgeIdentifier": "Brain",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			},
-			"unitMiND.memKnowledgeRequires": [
+			"unitMiND_memKnowledgeRequires": [
 				"unitMiND", "unitStream", "unitText"
 			]
 		},
 
 		
 		"typThread": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType"
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
 		"memThreadUnit": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typThread",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typThread",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 		"memThreadStack": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typThread",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollArr",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typThread",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollArr",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 
 		"logKnowledge": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic",
-			"unitMiND.memKnowledgeRequires" : [
-				"unitMiND.typKnowledge"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
+			"unitMiND_memKnowledgeRequires" : [
+				"unitMiND_typKnowledge"
 			]
 		},
 		"logUnit": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic",
-			"unitMiND.memKnowledgeRequires" : [
-				"unitMiND.typUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
+			"unitMiND_memKnowledgeRequires" : [
+				"unitMiND_typUnit"
 			]
 		},
 		"memUnitCollInfo": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logUnit",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logUnit",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberKeyType": "unitMiND.typMember",
-			"unitMiND.memMemberHandleType": "unitMiND.typTag"
+			"unitMiND_memMemberKeyType": "unitMiND_typMember",
+			"unitMiND_memMemberHandleType": "unitMiND_typTag"
 		},
 		"memUnitTagParent": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logUnit",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logUnit",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberKeyType": "unitMiND.typTag",
-			"unitMiND.memMemberHandleType": "unitMiND.typTag"
+			"unitMiND_memMemberKeyType": "unitMiND_typTag",
+			"unitMiND_memMemberHandleType": "unitMiND_typTag"
 		},
 
 		"logBrain": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
 		"memBrainUnits": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logBrain",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logBrain",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitMiND.typUnit"
+			"unitMiND_memMemberHandleType": "unitMiND_typUnit"
 		},
 		"memBrainLanguages": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logBrain",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logBrain",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitText.typLanguage"
+			"unitMiND_memMemberHandleType": "unitText_typLanguage"
 		},
 		"memBrainDialogs": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logBrain",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollSet",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logBrain",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollSet",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitMiND.logDialog"
+			"unitMiND_memMemberHandleType": "unitMiND_logDialog"
 		},
 		"memBrainThreads": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logBrain",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logBrain",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 
 		"typModule": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType"
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
 		"memModuleImplementations": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typModule",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typModule",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberKeyType": "unitMiND.typAgent"
+			"unitMiND_memMemberKeyType": "unitMiND_typAgent"
 		},
 		"tagUtypeModule": {
-			"unitMiND.memKnowledgeType": "unitMiND.typTag",
-			"unitMiND.memKnowledgeOwner": "unitMiND.tagUtype"
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "unitMiND_tagUtype"
 		},
 
 		"typApp": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType"
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
 		"memAppConfig": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 		"memAppStreamProvider": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitStream.typStreamProvider"
+			"unitMiND_memMemberHandleType": "unitStream_typStreamProvider"
 		},
 		"memAppStreamPortal": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitStream.typStreamPortal"
+			"unitMiND_memMemberHandleType": "unitStream_typStreamPortal"
 		},
 		"memAppApi": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typModule"
+			"unitMiND_memMemberHandleType": "typModule"
 		},
 		"memAppModules": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollSet",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollSet",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typModule"
+			"unitMiND_memMemberHandleType": "typModule"
 		},
 		"memAppMain": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typApp",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typApp",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "unitMiND.logDialog"
+			"unitMiND_memMemberHandleType": "unitMiND_logDialog"
 		},
 
 		"logBootMediator": {
-			"unitMiND.memKnowledgeType": "unitMiND.typLogic",
-			"unitMiND.memKnowledgeExtends": [
-				"unitMiND.typMediator"
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
+			"unitMiND_memKnowledgeExtends": [
+				"unitMiND_typMediator"
 			]
 		},
 		"memBootMediatorSources": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "logBootMediator",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollSet",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logBootMediator",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollSet",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 

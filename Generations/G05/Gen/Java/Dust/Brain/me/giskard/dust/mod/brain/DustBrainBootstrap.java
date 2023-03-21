@@ -86,7 +86,7 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 
 		@Override
 		public String toString() {
-			return GiskardUtils.sbAppend(null, ".", false, unit, name()).toString();
+			return GiskardUtils.sbAppend(null, SEP, false, unit, name()).toString();
 		}
 	}
 

@@ -1,77 +1,77 @@
 [
 	{
 		"syntax": "dust_json",
-		"version": "1.0"
+		"version": "1_0"
 	},
 	{
-		"unitMiND.authGiskard": {
-			"unitMiND.memKnowledgeType": "unitMiND.typAuthor",
-			"unitMiND.memKnowledgeIdentifier": "Giskard"
+		"unitMiND_authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
+			"unitMiND_memKnowledgeIdentifier": "Giskard"
 		},
 		"unitMiND": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "MiND",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "MiND",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			}
 		},
 		"": {
-			"unitMiND.memKnowledgeType": "unitMiND.typUnit",
-			"unitMiND.memUnitAuthor": "unitMiND.authGiskard",
-			"unitMiND.memKnowledgeIdentifier": "Text",
-			"unitMiND.memUnitVersionMajor": 1,
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagUtype": "unitMiND.tagUtypeUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeIdentifier": "Text",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
 			},
-			"unitMiND.memKnowledgeRequires": [
+			"unitMiND_memKnowledgeRequires": [
 				"unitMiND"
 			]
 		},
 
 		"typText": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType"
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
 		"memTextString": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typText",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagValtype": "unitMiND.tagValtypeBin"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typText",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
 		
 		"typVocabulary": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType",
-			"unitMiND.memKnowledgeExtends": [
-				"unitMiND.typMediator"
+			"unitMiND_memKnowledgeType": "unitMiND_typType",
+			"unitMiND_memKnowledgeExtends": [
+				"unitMiND_typMediator"
 			]
 		},
 
 		"typLanguage": {
-			"unitMiND.memKnowledgeType": "unitMiND.typType",
-			"unitMiND.memKnowledgeExtends": [
-				"unitMiND.typUnit"
+			"unitMiND_memKnowledgeType": "unitMiND_typType",
+			"unitMiND_memKnowledgeExtends": [
+				"unitMiND_typUnit"
 			]
 		},
 		"memLanguageWords": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typLanguage",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typText"
+			"unitMiND_memMemberHandleType": "typText"
 		},
 		"memLanguageVocabularies": {
-			"unitMiND.memKnowledgeType": "unitMiND.typMember",
-			"unitMiND.memKnowledgeOwner": "typLanguage",
-			"unitMiND.memKnowledgeTags": {
-				"unitMiND.tagColl": "unitMiND.tagCollMap",
-				"unitMiND.tagValtype": "unitMiND.tagValtypeHandle"
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND.memMemberHandleType": "typVocabulary",
-			"unitMiND.memMemberKeyType": "unitMiND.typUnit"
+			"unitMiND_memMemberHandleType": "typVocabulary",
+			"unitMiND_memMemberKeyType": "unitMiND_typUnit"
 		},
 
 		"_End_": "____________"
