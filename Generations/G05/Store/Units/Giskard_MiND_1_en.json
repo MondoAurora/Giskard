@@ -6,16 +6,14 @@
 	{
 		"authGiskard": {
 			"memKnowledgeType": "typAuthor",
-			"memKnowledgeToken": "Giskard"
+			"memKnowledgeToken": "Giskard",
+			"memUnitVersionMajor": 1
 		},
 		"": {
 			"memKnowledgeType": "typUnit",
 			"memUnitAuthor": "authGiskard",
 			"memKnowledgeToken": "MiND",
-			"memUnitVersionMajor": 1,
-			"memKnowledgeTags": {
-				"tagUtype": "tagUtypeUnit"
-			}
+			"memUnitVersionMajor": 1
 		},
 
 		"_Model_": "=======================_Model_=======================",
@@ -176,15 +174,7 @@
 				"tagValtype": "tagValtypeInt"
 			}
 		},
-		
-		"tagUtype": {
-			"memKnowledgeType": "typTag"
-		},
-		"tagUtypeUnit": {
-			"memKnowledgeType": "typTag",
-			"memKnowledgeOwner": "tagUtype"
-		},
-				
+						
 		"typReference": {
 			"memKnowledgeType": "typType"
 		},
@@ -199,22 +189,18 @@
 		"typProxy": {
 			"memKnowledgeType": "typType"
 		},
-		"memProxyUnit": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typProxy",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeHandle"
-			},
-			"memMemberHandleType": "typUnit"
+		"tagProxy": {
+			"memKnowledgeType": "typTag"
 		},
-		"memProxyId": {
-			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typProxy",
-			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeBin"
-			}
+		"tagProxyUnit": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagProxy"
 		},
-		
+		"tagProxyAuthor": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagProxy"
+		},
+
 		"_Idea_": "=======================_Idea_=======================",
 		"typType": {
 			"memKnowledgeType": "typType"
@@ -548,12 +534,12 @@
 			"memKnowledgeOwner": "tagListener"
 		},
 		
-		"typMediator": {
+		"logMediator": {
 			"memKnowledgeType": "typLogic"
 		},
 		"memMediatorRemote": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typMediator",
+			"memKnowledgeOwner": "logMediator",
 			"memKnowledgeTags": {
 				"tagValtype": "tagValtypeHandle"
 			},
@@ -561,7 +547,7 @@
 		},
 		"memMediatorLocalToRemote": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typMediator",
+			"memKnowledgeOwner": "logMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeHandle"
@@ -570,7 +556,7 @@
 		},
 		"memMediatorRemoteToLocal": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typMediator",
+			"memKnowledgeOwner": "logMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
 				"tagValtype": "tagValtypeHandle"
@@ -579,7 +565,7 @@
 		},
 		
 		"logDialog": {
-			"memKnowledgeType": "typType",
+			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
 				"logOrchestrator"
 			]

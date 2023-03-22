@@ -130,8 +130,8 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 
 		if ( GiskardUtils.isEmpty(id) ) {
 			item = getByToken(null, null, null);
-		} else if ( unitInfos.containsKey(id) ) {
-			item = getByToken(id, null, null);
+//		} else if ( unitInfos.containsKey(id) ) {
+//			item = getByToken(id, null, null);
 		} else {
 			int sep = id.indexOf(SEP);
 

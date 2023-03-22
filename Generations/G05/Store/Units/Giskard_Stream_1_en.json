@@ -4,35 +4,39 @@
 		"version": "1_0"
 	},
 	{
-		"unitMiND_authGiskard": {
-			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeToken": "Giskard"
+		"authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Giskard",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
 		},
 		"unitMiND": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "MiND",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"unitText": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "Text",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "Stream",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
 				"unitMiND", "unitText"
@@ -98,7 +102,7 @@
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND_memMemberHandleType": "unitMiND_typMediator"
+			"unitMiND_memMemberHandleType": "unitMiND_logMediator"
 		},
 		"memStreamSerializerTokenResolver": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",

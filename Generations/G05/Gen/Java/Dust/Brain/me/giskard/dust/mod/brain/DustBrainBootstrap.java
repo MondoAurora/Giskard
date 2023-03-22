@@ -57,17 +57,18 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 		typTag(BootUnit.unitMiND), 
 		tagValtype(BootUnit.unitMiND), tagValtypeInt(BootUnit.unitMiND), tagValtypeReal(BootUnit.unitMiND), tagValtypeHandle(BootUnit.unitMiND), tagValtypeBin(BootUnit.unitMiND), 
 		tagColl(BootUnit.unitMiND), tagCollOne(BootUnit.unitMiND), tagCollSet(BootUnit.unitMiND), tagCollArr(BootUnit.unitMiND), tagCollMap(BootUnit.unitMiND),
-
-		typUnit(BootUnit.unitMiND), memUnitLocalKnowledge(BootUnit.unitMiND), memUnitNextId(BootUnit.unitMiND), memUnitVersionMajor(BootUnit.unitMiND), 
+		tagProxy(BootUnit.unitMiND), tagProxyUnit(BootUnit.unitMiND), tagProxyAuthor(BootUnit.unitMiND), 
 		
+		typUnit(BootUnit.unitMiND), memUnitAuthor(BootUnit.unitMiND), memUnitLocalKnowledge(BootUnit.unitMiND), memUnitNextId(BootUnit.unitMiND), memUnitVersionMajor(BootUnit.unitMiND), 
+		typAuthor(BootUnit.unitMiND), typProxy(BootUnit.unitMiND), 
 		typKnowledge(BootUnit.unitMiND), memKnowledgeID(BootUnit.unitMiND), memKnowledgeHandle(BootUnit.unitMiND), memKnowledgeUnit(BootUnit.unitMiND), 
 		memKnowledgeType(BootUnit.unitMiND), memKnowledgeTags(BootUnit.unitMiND), memKnowledgeToken(BootUnit.unitMiND), 
-		memKnowledgeOwner(BootUnit.unitMiND), memKnowledgeRequires(BootUnit.unitMiND), 
+		memKnowledgeOwner(BootUnit.unitMiND), memKnowledgeRequires(BootUnit.unitMiND), memKnowledgeExtends(BootUnit.unitMiND), 
 		typType(BootUnit.unitMiND), 
 		typMember(BootUnit.unitMiND), memMemberHandleType(BootUnit.unitMiND), memMemberKeyType(BootUnit.unitMiND), 
 		logDialog(BootUnit.unitMiND), memDialogUnit(BootUnit.unitMiND), 
-		memUnitAuthor(BootUnit.unitMiND), 
-		typMediator(BootUnit.unitMiND), memMediatorRemote(BootUnit.unitMiND), memMediatorLocalToRemote(BootUnit.unitMiND), memMediatorRemoteToLocal(BootUnit.unitMiND), 
+		typLogic(BootUnit.unitMiND), 
+		logMediator(BootUnit.unitMiND), memMediatorRemote(BootUnit.unitMiND), memMediatorLocalToRemote(BootUnit.unitMiND), memMediatorRemoteToLocal(BootUnit.unitMiND), 
 		
 		typText(BootUnit.unitText), memTextString(BootUnit.unitText), 
 		typVocabulary(BootUnit.unitText), typLanguage(BootUnit.unitText), memLanguageWords(BootUnit.unitText), memLanguageVocabularies(BootUnit.unitText),

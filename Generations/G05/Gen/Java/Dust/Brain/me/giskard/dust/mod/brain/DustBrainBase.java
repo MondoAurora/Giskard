@@ -44,6 +44,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 		bootType.put("typ", GiskardUtils.getHandle(BootToken.typType));
 		bootType.put("mem", GiskardUtils.getHandle(BootToken.typMember));
 		bootType.put("tag", GiskardUtils.getHandle(BootToken.typTag));
+		bootType.put("log", GiskardUtils.getHandle(BootToken.typLogic));
 
 		BootToken tagParent = null;
 		Map<BootToken, BootToken> tags = new HashMap<>();
@@ -88,6 +89,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					case memKnowledgeTags:
 						ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMemberKeyType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typTag), null);
 					case memKnowledgeRequires:
+					case memKnowledgeExtends:
 					case memMediatorLocalToRemote:
 					case memMediatorRemoteToLocal:
 					case memLanguageWords:
@@ -205,6 +207,12 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				}
 				itData.remove();
 			}
+		}
+		
+		if ( content.isEmpty() ) {
+			GiskardMind.dump("Load complete", unitToken);
+		} else {
+			GiskardMind.dump("Load pending", unitToken, content);
 		}
 
 		return content.isEmpty();

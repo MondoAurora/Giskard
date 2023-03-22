@@ -4,58 +4,66 @@
 		"version": "1_0"
 	},
 	{
-		"unitMiND_authGiskard": {
-			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeToken": "Giskard"
+		"authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Giskard",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
 		},
 		"unitMiND": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "MiND",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"unitStream": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "Stream",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"unitText": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitMiND_authGiskard",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "Text",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		
-		"unitBrain_authDust": {
-			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeToken": "Dust"
+		"authDust": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Dust",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
 		},
 		"unitBrain": {
-			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitBrain_authDust",
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authDust",
 			"unitMiND_memKnowledgeToken": "Brain",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "unitBrain_authDust",
+			"unitMiND_memUnitAuthor": "authDust",
 			"unitMiND_memKnowledgeToken": "BrainJava",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagUtype": "unitMiND_tagUtypeUnit"
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
 				"unitMiND", "unitStream", "unitText", "unitBrain"
