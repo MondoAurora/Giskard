@@ -53,7 +53,8 @@
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollSet",
-				"tagValtype": "tagValtypeHandle"
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
 			},
 			"memMemberHandleType": "typType"
 		},
@@ -70,7 +71,8 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeHandle"
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
 			},
 			"memMemberHandleType": "typHandle"
 		},
@@ -78,7 +80,8 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typKnowledge",
 			"memKnowledgeTags": {
-				"tagValtype": "tagValtypeHandle"
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
 			},
 			"memMemberHandleType": "typUnit"
 		},
@@ -142,7 +145,8 @@
 			"memKnowledgeOwner": "typUnit",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeBin"
+				"tagValtype": "tagValtypeBin",
+				"tagTransient": "tagTransient"
 			}
 		},
 		"memUnitNextId": {
@@ -189,6 +193,14 @@
 		"typProxy": {
 			"memKnowledgeType": "typType"
 		},
+		"memProxyRemote": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typProxy",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
+			}
+		},
 		"tagProxy": {
 			"memKnowledgeType": "typTag"
 		},
@@ -199,6 +211,10 @@
 		"tagProxyAuthor": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagProxy"
+		},
+
+		"tagTransient": {
+			"memKnowledgeType": "typTag"
 		},
 
 		"_Idea_": "=======================_Idea_=======================",
@@ -550,7 +566,8 @@
 			"memKnowledgeOwner": "logMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeHandle"
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
 			},
 			"memMemberKeyType": "typHandle"
 		},
@@ -559,7 +576,8 @@
 			"memKnowledgeOwner": "logMediator",
 			"memKnowledgeTags": {
 				"tagColl": "tagCollMap",
-				"tagValtype": "tagValtypeHandle"
+				"tagValtype": "tagValtypeHandle",
+				"tagTransient": "tagTransient"
 			},
 			"memMemberHandleType": "typHandle"
 		},

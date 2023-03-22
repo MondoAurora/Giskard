@@ -21,6 +21,8 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 	protected abstract void setRoot(File root) throws Exception;
 
 	protected abstract Map loadUnitContent(String token, String lang) throws Exception;
+	protected abstract void saveUnitContent(String token) throws Exception;
+	protected abstract void saveLanguage(String lang) throws Exception;
 
 	Set<String> unitToRead = new TreeSet<>();
 	Map<String, Map> bootContent = new HashMap<>();
@@ -79,6 +81,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 						break;
 					case memKnowledgeOwner:
 					case memUnitAuthor:
+					case memProxyRemote:
 					case memKnowledgeType:
 					case memMediatorRemote:
 					case memMemberHandleType:
@@ -131,11 +134,15 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		while (!bootContent.isEmpty()) {
 			for (Iterator<String> itContent = bootContent.keySet().iterator(); itContent.hasNext();) {
-				if ( loadUnit(itContent.next()) ) {
+				String unitToken = itContent.next();
+				if ( loadUnit(unitToken) ) {
 					itContent.remove();
+					saveUnitContent(unitToken);
 				}
 			}
 		}
+		
+		saveLanguage(LANG_BOOT);
 	}
 
 	public void optAddUnit(String unitToken) throws Exception {
@@ -205,6 +212,13 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				if ( -1 == id.indexOf(SEP)) {
 					DustBrainBootUtils.optAssignID(unit, item);
 				}
+				
+				KnowledgeItem refUnit = langConn.getUnitByToken(id);
+				if ( null != refUnit ) {
+					MindHandle hU = DustBrainBootUtils.getHandle(refUnit);
+					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memProxyRemote), MindColl.One, null, hU, null);
+				}
+				
 				itData.remove();
 			}
 		}

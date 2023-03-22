@@ -58,9 +58,10 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 		tagValtype(BootUnit.unitMiND), tagValtypeInt(BootUnit.unitMiND), tagValtypeReal(BootUnit.unitMiND), tagValtypeHandle(BootUnit.unitMiND), tagValtypeBin(BootUnit.unitMiND), 
 		tagColl(BootUnit.unitMiND), tagCollOne(BootUnit.unitMiND), tagCollSet(BootUnit.unitMiND), tagCollArr(BootUnit.unitMiND), tagCollMap(BootUnit.unitMiND),
 		tagProxy(BootUnit.unitMiND), tagProxyUnit(BootUnit.unitMiND), tagProxyAuthor(BootUnit.unitMiND), 
+		tagTransient(BootUnit.unitMiND), 
 		
 		typUnit(BootUnit.unitMiND), memUnitAuthor(BootUnit.unitMiND), memUnitLocalKnowledge(BootUnit.unitMiND), memUnitNextId(BootUnit.unitMiND), memUnitVersionMajor(BootUnit.unitMiND), 
-		typAuthor(BootUnit.unitMiND), typProxy(BootUnit.unitMiND), 
+		typAuthor(BootUnit.unitMiND), typProxy(BootUnit.unitMiND), memProxyRemote(BootUnit.unitMiND), 
 		typKnowledge(BootUnit.unitMiND), memKnowledgeID(BootUnit.unitMiND), memKnowledgeHandle(BootUnit.unitMiND), memKnowledgeUnit(BootUnit.unitMiND), 
 		memKnowledgeType(BootUnit.unitMiND), memKnowledgeTags(BootUnit.unitMiND), memKnowledgeToken(BootUnit.unitMiND), 
 		memKnowledgeOwner(BootUnit.unitMiND), memKnowledgeRequires(BootUnit.unitMiND), memKnowledgeExtends(BootUnit.unitMiND), 

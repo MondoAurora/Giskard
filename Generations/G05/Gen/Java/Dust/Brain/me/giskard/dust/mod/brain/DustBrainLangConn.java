@@ -93,6 +93,9 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 				DustBrainBootUtils.optAssignID(unit, item);
 				if ( bt == BootToken.memLanguageVocabularies ) {
 					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemote), MindColl.One, null, params[0], null);
+//					DustBrainBootUtils.optRegisterProxy(unit, brain, params[0]);
+//				} else if ( bt == BootToken.memBrainLanguages ) {
+//					DustBrainBootUtils.optRegisterProxy(unit, BootUnit.unitText.getToken());
 				}
 				break;
 			case memLanguageWords:
@@ -130,8 +133,6 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 
 		if ( GiskardUtils.isEmpty(id) ) {
 			item = getByToken(null, null, null);
-//		} else if ( unitInfos.containsKey(id) ) {
-//			item = getByToken(id, null, null);
 		} else {
 			int sep = id.indexOf(SEP);
 
@@ -160,7 +161,8 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 	}
 
 	public KnowledgeItem getUnitByToken(String id) {
-		return unitInfos.get(id).unit;
+		UnitInfo ui = unitInfos.get(id);
+		return (null == ui) ? null : ui.unit;
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -65,4 +65,9 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 		return (null == unit) ? null : resolveHandle(unit, handle, null);
 	}
 
+//	public static void optRegisterProxy(KnowledgeItem unit, KnowledgeItem brain, Object target) {
+//		KnowledgeItem ki = resolveBrainHandle(brain, (MindHandle) target);
+//		GiskardMind.dump("Would register proxy to", target);
+//	}
+
 }

@@ -1,0 +1,586 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1_0"
+	},
+	{
+		"88": {
+			"null_1": "typAgent"
+		},
+		"89": {
+			"null_1": "memOrchestratorAgents"
+		},
+		"190": {
+			"null_1": "memStreamSerializerCondition"
+		},
+		"191": {
+			"null_1": "memStreamSerializerTokenResolver"
+		},
+		"110": {
+			"null_1": "memThreadUnit"
+		},
+		"111": {
+			"null_1": "memAppStreamPortal"
+		},
+		"112": {
+			"null_1": "logStreamPortal"
+		},
+		"113": {
+			"null_1": "memThreadStack"
+		},
+		"114": {
+			"null_1": "memUnitTagParent"
+		},
+		"115": {
+			"null_1": "logUnit"
+		},
+		"116": {
+			"null_1": "memAppModules"
+		},
+		"117": {
+			"null_1": "logKnowledge"
+		},
+		"90": {
+			"null_1": "memDialogListeners"
+		},
+		"91": {
+			"null_1": "memAgentLogic"
+		},
+		"118": {
+			"null_1": "memAppMain"
+		},
+		"92": {
+			"null_1": "memDialogLaunch"
+		},
+		"119": {
+			"null_1": "memAppApi"
+		},
+		"93": {
+			"null_1": "bootSerializer"
+		},
+		"94": {
+			"null_1": "memStreamSerializerMediator"
+		},
+		"95": {
+			"null_1": "modDustJava"
+		},
+		"96": {
+			"null_1": "typModule"
+		},
+		"97": {
+			"null_1": "memModuleImplementations"
+		},
+		"98": {
+			"null_1": "bootMediator"
+		},
+		"10": {
+			"null_1": "tagCollOne"
+		},
+		"99": {
+			"null_1": "memBootMediatorSources"
+		},
+		"11": {
+			"null_1": "tagCollSet"
+		},
+		"12": {
+			"null_1": "tagCollArr"
+		},
+		"13": {
+			"null_1": "tagCollMap"
+		},
+		"14": {
+			"null_1": "tagProxy"
+		},
+		"15": {
+			"null_1": "tagProxyUnit"
+		},
+		"16": {
+			"null_1": "tagProxyAuthor"
+		},
+		"17": {
+			"null_1": "tagTransient"
+		},
+		"18": {
+			"null_1": "typUnit"
+		},
+		"19": {
+			"null_1": "memUnitAuthor"
+		},
+		"120": {
+			"null_1": "memUnitCollInfo"
+		},
+		"121": {
+			"null_1": "memAppStreamProvider"
+		},
+		"1": {
+			"null_107": "Dust_BrainJava_1",
+			"null_94": "null_2"
+		},
+		"122": {
+			"null_1": "typListener"
+		},
+		"2": {
+			"null_107": "Giskard_MiND_1",
+			"null_94": "null_3"
+		},
+		"123": {
+			"null_1": "typHandle"
+		},
+		"124": {
+			"null_1": "tagStatus"
+		},
+		"3": {
+			"null_1": "typTag"
+		},
+		"4": {
+			"null_1": "tagValtype"
+		},
+		"125": {
+			"null_1": "typReference"
+		},
+		"5": {
+			"null_1": "tagValtypeInt"
+		},
+		"126": {
+			"null_1": "tagStatusWaiting"
+		},
+		"127": {
+			"null_1": "logOrchestrator"
+		},
+		"6": {
+			"null_1": "tagValtypeReal"
+		},
+		"128": {
+			"null_1": "tagAccess"
+		},
+		"7": {
+			"null_1": "tagValtypeHandle"
+		},
+		"8": {
+			"null_1": "tagValtypeBin"
+		},
+		"129": {
+			"null_1": "memReferencePath"
+		},
+		"9": {
+			"null_1": "tagColl"
+		},
+		"20": {
+			"null_1": "memUnitLocalKnowledge"
+		},
+		"21": {
+			"null_1": "memUnitNextId"
+		},
+		"22": {
+			"null_1": "memUnitVersionMajor"
+		},
+		"23": {
+			"null_1": "typAuthor"
+		},
+		"24": {
+			"null_1": "typProxy"
+		},
+		"25": {
+			"null_1": "memProxyRemote"
+		},
+		"26": {
+			"null_1": "typKnowledge"
+		},
+		"27": {
+			"null_1": "memKnowledgeID"
+		},
+		"28": {
+			"null_1": "memKnowledgeHandle"
+		},
+		"29": {
+			"null_1": "memKnowledgeUnit"
+		},
+		"130": {
+			"null_1": "tagAccessCommit"
+		},
+		"131": {
+			"null_1": "memListenerHandler"
+		},
+		"132": {
+			"null_1": "logResolver"
+		},
+		"133": {
+			"null_1": "typVar"
+		},
+		"134": {
+			"null_1": "memKnowledgeMembers"
+		},
+		"135": {
+			"null_1": "memKnowledgeAllTypes"
+		},
+		"136": {
+			"null_1": "tagActionInit"
+		},
+		"137": {
+			"null_1": "tagAction"
+		},
+		"138": {
+			"null_1": "tagStatusError"
+		},
+		"139": {
+			"null_1": "tagStatusAccept"
+		},
+		"30": {
+			"null_1": "memKnowledgeType"
+		},
+		"31": {
+			"null_1": "memKnowledgeTags"
+		},
+		"32": {
+			"null_1": "memKnowledgeToken"
+		},
+		"33": {
+			"null_1": "memKnowledgeOwner"
+		},
+		"34": {
+			"null_1": "memKnowledgeRequires"
+		},
+		"35": {
+			"null_1": "memKnowledgeExtends"
+		},
+		"36": {
+			"null_1": "typType"
+		},
+		"37": {
+			"null_1": "typMember"
+		},
+		"38": {
+			"null_1": "memMemberHandleType"
+		},
+		"39": {
+			"null_1": "memMemberKeyType"
+		},
+		"140": {
+			"null_1": "memSelectLogic"
+		},
+		"141": {
+			"null_1": "logSelect"
+		},
+		"142": {
+			"null_1": "tagAccessPeek"
+		},
+		"143": {
+			"null_1": "tagListenerFollower"
+		},
+		"144": {
+			"null_1": "tagListener"
+		},
+		"145": {
+			"null_1": "memOrchestratorCatch"
+		},
+		"146": {
+			"null_1": "memListenerTarget"
+		},
+		"147": {
+			"null_1": "memAgentNext"
+		},
+		"148": {
+			"null_1": "tagChangedMember"
+		},
+		"149": {
+			"null_1": "memUnitVersionMinor"
+		},
+		"40": {
+			"null_1": "logDialog"
+		},
+		"41": {
+			"null_1": "memDialogUnit"
+		},
+		"42": {
+			"null_1": "typLogic"
+		},
+		"43": {
+			"null_1": "logMediator"
+		},
+		"44": {
+			"null_1": "memMediatorRemote"
+		},
+		"45": {
+			"null_1": "memMediatorLocalToRemote"
+		},
+		"46": {
+			"null_1": "memMediatorRemoteToLocal"
+		},
+		"47": {
+			"null_107": "Giskard_Text_1",
+			"null_94": "null_4"
+		},
+		"48": {
+			"null_1": "typText"
+		},
+		"49": {
+			"null_1": "memTextString"
+		},
+		"150": {
+			"null_1": "logFork"
+		},
+		"151": {
+			"null_1": "memMemberDefVal"
+		},
+		"152": {
+			"null_1": "tagAccessInsert"
+		},
+		"153": {
+			"null_1": "tagChangedVal"
+		},
+		"154": {
+			"null_1": "tagStatusProcessing"
+		},
+		"155": {
+			"null_1": "memMemberAgent"
+		},
+		"156": {
+			"null_1": "tagAccessDelete"
+		},
+		"157": {
+			"null_1": "tagListenerMonitor"
+		},
+		"158": {
+			"null_1": "tagFlowState"
+		},
+		"159": {
+			"null_1": "tagActionRelease"
+		},
+		"50": {
+			"null_1": "typVocabulary"
+		},
+		"51": {
+			"null_1": "typLanguage"
+		},
+		"52": {
+			"null_1": "memLanguageWords"
+		},
+		"53": {
+			"null_1": "memLanguageVocabularies"
+		},
+		"54": {
+			"null_107": "Dust_Brain_1",
+			"null_94": "null_5"
+		},
+		"55": {
+			"null_1": "logBrain"
+		},
+		"56": {
+			"null_1": "memBrainUnits"
+		},
+		"57": {
+			"null_1": "memBrainLanguages"
+		},
+		"58": {
+			"null_1": "memBrainDialogs"
+		},
+		"59": {
+			"null_1": "memBrainThreads"
+		},
+		"160": {
+			"null_1": "tagStatusRead"
+		},
+		"161": {
+			"null_1": "tagStatusReject"
+		},
+		"162": {
+			"null_1": "tagChangedType"
+		},
+		"163": {
+			"null_1": "memKnowledgeCommit"
+		},
+		"164": {
+			"null_1": "tagStatusReadAccept"
+		},
+		"165": {
+			"null_1": "tagActionProcess"
+		},
+		"166": {
+			"null_1": "tagActionEnd"
+		},
+		"167": {
+			"null_1": "logFlow"
+		},
+		"168": {
+			"null_1": "tagListenerProcessor"
+		},
+		"169": {
+			"null_1": "tagAccessGet"
+		},
+		"60": {
+			"null_1": "theBrain"
+		},
+		"61": {
+			"null_107": "Giskard_Stream_1",
+			"null_94": "null_6"
+		},
+		"62": {
+			"null_1": "unitMiND"
+		},
+		"63": {
+			"null_1": "unitStream"
+		},
+		"64": {
+			"null_1": "unitText"
+		},
+		"65": {
+			"null_1": "unitBrain"
+		},
+		"66": {
+			"null_1": "authDust"
+		},
+		"67": {
+			"null_1": "authGiskard"
+		},
+		"68": {
+			"null_1": "javaLog"
+		},
+		"69": {
+			"null_1": "typJavaClass"
+		},
+		"170": {
+			"null_1": "memMemberVarValue"
+		},
+		"171": {
+			"null_1": "logJoin"
+		},
+		"172": {
+			"null_1": "tagActionBegin"
+		},
+		"173": {
+			"null_1": "tagListenerInterceptor"
+		},
+		"174": {
+			"null_1": "memOrchestratorCurrent"
+		},
+		"175": {
+			"null_1": "tagAccessCheck"
+		},
+		"176": {
+			"null_1": "tagMandatory"
+		},
+		"177": {
+			"null_1": "tagFlowStateExit"
+		},
+		"178": {
+			"null_1": "memResolverCursor"
+		},
+		"179": {
+			"null_1": "tagAccessSet"
+		},
+		"70": {
+			"null_1": "logStreamSerializerJson"
+		},
+		"71": {
+			"null_1": "logStreamSerializer"
+		},
+		"72": {
+			"null_1": "javaStreamPortal"
+		},
+		"73": {
+			"null_1": "javaBrain"
+		},
+		"74": {
+			"null_1": "javaUnit"
+		},
+		"75": {
+			"null_1": "javaStreamSerializerJson"
+		},
+		"76": {
+			"null_1": "javaBootTokens"
+		},
+		"77": {
+			"null_1": "typJavaObject"
+		},
+		"78": {
+			"null_1": "javaDialog"
+		},
+		"79": {
+			"null_1": "memJavaObInstance"
+		},
+		"180": {
+			"null_1": "tagFlowStateEntry"
+		},
+		"181": {
+			"null_1": "streamOut"
+		},
+		"182": {
+			"null_1": "tagStreamTypeChar"
+		},
+		"183": {
+			"null_1": "tagStreamType"
+		},
+		"184": {
+			"null_1": "memStreamPath"
+		},
+		"185": {
+			"null_1": "tagStreamTypeBin"
+		},
+		"186": {
+			"null_1": "memStreamProviderContentRoots"
+		},
+		"187": {
+			"null_1": "memStreamRoot"
+		},
+		"100": {
+			"null_1": "bootUnit"
+		},
+		"188": {
+			"null_1": "memStreamSerializerStream"
+		},
+		"101": {
+			"null_1": "memJavaObClass"
+		},
+		"189": {
+			"null_1": "memStreamPortalMediators"
+		},
+		"102": {
+			"null_1": "logStreamSerializerTextLine"
+		},
+		"103": {
+			"null_1": "javaStreamSerializerTextLine"
+		},
+		"104": {
+			"null_1": "logStreamProvider"
+		},
+		"105": {
+			"null_1": "logBootMediator"
+		},
+		"106": {
+			"null_1": "typThread"
+		},
+		"80": {
+			"null_1": "bootVocabulary"
+		},
+		"107": {
+			"null_1": "tagProxyModule"
+		},
+		"108": {
+			"null_1": "memAppConfig"
+		},
+		"81": {
+			"null_1": "javaKnowledge"
+		},
+		"82": {
+			"null_1": "memStreamProviderLocalRoot"
+		},
+		"109": {
+			"null_1": "typApp"
+		},
+		"83": {
+			"null_1": "logStreamProviderLocal"
+		},
+		"84": {
+			"null_1": "typStream"
+		},
+		"85": {
+			"null_1": "javaBootMediator"
+		},
+		"86": {
+			"null_1": "javaStreamProviderLocal"
+		},
+		"87": {
+			"null_1": "bootDialog"
+		}
+	}
+]
