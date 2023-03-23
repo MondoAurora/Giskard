@@ -30,7 +30,7 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"unitMiND"
+				"authGiskard", "unitMiND"
 			]
 		},
 

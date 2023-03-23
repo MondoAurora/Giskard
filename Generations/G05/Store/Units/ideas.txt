@@ -1,7 +1,9 @@
+===== IDEAS ======
 
-auth, unit proxies in the language
-vocabulary mapping (proxy to lang?)
-ID-based loader (validate only, needs src generation)
+SRC GEN
+ - relative to the host unit (MiND, BrainJava)
+ - move the local ID into the enum
+ - move translation to the bottom (accept enum param as handle)
  
  -> text persistence?
 
@@ -9,16 +11,31 @@ create static data access
  -> use in Montru activities
    -> text services?
    
+===== NEXT ======
+
+prepare for source generation
+
 ===== BOILING ======
 
-write unit JSONs with IDs
+
+
+===== TEMPORAL ======
+
 write separate resource units for "en" content
+auth, unit proxies in the language
+vocabulary mapping (proxy to lang?)
 
 ===== SETTLED ======
+
+write unit JSONs with IDs
 
 verify id management
 Set UnitID, nextID
 
 replace ID SEP from '.' to '_'
+
+===== POSTPONED ======
+
+ID-based loader (validate only, needs src generation)
 
 ===== DROPPED ======

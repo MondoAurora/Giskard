@@ -88,7 +88,7 @@ public class DustBrain extends DustBrainBase {
 						continue;
 					}
 
-					Object memId = optResolve(hUnit, hMem, urefs);
+					Object memId = optResolve(hUnit, unit, hMem, urefs, content);
 
 					DustBrainHandle coll = mi.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeTags), MindColl.Map, GiskardUtils.getHandle(BootToken.tagColl),
 							GiskardUtils.getHandle(BootToken.tagCollOne), null);
@@ -97,7 +97,7 @@ public class DustBrain extends DustBrainBase {
 					switch ( bt ) {
 					case tagCollOne:
 						val = item.access(MindAccess.Peek, hMem, MindColl.One, null, null, null);
-						val = optResolve(hUnit, val, urefs);
+						val = optResolve(hUnit, unit, val, urefs, content);
 						break;
 					case tagCollSet:
 					case tagCollArr:
@@ -105,7 +105,7 @@ public class DustBrain extends DustBrainBase {
 						
 						Iterable values = item.access(MindAccess.Peek, hMem, MindColl.Set, KEY_ITER, null, null);
 						for ( Object v : values ) {
-							arr.add(optResolve(hUnit, v, urefs));
+							arr.add(optResolve(hUnit, unit, v, urefs, content));
 						}
 						val = arr;
 						
@@ -116,7 +116,7 @@ public class DustBrain extends DustBrainBase {
 						Iterable mv = item.access(MindAccess.Peek, hMem, MindColl.Map, KEY_ITER, KEY_KEYS, null);
 						for ( Object v : mv ) {
 							val = item.access(MindAccess.Peek, hMem, MindColl.Map, v, null, null);
-							map.put(optResolve(hUnit, v, urefs), optResolve(hUnit, val, urefs));
+							map.put(optResolve(hUnit, unit, v, urefs, content), optResolve(hUnit, unit, val, urefs, content));
 						}
 						val = map;
 						break;
@@ -148,16 +148,28 @@ public class DustBrain extends DustBrainBase {
 
 	}
 
-	private Object optResolve(DustBrainHandle hUnit, Object val, Map urefs) {
+	@SuppressWarnings("unchecked")
+	private Object optResolve(DustBrainHandle hUnit, KnowledgeItem unit, Object val, Map urefs, Map content) {
 		Object ret = val;
 
 		if ( val instanceof MindHandle ) {
 			KnowledgeItem ki = DustBrainBootUtils.resolveBrainHandle(brain, (MindHandle) val);
+			if ( null == ki ) {
+				ki = DustBrainBootUtils.resolveBrainHandle(unit, (MindHandle) val);
+			}
 			String memId = GiskardUtils.toString(ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeID), MindColl.One, null, null, null));
 			DustBrainHandle memUnit = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeUnit), MindColl.One, null, null, null);
 
 			if ( memUnit != hUnit ) {
-				memId = urefs.get(memUnit) + SEP + memId;
+				Object unitId = urefs.get(memUnit);
+				
+				if ( null == unitId ) {
+					KnowledgeItem ku = DustBrainBootUtils.resolveBrainHandle(brain, memUnit);
+					unitId = ku.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, null, null);
+					urefs.put(memUnit, unitId);
+				}
+				
+				memId = unitId + SEP + memId;
 			}
 
 			ret = memId;

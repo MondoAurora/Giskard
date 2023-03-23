@@ -75,7 +75,7 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"unitMiND", "unitStream", "unitText", "unitBrain", "unitBrainJava"
+				"authGiskard", "authDust", "unitMiND", "unitStream", "unitText", "unitBrain", "unitBrainJava"
 			]
 		},
 		

@@ -14,7 +14,7 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 		return handle;
 	}
 
-	public static KnowledgeItem createKnowledgeItem(KnowledgeItem unit, MindHandle handle) throws Exception {
+	public static KnowledgeItem createKnowledgeItem(KnowledgeItem unit, MindHandle handle) {
 		KnowledgeItem ki = createInstance(CN_KNOWLEDGE_ITEM);
 
 		if ( null == handle ) {
@@ -66,8 +66,28 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 	}
 
 //	public static void optRegisterProxy(KnowledgeItem unit, KnowledgeItem brain, Object target) {
-//		KnowledgeItem ki = resolveBrainHandle(brain, (MindHandle) target);
-//		GiskardMind.dump("Would register proxy to", target);
+//		String token = target.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, null, null);
+//		
+//		boolean exists = langUnit.access(MindAccess.Check, GiskardUtils.getHandle(BootToken.memKnowledgeRequires), MindColl.Set, token, null, null);
+//		
+//		if ( !exists ) {
+//			KnowledgeItem ref = DustBrainBootUtils.createKnowledgeItem(langUnit, null);
+//			DustBrainBootUtils.optAssignID(langUnit, ref);
+//			
+//			ref.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typProxy), null);
+//			ref.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, token, null);
+//			
+//			DustBrainHandle hAuthor = target.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitAuthor), MindColl.One, null, null, null);
+//
+//			BootToken btProxyType;
+//			if ( null == hAuthor ) {
+//				btProxyType = BootToken.tagProxyUnit;
+//			} else {
+//				btProxyType = BootToken.tagProxyAuthor;				
+//			}
+//			ref.access(MindAccess.z, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, token, null);
+//
+//		}
 //	}
 
 }

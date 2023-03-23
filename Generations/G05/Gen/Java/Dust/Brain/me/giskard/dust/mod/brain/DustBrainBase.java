@@ -137,7 +137,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				String unitToken = itContent.next();
 				if ( loadUnit(unitToken) ) {
 					itContent.remove();
-					saveUnitContent(unitToken);
+//					saveUnitContent(unitToken);
 				}
 			}
 		}
@@ -172,11 +172,15 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					data = (Map) content.get(refId);
 					Map author = (Map) content.get(data.get(BootToken.memUnitAuthor.toString()));
 
+					if ( null == author ) {
+						continue; // this is an author ref
+					}
 					String refUnitId = BootUnit.getToken(author.get(BootToken.memKnowledgeToken.toString()), data.get(BootToken.memKnowledgeToken.toString()),
 							data.get(BootToken.memUnitVersionMajor.toString()));
 
 					langConn.addRefUnit(refId, refUnitId);
 					optAddUnit(refUnitId);
+					
 				}
 			}
 		} else {
