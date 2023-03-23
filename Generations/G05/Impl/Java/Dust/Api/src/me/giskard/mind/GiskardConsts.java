@@ -65,6 +65,7 @@ public interface GiskardConsts {
 	};
 
 	interface MindHandle {
+		Object getUnitToken();
 		Object getId();
 	};
 

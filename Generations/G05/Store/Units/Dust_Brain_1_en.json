@@ -39,7 +39,6 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
-		
 		"authDust": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
 			"unitMiND_memKnowledgeToken": "Dust",
@@ -54,11 +53,12 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"authGiskard", "unitMiND", "unitStream", "unitText"
+				"authGiskard",
+				"unitMiND",
+				"unitStream",
+				"unitText"
 			]
 		},
-
-		
 		"typThread": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -77,16 +77,15 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-
 		"logKnowledge": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
-			"unitMiND_memKnowledgeRequires" : [
+			"unitMiND_memKnowledgeRequires": [
 				"unitMiND_typKnowledge"
 			]
 		},
 		"logUnit": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
-			"unitMiND_memKnowledgeRequires" : [
+			"unitMiND_memKnowledgeRequires": [
 				"unitMiND_typUnit"
 			]
 		},
@@ -110,7 +109,6 @@
 			"unitMiND_memMemberKeyType": "unitMiND_typTag",
 			"unitMiND_memMemberHandleType": "unitMiND_typTag"
 		},
-
 		"logBrain": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
@@ -149,7 +147,6 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-
 		"typModule": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -166,7 +163,6 @@
 			"unitMiND_memKnowledgeType": "unitMiND_typTag",
 			"unitMiND_memKnowledgeOwner": "unitMiND_tagProxy"
 		},
-
 		"typApp": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -219,7 +215,6 @@
 			},
 			"unitMiND_memMemberHandleType": "unitMiND_logDialog"
 		},
-
 		"logBootMediator": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
 			"unitMiND_memKnowledgeExtends": [
@@ -234,7 +229,6 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-
 		"_End_": "____________"
 	}
 ]

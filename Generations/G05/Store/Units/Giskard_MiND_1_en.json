@@ -15,13 +15,10 @@
 			"memKnowledgeToken": "MiND",
 			"memUnitVersionMajor": 1
 		},
-
 		"_Model_": "=======================_Model_=======================",
-		
 		"typHandle": {
 			"memKnowledgeType": "typType"
 		},
-
 		"typVar": {
 			"memKnowledgeType": "typType"
 		},
@@ -29,7 +26,6 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "typVar"
 		},
-
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
 		},
@@ -132,11 +128,9 @@
 				"tagValtype": "tagValtypeBin"
 			}
 		},
-
 		"typAuthor": {
 			"memKnowledgeType": "typType"
 		},
-		
 		"typUnit": {
 			"memKnowledgeType": "typType"
 		},
@@ -178,7 +172,6 @@
 				"tagValtype": "tagValtypeInt"
 			}
 		},
-						
 		"typReference": {
 			"memKnowledgeType": "typType"
 		},
@@ -189,7 +182,6 @@
 				"tagColl": "tagCollArr"
 			}
 		},
-				
 		"typProxy": {
 			"memKnowledgeType": "typType"
 		},
@@ -212,11 +204,9 @@
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagProxy"
 		},
-
 		"tagTransient": {
 			"memKnowledgeType": "typTag"
 		},
-
 		"_Idea_": "=======================_Idea_=======================",
 		"typType": {
 			"memKnowledgeType": "typType"
@@ -323,11 +313,11 @@
 			},
 			"memMemberHandleType": "typAgent"
 		},
-		
 		"logResolver": {
 			"memKnowledgeType": "typLogic",
-			"memKnowledgeRequires" : [
-				"typReference", "typVar"
+			"memKnowledgeRequires": [
+				"typReference",
+				"typVar"
 			]
 		},
 		"memResolverCursor": {
@@ -337,7 +327,6 @@
 				"tagValtype": "tagValtypeBin"
 			}
 		},
-
 		"logOrchestrator": {
 			"memKnowledgeType": "typLogic"
 		},
@@ -366,7 +355,6 @@
 			},
 			"memMemberHandleType": "typAgent"
 		},
-		
 		"logSelect": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
@@ -399,7 +387,6 @@
 				"logOrchestrator"
 			]
 		},
-
 		"tagFlowState": {
 			"memKnowledgeType": "typTag"
 		},
@@ -411,8 +398,6 @@
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagFlowState"
 		},
-
-		
 		"tagAccess": {
 			"memKnowledgeType": "typTag"
 		},
@@ -499,7 +484,6 @@
 			"memKnowledgeOwner": "tagStatus"
 		},
 		"_Dialog_": "======================_Dialog_========================",
-
 		"typListener": {
 			"memKnowledgeType": "typType"
 		},
@@ -519,7 +503,6 @@
 			},
 			"memMemberHandleType": "typAgent"
 		},
-		
 		"tagChangedVal": {
 			"memKnowledgeType": "typTag"
 		},
@@ -529,7 +512,6 @@
 		"tagChangedType": {
 			"memKnowledgeType": "typTag"
 		},
-		
 		"tagListener": {
 			"memKnowledgeType": "typTag"
 		},
@@ -549,7 +531,6 @@
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagListener"
 		},
-		
 		"logMediator": {
 			"memKnowledgeType": "typLogic"
 		},
@@ -580,7 +561,6 @@
 			},
 			"memMemberHandleType": "typHandle"
 		},
-		
 		"logDialog": {
 			"memKnowledgeType": "typLogic",
 			"memKnowledgeExtends": [
@@ -612,7 +592,6 @@
 				"tagValtype": "tagValtypeHandle"
 			}
 		},
-		
 		"_End_": "____________"
 	}
 ]

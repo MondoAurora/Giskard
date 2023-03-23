@@ -39,7 +39,6 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
-		
 		"authDust": {
 			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
 			"unitMiND_memKnowledgeToken": "Dust",
@@ -75,10 +74,15 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"authGiskard", "authDust", "unitMiND", "unitStream", "unitText", "unitBrain", "unitBrainJava"
+				"authGiskard",
+				"authDust",
+				"unitMiND",
+				"unitStream",
+				"unitText",
+				"unitBrain",
+				"unitBrainJava"
 			]
 		},
-		
 		"modApi": {
 			"unitMiND_memKnowledgeType": "unitBrain_typModule",
 			"unitMiND_memUnitAuthor": "authDust",
@@ -97,7 +101,6 @@
 				"unitMiND_tagProxy": "unitBrain_tagProxyModule"
 			}
 		},
-		
 		"localStoreFolder": {
 			"unitMiND_memKnowledgeType": "unitMiND_typVar",
 			"unitMiND_memMemberVarValue": "../../Store"
@@ -111,15 +114,14 @@
 			"unitMiND_memAgentLogic": "unitStream_logStreamProvider",
 			"unitStream_memStreamProviderLocalRoot": "appStreamRoot",
 			"unitStream_memStreamProviderContentRoots": {
-				"unitMiND_typUnit" : "Units",
-				"unitBrain_typModule" : "Impl/Java/lib"
+				"unitMiND_typUnit": "Units",
+				"unitBrain_typModule": "Impl/Java/lib"
 			}
 		},
-		
 		"appJson": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
 			"unitMiND_memAgentLogic": "unitBrainJava_logStreamSerializerJson",
-			"unitStream_memStreamSerializerCondition":"*_json"
+			"unitStream_memStreamSerializerCondition": "*_json"
 		},
 		"appStreamPortal": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
@@ -128,7 +130,6 @@
 				"appJson"
 			]
 		},
-		
 		"appMsg": {
 			"unitMiND_memKnowledgeType": "unitText_typText",
 			"unitText_memTextString": "Hello, World!"
@@ -148,12 +149,10 @@
 				"unitMiND_tagListener": "unitMiND_tagListenerProcessor"
 			}
 		},
-		
 		"unitMain": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"message": "appMsg"
 		},
-		
 		"dlgMain": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
 			"unitMiND_memAgentLogic": "unitMiND_logDialog",
@@ -168,29 +167,24 @@
 				"message"
 			]
 		},
-				
 		"app": {
 			"unitMiND_memKnowledgeType": "unitBrain_typApp",
 			"unitMiND_memUnitAuthor": "authDust",
 			"unitMiND_memKnowledgeToken": "HelloWorld",
 			"unitMiND_memUnitVersionMajor": 1,
-			"unitBrain_memAppStreamProvider" : "appStreamProvider",
+			"unitBrain_memAppStreamProvider": "appStreamProvider",
 			"unitBrain_memAppStreamPortal": "appStreamPortal",
-			"unitBrain_memAppApi" : "modApi",
+			"unitBrain_memAppApi": "modApi",
 			"unitBrain_memAppModules": [
 				"modBrainJava"
 			],
 			"unitBrain_memAppMain": "dlgMain"
 		},
-				
-		"theBrain" : {
+		"theBrain": {
 			"unitBrain_memBrainDialogs": [
 				"dlgMain"
 			]
 		},
-		
-
 		"_End_": "____________"
-
 	}
 ]

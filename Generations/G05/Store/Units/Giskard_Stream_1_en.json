@@ -39,10 +39,11 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"authGiskard", "unitMiND", "unitText"
+				"authGiskard",
+				"unitMiND",
+				"unitText"
 			]
 		},
-		
 		"typStream": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -61,7 +62,6 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-		
 		"tagStreamType": {
 			"unitMiND_memKnowledgeType": "unitMiND_typTag"
 		},
@@ -73,14 +73,12 @@
 			"unitMiND_memKnowledgeType": "unitMiND_typTag",
 			"unitMiND_memKnowledgeOwner": "tagStreamType"
 		},
-		
 		"streamOut": {
 			"unitMiND_memKnowledgeType": "typStream",
 			"unitMiND_memKnowledgeTags": {
 				"tagStreamType": "tagStreamTypeChar"
 			}
 		},
-		
 		"logStreamProvider": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
@@ -91,8 +89,6 @@
 				"unitMiND_tagColl": "unitMiND_tagCollMap"
 			}
 		},
-
-		
 		"logStreamSerializer": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
@@ -127,7 +123,6 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-				
 		"logStreamPortal": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
 		},
@@ -140,7 +135,6 @@
 			},
 			"unitMiND_memMemberHandleType": "logStreamSerializer"
 		},
-		
 		"_End_": "____________"
 	}
 ]

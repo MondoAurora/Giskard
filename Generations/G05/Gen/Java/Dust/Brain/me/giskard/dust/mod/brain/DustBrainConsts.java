@@ -5,30 +5,30 @@ import me.giskard.mind.GiskardConsts;
 public interface DustBrainConsts extends GiskardConsts {
 
 	interface HandleFormatter {
-		String formatLabel(DustBrainHandle h);
+		String formatLabel(MindHandle h);
 	}
 
 	HandleFormatter DEF_FORMATTER = new HandleFormatter() {
 		@Override
-		public String formatLabel(DustBrainHandle h) {
-			return "BH(" + h.id + ")";
+		public String formatLabel(MindHandle h) {
+			return "BH(" + h.getId() + ")";
 		}
 	};
 
 	interface KnowledgeConnector {
-		Object create(KnowledgeItem unit, DustBrainHandle hMember, Object key, Object... params);
+		Object create(KnowledgeItem unit, MindHandle hMember, Object key, Object... params);
 
-		void notifyChange(MindAccess cmd, DustBrainHandle hMember, Object key, Object old, Object curr);
+		void notifyChange(MindAccess cmd, MindHandle hMember, Object key, Object old, Object curr);
 	}
 
 	interface KnowledgeVisitor {
-		public <RetType> RetType access(MindAction action, KnowledgeItem item, DustBrainHandle hMember, MindColl coll, Object key, Object val);
+		public <RetType> RetType access(MindAction action, KnowledgeItem item, MindHandle hMember, MindColl coll, Object key, Object val);
 	}
 
 	interface KnowledgeItem {
-		public <RetType> RetType access(MindAccess cmd, DustBrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params);
+		public <RetType> RetType access(MindAccess cmd, MindHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params);
 
-		public void visit(DustBrainHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor);
+		public void visit(MindHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor);
 	}
 
 	interface LogicKnowledge {

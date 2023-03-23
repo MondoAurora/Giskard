@@ -27,28 +27,28 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 	}
 
 	public static void initKnowledgeItem(KnowledgeItem unit, KnowledgeItem ki, MindHandle handle) {
-		ki.access(MindAccess.Insert, getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, handle, null);
-		unit.access(MindAccess.Insert, getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, handle, ki, null);
-		DustBrainHandle hUnit = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, null, null);
-		ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeUnit), MindColl.One, null, hUnit, null);
+		ki.access(MindAccess.Insert, BootToken.memKnowledgeHandle, MindColl.One, null, handle, null);
+		unit.access(MindAccess.Insert, BootToken.memUnitLocalKnowledge, MindColl.Map, handle, ki, null);
+		DustBrainHandle hUnit = unit.access(MindAccess.Peek, BootToken.memKnowledgeHandle, MindColl.One, null, null, null);
+		ki.access(MindAccess.Set, BootToken.memKnowledgeUnit, MindColl.One, null, hUnit, null);
 	}
 
 	public static void optAssignID(KnowledgeItem unit, KnowledgeItem ki) {
-		Long id = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeID), MindColl.One, null, null, null);
+		Long id = ki.access(MindAccess.Peek, BootToken.memKnowledgeID, MindColl.One, null, null, null);
 
 		if ( null == id ) {
-			id = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitNextId), MindColl.One, null, 1L, null);
-			ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeID), MindColl.One, null, id, null);
-			unit.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memUnitNextId), MindColl.One, null, ++id, null);
+			id = unit.access(MindAccess.Peek, BootToken.memUnitNextId, MindColl.One, null, 1L, null);
+			ki.access(MindAccess.Set, BootToken.memKnowledgeID, MindColl.One, null, id, null);
+			unit.access(MindAccess.Set, BootToken.memUnitNextId, MindColl.One, null, ++id, null);
 		}
 	}
 
 	public static MindHandle getHandle(KnowledgeItem item) {
-		return item.access(MindAccess.Peek, getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, null, null);
+		return item.access(MindAccess.Peek, BootToken.memKnowledgeHandle, MindColl.One, null, null, null);
 	}
 
 	public static KnowledgeItem resolveHandle(KnowledgeItem unit, MindHandle handle, KnowledgeConnector conn) {
-		return unit.access((null == conn) ? MindAccess.Peek : MindAccess.Get, getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, handle, null, conn);
+		return unit.access((null == conn) ? MindAccess.Peek : MindAccess.Get, BootToken.memUnitLocalKnowledge, MindColl.Map, handle, null, conn);
 	}
 
 	public static KnowledgeItem resolveBrainHandle(KnowledgeItem brain, MindHandle handle) {
@@ -58,7 +58,7 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 		if ( null == unitToken ) {
 			unit = brain;
 		} else {
-			DustBrainHandle hUnit = brain.access(MindAccess.Peek, getHandle(BootToken.memBrainUnits), MindColl.Map, unitToken, null, null);
+			DustBrainHandle hUnit = brain.access(MindAccess.Peek, BootToken.memBrainUnits, MindColl.Map, unitToken, null, null);
 			unit = resolveHandle(brain, hUnit, null);
 		}
 

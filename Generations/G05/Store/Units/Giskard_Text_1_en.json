@@ -30,10 +30,10 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"authGiskard", "unitMiND"
+				"authGiskard",
+				"unitMiND"
 			]
 		},
-
 		"typText": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -44,14 +44,12 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-		
 		"typVocabulary": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType",
 			"unitMiND_memKnowledgeExtends": [
 				"unitMiND_logMediator"
 			]
 		},
-
 		"typLanguage": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType",
 			"unitMiND_memKnowledgeExtends": [
@@ -77,7 +75,6 @@
 			"unitMiND_memMemberHandleType": "typVocabulary",
 			"unitMiND_memMemberKeyType": "unitMiND_typUnit"
 		},
-
 		"_End_": "____________"
 	}
 ]

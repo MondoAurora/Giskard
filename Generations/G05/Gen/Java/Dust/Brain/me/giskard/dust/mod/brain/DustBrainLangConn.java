@@ -39,7 +39,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		hBrain = GiskardUtils.getHandle(BootToken.theBrain);
 
 		unitInfos.clear();
-		DustBrainHandle handle = brain.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memBrainLanguages), MindColl.Map, lang, null, this);
+		DustBrainHandle handle = brain.access(MindAccess.Get, BootToken.memBrainLanguages, MindColl.Map, lang, null, this);
 		langUnit = DustBrainBootUtils.resolveHandle(brain, handle, null);
 
 		addRefUnit(null, defUnit);
@@ -49,10 +49,10 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 
 	public boolean addRefUnit(String refId, String unitId) {
 		if ( !unitInfos.containsKey(refId) ) {
-			DustBrainHandle hUnit = brain.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memBrainUnits), MindColl.Map, unitId, null, this);
+			DustBrainHandle hUnit = brain.access(MindAccess.Get, BootToken.memBrainUnits, MindColl.Map, unitId, null, this);
 			KnowledgeItem unit = DustBrainBootUtils.resolveHandle(brain, hUnit, this);
 
-			DustBrainHandle hVoc = langUnit.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memLanguageVocabularies), MindColl.Map, unitId, null, this, hUnit);
+			DustBrainHandle hVoc = langUnit.access(MindAccess.Get, BootToken.memLanguageVocabularies, MindColl.Map, unitId, null, this, hUnit);
 			KnowledgeItem voc = DustBrainBootUtils.resolveHandle(langUnit, hVoc, this);
 
 			unitInfos.put(refId, new UnitInfo(unitId, voc, unit));
@@ -64,11 +64,11 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 	}
 
 	@Override
-	public void notifyChange(MindAccess cmd, DustBrainHandle hMember, Object key, Object old, Object curr) {
+	public void notifyChange(MindAccess cmd, MindHandle hMember, Object key, Object old, Object curr) {
 	}
 
 	@Override
-	public Object create(KnowledgeItem unit, DustBrainHandle hMember, Object key, Object... params) {
+	public Object create(KnowledgeItem unit, MindHandle hMember, Object key, Object... params) {
 		Object ret = null;
 
 		BootToken bt = GiskardUtils.getEnum(hMember);
@@ -89,10 +89,10 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 			case memLanguageVocabularies:
 				ret = hItem = DustBrainBootUtils.createKnowledgeItem(unit);
 				item = DustBrainBootUtils.resolveHandle(unit, hItem, null);
-				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memKnowledgeToken), MindColl.One, null, key, null);
+				item.access(MindAccess.Set, BootToken.memKnowledgeToken, MindColl.One, null, key, null);
 				DustBrainBootUtils.optAssignID(unit, item);
 				if ( bt == BootToken.memLanguageVocabularies ) {
-					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemote), MindColl.One, null, params[0], null);
+					item.access(MindAccess.Set, BootToken.memMediatorRemote, MindColl.One, null, params[0], null);
 //					DustBrainBootUtils.optRegisterProxy(unit, brain, params[0]);
 //				} else if ( bt == BootToken.memBrainLanguages ) {
 //					DustBrainBootUtils.optRegisterProxy(unit, BootUnit.unitText.getToken());
@@ -101,7 +101,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 			case memLanguageWords:
 				ret = hItem = DustBrainBootUtils.createKnowledgeItem(unit);
 				item = DustBrainBootUtils.resolveHandle(unit, hItem, null);
-				item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memTextString), MindColl.One, null, key, null);
+				item.access(MindAccess.Set, BootToken.memTextString, MindColl.One, null, key, null);
 				DustBrainBootUtils.optAssignID(unit, item);
 				break;
 			case memMediatorLocalToRemote:
@@ -110,7 +110,7 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 					ret = hItem = new DustBrainHandle();
 					hItem.setUnitToken(params[0]);
 				}
-				unit.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMediatorRemoteToLocal), MindColl.Map, ret, key, null);
+				unit.access(MindAccess.Set, BootToken.memMediatorRemoteToLocal, MindColl.Map, ret, key, null);
 				break;
 			default:
 				break;
@@ -153,9 +153,9 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 
 		UnitInfo ui = unitInfos.get(unitRef);
 
-		MindHandle hWord = langUnit.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memLanguageWords), MindColl.Map, name, null, this);
+		MindHandle hWord = langUnit.access(MindAccess.Get, BootToken.memLanguageWords, MindColl.Map, name, null, this);
 
-		MindHandle hItem = ui.voc.access(MindAccess.Get, GiskardUtils.getHandle(BootToken.memMediatorLocalToRemote), MindColl.Map, hWord, null, this, ui.token, handle);
+		MindHandle hItem = ui.voc.access(MindAccess.Get, BootToken.memMediatorLocalToRemote, MindColl.Map, hWord, null, this, ui.token, handle);
 
 		return DustBrainBootUtils.resolveHandle(ui.unit, hItem, this);
 	}
@@ -167,15 +167,15 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 
 	@SuppressWarnings("rawtypes")
 	public boolean loadMember(KnowledgeItem item, KnowledgeItem member, Object value) throws Exception {
-		boolean knownMember = member.access(MindAccess.Check, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typMember), null);
+		boolean knownMember = member.access(MindAccess.Check, BootToken.memKnowledgeType, MindColl.One, null, BootToken.typMember, null);
 
 		if ( knownMember ) {
-			boolean valHandle = member.access(MindAccess.Check, GiskardUtils.getHandle(BootToken.memKnowledgeTags), MindColl.Map, GiskardUtils.getHandle(BootToken.tagValtype),
-					GiskardUtils.getHandle(BootToken.tagValtypeHandle), null);
-			DustBrainHandle hMember = member.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeHandle), MindColl.One, null, null, null);
+			boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags, MindColl.Map, BootToken.tagValtype,
+					BootToken.tagValtypeHandle, null);
+			DustBrainHandle hMember = member.access(MindAccess.Peek, BootToken.memKnowledgeHandle, MindColl.One, null, null, null);
 
 			if ( value instanceof Map ) {
-				boolean keyNotHandle = member.access(MindAccess.Check, GiskardUtils.getHandle(BootToken.memMemberKeyType), MindColl.One, null, null, null);
+				boolean keyNotHandle = member.access(MindAccess.Check, BootToken.memMemberKeyType, MindColl.One, null, null, null);
 
 				for (Object v : ((Map) value).entrySet()) {
 					Map.Entry ev = (Map.Entry) v;

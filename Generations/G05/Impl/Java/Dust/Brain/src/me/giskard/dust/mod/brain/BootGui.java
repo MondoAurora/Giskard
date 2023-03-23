@@ -245,8 +245,8 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 				labels.put(mh, lbl);
 
-				KnowledgeItem ki = unit.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, mh, null, null);
-				MindHandle th = ki.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeType), MindColl.One, null, null, null);
+				KnowledgeItem ki = unit.access(MindAccess.Peek, BootToken.memUnitLocalKnowledge, MindColl.Map, mh, null, null);
+				MindHandle th = ki.access(MindAccess.Peek, BootToken.memKnowledgeType, MindColl.One, null, null, null);
 				lbl.setBorder(borders.getOrDefault(th, def_border)); // Set a border for clarity.
 
 				Iterable<DustBrainHandle> members = ki.access(MindAccess.Peek, null, MindColl.Map, KEY_ITER, null, null);
@@ -270,18 +270,18 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 		Set<String> names = new TreeSet<>();
 
 		public void loadHandles() {
-			Iterable<MindHandle> localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+			Iterable<MindHandle> localKnowledge = brain.access(MindAccess.Peek, BootToken.memUnitLocalKnowledge, MindColl.Map, KEY_ITER, KEY_KEYS, null);
 
 			names.clear();
 			
 			loadHandles(brain, localKnowledge);
 			
-			localKnowledge = brain.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memBrainUnits), MindColl.Map, KEY_ITER, null, null);
+			localKnowledge = brain.access(MindAccess.Peek, BootToken.memBrainUnits, MindColl.Map, KEY_ITER, null, null);
 
 			for (MindHandle mh : localKnowledge) {
 				KnowledgeItem item = DustBrainBootUtils.resolveBrainHandle(brain, mh);
 				
-				Iterable<MindHandle> li = item.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memUnitLocalKnowledge), MindColl.Map, KEY_ITER, KEY_KEYS, null);
+				Iterable<MindHandle> li = item.access(MindAccess.Peek, BootToken.memUnitLocalKnowledge, MindColl.Map, KEY_ITER, KEY_KEYS, null);
 				
 				if ( null != li ) {
 					loadHandles(item, li);
@@ -566,10 +566,10 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 					if ( null == mi ) {
 						continue;
 					}
-					val[0] = mi.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeOwner), MindColl.One, null, null, null);
+					val[0] = mi.access(MindAccess.Peek, BootToken.memKnowledgeOwner, MindColl.One, null, null, null);
 					val[1] = hMem;
 
-					DustBrainHandle coll = mi.access(MindAccess.Peek, GiskardUtils.getHandle(BootToken.memKnowledgeTags), MindColl.Map, GiskardUtils.getHandle(BootToken.tagColl), GiskardUtils.getHandle(BootToken.tagCollOne), null);
+					DustBrainHandle coll = mi.access(MindAccess.Peek, BootToken.memKnowledgeTags, MindColl.Map, BootToken.tagColl, BootToken.tagCollOne, null);
 
 					BootToken bt =  GiskardUtils.getEnum(coll, BootToken.tagCollOne);
 					

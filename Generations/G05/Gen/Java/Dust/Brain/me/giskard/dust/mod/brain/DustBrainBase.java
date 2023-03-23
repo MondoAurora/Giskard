@@ -41,19 +41,19 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 
 		setRoot(new File(PATH_UNITS));
 
-		Map<String, DustBrainHandle> bootType = new TreeMap<>();
+		Map<String, BootToken> bootType = new TreeMap<>();
 
-		bootType.put("typ", GiskardUtils.getHandle(BootToken.typType));
-		bootType.put("mem", GiskardUtils.getHandle(BootToken.typMember));
-		bootType.put("tag", GiskardUtils.getHandle(BootToken.typTag));
-		bootType.put("log", GiskardUtils.getHandle(BootToken.typLogic));
+		bootType.put("typ", BootToken.typType);
+		bootType.put("mem", BootToken.typMember);
+		bootType.put("tag", BootToken.typTag);
+		bootType.put("log", BootToken.typLogic);
 
 		BootToken tagParent = null;
 		Map<BootToken, BootToken> tags = new HashMap<>();
 
-		DustBrainHandle hMemType = GiskardUtils.getHandle(BootToken.memKnowledgeType);
-		DustBrainHandle hMemTags = GiskardUtils.getHandle(BootToken.memKnowledgeTags);
-		DustBrainHandle hMemOwner = GiskardUtils.getHandle(BootToken.memKnowledgeOwner);
+		BootToken hMemType = BootToken.memKnowledgeType;
+		BootToken hMemTags = BootToken.memKnowledgeTags;
+		BootToken hMemOwner = BootToken.memKnowledgeOwner;
 
 		DustBrainLangConn langConn = new DustBrainLangConn(brain, LANG_BOOT, BootToken.theBrain.unit.getToken());
 
@@ -67,7 +67,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			KnowledgeItem ki = langConn.getByToken(bt.unit.id, name, GiskardUtils.getHandle(bt));
 
 			String pfx = name.substring(0, 3);
-			DustBrainHandle th = bootType.get(pfx);
+			MindHandle th = bootType.get(pfx);
 
 			if ( null != th ) {
 				ki.access(MindAccess.Set, hMemType, MindColl.One, null, th, null);
@@ -90,7 +90,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
 						break;
 					case memKnowledgeTags:
-						ki.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memMemberKeyType), MindColl.One, null, GiskardUtils.getHandle(BootToken.typTag), null);
+						ki.access(MindAccess.Set, BootToken.memMemberKeyType, MindColl.One, null, BootToken.typTag, null);
 					case memKnowledgeRequires:
 					case memKnowledgeExtends:
 					case memMediatorLocalToRemote:
@@ -107,7 +107,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					}
 
 					for (Map.Entry<BootToken, BootToken> tt : tags.entrySet()) {
-						ki.access(MindAccess.Insert, hMemTags, MindColl.Map, GiskardUtils.getHandle(tt.getKey()), GiskardUtils.getHandle(tt.getValue()), null);
+						ki.access(MindAccess.Insert, hMemTags, MindColl.Map, tt.getKey(), tt.getValue(), null);
 					}
 				}
 					break;
@@ -115,7 +115,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					if ( (null == tagParent) || !name.startsWith(tagParent.name()) ) {
 						tagParent = bt;
 					} else {
-						ki.access(MindAccess.Set, hMemOwner, MindColl.One, null, GiskardUtils.getHandle(tagParent), null);
+						ki.access(MindAccess.Set, hMemOwner, MindColl.One, null, tagParent, null);
 					}
 					break;
 				}
@@ -220,7 +220,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 				KnowledgeItem refUnit = langConn.getUnitByToken(id);
 				if ( null != refUnit ) {
 					MindHandle hU = DustBrainBootUtils.getHandle(refUnit);
-					item.access(MindAccess.Set, GiskardUtils.getHandle(BootToken.memProxyRemote), MindColl.One, null, hU, null);
+					item.access(MindAccess.Set, BootToken.memProxyRemote, MindColl.One, null, hU, null);
 				}
 				
 				itData.remove();

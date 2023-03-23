@@ -39,7 +39,6 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
-		
 		"authDust": {
 			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
 			"unitMiND_memKnowledgeToken": "Dust",
@@ -66,14 +65,17 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			},
 			"unitMiND_memKnowledgeRequires": [
-				"authGiskard", "authDust", "unitMiND", "unitStream", "unitText", "unitBrain"
+				"authGiskard",
+				"authDust",
+				"unitMiND",
+				"unitStream",
+				"unitText",
+				"unitBrain"
 			]
 		},
-		
 		"typJavaClass": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
-
 		"typJavaObject": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
@@ -92,7 +94,6 @@
 				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
 			}
 		},
-
 		"javaBrain": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "me.giskard.dust.mod.brain.DustBrain"
@@ -109,12 +110,10 @@
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "me.giskard.dust.mod.brain.agents.DustBrainAgentDialog"
 		},
-		
 		"javaLog": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"logStreamProviderLocal": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
 			"unitMiND_memKnowledgeExtends": [
@@ -129,12 +128,10 @@
 			},
 			"unitMiND_memMemberHandleType": "unitStream_typStream"
 		},
-
 		"javaStreamProviderLocal": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"logStreamSerializerJson": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
 			"unitMiND_memKnowledgeExtends": [
@@ -145,7 +142,6 @@
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"logStreamSerializerTextLine": {
 			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
 			"unitMiND_memKnowledgeExtends": [
@@ -156,23 +152,18 @@
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"javaStreamPortal": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"javaBootMediator": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
 		"javaBootTokens": {
 			"unitMiND_memKnowledgeType": "typJavaClass",
 			"unitMiND_memKnowledgeToken": "a.b.c"
 		},
-		
-		
 		"bootUnit": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit"
 		},
@@ -182,44 +173,37 @@
 		"bootMediator": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
 			"unitMiND_memAgentLogic": "unitBrain_logBootMediator",
-			"unitBrain_memBootMediatorSources" : [
+			"unitBrain_memBootMediatorSources": [
 				"javaBootTokens"
 			]
 		},
 		"bootSerializer": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
 			"unitMiND_memAgentLogic": "unitStream_logStreamSerializer",
-			"unitMiND_memMediatorRemote":"bootVocabulary",
-			"unitStream_memStreamSerializerMediator" : "bootMediator"
+			"unitMiND_memMediatorRemote": "bootVocabulary",
+			"unitStream_memStreamSerializerMediator": "bootMediator"
 		},
-		
 		"bootDialog": {
 			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
 			"unitMiND_memAgentLogic": "unitMiND_logDialog",
 			"unitMiND_memDialogUnit": "bootUnit",
-			"unitMiND_memOrchestratorAgents": [
-			],
-			"unitMiND_memDialogListeners": [
-			],
-			"unitMiND_memDialogLaunch": [
-			]
+			"unitMiND_memOrchestratorAgents": [],
+			"unitMiND_memDialogListeners": [],
+			"unitMiND_memDialogLaunch": []
 		},
-
-
 		"modDustJava": {
 			"unitMiND_memKnowledgeType": "unitBrain_typModule",
 			"unitBrain_memModuleImplementations": {
-				"unitBrain_logBrain" : "javaBrain",
-				"unitBrain_logKnowledge" : "javaKnowledge",
-				"unitBrain_logUnit" : "javaUnit",
-				"unitMiND_logDialog" : "javaDialog",
+				"unitBrain_logBrain": "javaBrain",
+				"unitBrain_logKnowledge": "javaKnowledge",
+				"unitBrain_logUnit": "javaUnit",
+				"unitMiND_logDialog": "javaDialog",
 				"unitStream_logStreamPortal": "javaStreamPortal",
 				"unitStream_logStreamProvider": "javaStreamProviderLocal",
-				"logStreamSerializerJson" : "javaStreamSerializerJson",
-				"logStreamSerializerTextLine" : "javaStreamSerializerTextLine",
-				"unitBrain_logBootMediator" : "javaBootMediator"
+				"logStreamSerializerJson": "javaStreamSerializerJson",
+				"logStreamSerializerTextLine": "javaStreamSerializerTextLine",
+				"unitBrain_logBootMediator": "javaBootMediator"
 			}
 		}
-		
 	}
 ]

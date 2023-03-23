@@ -15,10 +15,10 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	String LANG_BOOT = "en";
 
 	enum BootAuthor {
-		authGiskard("Giskard"), authDust("Dust"), 
-		
+		authGiskard("Giskard"), authDust("Dust"),
+
 		;
-		
+
 		public final String id;
 
 		private BootAuthor(String id) {
@@ -27,21 +27,20 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	}
 
 	enum BootUnit {
-		unitMiND(BootAuthor.authGiskard, 1), unitText(BootAuthor.authGiskard, 1), unitStream(BootAuthor.authGiskard, 1), 
-		unitBrain(BootAuthor.authDust, 1), unitBrainJava(BootAuthor.authDust, 1)
-		
+		unitMiND(BootAuthor.authGiskard, 1), unitText(BootAuthor.authGiskard, 1), unitStream(BootAuthor.authGiskard, 1), unitBrain(BootAuthor.authDust, 1), unitBrainJava(BootAuthor.authDust, 1)
+
 		;
-		
+
 		public final BootAuthor author;
 		public final String id;
 		public final Number verMajor;
-		
+
 		private BootUnit(BootAuthor author, Number verMajor) {
 			this.author = author;
 			this.id = name().substring(4);
 			this.verMajor = verMajor;
 		}
-		
+
 		public String getToken() {
 			return GiskardUtils.sbAppend(null, SEP, true, author.id, id, verMajor).toString();
 		}
@@ -51,7 +50,7 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 		}
 	}
 
-	enum BootToken {
+	enum BootToken implements MindHandle {
 //@formatter:off
 
 		typTag(BootUnit.unitMiND), 
@@ -80,16 +79,34 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	
 		;
 //@formatter:on
-		
+
 		public final BootUnit unit;
+
+		private Object id;
 
 		private BootToken(BootUnit unit) {
 			this.unit = unit;
 		}
 
+		// to be used by the generated code
+		private BootToken(BootUnit unit, Object id) {
+			this.unit = unit;
+			this.id = id;
+		}
+
 		@Override
 		public String toString() {
 			return GiskardUtils.sbAppend(null, SEP, false, unit, name()).toString();
+		}
+
+		@Override
+		public Object getUnitToken() {
+			return unit.getToken();
+		}
+
+		@Override
+		public Object getId() {
+			return id;
 		}
 	}
 

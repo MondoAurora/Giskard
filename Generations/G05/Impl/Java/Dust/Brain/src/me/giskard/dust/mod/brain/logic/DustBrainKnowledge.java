@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import me.giskard.dust.mod.brain.DustBrainConsts;
-import me.giskard.dust.mod.brain.DustBrainHandle;
 import me.giskard.mind.GiskardUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -44,7 +43,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 		
 	}
 
-	Map<DustBrainHandle, Object> data = new TreeMap<>();
+	Map<MindHandle, Object> data = new TreeMap<>();
 	
 	private static final Set<DustBrainKnowledge> SEEN = new HashSet<>();
 
@@ -60,7 +59,18 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 		return "";
 	}
 
-	public <RetType> RetType access(MindAccess cmd, DustBrainHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params) {
+	public <RetType> RetType access(MindAccess cmd, MindHandle hMember, MindColl coll, Object key, Object val, KnowledgeConnector kc, Object... params) {
+
+		if ( hMember instanceof Enum) {
+			hMember = GiskardUtils.getHandle((Enum)hMember);
+		}
+		if ( key instanceof Enum) {
+			key = GiskardUtils.getHandle((Enum)key);
+		}
+		if ( val instanceof Enum) {
+			val = GiskardUtils.getHandle((Enum)val);
+		}
+		
 		Object ret = (null == hMember) ? data.keySet() : data.get(hMember);
 		Object old = ret;
 		boolean changed = false;
@@ -339,7 +349,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 	}
 
 	@Override
-	public void visit(DustBrainHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor) {
+	public void visit(MindHandle hMember, MindColl coll, Object key, KnowledgeVisitor visitor) {
 		// TODO Auto-generated method stub
 		
 	}
