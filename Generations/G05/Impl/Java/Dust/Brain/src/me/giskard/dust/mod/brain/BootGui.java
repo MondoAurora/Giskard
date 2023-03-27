@@ -437,7 +437,7 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 
 			@Override
 			public String toString() {
-				return coll.wrapSize(count);
+				return GiskardUtils.wrapCollSize(coll, count);
 			}
 
 			public void loadModel(DefaultTableModel tmMultiVal) {

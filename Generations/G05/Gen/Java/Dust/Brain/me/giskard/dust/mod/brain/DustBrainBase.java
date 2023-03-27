@@ -36,6 +36,12 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 			bh.setUnitToken(bt.unit.getToken());
 			GiskardUtils.setEnumHandle(bt, bh);
 		}
+		
+		for (MindHandleEnum mhe : MindValType.values()) {
+			DustBrainHandle bh = new DustBrainHandle();
+			bh.setUnitToken(mhe.getUnitToken());
+			GiskardUtils.setEnumHandle((Enum) mhe, bh);
+		}
 
 		DustBrainBootUtils.initKnowledgeItem(brain, brain, GiskardUtils.getHandle(BootToken.theBrain));
 
@@ -175,7 +181,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					if ( null == author ) {
 						continue; // this is an author ref
 					}
-					String refUnitId = BootUnit.getToken(author.get(BootToken.memKnowledgeToken.toString()), data.get(BootToken.memKnowledgeToken.toString()),
+					String refUnitId = ModuleUnit.getToken(author.get(BootToken.memKnowledgeToken.toString()), data.get(BootToken.memKnowledgeToken.toString()),
 							data.get(BootToken.memUnitVersionMajor.toString()));
 
 					langConn.addRefUnit(refId, refUnitId);

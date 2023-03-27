@@ -14,28 +14,28 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 
 	String LANG_BOOT = "en";
 
-	enum BootAuthor {
+	enum ModuleAuthor {
 		authGiskard("Giskard"), authDust("Dust"),
 
 		;
 
 		public final String id;
 
-		private BootAuthor(String id) {
+		private ModuleAuthor(String id) {
 			this.id = id;
 		}
 	}
 
-	enum BootUnit {
-		unitMiND(BootAuthor.authGiskard, 1), unitText(BootAuthor.authGiskard, 1), unitStream(BootAuthor.authGiskard, 1), unitBrain(BootAuthor.authDust, 1), unitBrainJava(BootAuthor.authDust, 1)
+	enum ModuleUnit {
+		unitMiND(ModuleAuthor.authGiskard, 1), unitText(ModuleAuthor.authGiskard, 1), unitStream(ModuleAuthor.authGiskard, 1), unitBrain(ModuleAuthor.authDust, 1), unitBrainJava(ModuleAuthor.authDust, 1)
 
 		;
 
-		public final BootAuthor author;
+		public final ModuleAuthor author;
 		public final String id;
 		public final Number verMajor;
 
-		private BootUnit(BootAuthor author, Number verMajor) {
+		private ModuleUnit(ModuleAuthor author, Number verMajor) {
 			this.author = author;
 			this.id = name().substring(4);
 			this.verMajor = verMajor;
@@ -53,45 +53,45 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	enum BootToken implements MindHandle {
 //@formatter:off
 
-		typTag(BootUnit.unitMiND), 
-		tagValtype(BootUnit.unitMiND), tagValtypeInt(BootUnit.unitMiND), tagValtypeReal(BootUnit.unitMiND), tagValtypeHandle(BootUnit.unitMiND), tagValtypeBin(BootUnit.unitMiND), 
-		tagColl(BootUnit.unitMiND), tagCollOne(BootUnit.unitMiND), tagCollSet(BootUnit.unitMiND), tagCollArr(BootUnit.unitMiND), tagCollMap(BootUnit.unitMiND),
-		tagProxy(BootUnit.unitMiND), tagProxyUnit(BootUnit.unitMiND), tagProxyAuthor(BootUnit.unitMiND), 
-		tagTransient(BootUnit.unitMiND), 
+		typTag(ModuleUnit.unitMiND), 
+		tagValtype(ModuleUnit.unitMiND), tagValtypeInt(ModuleUnit.unitMiND), tagValtypeReal(ModuleUnit.unitMiND), tagValtypeHandle(ModuleUnit.unitMiND), tagValtypeBin(ModuleUnit.unitMiND), 
+		tagColl(ModuleUnit.unitMiND), tagCollOne(ModuleUnit.unitMiND), tagCollSet(ModuleUnit.unitMiND), tagCollArr(ModuleUnit.unitMiND), tagCollMap(ModuleUnit.unitMiND),
+		tagProxy(ModuleUnit.unitMiND), tagProxyUnit(ModuleUnit.unitMiND), tagProxyAuthor(ModuleUnit.unitMiND), 
+		tagTransient(ModuleUnit.unitMiND), 
 		
-		typUnit(BootUnit.unitMiND), memUnitAuthor(BootUnit.unitMiND), memUnitLocalKnowledge(BootUnit.unitMiND), memUnitNextId(BootUnit.unitMiND), memUnitVersionMajor(BootUnit.unitMiND), 
-		typAuthor(BootUnit.unitMiND), typProxy(BootUnit.unitMiND), memProxyRemote(BootUnit.unitMiND), 
-		typKnowledge(BootUnit.unitMiND), memKnowledgeID(BootUnit.unitMiND), memKnowledgeHandle(BootUnit.unitMiND), memKnowledgeUnit(BootUnit.unitMiND), 
-		memKnowledgeType(BootUnit.unitMiND), memKnowledgeTags(BootUnit.unitMiND), memKnowledgeToken(BootUnit.unitMiND), 
-		memKnowledgeOwner(BootUnit.unitMiND), memKnowledgeRequires(BootUnit.unitMiND), memKnowledgeExtends(BootUnit.unitMiND), 
-		typType(BootUnit.unitMiND), 
-		typMember(BootUnit.unitMiND), memMemberHandleType(BootUnit.unitMiND), memMemberKeyType(BootUnit.unitMiND), 
-		logDialog(BootUnit.unitMiND), memDialogUnit(BootUnit.unitMiND), 
-		typLogic(BootUnit.unitMiND), 
-		logMediator(BootUnit.unitMiND), memMediatorRemote(BootUnit.unitMiND), memMediatorLocalToRemote(BootUnit.unitMiND), memMediatorRemoteToLocal(BootUnit.unitMiND), 
+		typUnit(ModuleUnit.unitMiND), memUnitAuthor(ModuleUnit.unitMiND), memUnitLocalKnowledge(ModuleUnit.unitMiND), memUnitNextId(ModuleUnit.unitMiND), memUnitVersionMajor(ModuleUnit.unitMiND), 
+		typAuthor(ModuleUnit.unitMiND), typProxy(ModuleUnit.unitMiND), memProxyRemote(ModuleUnit.unitMiND), 
+		typKnowledge(ModuleUnit.unitMiND), memKnowledgeID(ModuleUnit.unitMiND), memKnowledgeHandle(ModuleUnit.unitMiND), memKnowledgeUnit(ModuleUnit.unitMiND), 
+		memKnowledgeType(ModuleUnit.unitMiND), memKnowledgeTags(ModuleUnit.unitMiND), memKnowledgeToken(ModuleUnit.unitMiND), 
+		memKnowledgeOwner(ModuleUnit.unitMiND), memKnowledgeRequires(ModuleUnit.unitMiND), memKnowledgeExtends(ModuleUnit.unitMiND), 
+		typType(ModuleUnit.unitMiND), 
+		typMember(ModuleUnit.unitMiND), memMemberHandleType(ModuleUnit.unitMiND), memMemberKeyType(ModuleUnit.unitMiND), 
+		logDialog(ModuleUnit.unitMiND), memDialogUnit(ModuleUnit.unitMiND), 
+		typLogic(ModuleUnit.unitMiND), 
+		logMediator(ModuleUnit.unitMiND), memMediatorRemote(ModuleUnit.unitMiND), memMediatorLocalToRemote(ModuleUnit.unitMiND), memMediatorRemoteToLocal(ModuleUnit.unitMiND), 
 		
-		typText(BootUnit.unitText), memTextString(BootUnit.unitText), 
-		typVocabulary(BootUnit.unitText), typLanguage(BootUnit.unitText), memLanguageWords(BootUnit.unitText), memLanguageVocabularies(BootUnit.unitText),
+		typText(ModuleUnit.unitText), memTextString(ModuleUnit.unitText), 
+		typVocabulary(ModuleUnit.unitText), typLanguage(ModuleUnit.unitText), memLanguageWords(ModuleUnit.unitText), memLanguageVocabularies(ModuleUnit.unitText),
 		
-		logBrain(BootUnit.unitBrain), memBrainUnits(BootUnit.unitBrain), memBrainLanguages(BootUnit.unitBrain), memBrainDialogs(BootUnit.unitBrain), memBrainThreads(BootUnit.unitBrain), 
+		logBrain(ModuleUnit.unitBrain), memBrainUnits(ModuleUnit.unitBrain), memBrainLanguages(ModuleUnit.unitBrain), memBrainDialogs(ModuleUnit.unitBrain), memBrainThreads(ModuleUnit.unitBrain), 
 
-		theBrain(BootUnit.unitBrainJava),
+		theBrain(ModuleUnit.unitBrainJava),
 	
 		;
 //@formatter:on
 
-		public final BootUnit unit;
+		public final ModuleUnit unit;
 
-		private Object id;
+		private Object itemId;
 
-		private BootToken(BootUnit unit) {
+		private BootToken(ModuleUnit unit) {
 			this.unit = unit;
 		}
 
 		// to be used by the generated code
-		private BootToken(BootUnit unit, Object id) {
+		private BootToken(ModuleUnit unit, Object id) {
 			this.unit = unit;
-			this.id = id;
+			this.itemId = id;
 		}
 
 		@Override
@@ -106,7 +106,12 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 
 		@Override
 		public Object getId() {
-			return id;
+			return toString();
+		}
+
+		@Override
+		public Object getItemId() {
+			return itemId;
 		}
 	}
 

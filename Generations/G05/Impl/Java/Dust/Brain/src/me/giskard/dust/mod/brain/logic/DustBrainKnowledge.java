@@ -120,7 +120,7 @@ public class DustBrainKnowledge implements DustBrainConsts, DustBrainConsts.Know
 					break;
 				}
 
-				if ( cmd.add && (null != ret) ) {
+				if ( GiskardUtils.isAccessAdd(cmd) && (null != ret) ) {
 					Object o;
 
 					switch ( coll ) {

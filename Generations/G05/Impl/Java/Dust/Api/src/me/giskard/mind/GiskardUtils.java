@@ -86,4 +86,34 @@ public class GiskardUtils implements GiskardConsts {
 	public static <RetType extends MindHandle> RetType  getHandle(Enum<?> e) {
 		return (RetType) enumToHandle.get(e);
 	}
+	
+	public static boolean isAccessAdd(MindAccess acc) {
+		switch ( acc ) {
+		case Get:
+		case Insert:
+		case Set:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public static String wrapCollSize(MindColl coll, Number size) {
+		switch (coll) {
+		case Arr:
+			return "[" + size + "]";
+		case Map:
+			return "{" + size + "}";
+		case One:
+			return  size.toString() ;
+		case Set:
+			return "(" + size + ")";			
+		}
+		
+		return "?";
+	}
+	
+	public static String getToken(Object authorId, Object unit, Object verMajor) {
+		return GiskardUtils.sbAppend(null, SEP, true, authorId, unit, verMajor).toString();
+	}
 }

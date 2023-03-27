@@ -10,6 +10,7 @@ public final class DustBrainHandle implements DustBrainConsts, GiskardConsts.Min
 
 	final Long id;
 	Object unitToken;
+	Object itemId;
 
 	public DustBrainHandle() {
 		synchronized (idlock) {
@@ -27,8 +28,17 @@ public final class DustBrainHandle implements DustBrainConsts, GiskardConsts.Min
 		return unitToken;
 	}
 	
+	@Override
+	public Object getItemId() {
+		return null;
+	}
+	
 	public void setUnitToken(Object unitToken) {
 		this.unitToken = unitToken;
+	}
+	
+	public void setItemId(Object itemId) {
+		this.itemId = itemId;
 	}
 
 	@Override
