@@ -1,0 +1,36 @@
+; id: core
+; source: https://tools.ietf.org/html/rfc5234
+; uses:
+
+CHAR      = %x01-7F
+VCHAR     = %x21-7E
+CTL       = %x00-1F / %x7F
+ALPHA     = %x41-5A / %x61-7A   
+
+BIT       = "0" / "1"
+DIGIT0    = "0"
+DIGIT1-9  = %x31-39
+DIGIT     = %x30-39
+HEXDIG    = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+
+POINT     = "."
+MINUS     = "-"
+PLUS      = "+"
+STAR      = "*"
+SLASH     = "/"
+BCKSLASH  = "\"
+EQU       = "="
+SEMICOLON = %x3B
+DQUOTE    = %x22
+
+BCKSP     = %x08
+HTAB      = %x09
+FF        = %x0C
+CR        = %x0D
+LF        = %x0A
+CRLF      = CR LF
+
+SP        = " "
+WSP       = SP / HTAB
+LWSP      = *(WSP / CRLF WSP)
+BLANK     = *( SP / HTAB / CR / LF )

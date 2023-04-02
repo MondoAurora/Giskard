@@ -158,7 +158,7 @@ public interface GiskardConsts {
 	};
 
 	enum MindStatus {
-		Waiting, Processing, Reject, Read, ReadAccept, Accept, Error,
+		Waiting, Processing, Reject, Pass, Read, ReadAccept, Accept, Error,
 	};
 
 	enum MindListener {

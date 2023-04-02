@@ -55,13 +55,39 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 		bootType.put("log", BootToken.typLogic);
 
 		BootToken tagParent = null;
-		Map<BootToken, BootToken> tags = new HashMap<>();
+		Map<Enum, Enum> tags = new HashMap<>();
 
 		BootToken hMemType = BootToken.memKnowledgeType;
 		BootToken hMemTags = BootToken.memKnowledgeTags;
 		BootToken hMemOwner = BootToken.memKnowledgeOwner;
 
 		DustBrainLangConn langConn = new DustBrainLangConn(brain, LANG_BOOT, BootToken.theBrain.unit.getToken());
+		
+		for (MindHandleEnum mhe : MindValType.values()) {
+			Enum e = (Enum)mhe;
+			
+			String unitToken = (String) mhe.getUnitToken();
+			String unitRef = unitToken.split(SEP)[1];
+			if ( langConn.addRefUnit(unitRef, unitToken) ) {
+				optAddUnit(unitToken);
+			}
+
+			String name = e.name();
+			KnowledgeItem ki = langConn.getByToken(unitRef, name, GiskardUtils.getHandle(e));
+
+			String pfx = name.substring(0, 3);
+			MindHandle th = bootType.get(pfx);
+			if ( null != th ) {
+				ki.access(MindAccess.Set, hMemType, MindColl.One, null, th, null);
+			}
+			
+			MindHandleEnum hParent = mhe.getItemParent();
+			if ( null == hParent ) {
+				hParent = mhe;
+			}
+			
+			ki.access(MindAccess.Set, hMemOwner, MindColl.One, null, hParent, null);
+		}
 
 		for (BootToken bt : BootToken.values()) {
 			String unitToken = bt.unit.getToken();
@@ -93,7 +119,8 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					case memMemberHandleType:
 					case memKnowledgeUnit:
 					case memMemberKeyType:
-						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
+						tags.put(MindEnumGroup.tagValtype, MindValType.tagValtypeHandle);
+//						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
 						break;
 					case memKnowledgeTags:
 						ki.access(MindAccess.Set, BootToken.memMemberKeyType, MindColl.One, null, BootToken.typTag, null);
@@ -105,14 +132,15 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 					case memBrainLanguages:
 					case memLanguageVocabularies:
 						tags.put(BootToken.tagColl, BootToken.tagCollMap);
-						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
+						tags.put(MindEnumGroup.tagValtype, MindValType.tagValtypeHandle);
+//						tags.put(BootToken.tagValtype, BootToken.tagValtypeHandle);
 						break;
 					default:
 						break;
 
 					}
 
-					for (Map.Entry<BootToken, BootToken> tt : tags.entrySet()) {
+					for (Map.Entry<Enum, Enum> tt : tags.entrySet()) {
 						ki.access(MindAccess.Insert, hMemTags, MindColl.Map, tt.getKey(), tt.getValue(), null);
 					}
 				}

@@ -1,0 +1,8 @@
+; id: number
+; source: https://www.rfc-editor.org/rfc/rfc7159.txt
+; uses: core
+
+number = int [ frac ] [ exp ]
+exp    = ( %x65 / %x45 ) [ MINUS / PLUS ] 1*DIGIT
+frac   = POINT 1*DIGIT
+int    = [ MINUS ] DIGIT0 / ( DIGIT1-9 *DIGIT )

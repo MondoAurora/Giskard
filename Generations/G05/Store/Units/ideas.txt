@@ -1,4 +1,4 @@
-===== IDEAS ======
+===== TODO ======
 
 SRC GEN
  - relative to the host unit (MiND, BrainJava)
@@ -11,6 +11,22 @@ create static data access
  -> use in Montru activities
    -> text services?
    
+===== INCOMING ======
+
+remove token from MiND -> provided by the actual brain, mentioned in the header
+text - encoding tags
+generic - HW data type tags, matrix, "matcher"
+stream - use text/generic tags
+
+abnf - unit with separate semantic net / token map units
+
+JSON parser logic
+ -> create it in DustBrain, instantiate
+ -> header reference, unit creation (should work fine after bootstrap)
+ -> content reading into set/insert commands
+ -> acceptor to execute or store
+ -> end / executor to do the delayed commands
+ 
 ===== NEXT ======
 
 prepare for source generation

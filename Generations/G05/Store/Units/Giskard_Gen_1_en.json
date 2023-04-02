@@ -1,0 +1,80 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1_0"
+	},
+	{
+		"authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Giskard",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
+		},
+		"unitMiND": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "MiND",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
+		"": {
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Text",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			},
+			"unitMiND_memKnowledgeRequires": [
+				"authGiskard",
+				"unitMiND"
+			]
+		},
+		"typText": {
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
+		},
+		"memTextString": {
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typText",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
+			}
+		},
+		"typVocabulary": {
+			"unitMiND_memKnowledgeType": "unitMiND_typType",
+			"unitMiND_memKnowledgeExtends": [
+				"unitMiND_logMediator"
+			]
+		},
+		"typLanguage": {
+			"unitMiND_memKnowledgeType": "unitMiND_typType",
+			"unitMiND_memKnowledgeExtends": [
+				"unitMiND_typUnit"
+			]
+		},
+		"memLanguageWords": {
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
+			},
+			"unitMiND_memMemberHandleType": "typText"
+		},
+		"memLanguageVocabularies": {
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
+			},
+			"unitMiND_memMemberHandleType": "typVocabulary",
+			"unitMiND_memMemberKeyType": "unitMiND_typUnit"
+		},
+		"_End_": "____________"
+	}
+]

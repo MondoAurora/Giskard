@@ -170,8 +170,10 @@ public class DustBrainLangConn implements DustBrainConsts, DustBrainBootstrap, D
 		boolean knownMember = member.access(MindAccess.Check, BootToken.memKnowledgeType, MindColl.One, null, BootToken.typMember, null);
 
 		if ( knownMember ) {
-			boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags, MindColl.Map, BootToken.tagValtype,
-					BootToken.tagValtypeHandle, null);
+			boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags, MindColl.Map, MindEnumGroup.tagValtype,
+					MindValType.tagValtypeHandle, null);
+//			boolean valHandle = member.access(MindAccess.Check, BootToken.memKnowledgeTags, MindColl.Map, BootToken.tagValtype,
+//					BootToken.tagValtypeHandle, null);
 			DustBrainHandle hMember = member.access(MindAccess.Peek, BootToken.memKnowledgeHandle, MindColl.One, null, null, null);
 
 			if ( value instanceof Map ) {

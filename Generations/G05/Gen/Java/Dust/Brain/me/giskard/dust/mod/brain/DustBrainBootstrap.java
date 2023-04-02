@@ -54,7 +54,7 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 //@formatter:off
 
 		typTag(ModuleUnit.unitMiND), 
-		tagValtype(ModuleUnit.unitMiND), tagValtypeInt(ModuleUnit.unitMiND), tagValtypeReal(ModuleUnit.unitMiND), tagValtypeHandle(ModuleUnit.unitMiND), tagValtypeBin(ModuleUnit.unitMiND), 
+//		tagValtype(ModuleUnit.unitMiND), tagValtypeInt(ModuleUnit.unitMiND), tagValtypeReal(ModuleUnit.unitMiND), tagValtypeHandle(ModuleUnit.unitMiND), tagValtypeBin(ModuleUnit.unitMiND), 
 		tagColl(ModuleUnit.unitMiND), tagCollOne(ModuleUnit.unitMiND), tagCollSet(ModuleUnit.unitMiND), tagCollArr(ModuleUnit.unitMiND), tagCollMap(ModuleUnit.unitMiND),
 		tagProxy(ModuleUnit.unitMiND), tagProxyUnit(ModuleUnit.unitMiND), tagProxyAuthor(ModuleUnit.unitMiND), 
 		tagTransient(ModuleUnit.unitMiND), 

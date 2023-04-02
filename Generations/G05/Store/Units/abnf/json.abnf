@@ -1,0 +1,17 @@
+; id: json
+; source: https://www.rfc-editor.org/rfc/rfc7159.txt
+; uses: core, number
+
+json       = BLANK value BLANK
+value      = null / false / true / object / array / number / string
+null       = %x6E.75.6C.6C      ; null
+false      = %x66.61.6C.73.65   ; false
+true       = %x74.72.75.65      ; true
+
+object     = BLANK "{" BLANK [ member *( BLANK "," BLANK member ) ] BLANK "}" BLANK
+member     = string BLANK ":" BLANK value
+array      = BLANK "[" BLANK [ value *( BLANK "," BLANK value ) ] BLANK "]" BLANK
+string     = DQUOTE *(escaped / unescaped) DQUOTE
+
+escaped    = BCKSLASH ( DQUOTE / BCKSLASH / SLASH / "b" / "f" / "n" / "r" / "t" / "u" 4HEXDIG )
+unescaped  = %x20-21 / %x23-5B / %x5D-10FFFF

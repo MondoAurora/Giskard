@@ -467,6 +467,10 @@
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagStatus"
 		},
+		"tagStatusPass": {
+			"memKnowledgeType": "typTag",
+			"memKnowledgeOwner": "tagStatus"
+		},
 		"tagStatusRead": {
 			"memKnowledgeType": "typTag",
 			"memKnowledgeOwner": "tagStatus"
