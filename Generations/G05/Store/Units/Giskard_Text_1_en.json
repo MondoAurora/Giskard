@@ -21,6 +21,15 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
+		"unitGen": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Gen",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "authGiskard",
@@ -31,8 +40,19 @@
 			},
 			"unitMiND_memKnowledgeRequires": [
 				"authGiskard",
-				"unitMiND"
+				"unitMiND",
+				"unitGen"
 			]
+		},
+		"typChar": {
+			"unitMiND_memKnowledgeType": "unitMiND_typType"
+		},
+		"memCharValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "typChar",
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagValtype": "unitMiND_tagValtypeInt"
+			}
 		},
 		"typText": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
@@ -74,6 +94,51 @@
 			},
 			"unitMiND_memMemberHandleType": "typVocabulary",
 			"unitMiND_memMemberKeyType": "unitMiND_typUnit"
+		},
+		
+		"logTextMatcher": {
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
+			"unitMiND_memKnowledgeExtends": [
+				"unitGen_logMatcher"
+			]
+		},
+		"logCharMatcher": {
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic",
+			"unitMiND_memKnowledgeExtends": [
+				"unitGen_logMatcher"
+			]
+		},
+
+		"tagMatch": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		"tagMatchChar": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagMatch"
+		},
+
+		"tagCase": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		"tagCaseSensitive": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagCase"
+		},
+		"tagCaseInsensitive": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagCase"
+		},
+		
+		"tagEncoding": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		"tagEncodingAscii": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagEncoding"
+		},
+		"tagEncodingUtf8": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagEncoding"
 		},
 		"_End_": "____________"
 	}

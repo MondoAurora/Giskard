@@ -1,0 +1,274 @@
+[
+	{
+		"syntax": "dust_json",
+		"version": "1_0"
+	},
+	{
+		"authGiskard": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Giskard",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
+		},
+		"unitMiND": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "MiND",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
+		"unitGen": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Gen",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
+		"unitText": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Text",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
+		"authDust": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memKnowledgeToken": "Dust",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
+			}
+		},
+		"": {
+			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
+			"unitMiND_memUnitAuthor": "authDust",
+			"unitMiND_memKnowledgeToken": "AbnfCore",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			},
+			"unitMiND_memKnowledgeRequires": [
+				"authGiskard",
+				"authDust",
+				"unitMiND",
+				"unitGen",
+				"unitText"
+			]
+		},
+		
+		"DIGIT0": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "DIGIT0Value"
+		},
+		"DIGIT0Value": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+		
+		"DIGIT1-9": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherRange" : "DIGIT1-9Range"
+		},
+		"DIGIT1-9Range": {
+			"unitMiND_memKnowledgeType": "unitGen_TypRange",
+			"unitGen_memRangeBegin": "DIGIT1-9RangeBegin",
+			"unitGen_memRangeEnd": "DIGIT1-9RangeEnd"
+		},
+		"DIGIT1-9RangeBegin": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 49
+		},
+		"DIGIT1-9RangeEnd": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 57
+		},
+		
+		"DIGIT": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherRange" : "DIGITRange"
+		},
+		"DIGITRange": {
+			"unitMiND_memKnowledgeType": "unitGen_TypRange",
+			"unitGen_memRangeBegin": "DIGITRangeBegin",
+			"unitGen_memRangeEnd": "DIGITRangeEnd"
+		},
+		"DIGITRangeBegin": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+		"DIGITRangeEnd": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 57
+		},
+		
+		"BIT": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherRange" : "BITRange"
+		},
+		"BITRange": {
+			"unitMiND_memKnowledgeType": "unitGen_TypRange",
+			"unitGen_memRangeBegin": "BITRangeBegin",
+			"unitGen_memRangeEnd": "BITRangeEnd"
+		},
+		"BITRangeBegin": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+		"BITRangeEnd": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 49
+		},
+
+		"HEXDIG": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitMiND_logFork",
+			"unitMiND_memOrchestratorAgents": [
+				"DIGIT",
+				"abnfCore_PLUS"
+			]
+		},
+		"hexChars": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logTextMatcher",
+			"unitGen_memMatcherValue": "hexCharsValue",
+			"unitMiND_memKnowledgeTags": {
+				"unitText_tagCase": "unitText_tagCaseInsensitive",
+				"unitText_tagMatch": "unitText_tagMatchChar"
+			}
+		},
+		"hexCharsValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memTextString": "abcdef"
+		},
+
+		"POINT": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "POINTValue"
+		},
+		"POINTValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 46
+		},
+
+		"MINUS": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "MINUSValue"
+		},
+		"MINUSValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 45
+		},
+
+		"PLUS": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "PLUSValue"
+		},
+		"PLUSValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 43
+		},
+
+		"DQUOTE": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "DQUOTEValue"
+		},
+		"DQUOTEValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+
+		"SLASH": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "SLASHValue"
+		},
+		"SLASHValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+
+		"BCKSLASH": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "BCKSLASHValue"
+		},
+		"BCKSLASHValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 48
+		},
+
+		"SP": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "SPValue"
+		},
+		"SPValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 32
+		},
+
+		"HTAB": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "HTABValue"
+		},
+		"HTABValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 9
+		},
+
+		"CR": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "CRValue"
+		},
+		"CRValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 13
+		},
+
+		"LF": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitText_logCharMatcher",
+			"unitGen_memMatcherValue": "LFValue"
+		},
+		"LFValue": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitText_memCharValue": 10
+		},
+
+		"BLANK": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitMiND_logIterator",
+			"unitMiND_memReferencePath": "BLANK1"
+		},
+		"BLANK1": {
+			"unitMiND_memKnowledgeType": "unitMiND_typAgent",
+			"unitMiND_memAgentLogic": "unitMiND_logFork",
+			"unitMiND_memOrchestratorAgents": [
+				"SP",
+				"HTAB",
+				"CR",
+				"LF"
+			]
+		},
+
+		"_End_": "____________"
+	}
+]

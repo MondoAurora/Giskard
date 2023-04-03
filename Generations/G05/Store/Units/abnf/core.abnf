@@ -7,9 +7,9 @@ VCHAR     = %x21-7E
 CTL       = %x00-1F / %x7F
 ALPHA     = %x41-5A / %x61-7A   
 
-BIT       = "0" / "1"
-DIGIT0    = "0"
+DIGIT0    = %x30
 DIGIT1-9  = %x31-39
+BIT       = %x30-31
 DIGIT     = %x30-39
 HEXDIG    = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 

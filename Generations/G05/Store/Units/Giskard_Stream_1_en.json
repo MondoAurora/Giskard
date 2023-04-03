@@ -21,6 +21,15 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
+		"unitGen": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Gen",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
 		"unitText": {
 			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
 			"unitMiND_memUnitAuthor": "authGiskard",
@@ -41,6 +50,7 @@
 			"unitMiND_memKnowledgeRequires": [
 				"authGiskard",
 				"unitMiND",
+				"unitGen",
 				"unitText"
 			]
 		},

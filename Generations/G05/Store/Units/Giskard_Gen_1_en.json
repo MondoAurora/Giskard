@@ -24,7 +24,7 @@
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
 			"unitMiND_memUnitAuthor": "authGiskard",
-			"unitMiND_memKnowledgeToken": "Text",
+			"unitMiND_memKnowledgeToken": "Gen",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
@@ -34,47 +34,73 @@
 				"unitMiND"
 			]
 		},
-		"typText": {
+		
+		"typRange": {
 			"unitMiND_memKnowledgeType": "unitMiND_typType"
 		},
-		"memTextString": {
+		"memRangeBegin": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",
-			"unitMiND_memKnowledgeOwner": "typText",
+			"unitMiND_memKnowledgeOwner": "typRange",
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagValtype": "unitMiND_tagValtypeBin"
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			}
 		},
-		"typVocabulary": {
-			"unitMiND_memKnowledgeType": "unitMiND_typType",
-			"unitMiND_memKnowledgeExtends": [
-				"unitMiND_logMediator"
-			]
-		},
-		"typLanguage": {
-			"unitMiND_memKnowledgeType": "unitMiND_typType",
-			"unitMiND_memKnowledgeExtends": [
-				"unitMiND_typUnit"
-			]
-		},
-		"memLanguageWords": {
+		"memRangeEnd": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",
-			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeOwner": "typRange",
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagColl": "unitMiND_tagCollMap",
+				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
+			}
+		},
+		
+		"logMatcher": {
+			"unitMiND_memKnowledgeType": "unitMiND_typLogic"
+		},
+		"memMatcherRange": {
+			"unitMiND_memKnowledgeType": "unitMiND_typMember",
+			"unitMiND_memKnowledgeOwner": "logMatcher",
+			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
 			},
-			"unitMiND_memMemberHandleType": "typText"
+			"unitMiND_memMemberHandleType": "typRange"
 		},
-		"memLanguageVocabularies": {
+		"memMatcherValue": {
 			"unitMiND_memKnowledgeType": "unitMiND_typMember",
-			"unitMiND_memKnowledgeOwner": "typLanguage",
+			"unitMiND_memKnowledgeOwner": "logMatcher",
 			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagColl": "unitMiND_tagCollMap",
 				"unitMiND_tagValtype": "unitMiND_tagValtypeHandle"
-			},
-			"unitMiND_memMemberHandleType": "typVocabulary",
-			"unitMiND_memMemberKeyType": "unitMiND_typUnit"
+			}
 		},
+
+		
+		"tagMeasureType": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		"tagMeasurementUnit": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		
+		"tagEndian": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag"
+		},
+		"tagBigEndian": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagEndian"
+		},
+		"tagLittleEndian": {
+			"unitMiND_memKnowledgeType": "unitMiND_typTag",
+			"unitMiND_memKnowledgeOwner": "tagEndian"
+		},
+
+		"constVar0": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitMiND_memMemberVarInt": 0
+		},
+		"constVar1": {
+			"unitMiND_memKnowledgeType": "unitMiND_typVar",
+			"unitMiND_memMemberVarInt": 1
+		},
+
 		"_End_": "____________"
 	}
 ]

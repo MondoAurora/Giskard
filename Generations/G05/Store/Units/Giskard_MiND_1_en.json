@@ -22,9 +22,26 @@
 		"typVar": {
 			"memKnowledgeType": "typType"
 		},
-		"memMemberVarValue": {
+		"memMemberVarInt": {
 			"memKnowledgeType": "typMember",
-			"memKnowledgeOwner": "typVar"
+			"memKnowledgeOwner": "typVar",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			}
+		},
+		"memMemberVarBin": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typVar",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeBin"
+			}
+		},
+		"memMemberVarReal": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "typVar",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeReal"
+			}
 		},
 		"typKnowledge": {
 			"memKnowledgeType": "typType"
@@ -327,6 +344,24 @@
 				"tagValtype": "tagValtypeBin"
 			}
 		},
+		"logIterator": {
+			"memKnowledgeType": "typLogic"
+		},
+		"memIteratorCount": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logIterator",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeHandle"
+			}
+		},
+		"memIteratorSeparator": {
+			"memKnowledgeType": "typMember",
+			"memKnowledgeOwner": "logIterator",
+			"memKnowledgeTags": {
+				"tagValtype": "tagValtypeInt"
+			},
+			"memMemberHandleType": "typVar"
+		},
 		"logOrchestrator": {
 			"memKnowledgeType": "typLogic"
 		},
@@ -334,7 +369,7 @@
 			"memKnowledgeType": "typMember",
 			"memKnowledgeOwner": "logOrchestrator",
 			"memKnowledgeTags": {
-				"tagColl": "tagCollSet",
+				"tagColl": "tagCollArr",
 				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberHandleType": "typAgent"
@@ -354,6 +389,12 @@
 				"tagValtype": "tagValtypeHandle"
 			},
 			"memMemberHandleType": "typAgent"
+		},
+		"logSequence": {
+			"memKnowledgeType": "typLogic",
+			"memKnowledgeExtends": [
+				"logOrchestrator"
+			]
 		},
 		"logSelect": {
 			"memKnowledgeType": "typLogic",
