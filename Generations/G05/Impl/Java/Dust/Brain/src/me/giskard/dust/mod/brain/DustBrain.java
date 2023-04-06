@@ -184,12 +184,12 @@ public class DustBrain extends DustBrainBase {
 
 		switch ( action ) {
 		case Begin:
+			BootGui.showGui(brain);
 			break;
 		case End:
 			break;
 		case Init:
 			initBrain();
-			BootGui.showGui(brain);
 			break;
 		case Process:
 			break;

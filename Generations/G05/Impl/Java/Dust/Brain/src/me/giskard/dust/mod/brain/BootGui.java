@@ -616,6 +616,8 @@ public class BootGui extends JFrame implements DustBrainConsts, DustBrainBootstr
 	DefaultListModel<MindHandle> lmItems;
 	JList<MindHandle> lstItems;
 
+	JList lstUnits;
+
 	JList lstConnTypes;
 
 	Map<GuiCmd, AbstractButton> cmds = new HashMap<>();

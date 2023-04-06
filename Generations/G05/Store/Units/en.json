@@ -1,1 +1,1398 @@
-[{"syntax":"dust_json","version":"1_0"},{"230":{"Text_1":"typThread"},"110":{"MiND_86":{"AbnfNumber_13":"222","AbnfNumber_12":"221","AbnfNumber_11":"220","AbnfNumber_10":"219","AbnfNumber_19":"228","AbnfNumber_18":"227","AbnfNumber_17":"226","AbnfNumber_4":"63","AbnfNumber_3":"64","AbnfNumber_16":"225","AbnfNumber_15":"224","AbnfNumber_2":"218","AbnfNumber_1":"67","AbnfNumber_14":"223","AbnfNumber_8":"216","AbnfNumber_7":"111","AbnfNumber_6":"68","AbnfNumber_5":"65","AbnfNumber_9":"217"},"MiND_100":"null_10","MiND_114":"Dust_AbnfNumber_1"},"231":{"Text_1":"tagProxyModule"},"232":{"Text_1":"memAppConfig"},"111":{"Text_1":"abnfCore"},"233":{"Text_1":"typApp"},"112":{"Text_1":"abnfNumber"},"113":{"Text_1":"charArrEndValue"},"234":{"Text_1":"memThreadUnit"},"235":{"Text_1":"memAppStreamPortal"},"114":{"Text_1":"memCharValue"},"236":{"Text_1":"logStreamPortal"},"115":{"Text_1":"typVar"},"116":{"Text_1":"charComma"},"237":{"Text_1":"memThreadStack"},"117":{"Text_1":"memMatcherValue"},"238":{"Text_1":"memUnitTagParent"},"239":{"Text_1":"logUnit"},"118":{"Text_1":"unescapedRange3"},"119":{"Text_1":"memRangeBegin"},"10":{"Text_1":"tagCollSet"},"11":{"Text_1":"tagCollArr"},"12":{"Text_1":"tagCollMap"},"13":{"Text_1":"tagProxy"},"14":{"Text_1":"tagProxyUnit"},"15":{"Text_1":"tagProxyAuthor"},"16":{"Text_1":"tagTransient"},"17":{"Text_1":"typUnit"},"18":{"Text_1":"memUnitAuthor"},"19":{"Text_1":"memUnitLocalKnowledge"},"240":{"Text_1":"memAppModules"},"241":{"Text_1":"logKnowledge"},"120":{"Text_1":"TypRange"},"121":{"Text_1":"memRangeEnd"},"242":{"Text_1":"memAppMain"},"1":{"MiND_86":{"BrainJava_25":"105","BrainJava_26":"106","BrainJava_23":"104","BrainJava_24":"72","BrainJava_29":"65","BrainJava_27":"107","BrainJava_28":"87","BrainJava_21":"64","BrainJava_22":"69","BrainJava_20":"90","BrainJava_14":"82","BrainJava_15":"84","BrainJava_12":"80","BrainJava_13":"81","BrainJava_9":"63","BrainJava_18":"86","BrainJava_19":"89","BrainJava_7":"76","BrainJava_16":"85","BrainJava_8":"77","BrainJava_17":"68","BrainJava_10":"78","BrainJava_32":"99","BrainJava_33":"102","BrainJava_11":"79","BrainJava_30":"91","BrainJava_31":"97","BrainJava_5":"70","BrainJava_6":"75","BrainJava_3":"67","BrainJava_4":"73","BrainJava_1":"66","null_":"59","BrainJava_2":"71"},"MiND_100":"null_2","MiND_114":"Dust_BrainJava_1"},"243":{"Text_1":"memAppApi"},"122":{"Text_1":"nullValue"},"2":{"MiND_86":{"MiND_72":"295","MiND_73":"296","MiND_74":"297","MiND_75":"298","MiND_76":"19","MiND_77":"299","MiND_78":"300","MiND_79":"18","MiND_70":"38","MiND_71":"24","MiND_83":"303","MiND_84":"304","MiND_85":"305","MiND_86":"45","MiND_87":"25","MiND_88":"7","MiND_89":"306","MiND_80":"17","MiND_81":"301","MiND_82":"302","MiND_58":"35","MiND_59":"281","MiND_50":"286","MiND_51":"287","MiND_52":"288","MiND_53":"28","MiND_54":"247","MiND_55":"289","MiND_56":"96","MiND_57":"21","MiND_69":"39","MiND_61":"290","MiND_62":"291","MiND_63":"292","MiND_64":"92","MiND_65":"293","MiND_66":"95","MiND_67":"27","MiND_68":"294","MiND_60":"9","MiND_108":"315","MiND_109":"278","MiND_104":"93","MiND_105":"265","MiND_106":"313","MiND_107":"314","MiND_100":"43","MiND_36":"42","MiND_37":"115","MiND_101":"94","MiND_102":"312","MiND_38":"36","MiND_103":"30","MiND_39":"277","MiND_30":"11","MiND_31":"275","MiND_32":"22","MiND_33":"12","MiND_34":"276","MiND_35":"13","MiND_47":"32","MiND_48":"284","MiND_49":"285","MiND_40":"20","MiND_41":"14","MiND_42":"33","MiND_43":"279","MiND_44":"280","MiND_45":"282","MiND_46":"283","MiND_14":"266","MiND_15":"37","MiND_16":"126","MiND_17":"267","MiND_18":"40","MiND_19":"268","MiND_94":"41","MiND_95":"26","MiND_96":"63","MiND_97":"309","MiND_98":"310","MiND_10":"6","MiND_11":"263","MiND_99":"311","MiND_12":"264","MiND_13":"44","MiND_90":"4","MiND_91":"307","MiND_92":"308","MiND_93":"5","MiND_115":"274","MiND_116":"318","MiND_111":"317","MiND_25":"29","MiND_26":"3","MiND_112":"16","MiND_113":"15","MiND_27":"272","MiND_114":"31","MiND_28":"273","MiND_29":"10","MiND_110":"316","MiND_20":"269","MiND_2":"257","MiND_21":"83","MiND_22":"270","MiND_1":"256","MiND_4":"258","MiND_23":"23","MiND_3":"8","MiND_24":"271","MiND_6":"261","MiND_5":"260","MiND_8":"259","MiND_7":"262","MiND_9":"34"},"MiND_100":"null_3","MiND_114":"Giskard_MiND_1"},"123":{"Text_1":"codedChar"},"244":{"Text_1":"memUnitCollInfo"},"245":{"Text_1":"memAppStreamProvider"},"124":{"Text_1":"unescapedRange1End"},"3":{"Text_1":"tagValtypeInt"},"125":{"Text_1":"string1"},"246":{"Text_1":"constVar1"},"4":{"Text_1":"tagValtypeReal"},"5":{"Text_1":"tagValtypeHandle"},"126":{"Text_1":"memReferencePath"},"247":{"Text_1":"memMemberVarInt"},"248":{"Text_1":"typRange"},"6":{"Text_1":"tagValtypeBin"},"127":{"Text_1":"escapedOptions"},"249":{"Text_1":"constVar0"},"7":{"Text_1":"typTag"},"128":{"Text_1":"string2"},"8":{"Text_1":"tagColl"},"129":{"Text_1":"charU"},"9":{"Text_1":"tagCollOne"},"20":{"Text_1":"memUnitNextId"},"21":{"Text_1":"memUnitVersionMajor"},"22":{"Text_1":"typAuthor"},"23":{"Text_1":"typProxy"},"24":{"Text_1":"memProxyRemote"},"25":{"Text_1":"typKnowledge"},"26":{"Text_1":"memKnowledgeID"},"27":{"Text_1":"memKnowledgeHandle"},"28":{"Text_1":"memKnowledgeUnit"},"29":{"Text_1":"memKnowledgeType"},"250":{"Text_1":"tagEndian"},"251":{"Text_1":"tagMeasurementUnit"},"130":{"Text_1":"escapedChars"},"252":{"Text_1":"tagMeasureType"},"131":{"Text_1":"tagCaseSensitive"},"132":{"Text_1":"tagCase"},"253":{"Text_1":"tagBigEndian"},"254":{"Text_1":"logMatcher"},"133":{"Text_1":"tagMatchChar"},"134":{"Text_1":"tagMatch"},"255":{"Text_1":"tagLittleEndian"},"256":{"Text_1":"typListener"},"135":{"Text_1":"unescapedRange2Begin"},"136":{"Text_1":"charObjEnd"},"257":{"Text_1":"typHandle"},"258":{"Text_1":"logSequence"},"137":{"Text_1":"escaped"},"138":{"Text_1":"charColon"},"259":{"Text_1":"logOrchestrator"},"139":{"Text_1":"null"},"30":{"Text_1":"memKnowledgeTags"},"31":{"Text_1":"memKnowledgeToken"},"32":{"Text_1":"memKnowledgeOwner"},"33":{"Text_1":"memKnowledgeRequires"},"34":{"Text_1":"memKnowledgeExtends"},"35":{"Text_1":"typType"},"36":{"Text_1":"typMember"},"37":{"Text_1":"memMemberHandleType"},"38":{"Text_1":"memMemberKeyType"},"39":{"Text_1":"logDialog"},"260":{"Text_1":"tagStatus"},"140":{"Text_1":"charColonValue"},"261":{"Text_1":"typReference"},"141":{"Text_1":"unescapedRange2End"},"262":{"Text_1":"tagStatusWaiting"},"263":{"Text_1":"tagStatusPass"},"142":{"Text_1":"true"},"264":{"Text_1":"memIteratorSeparator"},"143":{"Text_1":"object"},"144":{"Text_1":"object2"},"265":{"Text_1":"logIterator"},"266":{"Text_1":"tagAccess"},"145":{"Text_1":"object1"},"267":{"Text_1":"tagAccessCommit"},"146":{"Text_1":"charArrEnd"},"268":{"Text_1":"memListenerHandler"},"147":{"Text_1":"string"},"269":{"Text_1":"logResolver"},"148":{"Text_1":"escapedCharsValue"},"149":{"Text_1":"unescapedRange1Begin"},"40":{"Text_1":"memDialogUnit"},"41":{"Text_1":"typLogic"},"42":{"Text_1":"logMediator"},"43":{"Text_1":"memMediatorRemote"},"44":{"Text_1":"memMediatorLocalToRemote"},"45":{"Text_1":"memMediatorRemoteToLocal"},"46":{"MiND_86":{"Text_15":"134","Text_1":"48","Text_16":"49","Text_13":"50","Text_14":"133","Text_11":"207","Text_12":"333","Text_20":"65","Text_21":"52","Text_10":"334","Text_19":"335","Text_17":"331","Text_18":"131","Text_8":"114","Text_9":"63","Text_6":"332","Text_7":"132","Text_4":"51","Text_5":"330","Text_2":"67","Text_3":"47"},"MiND_100":"null_4","MiND_114":"Giskard_Text_1"},"47":{"Text_1":"typText"},"48":{"Text_1":"memTextString"},"49":{"Text_1":"typVocabulary"},"270":{"Text_1":"memKnowledgeMembers"},"150":{"Text_1":"object4"},"271":{"Text_1":"memKnowledgeAllTypes"},"151":{"Text_1":"trueValue"},"272":{"Text_1":"memMemberVarReal"},"152":{"Text_1":"object3"},"273":{"Text_1":"tagActionInit"},"274":{"Text_1":"tagAction"},"153":{"Text_1":"charArrBegin"},"275":{"Text_1":"tagStatusError"},"154":{"Text_1":"falseValue"},"276":{"Text_1":"tagStatusAccept"},"155":{"Text_1":"unescapedRange3End"},"156":{"Text_1":"charObjBegin"},"277":{"Text_1":"memSelectLogic"},"278":{"Text_1":"logSelect"},"157":{"Text_1":"array"},"279":{"Text_1":"tagAccessPeek"},"158":{"Text_1":"member"},"159":{"Text_1":"json"},"50":{"Text_1":"typLanguage"},"51":{"Text_1":"memLanguageWords"},"52":{"Text_1":"memLanguageVocabularies"},"53":{"MiND_86":{"Brain_29":"54","Brain_20":"241","Brain_26":"58","Brain_25":"55","Brain_28":"65","Brain_27":"239","Brain_22":"243","Brain_21":"242","Brain_24":"64","Brain_23":"244","Brain_5":"67","Brain_6":"56","Brain_7":"232","Brain_8":"100","Brain_1":"66","Brain_19":"240","Brain_18":"68","Brain_2":"229","Brain_3":"230","Brain_4":"231","Brain_30":"245","Brain_15":"233","Brain_14":"57","Brain_17":"103","Brain_16":"101","Brain_9":"234","Brain_11":"63","Brain_10":"235","Brain_13":"238","Brain_12":"237"},"MiND_100":"null_5","MiND_114":"Dust_Brain_1"},"54":{"Text_1":"logBrain"},"55":{"Text_1":"memBrainUnits"},"56":{"Text_1":"memBrainLanguages"},"57":{"Text_1":"memBrainDialogs"},"58":{"Text_1":"memBrainThreads"},"59":{"Text_1":"theBrain"},"280":{"Text_1":"tagListenerFollower"},"160":{"Text_1":"value"},"281":{"Text_1":"tagListener"},"282":{"Text_1":"memOrchestratorCatch"},"161":{"Text_1":"charObjEndValue"},"162":{"Text_1":"false"},"283":{"Text_1":"memListenerTarget"},"284":{"Text_1":"memAgentNext"},"163":{"Text_1":"charCommaValue"},"164":{"Text_1":"unescaped"},"285":{"Text_1":"tagChangedMember"},"165":{"Text_1":"unescapedRange3Begin"},"286":{"Text_1":"memIteratorCount"},"287":{"Text_1":"memUnitVersionMinor"},"166":{"Text_1":"charUValue"},"167":{"Text_1":"charArrBeginValue"},"288":{"Text_1":"logFork"},"289":{"Text_1":"memMemberDefVal"},"168":{"Text_1":"charObjBeginValue"},"169":{"Text_1":"array2"},"60":{"MiND_86":{"Stream_14":"108","Stream_8":"88","Stream_15":"328","Stream_7":"325","Stream_12":"327","Stream_9":"326","Stream_13":"320","Stream_18":"68","Stream_19":"329","Stream_16":"321","Stream_17":"65","Stream_2":"322","Stream_1":"319","Stream_4":"98","Stream_3":"323","Stream_6":"324","Stream_5":"67","Stream_10":"74","Stream_11":"63","Stream_20":"236"},"MiND_100":"null_6","MiND_114":"Giskard_Stream_1"},"61":{"MiND_86":{"Gen_10":"117","Gen_11":"121","Gen_":"120","Gen_7":"199","Gen_8":"254","Gen_9":"248","Gen_14":"246","Gen_15":"249","Gen_12":"255","Gen_1":"119","Gen_13":"65","Gen_2":"250","Gen_3":"251","Gen_4":"252","Gen_5":"253","Gen_6":"63"},"MiND_100":"null_7","MiND_114":"Giskard_Gen_1"},"62":{"MiND_86":{"AbnfJson_57":"173","AbnfJson_13":"116","AbnfJson_58":"174","AbnfJson_14":"118","AbnfJson_15":"123","AbnfJson_16":"124","AbnfJson_17":"125","AbnfJson_18":"127","AbnfJson_19":"128","AbnfJson_2":"122","AbnfJson_3":"64","AbnfJson_4":"111","AbnfJson_5":"148","AbnfJson_20":"129","AbnfJson_21":"130","AbnfJson_22":"135","AbnfJson_1":"112","AbnfJson_23":"136","AbnfJson_6":"67","AbnfJson_7":"151","AbnfJson_8":"154","AbnfJson_9":"63","AbnfJson_46":"162","AbnfJson_47":"163","AbnfJson_48":"164","AbnfJson_49":"165","AbnfJson_50":"166","AbnfJson_51":"167","AbnfJson_52":"168","AbnfJson_53":"169","AbnfJson_10":"68","AbnfJson_54":"170","AbnfJson_55":"171","AbnfJson_11":"65","AbnfJson_56":"172","AbnfJson_12":"113","AbnfJson_35":"149","AbnfJson_36":"150","AbnfJson_37":"152","AbnfJson_38":"153","AbnfJson_39":"155","AbnfJson_40":"156","AbnfJson_41":"157","AbnfJson_42":"158","AbnfJson_43":"159","AbnfJson_44":"160","AbnfJson_45":"161","AbnfJson_24":"137","AbnfJson_25":"138","AbnfJson_26":"139","AbnfJson_27":"140","AbnfJson_28":"141","AbnfJson_29":"142","AbnfJson_30":"143","AbnfJson_31":"144","AbnfJson_32":"145","AbnfJson_33":"146","AbnfJson_34":"147"},"MiND_100":"null_8","MiND_114":"Dust_AbnfJson_1"},"63":{"Text_1":"authGiskard"},"64":{"Text_1":"authDust"},"65":{"Text_1":"unitMiND"},"66":{"Text_1":"unitStream"},"67":{"Text_1":"unitGen"},"68":{"Text_1":"unitText"},"69":{"Text_1":"unitBrain"},"290":{"Text_1":"tagAccessInsert"},"170":{"Text_1":"unescapedRange1"},"291":{"Text_1":"tagChangedVal"},"292":{"Text_1":"tagStatusProcessing"},"171":{"Text_1":"array1"},"172":{"Text_1":"unescapedRange2"},"293":{"Text_1":"memMemberAgent"},"173":{"Text_1":"array4"},"294":{"Text_1":"memMemberVarBin"},"295":{"Text_1":"tagAccessDelete"},"174":{"Text_1":"array3"},"296":{"Text_1":"tagListenerMonitor"},"175":{"Text_1":"BCKSLASHValue"},"297":{"Text_1":"tagFlowState"},"176":{"Text_1":"DIGIT1-9RangeBegin"},"298":{"Text_1":"tagActionRelease"},"177":{"Text_1":"BITRangeBegin"},"299":{"Text_1":"tagStatusRead"},"178":{"Text_1":"hexCharsValue"},"179":{"Text_1":"SPValue"},"70":{"Text_1":"abnfJson"},"71":{"Text_1":"javaLog"},"72":{"Text_1":"typJavaClass"},"73":{"Text_1":"logStreamSerializerJson"},"74":{"Text_1":"logStreamSerializer"},"75":{"Text_1":"javaStreamPortal"},"76":{"Text_1":"javaBrain"},"77":{"Text_1":"javaUnit"},"78":{"Text_1":"javaStreamSerializerJson"},"79":{"Text_1":"javaBootTokens"},"180":{"Text_1":"DIGITRangeBegin"},"181":{"Text_1":"BCKSLASH"},"182":{"Text_1":"HTAB"},"183":{"Text_1":"PLUSValue"},"184":{"Text_1":"POINTValue"},"185":{"Text_1":"MINUS"},"186":{"Text_1":"BLANK1"},"187":{"Text_1":"DIGIT0Value"},"188":{"Text_1":"HEXDIG"},"189":{"Text_1":"DIGITRange"},"80":{"Text_1":"typJavaObject"},"81":{"Text_1":"javaDialog"},"82":{"Text_1":"memJavaObInstance"},"83":{"Text_1":"tagValtype"},"84":{"Text_1":"bootVocabulary"},"85":{"Text_1":"javaKnowledge"},"86":{"Text_1":"memStreamProviderLocalRoot"},"87":{"Text_1":"logStreamProviderLocal"},"88":{"Text_1":"typStream"},"89":{"Text_1":"javaBootMediator"},"190":{"Text_1":"CRValue"},"191":{"Text_1":"DQUOTEValue"},"192":{"Text_1":"SP"},"193":{"Text_1":"LFValue"},"194":{"Text_1":"BITRangeEnd"},"195":{"Text_1":"HTABValue"},"196":{"Text_1":"SLASH"},"197":{"Text_1":"DIGIT0"},"198":{"Text_1":"BIT"},"199":{"Text_1":"memMatcherRange"},"90":{"Text_1":"javaStreamProviderLocal"},"91":{"Text_1":"bootDialog"},"92":{"Text_1":"typAgent"},"93":{"Text_1":"memOrchestratorAgents"},"94":{"Text_1":"memDialogListeners"},"95":{"Text_1":"memAgentLogic"},"96":{"Text_1":"memDialogLaunch"},"97":{"Text_1":"bootSerializer"},"98":{"Text_1":"memStreamSerializerMediator"},"99":{"Text_1":"modDustJava"},"300":{"Text_1":"tagStatusReject"},"301":{"Text_1":"tagChangedType"},"302":{"Text_1":"memKnowledgeCommit"},"303":{"Text_1":"tagStatusReadAccept"},"304":{"Text_1":"tagActionProcess"},"305":{"Text_1":"tagActionEnd"},"306":{"Text_1":"logFlow"},"307":{"Text_1":"tagListenerProcessor"},"308":{"Text_1":"tagAccessGet"},"309":{"Text_1":"logJoin"},"310":{"Text_1":"tagActionBegin"},"311":{"Text_1":"tagListenerInterceptor"},"312":{"Text_1":"memOrchestratorCurrent"},"313":{"Text_1":"tagAccessCheck"},"314":{"Text_1":"tagMandatory"},"315":{"Text_1":"tagFlowStateExit"},"316":{"Text_1":"memResolverCursor"},"317":{"Text_1":"tagAccessSet"},"318":{"Text_1":"tagFlowStateEntry"},"319":{"Text_1":"streamOut"},"320":{"Text_1":"tagStreamTypeChar"},"200":{"Text_1":"BITRange"},"321":{"Text_1":"tagStreamType"},"322":{"Text_1":"memStreamPath"},"201":{"Text_1":"SLASHValue"},"202":{"Text_1":"DIGIT"},"323":{"Text_1":"tagStreamTypeBin"},"203":{"Text_1":"CR"},"324":{"Text_1":"memStreamProviderContentRoots"},"325":{"Text_1":"memStreamRoot"},"204":{"Text_1":"BLANK"},"326":{"Text_1":"memStreamSerializerStream"},"205":{"Text_1":"MINUSValue"},"327":{"Text_1":"memStreamPortalMediators"},"206":{"Text_1":"hexChars"},"328":{"Text_1":"memStreamSerializerCondition"},"207":{"Text_1":"tagCaseInsensitive"},"329":{"Text_1":"memStreamSerializerTokenResolver"},"208":{"Text_1":"DIGIT1-9"},"209":{"Text_1":"LF"},"330":{"Text_1":"tagEncodingUtf8"},"331":{"Text_1":"tagEncoding"},"210":{"Text_1":"DIGIT1-9RangeEnd"},"332":{"Text_1":"logCharMatcher"},"211":{"Text_1":"POINT"},"333":{"Text_1":"typChar"},"212":{"Text_1":"DIGIT1-9Range"},"334":{"Text_1":"logTextMatcher"},"213":{"Text_1":"DIGITRangeEnd"},"214":{"Text_1":"DQUOTE"},"335":{"Text_1":"tagEncodingAscii"},"215":{"Text_1":"PLUS"},"216":{"Text_1":"optMinus"},"217":{"Text_1":"expE"},"218":{"Text_1":"expEValue"},"219":{"Text_1":"expMP"},"220":{"Text_1":"int"},"100":{"Text_1":"typModule"},"221":{"Text_1":"number"},"222":{"Text_1":"int2"},"101":{"Text_1":"memModuleImplementations"},"223":{"Text_1":"int1"},"102":{"Text_1":"bootMediator"},"103":{"Text_1":"memBootMediatorSources"},"224":{"Text_1":"expMPOpts"},"104":{"Text_1":"bootUnit"},"225":{"Text_1":"digits"},"105":{"Text_1":"memJavaObClass"},"226":{"Text_1":"exp"},"106":{"Text_1":"logStreamSerializerTextLine"},"227":{"Text_1":"optDigits"},"107":{"Text_1":"javaStreamSerializerTextLine"},"228":{"Text_1":"frac"},"229":{"Text_1":"logBootMediator"},"108":{"Text_1":"logStreamProvider"},"109":{"MiND_86":{"AbnfCore_29":"198","AbnfCore_28":"197","AbnfCore_27":"196","AbnfCore_26":"195","AbnfCore_25":"194","AbnfCore_24":"193","AbnfCore_23":"192","AbnfCore_44":"215","AbnfCore_22":"191","AbnfCore_9":"177","AbnfCore_43":"214","AbnfCore_21":"190","AbnfCore_42":"213","AbnfCore_8":"176","AbnfCore_20":"189","AbnfCore_7":"175","AbnfCore_41":"212","AbnfCore_40":"211","AbnfCore_2":"67","AbnfCore_1":"178","AbnfCore_6":"65","AbnfCore_5":"64","AbnfCore_4":"68","AbnfCore_3":"63","AbnfCore_19":"188","AbnfCore_18":"187","AbnfCore_17":"186","AbnfCore_39":"210","AbnfCore_16":"185","AbnfCore_38":"209","AbnfCore_37":"208","AbnfCore_15":"184","AbnfCore_14":"183","AbnfCore_36":"206","AbnfCore_35":"205","AbnfCore_13":"182","AbnfCore_12":"181","AbnfCore_34":"204","AbnfCore_11":"180","AbnfCore_33":"203","AbnfCore_10":"179","AbnfCore_32":"202","AbnfCore_31":"201","AbnfCore_30":"200"},"MiND_100":"null_9","MiND_114":"Dust_AbnfCore_1"}}]
+[
+	{
+		"syntax": "dust_json",
+		"version": "1_0"
+	},
+	{
+		"230": {
+			"Text_1": "typThread"
+		},
+		"110": {
+			"MiND_86": {
+				"AbnfNumber_13": "222",
+				"AbnfNumber_12": "221",
+				"AbnfNumber_11": "220",
+				"AbnfNumber_10": "219",
+				"AbnfNumber_19": "228",
+				"AbnfNumber_18": "227",
+				"AbnfNumber_17": "226",
+				"AbnfNumber_4": "63",
+				"AbnfNumber_3": "64",
+				"AbnfNumber_16": "225",
+				"AbnfNumber_2": "218",
+				"AbnfNumber_15": "224",
+				"AbnfNumber_1": "67",
+				"AbnfNumber_14": "223",
+				"AbnfNumber_8": "216",
+				"AbnfNumber_7": "111",
+				"AbnfNumber_6": "68",
+				"AbnfNumber_5": "65",
+				"AbnfNumber_9": "217"
+			},
+			"MiND_100": "null_10",
+			"MiND_114": "Dust_AbnfNumber_1"
+		},
+		"231": {
+			"Text_1": "tagProxyModule"
+		},
+		"111": {
+			"Text_1": "abnfCore"
+		},
+		"232": {
+			"Text_1": "memAppConfig"
+		},
+		"233": {
+			"Text_1": "typApp"
+		},
+		"112": {
+			"Text_1": "abnfNumber"
+		},
+		"234": {
+			"Text_1": "memThreadUnit"
+		},
+		"113": {
+			"Text_1": "charArrEndValue"
+		},
+		"235": {
+			"Text_1": "memAppStreamPortal"
+		},
+		"114": {
+			"Text_1": "memCharValue"
+		},
+		"115": {
+			"Text_1": "typVar"
+		},
+		"236": {
+			"Text_1": "logStreamPortal"
+		},
+		"237": {
+			"Text_1": "memThreadStack"
+		},
+		"116": {
+			"Text_1": "charComma"
+		},
+		"117": {
+			"Text_1": "memMatcherValue"
+		},
+		"238": {
+			"Text_1": "memUnitTagParent"
+		},
+		"239": {
+			"Text_1": "logUnit"
+		},
+		"118": {
+			"Text_1": "unescapedRange3"
+		},
+		"119": {
+			"Text_1": "memRangeBegin"
+		},
+		"10": {
+			"Text_1": "tagCollSet"
+		},
+		"11": {
+			"Text_1": "tagCollArr"
+		},
+		"12": {
+			"Text_1": "tagCollMap"
+		},
+		"13": {
+			"Text_1": "tagProxy"
+		},
+		"14": {
+			"Text_1": "tagProxyUnit"
+		},
+		"15": {
+			"Text_1": "tagProxyAuthor"
+		},
+		"16": {
+			"Text_1": "tagTransient"
+		},
+		"17": {
+			"Text_1": "typUnit"
+		},
+		"18": {
+			"Text_1": "memUnitAuthor"
+		},
+		"19": {
+			"Text_1": "memUnitLocalKnowledge"
+		},
+		"240": {
+			"Text_1": "memAppModules"
+		},
+		"241": {
+			"Text_1": "logKnowledge"
+		},
+		"120": {
+			"Text_1": "TypRange"
+		},
+		"121": {
+			"Text_1": "memRangeEnd"
+		},
+		"242": {
+			"Text_1": "memAppMain"
+		},
+		"243": {
+			"Text_1": "memAppApi"
+		},
+		"1": {
+			"MiND_86": {
+				"BrainJava_25": "105",
+				"BrainJava_26": "106",
+				"BrainJava_23": "104",
+				"BrainJava_24": "72",
+				"BrainJava_29": "65",
+				"BrainJava_27": "107",
+				"BrainJava_28": "87",
+				"BrainJava_21": "64",
+				"BrainJava_22": "69",
+				"BrainJava_20": "90",
+				"BrainJava_14": "82",
+				"BrainJava_15": "84",
+				"BrainJava_12": "80",
+				"BrainJava_13": "81",
+				"BrainJava_9": "63",
+				"BrainJava_18": "86",
+				"BrainJava_19": "89",
+				"BrainJava_7": "76",
+				"BrainJava_16": "85",
+				"BrainJava_8": "77",
+				"BrainJava_17": "68",
+				"BrainJava_10": "78",
+				"BrainJava_32": "99",
+				"BrainJava_33": "102",
+				"BrainJava_11": "79",
+				"BrainJava_30": "91",
+				"BrainJava_31": "97",
+				"BrainJava_5": "70",
+				"BrainJava_6": "75",
+				"BrainJava_3": "67",
+				"BrainJava_4": "73",
+				"null_": "59",
+				"BrainJava_1": "66",
+				"BrainJava_2": "71"
+			},
+			"MiND_100": "null_2",
+			"MiND_114": "Dust_BrainJava_1"
+		},
+		"122": {
+			"Text_1": "nullValue"
+		},
+		"2": {
+			"MiND_86": {
+				"MiND_72": "295",
+				"MiND_73": "296",
+				"MiND_74": "297",
+				"MiND_75": "298",
+				"MiND_76": "19",
+				"MiND_77": "299",
+				"MiND_78": "300",
+				"MiND_79": "18",
+				"MiND_70": "38",
+				"MiND_71": "24",
+				"MiND_83": "303",
+				"MiND_84": "304",
+				"MiND_85": "305",
+				"MiND_86": "45",
+				"MiND_87": "25",
+				"MiND_88": "7",
+				"MiND_89": "306",
+				"MiND_80": "17",
+				"MiND_81": "301",
+				"MiND_82": "302",
+				"MiND_58": "35",
+				"MiND_59": "281",
+				"MiND_50": "286",
+				"MiND_51": "287",
+				"MiND_52": "288",
+				"MiND_53": "28",
+				"MiND_54": "247",
+				"MiND_55": "289",
+				"MiND_56": "96",
+				"MiND_57": "21",
+				"MiND_69": "39",
+				"MiND_61": "290",
+				"MiND_62": "291",
+				"MiND_63": "292",
+				"MiND_64": "92",
+				"MiND_65": "293",
+				"MiND_66": "95",
+				"MiND_67": "27",
+				"MiND_68": "294",
+				"MiND_60": "9",
+				"MiND_108": "315",
+				"MiND_109": "278",
+				"MiND_104": "93",
+				"MiND_105": "265",
+				"MiND_106": "313",
+				"MiND_107": "314",
+				"MiND_36": "42",
+				"MiND_100": "43",
+				"MiND_101": "94",
+				"MiND_37": "115",
+				"MiND_38": "36",
+				"MiND_102": "312",
+				"MiND_103": "30",
+				"MiND_39": "277",
+				"MiND_30": "11",
+				"MiND_31": "275",
+				"MiND_32": "22",
+				"MiND_33": "12",
+				"MiND_34": "276",
+				"MiND_35": "13",
+				"MiND_47": "32",
+				"MiND_48": "284",
+				"MiND_49": "285",
+				"MiND_40": "20",
+				"MiND_41": "14",
+				"MiND_42": "33",
+				"MiND_43": "279",
+				"MiND_44": "280",
+				"MiND_45": "282",
+				"MiND_46": "283",
+				"MiND_14": "266",
+				"MiND_15": "37",
+				"MiND_16": "126",
+				"MiND_17": "267",
+				"MiND_18": "40",
+				"MiND_19": "268",
+				"MiND_94": "41",
+				"MiND_95": "26",
+				"MiND_96": "63",
+				"MiND_97": "309",
+				"MiND_10": "6",
+				"MiND_98": "310",
+				"MiND_99": "311",
+				"MiND_11": "263",
+				"MiND_12": "264",
+				"MiND_13": "44",
+				"MiND_90": "4",
+				"MiND_91": "307",
+				"MiND_92": "308",
+				"MiND_93": "5",
+				"MiND_115": "274",
+				"MiND_116": "318",
+				"MiND_25": "29",
+				"MiND_111": "317",
+				"MiND_26": "3",
+				"MiND_112": "16",
+				"MiND_27": "272",
+				"MiND_113": "15",
+				"MiND_114": "31",
+				"MiND_28": "273",
+				"MiND_29": "10",
+				"MiND_110": "316",
+				"MiND_20": "269",
+				"MiND_2": "257",
+				"MiND_21": "83",
+				"MiND_22": "270",
+				"MiND_1": "256",
+				"MiND_4": "258",
+				"MiND_23": "23",
+				"MiND_24": "271",
+				"MiND_3": "8",
+				"MiND_6": "261",
+				"MiND_5": "260",
+				"MiND_8": "259",
+				"MiND_7": "262",
+				"MiND_9": "34"
+			},
+			"MiND_100": "null_3",
+			"MiND_114": "Giskard_MiND_1"
+		},
+		"123": {
+			"Text_1": "codedChar"
+		},
+		"244": {
+			"Text_1": "memUnitCollInfo"
+		},
+		"124": {
+			"Text_1": "unescapedRange1End"
+		},
+		"3": {
+			"Text_1": "tagValtypeInt"
+		},
+		"245": {
+			"Text_1": "memAppStreamProvider"
+		},
+		"246": {
+			"Text_1": "constVar1"
+		},
+		"125": {
+			"Text_1": "string1"
+		},
+		"4": {
+			"Text_1": "tagValtypeReal"
+		},
+		"5": {
+			"Text_1": "tagValtypeHandle"
+		},
+		"126": {
+			"Text_1": "memReferencePath"
+		},
+		"247": {
+			"Text_1": "memMemberVarInt"
+		},
+		"248": {
+			"Text_1": "typRange"
+		},
+		"6": {
+			"Text_1": "tagValtypeBin"
+		},
+		"127": {
+			"Text_1": "escapedOptions"
+		},
+		"128": {
+			"Text_1": "string2"
+		},
+		"249": {
+			"Text_1": "constVar0"
+		},
+		"7": {
+			"Text_1": "typTag"
+		},
+		"8": {
+			"Text_1": "tagColl"
+		},
+		"129": {
+			"Text_1": "charU"
+		},
+		"9": {
+			"Text_1": "tagCollOne"
+		},
+		"20": {
+			"Text_1": "memUnitNextId"
+		},
+		"21": {
+			"Text_1": "memUnitVersionMajor"
+		},
+		"22": {
+			"Text_1": "typAuthor"
+		},
+		"23": {
+			"Text_1": "typProxy"
+		},
+		"24": {
+			"Text_1": "memProxyRemote"
+		},
+		"25": {
+			"Text_1": "typKnowledge"
+		},
+		"26": {
+			"Text_1": "memKnowledgeID"
+		},
+		"27": {
+			"Text_1": "memKnowledgeHandle"
+		},
+		"28": {
+			"Text_1": "memKnowledgeUnit"
+		},
+		"29": {
+			"Text_1": "memKnowledgeType"
+		},
+		"250": {
+			"Text_1": "tagEndian"
+		},
+		"130": {
+			"Text_1": "escapedChars"
+		},
+		"251": {
+			"Text_1": "tagMeasurementUnit"
+		},
+		"131": {
+			"Text_1": "tagCaseSensitive"
+		},
+		"252": {
+			"Text_1": "tagMeasureType"
+		},
+		"253": {
+			"Text_1": "tagBigEndian"
+		},
+		"132": {
+			"Text_1": "tagCase"
+		},
+		"133": {
+			"Text_1": "tagMatchChar"
+		},
+		"254": {
+			"Text_1": "logMatcher"
+		},
+		"255": {
+			"Text_1": "tagLittleEndian"
+		},
+		"134": {
+			"Text_1": "tagMatch"
+		},
+		"135": {
+			"Text_1": "unescapedRange2Begin"
+		},
+		"256": {
+			"Text_1": "typListener"
+		},
+		"257": {
+			"Text_1": "typHandle"
+		},
+		"136": {
+			"Text_1": "charObjEnd"
+		},
+		"258": {
+			"Text_1": "logSequence"
+		},
+		"137": {
+			"Text_1": "escaped"
+		},
+		"138": {
+			"Text_1": "charColon"
+		},
+		"259": {
+			"Text_1": "logOrchestrator"
+		},
+		"139": {
+			"Text_1": "null"
+		},
+		"30": {
+			"Text_1": "memKnowledgeTags"
+		},
+		"31": {
+			"Text_1": "memKnowledgeToken"
+		},
+		"32": {
+			"Text_1": "memKnowledgeOwner"
+		},
+		"33": {
+			"Text_1": "memKnowledgeRequires"
+		},
+		"34": {
+			"Text_1": "memKnowledgeExtends"
+		},
+		"35": {
+			"Text_1": "typType"
+		},
+		"36": {
+			"Text_1": "typMember"
+		},
+		"37": {
+			"Text_1": "memMemberHandleType"
+		},
+		"38": {
+			"Text_1": "memMemberKeyType"
+		},
+		"39": {
+			"Text_1": "logDialog"
+		},
+		"260": {
+			"Text_1": "tagStatus"
+		},
+		"261": {
+			"Text_1": "typReference"
+		},
+		"140": {
+			"Text_1": "charColonValue"
+		},
+		"262": {
+			"Text_1": "tagStatusWaiting"
+		},
+		"141": {
+			"Text_1": "unescapedRange2End"
+		},
+		"263": {
+			"Text_1": "tagStatusPass"
+		},
+		"142": {
+			"Text_1": "true"
+		},
+		"264": {
+			"Text_1": "memIteratorSeparator"
+		},
+		"143": {
+			"Text_1": "object"
+		},
+		"144": {
+			"Text_1": "object2"
+		},
+		"265": {
+			"Text_1": "logIterator"
+		},
+		"145": {
+			"Text_1": "object1"
+		},
+		"266": {
+			"Text_1": "tagAccess"
+		},
+		"146": {
+			"Text_1": "charArrEnd"
+		},
+		"267": {
+			"Text_1": "tagAccessCommit"
+		},
+		"268": {
+			"Text_1": "memListenerHandler"
+		},
+		"147": {
+			"Text_1": "string"
+		},
+		"269": {
+			"Text_1": "logResolver"
+		},
+		"148": {
+			"Text_1": "escapedCharsValue"
+		},
+		"149": {
+			"Text_1": "unescapedRange1Begin"
+		},
+		"40": {
+			"Text_1": "memDialogUnit"
+		},
+		"41": {
+			"Text_1": "typLogic"
+		},
+		"42": {
+			"Text_1": "logMediator"
+		},
+		"43": {
+			"Text_1": "memMediatorRemote"
+		},
+		"44": {
+			"Text_1": "memMediatorLocalToRemote"
+		},
+		"45": {
+			"Text_1": "memMediatorRemoteToLocal"
+		},
+		"46": {
+			"MiND_86": {
+				"Text_15": "134",
+				"Text_16": "49",
+				"Text_1": "48",
+				"Text_13": "50",
+				"Text_14": "133",
+				"Text_11": "207",
+				"Text_12": "333",
+				"Text_20": "65",
+				"Text_10": "334",
+				"Text_21": "52",
+				"Text_19": "335",
+				"Text_17": "331",
+				"Text_18": "131",
+				"Text_8": "114",
+				"Text_9": "63",
+				"Text_6": "332",
+				"Text_7": "132",
+				"Text_4": "51",
+				"Text_5": "330",
+				"Text_2": "67",
+				"Text_3": "47"
+			},
+			"MiND_100": "null_4",
+			"MiND_114": "Giskard_Text_1"
+		},
+		"47": {
+			"Text_1": "typText"
+		},
+		"48": {
+			"Text_1": "memTextString"
+		},
+		"49": {
+			"Text_1": "typVocabulary"
+		},
+		"270": {
+			"Text_1": "memKnowledgeMembers"
+		},
+		"150": {
+			"Text_1": "object4"
+		},
+		"271": {
+			"Text_1": "memKnowledgeAllTypes"
+		},
+		"272": {
+			"Text_1": "memMemberVarReal"
+		},
+		"151": {
+			"Text_1": "trueValue"
+		},
+		"273": {
+			"Text_1": "tagActionInit"
+		},
+		"152": {
+			"Text_1": "object3"
+		},
+		"153": {
+			"Text_1": "charArrBegin"
+		},
+		"274": {
+			"Text_1": "tagAction"
+		},
+		"154": {
+			"Text_1": "falseValue"
+		},
+		"275": {
+			"Text_1": "tagStatusError"
+		},
+		"276": {
+			"Text_1": "tagStatusAccept"
+		},
+		"155": {
+			"Text_1": "unescapedRange3End"
+		},
+		"156": {
+			"Text_1": "charObjBegin"
+		},
+		"277": {
+			"Text_1": "memSelectLogic"
+		},
+		"278": {
+			"Text_1": "logSelect"
+		},
+		"157": {
+			"Text_1": "array"
+		},
+		"158": {
+			"Text_1": "member"
+		},
+		"279": {
+			"Text_1": "tagAccessPeek"
+		},
+		"159": {
+			"Text_1": "json"
+		},
+		"50": {
+			"Text_1": "typLanguage"
+		},
+		"51": {
+			"Text_1": "memLanguageWords"
+		},
+		"52": {
+			"Text_1": "memLanguageVocabularies"
+		},
+		"53": {
+			"MiND_86": {
+				"Brain_29": "54",
+				"Brain_20": "241",
+				"Brain_26": "58",
+				"Brain_25": "55",
+				"Brain_28": "65",
+				"Brain_27": "239",
+				"Brain_22": "243",
+				"Brain_21": "242",
+				"Brain_24": "64",
+				"Brain_23": "244",
+				"Brain_5": "67",
+				"Brain_6": "56",
+				"Brain_7": "232",
+				"Brain_8": "100",
+				"Brain_19": "240",
+				"Brain_1": "66",
+				"Brain_18": "68",
+				"Brain_2": "229",
+				"Brain_3": "230",
+				"Brain_4": "231",
+				"Brain_30": "245",
+				"Brain_15": "233",
+				"Brain_14": "57",
+				"Brain_17": "103",
+				"Brain_16": "101",
+				"Brain_11": "63",
+				"Brain_9": "234",
+				"Brain_10": "235",
+				"Brain_13": "238",
+				"Brain_12": "237"
+			},
+			"MiND_100": "null_5",
+			"MiND_114": "Dust_Brain_1"
+		},
+		"54": {
+			"Text_1": "logBrain"
+		},
+		"55": {
+			"Text_1": "memBrainUnits"
+		},
+		"56": {
+			"Text_1": "memBrainLanguages"
+		},
+		"57": {
+			"Text_1": "memBrainDialogs"
+		},
+		"58": {
+			"Text_1": "memBrainThreads"
+		},
+		"59": {
+			"Text_1": "theBrain"
+		},
+		"280": {
+			"Text_1": "tagListenerFollower"
+		},
+		"281": {
+			"Text_1": "tagListener"
+		},
+		"160": {
+			"Text_1": "value"
+		},
+		"161": {
+			"Text_1": "charObjEndValue"
+		},
+		"282": {
+			"Text_1": "memOrchestratorCatch"
+		},
+		"283": {
+			"Text_1": "memListenerTarget"
+		},
+		"162": {
+			"Text_1": "false"
+		},
+		"284": {
+			"Text_1": "memAgentNext"
+		},
+		"163": {
+			"Text_1": "charCommaValue"
+		},
+		"164": {
+			"Text_1": "unescaped"
+		},
+		"285": {
+			"Text_1": "tagChangedMember"
+		},
+		"286": {
+			"Text_1": "memIteratorCount"
+		},
+		"165": {
+			"Text_1": "unescapedRange3Begin"
+		},
+		"166": {
+			"Text_1": "charUValue"
+		},
+		"287": {
+			"Text_1": "memUnitVersionMinor"
+		},
+		"167": {
+			"Text_1": "charArrBeginValue"
+		},
+		"288": {
+			"Text_1": "logFork"
+		},
+		"289": {
+			"Text_1": "memMemberDefVal"
+		},
+		"168": {
+			"Text_1": "charObjBeginValue"
+		},
+		"169": {
+			"Text_1": "array2"
+		},
+		"60": {
+			"MiND_86": {
+				"Stream_14": "108",
+				"Stream_8": "88",
+				"Stream_7": "325",
+				"Stream_15": "328",
+				"Stream_12": "327",
+				"Stream_13": "320",
+				"Stream_9": "326",
+				"Stream_18": "68",
+				"Stream_19": "329",
+				"Stream_16": "321",
+				"Stream_17": "65",
+				"Stream_2": "322",
+				"Stream_1": "319",
+				"Stream_4": "98",
+				"Stream_3": "323",
+				"Stream_6": "324",
+				"Stream_5": "67",
+				"Stream_10": "74",
+				"Stream_11": "63",
+				"Stream_20": "236"
+			},
+			"MiND_100": "null_6",
+			"MiND_114": "Giskard_Stream_1"
+		},
+		"61": {
+			"MiND_86": {
+				"Gen_10": "117",
+				"Gen_11": "121",
+				"Gen_": "120",
+				"Gen_7": "199",
+				"Gen_8": "254",
+				"Gen_9": "248",
+				"Gen_14": "246",
+				"Gen_15": "249",
+				"Gen_1": "119",
+				"Gen_12": "255",
+				"Gen_2": "250",
+				"Gen_13": "65",
+				"Gen_3": "251",
+				"Gen_4": "252",
+				"Gen_5": "253",
+				"Gen_6": "63"
+			},
+			"MiND_100": "null_7",
+			"MiND_114": "Giskard_Gen_1"
+		},
+		"62": {
+			"MiND_86": {
+				"AbnfJson_57": "173",
+				"AbnfJson_13": "116",
+				"AbnfJson_58": "174",
+				"AbnfJson_14": "118",
+				"AbnfJson_15": "123",
+				"AbnfJson_16": "124",
+				"AbnfJson_17": "125",
+				"AbnfJson_18": "127",
+				"AbnfJson_19": "128",
+				"AbnfJson_2": "122",
+				"AbnfJson_3": "64",
+				"AbnfJson_4": "111",
+				"AbnfJson_5": "148",
+				"AbnfJson_20": "129",
+				"AbnfJson_21": "130",
+				"AbnfJson_22": "135",
+				"AbnfJson_23": "136",
+				"AbnfJson_1": "112",
+				"AbnfJson_6": "67",
+				"AbnfJson_7": "151",
+				"AbnfJson_8": "154",
+				"AbnfJson_9": "63",
+				"AbnfJson_46": "162",
+				"AbnfJson_47": "163",
+				"AbnfJson_48": "164",
+				"AbnfJson_49": "165",
+				"AbnfJson_50": "166",
+				"AbnfJson_51": "167",
+				"AbnfJson_52": "168",
+				"AbnfJson_53": "169",
+				"AbnfJson_54": "170",
+				"AbnfJson_10": "68",
+				"AbnfJson_11": "65",
+				"AbnfJson_55": "171",
+				"AbnfJson_56": "172",
+				"AbnfJson_12": "113",
+				"AbnfJson_35": "149",
+				"AbnfJson_36": "150",
+				"AbnfJson_37": "152",
+				"AbnfJson_38": "153",
+				"AbnfJson_39": "155",
+				"AbnfJson_40": "156",
+				"AbnfJson_41": "157",
+				"AbnfJson_42": "158",
+				"AbnfJson_43": "159",
+				"AbnfJson_44": "160",
+				"AbnfJson_45": "161",
+				"AbnfJson_24": "137",
+				"AbnfJson_25": "138",
+				"AbnfJson_26": "139",
+				"AbnfJson_27": "140",
+				"AbnfJson_28": "141",
+				"AbnfJson_29": "142",
+				"AbnfJson_30": "143",
+				"AbnfJson_31": "144",
+				"AbnfJson_32": "145",
+				"AbnfJson_33": "146",
+				"AbnfJson_34": "147"
+			},
+			"MiND_100": "null_8",
+			"MiND_114": "Dust_AbnfJson_1"
+		},
+		"63": {
+			"Text_1": "authGiskard"
+		},
+		"64": {
+			"Text_1": "authDust"
+		},
+		"65": {
+			"Text_1": "unitMiND"
+		},
+		"66": {
+			"Text_1": "unitStream"
+		},
+		"67": {
+			"Text_1": "unitGen"
+		},
+		"68": {
+			"Text_1": "unitText"
+		},
+		"69": {
+			"Text_1": "unitBrain"
+		},
+		"290": {
+			"Text_1": "tagAccessInsert"
+		},
+		"291": {
+			"Text_1": "tagChangedVal"
+		},
+		"170": {
+			"Text_1": "unescapedRange1"
+		},
+		"292": {
+			"Text_1": "tagStatusProcessing"
+		},
+		"171": {
+			"Text_1": "array1"
+		},
+		"293": {
+			"Text_1": "memMemberAgent"
+		},
+		"172": {
+			"Text_1": "unescapedRange2"
+		},
+		"294": {
+			"Text_1": "memMemberVarBin"
+		},
+		"173": {
+			"Text_1": "array4"
+		},
+		"295": {
+			"Text_1": "tagAccessDelete"
+		},
+		"174": {
+			"Text_1": "array3"
+		},
+		"175": {
+			"Text_1": "BCKSLASHValue"
+		},
+		"296": {
+			"Text_1": "tagListenerMonitor"
+		},
+		"176": {
+			"Text_1": "DIGIT1-9RangeBegin"
+		},
+		"297": {
+			"Text_1": "tagFlowState"
+		},
+		"298": {
+			"Text_1": "tagActionRelease"
+		},
+		"177": {
+			"Text_1": "BITRangeBegin"
+		},
+		"299": {
+			"Text_1": "tagStatusRead"
+		},
+		"178": {
+			"Text_1": "hexCharsValue"
+		},
+		"179": {
+			"Text_1": "SPValue"
+		},
+		"70": {
+			"Text_1": "abnfJson"
+		},
+		"71": {
+			"Text_1": "javaLog"
+		},
+		"72": {
+			"Text_1": "typJavaClass"
+		},
+		"73": {
+			"Text_1": "logStreamSerializerJson"
+		},
+		"74": {
+			"Text_1": "logStreamSerializer"
+		},
+		"75": {
+			"Text_1": "javaStreamPortal"
+		},
+		"76": {
+			"Text_1": "javaBrain"
+		},
+		"77": {
+			"Text_1": "javaUnit"
+		},
+		"78": {
+			"Text_1": "javaStreamSerializerJson"
+		},
+		"79": {
+			"Text_1": "javaBootTokens"
+		},
+		"180": {
+			"Text_1": "DIGITRangeBegin"
+		},
+		"181": {
+			"Text_1": "BCKSLASH"
+		},
+		"182": {
+			"Text_1": "HTAB"
+		},
+		"183": {
+			"Text_1": "PLUSValue"
+		},
+		"184": {
+			"Text_1": "POINTValue"
+		},
+		"185": {
+			"Text_1": "MINUS"
+		},
+		"186": {
+			"Text_1": "BLANK1"
+		},
+		"187": {
+			"Text_1": "DIGIT0Value"
+		},
+		"188": {
+			"Text_1": "HEXDIG"
+		},
+		"189": {
+			"Text_1": "DIGITRange"
+		},
+		"80": {
+			"Text_1": "typJavaObject"
+		},
+		"81": {
+			"Text_1": "javaDialog"
+		},
+		"82": {
+			"Text_1": "memJavaObInstance"
+		},
+		"83": {
+			"Text_1": "tagValtype"
+		},
+		"84": {
+			"Text_1": "bootVocabulary"
+		},
+		"85": {
+			"Text_1": "javaKnowledge"
+		},
+		"86": {
+			"Text_1": "memStreamProviderLocalRoot"
+		},
+		"87": {
+			"Text_1": "logStreamProviderLocal"
+		},
+		"88": {
+			"Text_1": "typStream"
+		},
+		"89": {
+			"Text_1": "javaBootMediator"
+		},
+		"190": {
+			"Text_1": "CRValue"
+		},
+		"191": {
+			"Text_1": "DQUOTEValue"
+		},
+		"192": {
+			"Text_1": "SP"
+		},
+		"193": {
+			"Text_1": "LFValue"
+		},
+		"194": {
+			"Text_1": "BITRangeEnd"
+		},
+		"195": {
+			"Text_1": "HTABValue"
+		},
+		"196": {
+			"Text_1": "SLASH"
+		},
+		"197": {
+			"Text_1": "DIGIT0"
+		},
+		"198": {
+			"Text_1": "BIT"
+		},
+		"199": {
+			"Text_1": "memMatcherRange"
+		},
+		"90": {
+			"Text_1": "javaStreamProviderLocal"
+		},
+		"91": {
+			"Text_1": "bootDialog"
+		},
+		"92": {
+			"Text_1": "typAgent"
+		},
+		"93": {
+			"Text_1": "memOrchestratorAgents"
+		},
+		"94": {
+			"Text_1": "memDialogListeners"
+		},
+		"95": {
+			"Text_1": "memAgentLogic"
+		},
+		"96": {
+			"Text_1": "memDialogLaunch"
+		},
+		"97": {
+			"Text_1": "bootSerializer"
+		},
+		"98": {
+			"Text_1": "memStreamSerializerMediator"
+		},
+		"99": {
+			"Text_1": "modDustJava"
+		},
+		"300": {
+			"Text_1": "tagStatusReject"
+		},
+		"301": {
+			"Text_1": "tagChangedType"
+		},
+		"302": {
+			"Text_1": "memKnowledgeCommit"
+		},
+		"303": {
+			"Text_1": "tagStatusReadAccept"
+		},
+		"304": {
+			"Text_1": "tagActionProcess"
+		},
+		"305": {
+			"Text_1": "tagActionEnd"
+		},
+		"306": {
+			"Text_1": "logFlow"
+		},
+		"307": {
+			"Text_1": "tagListenerProcessor"
+		},
+		"308": {
+			"Text_1": "tagAccessGet"
+		},
+		"309": {
+			"Text_1": "logJoin"
+		},
+		"310": {
+			"Text_1": "tagActionBegin"
+		},
+		"311": {
+			"Text_1": "tagListenerInterceptor"
+		},
+		"312": {
+			"Text_1": "memOrchestratorCurrent"
+		},
+		"313": {
+			"Text_1": "tagAccessCheck"
+		},
+		"314": {
+			"Text_1": "tagMandatory"
+		},
+		"315": {
+			"Text_1": "tagFlowStateExit"
+		},
+		"316": {
+			"Text_1": "memResolverCursor"
+		},
+		"317": {
+			"Text_1": "tagAccessSet"
+		},
+		"318": {
+			"Text_1": "tagFlowStateEntry"
+		},
+		"319": {
+			"Text_1": "streamOut"
+		},
+		"320": {
+			"Text_1": "tagStreamTypeChar"
+		},
+		"321": {
+			"Text_1": "tagStreamType"
+		},
+		"200": {
+			"Text_1": "BITRange"
+		},
+		"322": {
+			"Text_1": "memStreamPath"
+		},
+		"201": {
+			"Text_1": "SLASHValue"
+		},
+		"323": {
+			"Text_1": "tagStreamTypeBin"
+		},
+		"202": {
+			"Text_1": "DIGIT"
+		},
+		"203": {
+			"Text_1": "CR"
+		},
+		"324": {
+			"Text_1": "memStreamProviderContentRoots"
+		},
+		"325": {
+			"Text_1": "memStreamRoot"
+		},
+		"204": {
+			"Text_1": "BLANK"
+		},
+		"205": {
+			"Text_1": "MINUSValue"
+		},
+		"326": {
+			"Text_1": "memStreamSerializerStream"
+		},
+		"327": {
+			"Text_1": "memStreamPortalMediators"
+		},
+		"206": {
+			"Text_1": "hexChars"
+		},
+		"328": {
+			"Text_1": "memStreamSerializerCondition"
+		},
+		"207": {
+			"Text_1": "tagCaseInsensitive"
+		},
+		"329": {
+			"Text_1": "memStreamSerializerTokenResolver"
+		},
+		"208": {
+			"Text_1": "DIGIT1-9"
+		},
+		"209": {
+			"Text_1": "LF"
+		},
+		"330": {
+			"Text_1": "tagEncodingUtf8"
+		},
+		"210": {
+			"Text_1": "DIGIT1-9RangeEnd"
+		},
+		"331": {
+			"Text_1": "tagEncoding"
+		},
+		"332": {
+			"Text_1": "logCharMatcher"
+		},
+		"211": {
+			"Text_1": "POINT"
+		},
+		"212": {
+			"Text_1": "DIGIT1-9Range"
+		},
+		"333": {
+			"Text_1": "typChar"
+		},
+		"334": {
+			"Text_1": "logTextMatcher"
+		},
+		"213": {
+			"Text_1": "DIGITRangeEnd"
+		},
+		"335": {
+			"Text_1": "tagEncodingAscii"
+		},
+		"214": {
+			"Text_1": "DQUOTE"
+		},
+		"215": {
+			"Text_1": "PLUS"
+		},
+		"216": {
+			"Text_1": "optMinus"
+		},
+		"217": {
+			"Text_1": "expE"
+		},
+		"218": {
+			"Text_1": "expEValue"
+		},
+		"219": {
+			"Text_1": "expMP"
+		},
+		"220": {
+			"Text_1": "int"
+		},
+		"100": {
+			"Text_1": "typModule"
+		},
+		"221": {
+			"Text_1": "number"
+		},
+		"101": {
+			"Text_1": "memModuleImplementations"
+		},
+		"222": {
+			"Text_1": "int2"
+		},
+		"102": {
+			"Text_1": "bootMediator"
+		},
+		"223": {
+			"Text_1": "int1"
+		},
+		"103": {
+			"Text_1": "memBootMediatorSources"
+		},
+		"224": {
+			"Text_1": "expMPOpts"
+		},
+		"225": {
+			"Text_1": "digits"
+		},
+		"104": {
+			"Text_1": "bootUnit"
+		},
+		"105": {
+			"Text_1": "memJavaObClass"
+		},
+		"226": {
+			"Text_1": "exp"
+		},
+		"227": {
+			"Text_1": "optDigits"
+		},
+		"106": {
+			"Text_1": "logStreamSerializerTextLine"
+		},
+		"228": {
+			"Text_1": "frac"
+		},
+		"107": {
+			"Text_1": "javaStreamSerializerTextLine"
+		},
+		"229": {
+			"Text_1": "logBootMediator"
+		},
+		"108": {
+			"Text_1": "logStreamProvider"
+		},
+		"109": {
+			"MiND_86": {
+				"AbnfCore_29": "198",
+				"AbnfCore_28": "197",
+				"AbnfCore_27": "196",
+				"AbnfCore_26": "195",
+				"AbnfCore_25": "194",
+				"AbnfCore_24": "193",
+				"AbnfCore_23": "192",
+				"AbnfCore_44": "215",
+				"AbnfCore_22": "191",
+				"AbnfCore_9": "177",
+				"AbnfCore_43": "214",
+				"AbnfCore_21": "190",
+				"AbnfCore_8": "176",
+				"AbnfCore_20": "189",
+				"AbnfCore_42": "213",
+				"AbnfCore_41": "212",
+				"AbnfCore_7": "175",
+				"AbnfCore_40": "211",
+				"AbnfCore_2": "67",
+				"AbnfCore_1": "178",
+				"AbnfCore_6": "65",
+				"AbnfCore_5": "64",
+				"AbnfCore_4": "68",
+				"AbnfCore_3": "63",
+				"AbnfCore_19": "188",
+				"AbnfCore_18": "187",
+				"AbnfCore_39": "210",
+				"AbnfCore_17": "186",
+				"AbnfCore_38": "209",
+				"AbnfCore_16": "185",
+				"AbnfCore_37": "208",
+				"AbnfCore_15": "184",
+				"AbnfCore_36": "206",
+				"AbnfCore_14": "183",
+				"AbnfCore_35": "205",
+				"AbnfCore_13": "182",
+				"AbnfCore_34": "204",
+				"AbnfCore_12": "181",
+				"AbnfCore_11": "180",
+				"AbnfCore_33": "203",
+				"AbnfCore_10": "179",
+				"AbnfCore_32": "202",
+				"AbnfCore_31": "201",
+				"AbnfCore_30": "200"
+			},
+			"MiND_100": "null_9",
+			"MiND_114": "Dust_AbnfCore_1"
+		}
+	}
+]

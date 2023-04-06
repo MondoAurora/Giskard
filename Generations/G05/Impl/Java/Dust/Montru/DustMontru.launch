@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/G05DustHelloWorld/src/me/giskard/dust/app/DustHelloWorld.java"/>
+        <listEntry value="/G05_Generated/Dust/Montru/me/giskard/dust/montru/MontruApp.java"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>
     </listAttribute>
-    <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
-        <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
-    </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
-    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="me.giskard.dust.app.DustHelloWorld"/>
-    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="G05DustHelloWorld"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="G05DustHelloWorld"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="me.giskard.dust.montru.MontruApp"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="G05DustMontru"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="G05DustMontru"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DGiskard.G05.LocalStoreRoot=../../../../Store"/>
 </launchConfiguration>

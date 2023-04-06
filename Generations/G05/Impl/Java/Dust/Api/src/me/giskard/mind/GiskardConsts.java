@@ -144,6 +144,10 @@ public interface GiskardConsts {
 		}
 	};
 
+	enum BootParam {
+		Arr, Map,
+	};
+
 	enum MindRoot {
 		Action, Self, Dialog,
 	};

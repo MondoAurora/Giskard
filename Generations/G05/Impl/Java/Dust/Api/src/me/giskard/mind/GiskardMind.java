@@ -2,10 +2,11 @@ package me.giskard.mind;
 
 public class GiskardMind implements GiskardConsts {
 
-	private static MindBrain BRAIN = null;
+	static GiskardBootParams BOOT_PARAMS = new GiskardBootParams();
+	private static MindBrain BRAIN = BOOT_PARAMS;
 
 	static void initBrain(MindBrain brain) throws Exception {
-		if ( null != BRAIN ) {
+		if ( BOOT_PARAMS != BRAIN ) {
 			GiskardException.wrap(null, "Brain already set");
 		} else {
 			BRAIN = brain;
