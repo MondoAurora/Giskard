@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project G05DustForge with libraries in sub-folder">
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="/Users/lkedves/eclipse-workspace"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/../../../../Store/Binary/Java"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/Dust_BrainJava_1_0.jar">
+            <manifest>
+                <attribute name="Main-Class" value="me.giskard.dust.mod.brain.DustBrain"/>
+                <attribute name="Class-Path" value=". Dust_BrainJava_1_0/json-simple-1.1.1.jar"/>
+            </manifest>
+            <fileset dir="${dir.buildfile}/bin"/>
+            <fileset dir="/Users/lkedves/git/Giskard/Generations/G05/Impl/Java/Dust/Brain/bin"/>
+            <fileset dir="/Users/lkedves/git/Giskard/Generations/G05/Gen/Java/bin"/>
+        </jar>
+    </target>
+</project>

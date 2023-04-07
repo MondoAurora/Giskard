@@ -2,13 +2,15 @@ package me.giskard.mind;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class GiskardApp implements GiskardConsts {
 	public static final String CFGKEY_LOCALSTOREROOT = "Giskard.G05.LocalStoreRoot";
@@ -19,7 +21,7 @@ public class GiskardApp implements GiskardConsts {
 		public final String token;
 		public final Integer verMajor;
 		public final Integer verMinor;
-		
+
 		private ClassLoader cl;
 		private MindAgent mainAgent;
 
@@ -35,7 +37,7 @@ public class GiskardApp implements GiskardConsts {
 			StringBuilder sb = GiskardUtils.sbAppend(null, SEP, false, author, token, verMajor, verMinor);
 			return sb.toString();
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public MindAgent getMainAgent() throws Exception {
 			if ( null == cl ) {
@@ -43,11 +45,11 @@ public class GiskardApp implements GiskardConsts {
 				String modClass = GiskardMind.access(MindAccess.Peek, null, BootParam.LaunchConfig, CFGKEY_MODULEMAIN + "." + modID);
 				cl = ClassLoader.getSystemClassLoader();
 				Class<MindAgent> cAgent = null;
-				
+
 				if ( null != modClass ) {
 					cAgent = (Class<MindAgent>) cl.loadClass(modClass);
 				}
-				
+
 				if ( null == cAgent ) {
 					ArrayList<URL> urls = new ArrayList<>();
 
@@ -68,26 +70,27 @@ public class GiskardApp implements GiskardConsts {
 					uu = urls.toArray(uu);
 
 					cl = new URLClassLoader(uu, ClassLoader.getSystemClassLoader());
-					
-					InputStream isMF = cl.getResourceAsStream("META-INF/MANIFEST.MF");
-					if ( null != isMF ) {
-						BufferedReader br = new BufferedReader(new InputStreamReader(isMF));
-						String line;
-						Pattern pt = Pattern.compile("Main-Class:(.*)");
 
-						while (null != (line = br.readLine())) {
-							GiskardUtils.dump(", ", false, line);
+					ZipInputStream zin = new ZipInputStream(new FileInputStream(f));
+					for (ZipEntry e; (null == cAgent) && (e = zin.getNextEntry()) != null;) {
+						if ( e.getName().equalsIgnoreCase("META-INF/MANIFEST.MF") ) {
+							BufferedReader br = new BufferedReader(new InputStreamReader(zin));
+							String line;
+							Pattern pt = Pattern.compile("Main-Class:(.*)");
 
-							Matcher m = pt.matcher(line);
-							if ( m.matches() ) {
-								modClass = m.group(1).trim();
-								cAgent = (Class<MindAgent>) cl.loadClass(modClass);
-								break;
+							while (null != (line = br.readLine())) {
+								GiskardUtils.dump(", ", false, line);
+
+								Matcher m = pt.matcher(line);
+								if ( m.matches() ) {
+									modClass = m.group(1).trim();
+									cAgent = (Class<MindAgent>) cl.loadClass(modClass);
+									break;
+								}
 							}
 						}
-
-						br.close();
-					}					
+					}
+					zin.close();
 				}
 
 				if ( null != cAgent ) {
@@ -99,10 +102,10 @@ public class GiskardApp implements GiskardConsts {
 					}
 				}
 			}
-			
+
 			return mainAgent;
 		}
-		
+
 	}
 
 	protected final ModuleBean brainBean;
@@ -138,7 +141,6 @@ public class GiskardApp implements GiskardConsts {
 		GiskardMind.BOOT_PARAMS.access(MindAccess.Set, appBean, BootParam.AppModule);
 
 		MindAgent brain = brainBean.getMainAgent();
-		
 
 //		String cnBrain = getModClassName(brainBean);
 //		if ( null != cnBrain ) {
@@ -209,7 +211,5 @@ public class GiskardApp implements GiskardConsts {
 //	public static String getModClassName(ModuleBean moduleBean) {
 //		return GiskardMind.access(MindAccess.Peek, null, BootParam.LaunchConfig, CFGKEY_MODULEMAIN + "." + moduleBean.toString());
 //	}
-
-
 
 }

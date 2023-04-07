@@ -5,7 +5,7 @@ import me.giskard.mind.GiskardUtils;
 public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts, DustBrainBootstrap {
 
 	public static DustBrainHandle createKnowledgeItem(KnowledgeItem unit) {
-		KnowledgeItem ki = createInstance(CN_KNOWLEDGE_ITEM);
+		KnowledgeItem ki = createInstance(DustBrainBootUtils.class.getClassLoader(), CN_KNOWLEDGE_ITEM);
 
 		DustBrainHandle handle = new DustBrainHandle();
 
@@ -15,7 +15,7 @@ public class DustBrainBootUtils extends GiskardUtils implements DustBrainConsts,
 	}
 
 	public static KnowledgeItem createKnowledgeItem(KnowledgeItem unit, MindHandle handle) {
-		KnowledgeItem ki = createInstance(CN_KNOWLEDGE_ITEM);
+		KnowledgeItem ki = createInstance(DustBrainBootUtils.class.getClassLoader(), CN_KNOWLEDGE_ITEM);
 
 		if ( null == handle ) {
 			handle = new DustBrainHandle();

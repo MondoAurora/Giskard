@@ -59,9 +59,9 @@ public class GiskardUtils implements GiskardConsts {
 		}
 	}
 
-	public static <RetType> RetType createInstance(String className) {
+	public static <RetType> RetType createInstance(ClassLoader cl, String className) {
 		try {
-			return (RetType) Class.forName(className).getConstructor().newInstance();
+			return (RetType) cl.loadClass(className).getConstructor().newInstance();
 		} catch (Throwable e) {
 			return GiskardException.wrap(e);
 		}

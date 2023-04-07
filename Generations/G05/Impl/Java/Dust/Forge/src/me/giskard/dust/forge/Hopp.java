@@ -1,4 +1,4 @@
-package me.giskard.dust.app;
+package me.giskard.dust.forge;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

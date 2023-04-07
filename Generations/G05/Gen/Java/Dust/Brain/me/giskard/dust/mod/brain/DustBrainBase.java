@@ -29,7 +29,7 @@ public abstract class DustBrainBase implements DustBrainConsts, DustBrainBootstr
 	Map<String, DustBrainLangConn> loadConn = new HashMap<>();
 
 	protected void initBrain() throws Exception {
-		brain = GiskardUtils.createInstance(CN_KNOWLEDGE_ITEM);
+		brain = GiskardUtils.createInstance(this.getClass().getClassLoader(), CN_KNOWLEDGE_ITEM);
 
 		for (BootToken bt : BootToken.values()) {
 			DustBrainHandle bh = new DustBrainHandle();
