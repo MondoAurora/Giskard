@@ -39,21 +39,21 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
+		"unitBrain": {
+			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
+			"unitMiND_memUnitAuthor": "authGiskard",
+			"unitMiND_memKnowledgeToken": "Brain",
+			"unitMiND_memUnitVersionMajor": 1,
+			"unitMiND_memKnowledgeTags": {
+				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
+			}
+		},
 		"authDust": {
 			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
 			"unitMiND_memKnowledgeToken": "Dust",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {
 				"unitMiND_tagProxy": "unitMiND_tagProxyAuthor"
-			}
-		},
-		"unitBrain": {
-			"unitMiND_memKnowledgeType": "unitMiND_typProxy",
-			"unitMiND_memUnitAuthor": "authDust",
-			"unitMiND_memKnowledgeToken": "Brain",
-			"unitMiND_memUnitVersionMajor": 1,
-			"unitMiND_memKnowledgeTags": {
-				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
 		"unitBrainJava": {

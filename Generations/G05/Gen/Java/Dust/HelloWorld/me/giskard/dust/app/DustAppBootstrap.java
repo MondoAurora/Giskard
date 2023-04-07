@@ -6,7 +6,7 @@ public class DustAppBootstrap extends GiskardApp {
 
 	public DustAppBootstrap() {
 		super(
-				new ModuleBean("Dust", "Brain", 1, 0, "me.giskard.dust.mod.brain.DustBrain"), 
+				new ModuleBean("Dust", "BrainJava", 1, 0), 
 				new ModuleBean("Dust", "HelloWorld", 1, 0));
 	}
 	

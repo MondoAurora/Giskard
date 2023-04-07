@@ -48,14 +48,9 @@
 				"unitMiND_tagProxy": "unitMiND_tagProxyUnit"
 			}
 		},
-		"authDust": {
-			"unitMiND_memKnowledgeType": "unitMiND_typAuthor",
-			"unitMiND_memKnowledgeToken": "Dust",
-			"unitMiND_memUnitVersionMajor": 1
-		},
 		"": {
 			"unitMiND_memKnowledgeType": "unitMiND_typUnit",
-			"unitMiND_memUnitAuthor": "authDust",
+			"unitMiND_memUnitAuthor": "authGiskard",
 			"unitMiND_memKnowledgeToken": "Brain",
 			"unitMiND_memUnitVersionMajor": 1,
 			"unitMiND_memKnowledgeTags": {

@@ -27,7 +27,7 @@ public interface DustBrainBootstrap extends DustBrainConsts {
 	}
 
 	enum ModuleUnit {
-		unitMiND(ModuleAuthor.authGiskard, 1), unitText(ModuleAuthor.authGiskard, 1), unitStream(ModuleAuthor.authGiskard, 1), unitBrain(ModuleAuthor.authDust, 1), unitBrainJava(ModuleAuthor.authDust, 1)
+		unitMiND(ModuleAuthor.authGiskard, 1), unitText(ModuleAuthor.authGiskard, 1), unitStream(ModuleAuthor.authGiskard, 1), unitBrain(ModuleAuthor.authGiskard, 1), unitBrainJava(ModuleAuthor.authDust, 1)
 
 		;
 

@@ -12,6 +12,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="me.giskard.dust.montru.MontruApp"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="G05DustMontru"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="G05DustMontru"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="G05DustForge"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DGiskard.G05.LocalStoreRoot=../../../../Store -DGiskard.G05.ModuleMain.Dust_BrainJava_1_0=me.giskard.dust.mod.brain.DustBrain"/>
 </launchConfiguration>

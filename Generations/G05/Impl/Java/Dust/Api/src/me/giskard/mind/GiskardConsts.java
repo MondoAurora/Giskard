@@ -145,7 +145,7 @@ public interface GiskardConsts {
 	};
 
 	enum BootParam {
-		Arr, Map,
+		LaunchParams, LaunchConfig, AppModule
 	};
 
 	enum MindRoot {

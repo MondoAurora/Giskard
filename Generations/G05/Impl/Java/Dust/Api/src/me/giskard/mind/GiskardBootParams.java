@@ -11,6 +11,8 @@ public class GiskardBootParams implements GiskardConsts, GiskardConsts.MindBrain
 	ArrayList<String> params = new ArrayList<>();
 	Map<String, Object> config = new HashMap<>();
 
+	Object appModule;
+
 	public void initParams(String[] cmdLine) {
 		for (Map.Entry<String, String> e : System.getenv().entrySet()) {
 			addConfigVal(e.getKey(), e.getValue());
@@ -74,19 +76,35 @@ public class GiskardBootParams implements GiskardConsts, GiskardConsts.MindBrain
 	@Override
 	public <RetType> RetType access(MindAccess cmd, Object val, Object root, Object... path) {
 		Object ret = null;
-		Object curr = (root == BootParam.Arr) ? params : config;
 
-		for (Object p : path) {
-			if ( curr instanceof ArrayList ) {
-				curr = ((ArrayList) curr).get((Integer) p);
-			} else if ( curr instanceof Map ) {
-				curr = ((Map) curr).get(p);
-			} else {
-				curr = null;
+		if ( root == BootParam.AppModule ) {
+			ret = appModule;
+			switch ( cmd ) {
+			case Peek:
+			case Get:
+				break;
+			case Insert:
+			case Set:
+				appModule = val;
+				break;
+			default:
+				break;
 			}
+		} else {
+			Object curr = (root == BootParam.LaunchParams) ? params : config;
+
+			for (Object p : path) {
+				if ( curr instanceof ArrayList ) {
+					curr = ((ArrayList) curr).get((Integer) p);
+				} else if ( curr instanceof Map ) {
+					curr = ((Map) curr).get(p);
+				} else {
+					curr = null;
+				}
+			}
+
+			ret = (null == curr) ? val : curr;
 		}
-		
-		ret = (null == curr) ? val : curr;
 
 		return (RetType) ret;
 	}

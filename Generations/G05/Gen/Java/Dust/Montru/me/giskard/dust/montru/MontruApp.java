@@ -6,7 +6,7 @@ public class MontruApp extends GiskardApp {
 
 	public MontruApp() {
 		super(
-				new ModuleBean("Dust", "Brain", 1, 0, "me.giskard.dust.mod.brain.DustBrain"), 
+				new ModuleBean("Dust", "BrainJava", 1, 0), 
 				new ModuleBean("Dust", "Montru", 1, 0));
 	}
 
