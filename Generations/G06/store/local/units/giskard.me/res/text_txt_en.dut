@@ -1,0 +1,56 @@
+DustUnitText	1.0	UTF8	giskard.me	text_txt_en	1.0	1	2024-07-27T13:14:00.505Z
+
+!authors
+giskard.me
+
+!units
+0	giskard.me	text	1.0	1	2024-07-27T13:14:00.505Z
+0	giskard.me	mind	1.0	1	2024-07-27T13:14:00.505Z
+0	giskard.me	misc	1.0	1	2024-07-27T13:14:00.505Z
+
+!graph
+0	o1:9	h7
+0	o2:1	h0:0
+0	m1:7	h0	h1
+0	o3	bTEXT_TAG_LANGUAGE
+
+1	o1:9	h7
+1	o2:1	h0:1
+1	m1:7	h0	h1
+1	o3	bTEXT_TAG_LANGUAGE_EN_US
+
+2	o1:9	h7
+2	o2:1	h0:2
+2	m1:7	h0	h1
+2	o3	bTEXT_ATT_LANGUAGE_DEFAULT
+
+3	o1:9	h7
+3	o2:1	h0:3
+3	m1:7	h0	h1
+3	o3	bTEXT_ATT_TOKEN
+
+4	o1:9	h7
+4	o2:1	h0:4
+4	m1:7	h0	h1
+4	o3	bTEXT_TAG_TYPE
+
+5	o1:9	h7
+5	o2:1	h0:5
+5	m1:7	h0	h1
+5	o3	bTEXT_TAG_TYPE_TOKEN
+
+6	o1:9	h7
+6	o2:1	h0:6
+6	m1:7	h0	h1
+6	o3	bTEXT_TAG_TYPE_LABEL
+
+7	o1:9	h7
+7	o2:1	h0:7
+7	m1:7	h0	h1
+7	o3	bTEXT_ASP_PLAIN
+
+8	o1:9	h7
+8	o2:1	h0:8
+8	m1:7	h0	h1
+8	o3	bTEXT_ATT_PLAIN_TEXT
+

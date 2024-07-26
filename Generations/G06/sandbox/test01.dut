@@ -1,0 +1,36 @@
+DustUnitText	1.0	UTF8	test01	1.0	1	2024-07-23T12:33:00Z
+
+!authors
+giskard.me
+
+!units
+0	mind	1.0	1	2024-07-23T12:33:00Z
+0	misc	1.0	1	2024-07-23T12:33:00Z
+0	dev	1.0	1	2024-07-23T12:33:00Z
+0	text	1.0	1	2024-07-23T12:33:00Z
+0	dust	1.0	1	2024-07-23T12:33:00Z
+0	app	1.0	1	2024-07-23T12:33:00Z
+
+!graph
+# unit
+0	o0:11	h0:0
+
+# Hello world text
+1	o0:11	h3:7
+1	o3:3	bHello, World!
+1	a0:8	h4
+
+# Console out Narrative
+2	o0:11	h0:20
+
+# Native implementation
+3	o0:11	h4:18
+3	o3:3	bhu.sze.milab.dust.test.DustTestAgentHelloWorld
+3	o4:19	h2
+
+# Hello world agent
+4	o0:11	h0:29
+4	o0:30	h2
+
+# launch the agent
+5:2	a0:24	h1
