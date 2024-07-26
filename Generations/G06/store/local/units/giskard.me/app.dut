@@ -1,0 +1,45 @@
+DustUnitText	1.0	UTF8	giskard.me	app	1.0	1	2024-07-26T14:25:52.671Z
+
+!authors
+giskard.me
+
+!units
+0	giskard.me	dust	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	dustjava	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
+
+!graph
+0	a0:5	h1
+0	o1:9	h0:0
+0	o0:4	h2
+0	o1:6	h0
+0	o3:0	bAPP_MACHINE_MAIN
+1	o1:9	h0:12
+1	a0:14	h2:1
+1	a0:14	h2:2
+1	a0:14	h2:3
+1	a0:14	h2:4
+1	a0:14	h2:5
+1	a0:14	h2:6
+1	a0:14	h2:7
+1	a0:14	h2:8
+1	a0:14	h2:9
+1	a0:14	h2:10
+1	a0:14	h2:11
+1	a0:14	h2:12
+1	a0:14	h2:13
+1	a0:14	h2:14
+1	a0:14	h2:15
+1	a0:14	h2:16
+1	a0:14	h2:17
+1	a0:14	h2:18
+1	a0:14	h2:19
+1	a0:14	h2:20
+1	a0:14	h2:21
+1	a0:14	h2:22
+1	o1:6	h0
+1	o3:0	bAPP_MODULE_MAIN
+2	o1:9	h1:21
+2	o1:6	h0
+2	o3:0	bAPP_ASSEMBLY_MAIN

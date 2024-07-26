@@ -1,0 +1,52 @@
+DustUnitText	1.0	UTF8	giskard.me	forge	1.0	1	2024-07-26T14:25:52.671Z
+
+!authors
+giskard.me
+
+!units
+0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	misc	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
+
+!graph
+1	o0:9	h0:15
+1	o0:6	h15
+1	o2:0	bMATH_ASP_HOST
+2	o0:9	h0:17
+2	o1:2	h1
+2	o0:6	h15
+2	s0:10	h1:0
+2	o2:0	bMATH_ATT_HOST_PORT
+3	o0:9	h0:17
+3	o1:2	h1
+3	o0:6	h15
+3	s0:10	h1:0
+3	o2:0	bMATH_ATT_HOST_IPV4
+4	o0:9	h0:19
+4	o0:6	h15
+4	o2:0	bMATH_TAG_AGGRTYPE
+5	o0:9	h0:19
+5	o1:2	h4
+5	o0:6	h15
+5	s0:10	h1:0
+5	o2:0	bMATH_TAG_AGGRTYPE_FIRST
+6	o0:9	h0:19
+6	o1:2	h4
+6	o0:6	h15
+6	s0:10	h1:0
+6	o2:0	bMATH_TAG_AGGRTYPE_LAST
+7	o0:9	h0:19
+7	o1:2	h4
+7	o0:6	h15
+7	s0:10	h1:0
+7	o2:0	bMATH_TAG_AGGRTYPE_MIN
+8	o0:9	h0:19
+8	o1:2	h4
+8	o0:6	h15
+8	s0:10	h1:0
+8	o2:0	bMATH_TAG_AGGRTYPE_MAX
+9	o0:9	h0:19
+9	o1:2	h4
+9	o0:6	h15
+9	s0:10	h1:0
+9	o2:0	bMATH_TAG_AGGRTYPE_AVG
