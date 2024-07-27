@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 DustUnitText	1.0	UTF8	giskard.me	geometry	1.0	1	2024-07-27T13:14:00.505Z
 
 !authors
@@ -47,3 +48,67 @@ giskard.me
 13	o0:9	h0:19
 13	o1:2	h10
 13	s0:10	h1:0
+=======
+DustUnitText	1.0	UTF8	giskard.me	geometry	1.0	1	2024-07-26T14:25:52.671Z
+
+!authors
+giskard.me
+
+!units
+0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	misc	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
+
+!graph
+1	o0:9	h0:15
+1	o0:6	h12
+1	o2:0	bGEOMETRY_ASP_EDGE
+3	o0:9	h0:17
+3	o1:2	h2
+3	o0:6	h12
+3	s0:10	h1:0
+3	o2:0	bGEOMETRY_ATT_GRAPH_NODES
+4	o0:9	h0:17
+4	o1:2	h2
+4	o0:6	h12
+4	s0:10	h1:0
+4	o2:0	bGEOMETRY_ATT_GRAPH_EDGES
+5	o0:9	h0:19
+5	o0:6	h12
+5	s0:10	h1:0
+5	o2:0	bGEOMETRY_TAG_VECTOR_LOCATION
+6	o0:9	h0:19
+6	o0:6	h12
+6	s0:10	h1:0
+6	o2:0	bGEOMETRY_TAG_VECTOR_SIZE
+7	o0:9	h0:19
+7	o0:6	h12
+7	s0:10	h1:0
+7	o2:0	bGEOMETRY_TAG_VECTOR_WEIGHT
+8	o0:9	h0:19
+8	o0:6	h12
+8	s0:10	h1:0
+8	o2:0	bGEOMETRY_TAG_VECTOR_SCALE
+9	o0:9	h0:19
+9	o0:6	h12
+9	s0:10	h1:0
+9	o2:0	bGEOMETRY_TAG_VECTOR_ROTATE
+10	o0:9	h0:19
+10	o0:6	h12
+10	o2:0	bGEOMETRY_TAG_VALTYPE
+11	o0:9	h0:19
+11	o1:2	h10
+11	o0:6	h12
+11	s0:10	h1:0
+11	o2:0	bGEOMETRY_TAG_VALTYPE_CARTESIAN_X
+12	o0:9	h0:19
+12	o1:2	h10
+12	o0:6	h12
+12	s0:10	h1:0
+12	o2:0	bGEOMETRY_TAG_VALTYPE_CARTESIAN_Y
+13	o0:9	h0:19
+13	o1:2	h10
+13	o0:6	h12
+13	s0:10	h1:0
+13	o2:0	bGEOMETRY_TAG_VALTYPE_CARTESIAN_Z
+>>>>>>> branch 'main' of https://github.com/MondoAurora/Giskard.git

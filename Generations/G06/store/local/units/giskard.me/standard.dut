@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 DustUnitText	1.0	UTF8	giskard.me	standard	1.0	1	2024-07-27T13:14:00.505Z
 
 !authors
@@ -42,3 +43,60 @@ giskard.me
 9	o0:9	h0:17
 9	o1:2	h8
 9	s0:10	h1:0
+=======
+DustUnitText	1.0	UTF8	giskard.me	standard	1.0	1	2024-07-26T14:25:52.671Z
+
+!authors
+giskard.me
+
+!units
+0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
+0	giskard.me	misc	1.0	1	2024-07-26T14:25:52.671Z
+
+!graph
+0	o0:9	h0:15
+0	o0:6	h11
+0	o1:0	bSTANDARD_ASP_JSONAPIDOM
+1	o0:9	h0:15
+1	o0:6	h11
+1	o1:0	bSTANDARD_ASP_JSONAPIFETCH
+2	o0:9	h0:17
+2	o2:2	h1
+2	o0:6	h11
+2	s0:10	h2:0
+2	o1:0	bSTANDARD_ATT_JSONAPIFETCH_INCLUDE
+3	o0:9	h0:17
+3	o2:2	h1
+3	o0:6	h11
+3	s0:10	h2:0
+3	o1:0	bSTANDARD_ATT_JSONAPIFETCH_FIELDS
+4	o0:9	h0:17
+4	o2:2	h1
+4	o0:6	h11
+4	s0:10	h2:0
+4	o1:0	bSTANDARD_ATT_JSONAPIFETCH_FILTER
+5	o0:9	h0:17
+5	o2:2	h1
+5	o0:6	h11
+5	s0:10	h2:0
+5	o1:0	bSTANDARD_ATT_JSONAPIFETCH_SORT
+6	o0:9	h0:17
+6	o2:2	h1
+6	o0:6	h11
+6	s0:10	h2:0
+6	o1:0	bSTANDARD_ATT_JSONAPIFETCH_PAGELIMIT
+7	o0:9	h0:17
+7	o2:2	h1
+7	o0:6	h11
+7	s0:10	h2:0
+7	o1:0	bSTANDARD_ATT_JSONAPIFETCH_PAGEOFFSET
+8	o0:9	h0:15
+8	o0:6	h11
+8	o1:0	bSTANDARD_ASP_XMLELEMENT
+9	o0:9	h0:17
+9	o2:2	h8
+9	o0:6	h11
+9	s0:10	h2:0
+9	o1:0	bSTANDARD_ATT_XMLELEMENT_ATTRIBUTES
+>>>>>>> branch 'main' of https://github.com/MondoAurora/Giskard.git
