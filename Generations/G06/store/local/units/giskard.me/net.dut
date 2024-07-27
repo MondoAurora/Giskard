@@ -1,12 +1,11 @@
-<<<<<<< HEAD
-DustUnitText	1.0	UTF8	giskard.me	net	1.0	1	2024-07-27T13:14:00.505Z
+DustUnitText	1.0	UTF8	giskard.me	net	1.0	1	2024-07-27T17:36:39.874Z
 
 !authors
 giskard.me
 
 !units
-0	giskard.me	mind	1.0	1	2024-07-27T13:14:00.505Z
-0	giskard.me	misc	1.0	1	2024-07-27T13:14:00.505Z
+0	giskard.me	mind	1.0	1	2024-07-27T17:36:39.874Z
+0	giskard.me	misc	1.0	1	2024-07-27T17:36:39.874Z
 
 !graph
 0	o0:6	h10
@@ -91,121 +90,3 @@ giskard.me
 21	s0:10	h1:0
 26	o0:6	h10
 26	o0:9	h0:20
-=======
-DustUnitText	1.0	UTF8	giskard.me	net	1.0	1	2024-07-26T14:25:52.671Z
-
-!authors
-giskard.me
-
-!units
-0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
-0	giskard.me	misc	1.0	1	2024-07-26T14:25:52.671Z
-0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
-
-!graph
-0	o0:9	h0:15
-0	o0:6	h10
-0	o2:0	bNET_ASP_HOST
-1	o0:9	h0:17
-1	o1:2	h0
-1	o0:6	h10
-1	s0:10	h1:0
-1	o2:0	bNET_ATT_HOST_PORT
-2	o0:9	h0:17
-2	o1:2	h0
-2	o0:6	h10
-2	s0:10	h1:0
-2	o2:0	bNET_ATT_HOST_IPV4
-3	o0:9	h0:15
-3	o0:6	h10
-3	o2:0	bNET_ASP_SSLINFO
-4	o0:9	h0:17
-4	o1:2	h3
-4	o0:6	h10
-4	s0:10	h1:0
-4	o2:0	bNET_ATT_SSLINFO_PORT
-5	o0:9	h0:17
-5	o1:2	h3
-5	o0:6	h10
-5	s0:10	h1:0
-5	o2:0	bNET_ATT_SSLINFO_STOREPATH
-6	o0:9	h0:17
-6	o1:2	h3
-6	o0:6	h10
-6	s0:10	h1:0
-6	o2:0	bNET_ATT_SSLINFO_STOREPASS
-7	o0:9	h0:17
-7	o1:2	h3
-7	o0:6	h10
-7	s0:10	h1:0
-7	o2:0	bNET_ATT_SSLINFO_KEYMANAGERPASS
-8	o0:9	h0:15
-8	o0:6	h10
-8	o2:0	bNET_ASP_SRVCALL
-9	o0:9	h0:17
-9	o1:2	h8
-9	o0:6	h10
-9	s0:10	h1:0
-9	o2:0	bNET_ATT_SRVCALL_REQUEST
-10	o0:9	h0:17
-10	o1:2	h8
-10	o0:6	h10
-10	s0:10	h1:0
-10	o2:0	bNET_ATT_SRVCALL_RESPONSE
-11	o0:9	h0:17
-11	o1:2	h8
-11	o0:6	h10
-11	s0:10	h1:0
-11	o2:0	bNET_ATT_SRVCALL_METHOD
-12	o0:9	h0:17
-12	o1:2	h8
-12	o0:6	h10
-12	s0:10	h1:0
-12	o2:0	bNET_ATT_SRVCALL_PATHINFO
-13	o0:9	h0:17
-13	o1:2	h8
-13	o0:6	h10
-13	s0:10	h1:0
-13	o2:0	bNET_ATT_SRVCALL_PAYLOAD
-14	o0:9	h0:17
-14	o1:2	h8
-14	o0:6	h10
-14	s0:10	h1:0
-14	o2:0	bNET_ATT_SRVCALL_HEADERS
-15	o0:9	h0:17
-15	o1:2	h8
-15	o0:6	h10
-15	s0:10	h1:0
-15	o2:0	bNET_ATT_SRVCALL_ATTRIBUTES
-16	o0:9	h0:17
-16	o1:2	h8
-16	o0:6	h10
-16	s0:10	h1:0
-16	o2:0	bNET_ATT_SRVCALL_STATUS
-17	o0:9	h0:15
-17	o0:6	h10
-17	o2:0	bNET_ASP_SRVRESP
-18	o0:9	h0:17
-18	o1:2	h17
-18	o0:6	h10
-18	s0:10	h1:0
-18	o2:0	bNET_ATT_SRVRESP_STATUS
-19	o0:9	h0:17
-19	o1:2	h17
-19	o0:6	h10
-19	s0:10	h1:0
-19	o2:0	bNET_ATT_SRVRESP_TYPE
-20	o0:9	h0:17
-20	o1:2	h17
-20	o0:6	h10
-20	s0:10	h1:0
-20	o2:0	bNET_ATT_SRVRESP_HEADER
-21	o0:9	h0:17
-21	o1:2	h17
-21	o0:6	h10
-21	s0:10	h1:0
-21	o2:0	bNET_ATT_SRVRESP_PAYLOAD
-26	o0:9	h0:20
-26	o0:6	h10
-26	o2:0	bNET_NAR_HTTPCLICOMM
->>>>>>> branch 'main' of https://github.com/MondoAurora/Giskard.git

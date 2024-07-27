@@ -1,12 +1,11 @@
-<<<<<<< HEAD
-DustUnitText	1.0	UTF8	giskard.me	dust	1.0	1	2024-07-27T13:14:00.505Z
+DustUnitText	1.0	UTF8	giskard.me	dust	1.0	1	2024-07-27T17:36:39.874Z
 
 !authors
 giskard.me
 
 !units
-0	giskard.me	mind	1.0	1	2024-07-27T13:14:00.505Z
-0	giskard.me	misc	1.0	1	2024-07-27T13:14:00.505Z
+0	giskard.me	mind	1.0	1	2024-07-27T17:36:39.874Z
+0	giskard.me	misc	1.0	1	2024-07-27T17:36:39.874Z
 
 !graph
 0	o0:6	h2
@@ -58,86 +57,3 @@ giskard.me
 21	o0:6	h2
 21	o0:9	h0:17
 21	o1:2	h18
-=======
-DustUnitText	1.0	UTF8	giskard.me	dust	1.0	1	2024-07-26T14:25:52.671Z
-
-!authors
-giskard.me
-
-!units
-0	giskard.me	mind	1.0	1	2024-07-26T14:25:52.671Z
-0	giskard.me	misc	1.0	1	2024-07-26T14:25:52.671Z
-0	giskard.me	dev	1.0	1	2024-07-26T14:25:52.671Z
-
-!graph
-0	o0:9	h0:20
-0	o0:6	h2
-0	o2:0	bDUST_NAR_MACHINE
-1	o0:9	h0:17
-1	o0:6	h2
-1	o2:0	bDUST_ATT_MACHINE_AUTHORS
-2	o0:9	h0:17
-2	o0:6	h2
-2	o2:0	bDUST_ATT_MACHINE_UNITS
-3	o0:9	h0:17
-3	o0:6	h2
-3	o2:0	bDUST_ATT_MACHINE_ASSEMBLIES
-4	o0:9	h0:17
-4	o0:6	h2
-4	o2:0	bDUST_ATT_MACHINE_MAINASSEMBLY
-5	o0:9	h0:17
-5	o0:6	h2
-5	o2:0	bDUST_ATT_MACHINE_MODULES
-6	o0:9	h0:17
-6	o0:6	h2
-6	o2:0	bDUST_ATT_MACHINE_DIALOGS
-7	o0:9	h0:17
-7	o0:6	h2
-7	o2:0	bDUST_ATT_MACHINE_MAINDIALOG
-8	o0:9	h0:17
-8	o0:6	h2
-8	o2:0	bDUST_ATT_MACHINE_THREADS
-9	o0:9	h0:17
-9	o0:6	h2
-9	o2:0	bDUST_ATT_MACHINE_ALL_IMPLEMENTATIONS
-10	o0:9	h0:17
-10	o0:6	h2
-10	o2:0	bDUST_ATT_MACHINE_ACTIVE_SERVERS
-11	o0:9	h0:17
-11	o0:6	h2
-11	o2:0	bDUST_ATT_MACHINE_UNIT_RESOLVER
-12	o0:9	h0:15
-12	o0:6	h2
-12	o2:0	bDUST_ASP_MODULE
-13	o0:9	h0:17
-13	o1:2	h12
-13	o0:6	h2
-13	o2:0	bDUST_ATT_MODULE_UNITS
-14	o0:9	h0:17
-14	o1:2	h12
-14	o0:6	h2
-14	o2:0	bDUST_ATT_MODULE_NARRATIVEIMPLS
-15	o0:9	h0:17
-15	o1:2	h12
-15	o0:6	h2
-15	o2:0	bDUST_ATT_MODULE_LIBRARIES
-16	o0:9	h0:15
-16	o0:6	h2
-16	o2:0	bDUST_ASP_THREAD
-17	o0:9	h0:17
-17	o1:2	h16
-17	o0:6	h2
-17	o2:0	bDUST_ATT_THREAD_DIALOG
-19	o0:9	h0:17
-19	o1:2	h18
-19	o0:6	h2
-19	o2:0	bDUST_ATT_IMPL_NARRATIVE
-20	o0:9	h0:17
-20	o1:2	h18
-20	o0:6	h2
-20	o2:0	bDUST_ATT_IMPL_INSTANCE
-21	o0:9	h0:17
-21	o1:2	h18
-21	o0:6	h2
-21	o2:0	bDUST_ATT_IMPL_DATA
->>>>>>> branch 'main' of https://github.com/MondoAurora/Giskard.git
