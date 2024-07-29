@@ -69,8 +69,6 @@ public class DustSandboxBrain implements DustSandboxConsts {
 			}
 		}
 
-		val = parseVal(attType, val);
-
 		switch (attType) {
 		case 'o':
 			m.put(hAtt, val);
@@ -90,20 +88,5 @@ public class DustSandboxBrain implements DustSandboxConsts {
 		}
 
 		Dust.log(null, "Set", hTarget, hAtt, key, val);
-	}
-
-	private Object parseVal(char attType, Object val) {
-		switch (attType) {
-		case 'h':
-		case 'b':
-			break;
-		case 'i':
-			val = Long.parseLong((String) val);
-			break;
-		case 'r':
-			val = Double.parseDouble((String) val);
-			break;
-		}
-		return val;
 	}
 }
