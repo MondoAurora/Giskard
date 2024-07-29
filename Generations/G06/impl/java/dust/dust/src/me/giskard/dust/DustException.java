@@ -31,7 +31,7 @@ public final class DustException extends RuntimeException implements DustConsts 
 	}
 
 	private static void log(boolean thrown, Throwable src, String msg) {
-//		Dust.log(thrown ? EVENT_TAG_TYPE_EXCEPTIONTHROWN : EVENT_TAG_TYPE_EXCEPTIONSWALLOWED, src, msg);
+		Dust.log(null, src, msg);
 
 		if ( (null != DUMP_STACK_TRACE) && (null != src) ) {
 			src.printStackTrace(DUMP_STACK_TRACE);
