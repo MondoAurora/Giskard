@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 
 import me.giskard.dust.utils.DustUtils;
@@ -14,7 +15,12 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 	DustSandboxMachine machine;
 	File root;
 
-	private static final Set<String> LINEBREAK = Set.of("NAR", "ASP");
+	private static final Set<String> LINEBREAK = new HashSet<String>();
+	
+	static {
+		LINEBREAK.add("ASP");
+		LINEBREAK.add("NAR");
+	}
 
 	public DustSandboxCodeGen(String r, DustSandboxMachine m) {
 		root = new File(r);

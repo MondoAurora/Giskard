@@ -18,6 +18,9 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	enum DutStage {
 		authors, units, graph
 	}
+	enum TextAtt {
+		owner, tags, tagLang, tagType, text
+	}
 
 	interface GraphLineProcessor {
 		void reset();
@@ -137,9 +140,6 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	};
 
 	GraphLineProcessor glpText = new GraphLineProcessor() {
-		enum TextAtt {
-			owner, tags, tagLang, tagType, text
-		}
 
 		String currTarget;
 		Map<String, TextAtt> txtAtts = new TreeMap<>();
