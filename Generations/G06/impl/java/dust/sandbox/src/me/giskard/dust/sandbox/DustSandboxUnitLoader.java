@@ -28,6 +28,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	class LoadContext {
 		String author;
 		String unitId;
+		String uref;
 
 		ArrayList<String> authors = new ArrayList<>();
 		ArrayList<String> unitRefs = new ArrayList<>();
@@ -37,6 +38,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 		public void reset(String author, String unitId, GraphLineProcessor glp) {
 			this.author = author;
 			this.unitId = unitId;
+			this.uref = author + ":" + unitId;
 			this.glp = glp;
 
 			authors.clear();
@@ -65,19 +67,18 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 		public DustSandboxHandle resolve(String s) {
 			String[] ss = s.split(":");
 
-			String auth = author;
-			String unit = unitId;
+			String uref;
 			String id = ss[0];
 
 			if (ss.length == 2) {
-				String uref = unitRefs.get(Integer.parseInt(id));
-				String[] urs = uref.split(":");
-				auth = urs[0];
-				unit = urs[1];
+				uref = unitRefs.get(Integer.parseInt(id));
 				id = ss[1];
+			} else {
+				uref = this.uref;
+				id = ss[0];
 			}
 
-			DustSandboxHandle h = machine.resolve(auth, unit, id);
+			DustSandboxHandle h = machine.resolve(uref, id);
 
 			return h;
 		}

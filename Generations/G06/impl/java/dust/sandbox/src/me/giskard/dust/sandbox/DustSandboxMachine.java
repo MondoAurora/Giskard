@@ -10,10 +10,12 @@ import java.util.Set;
 import me.giskard.dust.Dust;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsFactory;
+import me.giskard.event.DustEventHandles;
+import me.giskard.mind.DustMindHandles;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustSandboxMachine extends Dust.Machine implements DustSandboxConsts {
-	
+public class DustSandboxMachine extends Dust.Machine implements DustSandboxConsts, DustMindHandles, DustEventHandles {
+
 	DustUtilsFactory<DustSandboxHandle, Map> knowledge = new DustUtilsFactory(MAP_CREATOR);
 
 	private DustCreator crHandle = new DustCreator() {
@@ -37,10 +39,8 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 		}
 	};
 
-	DustUtilsFactory handleCatalog = new DustUtilsFactory(crAuthor);
-	
-	
-	
+	DustUtilsFactory<String, DustUtilsFactory> handleCatalog = new DustUtilsFactory(crAuthor);
+
 	private DustCreator crLang = new DustCreator() {
 		@Override
 		public DustUtilsFactory create(Object key, Object... hints) {
@@ -49,13 +49,12 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 	};
 
 	DustUtilsFactory vocabulary = new DustUtilsFactory(crLang);
-	
-	
 
-	public DustSandboxHandle resolve(String author, String unit, String id) {
+	public DustSandboxHandle resolve(String uref, String id) {
+		String[] spl = uref.split(":");
+
 		DustUtilsFactory<String, DustSandboxHandle> hf = (DustUtilsFactory<String, DustSandboxHandle>) ((DustUtilsFactory) handleCatalog
-				.get(author)).get(unit);
-		String uref = author + ":" + unit;
+				.get(spl[0])).get(spl[1]);
 
 		DustSandboxHandle h = hf.get(id, uref);
 
@@ -108,22 +107,29 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 	public void setText(EnumMap<TextInfo, Object> txtData) {
 		DustUtilsFactory fType = (DustUtilsFactory) vocabulary.get(txtData.get(TextInfo.txtLang));
 		Map texts = (Map) fType.get(txtData.get(TextInfo.txtType));
-		
+
 		texts.put(txtData.get(TextInfo.owner), txtData.get(TextInfo.text));
-		
-		if ( null == DustSandboxHandle.TO_STRING ) {
-			 DustSandboxHandle.TO_STRING = texts;
+
+		if (null == DustSandboxHandle.TO_STRING) {
+			DustSandboxHandle.TO_STRING = texts;
 		}
-		
+
 //		Dust.log(null, "Set text", txtData);
 	}
 
 	@Override
 	protected <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
-		switch ( cmd ) {
+		Object ret = null;
+
+		switch (cmd) {
 		case Broadcast:
 			StringBuilder sb = DustUtils.sbAppend(null, " ", false, path);
 			System.out.println(val + " " + sb);
+			break;
+		case Lookup:
+			String lid = (String) val;
+			int ii = lid.lastIndexOf(":");
+			ret = resolve(lid.substring(0, ii), lid.substring(ii + 1));
 			break;
 		case Check:
 			break;
@@ -135,8 +141,6 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 			break;
 		case Insert:
 			break;
-		case Lookup:
-			break;
 		case Peek:
 			break;
 		case Reset:
@@ -145,10 +149,12 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 			break;
 		case Visit:
 			break;
-		default:
-			break;
 		}
-		
-		return null;
+
+		return (RetType) ret;
+	}
+	
+	public void test() {
+		Dust.log(EVENT_TAG_TYPE_WARNING, "pompom");
 	}
 }
