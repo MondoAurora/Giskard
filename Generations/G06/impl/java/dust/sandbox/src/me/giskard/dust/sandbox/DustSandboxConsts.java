@@ -1,5 +1,7 @@
 package me.giskard.dust.sandbox;
 
+import java.util.Map;
+
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.forge.DustForgeConsts;
 import me.giskard.dust.machine.DustMachineConsts;
@@ -10,19 +12,28 @@ public interface DustSandboxConsts extends DustConsts, DustUtilsConsts, DustForg
 	
 	String DUT_SIGNATURE = "DustUnitText";
 	
-	class DustSandboxHandle extends MindHandle {
-		final String key;
-		String hint;
+	enum TextInfo {
+		 owner, txtLang, txtType, text
+	}
 
-		public DustSandboxHandle(String key) {
+	
+	class DustSandboxHandle extends MindHandle {
+		final String id;
+		static Map<DustSandboxHandle, String> TO_STRING;
+
+		public DustSandboxHandle(String id) {
 			super();
-			this.key = key;
-			hint = key;
+			this.id = id;
+		}
+		
+		@Override
+		public String getId() {
+			return id;
 		}
 		
 		@Override
 		public String toString() {
-			return hint;
+			return ( null == TO_STRING ) ? id : TO_STRING.getOrDefault(this, id);
 		}
 	}
 }

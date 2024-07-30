@@ -1,0 +1,65 @@
+DustUnitText	1.0	UTF8	giskard.me	text_txt_en	1.0	1	2024-07-30T09:56:51.096Z
+
+!authors
+giskard.me
+
+!units
+0	text	1.0	1	2024-07-30T09:56:51.096Z
+0	mind	1.0	1	2024-07-30T09:56:51.096Z
+0	misc	1.0	1	2024-07-30T09:56:51.096Z
+
+!graph
+0	o1:9	h0:7
+0	o2:1	h0:0
+0	m1:7	h0:0	h0:1
+0	m1:7	h0:4	h0:5
+0	o0:3	bTEXT_TAG_LANGUAGE
+
+1	o1:9	h0:7
+1	o2:1	h0:1
+1	m1:7	h0:0	h0:1
+1	m1:7	h0:4	h0:5
+1	o0:3	bTEXT_TAG_LANGUAGE_EN_US
+
+2	o1:9	h0:7
+2	o2:1	h0:2
+2	m1:7	h0:0	h0:1
+2	m1:7	h0:4	h0:5
+2	o0:3	bTEXT_ATT_LANGUAGE_DEFAULT
+
+3	o1:9	h0:7
+3	o2:1	h0:3
+3	m1:7	h0:0	h0:1
+3	m1:7	h0:4	h0:5
+3	o0:3	bTEXT_ATT_TOKEN
+
+4	o1:9	h0:7
+4	o2:1	h0:4
+4	m1:7	h0:0	h0:1
+4	m1:7	h0:4	h0:5
+4	o0:3	bTEXT_TAG_TYPE
+
+5	o1:9	h0:7
+5	o2:1	h0:5
+5	m1:7	h0:0	h0:1
+5	m1:7	h0:4	h0:5
+5	o0:3	bTEXT_TAG_TYPE_TOKEN
+
+6	o1:9	h0:7
+6	o2:1	h0:6
+6	m1:7	h0:0	h0:1
+6	m1:7	h0:4	h0:5
+6	o0:3	bTEXT_TAG_TYPE_LABEL
+
+7	o1:9	h0:7
+7	o2:1	h0:7
+7	m1:7	h0:0	h0:1
+7	m1:7	h0:4	h0:5
+7	o0:3	bTEXT_ASP_PLAIN
+
+8	o1:9	h0:7
+8	o2:1	h0:8
+8	m1:7	h0:0	h0:1
+8	m1:7	h0:4	h0:5
+8	o0:3	bTEXT_ATT_PLAIN_TEXT
+

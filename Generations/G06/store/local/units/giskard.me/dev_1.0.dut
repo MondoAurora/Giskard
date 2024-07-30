@@ -1,0 +1,17 @@
+DustUnitText	1.0	UTF8	giskard.me	dev	1.0	1	2024-07-30T09:56:51.096Z
+
+!authors
+giskard.me
+
+!units
+0	mind	1.0	1	2024-07-30T09:56:51.096Z
+0	misc	1.0	1	2024-07-30T09:56:51.096Z
+
+!graph
+0	m0:7	h0:47	h0:51
+0	m0:7	h0:52	h0:53
+0	o0:6	h7
+0	o0:9	h0:17
+0	s0:10	h1:0
+1	o0:6	h7
+1	o0:9	h0:19

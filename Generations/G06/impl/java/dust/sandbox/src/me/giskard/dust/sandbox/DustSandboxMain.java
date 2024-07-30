@@ -4,7 +4,7 @@ import java.io.File;
 
 public class DustSandboxMain implements DustSandboxConsts {
 	public static void main(String[] args) {
-		DustSandboxBrain brain = new DustSandboxBrain();
+		DustSandboxMachine machine = new DustSandboxMachine();
 
 		try {
 			String fHome = System.getProperty("user.home");
@@ -13,10 +13,10 @@ public class DustSandboxMain implements DustSandboxConsts {
 			File f = new File(fHome, fRoot);
 			File fUnit = new File(f, "store/local/units");
 			
-			DustSandboxUnitLoader loader = new DustSandboxUnitLoader(brain);
+			DustSandboxUnitLoader loader = new DustSandboxUnitLoader(machine);
 
 			loader.loadUnits(fUnit, "giskard.me", "en");
-//			loader.loadUnits(fUnit, "giskard.me", "en", "mind", "misc", "dust");
+//			loader.loadUnits(fUnit, "giskard.me", "en", "mind_1.0", "misc_1.0", "dust_1.0");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		} finally {

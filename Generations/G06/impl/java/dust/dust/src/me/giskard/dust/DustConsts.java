@@ -7,6 +7,12 @@ public interface DustConsts {
 	public static abstract class MindHandle {
 		protected MindHandle() {
 		}
+		
+		public abstract String getId();
+	};
+
+	enum MindAccess {
+		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Broadcast, Lookup, Visit, 
 	};
 
 }

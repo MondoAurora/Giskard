@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustException;
@@ -17,25 +20,29 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	}
 
 	interface GraphLineProcessor {
+		void reset();
+
 		void processGraphLine(LoadContext ctx, String sepChar, String line);
 	}
 
 	class LoadContext {
 		String author;
-		String unitName;
+		String unitId;
 
 		ArrayList<String> authors = new ArrayList<>();
 		ArrayList<String> unitRefs = new ArrayList<>();
 
 		GraphLineProcessor glp;
 
-		public void reset(String author, String unitName, GraphLineProcessor glp) {
+		public void reset(String author, String unitId, GraphLineProcessor glp) {
 			this.author = author;
-			this.unitName = unitName;
+			this.unitId = unitId;
 			this.glp = glp;
 
 			authors.clear();
 			unitRefs.clear();
+
+			glp.reset();
 		}
 
 		public void processLine(DutStage stage, String sepChar, String line) {
@@ -47,7 +54,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 				String[] sl = line.split(sepChar);
 				int authIdx = Integer.parseInt(sl[0]);
 				String authName = authors.get(authIdx);
-				unitRefs.add(authName + ":" + sl[1]);
+				unitRefs.add(authName + ":" + sl[1] + "_" + sl[2]);
 				break;
 			case graph:
 				glp.processGraphLine(this, sepChar, line);
@@ -59,7 +66,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 			String[] ss = s.split(":");
 
 			String auth = author;
-			String unit = unitName;
+			String unit = unitId;
 			String id = ss[0];
 
 			if (ss.length == 2) {
@@ -70,15 +77,19 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 				id = ss[1];
 			}
 
-			DustSandboxHandle h = brain.resolve(auth, unit, id);
+			DustSandboxHandle h = machine.resolve(auth, unit, id);
 
 			return h;
 		}
 	}
 
-	DustSandboxBrain brain;
-	
+	DustSandboxMachine machine;
+
 	GraphLineProcessor glpUnit = new GraphLineProcessor() {
+		@Override
+		public void reset() {
+		}
+
 		@Override
 		public void processGraphLine(LoadContext ctx, String sepChar, String line) {
 			String spl = line;
@@ -105,7 +116,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 				cp = spl.indexOf(sepChar);
 				s = spl.substring(0, cp);
 				spl = spl.substring(cp + 1);
-				
+
 				key = Integer.parseInt(s);
 
 				break;
@@ -113,19 +124,101 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 				cp = spl.indexOf(sepChar);
 				s = spl.substring(0, cp);
 				spl = spl.substring(cp + 1);
-				
+
 				key = parseVal(ctx, s);
 				break;
 			}
 
 			Object val = parseVal(ctx, spl);
-			
-			brain.set(hTarget, hAtt, attType, key, val);
+
+			machine.set(hTarget, hAtt, attType, key, val);
 		}
 	};
-	
-	public DustSandboxUnitLoader(DustSandboxBrain brain) {
-		this.brain = brain;
+
+	GraphLineProcessor glpText = new GraphLineProcessor() {
+		enum TextAtt {
+			owner, tags, tagLang, tagType, text
+		}
+
+		String currTarget;
+		Map<String, TextAtt> txtAtts = new TreeMap<>();
+		EnumMap<TextInfo, Object> txtData = new EnumMap<>(TextInfo.class);
+
+		public void reset() {
+			currTarget = null;
+		}
+
+		@Override
+		public void processGraphLine(LoadContext ctx, String sepChar, String line) {
+			String[] spl = line.split(sepChar);
+			String tId = spl[0];
+
+			if (!DustUtils.isEqual(currTarget, tId)) {
+				if (null == currTarget) {
+					txtAtts.clear();
+
+					for (int i = ctx.unitRefs.size(); i-- > 0;) {
+						String un = ctx.unitRefs.get(i).split("_")[0];
+
+						switch (un) {
+						case "giskard.me:mind":
+							txtAtts.put(i + ":7", TextAtt.tags);
+							break;
+						case "giskard.me:misc":
+							txtAtts.put(i + ":1", TextAtt.owner);
+							break;
+						case "giskard.me:text":
+							txtAtts.put(i + ":3", TextAtt.text);
+							txtAtts.put(i + ":0", TextAtt.tagLang);
+							txtAtts.put(i + ":4", TextAtt.tagType);
+
+							break;
+						}
+					}
+				} else {
+					machine.setText(txtData);
+					txtData.clear();
+				}
+
+				currTarget = tId;
+			} else {
+				TextAtt ti = txtAtts.get(spl[1].substring(1));
+				if (null != ti) {
+					String p1 = spl[2].substring(1);
+
+					switch (ti) {
+					case tags:
+						TextAtt ta = txtAtts.get(p1);
+						if (null != ta) {
+							Object pv = ctx.resolve(spl[3].substring(1));
+							switch (ta) {
+							case tagLang:
+								txtData.put(TextInfo.txtLang, pv);
+								break;
+							case tagType:
+								txtData.put(TextInfo.txtType, pv);
+								break;
+							default:
+								break;
+							}
+						}
+						break;
+					case owner:
+						txtData.put(TextInfo.owner, ctx.resolve(p1));
+						break;
+					case text:
+						txtData.put(TextInfo.text, p1);
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+	};
+
+	public DustSandboxUnitLoader(DustSandboxMachine machine) {
+		this.machine = machine;
 	}
 
 	public void loadUnits(File root, String author, String resLang, String... unitNames) throws Exception {
@@ -147,16 +240,29 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 		for (String un : unitNames) {
 			un = DustUtils.cutPostfix(un, ".");
 			File fUnit = new File(fa, un + ".dut");
-			File fTxt = new File(fa, "res/" + un + "_txt_" + resLang + ".dut");
 
-			Dust.log(null, "Unit", fUnit.getCanonicalPath(), "resource", fTxt.getCanonicalPath());
-			
+			Dust.log(null, "Loading unit", fUnit.getCanonicalPath());
+
 			lc.reset(author, un, glpUnit);
-			readunit(lc, fUnit);
+			readunit(lc, un, fUnit);
+		}
+
+		for (String un : unitNames) {
+			String pf = DustUtils.getPostfix(un, "_");
+			String fName = DustUtils.cutPostfix(un, "_") + "_txt_" + resLang + "_" + pf;
+			File fTxt = new File(fa, "res/" + fName);
+
+			if (fTxt.isFile()) {
+				un = DustUtils.cutPostfix(fName, ".");
+				Dust.log(null, "Loading resource", fTxt.getCanonicalPath());
+
+				lc.reset(author, un, glpText);
+				readunit(lc, un, fTxt);
+			}
 		}
 	}
 
-	private void readunit(LoadContext lc, File fUnit) throws Exception {
+	private void readunit(LoadContext lc, String unitName, File fUnit) throws Exception {
 
 		try (FileReader fr = new FileReader(fUnit); BufferedReader br = new BufferedReader(fr)) {
 			DutStage stage = null;
@@ -183,8 +289,8 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 					if (!DustUtils.isEqual(lc.author, sl[3])) {
 						DustException.wrap(null, "Invalid author in file", line, "required", lc.author);
 					}
-					if (!DustUtils.isEqual(lc.unitName, sl[4])) {
-						DustException.wrap(null, "Invalid unit in file", line, "required", lc.unitName);
+					if (!DustUtils.isEqual(lc.unitId, sl[4] + "_" + sl[5])) {
+						DustException.wrap(null, "Invalid unit in file", line, "required", lc.unitId);
 					}
 
 					continue;
@@ -194,25 +300,25 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 					stage = DutStage.valueOf(line.substring(1));
 					continue;
 				}
-				
+
 				lc.processLine(stage, sepChar, line);
 			}
 		}
 	}
-	
+
 	private Object parseVal(LoadContext ctx, String val) {
 		char valType = val.charAt(0);
 		val = val.substring(1);
-		
+
 		switch (valType) {
 		case 'h':
 			return ctx.resolve(val);
 		case 'i':
-			return Long.parseLong((String)val);
+			return Long.parseLong((String) val);
 		case 'r':
-			return Double.parseDouble((String)val);
+			return Double.parseDouble((String) val);
 		}
-		
+
 		return val;
 	}
 }
