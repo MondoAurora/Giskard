@@ -15,14 +15,10 @@ public class DustSandboxMain implements DustSandboxConsts {
 			File f = new File(fHome, fRoot);
 			File fUnit = new File(f, "store/local/units");
 			
-			DustSandboxUnitLoader loader = new DustSandboxUnitLoader(machine);
+			DustSandboxUnitLoader loader = new DustSandboxUnitLoader(fUnit);
 
-			loader.loadUnits(fUnit, "giskard.me", "en");
-//			loader.loadUnits(fUnit, "giskard.me", "en", "mind_1.0", "misc_1.0", "dust_1.0");
-			
-//			MindHandle h = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:7");
-//			
-//			Dust.log(null, h.getId(), h);
+			loader.loadAllUnits(machine, "en", "giskard.me");
+//			loader.loadUnits(machine, "en", "giskard.me:mind_1.0", "giskard.me:misc_1.0", "giskard.me:event_1.0");
 			
 			machine.test();
 

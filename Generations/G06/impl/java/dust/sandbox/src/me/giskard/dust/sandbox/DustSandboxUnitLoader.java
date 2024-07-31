@@ -18,6 +18,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	enum DutStage {
 		authors, units, graph
 	}
+
 	enum TextAtt {
 		owner, tags, tagLang, tagType, text
 	}
@@ -29,8 +30,10 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	}
 
 	class LoadContext {
-		String author;
-		String unitId;
+		DustSandboxMachine machine;
+
+//		String author;
+//		String unitId;
 		String uref;
 
 		ArrayList<String> authors = new ArrayList<>();
@@ -38,10 +41,14 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 		GraphLineProcessor glp;
 
-		public void reset(String author, String unitId, GraphLineProcessor glp) {
-			this.author = author;
-			this.unitId = unitId;
-			this.uref = author + ":" + unitId;
+		public LoadContext(DustSandboxMachine machine) {
+			this.machine = machine;
+		}
+
+		public void reset(String uref, GraphLineProcessor glp) {
+//			this.author = author;
+//			this.unitId = unitId;
+			this.uref = uref;
 			this.glp = glp;
 
 			authors.clear();
@@ -85,9 +92,19 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 			return h;
 		}
-	}
 
-	DustSandboxMachine machine;
+		public void verifyFileSignature(String author, String unit, String version) {
+			String[] au = uref.split(":");
+
+			if (!DustUtils.isEqual(au[0], author)) {
+				DustException.wrap(null, "Invalid author in file", author, "required", au[0]);
+			}
+			String uf = unit + "_" + version;
+			if (!DustUtils.isEqual(au[1], uf)) {
+				DustException.wrap(null, "Invalid unit in file", uf, "required", au[1]);
+			}
+		}
+	}
 
 	GraphLineProcessor glpUnit = new GraphLineProcessor() {
 		@Override
@@ -135,7 +152,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 			Object val = parseVal(ctx, spl);
 
-			machine.set(hTarget, hAtt, attType, key, val);
+			ctx.machine.set(hTarget, hAtt, attType, key, val);
 		}
 	};
 
@@ -177,7 +194,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 						}
 					}
 				} else {
-					machine.setText(txtData);
+					ctx.machine.setText(txtData);
 					txtData.clear();
 				}
 
@@ -218,52 +235,60 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 		}
 	};
 
-	public DustSandboxUnitLoader(DustSandboxMachine machine) {
-		this.machine = machine;
+	File root;
+
+	public DustSandboxUnitLoader(File root) {
+		this.root = root;
 	}
 
-	public void loadUnits(File root, String author, String resLang, String... unitNames) throws Exception {
-		Dust.log(null, "Loading units from", root.getCanonicalPath());
+	public void loadAllUnits(DustSandboxMachine machine, String resLang, String defAuthor) throws Exception {
+		File fa = new File(root, defAuthor);
 
-		File fa = new File(root, author);
+		String[] unitNames = fa.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".dut");
+			}
+		});
 
-		if (0 == unitNames.length) {
-			unitNames = fa.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".dut");
-				}
-			});
+		for (int i = unitNames.length; i-- > 0;) {
+			unitNames[i] = DustUtils.cutPostfix(defAuthor + ":" + unitNames[i], ".dut");
 		}
 
-		LoadContext lc = new LoadContext();
+		loadUnits(machine, resLang, unitNames);
+	}
+
+	public void loadUnits(DustSandboxMachine machine, String resLang, String... unitNames) throws Exception {
+		Dust.log(null, "Loading units from", root.getCanonicalPath());
+
+		LoadContext lc = new LoadContext(machine);
 
 		for (String un : unitNames) {
-			un = DustUtils.cutPostfix(un, ".");
-			File fUnit = new File(fa, un + ".dut");
+			String fName = un.replace(':', '/') + ".dut";
 
-			Dust.log(null, "Loading unit", fUnit.getCanonicalPath());
-
-			lc.reset(author, un, glpUnit);
-			readunit(lc, un, fUnit);
+			lc.reset(un, glpUnit);
+			readunit(lc, un, fName);
 		}
 
 		for (String un : unitNames) {
 			String pf = DustUtils.getPostfix(un, "_");
-			String fName = DustUtils.cutPostfix(un, "_") + "_txt_" + resLang + "_" + pf;
-			File fTxt = new File(fa, "res/" + fName);
+			String fName = DustUtils.cutPostfix(un.replace(":", "/res/"), "_") + "_txt_" + resLang + "_" + pf + ".dut";
 
-			if (fTxt.isFile()) {
-				un = DustUtils.cutPostfix(fName, ".");
-				Dust.log(null, "Loading resource", fTxt.getCanonicalPath());
+			un = DustUtils.cutPostfix(un, "_") + "_txt_" + resLang + "_" + pf;
 
-				lc.reset(author, un, glpText);
-				readunit(lc, un, fTxt);
-			}
+			lc.reset(un, glpText);
+			readunit(lc, un, fName);
 		}
 	}
 
-	private void readunit(LoadContext lc, String unitName, File fUnit) throws Exception {
+	private void readunit(LoadContext lc, String unitName, String fName) throws Exception {
+		File fUnit = new File(root, fName);
+
+		if (!fUnit.isFile()) {
+			return;
+		}
+
+		Dust.log(null, "Loading", fUnit.getCanonicalPath());
 
 		try (FileReader fr = new FileReader(fUnit); BufferedReader br = new BufferedReader(fr)) {
 			DutStage stage = null;
@@ -287,12 +312,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 					sl = line.split(sepChar);
 
-					if (!DustUtils.isEqual(lc.author, sl[3])) {
-						DustException.wrap(null, "Invalid author in file", line, "required", lc.author);
-					}
-					if (!DustUtils.isEqual(lc.unitId, sl[4] + "_" + sl[5])) {
-						DustException.wrap(null, "Invalid unit in file", line, "required", lc.unitId);
-					}
+					lc.verifyFileSignature(sl[3], sl[4], sl[5]);
 
 					continue;
 				}
