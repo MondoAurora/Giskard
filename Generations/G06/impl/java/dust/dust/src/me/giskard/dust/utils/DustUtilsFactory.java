@@ -19,11 +19,8 @@ public class DustUtilsFactory<KeyType, ValType> implements DustUtilsConsts {
 		this.creator = creator;
 	}
 
-//	protected abstract ValType create(KeyType key, Object... hints);
-
-//	protected void initNew(ValType item, KeyType key, Object... hints) {
-//
-//	}
+	protected void initNew(ValType item, KeyType key, Object... hints) {
+	}
 
 	public synchronized ValType peek(KeyType key) {
 		return content.get(key);
@@ -35,7 +32,7 @@ public class DustUtilsFactory<KeyType, ValType> implements DustUtilsConsts {
 		if (null == v) {
 			v = creator.create(key, hints);
 			content.put(key, v);
-//			initNew(v, key, hints);
+			initNew(v, key, hints);
 		}
 
 		return v;

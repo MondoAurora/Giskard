@@ -28,7 +28,7 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 	}
 
 	public void genSources(String... units) throws Exception {
-		for (String author : machine.handleCatalog.keys()) {
+		for (String author : machine.getAuthors()) {
 			StringBuilder sb = null;
 			String[] spl = author.split("\\.");
 
@@ -38,7 +38,7 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 
 			String pAuthor = sb.toString();
 
-			DustUtilsFactory<String, DustUtilsFactory> fUnit = machine.handleCatalog.peek(author);
+			DustUtilsFactory<String, DustUtilsFactory> fUnit = machine.getAuthorUnits(author);
 
 			for (String unitId : fUnit.keys()) {
 				String unit = DustUtils.cutPostfix(unitId, "_").toLowerCase();

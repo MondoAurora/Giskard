@@ -1,5 +1,6 @@
 package me.giskard.dust.sandbox;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsFactory;
 import me.giskard.event.DustEventHandles;
@@ -16,7 +18,7 @@ import me.giskard.mind.DustMindHandles;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustSandboxMachine extends Dust.Machine implements DustSandboxConsts, DustMindHandles, DustEventHandles {
 
-	DustUtilsFactory<DustSandboxHandle, Map> knowledge = new DustUtilsFactory(MAP_CREATOR);
+	private DustUtilsFactory<DustSandboxHandle, Map> knowledge = new DustUtilsFactory(MAP_CREATOR);
 
 	private DustCreator crHandle = new DustCreator() {
 		@Override
@@ -35,11 +37,21 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 	private DustCreator crAuthor = new DustCreator() {
 		@Override
 		public DustUtilsFactory create(Object key, Object... hints) {
-			return new DustUtilsFactory(crUnit);
+			return new DustUtilsFactory(crUnit) {
+				protected void initNew(Object item, Object key, Object... hints) {
+					String uref = hints[0] + ":" + key;
+					
+					try {
+						unitLoader.loadUnits(DustSandboxMachine.this, uref);
+					} catch (Exception e) {
+						DustException.wrap(e, "Autoloading failed for unit", uref);
+					}
+				};
+			};
 		}
 	};
 
-	DustUtilsFactory<String, DustUtilsFactory> handleCatalog = new DustUtilsFactory(crAuthor);
+	private DustUtilsFactory<String, DustUtilsFactory> handleCatalog = new DustUtilsFactory(crAuthor);
 
 	private DustCreator crLang = new DustCreator() {
 		@Override
@@ -47,14 +59,27 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 			return new DustUtilsFactory(MAP_CREATOR);
 		}
 	};
+	private DustUtilsFactory vocabulary = new DustUtilsFactory(crLang);
 
-	DustUtilsFactory vocabulary = new DustUtilsFactory(crLang);
+	private String language;
+	private DustSandboxUnitLoader unitLoader;
+
+	public DustSandboxMachine(String language, File fUnit) throws Exception {
+		this.language = language;
+		this.unitLoader = new DustSandboxUnitLoader(fUnit);
+
+		unitLoader.loadUnits(this, "giskard.me:mind_1.0", "giskard.me:misc_1.0", "giskard.me:text_1.0");
+	}
+
+	public String getLanguage() {
+		return language;
+	}
 
 	public DustSandboxHandle resolve(String uref, String id) {
 		String[] spl = uref.split(":");
 
 		DustUtilsFactory<String, DustSandboxHandle> hf = (DustUtilsFactory<String, DustSandboxHandle>) ((DustUtilsFactory) handleCatalog
-				.get(spl[0])).get(spl[1]);
+				.get(spl[0])).get(spl[1], spl[0]);
 
 		DustSandboxHandle h = hf.get(id, uref);
 
@@ -100,8 +125,6 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 			((Map) v).put(key, val);
 			break;
 		}
-
-//		Dust.log(null, "Set", hTarget, hAtt, key, val);
 	}
 
 	public void setText(EnumMap<TextInfo, Object> txtData) {
@@ -113,8 +136,6 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 		if (null == DustSandboxHandle.TO_STRING) {
 			DustSandboxHandle.TO_STRING = texts;
 		}
-
-//		Dust.log(null, "Set text", txtData);
 	}
 
 	@Override
@@ -153,8 +174,19 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 
 		return (RetType) ret;
 	}
-	
+
 	public void test() {
 		Dust.log(EVENT_TAG_TYPE_WARNING, "pompom");
+	}
+
+	public Iterable<String> getAuthors() {
+		return handleCatalog.keys();
+	}
+	public DustUtilsFactory<String, DustUtilsFactory> getAuthorUnits(String author) {
+		return handleCatalog.peek(author);
+	}
+
+	public void loadAllUnits() throws Exception {
+		unitLoader.loadAllUnits(this);
 	}
 }
