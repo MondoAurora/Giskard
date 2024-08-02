@@ -22,7 +22,6 @@ public interface DustEventHandles extends DustConsts {
 	MindHandle EVENT_ATT_EVENT_TIMEFORMAT = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:12");
 
 	MindHandle EVENT_ASP_CALENDAR = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:13");
-// No text assigned to handle giskard.me:event_1.0:14
 	MindHandle EVENT_ATT_LAST_ACTION = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:15");
 
 	MindHandle EVENT_TAG_CAL = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:16");

@@ -17,6 +17,7 @@ import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import me.giskard.dust.DustMain;
 import me.giskard.dust.utils.DustUtils;
 
 public class DustSandboxBinaryGen implements DustSandboxConsts {
@@ -51,19 +52,29 @@ public class DustSandboxBinaryGen implements DustSandboxConsts {
 	public static void buildAll(File fPrjRoot, File fModDir) throws Exception {
 		List<File> arrProjects = new ArrayList<>();
 		collectFiles(".project", fPrjRoot, arrProjects);
-		
-		for ( File pf : arrProjects ) {
+
+		File pGen = null;
+		List<File> arrMains = new ArrayList<>();
+
+		for (File pf : arrProjects) {
 			File pd = pf.getParentFile();
-			
-			if ( new File(pd, "dust_gen.txt").isFile()) {
+
+			if (new File(pd, "dust_gen.txt").isFile()) {
+				pGen = pd;
 				continue;
 			}
-			
-			build(pd, fModDir);
+
+			if (!build(pd, fModDir, null)) {
+				arrMains.add(pd);
+			}
+		}
+
+		for (File pf : arrMains) {
+			build(pf, fModDir, pGen);
 		}
 	}
 
-	public static String build(File fPrj, File fModDir) throws Exception {
+	public static boolean build(File fPrj, File fModDir, File fGenDir) throws Exception {
 		String[] pp = fPrj.getCanonicalPath().split(File.separator);
 		int i = pp.length;
 		String ver = pp[--i];
@@ -79,6 +90,22 @@ public class DustSandboxBinaryGen implements DustSandboxConsts {
 		StringBuilder sb = DustUtils.sbAppend(null, File.pathSeparator, false, dSrc);
 
 		if (!arrSources.isEmpty()) {
+			boolean app = false;
+			
+			if (null == fGenDir) {
+				String mc = DustMain.class.getName().replace('.', '/') + DUST_EXT_JAVA;
+
+				for (File f : arrSources) {
+					if (f.getCanonicalPath().endsWith(mc)) {
+						return false;
+					}
+				}
+			} else {
+				collectFiles(".*\\.java", new File(fGenDir, "src"), arrSources);
+				DustUtils.sbAppend(sb, File.pathSeparator, false, fGenDir);
+				app = true;
+			}
+
 			File fBuildDir = new File("build/" + modId);
 			if (fBuildDir.exists()) {
 				deleteRec(fBuildDir);
@@ -88,8 +115,9 @@ public class DustSandboxBinaryGen implements DustSandboxConsts {
 
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 			StandardJavaFileManager fm = compiler.getStandardFileManager(null, null, null);
-			CompilationTask task = compiler.getTask(null, fm, null, Arrays.asList("-sourcepath", sb.toString(), "-d", fBuildDir.toString()),
-					null, fm.getJavaFileObjectsFromFiles(arrSources));
+			CompilationTask task = compiler.getTask(null, fm, null,
+					Arrays.asList("-sourcepath", sb.toString(), "-d", fBuildDir.toString()), null,
+					fm.getJavaFileObjectsFromFiles(arrSources));
 
 			if (task.call()) {
 				Manifest manifest = new Manifest();
@@ -98,9 +126,9 @@ public class DustSandboxBinaryGen implements DustSandboxConsts {
 				mfAtts.put(Attributes.Name.IMPLEMENTATION_VENDOR, vendor);
 				mfAtts.put(Attributes.Name.IMPLEMENTATION_TITLE, name);
 				mfAtts.put(Attributes.Name.IMPLEMENTATION_VERSION, ver);
-//				if (app) {
-//					maniAtts.put(Attributes.Name.MAIN_CLASS, GiskardApp.class.getCanonicalName());
-//				}
+				if (app) {
+					mfAtts.put(Attributes.Name.MAIN_CLASS, DustMain.class.getCanonicalName());
+				}
 
 				fModDir.mkdirs();
 				File fJar = new File(fModDir, modId + DUST_EXT_JAR);
@@ -116,7 +144,7 @@ public class DustSandboxBinaryGen implements DustSandboxConsts {
 			}
 		}
 
-		return null;
+		return true;
 	}
 
 	private static void add(File source, String prefix, JarOutputStream target) throws Exception {

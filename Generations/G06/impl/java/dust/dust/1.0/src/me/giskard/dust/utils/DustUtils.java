@@ -113,6 +113,10 @@ public class DustUtils implements DustUtilsConsts {
 		}
 	}
 
+	public static String toUpperFirst(String str) {
+		return isEmpty(str) ? str : str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
+
 	public static String getPostfix(String strSrc, String pfSep) {
 		int sep = strSrc.lastIndexOf(pfSep);
 		return strSrc.substring(sep + pfSep.length());

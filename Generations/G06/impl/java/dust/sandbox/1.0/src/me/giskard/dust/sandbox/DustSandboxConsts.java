@@ -2,13 +2,10 @@ package me.giskard.dust.sandbox;
 
 import java.util.Map;
 
-import me.giskard.dust.DustConsts;
-import me.giskard.dust.forge.DustForgeConsts;
-import me.giskard.dust.machine.DustMachineConsts;
+import me.giskard.dust.DustMainConsts;
 import me.giskard.dust.utils.DustUtilsConsts;
 
-public interface DustSandboxConsts extends DustConsts, DustUtilsConsts, DustForgeConsts, DustMachineConsts {
-	String LP_GISKARD_ROOT = "giskard.root";
+public interface DustSandboxConsts extends DustMainConsts, DustUtilsConsts {
 	
 	String DUT_SIGNATURE = "DustUnitText";
 	

@@ -1,5 +1,7 @@
 package me.giskard.dust;
 
+import me.giskard.dust.utils.DustUtils;
+
 public class Dust implements DustConsts {
 	
 	private static Machine MACHINE;
@@ -21,7 +23,12 @@ public class Dust implements DustConsts {
 	}
 
 	public static void log(MindHandle event, Object... params) {
-		access(MindAccess.Broadcast, event, params);
+		if ( null == MACHINE ) {
+			StringBuilder sb = DustUtils.sbAppend(null, ", ", false, params);
+			System.out.println(event + " " + DustUtils.toString(sb));
+		} else {
+			access(MindAccess.Broadcast, event, params);
+		}
 	}
 
 }
