@@ -30,7 +30,7 @@ public class DustMain implements DustMainConsts {
 		String[] mm = moduleRef.split(DUST_SEP_ID);
 
 		String module = mm[1];
-		String modClass = DustMain.class.getPackageName() + "." + module + "." + DustUtils.toUpperFirst(mm[0])
+		String modClass = DustMain.class.getPackage().getName() + "." + module + "." + DustUtils.toUpperFirst(mm[0])
 				+ DustUtils.toUpperFirst(module) + "Module";
 		ClassLoader cl = Dust.class.getClassLoader();
 
