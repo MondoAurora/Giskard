@@ -1,10 +1,16 @@
 package me.giskard.dust.sandbox;
 
-import me.giskard.dust.Dust;
+import java.util.ArrayList;
 
-public class DustSandboxModule {
+import me.giskard.dust.Dust;
+import me.giskard.dust.DustConsts;
+
+public class DustSandboxModule implements DustConsts {
+	public static MindMachine dustMachineInit(ArrayList<String> args) throws Exception {
+		return DustSandboxMain.initMachine(null);
+	}
+	
 	public static void dustModuleInit() throws Exception {
-		DustSandboxMain.initMachine();
 		Dust.log(null, "Hello world from Sandbox module");
 	}
 }

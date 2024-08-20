@@ -35,4 +35,9 @@ public interface DustConsts {
 		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Broadcast, Lookup, Visit, 
 	};
 
+	public interface MindMachine {
+		<RetType> RetType access(MindAccess cmd, Object val, Object... path);
+		void run() throws Exception;
+	}
+
 }

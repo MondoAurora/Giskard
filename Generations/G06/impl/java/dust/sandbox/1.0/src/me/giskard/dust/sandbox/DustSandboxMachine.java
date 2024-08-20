@@ -16,7 +16,7 @@ import me.giskard.event.DustEventHandles;
 import me.giskard.mind.DustMindHandles;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustSandboxMachine extends Dust.Machine implements DustSandboxConsts, DustMindHandles, DustEventHandles {
+public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, DustMindHandles, DustEventHandles {
 
 	private DustUtilsFactory<DustSandboxHandle, Map> knowledge = new DustUtilsFactory(MAP_CREATOR);
 
@@ -64,11 +64,15 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 	private String language;
 	private DustSandboxUnitLoader unitLoader;
 
-	public DustSandboxMachine(String language, File fUnit) throws Exception {
+	public DustSandboxMachine(String language, File fUnit) throws Exception {		
 		this.language = language;
 		this.unitLoader = new DustSandboxUnitLoader(fUnit);
-
-		unitLoader.loadUnits(this, "giskard.me:mind_1.0", "giskard.me:misc_1.0", "giskard.me:text_1.0");
+	}
+	
+	@Override
+	public void run() throws Exception {
+		Dust.log(EVENT_TAG_TYPE_TRACE, "Machine run called");
+//		unitLoader.loadUnits(this, "giskard.me:mind_1.0", "giskard.me:misc_1.0", "giskard.me:text_1.0");
 	}
 
 	public String getLanguage() {
@@ -139,7 +143,7 @@ public class DustSandboxMachine extends Dust.Machine implements DustSandboxConst
 	}
 
 	@Override
-	protected <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
+	public <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
 		Object ret = null;
 
 		switch (cmd) {
