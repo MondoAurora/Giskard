@@ -12,7 +12,7 @@ public class DustSandboxMain implements DustSandboxConsts {
 
 			File f = new File(fHome, fRoot);
 
-			DustSandboxMachine machine = initMachine(args);
+			DustSandboxMachine machine = initMachine();
 			
 			Dust.log(null, "***** Generating sources *****");
 
@@ -20,10 +20,12 @@ public class DustSandboxMain implements DustSandboxConsts {
 			DustSandboxCodeGen cg = new DustSandboxCodeGen(fGenRoot, machine);
 			cg.genSources();
 
+			Dust.log(null, "***** Generating jars *****");
+
 			File fPrjRoot = new File(f, "impl/java");
 			File fMods = new File(f, "store/local/modules");
-
 			DustSandboxBinaryGen.buildAll(fPrjRoot, fMods);
+			
 		} catch (Throwable t) {
 			t.printStackTrace();
 		} finally {
@@ -31,7 +33,7 @@ public class DustSandboxMain implements DustSandboxConsts {
 		}
 	}
 
-	public static DustSandboxMachine initMachine(String[] args) throws Exception {
+	public static DustSandboxMachine initMachine() throws Exception {
 		String fHome = System.getProperty("user.home");
 		String fRoot = System.getProperty(LP_GISKARD_ROOT, "");
 

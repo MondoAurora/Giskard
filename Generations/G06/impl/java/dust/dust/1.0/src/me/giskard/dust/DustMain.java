@@ -5,74 +5,99 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
 
 import me.giskard.dust.utils.DustUtils;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustMain implements DustMainConsts {
+	
+	private static DustMain MAIN;
+
+	
+	public static int getArgCount() {
+		return MAIN.argList.size();
+	}
+
+	public static String getArg(int idx) {
+		return MAIN.argList.get(idx);
+	}
+
+	public static String getEnvValue(String key, String defVal) throws Exception {
+		return MAIN.envData.getOrDefault(key, defVal);
+	}
+
+	public static ClassLoader getModuleCL(File modRoot, String modName) throws Exception {
+		return MAIN.getModuleClassLoader(modRoot, modName);
+	}
+	
+	
 
 	public static void main(String[] args) {
 		try {
-
 			if ((null == args) || (0 == args.length)) {
-				args = new String[] { "dust:sandbox:1.0" };
+				args = new String[] { "{GISKARD06_MODULES}/dust_sandbox_1.0.jar" };
 				Dust.log(null, "No module list given, starting with the default", args);
 			}
-
-			String strMachineModule = DustUtils.getPostfix(args[0], File.separator);
-			if (strMachineModule.endsWith(DUST_EXT_JAR)) {
-				strMachineModule = strMachineModule.replace(DUST_SEP, DUST_SEP_ID);
-				strMachineModule = DustUtils.cutPostfix(strMachineModule, DUST_EXT_JAR);
-			}
-
-			String[] mm = strMachineModule.split(DUST_SEP_ID);
-			String module = mm[1];
-			String modClassName = DustMain.class.getPackage().getName() + "." + module + "." + DustUtils.toUpperFirst(mm[0])
-					+ DustUtils.toUpperFirst(module) + "Module";
-
-			ClassLoader cl = Dust.class.getClassLoader();
-			Class cModule = null;
-
-			try {
-				cModule = cl.loadClass(modClassName);
-			} catch (ClassNotFoundException cnf) {
-				File fMods;
-				String modPath = args[0].contains(File.separator) ? DustUtils.cutPostfix(args[0], File.separator) : null;
-
-				if (DustUtils.isEmpty(modPath)) {
-					String home = System.getProperty("user.home");
-					String root = System.getProperty(LP_GISKARD_ROOT, "");
-
-					File fRoot = new File(home, root);
-					fMods = new File(fRoot, "store/local/modules");
-				} else {
-					fMods = new File(modPath);
-				}
-
-				cl = getModuleClassLoader(fMods, strMachineModule);
-
-				cModule = cl.loadClass(modClassName);
-			}
 			
-			ArrayList<String> alArgs = new ArrayList<String>();
-			for ( String a : args ) {
-				alArgs.add(a);
-			}
-
-			Method mMachineInit = cModule.getMethod(FN_MACHINE_INIT, ArrayList.class);
-			MindMachine machine = (MindMachine) mMachineInit.invoke(null, alArgs);
-			Dust.setMachine(machine);
-			
-			machine.run();
-			
+			runMain(new DustMain(), args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static ClassLoader getModuleClassLoader(File modRoot, String modName) throws Exception {
-		ClassLoader cl = Dust.class.getClassLoader();
+	protected static void runMain(DustMain main, String... args) throws Exception {
+		MAIN = main;
 		
+		MAIN.loadEnv(args);
+		
+		Class cModule = MAIN.getMachineLoaderClass(args[0]);
+
+		Method mMachineInit = cModule.getMethod(FN_MODULE_INIT);
+		MindMachine machine = (MindMachine) mMachineInit.invoke(null);
+		Dust.setMachine(machine);
+
+		machine.run();
+	}
+
+	
+	
+
+	private final Map<String, String> envData = new TreeMap<>();
+	private final ArrayList<String> argList = new ArrayList<>();
+
+	protected void loadEnv(String[] args) {
+		envData.putAll(System.getenv());
+
+		Properties props = System.getProperties();
+		for (Object k : props.keySet()) {
+			String pk = DustUtils.toString(k);
+			envData.put(pk, props.getProperty(pk));
+		}
+
+		for (String a : args) {
+			if (a.startsWith("-")) {
+				String name = a.substring(1);
+				String val = null;
+
+				int sep = name.indexOf("=");
+				if (-1 != sep) {
+					val = name.substring(sep + 1);
+					name = name.substring(0, sep);
+				}
+
+				envData.put(name, val);
+			} else {
+				argList.add(a);
+			}
+		}
+	}
+	
+	protected ClassLoader getModuleClassLoader(File modRoot, String modName) throws Exception {
+		ClassLoader cl = Dust.class.getClassLoader();
+
 		String modFileName = modName.replace(DUST_SEP_ID, DUST_SEP);
 
 		File f = new File(modRoot, modFileName + DUST_EXT_JAR);
@@ -92,10 +117,41 @@ public class DustMain implements DustMainConsts {
 
 		URL[] uu = new URL[urls.size()];
 		uu = urls.toArray(uu);
-		
+
 		Dust.log(null, "Creating classloader for module", modName, "jars", urls);
 
 		return new URLClassLoader(uu, cl);
+	}
+	
+	protected Class getMachineLoaderClass(String machineJar) throws ClassNotFoundException, Exception {		
+		String strMachineModule = DustUtils.getPostfix(machineJar, File.separator);
+		strMachineModule = DustUtils.cutPostfix(strMachineModule, DUST_EXT_JAR);
+
+		String[] mm = strMachineModule.split(DUST_SEP);
+		String module = mm[1];
+		String modClassName = DustMain.class.getPackage().getName() + "." + module + "." + DustUtils.toUpperFirst(mm[0])
+				+ DustUtils.toUpperFirst(module) + "Module";
+
+		Class cModule = null;
+
+		try {
+			cModule = Dust.class.getClassLoader().loadClass(modClassName);
+		} catch (ClassNotFoundException cnf) {
+			if ( machineJar.startsWith("{") ) {
+				int refEnd = machineJar.indexOf("}");
+				
+				String key = machineJar.substring(1, refEnd);
+				String val = envData.getOrDefault(key, "");
+				machineJar = val + machineJar.substring(refEnd + 1);
+			}
+
+			String modPath = machineJar.contains(File.separator) ? DustUtils.cutPostfix(machineJar, File.separator) : null;
+			File fMods = new File(modPath);
+
+			cModule = getModuleClassLoader(fMods, strMachineModule).loadClass(modClassName);
+		}
+		
+		return cModule;
 	}
 
 }

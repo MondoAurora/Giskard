@@ -7,6 +7,9 @@
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>
     </listAttribute>
+    <mapAttribute key="org.eclipse.debug.core.environmentVariables">
+        <mapEntry key="GISKARD06_MODULES" value="${GISKARD06_MODULES}"/>
+    </mapAttribute>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
     </listAttribute>
@@ -17,7 +20,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="me.giskard.dust.DustMain"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="G06Dust_1.0"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="dust:sandbox:1.0 dust:forge:1.0"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="G06_appDustTest01"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dgiskard.root=work/git/Giskard/Generations/G06"/>
 </launchConfiguration>
