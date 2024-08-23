@@ -26,6 +26,6 @@ public interface DustDustjavaHandles extends DustConsts {
 // Not standard handle name DustHttpServerJetty
 // Not standard handle name DustHttpFileAgent
 // Not standard handle name DustHttpJsonapiAgent
-// No text assigned to handle giskard.me:dustjava_1.0:22
+// Not standard handle name DustDevNarrativeForgeUI
 }
 

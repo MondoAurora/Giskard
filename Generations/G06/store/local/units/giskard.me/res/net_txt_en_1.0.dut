@@ -1,13 +1,13 @@
-DustUnitText	1.0	UTF8	giskard.me	net_txt_en	1.0	1	2024-08-01T12:17:35.670Z
+DustUnitText	1.0	UTF8	giskard.me	net_txt_en	1.0	1	2024-08-23T12:48:19.854Z
 
 !authors
 giskard.me
 
 !units
-0	net	1.0	1	2024-08-01T12:17:35.670Z
-0	mind	1.0	1	2024-08-01T12:17:35.670Z
-0	text	1.0	1	2024-08-01T12:17:35.670Z
-0	misc	1.0	1	2024-08-01T12:17:35.670Z
+0	net	1.0	1	2024-08-23T12:48:19.854Z
+0	mind	1.0	1	2024-08-23T12:48:19.854Z
+0	text	1.0	1	2024-08-23T12:48:19.854Z
+0	misc	1.0	1	2024-08-23T12:48:19.854Z
 
 !graph
 0	o1:9	h2:7
@@ -143,8 +143,32 @@ giskard.me
 21	o2:3	bNET_ATT_SRVRESP_PAYLOAD
 
 22	o1:9	h2:7
-22	o3:1	h0:26
+22	o3:1	h0:22
 22	m1:7	h2:0	h2:1
 22	m1:7	h2:4	h2:5
-22	o2:3	bNET_NAR_HTTPCLICOMM
+22	o2:3	bNET_NAR_DOWNLOAD
+
+23	o1:9	h2:7
+23	o3:1	h0:23
+23	m1:7	h2:0	h2:1
+23	m1:7	h2:4	h2:5
+23	o2:3	bNET_NAR_HTTPSRV
+
+24	o1:9	h2:7
+24	o3:1	h0:24
+24	m1:7	h2:0	h2:1
+24	m1:7	h2:4	h2:5
+24	o2:3	bNET_NAR_HTTPSVCFILES
+
+25	o1:9	h2:7
+25	o3:1	h0:25
+25	m1:7	h2:0	h2:1
+25	m1:7	h2:4	h2:5
+25	o2:3	bNET_NAR_HTTPSVCJSONAPI
+
+26	o1:9	h2:7
+26	o3:1	h0:26
+26	m1:7	h2:0	h2:1
+26	m1:7	h2:4	h2:5
+26	o2:3	bNET_NAR_HTTPCLICOMM
 

@@ -12,6 +12,8 @@ public interface DustMontruHandles extends DustConsts {
 
 	MindHandle MONTRU_NAR_AREA = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:4");
 	MindHandle MONTRU_ATT_AREA_VECTORS = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:5");
+
+	MindHandle MONTRU_NAR_WIDGET = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:6");
 	MindHandle MONTRU_ATT_WIDGET_CMDTAG = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:7");
 
 	MindHandle MONTRU_TAG_WIDGET = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:8");
@@ -23,6 +25,8 @@ public interface DustMontruHandles extends DustConsts {
 	MindHandle MONTRU_TAG_WIDGET_LIST = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:14");
 	MindHandle MONTRU_TAG_WIDGET_COMBO = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:15");
 	MindHandle MONTRU_TAG_WIDGET_TREE = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:16");
+
+	MindHandle MONTRU_NAR_CONTAINER = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:17");
 
 	MindHandle MONTRU_TAG_LAYOUT = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:18");
 	MindHandle MONTRU_TAG_LAYOUT_LAYERED = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:19");
@@ -46,8 +50,16 @@ public interface DustMontruHandles extends DustConsts {
 	MindHandle MONTRU_TAG_BOX = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:34");
 	MindHandle MONTRU_TAG_BOX_LINE = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:35");
 	MindHandle MONTRU_TAG_BOX_PAGE = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:36");
+
+	MindHandle MONTRU_NAR_GRID = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:37");
 	MindHandle MONTRU_ATT_GRID_AXES = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:38");
+
+	MindHandle MONTRU_NAR_WINDOW = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:39");
 	MindHandle MONTRU_ATT_WINDOW_MAIN = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:40");
+
+	MindHandle MONTRU_NAR_GRAPH = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:41");
+
+	MindHandle MONTRU_NAR_UNITGRAPH = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:42");
 
 	MindHandle MONTRU_TAG_UNITGRAPHEDGE = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:43");
 	MindHandle MONTRU_TAG_UNITGRAPHEDGE_REF = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:44");
@@ -56,7 +68,8 @@ public interface DustMontruHandles extends DustConsts {
 
 	MindHandle MONTRU_NAR_GUI = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:47");
 	MindHandle MONTRU_ATT_GUI_SELECTED = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:48");
-// No text assigned to handle giskard.me:montru_1.0:49
+	MindHandle MONTRU_ATT_GUI_THEME = Dust.access(MindAccess.Lookup, "giskard.me:montru_1.0:49");
+// Not standard handle name giskard:13:42
 // No text assigned to handle giskard.me:montru_1.0:51
 }
 

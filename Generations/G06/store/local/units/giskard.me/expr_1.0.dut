@@ -1,11 +1,11 @@
-DustUnitText	1.0	UTF8	giskard.me	expr	1.0	1	2024-08-01T12:17:35.670Z
+DustUnitText	1.0	UTF8	giskard.me	expr	1.0	1	2024-08-23T12:48:19.854Z
 
 !authors
 giskard.me
 
 !units
-0	misc	1.0	1	2024-08-01T12:17:35.670Z
-0	mind	1.0	1	2024-08-01T12:17:35.670Z
+0	misc	1.0	1	2024-08-23T12:48:19.854Z
+0	mind	1.0	1	2024-08-23T12:48:19.854Z
 
 !graph
 0	o1:6	h14
@@ -18,3 +18,7 @@ giskard.me
 2	o1:6	h14
 2	o1:9	h1:17
 2	s1:10	h0:0
+3	o1:6	h14
+3	o1:9	h1:20
+4	o1:6	h14
+4	o1:9	h1:20

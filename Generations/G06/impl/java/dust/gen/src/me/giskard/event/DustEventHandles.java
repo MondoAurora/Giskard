@@ -22,6 +22,8 @@ public interface DustEventHandles extends DustConsts {
 	MindHandle EVENT_ATT_EVENT_TIMEFORMAT = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:12");
 
 	MindHandle EVENT_ASP_CALENDAR = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:13");
+
+	MindHandle EVENT_NAR_THROTTLE = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:14");
 	MindHandle EVENT_ATT_LAST_ACTION = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:15");
 
 	MindHandle EVENT_TAG_CAL = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:16");
@@ -39,6 +41,6 @@ public interface DustEventHandles extends DustConsts {
 	MindHandle EVENT_TAG_TYPE_WARNING = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:25");
 	MindHandle EVENT_TAG_TYPE_INFO = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:26");
 	MindHandle EVENT_TAG_TYPE_TRACE = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:27");
-// No text assigned to handle giskard.me:event_1.0:28
+	MindHandle EVENT_TAG_TYPE_BREAKPOINT = Dust.access(MindAccess.Lookup, "giskard.me:event_1.0:28");
 }
 

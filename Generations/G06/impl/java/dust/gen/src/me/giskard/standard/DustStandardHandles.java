@@ -17,7 +17,7 @@ public interface DustStandardHandles extends DustConsts {
 	MindHandle STANDARD_ATT_JSONAPIFETCH_PAGEOFFSET = Dust.access(MindAccess.Lookup, "giskard.me:standard_1.0:7");
 
 	MindHandle STANDARD_ASP_XMLELEMENT = Dust.access(MindAccess.Lookup, "giskard.me:standard_1.0:8");
-// No text assigned to handle giskard.me:standard_1.0:9
+	MindHandle STANDARD_ATT_XMLELEMENT_ATTRIBUTES = Dust.access(MindAccess.Lookup, "giskard.me:standard_1.0:9");
 // No text assigned to handle giskard.me:standard_1.0:11
 }
 

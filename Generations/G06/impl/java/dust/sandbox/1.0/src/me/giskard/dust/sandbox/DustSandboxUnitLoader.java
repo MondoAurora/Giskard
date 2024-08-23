@@ -30,6 +30,8 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 	interface GraphLineProcessor {
 		void reset();
 
+		void close(LoadContext ctx);
+
 		void processGraphLine(LoadContext ctx, String sepChar, String line);
 	}
 
@@ -74,6 +76,10 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 				glp.processGraphLine(this, sepChar, line);
 				break;
 			}
+		}
+		
+		void close() {
+			glp.close(this);
 		}
 
 		public DustSandboxHandle resolve(String s) {
@@ -204,6 +210,10 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 			ctx.machine.set(hTarget, hAtt, attType, key, val);
 		}
+
+		@Override
+		public void close(LoadContext ctx) {
+		}
 	};
 
 	GraphLineProcessor glpText = new GraphLineProcessor() {
@@ -281,6 +291,14 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 						break;
 					}
 				}
+			}
+		}
+
+		@Override
+		public void close(LoadContext ctx) {
+			if (!txtData.isEmpty()) {
+				ctx.machine.setText(txtData);
+				txtData.clear();
 			}
 		}
 	};
@@ -389,6 +407,8 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 
 				lc.processLine(stage, sepChar, line);
 			}
+			
+			lc.close();
 		}
 	}
 }

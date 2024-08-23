@@ -6,8 +6,11 @@ import me.giskard.dust.DustConsts;
 public interface DustGeometryHandles extends DustConsts {
 
 
+	MindHandle GEOMETRY_ASP_NODE = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:0");
+
 	MindHandle GEOMETRY_ASP_EDGE = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:1");
-// No text assigned to handle giskard.me:geometry_1.0:2
+
+	MindHandle GEOMETRY_ASP_GRAPH = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:2");
 	MindHandle GEOMETRY_ATT_GRAPH_NODES = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:3");
 	MindHandle GEOMETRY_ATT_GRAPH_EDGES = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:4");
 
@@ -24,6 +27,6 @@ public interface DustGeometryHandles extends DustConsts {
 	MindHandle GEOMETRY_TAG_VALTYPE = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:10");
 	MindHandle GEOMETRY_TAG_VALTYPE_CARTESIAN_X = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:11");
 	MindHandle GEOMETRY_TAG_VALTYPE_CARTESIAN_Y = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:12");
-// No text assigned to handle giskard.me:geometry_1.0:13
+	MindHandle GEOMETRY_TAG_VALTYPE_CARTESIAN_Z = Dust.access(MindAccess.Lookup, "giskard.me:geometry_1.0:13");
 }
 

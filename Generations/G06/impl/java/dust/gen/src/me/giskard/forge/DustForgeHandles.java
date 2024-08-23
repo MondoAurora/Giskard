@@ -15,7 +15,7 @@ public interface DustForgeHandles extends DustConsts {
 	MindHandle MATH_TAG_AGGRTYPE_LAST = Dust.access(MindAccess.Lookup, "giskard.me:forge_1.0:6");
 	MindHandle MATH_TAG_AGGRTYPE_MIN = Dust.access(MindAccess.Lookup, "giskard.me:forge_1.0:7");
 	MindHandle MATH_TAG_AGGRTYPE_MAX = Dust.access(MindAccess.Lookup, "giskard.me:forge_1.0:8");
-// No text assigned to handle giskard.me:forge_1.0:9
+	MindHandle MATH_TAG_AGGRTYPE_AVG = Dust.access(MindAccess.Lookup, "giskard.me:forge_1.0:9");
 // No text assigned to handle giskard.me:forge_1.0:15
 }
 

@@ -5,10 +5,11 @@ import me.giskard.dust.DustConsts;
 
 public interface DustMiscHandles extends DustConsts {
 
-// No text assigned to handle giskard.me:misc_1.0:0
+
+	MindHandle MISC_ASP_CONN = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:0");
 	MindHandle MISC_ATT_CONN_OWNER = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:1");
 	MindHandle MISC_ATT_CONN_PARENT = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:2");
-// No text assigned to handle giskard.me:misc_1.0:3
+	MindHandle MISC_ATT_CONN_SOURCE = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:3");
 	MindHandle MISC_ATT_CONN_TARGET = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:4");
 	MindHandle MISC_ATT_CONN_REQUIRES = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:5");
 	MindHandle MISC_ATT_CONN_MEMBERMAP = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:6");
@@ -59,7 +60,8 @@ public interface DustMiscHandles extends DustConsts {
 
 	MindHandle MISC_ASP_SHAPE = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:36");
 	MindHandle MISC_ATT_SHAPE_VECTORS = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:37");
-// No text assigned to handle giskard.me:misc_1.0:38
+
+	MindHandle MISC_ASP_VECTOR = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:38");
 	MindHandle MISC_ATT_VECTOR_COORDINATES = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:39");
 
 	MindHandle MISC_ASP_VARIANT = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:40");
@@ -67,7 +69,11 @@ public interface DustMiscHandles extends DustConsts {
 
 	MindHandle MISC_NAR_ATTCOLLECTOR = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:42");
 
+	MindHandle MISC_NAR_TABLE = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:43");
+
 	MindHandle MISC_NAR_FACTORY = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:44");
-// No text assigned to handle giskard.me:misc_1.0:45
+	MindHandle MISC_ATT_FACTORY_TYPE = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:45");
+
+	MindHandle MISC_NAR_COUNTER = Dust.access(MindAccess.Lookup, "giskard.me:misc_1.0:46");
 }
 

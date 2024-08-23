@@ -16,6 +16,6 @@ public interface DustTextHandles extends DustConsts {
 	MindHandle TEXT_TAG_TYPE_LABEL = Dust.access(MindAccess.Lookup, "giskard.me:text_1.0:6");
 
 	MindHandle TEXT_ASP_PLAIN = Dust.access(MindAccess.Lookup, "giskard.me:text_1.0:7");
-// No text assigned to handle giskard.me:text_1.0:8
+	MindHandle TEXT_ATT_PLAIN_TEXT = Dust.access(MindAccess.Lookup, "giskard.me:text_1.0:8");
 }
 

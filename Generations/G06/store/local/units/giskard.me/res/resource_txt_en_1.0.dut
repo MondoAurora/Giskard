@@ -1,13 +1,13 @@
-DustUnitText	1.0	UTF8	giskard.me	resource_txt_en	1.0	1	2024-08-01T12:17:35.670Z
+DustUnitText	1.0	UTF8	giskard.me	resource_txt_en	1.0	1	2024-08-23T12:48:19.854Z
 
 !authors
 giskard.me
 
 !units
-0	resource	1.0	1	2024-08-01T12:17:35.670Z
-0	mind	1.0	1	2024-08-01T12:17:35.670Z
-0	text	1.0	1	2024-08-01T12:17:35.670Z
-0	misc	1.0	1	2024-08-01T12:17:35.670Z
+0	resource	1.0	1	2024-08-23T12:48:19.854Z
+0	mind	1.0	1	2024-08-23T12:48:19.854Z
+0	text	1.0	1	2024-08-23T12:48:19.854Z
+0	misc	1.0	1	2024-08-23T12:48:19.854Z
 
 !graph
 0	o1:9	h2:7
@@ -107,8 +107,44 @@ giskard.me
 15	o2:3	bRESOURCE_ATT_PROCESSOR_DATA
 
 16	o1:9	h2:7
-16	o3:1	h0:17
+16	o3:1	h0:16
 16	m1:7	h2:0	h2:1
 16	m1:7	h2:4	h2:5
-16	o2:3	bRESOURCE_ATT_CACHE_REQUEST
+16	o2:3	bRESOURCE_NAR_CACHE
+
+17	o1:9	h2:7
+17	o3:1	h0:17
+17	m1:7	h2:0	h2:1
+17	m1:7	h2:4	h2:5
+17	o2:3	bRESOURCE_ATT_CACHE_REQUEST
+
+18	o1:9	h2:7
+18	o3:1	h0:18
+18	m1:7	h2:0	h2:1
+18	m1:7	h2:4	h2:5
+18	o2:3	bRESOURCE_NAR_FILESYSTEM
+
+19	o1:9	h2:7
+19	o3:1	h0:19
+19	m1:7	h2:0	h2:1
+19	m1:7	h2:4	h2:5
+19	o2:3	bRESOURCE_NAR_ZIPREADER
+
+20	o1:9	h2:7
+20	o3:1	h0:20
+20	m1:7	h2:0	h2:1
+20	m1:7	h2:4	h2:5
+20	o2:3	bRESOURCE_NAR_XMLDOM
+
+21	o1:9	h2:7
+21	o3:1	h0:21
+21	m1:7	h2:0	h2:1
+21	m1:7	h2:4	h2:5
+21	o2:3	bRESOURCE_NAR_JSONDOM
+
+22	o1:9	h2:7
+22	o3:1	h0:22
+22	m1:7	h2:0	h2:1
+22	m1:7	h2:4	h2:5
+22	o2:3	bRESOURCE_NAR_CSVSAX
 

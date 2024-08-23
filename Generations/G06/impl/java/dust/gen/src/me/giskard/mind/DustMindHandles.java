@@ -18,17 +18,23 @@ public interface DustMindHandles extends DustConsts {
 	MindHandle MIND_ATT_KNOWLEDGE_LISTENERS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:8");
 	MindHandle MIND_ATT_KNOWLEDGE_PRIMARYASPECT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:9");
 	MindHandle MIND_ATT_KNOWLEDGE_ASPECTS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:10");
-// No text assigned to handle giskard.me:mind_1.0:11
+
+	MindHandle MIND_ASP_FACTORY = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:11");
 	MindHandle MIND_ATT_FACTORY_PRIMARYASPECT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:12");
 	MindHandle MIND_ATT_FACTORY_DEFATTS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:13");
 	MindHandle MIND_ATT_FACTORY_NARRATIVE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:14");
-// No text assigned to handle giskard.me:mind_1.0:15
+
+	MindHandle MIND_ASP_ASPECT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:15");
 	MindHandle MIND_ATT_ASPECT_ATTFACTORIES = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:16");
-// No text assigned to handle giskard.me:mind_1.0:17
+
+	MindHandle MIND_ASP_ATTRIBUTE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:17");
 	MindHandle MIND_ATT_ATTRIBUTE_FACTORY = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:18");
-// No text assigned to handle giskard.me:mind_1.0:19
-// No text assigned to handle giskard.me:mind_1.0:20
-// No text assigned to handle giskard.me:mind_1.0:21
+
+	MindHandle MIND_ASP_TAG = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:19");
+
+	MindHandle MIND_ASP_NARRATIVE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:20");
+
+	MindHandle MIND_ASP_ASSEMBLY = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:21");
 	MindHandle MIND_ATT_ASSEMBLY_UNITS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:22");
 	MindHandle MIND_ATT_ASSEMBLY_STARTAGENTS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:23");
 	MindHandle MIND_ATT_ASSEMBLY_STARTCOMMITS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:24");
@@ -37,7 +43,8 @@ public interface DustMindHandles extends DustConsts {
 	MindHandle MIND_ATT_DIALOG_ASSEMBLY = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:26");
 	MindHandle MIND_ATT_DIALOG_LAUNCHPARAMS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:27");
 	MindHandle MIND_ATT_DIALOG_ACTIVEAGENT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:28");
-// No text assigned to handle giskard.me:mind_1.0:29
+
+	MindHandle MIND_ASP_AGENT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:29");
 	MindHandle MIND_ATT_AGENT_NARRATIVE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:30");
 	MindHandle MIND_ATT_AGENT_TARGET = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:31");
 
@@ -58,21 +65,17 @@ public interface DustMindHandles extends DustConsts {
 	MindHandle MIND_TAG_VISITFOLLOWREF_ALWAYS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:45");
 
 	MindHandle MIND_TAG_UNIT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:46");
-// No text assigned to handle giskard.me:mind_1.0:47
 
+	MindHandle MIND_TAG_VALTYPE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:47");
 	MindHandle MIND_TAG_VALTYPE_INT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:48");
-
 	MindHandle MIND_TAG_VALTYPE_REAL = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:49");
-
 	MindHandle MIND_TAG_VALTYPE_HANDLE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:50");
-// No text assigned to handle giskard.me:mind_1.0:51
-// No text assigned to handle giskard.me:mind_1.0:52
-// No text assigned to handle giskard.me:mind_1.0:53
+	MindHandle MIND_TAG_VALTYPE_BIN = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:51");
 
+	MindHandle MIND_TAG_COLLTYPE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:52");
+	MindHandle MIND_TAG_COLLTYPE_ONE = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:53");
 	MindHandle MIND_TAG_COLLTYPE_SET = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:54");
-
 	MindHandle MIND_TAG_COLLTYPE_ARR = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:55");
-
 	MindHandle MIND_TAG_COLLTYPE_MAP = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:56");
 
 	MindHandle MIND_TAG_ACCESS = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:57");
@@ -108,7 +111,12 @@ public interface DustMindHandles extends DustConsts {
 	MindHandle MIND_TAG_RESULT_READACCEPT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:84");
 	MindHandle MIND_TAG_RESULT_ACCEPT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:85");
 
+	MindHandle MIND_ASP_AUTHOR = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:86");
+
 	MindHandle MIND_NAR_SELECT = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:87");
-// No text assigned to handle giskard.me:mind_1.0:88
+
+	MindHandle MIND_NAR_JOIN = Dust.access(MindAccess.Lookup, "giskard.me:mind_1.0:88");
+// No text assigned to handle giskard.me:mind_1.0:90
+// No text assigned to handle giskard.me:mind_1.0:91
 }
 

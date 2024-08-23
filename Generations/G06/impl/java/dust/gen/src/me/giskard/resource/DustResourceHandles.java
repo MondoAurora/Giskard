@@ -25,6 +25,18 @@ public interface DustResourceHandles extends DustConsts {
 	MindHandle RESOURCE_ASP_PROCESSOR = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:13");
 	MindHandle RESOURCE_ATT_PROCESSOR_STREAM = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:14");
 	MindHandle RESOURCE_ATT_PROCESSOR_DATA = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:15");
-// No text assigned to handle giskard.me:resource_1.0:17
+
+	MindHandle RESOURCE_NAR_CACHE = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:16");
+	MindHandle RESOURCE_ATT_CACHE_REQUEST = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:17");
+
+	MindHandle RESOURCE_NAR_FILESYSTEM = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:18");
+
+	MindHandle RESOURCE_NAR_ZIPREADER = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:19");
+
+	MindHandle RESOURCE_NAR_XMLDOM = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:20");
+
+	MindHandle RESOURCE_NAR_JSONDOM = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:21");
+
+	MindHandle RESOURCE_NAR_CSVSAX = Dust.access(MindAccess.Lookup, "giskard.me:resource_1.0:22");
 }
 

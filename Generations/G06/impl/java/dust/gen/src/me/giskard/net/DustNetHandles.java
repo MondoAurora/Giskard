@@ -31,6 +31,15 @@ public interface DustNetHandles extends DustConsts {
 	MindHandle NET_ATT_SRVRESP_TYPE = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:19");
 	MindHandle NET_ATT_SRVRESP_HEADER = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:20");
 	MindHandle NET_ATT_SRVRESP_PAYLOAD = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:21");
-// No text assigned to handle giskard.me:net_1.0:26
+
+	MindHandle NET_NAR_DOWNLOAD = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:22");
+
+	MindHandle NET_NAR_HTTPSRV = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:23");
+
+	MindHandle NET_NAR_HTTPSVCFILES = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:24");
+
+	MindHandle NET_NAR_HTTPSVCJSONAPI = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:25");
+
+	MindHandle NET_NAR_HTTPCLICOMM = Dust.access(MindAccess.Lookup, "giskard.me:net_1.0:26");
 }
 

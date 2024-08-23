@@ -1,13 +1,13 @@
-DustUnitText	1.0	UTF8	giskard.me	expr_txt_en	1.0	1	2024-08-01T12:17:35.670Z
+DustUnitText	1.0	UTF8	giskard.me	expr_txt_en	1.0	1	2024-08-23T12:48:19.854Z
 
 !authors
 giskard.me
 
 !units
-0	expr	1.0	1	2024-08-01T12:17:35.670Z
-0	mind	1.0	1	2024-08-01T12:17:35.670Z
-0	text	1.0	1	2024-08-01T12:17:35.670Z
-0	misc	1.0	1	2024-08-01T12:17:35.670Z
+0	expr	1.0	1	2024-08-23T12:48:19.854Z
+0	mind	1.0	1	2024-08-23T12:48:19.854Z
+0	text	1.0	1	2024-08-23T12:48:19.854Z
+0	misc	1.0	1	2024-08-23T12:48:19.854Z
 
 !graph
 0	o1:9	h2:7
@@ -27,4 +27,16 @@ giskard.me
 2	m1:7	h2:0	h2:1
 2	m1:7	h2:4	h2:5
 2	o2:3	bEXPR_ATT_EXPRESSION_STR
+
+3	o1:9	h2:7
+3	o3:1	h0:3
+3	m1:7	h2:0	h2:1
+3	m1:7	h2:4	h2:5
+3	o2:3	bEXPR_NAR_POPULATE
+
+4	o1:9	h2:7
+4	o3:1	h0:4
+4	m1:7	h2:0	h2:1
+4	m1:7	h2:4	h2:5
+4	o2:3	bEXPR_NAR_FILTER
 
