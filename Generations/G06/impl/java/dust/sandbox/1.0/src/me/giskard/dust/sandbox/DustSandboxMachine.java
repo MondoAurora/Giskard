@@ -70,11 +70,32 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 	}
 	
 	@Override
-	public void run() throws Exception {
-		Dust.log(EVENT_TAG_TYPE_TRACE, "Machine run called");
-//		unitLoader.loadUnits(this, "giskard.me:mind_1.0", "giskard.me:misc_1.0", "giskard.me:text_1.0");
+	public MindResponse execute(MindAction action) throws Exception {
+		String log = null;
+		
+		switch ( action ) {
+		case Begin:
+			break;
+		case End:
+			break;
+		case Init:
+			log = "Machine run called";
+			break;
+		case Process:
+			break;
+		case Release:
+			break;
+		}
+		
+		if ( DustUtils.isEmpty(log) ) {
+			Dust.log(EVENT_TAG_TYPE_ERROR, "Unimplemented action in Machine");
+			return MindResponse.Error;
+		} else {
+			Dust.log(EVENT_TAG_TYPE_TRACE, "Machine run called");
+			return MindResponse.Accept;
+		}
 	}
-
+	
 	public String getLanguage() {
 		return language;
 	}

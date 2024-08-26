@@ -59,7 +59,7 @@ public class DustMain implements DustMainConsts {
 		MindMachine machine = (MindMachine) mMachineInit.invoke(null);
 		Dust.setMachine(machine);
 
-		machine.run();
+		machine.execute(MindAction.Init);
 	}
 
 	

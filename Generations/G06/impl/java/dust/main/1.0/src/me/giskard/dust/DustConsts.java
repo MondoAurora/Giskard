@@ -24,20 +24,41 @@ public interface DustConsts {
 	int KEY_ADD = -1;
 	int KEY_SIZE = -2;
 
-	public static abstract class MindHandle {
-		protected MindHandle() {
-		}
-		
-		public abstract String getId();
+
+	
+	enum MindValType {
+		Int, Real, Handle, Bin
+	};
+
+	enum MindCollType {
+		One, Set, Arr, Map
+	};
+	
+	enum MindAction {
+		Init, Begin, Process, End, Release,
+	};
+	
+	enum MindResponse {
+		Reject, Pass, Read, ReadAccept, Accept, Error,
 	};
 
 	enum MindAccess {
 		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Broadcast, Lookup, Visit, 
 	};
 
-	public interface MindMachine {
+	public static abstract class MindHandle {
+		protected MindHandle() {
+		}
+		
+		public abstract String getId();
+	};
+	
+	interface MindNarrative {
+		MindResponse execute(MindAction action) throws Exception;
+	}
+
+	public interface MindMachine extends MindNarrative {
 		<RetType> RetType access(MindAccess cmd, Object val, Object... path);
-		void run() throws Exception;
 	}
 
 }

@@ -1,21 +1,63 @@
 package me.giskard.dust.machine;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import me.giskard.dust.DustConsts;
+import me.giskard.dust.utils.DustUtils;
 
-public class DustMachineHandle extends DustConsts.MindHandle implements DustMachineConsts {
-	private final Map<MindHandle, Object> data = new TreeMap<>();
+public class DustMachineHandle extends DustConsts.MindHandle implements DustMachineConsts, Comparable<DustMachineHandle> {
+	private final String id;
+	
+	private final String author;
+	private final String unit;
+	private final Object key;
+	private final boolean intKey;
 
-	@Override
-	public String toString() {
-		return data.toString();
+	public DustMachineHandle(String id) {
+		this.id = id;
+		
+		String[] spl = id.split(DUST_SEP_ID);
+		author = spl[0];
+		unit = spl[1];
+		
+		
+		if ( spl.length < 3 ) {
+			key = -1;
+			intKey = true;
+		} else {
+			Object k;
+			boolean ik = false;
+			try {
+				k = Integer.parseInt(spl[2]);
+				ik = true;
+			} catch ( Throwable t ) {
+				k = spl[3];
+			}
+			
+			key = k;
+			intKey = ik;
+		}
 	}
 
 	@Override
 	public String getId() {
-		return null;
+		return id;
+	}
+
+	@Override
+	public int compareTo(DustMachineHandle o) {
+		int d = author.compareTo(o.author);
+		if ( 0 == d ) {
+			d = unit.compareTo(o.unit);
+		}
+		if ( 0 == d ) {
+			d = (intKey == o.intKey) ? DustUtils.safeCompare(key, o.key) : intKey ? 1 : -1;
+		}
+		
+		return d;
+	}
+	
+	@Override
+	public String toString() {
+		return id.toString();
 	}
 
 }
