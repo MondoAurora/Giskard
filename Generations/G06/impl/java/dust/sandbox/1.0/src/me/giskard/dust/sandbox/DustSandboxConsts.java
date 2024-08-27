@@ -7,8 +7,6 @@ import me.giskard.dust.utils.DustUtilsConsts;
 
 public interface DustSandboxConsts extends DustMainConsts, DustUtilsConsts {
 	
-	String DUT_SIGNATURE = "DustUnitText";
-	
 	enum TextInfo {
 		 owner, txtLang, txtType, text
 	}

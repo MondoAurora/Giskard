@@ -1,21 +1,19 @@
 package me.giskard.dust.machine;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import me.giskard.dust.Dust;
+import me.giskard.dust.machine.sandbox.DustSandboxUnitLoader;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.event.DustEventHandles;
 import me.giskard.mind.DustMindHandles;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustMachineNarrative implements Dust.MindMachine, DustMindHandles, DustEventHandles {
+@SuppressWarnings({ "unchecked" })
+public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine, DustMindHandles, DustEventHandles {
 
-	DustMachineHandle hUnitHandles = new DustMachineHandle("giskard.me:mind_1.0:1");
-	DustMachineHandle hUnitContent = new DustMachineHandle("giskard.me:mind_1.0:2");
+	DustMachineHandle hUnitHandles;
+	DustMachineHandle hUnitContent;
 
 //	DustMachineKnowledgeItem mainKnowledge;
+	DustSandboxUnitLoader unitLoader;
 
 	final ThreadLocal<DustMachineKnowledgeItem> dialogs = new ThreadLocal<DustMachineKnowledgeItem>() {
 		@Override
@@ -24,9 +22,14 @@ public class DustMachineNarrative implements Dust.MindMachine, DustMindHandles, 
 		}
 	};
 
-	public DustMachineNarrative(DustMachineKnowledgeItem bootKnowledge) {
+	public DustMachineNarrative(DustMachineKnowledgeItem bootKnowledge, DustMachineHandle hUnitHandles,
+			DustMachineHandle hUnitContent) {
 		dialogs.set(bootKnowledge);
-//		this.mainKnowledge = bootKnowledge;
+		
+		this.hUnitHandles = hUnitHandles;
+		this.hUnitContent = hUnitContent;
+		
+		unitLoader = new DustSandboxUnitLoader(this);
 	}
 
 	@Override
@@ -42,14 +45,27 @@ public class DustMachineNarrative implements Dust.MindMachine, DustMindHandles, 
 			String lid = (String) val;
 			String[] spl = lid.split(DUST_SEP_ID);
 
-			DustMachineKnowledgeItem kiUnit = dialogs.get();
+			DustMachineKnowledgeItem kiMachine = dialogs.get();
 
-			if (spl.length > 2) {
-				kiUnit = resolveItem(kiUnit, spl[0] + DUST_SEP_ID + spl[1]);
-//				lid = spl[2];
+			boolean inUnit = spl.length > 2;
+			DustMachineHandle h = kiMachine.get(hUnitHandles, MindCollType.Map, inUnit ? spl[0] + DUST_SEP_ID + spl[1] : lid,
+					new DustCreator<DustMachineHandle>() {
+						@Override
+						public DustMachineHandle create(Object key, Object... hints) {
+							DustMachineHandle hUnit = new DustMachineHandle(kiMachine, (String) key);
+
+							loadUnit(hUnit);
+
+							return hUnit;
+						}
+					});
+
+			if (inUnit) {
+				DustMachineKnowledgeItem kiUnit = resolveItem(kiMachine, h);
+				h = resolveHandle(kiUnit, lid);
 			}
 
-			ret = resolveHandle(kiUnit, lid);
+			ret = h;
 			break;
 		case Check:
 			break;
@@ -74,38 +90,38 @@ public class DustMachineNarrative implements Dust.MindMachine, DustMindHandles, 
 		return (RetType) ret;
 	}
 
-	private DustMachineHandle resolveHandle(DustMachineKnowledgeItem kiUnit, String lookupId) {
-		Map mh = kiUnit.get(hUnitHandles);
-		if ( null == mh ) {
-			mh = new TreeMap<>();
-			kiUnit.set(hUnitHandles, mh);
+	protected void loadUnit(DustMachineHandle hUnit) {
+		Dust.log(EVENT_TAG_TYPE_INFO, "Now would load", hUnit);
+		try {
+			unitLoader.loadUnits(hUnit.toString());
+			Dust.log(EVENT_TAG_TYPE_INFO, "Load success", hUnit);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		DustMachineHandle h = (DustMachineHandle) mh.get(lookupId);
+	}
 
-		if ( null == h ) {
-			h = new DustMachineHandle(lookupId);
-			mh.put(lookupId, h);
-		}
-		
+	public DustMachineHandle resolveHandle(DustMachineKnowledgeItem kiUnit, String lookupId) {
+		DustMachineHandle h = kiUnit.get(hUnitHandles, MindCollType.Map, lookupId, new DustCreator<DustMachineHandle>() {
+			@Override
+			public DustMachineHandle create(Object key, Object... hints) {
+				DustMachineHandle hUnit = new DustMachineHandle(kiUnit, (String) key);
+				return hUnit;
+			}
+		});
+
 		return h;
 	}
-	
-	private DustMachineKnowledgeItem resolveItem(DustMachineKnowledgeItem kiUnit, String lookupId) {
-		DustMachineHandle h = resolveHandle(kiUnit, lookupId);
-		
-		Map mc = kiUnit.get(hUnitContent);
-		if ( null == mc ) {
-			mc = new HashMap<>();
-			kiUnit.set(hUnitContent, mc);
-		}
-		DustMachineKnowledgeItem ret = (DustMachineKnowledgeItem) mc.get(h);
-		
-		if ( null == ret ) {
-			ret = new DustMachineKnowledgeItem(h);
-			mc.put(h, ret);
-		}
-		
-		return ret;
+
+	public DustMachineKnowledgeItem resolveItem(DustMachineKnowledgeItem kiUnit, DustMachineHandle h) {
+		DustMachineKnowledgeItem ki = kiUnit.get(hUnitContent, MindCollType.Map, h,
+				new DustCreator<DustMachineKnowledgeItem>() {
+					@Override
+					public DustMachineKnowledgeItem create(Object key, Object... hints) {
+						return new DustMachineKnowledgeItem((DustMachineHandle) key);
+					}
+				});
+
+		return ki;
 	}
 
 	@Override
@@ -134,6 +150,13 @@ public class DustMachineNarrative implements Dust.MindMachine, DustMindHandles, 
 			Dust.log(EVENT_TAG_TYPE_INFO, log);
 			return MindResponse.Accept;
 		}
+	}
+
+	public void set(DustMachineHandle hTarget, DustMachineHandle hAtt, Object val, MindCollType ct, Object key) {
+		DustMachineKnowledgeItem ki = resolveItem(hTarget.kiUnit, hTarget);
+		
+		ki.set(hAtt, val, ct, key);
+		
 	}
 
 }

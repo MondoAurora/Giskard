@@ -20,6 +20,9 @@ public interface DustConsts {
 	String DUST_EXT_JAVA = ".java";
 	String DUST_EXT_CLASS = ".class";
 	
+	String DUST_EXT_DUT = ".dut";
+	String DUST_DUT_SIGNATURE = "DustUnitText";
+
 	
 	int KEY_ADD = -1;
 	int KEY_SIZE = -2;

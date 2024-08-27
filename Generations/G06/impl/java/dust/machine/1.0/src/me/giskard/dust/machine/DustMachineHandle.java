@@ -10,8 +10,11 @@ public class DustMachineHandle extends DustConsts.MindHandle implements DustMach
 	private final String unit;
 	private final Object key;
 	private final boolean intKey;
+	
+	DustMachineKnowledgeItem kiUnit;
 
-	public DustMachineHandle(String id) {
+	public DustMachineHandle(DustMachineKnowledgeItem kiUnit, String id) {
+		this.kiUnit = kiUnit;
 		this.id = id;
 		
 		String[] spl = id.split(DUST_SEP_ID);
