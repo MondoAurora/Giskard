@@ -4,6 +4,24 @@ import me.giskard.dust.DustConsts;
 import me.giskard.dust.utils.DustUtils;
 
 public class DustMachineHandle extends DustConsts.MindHandle implements DustMachineConsts, Comparable<DustMachineHandle> {
+	
+	public interface Formatter {
+		String toString(DustMachineHandle h);
+	}
+	
+	public static final Formatter DEF_FORMATTER = new Formatter() {
+		@Override
+		public String toString(DustMachineHandle h) {
+			return h.getId();
+		}
+	};
+
+	static Formatter FORMATTER = DEF_FORMATTER;
+	
+	public static void setFormatter(Formatter fmt) {
+		FORMATTER = (null == fmt) ? DEF_FORMATTER : fmt;
+	}
+	
 	private final String id;
 	
 	private final String author;
@@ -19,7 +37,7 @@ public class DustMachineHandle extends DustConsts.MindHandle implements DustMach
 		
 		String[] spl = id.split(DUST_SEP_ID);
 		author = spl[0];
-		unit = spl[1];
+		unit = ( spl.length < 1 ) ? spl[1] : "";
 		
 		
 		if ( spl.length < 3 ) {
@@ -60,7 +78,7 @@ public class DustMachineHandle extends DustConsts.MindHandle implements DustMach
 	
 	@Override
 	public String toString() {
-		return id.toString();
+		return FORMATTER.toString(this);
 	}
 
 }

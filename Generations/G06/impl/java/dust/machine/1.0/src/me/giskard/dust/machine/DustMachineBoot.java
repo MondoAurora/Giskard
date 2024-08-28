@@ -39,7 +39,7 @@ public class DustMachineBoot implements DustMachineConsts {
 	}
 	
 	public static void loadBootModules() throws Exception {
-		Dust.log(DustEventHandles.EVENT_TAG_TYPE_INFO, "would boot modules");
+		Dust.log(DustEventHandles.DH_EVENT_TYPE_INFO, "would boot modules");
 	}
 	
 }

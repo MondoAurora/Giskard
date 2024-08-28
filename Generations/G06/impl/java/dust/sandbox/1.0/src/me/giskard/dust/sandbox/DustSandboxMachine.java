@@ -88,10 +88,10 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 		}
 		
 		if ( DustUtils.isEmpty(log) ) {
-			Dust.log(EVENT_TAG_TYPE_ERROR, "Unimplemented action in Machine");
+			Dust.log(DH_EVENT_TYPE_ERROR, "Unimplemented action in Machine");
 			return MindResponse.Error;
 		} else {
-			Dust.log(EVENT_TAG_TYPE_TRACE, "Machine run called");
+			Dust.log(DH_EVENT_TYPE_TRACE, "Machine run called");
 			return MindResponse.Accept;
 		}
 	}
@@ -201,7 +201,7 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 	}
 
 	public void test() {
-		Dust.log(EVENT_TAG_TYPE_WARNING, "pompom");
+		Dust.log(DH_EVENT_TYPE_WARNING, "pompom");
 	}
 
 	public Iterable<String> getAuthors() {

@@ -97,6 +97,7 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 					for (String lookupId : hIds) {
 						DustSandboxHandle h = fHandles.peek(lookupId);
 						String name = h.toString();
+						StringBuilder handleName = null;
 
 						if (name.startsWith(author)) {
 							pw.println("// No text assigned to handle " + h);
@@ -112,13 +113,18 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 										pw.println();
 									}
 								}
+								
+								handleName = DustUtils.sbAppend(handleName, DUST_SEP, true, (ns.length < 3) ? "DU" : "DH", ns[0]);
+								for ( int i = 2; i < ns.length; ++i ) {
+									handleName = DustUtils.sbAppend(handleName, DUST_SEP, true, ns[i]);
+								}
 							} else {
 								pw.println("// Not standard handle name " + name);
 								continue;
 							}
 
 							pw.print("\tMindHandle ");
-							pw.print(name);
+							pw.print(handleName);
 							pw.print(" = Dust.access(MindAccess.Lookup, \"");
 							pw.print(author);
 							pw.print(":");

@@ -18,7 +18,7 @@ import me.giskard.dust.machine.DustMachineHandle;
 import me.giskard.dust.machine.DustMachineNarrative;
 import me.giskard.dust.utils.DustUtils;
 
-public class DustSandboxUnitLoader implements DustMachineConsts, DustMainConsts {
+public class DustMachineSandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 
 	enum DutStage {
 		authors, units, graph
@@ -133,17 +133,6 @@ public class DustSandboxUnitLoader implements DustMachineConsts, DustMainConsts 
 				reset(un, glpUnit);
 				readunit(fName);
 			}
-
-//			for (String un : loadText) {
-//				String pf = DustUtils.getPostfix(un, "_");
-//				un = DustUtils.cutPostfix(un, "_") + "_txt_" + machine.getLanguage() + "_" + pf;
-//				String fName = un.replace(":", "/res/") + ".dut";
-//
-//				reset(un, glpText);
-//				readunit(fName);
-//			}
-
-//			loadedUnits.clear();
 		}
 	}
 
@@ -224,99 +213,12 @@ public class DustSandboxUnitLoader implements DustMachineConsts, DustMainConsts 
 		}
 	};
 
-//	GraphLineProcessor glpText = new GraphLineProcessor() {
-//
-//		String currTarget;
-//		Map<String, TextAtt> txtAtts = new TreeMap<>();
-//		EnumMap<TextInfo, Object> txtData = new EnumMap<>(TextInfo.class);
-//
-//		public void reset() {
-//			currTarget = null;
-//		}
-//
-//		@Override
-//		public void processGraphLine(LoadContext ctx, String sepChar, String line) {
-//			String[] spl = line.split(sepChar);
-//			String tId = spl[0];
-//
-//			if (!DustUtils.isEqual(currTarget, tId)) {
-//				if (null == currTarget) {
-//					txtAtts.clear();
-//
-//					for (int i = ctx.unitRefs.size(); i-- > 0;) {
-//						String un = ctx.unitRefs.get(i).split("_")[0];
-//
-//						switch (un) {
-//						case "giskard.me:mind":
-//							txtAtts.put(i + ":7", TextAtt.tags);
-//							break;
-//						case "giskard.me:misc":
-//							txtAtts.put(i + ":1", TextAtt.owner);
-//							break;
-//						case "giskard.me:text":
-//							txtAtts.put(i + ":3", TextAtt.text);
-//							txtAtts.put(i + ":0", TextAtt.tagLang);
-//							txtAtts.put(i + ":4", TextAtt.tagType);
-//
-//							break;
-//						}
-//					}
-//				} else {
-//					ctx.machine.setText(txtData);
-//					txtData.clear();
-//				}
-//
-//				currTarget = tId;
-//			} else {
-//				TextAtt ti = txtAtts.get(spl[1].substring(1));
-//				if (null != ti) {
-//					String p1 = spl[2].substring(1);
-//
-//					switch (ti) {
-//					case tags:
-//						TextAtt ta = txtAtts.get(p1);
-//						if (null != ta) {
-//							Object pv = ctx.resolve(spl[3].substring(1));
-//							switch (ta) {
-//							case tagLang:
-//								txtData.put(TextInfo.txtLang, pv);
-//								break;
-//							case tagType:
-//								txtData.put(TextInfo.txtType, pv);
-//								break;
-//							default:
-//								break;
-//							}
-//						}
-//						break;
-//					case owner:
-//						txtData.put(TextInfo.owner, ctx.resolve(p1));
-//						break;
-//					case text:
-//						txtData.put(TextInfo.text, p1);
-//						break;
-//					default:
-//						break;
-//					}
-//				}
-//			}
-//		}
-//
-//		@Override
-//		public void close(LoadContext ctx) {
-//			if (!txtData.isEmpty()) {
-//				ctx.machine.setText(txtData);
-//				txtData.clear();
-//			}
-//		}
-//	};
-
 	DustMachineNarrative machine;
 	File root;
 	Set<String> loadedUnits = new HashSet<>();
 	LoadContext lc;
 
-	public DustSandboxUnitLoader(DustMachineNarrative machine) {
+	public DustMachineSandboxUnitLoader(DustMachineNarrative machine) {
 		this.machine = machine;
 		
 		String fHome = System.getProperty("user.home");
@@ -328,8 +230,6 @@ public class DustSandboxUnitLoader implements DustMachineConsts, DustMainConsts 
 	}
 
 	public void loadAllUnits() throws Exception {
-//		File fa = new File(root, defAuthor);
-
 		File[] authorDirs = root.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
@@ -358,8 +258,6 @@ public class DustSandboxUnitLoader implements DustMachineConsts, DustMainConsts 
 	}
 
 	public void loadUnits(String... unitNames) throws Exception {
-//		Dust.log(null, "Loading units from", root.getCanonicalPath());
-
 		boolean doProcess = false;
 
 		if (null == lc) {

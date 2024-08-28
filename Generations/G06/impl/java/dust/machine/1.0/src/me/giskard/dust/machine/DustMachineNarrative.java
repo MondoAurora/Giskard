@@ -1,7 +1,7 @@
 package me.giskard.dust.machine;
 
 import me.giskard.dust.Dust;
-import me.giskard.dust.machine.sandbox.DustSandboxUnitLoader;
+import me.giskard.dust.machine.sandbox.DustMachineSandboxUnitLoader;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.event.DustEventHandles;
 import me.giskard.mind.DustMindHandles;
@@ -13,7 +13,7 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 	DustMachineHandle hUnitContent;
 
 //	DustMachineKnowledgeItem mainKnowledge;
-	DustSandboxUnitLoader unitLoader;
+	DustMachineSandboxUnitLoader unitLoader;
 
 	final ThreadLocal<DustMachineKnowledgeItem> dialogs = new ThreadLocal<DustMachineKnowledgeItem>() {
 		@Override
@@ -29,7 +29,7 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 		this.hUnitHandles = hUnitHandles;
 		this.hUnitContent = hUnitContent;
 		
-		unitLoader = new DustSandboxUnitLoader(this);
+		unitLoader = new DustMachineSandboxUnitLoader(this);
 	}
 
 	@Override
@@ -91,10 +91,10 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 	}
 
 	protected void loadUnit(DustMachineHandle hUnit) {
-		Dust.log(EVENT_TAG_TYPE_INFO, "Now would load", hUnit);
+		Dust.log(DH_EVENT_TYPE_INFO, "Now would load", hUnit);
 		try {
 			unitLoader.loadUnits(hUnit.toString());
-			Dust.log(EVENT_TAG_TYPE_INFO, "Load success", hUnit);
+			Dust.log(DH_EVENT_TYPE_INFO, "Load success", hUnit);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,10 +144,10 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 		}
 
 		if (DustUtils.isEmpty(log)) {
-			Dust.log(EVENT_TAG_TYPE_ERROR, "Unimplemented action in Machine");
+			Dust.log(DH_EVENT_TYPE_ERROR, "Unimplemented action in Machine");
 			return MindResponse.Error;
 		} else {
-			Dust.log(EVENT_TAG_TYPE_INFO, log);
+			Dust.log(DH_EVENT_TYPE_INFO, log);
 			return MindResponse.Accept;
 		}
 	}
