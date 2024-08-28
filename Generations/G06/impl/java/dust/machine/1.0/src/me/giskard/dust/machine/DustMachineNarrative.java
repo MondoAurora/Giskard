@@ -1,7 +1,8 @@
 package me.giskard.dust.machine;
 
 import me.giskard.dust.Dust;
-import me.giskard.dust.machine.sandbox.DustMachineSandboxUnitLoader;
+import me.giskard.dust.machine.sandbox.SandboxHandleFormatter;
+import me.giskard.dust.machine.sandbox.SandboxUnitLoader;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.event.DustEventHandles;
 import me.giskard.mind.DustMindHandles;
@@ -13,7 +14,8 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 	DustMachineHandle hUnitContent;
 
 //	DustMachineKnowledgeItem mainKnowledge;
-	DustMachineSandboxUnitLoader unitLoader;
+	SandboxUnitLoader unitLoader;
+	SandboxHandleFormatter sbFmt;
 
 	final ThreadLocal<DustMachineKnowledgeItem> dialogs = new ThreadLocal<DustMachineKnowledgeItem>() {
 		@Override
@@ -29,7 +31,7 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 		this.hUnitHandles = hUnitHandles;
 		this.hUnitContent = hUnitContent;
 		
-		unitLoader = new DustMachineSandboxUnitLoader(this);
+		unitLoader = new SandboxUnitLoader(this);
 	}
 
 	@Override
@@ -135,6 +137,10 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 			break;
 		case Init:
 			DustMachineBoot.loadBootModules();
+			
+			sbFmt = new SandboxHandleFormatter(unitLoader);
+			DustMachineHandle.setFormatter(sbFmt);
+			
 			log = "Machine initialized";
 			break;
 		case Process:
@@ -153,7 +159,7 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 	}
 
 	public void set(DustMachineHandle hTarget, DustMachineHandle hAtt, Object val, MindCollType ct, Object key) {
-		DustMachineKnowledgeItem ki = resolveItem(hTarget.kiUnit, hTarget);
+		DustMachineKnowledgeItem ki = resolveItem(hTarget.getUnitItem(), hTarget);
 		
 		ki.set(hAtt, val, ct, key);
 		

@@ -2,9 +2,7 @@ package me.giskard.dust.machine.sandbox;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,7 +16,7 @@ import me.giskard.dust.machine.DustMachineHandle;
 import me.giskard.dust.machine.DustMachineNarrative;
 import me.giskard.dust.utils.DustUtils;
 
-public class DustMachineSandboxUnitLoader implements DustMachineConsts, DustMainConsts {
+public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 
 	enum DutStage {
 		authors, units, graph
@@ -129,6 +127,8 @@ public class DustMachineSandboxUnitLoader implements DustMachineConsts, DustMain
 				loadText.add(un);
 
 				String fName = un.replace(':', '/') + ".dut";
+				
+				un = un.replace("/res/", ":");
 
 				reset(un, glpUnit);
 				readunit(fName);
@@ -218,7 +218,7 @@ public class DustMachineSandboxUnitLoader implements DustMachineConsts, DustMain
 	Set<String> loadedUnits = new HashSet<>();
 	LoadContext lc;
 
-	public DustMachineSandboxUnitLoader(DustMachineNarrative machine) {
+	public SandboxUnitLoader(DustMachineNarrative machine) {
 		this.machine = machine;
 		
 		String fHome = System.getProperty("user.home");
@@ -227,34 +227,6 @@ public class DustMachineSandboxUnitLoader implements DustMachineConsts, DustMain
 		File f = new File(fHome, fRoot);
 		
 		root = new File(f, "store/local/units");
-	}
-
-	public void loadAllUnits() throws Exception {
-		File[] authorDirs = root.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isDirectory();
-			}
-		});
-
-		for (File fa : authorDirs) {
-			String author = fa.getName();
-
-			String[] unitNames = fa.list(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".dut");
-				}
-			});
-
-			if (unitNames.length > 0) {
-				for (int i = unitNames.length; i-- > 0;) {
-					unitNames[i] = DustUtils.cutPostfix(author + ":" + unitNames[i], ".dut");
-				}
-
-				loadUnits(unitNames);
-			}
-		}
 	}
 
 	public void loadUnits(String... unitNames) throws Exception {

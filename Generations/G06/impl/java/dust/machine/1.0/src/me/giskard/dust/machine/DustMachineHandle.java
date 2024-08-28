@@ -29,7 +29,7 @@ public class DustMachineHandle extends DustConsts.MindHandle implements DustMach
 	private final Object key;
 	private final boolean intKey;
 	
-	DustMachineKnowledgeItem kiUnit;
+	private final DustMachineKnowledgeItem kiUnit;
 
 	public DustMachineHandle(DustMachineKnowledgeItem kiUnit, String id) {
 		this.kiUnit = kiUnit;
@@ -56,6 +56,10 @@ public class DustMachineHandle extends DustConsts.MindHandle implements DustMach
 			key = k;
 			intKey = ik;
 		}
+	}
+	
+	public DustMachineKnowledgeItem getUnitItem() {
+		return kiUnit;
 	}
 
 	@Override
