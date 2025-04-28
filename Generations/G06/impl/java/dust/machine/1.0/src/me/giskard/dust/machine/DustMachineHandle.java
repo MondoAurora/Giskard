@@ -3,7 +3,7 @@ package me.giskard.dust.machine;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.utils.DustUtils;
 
-public class DustMachineHandle extends DustConsts.MindHandle implements DustMachineConsts, Comparable<DustMachineHandle> {
+public class DustMachineHandle extends DustConsts.MindToken implements DustMachineConsts, Comparable<DustMachineHandle> {
 	
 	public interface Formatter {
 		String toString(DustMachineHandle h);

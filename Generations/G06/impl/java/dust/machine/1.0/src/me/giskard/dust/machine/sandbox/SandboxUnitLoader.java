@@ -95,7 +95,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 				id = ss[0];
 			}
 
-			DustMachineHandle h = Dust.access(MindAccess.Lookup, uref + DUST_SEP_ID + id);
+			DustMachineHandle h = Dust.access(null, uref + DUST_SEP_ID + id);
 
 			return h;
 		}
@@ -257,7 +257,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 			return;
 		}
 
-		Dust.log(null, "Loading", fUnit.getCanonicalPath());
+		Dust.broadcast(null, "Loading", fUnit.getCanonicalPath());
 
 		try (FileReader fr = new FileReader(fUnit); BufferedReader br = new BufferedReader(fr)) {
 			DutStage stage = null;

@@ -6,7 +6,7 @@ import me.giskard.dust.DustConsts;
 public class DustMachineModule implements DustConsts {
 	
 	public static Object dustModuleInit() throws Exception {
-		Dust.log(null, "Hello world from Machine module");
+		Dust.broadcast(null, "Hello world from Machine module");
 		
 		return DustMachineBoot.bootMachine();
 	}

@@ -12,11 +12,11 @@ import me.giskard.dust.Dust;
 import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsFactory;
-import me.giskard.event.DustEventHandles;
-import me.giskard.mind.DustMindHandles;
+import me.giskard.event.DustEventTokens;
+import me.giskard.mind.DustMindTokens;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, DustMindHandles, DustEventHandles {
+public class DustSandboxMachine implements Dust.MindDialog, DustSandboxConsts, DustMindTokens, DustEventTokens {
 
 	private DustUtilsFactory<DustSandboxHandle, Map> knowledge = new DustUtilsFactory(MAP_CREATOR);
 
@@ -40,7 +40,7 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 			return new DustUtilsFactory(crUnit) {
 				protected void initNew(Object item, Object key, Object... hints) {
 					String uref = hints[0] + ":" + key;
-					
+
 					try {
 						unitLoader.loadUnits(DustSandboxMachine.this, uref);
 					} catch (Exception e) {
@@ -64,38 +64,17 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 	private String language;
 	private DustSandboxUnitLoader unitLoader;
 
-	public DustSandboxMachine(String language, File fUnit) throws Exception {		
+	public DustSandboxMachine(String language, File fUnit) throws Exception {
 		this.language = language;
 		this.unitLoader = new DustSandboxUnitLoader(fUnit);
 	}
-	
+
 	@Override
-	public MindResponse execute(MindAction action) throws Exception {
-		String log = null;
-		
-		switch ( action ) {
-		case Begin:
-			break;
-		case End:
-			break;
-		case Init:
-			log = "Machine run called";
-			break;
-		case Process:
-			break;
-		case Release:
-			break;
-		}
-		
-		if ( DustUtils.isEmpty(log) ) {
-			Dust.log(DH_EVENT_TYPE_ERROR, "Unimplemented action in Machine");
-			return MindResponse.Error;
-		} else {
-			Dust.log(DH_EVENT_TYPE_TRACE, "Machine run called");
-			return MindResponse.Accept;
-		}
+	public MindToken agentInit() throws Exception {
+		Dust.broadcast(TOKEN_EVENT_TYPE_TRACE, "Machine run called");
+		return TOKEN_MIND_RESULT_ACCEPT;
 	}
-	
+
 	public String getLanguage() {
 		return language;
 	}
@@ -103,8 +82,8 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 	public DustSandboxHandle resolve(String uref, String id) {
 		String[] spl = uref.split(":");
 
-		DustUtilsFactory<String, DustSandboxHandle> hf = (DustUtilsFactory<String, DustSandboxHandle>) ((DustUtilsFactory) handleCatalog
-				.get(spl[0])).get(spl[1], spl[0]);
+		DustUtilsFactory<String, DustSandboxHandle> hf = (DustUtilsFactory<String, DustSandboxHandle>) ((DustUtilsFactory) handleCatalog.get(spl[0])).get(spl[1],
+				spl[0]);
 
 		DustSandboxHandle h = hf.get(id, uref);
 
@@ -164,49 +143,32 @@ public class DustSandboxMachine implements Dust.MindMachine, DustSandboxConsts, 
 	}
 
 	@Override
-	public <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
+	public void broadcast(MindToken event, Object... params) {
+		StringBuilder sb = DustUtils.sbAppend(null, " ", false, params);
+		System.out.println(event + " " + sb);
+	}
+
+	@Override
+	public <RetType> RetType access(MindToken cmd, Object val, Object... path) {
 		Object ret = null;
 
-		switch (cmd) {
-		case Broadcast:
-			StringBuilder sb = DustUtils.sbAppend(null, " ", false, path);
-			System.out.println(val + " " + sb);
-			break;
-		case Lookup:
+		if (null == cmd) {
 			String lid = (String) val;
 			int ii = lid.lastIndexOf(":");
 			ret = resolve(lid.substring(0, ii), lid.substring(ii + 1));
-			break;
-		case Check:
-			break;
-		case Commit:
-			break;
-		case Delete:
-			break;
-		case Get:
-			break;
-		case Insert:
-			break;
-		case Peek:
-			break;
-		case Reset:
-			break;
-		case Set:
-			break;
-		case Visit:
-			break;
 		}
 
 		return (RetType) ret;
 	}
 
 	public void test() {
-		Dust.log(DH_EVENT_TYPE_WARNING, "pompom");
+		Dust.broadcast(TOKEN_EVENT_TYPE_WARNING, "pompom");
 	}
 
 	public Iterable<String> getAuthors() {
 		return handleCatalog.keys();
 	}
+
 	public DustUtilsFactory<String, DustUtilsFactory> getAuthorUnits(String author) {
 		return handleCatalog.peek(author);
 	}

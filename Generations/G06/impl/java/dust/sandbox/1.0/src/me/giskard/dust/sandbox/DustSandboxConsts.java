@@ -12,7 +12,7 @@ public interface DustSandboxConsts extends DustMainConsts, DustUtilsConsts {
 	}
 
 	
-	class DustSandboxHandle extends MindHandle {
+	class DustSandboxHandle extends MindToken {
 		final String id;
 		static Map<DustSandboxHandle, String> TO_STRING;
 

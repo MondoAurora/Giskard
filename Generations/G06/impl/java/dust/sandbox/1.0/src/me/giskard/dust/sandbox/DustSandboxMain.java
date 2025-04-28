@@ -14,13 +14,13 @@ public class DustSandboxMain implements DustSandboxConsts {
 
 			DustSandboxMachine machine = initMachine();
 			
-			Dust.log(null, "***** Generating sources *****");
+			Dust.broadcast(null, "***** Generating sources *****");
 
 			File fGenRoot = new File(f, "impl/java/dust/gen/src");
 			DustSandboxCodeGen cg = new DustSandboxCodeGen(fGenRoot, machine);
 			cg.genSources();
 
-			Dust.log(null, "***** Generating jars *****");
+			Dust.broadcast(null, "***** Generating jars *****");
 
 			File fPrjRoot = new File(f, "impl/java");
 			File fMods = new File(f, "store/local/modules");
@@ -43,11 +43,11 @@ public class DustSandboxMain implements DustSandboxConsts {
 		DustSandboxMachine machine = new DustSandboxMachine("en", fUnit);
 		Dust.setMachine(machine);
 		
-		Dust.log(null, "***** Machine test *****");
+		Dust.broadcast(null, "***** Machine test *****");
 
 		machine.test();
 
-		Dust.log(null, "***** Load all units *****");
+		Dust.broadcast(null, "***** Load all units *****");
 
 		machine.loadAllUnits();
 		

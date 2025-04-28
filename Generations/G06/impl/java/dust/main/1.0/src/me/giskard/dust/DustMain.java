@@ -39,7 +39,7 @@ public class DustMain implements DustMainConsts {
 		try {
 			if ((null == args) || (0 == args.length)) {
 				args = new String[] { "{GISKARD06_MODULES}/dust_sandbox_1.0.jar" };
-				Dust.log(null, "No module list given, starting with the default", args);
+				Dust.broadcast(null, "No module list given, starting with the default", args);
 			}
 			
 			runMain(new DustMain(), args);
@@ -56,10 +56,10 @@ public class DustMain implements DustMainConsts {
 		Class cModule = MAIN.getMachineLoaderClass(args[0]);
 
 		Method mMachineInit = cModule.getMethod(FN_MODULE_INIT);
-		MindMachine machine = (MindMachine) mMachineInit.invoke(null);
+		MindDialog machine = (MindDialog) mMachineInit.invoke(null);
 		Dust.setMachine(machine);
 
-		machine.execute(MindAction.Init);
+		machine.agentInit();
 	}
 
 	
@@ -118,7 +118,7 @@ public class DustMain implements DustMainConsts {
 		URL[] uu = new URL[urls.size()];
 		uu = urls.toArray(uu);
 
-		Dust.log(null, "Creating classloader for module", modName, "jars", urls);
+		Dust.broadcast(null, "Creating classloader for module", modName, "jars", urls);
 
 		return new URLClassLoader(uu, cl);
 	}

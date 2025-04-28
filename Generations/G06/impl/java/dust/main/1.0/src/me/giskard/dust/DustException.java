@@ -17,9 +17,6 @@ public final class DustException extends RuntimeException implements DustConsts 
 
 	public static void swallow(Throwable src, Object... params) {
 		log(true, src, DustUtils.toString(DustUtils.sbAppend(null, ",", false, params)));
-//		if ( null != src ) {
-//			src.printStackTrace();
-//		}
 	}
 
 	public static <FakeRet> FakeRet wrap(Throwable src, Object... params) {
@@ -31,7 +28,7 @@ public final class DustException extends RuntimeException implements DustConsts 
 	}
 
 	private static void log(boolean thrown, Throwable src, String msg) {
-		Dust.log(null, src, msg);
+		Dust.broadcast(null, src, msg);
 
 		if ( (null != DUMP_STACK_TRACE) && (null != src) ) {
 			src.printStackTrace(DUMP_STACK_TRACE);

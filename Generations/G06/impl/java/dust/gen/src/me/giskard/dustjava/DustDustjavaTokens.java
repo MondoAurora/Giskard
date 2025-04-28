@@ -3,7 +3,7 @@ package me.giskard.dustjava;
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 
-public interface DustDustjavaHandles extends DustConsts {
+public interface DustDustjavaTokens extends DustConsts {
 
 // Not standard handle name DustMontruNarrativeFrame
 // Not standard handle name DustMontruNarrativeContainer

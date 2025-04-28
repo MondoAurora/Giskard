@@ -5,4 +5,8 @@ import me.giskard.dust.utils.DustUtilsConsts;
 
 public interface DustMachineConsts extends DustConsts, DustUtilsConsts {
 
+	enum MindCollType {
+		One, Set, Arr, Map
+	};
+
 }

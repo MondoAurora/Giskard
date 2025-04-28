@@ -371,7 +371,7 @@ public class DustSandboxUnitLoader implements DustSandboxConsts {
 			return;
 		}
 
-		Dust.log(null, "Loading", fUnit.getCanonicalPath());
+		Dust.broadcast(null, "Loading", fUnit.getCanonicalPath());
 
 		try (FileReader fr = new FileReader(fUnit); BufferedReader br = new BufferedReader(fr)) {
 			DutStage stage = null;

@@ -63,15 +63,6 @@ public class DustUtilsFactory<KeyType, ValType> implements DustUtilsConsts {
 		public Simple(boolean sorted, Class<? extends ValType> clVal) {
 			super(new DustCreatorSimple<ValType>(clVal), sorted);
 		}
-
-//		@Override
-//		protected ValType create(KeyType key, Object... hints) {
-//			try {
-//				return constructor.newInstance();
-//			} catch (Exception e) {
-//				throw new RuntimeException(e);
-//			}
-//		}
 	}
 
 	public int size() {

@@ -12,17 +12,17 @@ import me.giskard.dust.utils.DustUtils;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineKnowledgeItem implements DustMachineConsts {
 	DustMachineHandle h;
-	private final Map<MindHandle, Object> data = new TreeMap<>();
+	private final Map<MindToken, Object> data = new TreeMap<>();
 
 	public DustMachineKnowledgeItem(DustMachineHandle h) {
 		this.h = h;
 	}
 
-	public <RetType> RetType peek(MindHandle hAtt) {
+	public <RetType> RetType peek(MindToken hAtt) {
 		return peek(hAtt, MindCollType.One, null);
 	}
 
-	public <RetType> RetType peek(MindHandle hAtt, MindCollType ct, Object key) {
+	public <RetType> RetType peek(MindToken hAtt, MindCollType ct, Object key) {
 		Object ob = data.get(hAtt);
 
 		if (null != ob) {
@@ -48,7 +48,7 @@ public class DustMachineKnowledgeItem implements DustMachineConsts {
 		return (RetType) ob;
 	}
 
-	public <RetType> RetType get(MindHandle hAtt, MindCollType ct, Object key, DustCreator<RetType> creator,
+	public <RetType> RetType get(MindToken hAtt, MindCollType ct, Object key, DustCreator<RetType> creator,
 			Object... hints) {
 		synchronized (data) {
 			Object ob = data.get(hAtt);
@@ -82,11 +82,11 @@ public class DustMachineKnowledgeItem implements DustMachineConsts {
 		}
 	}
 
-	public boolean set(MindHandle hAtt, Object val) {
+	public boolean set(MindToken hAtt, Object val) {
 		return set(hAtt, val, MindCollType.One, null);
 	}
 
-	public boolean set(MindHandle hAtt, Object val, MindCollType ct, Object key) {
+	public boolean set(MindToken hAtt, Object val, MindCollType ct, Object key) {
 		boolean changed;
 
 		synchronized (data) {

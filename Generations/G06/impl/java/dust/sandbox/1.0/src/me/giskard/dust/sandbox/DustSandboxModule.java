@@ -8,7 +8,7 @@ public class DustSandboxModule implements DustConsts {
 //	}
 	
 	public static Object dustModuleInit() throws Exception {
-		Dust.log(null, "Hello world from Sandbox module");
+		Dust.broadcast(null, "Hello world from Sandbox module");
 		return DustSandboxMain.initMachine();
 	}
 }

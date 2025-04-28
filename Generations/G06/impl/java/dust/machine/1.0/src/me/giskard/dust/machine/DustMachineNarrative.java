@@ -4,11 +4,11 @@ import me.giskard.dust.Dust;
 import me.giskard.dust.machine.sandbox.SandboxHandleFormatter;
 import me.giskard.dust.machine.sandbox.SandboxUnitLoader;
 import me.giskard.dust.utils.DustUtils;
-import me.giskard.event.DustEventHandles;
-import me.giskard.mind.DustMindHandles;
+import me.giskard.event.DustEventTokens;
+import me.giskard.mind.DustMindTokens;
 
 @SuppressWarnings({ "unchecked" })
-public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine, DustMindHandles, DustEventHandles {
+public class DustMachineNarrative implements DustMachineConsts, Dust.MindDialog, DustMindTokens, DustEventTokens {
 
 	DustMachineHandle hUnitHandles;
 	DustMachineHandle hUnitContent;
@@ -24,43 +24,42 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 		}
 	};
 
-	public DustMachineNarrative(DustMachineKnowledgeItem bootKnowledge, DustMachineHandle hUnitHandles,
-			DustMachineHandle hUnitContent) {
+	public DustMachineNarrative(DustMachineKnowledgeItem bootKnowledge, DustMachineHandle hUnitHandles, DustMachineHandle hUnitContent) {
 		dialogs.set(bootKnowledge);
-		
+
 		this.hUnitHandles = hUnitHandles;
 		this.hUnitContent = hUnitContent;
-		
+
 		unitLoader = new SandboxUnitLoader(this);
 	}
 
 	@Override
-	public <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
+	public void broadcast(MindToken event, Object... params) {
+		StringBuilder sb = DustUtils.sbAppend(null, " ", false, params);
+		System.out.println(event + " " + sb);
+	}
+
+	@Override
+	public <RetType> RetType access(MindToken cmd, Object val, Object... path) {
 		Object ret = null;
 
-		switch (cmd) {
-		case Broadcast:
-			StringBuilder sb = DustUtils.sbAppend(null, " ", false, path);
-			System.out.println(val + " " + sb);
-			break;
-		case Lookup:
+		if (null == cmd) {
 			String lid = (String) val;
 			String[] spl = lid.split(DUST_SEP_ID);
 
 			DustMachineKnowledgeItem kiMachine = dialogs.get();
 
 			boolean inUnit = spl.length > 2;
-			DustMachineHandle h = kiMachine.get(hUnitHandles, MindCollType.Map, inUnit ? spl[0] + DUST_SEP_ID + spl[1] : lid,
-					new DustCreator<DustMachineHandle>() {
-						@Override
-						public DustMachineHandle create(Object key, Object... hints) {
-							DustMachineHandle hUnit = new DustMachineHandle(kiMachine, (String) key);
+			DustMachineHandle h = kiMachine.get(hUnitHandles, MindCollType.Map, inUnit ? spl[0] + DUST_SEP_ID + spl[1] : lid, new DustCreator<DustMachineHandle>() {
+				@Override
+				public DustMachineHandle create(Object key, Object... hints) {
+					DustMachineHandle hUnit = new DustMachineHandle(kiMachine, (String) key);
 
-							loadUnit(hUnit);
+					loadUnit(hUnit);
 
-							return hUnit;
-						}
-					});
+					return hUnit;
+				}
+			});
 
 			if (inUnit) {
 				DustMachineKnowledgeItem kiUnit = resolveItem(kiMachine, h);
@@ -68,35 +67,16 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 			}
 
 			ret = h;
-			break;
-		case Check:
-			break;
-		case Commit:
-			break;
-		case Delete:
-			break;
-		case Get:
-			break;
-		case Insert:
-			break;
-		case Peek:
-			break;
-		case Reset:
-			break;
-		case Set:
-			break;
-		case Visit:
-			break;
 		}
 
 		return (RetType) ret;
 	}
 
 	protected void loadUnit(DustMachineHandle hUnit) {
-		Dust.log(DH_EVENT_TYPE_INFO, "Now would load", hUnit);
+		Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Now would load", hUnit);
 		try {
 			unitLoader.loadUnits(hUnit.toString());
-			Dust.log(DH_EVENT_TYPE_INFO, "Load success", hUnit);
+			Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Load success", hUnit);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,54 +95,32 @@ public class DustMachineNarrative implements DustMachineConsts, Dust.MindMachine
 	}
 
 	public DustMachineKnowledgeItem resolveItem(DustMachineKnowledgeItem kiUnit, DustMachineHandle h) {
-		DustMachineKnowledgeItem ki = kiUnit.get(hUnitContent, MindCollType.Map, h,
-				new DustCreator<DustMachineKnowledgeItem>() {
-					@Override
-					public DustMachineKnowledgeItem create(Object key, Object... hints) {
-						return new DustMachineKnowledgeItem((DustMachineHandle) key);
-					}
-				});
+		DustMachineKnowledgeItem ki = kiUnit.get(hUnitContent, MindCollType.Map, h, new DustCreator<DustMachineKnowledgeItem>() {
+			@Override
+			public DustMachineKnowledgeItem create(Object key, Object... hints) {
+				return new DustMachineKnowledgeItem((DustMachineHandle) key);
+			}
+		});
 
 		return ki;
 	}
 
 	@Override
-	public MindResponse execute(MindAction action) throws Exception {
-		String log = null;
+	public MindToken agentInit() throws Exception {
+		DustMachineBoot.loadBootModules();
 
-		switch (action) {
-		case Begin:
-			break;
-		case End:
-			break;
-		case Init:
-			DustMachineBoot.loadBootModules();
-			
-			sbFmt = new SandboxHandleFormatter(unitLoader);
-			DustMachineHandle.setFormatter(sbFmt);
-			
-			log = "Machine initialized";
-			break;
-		case Process:
-			break;
-		case Release:
-			break;
-		}
+		sbFmt = new SandboxHandleFormatter(unitLoader);
+		DustMachineHandle.setFormatter(sbFmt);
 
-		if (DustUtils.isEmpty(log)) {
-			Dust.log(DH_EVENT_TYPE_ERROR, "Unimplemented action in Machine");
-			return MindResponse.Error;
-		} else {
-			Dust.log(DH_EVENT_TYPE_INFO, log);
-			return MindResponse.Accept;
-		}
+		Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Machine initialized");
+		return TOKEN_MIND_RESULT_ACCEPT;
 	}
 
 	public void set(DustMachineHandle hTarget, DustMachineHandle hAtt, Object val, MindCollType ct, Object key) {
 		DustMachineKnowledgeItem ki = resolveItem(hTarget.getUnitItem(), hTarget);
-		
+
 		ki.set(hAtt, val, ct, key);
-		
+
 	}
 
 }

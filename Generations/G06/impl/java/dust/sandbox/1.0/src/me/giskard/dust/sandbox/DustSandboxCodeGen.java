@@ -60,7 +60,7 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 			for (String unitId : fUnit.keys()) {
 				String unit = DustUtils.cutPostfix(unitId, "_").toLowerCase();
 				String pUnit = pAuthor + "." + unit;
-				String ifName = "Dust" + unit.substring(0, 1).toUpperCase() + unit.substring(1) + "Handles";
+				String ifName = "Dust" + unit.substring(0, 1).toUpperCase() + unit.substring(1) + "Tokens";
 
 				File dir = new File(root, pUnit.replace(".", "/"));
 				dir.mkdirs();
@@ -114,7 +114,7 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 									}
 								}
 								
-								handleName = DustUtils.sbAppend(handleName, DUST_SEP, true, (ns.length < 3) ? "DU" : "DH", ns[0]);
+								handleName = DustUtils.sbAppend(handleName, DUST_SEP, true, (ns.length < 3) ? "DU" : "TOKEN", ns[0]);
 								for ( int i = 2; i < ns.length; ++i ) {
 									handleName = DustUtils.sbAppend(handleName, DUST_SEP, true, ns[i]);
 								}
@@ -123,9 +123,9 @@ public class DustSandboxCodeGen implements DustSandboxConsts {
 								continue;
 							}
 
-							pw.print("\tMindHandle ");
+							pw.print("\tMindToken ");
 							pw.print(handleName);
-							pw.print(" = Dust.access(MindAccess.Lookup, \"");
+							pw.print(" = Dust.access(null, \"");
 							pw.print(author);
 							pw.print(":");
 							pw.print(unitId);

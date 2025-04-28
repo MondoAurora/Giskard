@@ -4,9 +4,9 @@ import me.giskard.dust.utils.DustUtils;
 
 public class Dust implements DustConsts {
 
-	private static MindMachine MACHINE;
+	private static MindDialog MACHINE;
 
-	public static void setMachine(MindMachine m) {
+	public static void setMachine(MindDialog m) {
 		if (m != MACHINE) {
 
 			if (null != MACHINE) {
@@ -17,16 +17,16 @@ public class Dust implements DustConsts {
 		}
 	}
 
-	public static <RetType> RetType access(MindAccess cmd, Object val, Object... path) {
+	public static <RetType> RetType access(MindToken cmd, Object val, Object... path) {
 		return MACHINE.access(cmd, val, path);
 	}
 
-	public static void log(MindHandle event, Object... params) {
+	public static void broadcast(MindToken event, Object... params) {
 		if (null == MACHINE) {
 			StringBuilder sb = DustUtils.sbAppend(null, ", ", false, params);
 			System.out.println("BOOTLOG " + event + " " + DustUtils.toString(sb));
 		} else {
-			access(MindAccess.Broadcast, event, params);
+			MACHINE.broadcast(event, params);
 		}
 	}
 

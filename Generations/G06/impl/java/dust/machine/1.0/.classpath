@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/G06Dust_1.0"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/G06DustGenHandles"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/G06DustGenTokens"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

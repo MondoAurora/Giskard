@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
-import me.giskard.event.DustEventHandles;
 
 public class DustMachineBoot implements DustMachineConsts {
 	
@@ -39,7 +38,7 @@ public class DustMachineBoot implements DustMachineConsts {
 	}
 	
 	public static void loadBootModules() throws Exception {
-		Dust.log(DustEventHandles.DH_EVENT_TYPE_INFO, "would boot modules");
+		Dust.broadcast(null, "would boot modules");
 	}
 	
 }

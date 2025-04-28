@@ -8,28 +8,27 @@ import me.giskard.dust.machine.DustMachineHandle;
 import me.giskard.dust.text.DustTextConsts;
 import me.giskard.dust.utils.DustUtils;
 
-@SuppressWarnings({ "unchecked" })
 public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle.Formatter {
 	
 	SandboxUnitLoader unitLoader;
-	MindHandle hLang;
+	MindToken hLang;
 	String langTemp = "en";
 
-	Map<String, Map<MindHandle, String>> texts = new HashMap<>();
+	Map<String, Map<MindToken, String>> texts = new HashMap<>();
 	
 	public SandboxHandleFormatter(SandboxUnitLoader unitLoader) {
 		this.unitLoader = unitLoader;
 	}
 	
-	public void setLang(MindHandle hLang) {
+	public void setLang(MindToken hLang) {
 		this.hLang = hLang;
 	}
 
 	protected void loadUnit(DustMachineHandle hUnit) {
-		Dust.log(DH_EVENT_TYPE_INFO, "Now would load", hUnit);
+		Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Now would load", hUnit);
 		try {
 			unitLoader.loadUnits(hUnit.toString());
-			Dust.log(DH_EVENT_TYPE_INFO, "Load success", hUnit);
+			Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Load success", hUnit);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +39,7 @@ public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle
 		String id = h.getId();
 		id = DustUtils.cutPostfix(id, DUST_SEP_ID);
 		
-		Map<MindHandle, String> unitTexts = texts.get(id);
+		Map<MindToken, String> unitTexts = texts.get(id);
 		
 		if ( null == unitTexts ) {
 			unitTexts = new HashMap<>();
@@ -52,6 +51,8 @@ public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle
 
 			try {
 				unitLoader.loadUnits(fName);
+				
+//				DustMachineHandle hRes = Dust.access(MindAccess.Lookup, fName);
 				
 				
 			} catch (Exception e) {
