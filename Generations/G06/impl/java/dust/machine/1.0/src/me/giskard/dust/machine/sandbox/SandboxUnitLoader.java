@@ -12,8 +12,8 @@ import me.giskard.dust.Dust;
 import me.giskard.dust.DustException;
 import me.giskard.dust.DustMainConsts;
 import me.giskard.dust.machine.DustMachineConsts;
-import me.giskard.dust.machine.DustMachineHandle;
-import me.giskard.dust.machine.DustMachineNarrative;
+import me.giskard.dust.machine.DustMachineToken;
+import me.giskard.dust.machine.DustMachineLogicNode;
 import me.giskard.dust.utils.DustUtils;
 
 public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
@@ -35,7 +35,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 	}
 
 	class LoadContext {
-		DustMachineNarrative machine;
+		DustMachineLogicNode machine;
 		
 		Set<String> queue = new HashSet<>();
 		Set<String> loadText = new HashSet<>();
@@ -46,7 +46,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 
 		GraphLineProcessor glp;
 		
-		public LoadContext(DustMachineNarrative machine) {
+		public LoadContext(DustMachineLogicNode machine) {
 			this.machine = machine;
 		}
 
@@ -81,7 +81,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 			glp.close(this);
 		}
 
-		public DustMachineHandle resolve(String s) {
+		public DustMachineToken resolve(String s) {
 			String[] ss = s.split(":");
 
 			String uref;
@@ -95,7 +95,7 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 				id = ss[0];
 			}
 
-			DustMachineHandle h = Dust.access(null, uref + DUST_SEP_ID + id);
+			DustMachineToken h = Dust.access(null, uref + DUST_SEP_ID + id);
 
 			return h;
 		}
@@ -164,13 +164,13 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 			String s = spl.substring(0, cp);
 			spl = spl.substring(cp + 1);
 
-			DustMachineHandle hTarget = ctx.resolve(s);
+			DustMachineToken hTarget = ctx.resolve(s);
 
 			cp = spl.indexOf(sepChar);
 			s = spl.substring(0, cp);
 			spl = spl.substring(cp + 1);
 
-			DustMachineHandle hAtt = ctx.resolve(s.substring(1));
+			DustMachineToken hAtt = ctx.resolve(s.substring(1));
 
 			Object key = "-";
 			char attType = s.charAt(0);
@@ -213,12 +213,12 @@ public class SandboxUnitLoader implements DustMachineConsts, DustMainConsts {
 		}
 	};
 
-	DustMachineNarrative machine;
+	DustMachineLogicNode machine;
 	File root;
 	Set<String> loadedUnits = new HashSet<>();
 	LoadContext lc;
 
-	public SandboxUnitLoader(DustMachineNarrative machine) {
+	public SandboxUnitLoader(DustMachineLogicNode machine) {
 		this.machine = machine;
 		
 		String fHome = System.getProperty("user.home");

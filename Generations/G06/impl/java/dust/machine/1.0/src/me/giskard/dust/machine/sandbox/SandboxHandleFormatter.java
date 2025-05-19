@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.dust.Dust;
-import me.giskard.dust.machine.DustMachineHandle;
+import me.giskard.dust.machine.DustMachineToken;
 import me.giskard.dust.text.DustTextConsts;
 import me.giskard.dust.utils.DustUtils;
 
-public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle.Formatter {
+public class SandboxHandleFormatter implements DustTextConsts, DustMachineToken.Formatter {
 	
 	SandboxUnitLoader unitLoader;
 	MindToken hLang;
@@ -24,7 +24,7 @@ public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle
 		this.hLang = hLang;
 	}
 
-	protected void loadUnit(DustMachineHandle hUnit) {
+	protected void loadUnit(DustMachineToken hUnit) {
 		Dust.broadcast(TOKEN_EVENT_TYPE_INFO, "Now would load", hUnit);
 		try {
 			unitLoader.loadUnits(hUnit.toString());
@@ -35,7 +35,7 @@ public class SandboxHandleFormatter implements DustTextConsts, DustMachineHandle
 	}
 
 	@Override
-	public String toString(DustMachineHandle h) {
+	public String toString(DustMachineToken h) {
 		String id = h.getId();
 		id = DustUtils.cutPostfix(id, DUST_SEP_ID);
 		

@@ -1,17 +1,19 @@
 package me.giskard.dust.machine;
 
+import java.util.Map;
+
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.utils.DustUtils;
 
-public class DustMachineHandle extends DustConsts.MindToken implements DustMachineConsts, Comparable<DustMachineHandle> {
+public class DustMachineToken extends DustConsts.MindToken implements DustMachineConsts, Comparable<DustMachineToken> {
 	
 	public interface Formatter {
-		String toString(DustMachineHandle h);
+		String toString(DustMachineToken h);
 	}
 	
 	public static final Formatter DEF_FORMATTER = new Formatter() {
 		@Override
-		public String toString(DustMachineHandle h) {
+		public String toString(DustMachineToken h) {
 			return h.getId();
 		}
 	};
@@ -24,42 +26,42 @@ public class DustMachineHandle extends DustConsts.MindToken implements DustMachi
 	
 	private final String id;
 	
-	private final String author;
-	private final String unit;
+	private final String authorID;
+	private final String unitID;
 	private final Object key;
-	private final boolean intKey;
+//	private final boolean intKey;
 	
-	private final DustMachineKnowledgeItem kiUnit;
+	private final Map<MindToken, Object> unit;
 
-	public DustMachineHandle(DustMachineKnowledgeItem kiUnit, String id) {
-		this.kiUnit = kiUnit;
+	public DustMachineToken(Map<MindToken, Object> iUnit, String id) {
+		this.unit = iUnit;
 		this.id = id;
 		
 		String[] spl = id.split(DUST_SEP_ID);
-		author = spl[0];
-		unit = ( spl.length < 1 ) ? spl[1] : "";
+		authorID = spl[0];
+		unitID = ( spl.length < 1 ) ? spl[1] : "";
 		
 		
 		if ( spl.length < 3 ) {
 			key = -1;
-			intKey = true;
+//			intKey = true;
 		} else {
 			Object k;
-			boolean ik = false;
+//			boolean ik = false;
 			try {
 				k = Integer.parseInt(spl[2]);
-				ik = true;
+//				ik = true;
 			} catch ( Throwable t ) {
 				k = spl[3];
 			}
 			
 			key = k;
-			intKey = ik;
+//			intKey = ik;
 		}
 	}
 	
-	public DustMachineKnowledgeItem getUnitItem() {
-		return kiUnit;
+	public Map<MindToken, Object> getUnitItem() {
+		return unit;
 	}
 
 	@Override
@@ -68,13 +70,14 @@ public class DustMachineHandle extends DustConsts.MindToken implements DustMachi
 	}
 
 	@Override
-	public int compareTo(DustMachineHandle o) {
-		int d = author.compareTo(o.author);
+	public int compareTo(DustMachineToken o) {
+		int d = authorID.compareTo(o.authorID);
 		if ( 0 == d ) {
-			d = unit.compareTo(o.unit);
+			d = unitID.compareTo(o.unitID);
 		}
 		if ( 0 == d ) {
-			d = (intKey == o.intKey) ? DustUtils.safeCompare(key, o.key) : intKey ? 1 : -1;
+			d = DustUtils.safeCompare(key, o.key);
+//			d = (intKey == o.intKey) ? DustUtils.safeCompare(key, o.key) : intKey ? 1 : -1;
 		}
 		
 		return d;

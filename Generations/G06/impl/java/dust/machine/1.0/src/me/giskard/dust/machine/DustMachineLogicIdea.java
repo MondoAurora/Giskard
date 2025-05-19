@@ -5,24 +5,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import me.giskard.dust.utils.DustUtils;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineKnowledgeItem implements DustMachineConsts {
-	DustMachineHandle h;
-	private final Map<MindToken, Object> data = new TreeMap<>();
+public class DustMachineLogicIdea implements DustMachineConsts {
 
-	public DustMachineKnowledgeItem(DustMachineHandle h) {
-		this.h = h;
+	public <RetType> RetType peek(Map<MindToken, Object> data, MindToken hAtt) {
+		return peek(data, hAtt, MindCollType.One, null);
 	}
 
-	public <RetType> RetType peek(MindToken hAtt) {
-		return peek(hAtt, MindCollType.One, null);
-	}
-
-	public <RetType> RetType peek(MindToken hAtt, MindCollType ct, Object key) {
+	public <RetType> RetType peek(Map<MindToken, Object> data, MindToken hAtt, MindCollType ct, Object key) {
 		Object ob = data.get(hAtt);
 
 		if (null != ob) {
@@ -48,7 +41,7 @@ public class DustMachineKnowledgeItem implements DustMachineConsts {
 		return (RetType) ob;
 	}
 
-	public <RetType> RetType get(MindToken hAtt, MindCollType ct, Object key, DustCreator<RetType> creator,
+	public <RetType> RetType get(Map<MindToken, Object> data, MindToken hAtt, MindCollType ct, Object key, DustCreator<RetType> creator,
 			Object... hints) {
 		synchronized (data) {
 			Object ob = data.get(hAtt);
@@ -75,18 +68,18 @@ public class DustMachineKnowledgeItem implements DustMachineConsts {
 
 			if ((null == ob) && (null != creator)) {
 				ob = creator.create(key, hints);
-				set(hAtt, ob, ct, key);
+				set(data, hAtt, ob, ct, key);
 			}
 
 			return (RetType) ob;
 		}
 	}
 
-	public boolean set(MindToken hAtt, Object val) {
-		return set(hAtt, val, MindCollType.One, null);
+	public boolean set(Map<MindToken, Object> data, MindToken hAtt, Object val) {
+		return set(data, hAtt, val, MindCollType.One, null);
 	}
 
-	public boolean set(MindToken hAtt, Object val, MindCollType ct, Object key) {
+	public boolean set(Map<MindToken, Object> data, MindToken hAtt, Object val, MindCollType ct, Object key) {
 		boolean changed;
 
 		synchronized (data) {
@@ -165,11 +158,6 @@ public class DustMachineKnowledgeItem implements DustMachineConsts {
 
 			return changed;
 		}
-	}
-
-	@Override
-	public String toString() {
-		return data.toString();
 	}
 
 }

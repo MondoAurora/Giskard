@@ -40,7 +40,7 @@ public interface DustConsts {
 		}
 	};
 
-	interface MindAgent {
+	interface MindLogic {
 		default MindToken agentInit() throws Exception {
 			return UNIMPLEMENTED_ACTION;
 		}
@@ -62,7 +62,7 @@ public interface DustConsts {
 		}
 	}
 
-	public interface MindDialog extends MindAgent {
+	public interface MindDialog extends MindLogic {
 		<RetType> RetType access(MindToken cmd, Object val, Object... path);
 		void broadcast(MindToken event, Object... params);
 	}
