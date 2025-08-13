@@ -16,11 +16,11 @@ public class Dust implements DustConsts {
 	static final Map<String, String> envData = new TreeMap<>();
 	static final ArrayList<String> argList = new ArrayList<>();
 
-	public static <RetType> RetType access(MindToken cmd, Object val, Object... path) {
+	public static <RetType> RetType access(MindHandle cmd, Object val, Object... path) {
 		return MACHINE.access(cmd, val, path);
 	}
 
-	public static void broadcast(MindToken event, Object... params) {
+	public static void broadcast(MindHandle event, Object... params) {
 		if (null == MACHINE) {
 			log(event, params);
 		} else {
@@ -28,7 +28,7 @@ public class Dust implements DustConsts {
 		}
 	}
 
-	public static void log(MindToken event, Object... params) {
+	public static void log(MindHandle event, Object... params) {
 		StringBuilder sb = DustUtils.sbAppend(null, ", ", false, DustUtils.strTime(), event);
 		DustUtils.sbAppend(sb, ", ", false, params);
 		System.out.println(sb);
@@ -71,7 +71,7 @@ public class Dust implements DustConsts {
 			Method mMachineInit = cModule.getMethod(FN_MODULE_INIT);
 			MACHINE = (MindDialog) mMachineInit.invoke(null);
 			
-			MACHINE.agentInit();
+			MACHINE.logicProcess(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

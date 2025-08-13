@@ -9,20 +9,30 @@
 		]
 	},
 	{
-		"mind#unitAuthor": "->",
+		"mind#unitAuthor": "->giskard:0",
 		"misc#verMajor": 1,
 		"misc#verMinor": 0,
 		"misc#verCommit": 1,
 		"misc#verDate": "2025-07-22T15:56:24.375Z",
-		"mind#ideaToken": "giskard.me",
+		"mind#ideaToken": "test01",
 		"misc#connRequired": {
+			"giskard": "->giskard:0",
 			"mind": "->mind:0",
-			"misc": "->misc:0"
+			"misc": "->misc:0",
+			"dust": "->dust:0"
 		}
 	},
 	{
+		"giskard:0": {
+			"mind#unitAuthor": "->giskard:0",
+			"mind#ideaToken": "giskard.me",
+			"misc#verMajor": 1,
+			"misc#verMinor": 0,
+			"misc#verCommit": 1,
+			"misc#verDate": "2025-07-22T15:56:24.375Z"
+		},
 		"mind:0": {
-			"mind#unitAuthor": "->",
+			"mind#unitAuthor": "->giskard:0",
 			"mind#ideaToken": "mind",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
@@ -30,8 +40,16 @@
 			"misc#verDate": "2025-07-22T15:56:24.375Z"
 		},
 		"misc:0": {
-			"mind#unitAuthor": "->",
+			"mind#unitAuthor": "->giskard:0",
 			"mind#ideaToken": "misc",
+			"misc#verMajor": 1,
+			"misc#verMinor": 0,
+			"misc#verCommit": 1,
+			"misc#verDate": "2025-07-22T15:56:24.375Z"
+		},
+		"dust:0": {
+			"mind#unitAuthor": "->giskard:0",
+			"mind#ideaToken": "dust",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,

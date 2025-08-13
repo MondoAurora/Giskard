@@ -1,7 +1,9 @@
 package me.giskard.dust.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustUtils implements DustUtilsConsts {
@@ -40,7 +42,7 @@ public class DustUtils implements DustUtilsConsts {
 	
 	public static String getPostfix(String strSrc, String pfSep) {
 		int sep = strSrc.lastIndexOf(pfSep);
-		return strSrc.substring(sep + pfSep.length());
+		return (-1 == sep) ? strSrc : strSrc.substring(sep + pfSep.length());
 	}
 
 	public static String cutPostfix(String strSrc, String pfSep) {
@@ -105,6 +107,36 @@ public class DustUtils implements DustUtilsConsts {
 		}
 
 		return sb;
+	}
+
+	public static <RetType> RetType simpleGet(Object root, Object... path) {
+		Object curr = root;
+
+		for (Object p : path) {
+			if ( null == curr ) {
+				break;
+			}
+			if ( p instanceof Integer ) {
+				int idx = (Integer) p;
+				ArrayList l = (ArrayList) curr;
+				curr = ((0 <= idx) && (idx < l.size())) ? l.get(idx) : null;
+			} else {
+				curr = ((Map) curr).get(p);
+			}
+		}
+
+		return (RetType) curr;
+	}
+
+	public static <RetType> RetType safeGet(Object map, Object key, DustCreator<RetType> creator, Object... hints) {
+		synchronized (map) {
+			RetType ret = ((Map<Object, RetType>) map).get(key);
+			if ( (null == ret) && (null != creator) ) {
+				ret = creator.create(key, hints);
+				((Map<Object, RetType>) map).put(key, ret);
+			}
+			return ret;
+		}
 	}
 
 }

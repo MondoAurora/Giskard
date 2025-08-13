@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.DustException;
@@ -36,6 +38,8 @@ public interface DustUtilsConsts extends DustConsts {
 	
 	DustCreator<Map> MAP_CREATOR = new DustCreatorSimple<>(HashMap.class);
 	DustCreator<Set> SET_CREATOR = new DustCreatorSimple<>(HashSet.class);
+	DustCreator<Map> SORTEDMAP_CREATOR = new DustCreatorSimple<>(TreeMap.class);
+	DustCreator<Set> SORTEDSET_CREATOR = new DustCreatorSimple<>(TreeSet.class);
 	DustCreator<ArrayList> ARRAY_CREATOR = new DustCreatorSimple<>(ArrayList.class);
 
 }
