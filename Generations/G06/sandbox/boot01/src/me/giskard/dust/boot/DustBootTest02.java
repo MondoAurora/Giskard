@@ -1,7 +1,6 @@
 package me.giskard.dust.boot;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,101 +8,72 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
-import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
-import me.giskard.dust.utils.DustUtilsFile;
 import me.giskard.dust.utils.DustUtilsJson;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
+public class DustBootTest02 implements DustBootConsts, DustUtilsConsts {
 
-	public static void test01() {
+	static Map<MindHandle, Object> DIALOG_DATA = new HashMap<>();
 
-		File root = new File("units");
-		int pl = root.getAbsolutePath().length();
+	public static void test01() throws Exception {
+		DIALOG_DATA.put(DIALOG_UNITS, new TreeMap());
+		DIALOG_DATA.put(DIALOG_IDEAS, new HashMap());
+		DIALOG_DATA.put(DIALOG_VOCABULARY, new TreeMap());
 
-		FileFilter ff = new DustUtilsFile.ExtFilter(DUST_EXT_JSON);
+		Map<String, ArrayList<Object>> queue = new TreeMap<>();
+		Map<String, Object> app = new TreeMap<>();
+		initUnitData(app, "giskard.me", "test01");
 
-		DustUtilsFile.FileProcessor fp = new DustUtilsFile.FileProcessor() {
-			@Override
-			public boolean processFile(File f) {
-				String id = f.getAbsolutePath().substring(pl + 1);
+		optRegisterUnit(queue, app);
 
-				try {
-					ArrayList<Object> j = DustUtilsJson.readJson(f);
-
-					Object meta = j.get(0);
-					Dust.log(null, id, meta);
-
-					Map<String, Object> data = (Map<String, Object>) j.get(2);
-
-					int idx = 0;
-					for (String o : data.keySet()) {
-						Dust.log(null, "data", idx++, o, data.get(o));
-
-					}
-				} catch (Exception e) {
-					DustException.swallow(e, "reading unit file", id);
-				}
-				return true;
-			}
-		};
-
-		DustUtilsFile.procRecursive(root, fp, ff);
+		loadQueue(queue);
 	}
 
-	public static void test02() throws Exception {
-		Map<String, Object> app = initUnitData(null, "giskard.me", "test01");
-
-		enqueueModule(app);
-
-		loadQueue();
+	public static String buildKey(Map<String, Object> unitData) {
+		return DustUtils.sbAppend(null, "/", true, "units", unitData.get(LOCAL_UNIT_AUTHOR), unitData.get(LOCAL_UNIT_ID)).toString();
 	}
 
 	public static Map<String, Object> initUnitData(Map<String, Object> ud, String author, String id) throws Exception {
-		if (null == ud) {
-			ud = new TreeMap<String, Object>();
-		}
-
 		ud.put(LOCAL_UNIT_AUTHOR, author);
 		ud.put(LOCAL_UNIT_ID, id);
-
-//		ud.put(LOCAL_UNIT_MAP, new TreeMap<>());
-
 		return ud;
 	}
 
-	static Map<String, Map<MindHandle, Object>> units = new TreeMap<>();
-	static Map<String, ArrayList<Object>> queue = new TreeMap<>();
-	static Map<String, Map<String, Object>> vocabulary = new TreeMap<>();
+	private static String optRegisterUnit(Map<String, ArrayList<Object>> queue, Map<String, Object> inputData) throws Exception {
+		String key = buildKey(inputData);
 
-	private static String enqueueModule(Map<String, Object> unitData) throws Exception {
-		String key = buildKey(unitData);
+		Map units = DustUtils.simpleGet(DIALOG_DATA, DIALOG_UNITS);
+		Map dialogIdeas = DustUtils.simpleGet(DIALOG_DATA, DIALOG_IDEAS);
+		Object u = DustUtils.simpleGet(units, key);
 
-		if (!units.containsKey(key) && !queue.containsKey(key)) {
+		if ((null == u) && !queue.containsKey(key)) {
+			Dust.log(null, "Queueing", key);
 			File f = new File(key + DUST_EXT_JSON);
 			ArrayList<Object> j = DustUtilsJson.readJson(f);
 			queue.put(key, j);
 
 			String lang = DustUtils.simpleGet(j, 0, "lang");
 			lang = DustUtils.getPostfix(lang, DUST_REF_PREFIX);
-			Map<String, DustHandle> tokenMap = DustUtils.safeGet(vocabulary, lang, SORTEDMAP_CREATOR);
+			Map<String, DustHandle> tokenMap = DustUtils.safeGet(DIALOG_DATA.get(DIALOG_VOCABULARY), lang, SORTEDMAP_CREATOR);
 			tokenMap = DustUtils.safeGet(tokenMap, key, MAP_CREATOR);
 
-			DustHandle hUnit = new DustHandle(null, key);
-			Map<MindHandle, Object> unit = new HashMap<>();
-			units.put(key, unit);
-			unit.put(IDEA_HANDLE, hUnit);
-
-			HashMap<DustHandle, Map<MindHandle, Object>> unitIdeas = new HashMap();
-			unit.put(UNIT_IDEAS, unitIdeas);
-
+			DustHandle unitHandle = new DustHandle(key);
+			units.put(key, unitHandle);
+			
+			Map<MindHandle, Object> unitData = new HashMap<>();
+			unitData.put(IDEA_HANDLE, unitHandle);
+			
 			HashMap<String, MindHandle> unitHandles = new HashMap();
-			unit.put(UNIT_HANDLES, unitHandles);
-			unitHandles.put("", hUnit);
+			unitData.put(UNIT_HANDLES, unitHandles);
+			unitHandles.put("", unitHandle);
 
-			Map<String, String> refs = DustUtils.safeGet(unit, MISC_CONN_REQUIRES, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
+			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = new HashMap();
+			dialogIdeas.put(unitHandle, unitIdeas);
+			unitIdeas.put(unitHandle, unitData);
+
+			Map<String, String> refs = DustUtils.safeGet(unitData, MISC_CONN_REQUIRES, MAP_CREATOR);
 			refs.put(DustUtils.simpleGet(j, 1, "mind#ideaToken"), key);
 
 			Map<String, Object> content = DustUtils.simpleGet(j, 2);
@@ -115,7 +85,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 					continue;
 				}
 
-				DustHandle hIdea = new DustHandle(hUnit, kIdea);
+				DustHandle hIdea = new DustHandle(unitHandle, kIdea);
 				Map<MindHandle, Object> dIdea = new HashMap<>();
 				dIdea.put(IDEA_HANDLE, hIdea);
 				unitIdeas.put(hIdea, dIdea);
@@ -124,7 +94,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				String token = DustUtils.simpleGet(ec.getValue(), "mind#ideaToken");
 				if (!DustUtils.isEmpty(token)) {
 					String tkey = DUST_SEP_TOKEN + token;
-					DustHandle hToken = new DustHandle(hUnit, tkey);
+					DustHandle hToken = new DustHandle(unitHandle, tkey);
 					Map<MindHandle, Object> dToken = new HashMap<>();
 					dToken.put(IDEA_HANDLE, hToken);
 					dToken.put(MISC_TARGET, hIdea);
@@ -148,43 +118,37 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				String uid = DustUtils.simpleGet(ud, "mind#ideaToken");
 				initUnitData(ud, author, uid);
 
-				String uKey = enqueueModule(ud);
+				String uKey = optRegisterUnit(queue, ud);
 				refs.put(ure.getKey(), uKey);
-
 			}
 		}
 
 		return key;
 	}
 
-	public static String buildKey(Map<String, Object> unitData) {
-		return DustUtils.sbAppend(null, "/", true, "units", unitData.get("author"), unitData.get("token")).toString();
-	}
-
-	private static void loadQueue() {
+	private static void loadQueue(Map<String, ArrayList<Object>> queue) {
 		for (Map.Entry<String, ArrayList<Object>> eq : queue.entrySet()) {
 			String key = eq.getKey();
 			ArrayList<Object> inputData = eq.getValue();
-			Map<MindHandle, Object> unit = DustUtils.simpleGet(units, key);
-			Map<DustHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
-
+			
+			MindHandle unitHandle = DustUtils.simpleGet(DIALOG_DATA, DIALOG_UNITS, key);
+			Map<MindHandle, Object> unit = DustUtils.simpleGet(DIALOG_DATA, DIALOG_IDEAS, unitHandle, unitHandle);
+			
+			Map<String, DustHandle> unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
 			Map<String, String> unitMap = DustUtils.simpleGet(unit, MISC_CONN_REQUIRES);
 
-			Dust.log(null, "Load unit", key, unitMap, inputData, unitIdeas);
+			Dust.log(null, "Load unit", key, unitMap, inputData, unitHandles);
 
 			optLoadIdea(unitMap, key, (DustHandle) unit.get(IDEA_HANDLE), unit, DustUtils.simpleGet(inputData, 1));
 
-			for (Map.Entry<DustHandle, Map<MindHandle, Object>> eu : unitIdeas.entrySet()) {
-				DustHandle ideaHandle = eu.getKey();
-				Map<MindHandle, Object> ideaData = eu.getValue();
+			for (DustHandle ideaHandle : unitHandles.values()) {
+				Map<MindHandle, Object> ideaData = DustUtils.simpleGet(DIALOG_DATA, DIALOG_IDEAS, unitHandle, ideaHandle);
 				Map<String, Object> input = DustUtils.simpleGet(inputData, 2, ideaHandle.id);
 				ideaData.put(IDEA_HANDLE, ideaHandle);
 
 				optLoadIdea(unitMap, key, ideaHandle, ideaData, input);
 			}
 		}
-
-		Dust.log(null, "Vocabulary", vocabulary);
 	}
 
 	public static void optLoadIdea(Map<String, String> unitMap, String unit, DustHandle ideaHandle, Map<MindHandle, Object> ideaData, Map<String, Object> input) {
@@ -213,19 +177,21 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 
 	private static MindHandle resolveHandle(Map<String, String> unitMap, String unit, String t) {
 		String ur = unit;
+		String k = t;
 		int sep = t.indexOf(DUST_SEP_TOKEN);
 		if (-1 != sep) {
 			ur = unitMap.get(t.substring(0, sep));
-			t = t.substring(sep);
+			k = t.substring(sep);
 		} else {
 			sep = t.indexOf(DUST_SEP_ID);
 			if (-1 != sep) {
 				ur = unitMap.get(t.substring(0, sep));
-				t = t.substring(sep + DUST_SEP_ID.length());
+				k = t.substring(sep + DUST_SEP_ID.length());
 			}
 		}
 
-		return DustUtils.isEmpty(t) ? DustUtils.simpleGet(units, ur, IDEA_HANDLE) : DustUtils.simpleGet(units, ur, UNIT_HANDLES, t);
+		DustHandle hUnit = DustUtils.simpleGet(DIALOG_DATA, DIALOG_UNITS, ur);
+		return DustUtils.isEmpty(k) ? hUnit : DustUtils.simpleGet(DIALOG_DATA, DIALOG_IDEAS, hUnit, hUnit, UNIT_HANDLES, k);
 	}
 
 	private static Object resolveValue(Map<String, String> unitMap, String unit, MindHandle hVal, Object v) {

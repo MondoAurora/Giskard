@@ -18,7 +18,8 @@ public class DustBootMachine extends DustConsts.MindDialog implements DustBootCo
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
-		DustBootTest01.test02();
+		DustBootTest02.test01();
+//		DustBootTest01.test02();
 //		DustBootTest01.test01();
 		return null;
 	}
