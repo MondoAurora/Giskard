@@ -53,24 +53,34 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 	}
 
 	public static void test02() throws Exception {
-		Map<String, Object> app = new TreeMap<String, Object>();
-
-		app.put("author", "giskard.me");
-		app.put("token", "test01");
+		Map<String, Object> app = initUnitData(null, "giskard.me", "test01");
 
 		enqueueModule(app);
 
 		loadQueue();
 	}
 
+	public static Map<String, Object> initUnitData(Map<String, Object> ud, String author, String id) throws Exception {
+		if ( null == ud ) {
+			ud = new TreeMap<String, Object>();
+		}
+
+		ud.put(LOCAL_UNIT_AUTHOR, author);
+		ud.put(LOCAL_UNIT_ID, id);
+
+//		ud.put(LOCAL_UNIT_MAP, new TreeMap<>());
+
+		return ud;
+	}
+
 	static Map<String, Map<MindHandle, Object>> units = new TreeMap<>();
 	static Map<String, ArrayList<Object>> queue = new TreeMap<>();
 	static Map<String, Map<String, Object>> vocabulary = new TreeMap<>();
 
-	private static void enqueueModule(Map<String, Object> unitData) throws Exception {
+	private static String enqueueModule(Map<String, Object> unitData) throws Exception {
 		String key = buildKey(unitData);
 
-		if (!units.containsKey(key) && !queue.containsKey(key)) {
+		if ( !units.containsKey(key) && !queue.containsKey(key) ) {
 			File f = new File(key + DUST_EXT_JSON);
 			ArrayList<Object> j = DustUtilsJson.readJson(f);
 			queue.put(key, j);
@@ -87,14 +97,17 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 			lang = DustUtils.getPostfix(lang, REF_PREFIX);
 
 			Map<String, DustHandle> tokenMap = DustUtils.safeGet(vocabulary, lang, SORTEDMAP_CREATOR);
-			tokenMap = DustUtils.safeGet(tokenMap, key, SORTEDMAP_CREATOR);
+			tokenMap = DustUtils.safeGet(tokenMap, key, MAP_CREATOR);
 			tokenMap.put("", hUnit);
+			
+			Map<String, String> refs = DustUtils.safeGet(iUnit, MISC_CONN_REQUIRES, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
+			refs.put(DustUtils.simpleGet(j, 1, "mind#ideaToken"), key);
 
 			Map<String, Object> content = DustUtils.simpleGet(j, 2);
 			for (Map.Entry<String, Object> ec : content.entrySet()) {
 				String kIdea = ec.getKey();
 
-				if (kIdea.contains(DUST_SEP_ID)) {
+				if ( kIdea.contains(DUST_SEP_ID) ) {
 					// remote idea
 					continue;
 				}
@@ -105,7 +118,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				iUnit.put(hIdea, dIdea);
 
 				String token = DustUtils.simpleGet(ec.getValue(), "mind#ideaToken");
-				if (!DustUtils.isEmpty(token)) {
+				if ( !DustUtils.isEmpty(token) ) {
 					String tkey = DUST_SEP_TOKEN + token;
 					DustHandle hToken = new DustHandle(hUnit, tkey);
 					Map<MindHandle, Object> dToken = new HashMap<>();
@@ -123,15 +136,18 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				Map<String, Object> ud = (Map<String, Object>) content.get(uRef.substring(2));
 
 				String author = DustUtils.simpleGet(ud, "mind#unitAuthor");
-				author = (REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "mind#ideaToken")
-						: DustUtils.simpleGet(content, author.substring(2), "mind#ideaToken");
-				ud.put("author", author);
-				ud.put("token", DustUtils.simpleGet(ud, "mind#ideaToken"));
+				author = (REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "mind#ideaToken") : DustUtils.simpleGet(content, author.substring(2), "mind#ideaToken");
 
-				enqueueModule(ud);
+				String uid = DustUtils.simpleGet(ud, "mind#ideaToken");
+				initUnitData(ud, author, uid);
+
+				String uKey = enqueueModule(ud);
+				refs.put(uid, uKey);
+
 			}
-
 		}
+
+		return key;
 	}
 
 	public static String buildKey(Map<String, Object> unitData) {
@@ -143,8 +159,10 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 			String key = eq.getKey();
 			ArrayList<Object> inputData = eq.getValue();
 			Map<DustHandle, Map<MindHandle, Object>> iUnit = DustUtils.simpleGet(units, key, UNIT_HANDLES);
+			
+			Map<String, String> unitMap = DustUtils.simpleGet(iUnit, MISC_CONN_REQUIRES);
 
-			Dust.log(null, "Load unit", key, inputData, iUnit);
+			Dust.log(null, "Load unit", key, unitMap, inputData, iUnit);
 
 			for (Map.Entry<DustHandle, Map<MindHandle, Object>> eu : iUnit.entrySet()) {
 				DustHandle h = eu.getKey();
@@ -153,7 +171,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 
 				Map<String, Object> input = DustUtils.simpleGet(inputData, 2, h.id);
 
-				if (null != input) {
+				if ( null != input ) {
 					Dust.log(null, "   Load item", h.id, input);
 
 					for (Map.Entry<String, Object> ev : input.entrySet()) {

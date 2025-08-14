@@ -25,8 +25,12 @@ public interface DustBootConsts extends DustConsts {
 	
 	DustHandle MISC_PARENT = new DustHandle(null, "MISC_PARENT");
 	DustHandle MISC_TARGET = new DustHandle(null, "MISC_TARGET");
+	DustHandle MISC_CONN_REQUIRES = new DustHandle(null, "MISC_CONN_REQUIRES");
 
 	String REF_PREFIX = "->";
+
+	String LOCAL_UNIT_AUTHOR = "author";
+	String LOCAL_UNIT_ID = "token";
 
 
 }
