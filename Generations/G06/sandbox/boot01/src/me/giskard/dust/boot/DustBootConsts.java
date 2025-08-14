@@ -22,6 +22,7 @@ public interface DustBootConsts extends DustConsts {
 	
 	DustHandle IDEA_HANDLE = new DustHandle(null, "IDEA_HANDLE");
 	DustHandle UNIT_HANDLES = new DustHandle(null, "UNIT_HANDLES");
+	DustHandle UNIT_IDEAS = new DustHandle(null, "UNIT_IDEAS");
 	
 	DustHandle MISC_PARENT = new DustHandle(null, "MISC_PARENT");
 	DustHandle MISC_TARGET = new DustHandle(null, "MISC_TARGET");

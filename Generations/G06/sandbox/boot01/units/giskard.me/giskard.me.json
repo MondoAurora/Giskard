@@ -16,12 +16,12 @@
 		"misc#verDate": "2025-07-22T15:56:24.375Z",
 		"mind#ideaToken": "giskard.me",
 		"misc#connRequired": {
-			"mind": "->mind:0",
-			"misc": "->misc:0"
+			"mind": "->mind:",
+			"misc": "->misc:"
 		}
 	},
 	{
-		"mind:0": {
+		"mind:": {
 			"mind#unitAuthor": "->",
 			"mind#ideaToken": "mind",
 			"misc#verMajor": 1,
@@ -29,7 +29,7 @@
 			"misc#verCommit": 1,
 			"misc#verDate": "2025-07-22T15:56:24.375Z"
 		},
-		"misc:0": {
+		"misc:": {
 			"mind#unitAuthor": "->",
 			"mind#ideaToken": "misc",
 			"misc#verMajor": 1,

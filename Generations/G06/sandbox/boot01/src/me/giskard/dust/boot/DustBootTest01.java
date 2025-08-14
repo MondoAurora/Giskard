@@ -3,6 +3,7 @@ package me.giskard.dust.boot;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -61,7 +62,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 	}
 
 	public static Map<String, Object> initUnitData(Map<String, Object> ud, String author, String id) throws Exception {
-		if ( null == ud ) {
+		if (null == ud) {
 			ud = new TreeMap<String, Object>();
 		}
 
@@ -80,34 +81,36 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 	private static String enqueueModule(Map<String, Object> unitData) throws Exception {
 		String key = buildKey(unitData);
 
-		if ( !units.containsKey(key) && !queue.containsKey(key) ) {
+		if (!units.containsKey(key) && !queue.containsKey(key)) {
 			File f = new File(key + DUST_EXT_JSON);
 			ArrayList<Object> j = DustUtilsJson.readJson(f);
 			queue.put(key, j);
 
-			Map<MindHandle, Object> unit = new HashMap<>();
-			units.put(key, unit);
-			DustHandle hUnit = new DustHandle(null, key);
-			unit.put(IDEA_HANDLE, hUnit);
-
-			HashMap<DustHandle, Map<MindHandle, Object>> iUnit = new HashMap();
-			unit.put(UNIT_HANDLES, iUnit);
-
 			String lang = DustUtils.simpleGet(j, 0, "lang");
 			lang = DustUtils.getPostfix(lang, REF_PREFIX);
-
 			Map<String, DustHandle> tokenMap = DustUtils.safeGet(vocabulary, lang, SORTEDMAP_CREATOR);
 			tokenMap = DustUtils.safeGet(tokenMap, key, MAP_CREATOR);
-			tokenMap.put("", hUnit);
-			
-			Map<String, String> refs = DustUtils.safeGet(iUnit, MISC_CONN_REQUIRES, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
+
+			DustHandle hUnit = new DustHandle(null, key);
+			Map<MindHandle, Object> unit = new HashMap<>();
+			units.put(key, unit);
+			unit.put(IDEA_HANDLE, hUnit);
+
+			HashMap<DustHandle, Map<MindHandle, Object>> unitIdeas = new HashMap();
+			unit.put(UNIT_IDEAS, unitIdeas);
+
+			HashMap<String, MindHandle> unitHandles = new HashMap();
+			unit.put(UNIT_HANDLES, unitHandles);
+			unitHandles.put("", hUnit);
+
+			Map<String, String> refs = DustUtils.safeGet(unit, MISC_CONN_REQUIRES, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
 			refs.put(DustUtils.simpleGet(j, 1, "mind#ideaToken"), key);
 
 			Map<String, Object> content = DustUtils.simpleGet(j, 2);
 			for (Map.Entry<String, Object> ec : content.entrySet()) {
 				String kIdea = ec.getKey();
 
-				if ( kIdea.contains(DUST_SEP_ID) ) {
+				if (kIdea.contains(DUST_SEP_ID)) {
 					// remote idea
 					continue;
 				}
@@ -115,16 +118,18 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				DustHandle hIdea = new DustHandle(hUnit, kIdea);
 				Map<MindHandle, Object> dIdea = new HashMap<>();
 				dIdea.put(IDEA_HANDLE, hIdea);
-				iUnit.put(hIdea, dIdea);
+				unitIdeas.put(hIdea, dIdea);
+				unitHandles.put(kIdea, hIdea);
 
 				String token = DustUtils.simpleGet(ec.getValue(), "mind#ideaToken");
-				if ( !DustUtils.isEmpty(token) ) {
+				if (!DustUtils.isEmpty(token)) {
 					String tkey = DUST_SEP_TOKEN + token;
 					DustHandle hToken = new DustHandle(hUnit, tkey);
 					Map<MindHandle, Object> dToken = new HashMap<>();
 					dToken.put(IDEA_HANDLE, hToken);
 					dToken.put(MISC_TARGET, hIdea);
-					iUnit.put(hToken, dToken);
+					unitIdeas.put(hToken, dToken);
+					unitHandles.put(tkey, hToken);
 
 					tokenMap.put(tkey, hToken);
 				}
@@ -132,17 +137,19 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 
 			Map<String, String> unitRefs = DustUtils.simpleGet(j, 1, "misc#connRequired");
 
-			for (String uRef : unitRefs.values()) {
+			for (Map.Entry<String, String> ure : unitRefs.entrySet()) {
+				String uRef = ure.getValue();
 				Map<String, Object> ud = (Map<String, Object>) content.get(uRef.substring(2));
 
 				String author = DustUtils.simpleGet(ud, "mind#unitAuthor");
-				author = (REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "mind#ideaToken") : DustUtils.simpleGet(content, author.substring(2), "mind#ideaToken");
+				author = (REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "mind#ideaToken")
+						: DustUtils.simpleGet(content, author.substring(2), "mind#ideaToken");
 
 				String uid = DustUtils.simpleGet(ud, "mind#ideaToken");
 				initUnitData(ud, author, uid);
 
 				String uKey = enqueueModule(ud);
-				refs.put(uid, uKey);
+				refs.put(ure.getKey(), uKey);
 
 			}
 		}
@@ -158,33 +165,98 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 		for (Map.Entry<String, ArrayList<Object>> eq : queue.entrySet()) {
 			String key = eq.getKey();
 			ArrayList<Object> inputData = eq.getValue();
-			Map<DustHandle, Map<MindHandle, Object>> iUnit = DustUtils.simpleGet(units, key, UNIT_HANDLES);
-			
-			Map<String, String> unitMap = DustUtils.simpleGet(iUnit, MISC_CONN_REQUIRES);
+			Map<MindHandle, Object> unit = DustUtils.simpleGet(units, key);
+			Map<DustHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
 
-			Dust.log(null, "Load unit", key, unitMap, inputData, iUnit);
+			Map<String, String> unitMap = DustUtils.simpleGet(unit, MISC_CONN_REQUIRES);
 
-			for (Map.Entry<DustHandle, Map<MindHandle, Object>> eu : iUnit.entrySet()) {
-				DustHandle h = eu.getKey();
-				Map<MindHandle, Object> idea = eu.getValue();
-				idea.put(IDEA_HANDLE, h);
+			Dust.log(null, "Load unit", key, unitMap, inputData, unitIdeas);
 
-				Map<String, Object> input = DustUtils.simpleGet(inputData, 2, h.id);
+			optLoadIdea(unitMap, key, (DustHandle) unit.get(IDEA_HANDLE), unit, DustUtils.simpleGet(inputData, 1));
 
-				if ( null != input ) {
-					Dust.log(null, "   Load item", h.id, input);
+			for (Map.Entry<DustHandle, Map<MindHandle, Object>> eu : unitIdeas.entrySet()) {
+				DustHandle ideaHandle = eu.getKey();
+				Map<MindHandle, Object> ideaData = eu.getValue();
+				Map<String, Object> input = DustUtils.simpleGet(inputData, 2, ideaHandle.id);
+				ideaData.put(IDEA_HANDLE, ideaHandle);
 
-					for (Map.Entry<String, Object> ev : input.entrySet()) {
-						String t = ev.getKey();
-						Object v = ev.getValue();
-
-						Dust.log(null, "       Load value", t, v);
-
-					}
-				}
+				optLoadIdea(unitMap, key, ideaHandle, ideaData, input);
 			}
 		}
 
 		Dust.log(null, "Vocabulary", vocabulary);
+	}
+
+	public static void optLoadIdea(Map<String, String> unitMap, String unit, DustHandle ideaHandle, Map<MindHandle, Object> ideaData, Map<String, Object> input) {
+		if (null == input) {
+			return;
+		}
+
+		Dust.log(null, "   Load item", ideaHandle.id, input);
+
+		for (Map.Entry<String, Object> ev : input.entrySet()) {
+
+			String t = ev.getKey();
+			Object v = ev.getValue();
+
+			MindHandle hVal = resolveHandle(unitMap, unit, t);
+
+			if (null == hVal) {
+				Dust.log(null, "ERROR - missing referred handle for key", t);
+			} else {
+				v = resolveValue(unitMap, unit, hVal, v);
+				ideaData.put(hVal, v);
+				Dust.log(null, "       Load value", t, v, hVal);
+			}
+		}
+	}
+
+	private static MindHandle resolveHandle(Map<String, String> unitMap, String unit, String t) {
+		String ur = unit;
+		int sep = t.indexOf(DUST_SEP_TOKEN);
+		if (-1 != sep) {
+			ur = unitMap.get(t.substring(0, sep));
+			t = t.substring(sep);
+		} else {
+			sep = t.indexOf(DUST_SEP_ID);
+			if (-1 != sep) {
+				ur = unitMap.get(t.substring(0, sep));
+				t = t.substring(sep + DUST_SEP_ID.length());
+			}
+		}
+
+		return DustUtils.isEmpty(t) ? DustUtils.simpleGet(units, ur, IDEA_HANDLE) : DustUtils.simpleGet(units, ur, UNIT_HANDLES, t);
+	}
+
+	private static Object resolveValue(Map<String, String> unitMap, String unit, MindHandle hVal, Object v) {
+		Object ret = v;
+
+		if (v instanceof Map) {
+			Map<String, Object> m = new TreeMap<>();
+
+			for (Map.Entry<String, Object> ev : ((Map<String, Object>) v).entrySet()) {
+				String k = ev.getKey();
+				m.put(k, resolveValue(unitMap, unit, hVal, ev.getValue()));
+			}
+
+			ret = m;
+		} else if (v instanceof Collection) {
+			ArrayList<Object> a = new ArrayList<>();
+
+			for (Object o : (Collection) v) {
+				a.add(resolveValue(unitMap, unit, hVal, o));
+			}
+
+			ret = a;
+
+		} else if (v instanceof String) {
+			String s = (String) v;
+
+			if (s.startsWith(REF_PREFIX)) {
+				ret = resolveHandle(unitMap, unit, s.substring(REF_PREFIX.length()));
+			}
+		}
+
+		return ret;
 	}
 }

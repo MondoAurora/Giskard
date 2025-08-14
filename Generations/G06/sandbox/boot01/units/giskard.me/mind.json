@@ -9,28 +9,28 @@
 		]
 	},
 	{
-		"mind#unitAuthor": "->giskard:0",
+		"mind#unitAuthor": "->giskard:",
 		"misc#verMajor": 1,
 		"misc#verMinor": 0,
 		"misc#verCommit": 1,
 		"misc#verDate": "2025-07-22T15:56:24.375Z",
 		"mind#ideaToken": "mind",
 		"misc#connRequired": {
-			"giskard": "->giskard:0",
-			"misc": "->misc:0"
+			"giskard": "->giskard:",
+			"misc": "->misc:"
 		}
 	},
 	{
-		"giskard:0": {
-			"mind#unitAuthor": "->giskard:0",
+		"giskard:": {
+			"mind#unitAuthor": "->giskard:",
 			"mind#ideaToken": "giskard.me",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
 			"misc#verDate": "2025-07-22T15:56:24.375Z"
 		},
-		"misc:0": {
-			"mind#unitAuthor": "->giskard:0",
+		"misc:": {
+			"mind#unitAuthor": "->giskard:",
 			"mind#ideaToken": "misc",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
