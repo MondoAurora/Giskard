@@ -2,6 +2,7 @@
 	{
 		"format": "DustUnitJSON",
 		"lang": "->iso:639-1:en",
+		"time": "->iso:8601:yyyy-MM-dd'T'HH_mm_ss'Z'",
 		"toc": [
 			"streamMeta",
 			"unit",
@@ -13,8 +14,8 @@
 		"misc#verMajor": 1,
 		"misc#verMinor": 0,
 		"misc#verCommit": 1,
-		"misc#verDate": "2025-07-22T15:56:24.375Z",
-		"mind#ideaToken": "giskard.me",
+		"misc#verDate": "2025-07-22T15_56_24Z",
+		"misc#extId": "giskard.me",
 		"misc#connRequired": {
 			"mind": "->mind:",
 			"misc": "->misc:"
@@ -23,19 +24,19 @@
 	{
 		"mind:": {
 			"mind#unitAuthor": "->",
-			"mind#ideaToken": "mind",
+			"misc#extId": "mind",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15:56:24.375Z"
+			"misc#verDate": "2025-07-22T15_56_24Z"
 		},
 		"misc:": {
 			"mind#unitAuthor": "->",
-			"mind#ideaToken": "misc",
+			"misc#extId": "misc",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15:56:24.375Z"
+			"misc#verDate": "2025-07-22T15_56_24Z"
 		}
 	}
 ]

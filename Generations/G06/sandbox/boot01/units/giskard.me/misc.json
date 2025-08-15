@@ -2,6 +2,7 @@
 	{
 		"format": "DustUnitJSON",
 		"lang": "->iso:639-1:en",
+		"time": "->iso:8601:yyyy-MM-dd'T'HH_mm_ss'Z'",
 		"toc": [
 			"streamMeta",
 			"unit",
@@ -13,8 +14,8 @@
 		"misc#verMajor": 1,
 		"misc#verMinor": 0,
 		"misc#verCommit": 1,
-		"misc#verDate": "2025-07-22T15:56:24.375Z",
-		"mind#ideaToken": "misc",
+		"misc#verDate": "2025-07-22T15_56_24Z",
+		"misc#extId": "misc",
 		"misc#connRequired": {
 			"giskard": "->giskard:",
 			"mind": "->mind:"
@@ -23,37 +24,43 @@
 	{
 		"giskard:": {
 			"mind#unitAuthor": "->giskard:",
-			"mind#ideaToken": "giskard.me",
+			"misc#extId": "giskard.me",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15:56:24.375Z"
+			"misc#verDate": "2025-07-22T15_56_24Z"
 		},
 		"mind:": {
 			"mind#unitAuthor": "->giskard:",
-			"mind#ideaToken": "mind",
+			"misc#extId": "mind",
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15:56:24.375Z"
+			"misc#verDate": "2025-07-22T15_56_24Z"
 		},
 		"0": {
-			"mind#ideaToken": "verMajor"
+			"misc#ideaToken": "verMajor"
 		},
 		"1": {
-			"mind#ideaToken": "verMinor"
+			"misc#ideaToken": "verMinor"
 		},
 		"2": {
-			"mind#ideaToken": "verCommit"
+			"misc#ideaToken": "verCommit"
 		},
 		"3": {
-			"mind#ideaToken": "verDate"
+			"misc#ideaToken": "verDate"
 		},
 		"4": {
-			"mind#ideaToken": "connRequired"
+			"misc#ideaToken": "connRequired"
+		},
+		"5": {
+			"misc#ideaToken": "ideaToken"
+		},
+		"6": {
+			"misc#ideaToken": "extId"
 		},
 		"": {
-			"mind#ideaToken": ""
+			"misc#ideaToken": ""
 		}
 	}
 ]

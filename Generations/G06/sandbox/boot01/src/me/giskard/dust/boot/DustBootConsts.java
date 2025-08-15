@@ -24,19 +24,31 @@ public interface DustBootConsts extends DustConsts {
 		}
 	}
 	
-	DustHandle IDEA_HANDLE = new DustHandle(null, "IDEA_HANDLE");
+	DustHandle MISC = new DustHandle("giskard.me/misc");
 	
-	DustHandle UNIT_HANDLES = new DustHandle(null, "UNIT_HANDLES");
-	DustHandle UNIT_IDEAS = new DustHandle(null, "UNIT_IDEAS");
+	DustHandle MISC_PARENT = new DustHandle(MISC, "MISC_PARENT");
+	DustHandle MISC_TARGET = new DustHandle(MISC, "MISC_TARGET");
+	DustHandle MISC_CONN_REQUIRED = new DustHandle(MISC, "4");
+
+	DustHandle MIND = new DustHandle("giskard.me/mind");
 	
-	DustHandle MISC_PARENT = new DustHandle(null, "MISC_PARENT");
-	DustHandle MISC_TARGET = new DustHandle(null, "MISC_TARGET");
-	DustHandle MISC_CONN_REQUIRES = new DustHandle(null, "MISC_CONN_REQUIRES");
+	DustHandle IDEA_HANDLE = new DustHandle(MIND, "IDEA_HANDLE");
+	
+	DustHandle UNIT_HANDLES = new DustHandle(MIND, "UNIT_HANDLES");
+	DustHandle UNIT_IDEAS = new DustHandle(MIND, "UNIT_IDEAS");
+	
+	DustHandle DIALOG_IDEAS = new DustHandle(MIND, "DIALOG_IDEAS");
+	DustHandle DIALOG_VOCABULARY = new DustHandle(MIND, "DIALOG_VOCABULARY");
 
-	DustHandle DIALOG_UNITS = new DustHandle(null, "DIALOG_UNITS");
-	DustHandle DIALOG_IDEAS = new DustHandle(null, "DIALOG_IDEAS");
-	DustHandle DIALOG_VOCABULARY = new DustHandle(null, "DIALOG_VOCABULARY");
+	DustHandle DUST = new DustHandle("giskard.me/dust");
 
-	String LOCAL_UNIT_AUTHOR = "author";
-	String LOCAL_UNIT_ID = "token";
+	DustHandle MACHINE_UNITS = new DustHandle(DUST, "MACHINE_UNITS");
+	
+	
+	String LOAD_TOKEN_LANG = "lang";
+	String LOAD_TOKEN_UNIT_AUTHOR = "mind#unitAuthor";
+	String LOAD_TOKEN_CONN_REQUIRED = "misc#connRequired";
+	String LOAD_TOKEN_IDEA_TOKEN = "misc#ideaToken";
+	String LOAD_TOKEN_EXT_ID = "misc#extId";
+
 }

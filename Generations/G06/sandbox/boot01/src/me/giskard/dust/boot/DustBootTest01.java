@@ -17,6 +17,8 @@ import me.giskard.dust.utils.DustUtilsJson;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
+	static String LOCAL_UNIT_AUTHOR = "author";
+	static String LOCAL_UNIT_ID = "token";
 
 	public static void test01() {
 
@@ -103,8 +105,8 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 			unit.put(UNIT_HANDLES, unitHandles);
 			unitHandles.put("", hUnit);
 
-			Map<String, String> refs = DustUtils.safeGet(unit, MISC_CONN_REQUIRES, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
-			refs.put(DustUtils.simpleGet(j, 1, "mind#ideaToken"), key);
+			Map<String, String> refs = DustUtils.safeGet(unit, MISC_CONN_REQUIRED, MAP_CREATOR); // DustUtils.simpleGet(unitData, LOCAL_UNIT_MAP);
+			refs.put(DustUtils.simpleGet(j, 1, "misc#ideaToken"), key);
 
 			Map<String, Object> content = DustUtils.simpleGet(j, 2);
 			for (Map.Entry<String, Object> ec : content.entrySet()) {
@@ -121,7 +123,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				unitIdeas.put(hIdea, dIdea);
 				unitHandles.put(kIdea, hIdea);
 
-				String token = DustUtils.simpleGet(ec.getValue(), "mind#ideaToken");
+				String token = DustUtils.simpleGet(ec.getValue(), "misc#ideaToken");
 				if (!DustUtils.isEmpty(token)) {
 					String tkey = DUST_SEP_TOKEN + token;
 					DustHandle hToken = new DustHandle(hUnit, tkey);
@@ -142,10 +144,10 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 				Map<String, Object> ud = (Map<String, Object>) content.get(uRef.substring(2));
 
 				String author = DustUtils.simpleGet(ud, "mind#unitAuthor");
-				author = (DUST_REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "mind#ideaToken")
-						: DustUtils.simpleGet(content, author.substring(2), "mind#ideaToken");
+				author = (DUST_REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, "misc#ideaToken")
+						: DustUtils.simpleGet(content, author.substring(2), "misc#ideaToken");
 
-				String uid = DustUtils.simpleGet(ud, "mind#ideaToken");
+				String uid = DustUtils.simpleGet(ud, "misc#ideaToken");
 				initUnitData(ud, author, uid);
 
 				String uKey = enqueueModule(ud);
@@ -168,7 +170,7 @@ public class DustBootTest01 implements DustBootConsts, DustUtilsConsts {
 			Map<MindHandle, Object> unit = DustUtils.simpleGet(units, key);
 			Map<DustHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
 
-			Map<String, String> unitMap = DustUtils.simpleGet(unit, MISC_CONN_REQUIRES);
+			Map<String, String> unitMap = DustUtils.simpleGet(unit, MISC_CONN_REQUIRED);
 
 			Dust.log(null, "Load unit", key, unitMap, inputData, unitIdeas);
 
