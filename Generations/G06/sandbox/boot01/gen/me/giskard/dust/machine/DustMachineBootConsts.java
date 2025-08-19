@@ -1,29 +1,10 @@
-package me.giskard.dust.boot;
+package me.giskard.dust.machine;
 
 import me.giskard.dust.DustConsts;
-import me.giskard.dust.utils.DustUtils;
+import me.giskard.dust.machine.DustMachineConsts.DustHandle;
 
-public interface DustBootConsts extends DustConsts {
-	public class DustHandle extends MindHandle {
-		DustHandle unit;
-		String id;
-		
-		public DustHandle(DustHandle unit, String id) {
-			this.unit = unit;
-			this.id = id;
-		}
-		
-		public DustHandle(String id) {
-			this.unit = this;
-			this.id = id;
-		}
-		
-		@Override
-		public String toString() {
-			return DustUtils.sbAppend(null, "", true, "[", ((this == unit) ? "" : unit), "] ", id).toString();
-		}
-	}
-	
+public interface DustMachineBootConsts extends DustConsts {
+
 	DustHandle MISC = new DustHandle("giskard.me/misc");
 	
 	DustHandle MISC_PARENT = new DustHandle(MISC, "MISC_PARENT");
@@ -39,6 +20,8 @@ public interface DustBootConsts extends DustConsts {
 	
 	DustHandle DIALOG_IDEAS = new DustHandle(MIND, "DIALOG_IDEAS");
 	DustHandle DIALOG_VOCABULARY = new DustHandle(MIND, "DIALOG_VOCABULARY");
+
+	DustHandle ACTION_INIT = new DustHandle(MIND, "ACTION_INIT");
 
 	DustHandle DUST = new DustHandle("giskard.me/dust");
 

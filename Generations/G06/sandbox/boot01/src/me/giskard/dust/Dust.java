@@ -37,7 +37,7 @@ public class Dust implements DustConsts {
 	public static void main(String[] args) {
 		try {
 			if ((null == args) || (0 == args.length)) {
-				args = new String[] { "{GISKARD06_MODULES}/dust_boot_1.0.jar" };
+				args = new String[] { "{GISKARD06_MODULES}/dust_machine_1.0.jar" };
 				Dust.broadcast(null, "No module list given, starting with the default", args);
 			}
 
