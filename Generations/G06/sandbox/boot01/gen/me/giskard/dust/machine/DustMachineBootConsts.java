@@ -26,9 +26,11 @@ public interface DustMachineBootConsts extends DustConsts {
 
 	DustHandle ACTION_INIT = new DustHandle(MIND, "ACTION_INIT");
 
+	DustHandle ACCESS_PEEK = new DustHandle(MIND, "ACCESS_PEEK");
 	DustHandle ACCESS_SET = new DustHandle(MIND, "ACCESS_SET");
 
 	DustHandle DUST = new DustHandle("giskard.me/dust");
+	DustHandle PERS_ID = new DustHandle(DUST, "persId");
 
 	DustHandle MACHINE_UNITS = new DustHandle(DUST, "MACHINE_UNITS");
 	

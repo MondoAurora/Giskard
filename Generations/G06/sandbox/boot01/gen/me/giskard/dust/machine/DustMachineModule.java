@@ -30,9 +30,10 @@ public class DustMachineModule implements DustMachineBootConsts {
 		DustMachineUtils.storeHandle(ACTION_INIT, units, dialogIdeas, vocabulary, LANG_ID, "actionInit");
 
 		DustMachineUtils.storeHandle(DUST, units, dialogIdeas, vocabulary, LANG_ID, "dust");
+		DustMachineUtils.storeHandle(PERS_ID, units, dialogIdeas, vocabulary, LANG_ID, "persId");
 		
 		MindDialog machine = new DustMachineLogic(initData);
-		
+				
 		return machine;
 	}
 }

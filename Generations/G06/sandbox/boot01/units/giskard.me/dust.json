@@ -46,6 +46,9 @@
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
 			"misc#verDate": "2025-07-22T15_56_24Z"
+		},
+		"0": {
+			"misc#ideaToken": "persId"
 		}
 	}
 ]

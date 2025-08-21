@@ -14,88 +14,99 @@ import me.giskard.dust.utils.DustUtilsJson;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineLogicFormatterJson implements DustMachineBootConsts, DustMachineConsts, DustUtilsConsts {
 
-	public void optLoadUnit(Map<String, ArrayList<Object>> queue, String key) throws Exception {
-		boolean first = (null == queue);
+	private static ThreadLocal<Map<String, ArrayList<Object>>> READ_QUEUE = new ThreadLocal<Map<String, ArrayList<Object>>>() {
+		protected java.util.Map<String, java.util.ArrayList<Object>> initialValue() {
+			return new TreeMap<>();
+		};
+	};
 
-		if (first) {
-			queue = new TreeMap<>();
-		}
+	public void optLoadUnit(String key) throws Exception {
+		Map<String, ArrayList<Object>> queue = READ_QUEUE.get();
+		boolean first = queue.isEmpty();
 
-		if (!queue.containsKey(key)) {
-			Dust.log(null, "Queueing", key);
-			File f = new File("units/" + key + DUST_EXT_JSON);
-			ArrayList<Object> j = DustUtilsJson.readJson(f);
-			queue.put(key, j);
-			
-			Map meta = DustUtils.simpleGet(j, 0);
+		try {
+			if (!queue.containsKey(key)) {
+				Dust.log(null, "Queueing", key);
+				File f = new File("units/" + key + DUST_EXT_JSON);
+				ArrayList<Object> j = DustUtilsJson.readJson(f);
+				queue.put(key, j);
 
-			String lang = DustUtils.getPostfix(DustUtils.simpleGet(meta, LOAD_TOKEN_LANG), DUST_REF_PREFIX);
+				Map meta = DustUtils.simpleGet(j, 0);
 
-			String token = DustUtils.simpleGet(j, 1, LOAD_TOKEN_EXT_ID);
-			Map<String, String> refs = DustUtils.safeGet(meta, LOAD_TOKEN_UNITMAP, MAP_CREATOR);
-			refs.put(token, key);
+				String lang = DustUtils.getPostfix(DustUtils.simpleGet(meta, LOAD_TOKEN_LANG), DUST_REF_PREFIX);
 
-			MindHandle unitHandle = Dust.lookup(null, key);
-			
-			meta.put(IDEA_HANDLE, unitHandle);
+				String token = DustUtils.simpleGet(j, 1, LOAD_TOKEN_EXT_ID);
+				Map<String, String> refs = DustUtils.safeGet(meta, LOAD_TOKEN_UNITMAP, MAP_CREATOR);
+				refs.put(token, key);
 
-			Map<String, Object> content = DustUtils.simpleGet(j, 2);
-			for (Map.Entry<String, Object> ec : content.entrySet()) {
-				String kIdea = ec.getKey();
-
-				if (DustMachineUtils.isIdRemote(kIdea)) {
-					// remote idea
-					continue;
-				}
+				MindHandle unitHandle = Dust.lookup(null, key);
+				Dust.access(ACCESS_SET, f.getAbsolutePath(), unitHandle, PERS_ID);
 				
-				token = DustUtils.simpleGet(ec.getValue(), LOAD_TOKEN_IDEA_TOKEN);
-				Dust.lookup(unitHandle, kIdea, lang, token);
-			}
+				meta.put(IDEA_HANDLE, unitHandle);
 
-			Map<String, String> unitRefs = DustUtils.simpleGet(j, 1, LOAD_TOKEN_CONN_REQUIRED);
-
-			for (Map.Entry<String, String> ure : unitRefs.entrySet()) {
-				String uRef = ure.getValue();
-				Map<String, Object> ud = (Map<String, Object>) content.get(uRef.substring(2));
-
-				String author = DustUtils.simpleGet(ud, LOAD_TOKEN_UNIT_AUTHOR);
-				author = (DUST_REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, LOAD_TOKEN_EXT_ID)
-						: DustUtils.simpleGet(content, author.substring(2), LOAD_TOKEN_EXT_ID);
-
-				String uid = DustUtils.simpleGet(ud, LOAD_TOKEN_EXT_ID);
-
-				String uKey = DustMachineUtils.buildUnitKey(author, uid);
-				optLoadUnit(queue, uKey);
-				refs.put(ure.getKey(), uKey);
-			}
-		}
-
-		if (first) {
-			for (Map.Entry<String, ArrayList<Object>> eq : queue.entrySet()) {
-				String qKey = eq.getKey();
-				ArrayList<Object> qData = eq.getValue();
-
-				Map<String, String> unitMap = DustUtils.simpleGet(qData, 0, LOAD_TOKEN_UNITMAP);
-				DustHandle unitHandle = DustUtils.simpleGet(qData, 0, IDEA_HANDLE);
-				
-				Dust.log(null, "Load unit", qKey, unitMap, qData);
-				optLoadIdea(unitMap, qKey, unitHandle, "", DustUtils.simpleGet(qData, 1));
-				
-				Map<String, Map<String, Object>> content = DustUtils.simpleGet(qData, 2);
-				for (Map.Entry<String, Map<String, Object>> ec : content.entrySet()) {
+				Map<String, Object> content = DustUtils.simpleGet(j, 2);
+				for (Map.Entry<String, Object> ec : content.entrySet()) {
 					String kIdea = ec.getKey();
 
-					if (!DustMachineUtils.isIdRemote(kIdea)) {
-						optLoadIdea(unitMap, qKey, unitHandle, kIdea, ec.getValue());					
-					}					
-				}			
+					if (DustMachineUtils.isIdRemote(kIdea)) {
+						// remote idea
+						continue;
+					}
+
+					token = DustUtils.simpleGet(ec.getValue(), LOAD_TOKEN_IDEA_TOKEN);
+					Dust.lookup(unitHandle, kIdea, lang, token);
+				}
+
+				Map<String, String> unitRefs = DustUtils.simpleGet(j, 1, LOAD_TOKEN_CONN_REQUIRED);
+
+				for (Map.Entry<String, String> ure : unitRefs.entrySet()) {
+					String uRef = ure.getValue();
+					Map<String, Object> ud = (Map<String, Object>) content.get(uRef.substring(2));
+
+					String author = DustUtils.simpleGet(ud, LOAD_TOKEN_UNIT_AUTHOR);
+					author = (DUST_REF_PREFIX.equals(author)) ? DustUtils.simpleGet(j, 1, LOAD_TOKEN_EXT_ID)
+							: DustUtils.simpleGet(content, author.substring(2), LOAD_TOKEN_EXT_ID);
+
+					String uid = DustUtils.simpleGet(ud, LOAD_TOKEN_EXT_ID);
+
+					String uKey = DustMachineUtils.buildUnitKey(author, uid);
+					Dust.lookup(null, uKey);
+//					optLoadUnit(uKey);
+					refs.put(ure.getKey(), uKey);
+				}
+			}
+
+			if (first) {
+				for (Map.Entry<String, ArrayList<Object>> eq : queue.entrySet()) {
+					String qKey = eq.getKey();
+					ArrayList<Object> qData = eq.getValue();
+
+					Map<String, String> unitMap = DustUtils.simpleGet(qData, 0, LOAD_TOKEN_UNITMAP);
+					DustHandle unitHandle = DustUtils.simpleGet(qData, 0, IDEA_HANDLE);
+
+					Dust.log(null, "Load unit", qKey, unitMap, qData);
+					optLoadIdea(unitMap, qKey, unitHandle, "", DustUtils.simpleGet(qData, 1));
+
+					Map<String, Map<String, Object>> content = DustUtils.simpleGet(qData, 2);
+					for (Map.Entry<String, Map<String, Object>> ec : content.entrySet()) {
+						String kIdea = ec.getKey();
+
+						if (!DustMachineUtils.isIdRemote(kIdea)) {
+							optLoadIdea(unitMap, qKey, unitHandle, kIdea, ec.getValue());
+						}
+					}
+				}
+			}
+		} finally {
+			if (first) {
+				queue.clear();
 			}
 		}
 	}
-	
+
 	private void optLoadIdea(Map<String, String> unitMap, String unit, DustHandle unitHandle, String itemId, Map<String, Object> input) {
 		Dust.log(null, "   Load item", unitHandle.getId(), itemId, input);
-		
+
 		MindHandle hItem = Dust.lookup(unitHandle, itemId);
 
 		for (Map.Entry<String, Object> ev : input.entrySet()) {

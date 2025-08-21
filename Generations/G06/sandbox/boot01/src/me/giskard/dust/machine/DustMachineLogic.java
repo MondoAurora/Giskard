@@ -5,6 +5,7 @@ import java.util.Map;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
+import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 
@@ -24,35 +25,59 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 	public MindHandle lookup(MindHandle unitHandle, String id, String lang, String token) {
 		MindHandle ret = null;
 		Map dialogIdeas = DustUtils.simpleGet(data, DIALOG_IDEAS);
-		
+
 		if (null == unitHandle) {
 			Map units = DustUtils.simpleGet(data, MACHINE_UNITS);
 
+			int sep = id.indexOf(DUST_SEP_ID);
+
+			String k = null;
+
+			if (-1 != sep) {
+				k = id.substring(sep + 1);
+				id = id.substring(0, sep);
+			}
+
 			ret = DustUtils.safeGet(units, id, new DustCreator<DustHandle>() {
 				@Override
-				public DustHandle create(Object k, Object... hints) {
-					DustHandle ret = new DustHandle(id);
+				public DustHandle create(Object key, Object... hints) {
+					DustHandle ret = new DustHandle((String) key);
 					DustMachineUtils.storeHandle(ret, dialogIdeas);
 					return ret;
 				}
 			});
-		} else {
-			Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
-			Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
 
-			ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
-				@Override
-				public DustHandle create(Object k, Object... hints) {
-					DustHandle ret = new DustHandle(unitHandle, id);
-					DustMachineUtils.storeHandle(ret, dialogIdeas);
-					return ret;
+			if (null == Dust.access(ACCESS_PEEK, null, ret, PERS_ID)) {
+				try {
+					jsonFormatter.optLoadUnit(id);
+				} catch (Exception e) {
+					DustException.swallow(e, "Reading unit", id);
 				}
-			});
-			
-			if (!DustUtils.isEmpty(token)) {
-				Map vocabulary = DustUtils.simpleGet(data, DIALOG_VOCABULARY);
-				DustMachineUtils.storeToken((DustHandle) ret, dialogIdeas, vocabulary, lang, token);
 			}
+
+			if (null == k) {
+				return ret;
+			} else {
+				unitHandle = ret;
+				id = k;
+			}
+		}
+		
+		Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
+		Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
+
+		ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
+			@Override
+			public DustHandle create(Object key, Object... hints) {
+				DustHandle ret = new DustHandle((MindHandle) hints[0], (String) key);
+				DustMachineUtils.storeHandle(ret, dialogIdeas);
+				return ret;
+			}
+		}, unitHandle);
+
+		if (!DustUtils.isEmpty(token)) {
+			Map vocabulary = DustUtils.simpleGet(data, DIALOG_VOCABULARY);
+			DustMachineUtils.storeToken((DustHandle) ret, dialogIdeas, vocabulary, lang, token);
 		}
 
 		return ret;
@@ -61,14 +86,16 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 	@Override
 	public <RetType> RetType access(MindHandle cmd, Object val, Object... path) {
 		Object ret = null;
-		Dust.log(null, "       ", cmd, path, val);
-		
-		if ( ACCESS_SET == cmd ) {
-			DustHandle hItem = (DustHandle) path[0];
-			Map m = DustUtils.simpleGet(data, DIALOG_IDEAS, hItem.unit, hItem);
+		DustHandle hItem = (DustHandle) path[0];
+		Map m = DustUtils.simpleGet(data, DIALOG_IDEAS, hItem.unit, hItem);
+
+		if (ACCESS_SET == cmd) {
+			Dust.log(null, "       ", cmd, path, val);
 			ret = m.put(path[1], val);
+		} else if (ACCESS_PEEK == cmd) {
+			ret = (null == m) ? null : m.get(path[1]);
 		}
-		
+
 		return (RetType) ret;
 	}
 
@@ -79,7 +106,6 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
-		jsonFormatter.optLoadUnit(null, DustMachineUtils.buildUnitKey("giskard.me", "test01"));
 		return null;
 	}
 

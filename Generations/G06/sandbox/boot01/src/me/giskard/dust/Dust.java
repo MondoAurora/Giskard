@@ -45,7 +45,7 @@ public class Dust implements DustConsts {
 	public static void main(String[] args) {
 		try {
 			if ((null == args) || (0 == args.length)) {
-				args = new String[] { "{GISKARD06_MODULES}/dust_machine_1.0.jar" };
+				args = new String[] { "{GISKARD06_MODULES}/dust_machine_1.0.jar", "giskard.me/test01", "giskard.me/dust:0" };
 				Dust.broadcast(null, "No module list given, starting with the default", args);
 			}
 
@@ -80,6 +80,13 @@ public class Dust implements DustConsts {
 			MACHINE = (MindDialog) mMachineInit.invoke(null);
 
 			MACHINE.logicProcess(null);
+
+			if (argList.size() > 1) {
+				Dust.lookup(null, argList.get(1));
+			}
+			if (argList.size() > 2) {
+				Dust.lookup(null, argList.get(2));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
