@@ -11,19 +11,65 @@ import me.giskard.dust.utils.DustUtilsConsts;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
 
-	Map<MindHandle, Object> data = new HashMap<>();
-	
+	private Map<MindHandle, Object> data = new HashMap<>();
+
 	DustMachineLogicFormatterJson jsonFormatter;
 
 	public DustMachineLogic(Map data) {
 		this.data = data;
-		jsonFormatter = new DustMachineLogicFormatterJson(this);
+		jsonFormatter = new DustMachineLogicFormatterJson();
+	}
+
+	@Override
+	public MindHandle lookup(MindHandle unitHandle, String id, String lang, String token) {
+		MindHandle ret = null;
+		Map dialogIdeas = DustUtils.simpleGet(data, DIALOG_IDEAS);
+		
+		if (null == unitHandle) {
+			Map units = DustUtils.simpleGet(data, MACHINE_UNITS);
+
+			ret = DustUtils.safeGet(units, id, new DustCreator<DustHandle>() {
+				@Override
+				public DustHandle create(Object k, Object... hints) {
+					DustHandle ret = new DustHandle(id);
+					DustMachineUtils.storeHandle(ret, dialogIdeas);
+					return ret;
+				}
+			});
+		} else {
+			Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
+			Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
+
+			ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
+				@Override
+				public DustHandle create(Object k, Object... hints) {
+					DustHandle ret = new DustHandle(unitHandle, id);
+					DustMachineUtils.storeHandle(ret, dialogIdeas);
+					return ret;
+				}
+			});
+			
+			if (!DustUtils.isEmpty(token)) {
+				Map vocabulary = DustUtils.simpleGet(data, DIALOG_VOCABULARY);
+				DustMachineUtils.storeToken((DustHandle) ret, dialogIdeas, vocabulary, lang, token);
+			}
+		}
+
+		return ret;
 	}
 
 	@Override
 	public <RetType> RetType access(MindHandle cmd, Object val, Object... path) {
-		// TODO Auto-generated method stub
-		return null;
+		Object ret = null;
+		Dust.log(null, "       ", cmd, path, val);
+		
+		if ( ACCESS_SET == cmd ) {
+			DustHandle hItem = (DustHandle) path[0];
+			Map m = DustUtils.simpleGet(data, DIALOG_IDEAS, hItem.unit, hItem);
+			ret = m.put(path[1], val);
+		}
+		
+		return (RetType) ret;
 	}
 
 	@Override
@@ -35,25 +81,6 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 	public MindHandle logicProcess(MindHandle action) throws Exception {
 		jsonFormatter.optLoadUnit(null, DustMachineUtils.buildUnitKey("giskard.me", "test01"));
 		return null;
-	}
-
-	public MindHandle resolveHandle(Map<String, String> unitRefMap, String unit, String t) {
-		String ur = unit;
-		String k = t;
-		int sep = t.indexOf(DUST_SEP_TOKEN);
-		if (-1 != sep) {
-			ur = unitRefMap.get(t.substring(0, sep));
-			k = t.substring(sep);
-		} else {
-			sep = t.indexOf(DUST_SEP_ID);
-			if (-1 != sep) {
-				ur = unitRefMap.get(t.substring(0, sep));
-				k = t.substring(sep + DUST_SEP_ID.length());
-			}
-		}
-
-		DustHandle hUnit = DustUtils.simpleGet(data, MACHINE_UNITS, ur);
-		return DustUtils.isEmpty(k) ? hUnit : DustUtils.simpleGet(data, DIALOG_IDEAS, hUnit, hUnit, UNIT_HANDLES, k);
 	}
 
 }

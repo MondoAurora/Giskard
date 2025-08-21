@@ -3,6 +3,7 @@ package me.giskard.dust.machine;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.giskard.dust.Dust;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 
@@ -12,18 +13,23 @@ public class DustMachineUtils implements DustMachineConsts, DustMachineBootConst
 	public static String buildUnitKey(Object... path) {
 		return DustUtils.sbAppend(null, "/", true, path).toString();
 	}
+	
+	public static boolean isIdRemote(String kIdea) {
+		return kIdea.contains(DUST_SEP_ID);
+	}
 
 	public static void storeHandle(DustHandle h, Map units, Map dialogIdeas, Map vocabulary, String lang, String token) {
-		storeHandle(h, units, dialogIdeas);
+		if (h == h.unit) {
+			units.put(h.id, h);
+		}
+		storeHandle(h, dialogIdeas);
 		if (!DustUtils.isEmpty(token)) {
 			storeToken(h, dialogIdeas, vocabulary, lang, token);
 		}
 	}
 
-	private static void storeHandle(DustHandle h, Map units, Map dialogIdeas) {
+	static void storeHandle(DustHandle h, Map dialogIdeas) {
 		if (h == h.unit) {
-			units.put(h.id, h);
-
 			Map<MindHandle, Object> unitData = new HashMap<>();
 			unitData.put(IDEA_HANDLE, h);
 
@@ -46,7 +52,7 @@ public class DustMachineUtils implements DustMachineConsts, DustMachineBootConst
 		}
 	}
 
-	private static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
+	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
 		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
 		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitIdeas, h.unit, UNIT_HANDLES);
 		String tkey = DUST_SEP_TOKEN + token;
@@ -62,4 +68,25 @@ public class DustMachineUtils implements DustMachineConsts, DustMachineBootConst
 		tokenMap = DustUtils.safeGet(tokenMap, h.unit.id, MAP_CREATOR);
 		tokenMap.put(tkey, hToken);
 	}
+	
+	public static MindHandle resolveHandle(Map<String, String> unitRefMap, String unit, String t) {
+		String ur = unit;
+		String k = t;
+		
+		int sep = t.indexOf(DUST_SEP_TOKEN);
+		if (-1 != sep) {
+			ur = unitRefMap.get(t.substring(0, sep));
+			k = t.substring(sep);
+		} else {
+			sep = t.indexOf(DUST_SEP_ID);
+			if (-1 != sep) {
+				ur = unitRefMap.get(t.substring(0, sep));
+				k = t.substring(sep + DUST_SEP_ID.length());
+			}
+		}
+
+		MindHandle hUnit = Dust.lookup(null, ur);
+		return DustUtils.isEmpty(k) ? hUnit : Dust.lookup(hUnit, k);
+	}
+
 }

@@ -8,8 +8,8 @@ public interface DustMachineConsts extends DustConsts {
 		DustHandle unit;
 		String id;
 		
-		public DustHandle(DustHandle unit, String id) {
-			this.unit = unit;
+		public DustHandle(MindHandle unit, String id) {
+			this.unit = (DustHandle) unit;
 			this.id = id;
 		}
 		

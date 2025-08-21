@@ -20,6 +20,14 @@ public class Dust implements DustConsts {
 		return MACHINE.access(cmd, val, path);
 	}
 
+	public static MindHandle lookup(MindHandle unit, String id) {
+		return MACHINE.lookup(unit, id, null, null);
+	}
+
+	public static MindHandle lookup(MindHandle unit, String id, String lang, String token) {
+		return MACHINE.lookup(unit, id, lang, token);
+	}
+
 	public static void broadcast(MindHandle event, Object... params) {
 		if (null == MACHINE) {
 			log(event, params);
@@ -70,7 +78,7 @@ public class Dust implements DustConsts {
 
 			Method mMachineInit = cModule.getMethod(FN_MODULE_INIT);
 			MACHINE = (MindDialog) mMachineInit.invoke(null);
-			
+
 			MACHINE.logicProcess(null);
 		} catch (Exception e) {
 			e.printStackTrace();

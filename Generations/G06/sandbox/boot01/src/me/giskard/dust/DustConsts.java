@@ -26,8 +26,8 @@ public interface DustConsts {
 	}
 
 	public abstract class MindDialog implements MindLogic {
+		public abstract MindHandle lookup(MindHandle unit, String id, String lang, String token);
 		public abstract <RetType> RetType access(MindHandle cmd, Object val, Object... path);
-
 		public abstract void broadcast(MindHandle event, Object... params);
 	}
 

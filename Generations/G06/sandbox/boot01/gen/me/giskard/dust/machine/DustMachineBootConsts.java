@@ -4,6 +4,9 @@ import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConsts.DustHandle;
 
 public interface DustMachineBootConsts extends DustConsts {
+	
+	String LANG_ID = "iso:639-1:en";
+
 
 	DustHandle MISC = new DustHandle("giskard.me/misc");
 	
@@ -23,12 +26,16 @@ public interface DustMachineBootConsts extends DustConsts {
 
 	DustHandle ACTION_INIT = new DustHandle(MIND, "ACTION_INIT");
 
+	DustHandle ACCESS_SET = new DustHandle(MIND, "ACCESS_SET");
+
 	DustHandle DUST = new DustHandle("giskard.me/dust");
 
 	DustHandle MACHINE_UNITS = new DustHandle(DUST, "MACHINE_UNITS");
 	
 	
 	String LOAD_TOKEN_LANG = "lang";
+	String LOAD_TOKEN_UNITMAP = "unitMap";
+	
 	String LOAD_TOKEN_UNIT_AUTHOR = "mind#unitAuthor";
 	String LOAD_TOKEN_CONN_REQUIRED = "misc#connRequired";
 	String LOAD_TOKEN_IDEA_TOKEN = "misc#ideaToken";

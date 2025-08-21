@@ -21,15 +21,15 @@ public class DustMachineModule implements DustMachineBootConsts {
 		initData.put(DIALOG_IDEAS, dialogIdeas);
 		initData.put(DIALOG_VOCABULARY, vocabulary);
 
-		DustMachineUtils.storeHandle(MISC, units, dialogIdeas, vocabulary, "iso:639-1:en", "misc");
-		DustMachineUtils.storeHandle(MISC_TARGET, units, dialogIdeas, vocabulary, "iso:639-1:en", "MISC_TARGET");
-		DustMachineUtils.storeHandle(MISC_PARENT, units, dialogIdeas, vocabulary, "iso:639-1:en", "MISC_PARENT");
-		DustMachineUtils.storeHandle(MISC_CONN_REQUIRED, units, dialogIdeas, vocabulary, "iso:639-1:en", "connRequired");
+		DustMachineUtils.storeHandle(MISC, units, dialogIdeas, vocabulary, LANG_ID, "misc");
+		DustMachineUtils.storeHandle(MISC_TARGET, units, dialogIdeas, vocabulary, LANG_ID, "MISC_TARGET");
+		DustMachineUtils.storeHandle(MISC_PARENT, units, dialogIdeas, vocabulary, LANG_ID, "MISC_PARENT");
+		DustMachineUtils.storeHandle(MISC_CONN_REQUIRED, units, dialogIdeas, vocabulary, LANG_ID, "connRequired");
 
-		DustMachineUtils.storeHandle(MIND, units, dialogIdeas, vocabulary, "iso:639-1:en", "mind");
-		DustMachineUtils.storeHandle(ACTION_INIT, units, dialogIdeas, vocabulary, "iso:639-1:en", "actionInit");
+		DustMachineUtils.storeHandle(MIND, units, dialogIdeas, vocabulary, LANG_ID, "mind");
+		DustMachineUtils.storeHandle(ACTION_INIT, units, dialogIdeas, vocabulary, LANG_ID, "actionInit");
 
-		DustMachineUtils.storeHandle(DUST, units, dialogIdeas, vocabulary, "iso:639-1:en", "dust");
+		DustMachineUtils.storeHandle(DUST, units, dialogIdeas, vocabulary, LANG_ID, "dust");
 		
 		MindDialog machine = new DustMachineLogic(initData);
 		
