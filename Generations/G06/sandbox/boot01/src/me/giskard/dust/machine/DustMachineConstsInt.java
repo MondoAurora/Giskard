@@ -1,9 +1,8 @@
 package me.giskard.dust.machine;
 
-import me.giskard.dust.DustConsts;
 import me.giskard.dust.utils.DustUtils;
 
-public interface DustMachineConsts extends DustConsts {
+public interface DustMachineConstsInt extends DustMachineConsts {
 	public class DustHandle extends MindHandle {
 		DustHandle unit;
 		String id;

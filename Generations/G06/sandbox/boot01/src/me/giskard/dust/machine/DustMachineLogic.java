@@ -10,7 +10,7 @@ import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
+public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
 
 	private Map<MindHandle, Object> data = new HashMap<>();
 
@@ -65,6 +65,10 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		
 		Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
 		Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
+		
+		if ( "?".equals(id) ) {
+			id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
+		}
 
 		ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
 			@Override

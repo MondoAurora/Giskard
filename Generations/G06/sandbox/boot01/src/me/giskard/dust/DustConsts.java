@@ -4,10 +4,10 @@ import java.nio.charset.StandardCharsets;
 
 public interface DustConsts {
 	String DUST_CHARSET_UTF8 = StandardCharsets.UTF_8.name();// "UTF-8";
-	String DUST_FMT_TIMESTAMP = "yyyy-MM-dd'T'HH_mm_ss";
-	String DUST_FMT_DATE = "yyyy-MM-dd";
+	String DUST_FMT_TIMESTAMP = "yyyyMMdd'T'HHmmss'Z'";
 
 	String DUST_EXT_JAR = ".jar";
+	String FN_MACHINE_INIT = "dustMachineInit";
 	String FN_MODULE_INIT = "dustModuleInit";
 
 	String DUST_EXT_JSON = ".json";

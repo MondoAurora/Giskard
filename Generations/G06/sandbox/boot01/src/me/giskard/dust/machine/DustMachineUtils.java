@@ -1,55 +1,78 @@
 package me.giskard.dust.machine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineUtils implements DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
+public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
 
 	public static String buildUnitKey(Object... path) {
 		return DustUtils.sbAppend(null, "/", true, path).toString();
 	}
-	
+
 	public static boolean isIdRemote(String kIdea) {
 		return kIdea.contains(DUST_SEP_ID);
 	}
 
-	public static void storeHandle(DustHandle h, Map units, Map dialogIdeas, Map vocabulary, String lang, String token) {
-		if (h == h.unit) {
-			units.put(h.id, h);
-		}
-		storeHandle(h, dialogIdeas);
-		if (!DustUtils.isEmpty(token)) {
-			storeToken(h, dialogIdeas, vocabulary, lang, token);
-		}
+	public static String nextId(Map ideaData, MindHandle key) {
+		Long l = (Long) ideaData.getOrDefault(key, 0L);
+		ideaData.put(key, l+1);
+		return l.toString();
 	}
 
-	static void storeHandle(DustHandle h, Map dialogIdeas) {
+	public static MindCollType getCollType(Object coll) {
+		MindCollType ret = (null == coll) ? MindCollType.One
+				: (coll instanceof ArrayList) ? MindCollType.Arr
+						: (coll instanceof Map) ? MindCollType.Map : (coll instanceof Set) ? MindCollType.Set : MindCollType.One;
+
+		return ret;
+	}
+
+	public static Map<MindHandle, Object> storeHandle(DustHandle h, Map units, Map dialogIdeas, Map vocabulary, String lang, String token) {
+		Map<MindHandle, Object> ret = storeHandle(h, dialogIdeas);
 		if (h == h.unit) {
-			Map<MindHandle, Object> unitData = new HashMap<>();
-			unitData.put(IDEA_HANDLE, h);
+			units.put(h.id, h);
+		} else if (!DustUtils.isEmpty(token)) {
+			storeToken(h, dialogIdeas, vocabulary, lang, token);
+		}
+		
+		return ret;
+	}
+
+	static Map<MindHandle, Object> storeHandle(DustHandle h, Map dialogIdeas) {
+		Map<MindHandle, Object> data= new HashMap<>();
+		data.put(IDEA_HANDLE, h);
+		
+		if (h == h.unit) {
 
 			HashMap<String, MindHandle> unitHandles = new HashMap();
-			unitData.put(UNIT_HANDLES, unitHandles);
+			data.put(UNIT_HANDLES, unitHandles);
 			unitHandles.put("", h);
 
 			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = new HashMap();
-			unitIdeas.put(h, unitData);
+			unitIdeas.put(h, data);
 
 			dialogIdeas.put(h, unitIdeas);
 		} else {
 			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
-			HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitIdeas, h.unit, UNIT_HANDLES);
+			HashMap<String, MindHandle> unitData = DustUtils.simpleGet(unitIdeas, h.unit);
+			HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
+			
+			if ("?".equals(h.id)) {
+				h.id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
+			}
 
-			Map<MindHandle, Object> dIdea = new HashMap<>();
-			dIdea.put(IDEA_HANDLE, h);
-			unitIdeas.put(h, dIdea);
+			unitIdeas.put(h, data);
 			unitHandles.put(h.id, h);
 		}
+		
+		return data;
 	}
 
 	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
@@ -68,11 +91,11 @@ public class DustMachineUtils implements DustMachineConsts, DustMachineBootConst
 		tokenMap = DustUtils.safeGet(tokenMap, h.unit.id, MAP_CREATOR);
 		tokenMap.put(tkey, hToken);
 	}
-	
+
 	public static MindHandle resolveHandle(Map<String, String> unitRefMap, String unit, String t) {
 		String ur = unit;
 		String k = t;
-		
+
 		int sep = t.indexOf(DUST_SEP_TOKEN);
 		if (-1 != sep) {
 			ur = unitRefMap.get(t.substring(0, sep));

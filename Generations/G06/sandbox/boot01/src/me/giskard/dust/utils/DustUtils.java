@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustUtils implements DustUtilsConsts {
@@ -60,7 +61,6 @@ public class DustUtils implements DustUtilsConsts {
 	}
 
 	private static SimpleDateFormat sdfTime = new SimpleDateFormat(DUST_FMT_TIMESTAMP);
-	private static SimpleDateFormat sdfDate = new SimpleDateFormat(DUST_FMT_DATE);
 
 	public static String strTime(Date d) {
 		synchronized (sdfTime) {
@@ -70,16 +70,6 @@ public class DustUtils implements DustUtilsConsts {
 
 	public static String strTime() {
 		return strTime(new Date());
-	}
-
-	public static String strDate(Date d) {
-		synchronized (sdfDate) {
-			return sdfDate.format(d);
-		}
-	}
-
-	public static String strDate() {
-		return strDate(new Date());
 	}
 
 	public static String getHash2(String str, String sep) {
@@ -139,4 +129,7 @@ public class DustUtils implements DustUtilsConsts {
 		}
 	}
 
+	static {
+		sdfTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
 }

@@ -2,7 +2,7 @@
 	{
 		"format": "DustUnitJSON",
 		"lang": "->iso:639-1:en",
-		"time": "->iso:8601:yyyy-MM-dd'T'HH_mm_ss'Z'",
+		"time": "->iso:8601:yyyyMMdd'T'HHmmss'Z'",
 		"toc": [
 			"streamMeta",
 			"unit",
@@ -14,7 +14,7 @@
 		"misc#verMajor": 1,
 		"misc#verMinor": 0,
 		"misc#verCommit": 1,
-		"misc#verDate": "2025-07-22T15_56_24Z",
+		"misc#verDate": "20250722T155624Z",
 		"misc#extId": "misc",
 		"misc#connRequired": {
 			"giskard": "->giskard:",
@@ -28,7 +28,7 @@
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15_56_24Z"
+			"misc#verDate": "20250722T155624Z"
 		},
 		"mind:": {
 			"mind#unitAuthor": "->giskard:",
@@ -36,7 +36,7 @@
 			"misc#verMajor": 1,
 			"misc#verMinor": 0,
 			"misc#verCommit": 1,
-			"misc#verDate": "2025-07-22T15_56_24Z"
+			"misc#verDate": "20250722T155624Z"
 		},
 		"0": {
 			"misc#ideaToken": "verMajor"
