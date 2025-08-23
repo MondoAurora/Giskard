@@ -10,13 +10,13 @@
 		]
 	},
 	{
-		"mind#unitAuthor": "->giskard:",
-		"misc#verMajor": 1,
-		"misc#verMinor": 0,
-		"misc#verCommit": 1,
-		"misc#verDate": "20250722T155624Z",
-		"misc#extId": "test01",
-		"misc#connRequired": {
+		"mind:0#unitAuthor": "->giskard:",
+		"misc:0#verMajor": 1,
+		"misc:1#verMinor": 0,
+		"misc:2#verCommit": 1,
+		"misc:3#verDate": "20250722T155624Z",
+		"misc:6#extId": "test01",
+		"misc:4#connRequired": {
 			"giskard": "->giskard:",
 			"mind": "->mind:",
 			"misc": "->misc:",
@@ -25,36 +25,36 @@
 	},
 	{
 		"giskard:": {
-			"mind#unitAuthor": "->giskard:",
-			"misc#extId": "giskard.me",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "giskard.me",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		},
 		"mind:": {
-			"mind#unitAuthor": "->giskard:",
-			"misc#extId": "mind",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "mind",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		},
 		"misc:": {
-			"mind#unitAuthor": "->giskard:",
-			"misc#extId": "misc",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "misc",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		},
 		"dust:": {
-			"mind#unitAuthor": "->giskard:",
-			"misc#extId": "dust",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "dust",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		}
 	}
 ]

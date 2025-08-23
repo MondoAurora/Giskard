@@ -34,12 +34,10 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return ret;
 	}
 
-	public static Map<MindHandle, Object> storeHandle(DustHandle h, Map units, Map dialogIdeas, Map vocabulary, String lang, String token) {
+	public static Map<MindHandle, Object> storeHandle(DustHandle h, Map units, Map dialogIdeas) {
 		Map<MindHandle, Object> ret = storeHandle(h, dialogIdeas);
 		if (h == h.unit) {
 			units.put(h.id, h);
-		} else if (!DustUtils.isEmpty(token)) {
-			storeToken(h, dialogIdeas, vocabulary, lang, token);
 		}
 		
 		return ret;
@@ -78,34 +76,44 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
 		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
 		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitIdeas, h.unit, UNIT_HANDLES);
-		String tkey = DUST_SEP_TOKEN + token;
+		String tkey = DUST_SEP_TOKEN + h.id;
 
 		DustHandle hToken = new DustHandle(h.unit, tkey);
 		Map<MindHandle, Object> dToken = new HashMap<>();
 		dToken.put(IDEA_HANDLE, hToken);
 		dToken.put(MISC_TARGET, h);
+		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
+		
 		unitIdeas.put(hToken, dToken);
 		unitHandles.put(tkey, hToken);
 
-		Map<String, DustHandle> tokenMap = DustUtils.safeGet(vocabulary, lang, SORTEDMAP_CREATOR);
-		tokenMap = DustUtils.safeGet(tokenMap, h.unit.id, MAP_CREATOR);
-		tokenMap.put(tkey, hToken);
+		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);
+		tokenMap = DustUtils.safeGet(tokenMap, h.unit, MAP_CREATOR);
+		tokenMap.put(token, hToken);
+		tokenMap.put(hToken, token);
+		tokenMap.put(h, token);
 	}
 
 	public static MindHandle resolveHandle(Map<String, String> unitRefMap, String unit, String t) {
 		String ur = unit;
-		String k = t;
+		String k = DustUtils.getPrefix(t, DUST_SEP_TOKEN);
 
-		int sep = t.indexOf(DUST_SEP_TOKEN);
+//		int sep = t.indexOf(DUST_SEP_TOKEN);
+//		if (-1 != sep) {
+//			ur = unitRefMap.get(t.substring(0, sep));
+//			k = t.substring(sep);
+//		} else {
+//			sep = t.indexOf(DUST_SEP_ID);
+//			if (-1 != sep) {
+//				ur = unitRefMap.get(t.substring(0, sep));
+//				k = t.substring(sep + DUST_SEP_ID.length());
+//			}
+//		}
+
+		int sep = t.indexOf(DUST_SEP_ID);
 		if (-1 != sep) {
 			ur = unitRefMap.get(t.substring(0, sep));
-			k = t.substring(sep);
-		} else {
-			sep = t.indexOf(DUST_SEP_ID);
-			if (-1 != sep) {
-				ur = unitRefMap.get(t.substring(0, sep));
-				k = t.substring(sep + DUST_SEP_ID.length());
-			}
+			k = t.substring(sep + DUST_SEP_ID.length());
 		}
 
 		MindHandle hUnit = Dust.lookup(null, ur);

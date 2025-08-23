@@ -1,7 +1,11 @@
 package me.giskard.dust.machine;
 
+import java.util.Collections;
+import java.util.Map;
+
 import me.giskard.dust.utils.DustUtils;
 
+@SuppressWarnings("rawtypes")
 public interface DustMachineConstsInt extends DustMachineConsts {
 	public class DustHandle extends MindHandle {
 		DustHandle unit;
@@ -27,8 +31,14 @@ public interface DustMachineConstsInt extends DustMachineConsts {
 		
 		@Override
 		public String toString() {
-			return DustUtils.sbAppend(null, "", true, "[", ((this == unit) ? "" : unit.id), "::", id, "]").toString();
+			String token = DustUtils.simpleGet(CURR_VOC, unit, this);
+			if (!DustUtils.isEmpty(token)) {
+				token = DUST_SEP_TOKEN + token;
+			}
+			return DustUtils.sbAppend(null, "", true, "[", ((this == unit) ? "" : unit.id), "::", id, token, "]").toString();
 		}
+		
+		static Map CURR_VOC = Collections.EMPTY_MAP;
 	}
 	
 }

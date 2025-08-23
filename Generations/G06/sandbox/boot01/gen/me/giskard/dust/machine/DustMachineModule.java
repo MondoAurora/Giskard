@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
+import me.giskard.dust.utils.DustUtils;
+import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineModule implements DustMachineBootConsts, DustMachineConsts {
+public class DustMachineModule implements DustMachineBootConsts, DustMachineConsts, DustUtilsConsts {
 
 	public static Object dustMachineInit() throws Exception {
 		Dust.broadcast(null, "Hello world from Sandbox module");
@@ -23,29 +26,34 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		initData.put(DIALOG_IDEAS, dialogIdeas);
 		initData.put(DIALOG_VOCABULARY, vocabulary);
 		
+		DustHandle.CURR_VOC = DustUtils.safeGet(vocabulary, LANG_ID, MAP_CREATOR);
+		
 		Map<MindHandle, Object> unitData;
 
-		unitData = DustMachineUtils.storeHandle(MISC, units, dialogIdeas, vocabulary, LANG_ID, "misc");
+		unitData = DustMachineUtils.storeHandle(MISC, units, dialogIdeas);
 		unitData.put(UNIT_NEXT_ID, 7L);
-		DustMachineUtils.storeHandle(MISC_TARGET, units, dialogIdeas, vocabulary, LANG_ID, "target");
-		DustMachineUtils.storeHandle(MISC_PARENT, units, dialogIdeas, vocabulary, LANG_ID, "parent");
-		DustMachineUtils.storeHandle(MISC_CONN_REQUIRED, units, dialogIdeas, vocabulary, LANG_ID, "connRequired");
+		DustMachineUtils.storeHandle(MISC_TARGET, units, dialogIdeas);
+		DustMachineUtils.storeHandle(MISC_PARENT, units, dialogIdeas);
+		DustMachineUtils.storeHandle(MISC_CONN_REQUIRED, units, dialogIdeas);
 
-		unitData = DustMachineUtils.storeHandle(MIND, units, dialogIdeas, vocabulary, LANG_ID, "mind");
-		unitData.put(UNIT_NEXT_ID, 2L);
+		unitData = DustMachineUtils.storeHandle(MIND, units, dialogIdeas);
+		unitData.put(UNIT_NEXT_ID, 100L);
 
-		DustMachineUtils.storeHandle(IDEA_HANDLE, units, dialogIdeas, vocabulary, LANG_ID, "handle");
-		DustMachineUtils.storeHandle(UNIT_HANDLES, units, dialogIdeas, vocabulary, LANG_ID, "unitHandles");
-		DustMachineUtils.storeHandle(UNIT_NEXT_ID, units, dialogIdeas, vocabulary, LANG_ID, "unitNextId");
-		DustMachineUtils.storeHandle(DIALOG_IDEAS, units, dialogIdeas, vocabulary, LANG_ID, "dialogIdeas");
-		DustMachineUtils.storeHandle(DIALOG_VOCABULARY, units, dialogIdeas, vocabulary, LANG_ID, "vocabulary");
+		DustMachineUtils.storeHandle(IDEA_HANDLE, units, dialogIdeas);
+		DustMachineUtils.storeHandle(UNIT_HANDLES, units, dialogIdeas);
+		DustMachineUtils.storeHandle(UNIT_NEXT_ID, units, dialogIdeas);
+		DustMachineUtils.storeHandle(DIALOG_IDEAS, units, dialogIdeas);
+		DustMachineUtils.storeHandle(DIALOG_VOCABULARY, units, dialogIdeas);
 
-		DustMachineUtils.storeHandle(ACTION_INIT, units, dialogIdeas, vocabulary, LANG_ID, "init");
-		DustMachineUtils.storeHandle(ACCESS_PEEK, units, dialogIdeas, vocabulary, LANG_ID, "peek");
-		DustMachineUtils.storeHandle(ACCESS_SET, units, dialogIdeas, vocabulary, LANG_ID, "set");
+		DustMachineUtils.storeHandle(ACTION_INIT, units, dialogIdeas);
+		DustMachineUtils.storeHandle(ACCESS_PEEK, units, dialogIdeas);
+		DustMachineUtils.storeHandle(ACCESS_SET, units, dialogIdeas);
 
-		unitData = DustMachineUtils.storeHandle(DUST, units, dialogIdeas, vocabulary, LANG_ID, "dust");
-		DustMachineUtils.storeHandle(PERS_ID, units, dialogIdeas, vocabulary, LANG_ID, "persId");
+		unitData = DustMachineUtils.storeHandle(DUST, units, dialogIdeas);
+		DustMachineUtils.storeHandle(PERS_ID, units, dialogIdeas);
+		
+		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
+		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
 
 		MindDialog machine = new DustMachineLogic(initData);
 

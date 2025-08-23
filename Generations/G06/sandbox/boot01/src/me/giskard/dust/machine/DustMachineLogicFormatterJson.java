@@ -112,6 +112,7 @@ public class DustMachineLogicFormatterJson implements DustMachineBootConsts, Dus
 		for (Map.Entry<String, Object> ev : input.entrySet()) {
 
 			String t = ev.getKey();
+			t = DustUtils.getPrefix(t, DUST_SEP_TOKEN);
 			Object v = ev.getValue();
 
 			MindHandle hVal = DustMachineUtils.resolveHandle(unitMap, unit, t);

@@ -41,6 +41,11 @@ public class DustUtils implements DustUtilsConsts {
 		}
 	}
 	
+	public static String getPrefix(String strSrc, String pfSep) {
+		int sep = strSrc.lastIndexOf(pfSep);
+		return (-1 == sep) ? strSrc : strSrc.substring(0, sep);
+	}
+	
 	public static String getPostfix(String strSrc, String pfSep) {
 		int sep = strSrc.lastIndexOf(pfSep);
 		return (-1 == sep) ? strSrc : strSrc.substring(sep + pfSep.length());
@@ -132,4 +137,6 @@ public class DustUtils implements DustUtilsConsts {
 	static {
 		sdfTime.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
+
+
 }

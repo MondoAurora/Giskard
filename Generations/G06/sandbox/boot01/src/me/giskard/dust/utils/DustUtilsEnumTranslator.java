@@ -24,6 +24,11 @@ public class DustUtilsEnumTranslator implements DustUtilsConsts {
 		}
 	}
 	
+	public static void setEnum(MindHandle h, Object val) {
+		H2E.put(h, val);
+		E2H.put(val, h);
+	}
+	
 	public static <RetType> RetType getEnum(MindHandle h, Object defVal) {
 		return (RetType) H2E.getOrDefault(h, defVal);
 	}

@@ -10,33 +10,33 @@
 		]
 	},
 	{
-		"mind#unitAuthor": "->",
-		"misc#verMajor": 1,
-		"misc#verMinor": 0,
-		"misc#verCommit": 1,
-		"misc#verDate": "20250722T155624Z",
-		"misc#extId": "giskard.me",
-		"misc#connRequired": {
+		"mind:0#unitAuthor": "->",
+		"misc:0#verMajor": 1,
+		"misc:1#verMinor": 0,
+		"misc:2#verCommit": 1,
+		"misc:3#verDate": "20250722T155624Z",
+		"misc:6#extId": "giskard.me",
+		"misc:4#connRequired": {
 			"mind": "->mind:",
 			"misc": "->misc:"
 		}
 	},
 	{
 		"mind:": {
-			"mind#unitAuthor": "->",
-			"misc#extId": "mind",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->",
+			"misc:6#extId": "mind",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		},
 		"misc:": {
-			"mind#unitAuthor": "->",
-			"misc#extId": "misc",
-			"misc#verMajor": 1,
-			"misc#verMinor": 0,
-			"misc#verCommit": 1,
-			"misc#verDate": "20250722T155624Z"
+			"mind:0#unitAuthor": "->",
+			"misc:6#extId": "misc",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": 1,
+			"misc:3#verDate": "20250722T155624Z"
 		}
 	}
 ]

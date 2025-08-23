@@ -8,6 +8,7 @@ import me.giskard.dust.DustConsts;
 import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
+import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
@@ -62,11 +63,11 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 				id = k;
 			}
 		}
-		
+
 		Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
 		Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
-		
-		if ( "?".equals(id) ) {
+
+		if ("?".equals(id)) {
 			id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
 		}
 
@@ -93,11 +94,19 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		DustHandle hItem = (DustHandle) path[0];
 		Map m = DustUtils.simpleGet(data, DIALOG_IDEAS, hItem.unit, hItem);
 
-		if (ACCESS_SET == cmd) {
+		MindAccess access = DustUtilsEnumTranslator.getEnum(cmd, null);
+
+		switch (access) {
+		case Set:
 			Dust.log(null, "       ", cmd, path, val);
 			ret = m.put(path[1], val);
-		} else if (ACCESS_PEEK == cmd) {
+			break;
+		case Peek:
 			ret = (null == m) ? null : m.get(path[1]);
+
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + access);
 		}
 
 		return (RetType) ret;
