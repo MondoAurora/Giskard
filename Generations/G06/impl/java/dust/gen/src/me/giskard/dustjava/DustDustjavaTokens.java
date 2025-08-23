@@ -1,6 +1,5 @@
 package me.giskard.dustjava;
 
-import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 
 public interface DustDustjavaTokens extends DustConsts {
