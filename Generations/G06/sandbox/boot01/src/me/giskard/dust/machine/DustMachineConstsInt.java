@@ -41,4 +41,7 @@ public interface DustMachineConstsInt extends DustMachineConsts {
 		static Map CURR_VOC = Collections.EMPTY_MAP;
 	}
 	
+	public interface UnitLoader {
+		void optLoadUnit(String key) throws Exception;
+	}
 }

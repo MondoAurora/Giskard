@@ -12,7 +12,7 @@ import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsJson;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineLogicFormatterJson implements DustMachineBootConsts, DustMachineConstsInt, DustUtilsConsts {
+public class DustMachineLogicFormatterJson implements DustMachineConstsInt.UnitLoader, DustMachineBootConsts, DustMachineConstsInt, DustUtilsConsts {
 
 	private static ThreadLocal<Map<String, ArrayList<Object>>> READ_QUEUE = new ThreadLocal<Map<String, ArrayList<Object>>>() {
 		protected java.util.Map<String, java.util.ArrayList<Object>> initialValue() {
@@ -20,6 +20,7 @@ public class DustMachineLogicFormatterJson implements DustMachineBootConsts, Dus
 		};
 	};
 
+	@Override
 	public void optLoadUnit(String key) throws Exception {
 		Map<String, ArrayList<Object>> queue = READ_QUEUE.get();
 		boolean first = queue.isEmpty();

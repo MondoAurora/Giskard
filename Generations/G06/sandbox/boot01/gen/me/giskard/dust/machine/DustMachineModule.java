@@ -25,9 +25,9 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		initData.put(MACHINE_UNITS, units);
 		initData.put(DIALOG_IDEAS, dialogIdeas);
 		initData.put(DIALOG_VOCABULARY, vocabulary);
-		
+
 		DustHandle.CURR_VOC = DustUtils.safeGet(vocabulary, LANG_ID, MAP_CREATOR);
-		
+
 		Map<MindHandle, Object> unitData;
 
 		unitData = DustMachineUtils.storeHandle(MISC, units, dialogIdeas);
@@ -51,7 +51,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 
 		unitData = DustMachineUtils.storeHandle(DUST, units, dialogIdeas);
 		DustMachineUtils.storeHandle(PERS_ID, units, dialogIdeas);
-		
+
 		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
 		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
 
@@ -67,8 +67,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustUtilsEnumTranslator.register(MindCollType.class, MIND_TAG_COLLTYPE_ONE, MIND_TAG_COLLTYPE_SET, MIND_TAG_COLLTYPE_ARR, MIND_TAG_COLLTYPE_MAP);
 
 		DustUtilsEnumTranslator.register(MindAccess.class, MIND_TAG_ACCESS_CHECK, MIND_TAG_ACCESS_PEEK, MIND_TAG_ACCESS_GET, MIND_TAG_ACCESS_SET,
-				MIND_TAG_ACCESS_INSERT, MIND_TAG_ACCESS_DELETE, MIND_TAG_ACCESS_RESET, MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACCESS_BROADCAST, MIND_TAG_ACCESS_LOOKUP,
-				MIND_TAG_ACCESS_VISIT);
+				MIND_TAG_ACCESS_INSERT, MIND_TAG_ACCESS_DELETE, MIND_TAG_ACCESS_RESET, MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACCESS_VISIT);
 
 		DustUtilsEnumTranslator.register(MindAction.class, MIND_TAG_ACTION_INIT, MIND_TAG_ACTION_BEGIN, MIND_TAG_ACTION_PROCESS, MIND_TAG_ACTION_END,
 				MIND_TAG_ACTION_RELEASE);

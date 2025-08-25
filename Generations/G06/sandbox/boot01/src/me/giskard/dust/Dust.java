@@ -16,8 +16,8 @@ public class Dust implements DustConsts {
 	static final Map<String, String> envData = new TreeMap<>();
 	static final ArrayList<String> argList = new ArrayList<>();
 
-	public static <RetType> RetType access(MindHandle cmd, Object val, Object... path) {
-		return MACHINE.access(cmd, val, path);
+	public static <RetType> RetType access(MindHandle cmd, Object val, Object root, Object... path) {
+		return MACHINE.access(cmd, val, root, path);
 	}
 
 	public static MindHandle lookup(MindHandle unit, String id) {

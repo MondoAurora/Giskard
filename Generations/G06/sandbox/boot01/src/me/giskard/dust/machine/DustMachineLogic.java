@@ -1,7 +1,11 @@
 package me.giskard.dust.machine;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
@@ -13,17 +17,33 @@ import me.giskard.dust.utils.DustUtilsEnumTranslator;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
 
-	private Map<MindHandle, Object> data = new HashMap<>();
+	private static ThreadLocal<Map<MindHandle, Object>> DATA = new ThreadLocal<Map<MindHandle,Object>>() {
+		protected java.util.Map<MindHandle,Object> initialValue() {
+			return new  HashMap<>();
+		};
+	};
+	
+	static Map getData() {
+		return DATA.get();
+	};
+	
+	static Map setData(Map data) {
+		Map ret = DATA.get();
+		DATA.set(data);
+		return ret;
+	}
 
-	DustMachineLogicFormatterJson jsonFormatter;
+	UnitLoader jsonFormatter;
 
 	public DustMachineLogic(Map data) {
-		this.data = data;
+		setData(data);
 		jsonFormatter = new DustMachineLogicFormatterJson();
 	}
 
 	@Override
 	public MindHandle lookup(MindHandle unitHandle, String id, String lang, String token) {
+		Map data = DATA.get();
+		
 		MindHandle ret = null;
 		Map dialogIdeas = DustUtils.simpleGet(data, DIALOG_IDEAS);
 
@@ -89,27 +109,153 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 	}
 
 	@Override
-	public <RetType> RetType access(MindHandle cmd, Object val, Object... path) {
-		Object ret = null;
-		DustHandle hItem = (DustHandle) path[0];
-		Map m = DustUtils.simpleGet(data, DIALOG_IDEAS, hItem.unit, hItem);
+	public <RetType> RetType access(MindHandle cmd, Object val, Object root, Object... path) {
+		Map data = DATA.get();
 
+		Object ret = null;
 		MindAccess access = DustUtilsEnumTranslator.getEnum(cmd, null);
 
+		boolean createIfMissing = DustMachineUtils.isCreator(access);
+
+		Object curr = root;
+		DustHandle hLastItem = null;
+
+		Object prev = null;
+		Object lastKey = null;
+
+		Object prevColl = null;
+		MindCollType collType = null;
+		
+		for (Object p : path) {
+			if (curr instanceof DustHandle) {
+				hLastItem = (DustHandle) curr;
+				curr = resolveHandleToIdea(data, hLastItem, createIfMissing);
+			} else if (null == curr) {
+				if (createIfMissing) {
+					curr = (p instanceof Integer) ? new ArrayList() : new HashMap();
+
+					if (null != prevColl) {
+						switch (collType) {
+						case Arr:
+							DustUtils.safePut((ArrayList) prevColl, (Integer) lastKey, val, false);
+							break;
+						case Map:
+							((Map) prevColl).put(lastKey, curr);
+							break;
+						case One:
+							break;
+						case Set:
+							((Set) prevColl).add(curr);
+							break;
+						}
+					}
+				} else {
+					break;
+				}
+			}
+
+			prev = curr;
+			collType = DustMachineUtils.getCollType(prev);
+			prevColl = (null == collType) ? null : prev;
+
+			lastKey = p;
+
+			if (curr instanceof ArrayList) {
+				ArrayList al = (ArrayList) curr;
+				Integer idx = (Integer) p;
+
+				if ((KEY_SIZE == idx)) {
+					curr = al.size();
+				} else if ((KEY_ADD == idx) || (idx >= al.size())) {
+					curr = null;
+				} else {
+					curr = al.get(idx);
+				}
+			} else if (curr instanceof Map) {
+				curr = DustUtils.isEqual(KEY_SIZE, p) ? ((Map) curr).size() : ((Map) curr).get(p);
+			} else {
+				curr = null;
+			}
+		}
+
 		switch (access) {
-		case Set:
-			Dust.log(null, "       ", cmd, path, val);
-			ret = m.put(path[1], val);
+		case Check:
+			ret = DustUtils.isEqual(val, curr);
 			break;
-		case Peek:
-			ret = (null == m) ? null : m.get(path[1]);
+		case Commit:
 
 			break;
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + access);
+		case Delete:
+			break;
+		case Get:
+			ret = (null == curr) ? val : curr;
+			break;
+		case Insert:
+			if (!DustUtils.isEqual(curr, val) && (null != prevColl)) {
+				switch (collType) {
+				case Arr:
+					DustUtils.safePut((ArrayList) prevColl, (Integer) lastKey, val, false);
+					break;
+				case Map:
+					Set s = (curr instanceof Set) ? (Set) curr : new HashSet();
+					s.add(val);
+					((Map) prevColl).put(lastKey, s);
+					break;
+				case One:
+					break;
+				case Set:
+					((Set) prevColl).add(curr);
+					break;
+				}
+			}
+			break;
+		case Peek:
+			ret = (null == curr) ? val : curr;
+			break;
+		case Reset:
+			if (curr instanceof Map) {
+				((Map) curr).clear();
+			} else if (curr instanceof Collection) {
+				((Collection) curr).clear();
+			}
+			break;
+		case Set:
+			if ((null != lastKey) && (null != prevColl)) {
+				Dust.log(null, "       ", access, hLastItem, lastKey, val);
+				switch (collType) {
+				case Arr:
+					DustUtils.safePut((ArrayList) prevColl, (Integer) lastKey, val, true);
+					break;
+				case Map:
+					if (!DustUtils.isEqual(curr, val)) {
+						((Map) prevColl).put(lastKey, val);
+					}
+					break;
+				case One:
+					break;
+				case Set:
+					((Set) prevColl).add(curr);
+					break;
+				}
+			}
+
+			break;
+		case Visit:
+			doVisit(val, hLastItem, lastKey, curr);
+			break;
 		}
 
 		return (RetType) ret;
+	}
+
+	private Map resolveHandleToIdea(Map data, DustHandle hItem, boolean createIfMissing) {
+		Map m = DustUtils.simpleGet(data, DIALOG_IDEAS);
+		m = DustUtils.safeGet(m, hItem.unit, (createIfMissing ? MAP_CREATOR : null));
+		return (null == m) ? null : DustUtils.safeGet(m, hItem, (createIfMissing ? MAP_CREATOR : null));
+	}
+
+	private void doVisit(Object val, DustHandle hLastItem, Object lastKey, Object curr) {
+		// TODO visit
 	}
 
 	@Override

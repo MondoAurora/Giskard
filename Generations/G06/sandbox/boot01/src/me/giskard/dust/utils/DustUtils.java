@@ -133,6 +133,34 @@ public class DustUtils implements DustUtilsConsts {
 			return ret;
 		}
 	}
+	
+	public static int safePut(ArrayList arr, int index, Object value, boolean overwrite) {
+		int idx;
+		int s = arr.size();
+
+		if ( KEY_ADD == index ) {
+			idx = s;
+			arr.add(value);
+		} else {
+			if ( index < s ) {
+				if ( overwrite ) {
+					arr.set(index, value);
+				} else {
+					arr.add(index, value);
+				}
+			} else {
+				for (idx = s; idx <= index; ++idx) {
+					arr.add(null);
+				}
+				arr.set(index, value);
+			}
+			idx = index;
+		}
+
+		return idx;
+	};
+
+
 
 	static {
 		sdfTime.setTimeZone(TimeZone.getTimeZone("GMT"));

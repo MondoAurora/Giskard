@@ -18,6 +18,9 @@ public interface DustConsts {
 	String DUST_SEP_ID = ":";
 	String DUST_SEP_TOKEN = "#";
 	String DUST_REF_PREFIX = "->";
+	
+	int KEY_ADD = -1;
+	int KEY_SIZE = -2;
 
 	public static class MindHandle {};
 	
@@ -27,7 +30,7 @@ public interface DustConsts {
 
 	public abstract class MindDialog implements MindLogic {
 		public abstract MindHandle lookup(MindHandle unit, String id, String lang, String token);
-		public abstract <RetType> RetType access(MindHandle cmd, Object val, Object... path);
+		public abstract <RetType> RetType access(MindHandle cmd, Object val, Object root, Object... path);
 		public abstract void broadcast(MindHandle event, Object... params);
 	}
 

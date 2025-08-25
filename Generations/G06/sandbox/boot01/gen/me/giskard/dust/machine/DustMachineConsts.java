@@ -14,7 +14,7 @@ public interface DustMachineConsts extends DustConsts {
 	};
 	
 	enum MindAccess {
-		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Broadcast, Lookup, Visit, 
+		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Visit, 
 	};
 	
 	enum MindAction {
@@ -34,9 +34,7 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_ACCESS_DELETE = Dust.lookup(null, "giskard.me/mind:16");
 	MindHandle MIND_TAG_ACCESS_RESET = Dust.lookup(null, "giskard.me/mind:17");
 	MindHandle MIND_TAG_ACCESS_COMMIT = Dust.lookup(null, "giskard.me/mind:18");
-	MindHandle MIND_TAG_ACCESS_BROADCAST = Dust.lookup(null, "giskard.me/mind:19");
-	MindHandle MIND_TAG_ACCESS_LOOKUP = Dust.lookup(null, "giskard.me/mind:20");
-	MindHandle MIND_TAG_ACCESS_VISIT = Dust.lookup(null, "giskard.me/mind:21");
+	MindHandle MIND_TAG_ACCESS_VISIT = Dust.lookup(null, "giskard.me/mind:19");
 
 	MindHandle MIND_TAG_VALTYPE = Dust.lookup(null, "giskard.me/mind:?");
 	MindHandle MIND_TAG_VALTYPE_INT = Dust.lookup(null, "giskard.me/mind:?");

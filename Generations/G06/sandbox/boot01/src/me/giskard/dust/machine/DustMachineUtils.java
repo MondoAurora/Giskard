@@ -22,8 +22,19 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 	public static String nextId(Map ideaData, MindHandle key) {
 		Long l = (Long) ideaData.getOrDefault(key, 0L);
-		ideaData.put(key, l+1);
+		ideaData.put(key, l + 1);
 		return l.toString();
+	}
+
+	public static boolean isCreator(MindAccess acc) {
+		switch (acc) {
+		case Get:
+		case Insert:
+		case Set:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	public static MindCollType getCollType(Object coll) {
@@ -39,14 +50,14 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		if (h == h.unit) {
 			units.put(h.id, h);
 		}
-		
+
 		return ret;
 	}
 
 	static Map<MindHandle, Object> storeHandle(DustHandle h, Map dialogIdeas) {
-		Map<MindHandle, Object> data= new HashMap<>();
+		Map<MindHandle, Object> data = new HashMap<>();
 		data.put(IDEA_HANDLE, h);
-		
+
 		if (h == h.unit) {
 
 			HashMap<String, MindHandle> unitHandles = new HashMap();
@@ -61,7 +72,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
 			HashMap<String, MindHandle> unitData = DustUtils.simpleGet(unitIdeas, h.unit);
 			HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
-			
+
 			if ("?".equals(h.id)) {
 				h.id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
 			}
@@ -69,7 +80,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 			unitIdeas.put(h, data);
 			unitHandles.put(h.id, h);
 		}
-		
+
 		return data;
 	}
 
@@ -83,7 +94,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		dToken.put(IDEA_HANDLE, hToken);
 		dToken.put(MISC_TARGET, h);
 		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
-		
+
 		unitIdeas.put(hToken, dToken);
 		unitHandles.put(tkey, hToken);
 
@@ -98,18 +109,6 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		String ur = unit;
 		String k = DustUtils.getPrefix(t, DUST_SEP_TOKEN);
 
-//		int sep = t.indexOf(DUST_SEP_TOKEN);
-//		if (-1 != sep) {
-//			ur = unitRefMap.get(t.substring(0, sep));
-//			k = t.substring(sep);
-//		} else {
-//			sep = t.indexOf(DUST_SEP_ID);
-//			if (-1 != sep) {
-//				ur = unitRefMap.get(t.substring(0, sep));
-//				k = t.substring(sep + DUST_SEP_ID.length());
-//			}
-//		}
-
 		int sep = t.indexOf(DUST_SEP_ID);
 		if (-1 != sep) {
 			ur = unitRefMap.get(t.substring(0, sep));
@@ -119,5 +118,4 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		MindHandle hUnit = Dust.lookup(null, ur);
 		return DustUtils.isEmpty(k) ? hUnit : Dust.lookup(hUnit, k);
 	}
-
 }
