@@ -7,18 +7,24 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.DustConsts;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsJson;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineLogicFormatterJson implements DustMachineConstsInt.UnitLoader, DustMachineBootConsts, DustMachineConstsInt, DustUtilsConsts {
+public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, DustMachineConstsInt.UnitLoader, DustMachineBootConsts, DustMachineConstsInt, DustUtilsConsts {
 
 	private static ThreadLocal<Map<String, ArrayList<Object>>> READ_QUEUE = new ThreadLocal<Map<String, ArrayList<Object>>>() {
 		protected java.util.Map<String, java.util.ArrayList<Object>> initialValue() {
 			return new TreeMap<>();
 		};
 	};
+	
+	@Override
+	public MindHandle logicProcess(MindHandle action) throws Exception {
+		return null;
+	}
 
 	@Override
 	public void optLoadUnit(String key) throws Exception {

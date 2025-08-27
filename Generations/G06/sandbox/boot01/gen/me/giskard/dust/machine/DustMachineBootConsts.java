@@ -18,6 +18,11 @@ public interface DustMachineBootConsts extends DustConsts {
 	DustHandle MIND = new DustHandle("giskard.me/mind");
 	
 	DustHandle IDEA_HANDLE = new DustHandle(MIND, "?");
+	DustHandle IDEA_LISTENERS = new DustHandle(MIND, "?");
+	
+	DustHandle AGENT_LOGIC = new DustHandle(MIND, "?");
+	
+	DustHandle MEMBER_FACTORIES = new DustHandle(MIND, "?");
 	
 	DustHandle UNIT_HANDLES = new DustHandle(MIND, "?");
 	DustHandle UNIT_IDEAS = new DustHandle(MIND, "?");
@@ -35,7 +40,17 @@ public interface DustMachineBootConsts extends DustConsts {
 	DustHandle PERS_ID = new DustHandle(DUST, "0");
 
 	DustHandle MACHINE_UNITS = new DustHandle(DUST, "?");
-	
+	DustHandle MACHINE_MODULES = new DustHandle(DUST, "?");
+	DustHandle LOGIC_BINARY = new DustHandle(DUST, "?");
+	DustHandle AGENT_BINARY = new DustHandle(DUST, "?");
+
+	DustHandle AGENT_SELF = new DustHandle(DUST, "?");
+	DustHandle AGENT_PARAM = new DustHandle(DUST, "?");
+
+	DustHandle DUSTJAVA = new DustHandle("giskard.me/dustjava");
+	DustHandle LOGIC_CLASSNAME = new DustHandle(DUSTJAVA, "?");
+	DustHandle MODULE_CLASSLOADER = new DustHandle(DUSTJAVA, "?");
+
 	
 	String LOAD_TOKEN_LANG = "lang";
 	String LOAD_TOKEN_UNITMAP = "unitMap";
