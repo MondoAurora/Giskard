@@ -14,7 +14,7 @@ public interface DustMachineConsts extends DustConsts {
 	};
 	
 	enum MindAccess {
-		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, Visit, 
+		Check, Peek, Get, Set, Insert, Delete, Reset, Commit, // Visit, 
 	};
 	
 	enum MindAction {
@@ -24,6 +24,8 @@ public interface DustMachineConsts extends DustConsts {
 	enum MindResult {
 		Reject, Pass, Read, ReadAccept, Accept,
 	};
+	
+	/**** MIND ****/
 
 	MindHandle MIND_TAG_ACCESS = Dust.lookup(null, "giskard.me/mind:10");
 	MindHandle MIND_TAG_ACCESS_CHECK = Dust.lookup(null, "giskard.me/mind:11");
@@ -34,7 +36,9 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_ACCESS_DELETE = Dust.lookup(null, "giskard.me/mind:16");
 	MindHandle MIND_TAG_ACCESS_RESET = Dust.lookup(null, "giskard.me/mind:17");
 	MindHandle MIND_TAG_ACCESS_COMMIT = Dust.lookup(null, "giskard.me/mind:18");
-	MindHandle MIND_TAG_ACCESS_VISIT = Dust.lookup(null, "giskard.me/mind:19");
+//	MindHandle MIND_TAG_ACCESS_VISIT = Dust.lookup(null, "giskard.me/mind:19");
+
+	MindHandle MIND_LOGIC_GRAPHWALKER = Dust.lookup(null, "giskard.me/mind:19");
 
 	MindHandle MIND_TAG_VALTYPE = Dust.lookup(null, "giskard.me/mind:?");
 	MindHandle MIND_TAG_VALTYPE_INT = Dust.lookup(null, "giskard.me/mind:?");
@@ -48,12 +52,12 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_COLLTYPE_ARR = Dust.lookup(null, "giskard.me/mind:?");
 	MindHandle MIND_TAG_COLLTYPE_MAP = Dust.lookup(null, "giskard.me/mind:?");
 
-	MindHandle MIND_TAG_ACTION = Dust.lookup(null, "giskard.me/mind:?");
-	MindHandle MIND_TAG_ACTION_INIT = Dust.lookup(null, "giskard.me/mind:?");
-	MindHandle MIND_TAG_ACTION_BEGIN = Dust.lookup(null, "giskard.me/mind:?");
-	MindHandle MIND_TAG_ACTION_PROCESS = Dust.lookup(null, "giskard.me/mind:?");
-	MindHandle MIND_TAG_ACTION_END = Dust.lookup(null, "giskard.me/mind:?");
-	MindHandle MIND_TAG_ACTION_RELEASE = Dust.lookup(null, "giskard.me/mind:?");
+	MindHandle MIND_TAG_ACTION = Dust.lookup(null, "giskard.me/mind:118");
+	MindHandle MIND_TAG_ACTION_INIT = Dust.lookup(null, "giskard.me/mind:119");
+	MindHandle MIND_TAG_ACTION_BEGIN = Dust.lookup(null, "giskard.me/mind:120");
+	MindHandle MIND_TAG_ACTION_PROCESS = Dust.lookup(null, "giskard.me/mind:121");
+	MindHandle MIND_TAG_ACTION_END = Dust.lookup(null, "giskard.me/mind:122");
+	MindHandle MIND_TAG_ACTION_RELEASE = Dust.lookup(null, "giskard.me/mind:123");
 
 	MindHandle MIND_TAG_STATUS = Dust.lookup(null, "giskard.me/mind:?");
 	MindHandle MIND_TAG_STATUS_IDLE = Dust.lookup(null, "giskard.me/mind:?");
@@ -68,4 +72,34 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_RESULT_READACCEPT = Dust.lookup(null, "giskard.me/mind:?");
 	MindHandle MIND_TAG_RESULT_ACCEPT = Dust.lookup(null, "giskard.me/mind:?");
 
+	
+	MindHandle MIND_VISIT_IDEA = Dust.lookup(null, "giskard.me/mind:?");
+	MindHandle MIND_VISIT_ATT = Dust.lookup(null, "giskard.me/mind:?");
+	MindHandle MIND_VISIT_KEY = Dust.lookup(null, "giskard.me/mind:?");
+	MindHandle MIND_VISIT_VALUE = Dust.lookup(null, "giskard.me/mind:?");
+	
+	MindHandle MIND_CALL_STACK = Dust.lookup(null, "giskard.me/mind:?");
+
+	MindHandle MIND_TAG_COLLTYPE_STACK = Dust.lookup(null, "giskard.me/mind:?");
+
+	MindHandle MIND_DIALOG_INIT = Dust.lookup(null, "giskard.me/mind:?");
+	MindHandle MIND_DIALOG_NEXT = Dust.lookup(null, "giskard.me/mind:?");
+
+	
+	/**** MISC ****/
+
+	MindHandle MISC_ATT_TARGET = Dust.lookup(null, "giskard.me/misc:7");
+	MindHandle MISC_ATT_COUNT = Dust.lookup(null, "giskard.me/misc:8");
+	
+	/**** DUST ****/
+
+	MindHandle DUST_THREADS = Dust.lookup(null, "giskard.me/dust:1");
+	MindHandle DUST_DIALOGS = Dust.lookup(null, "giskard.me/dust:2");
+	MindHandle DUST_THREADDIALOG = Dust.lookup(null, "giskard.me/dust:3");
+	MindHandle DUST_SELF = Dust.lookup(null, "giskard.me/dust:4");
+	MindHandle DUST_PARAM = Dust.lookup(null, "giskard.me/dust:5");
+	
+	/**** DUSTJAVA ****/
+
+	MindHandle DUSTJAVA_ATT_ITERATOR = Dust.lookup(null, "giskard.me/dustjava:?");
 }

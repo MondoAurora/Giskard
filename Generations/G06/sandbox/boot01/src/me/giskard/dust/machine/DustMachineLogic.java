@@ -17,35 +17,110 @@ import me.giskard.dust.utils.DustUtilsEnumTranslator;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineLogic extends DustConsts.MindDialog implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
 
-	private static ThreadLocal<Map<MindHandle, Object>> DATA = new ThreadLocal<Map<MindHandle, Object>>() {
-		protected java.util.Map<MindHandle, Object> initialValue() {
-			return new HashMap<>();
-		};
+	class MachineThread {
+		final Map<MindHandle, Object> threadData = new HashMap<>();
+		private Map dialogData;
+
+		public MachineThread(Map dialogData) {
+			threadData.put(AGENT_BINARY, this);
+			setDialogData(dialogData);
+		}
+
+		public void setDialogData(Map dialogData) {
+			threadData.put(THREAD_DIALOG, dialogData);
+			this.dialogData = dialogData;
+		}
+
+		public boolean start() {
+			Collection init = (Collection) dialogData.get(MIND_DIALOG_INIT);
+
+			if (DustUtils.isEmpty(init)) {
+				return false;
+			}
+
+			for (Object i : init) {
+				access(MindAccess.Commit, null, i);
+			}
+
+			return true;
+		}
+
+		public MindResult step() {
+			ArrayList<Map> nextArr = DustUtils.simpleGet(dialogData, MIND_DIALOG_NEXT);
+
+			if (DustUtils.isEmpty(nextArr)) {
+				return MindResult.Pass;
+			}
+
+			Map call = nextArr.get(0);
+
+			MindHandle ret = doCall(dialogData, (DustHandle) call.get(AGENT_PARAM), (DustHandle) call.get(AGENT_SELF));
+
+			MindResult r = DustUtilsEnumTranslator.getEnum(ret, MindResult.Reject);
+			
+			if ( !DustMachineUtils.isContinue(r) ) {
+				nextArr.remove(call);
+			}
+
+			return nextArr.isEmpty() ? r : MindResult.ReadAccept;
+		}
+
+		public MindResult go(boolean start) {
+			MindResult ret = null;
+
+			if (start) {
+				if (!start()) {
+					return MindResult.Pass;
+				}
+			}
+
+			do {
+				ret = step();
+
+				// check for task switch request
+
+			} while (DustMachineUtils.isContinue(ret));
+
+			return ret;
+		}
+	};
+
+	private static ThreadLocal<MachineThread> THREADS = new ThreadLocal<MachineThread>() {
 	};
 
 	static Map getData() {
-		return DATA.get();
+		return (Map) THREADS.get().threadData.get(THREAD_DIALOG);
 	};
 
-	static Map setData(Map data) {
-		Map ret = DATA.get();
-		DATA.set(data);
-		return ret;
-	}
-
 	Map<MindHandle, Object> machineData;
-
 	UnitLoader jsonFormatter;
 
+	boolean launched = false;
+
 	public DustMachineLogic(Map data, Map<MindHandle, Object> machineData) {
-		setData(data);
 		this.machineData = machineData;
 		jsonFormatter = new DustMachineLogicFormatterJson();
+
+		machineData.put(MACHINE_THREADS, new HashSet());
+		attachThread(data);
+	}
+
+	void attachThread(Map dialogData) {
+		synchronized (THREADS) {
+			MachineThread mt = THREADS.get();
+			if (null == mt) {
+				mt = new MachineThread(dialogData);
+				THREADS.set(mt);
+				access(MindAccess.Insert, mt.threadData, machineData, MACHINE_THREADS);
+			} else {
+				mt.setDialogData(dialogData);
+			}
+		}
 	}
 
 	@Override
 	public MindHandle lookup(MindHandle unitHandle, String id, String lang, String token) {
-		Map data = DATA.get();
+		Map data = getData();
 
 		MindHandle ret = null;
 		Map dialogIdeas = DustUtils.simpleGet(data, DIALOG_IDEAS);
@@ -95,6 +170,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		}
 
 		ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
+
 			@Override
 			public DustHandle create(Object key, Object... hints) {
 				DustHandle ret = new DustHandle((MindHandle) hints[0], (String) key);
@@ -104,6 +180,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		}, unitHandle);
 
 		if (!DustUtils.isEmpty(token)) {
+
 			Map vocabulary = DustUtils.simpleGet(data, DIALOG_VOCABULARY);
 			DustMachineUtils.storeToken((DustHandle) ret, dialogIdeas, vocabulary, lang, token);
 		}
@@ -113,10 +190,14 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 	@Override
 	public <RetType> RetType access(MindHandle cmd, Object val, Object root, Object... path) {
-		Map data = DATA.get();
+		MindAccess access = DustUtilsEnumTranslator.getEnum(cmd, null);
+		return access(access, val, root, path);
+	}
+
+	public <RetType> RetType access(MindAccess access, Object val, Object root, Object... path) {
+		Map data = getData();
 
 		Object ret = null;
-		MindAccess access = DustUtilsEnumTranslator.getEnum(cmd, null);
 
 		boolean createIfMissing = DustMachineUtils.isCreator(access);
 
@@ -196,7 +277,10 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			if ((null == curr) && createIfMissing && (null != hLastAtt)) {
 				DustHandle factoryMsg = DustUtils.simpleGet(machineData, MEMBER_FACTORIES, hLastAtt);
 				if (null != factoryMsg) {
-					curr = doCommit(data, factoryMsg);
+					// need local execution
+//					curr = doCommit(data, factoryMsg);
+				} else {
+					Dust.log(null, "Would create member for att def", kAtt);
 				}
 			}
 		}
@@ -206,7 +290,20 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			ret = DustUtils.isEqual(val, curr);
 			break;
 		case Commit:
-			ret = doCommit(data, (DustHandle) curr);
+			DustHandle hMessage = (DustHandle) curr;
+
+			Map item = resolveHandleToIdea(data, hMessage, false);
+			ArrayList<DustHandle> listeners = DustUtils.simpleGet(item, IDEA_LISTENERS);
+
+			if (DustUtils.isEmpty(listeners)) {
+				ret = MIND_TAG_RESULT_PASS;
+			} else {
+				for (DustHandle l : listeners) {
+					registerCall(data, hMessage, l);
+				}
+				ret = MIND_TAG_RESULT_READ;
+			}
+
 			break;
 		case Delete:
 			break;
@@ -244,7 +341,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			break;
 		case Set:
 			if ((null != lastKey) && (null != prevColl)) {
-				Dust.log(null, "       ", access, hLastItem, lastKey, val);
+//				Dust.log(null, "       ", access, hLastItem, lastKey, val);
 				switch (collType) {
 				case Arr:
 					DustUtils.safePut((ArrayList) prevColl, (Integer) lastKey, val, true);
@@ -263,71 +360,69 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			}
 
 			break;
-		case Visit:
-			doVisit(val, hLastItem, lastKey, curr);
-			break;
 		}
 
 		return (RetType) ret;
 	}
 
-	private Object doCommit(Map data, DustHandle hMessage) {
-		Object ret = null;
+	public void registerCall(Map data, DustHandle hMessage, DustHandle hListener) {
+		Map call = new HashMap();
+		call.put(AGENT_SELF, hListener);
+		call.put(AGENT_PARAM, hMessage);
 
-		Map item = resolveHandleToIdea(data, hMessage, false);
-		Collection<DustHandle> listeners = DustUtils.simpleGet(item, IDEA_LISTENERS);
+		access(MindAccess.Insert, call, data, MIND_DIALOG_NEXT, 0);
+	}
 
-		if (null != listeners) {
+	public MindHandle doCall(Map data, DustHandle hMessage, DustHandle hListener) {
+		MindHandle ret = null;
 
-			for (DustHandle l : listeners) {
-				Map listener = resolveHandleToIdea(data, l, false);
+		Map listener = resolveHandleToIdea(data, hListener, false);
 
-				MindLogic binLogic = DustUtils.simpleGet(listener, AGENT_BINARY);
-				boolean firstCall = (null == binLogic);
-				if (firstCall) {
-					DustHandle hLogic = DustUtils.simpleGet(listener, AGENT_LOGIC);
-					// TODO safeGet here
-					Map resolved = DustUtils.safeGet(machineData, LOGIC_BINARY, MAP_CREATOR);
-					
-					binLogic = DustUtils.safeGet(resolved, hLogic, new DustCreator<MindLogic>() {
-						@SuppressWarnings("deprecation")
-						@Override
-						public MindLogic create(Object key, Object... hints) {
-							Map<String, DustHandle> modules = DustUtils.simpleGet(machineData, MACHINE_MODULES);
-							
-							for ( DustHandle hModule : modules.values() ) {
-								String cName = DustUtils.simpleGet(resolveHandleToIdea(data, hModule, false), LOGIC_CLASSNAME, hLogic);
-								if ( null != cName ) {
-									try {
-										return (MindLogic) Class.forName(cName).newInstance();
-									} catch (Throwable e) {
-										DustException.swallow(e, "creating logic", cName);
-									}
-								}
+		MindLogic binLogic = DustUtils.simpleGet(listener, AGENT_BINARY);
+		boolean firstCall = (null == binLogic);
+
+		if (firstCall) {
+			DustHandle hLogic = DustUtils.simpleGet(listener, AGENT_LOGIC);
+
+			Map resolved = DustUtils.safeGet(machineData, LOGIC_BINARY, MAP_CREATOR);
+			binLogic = DustUtils.safeGet(resolved, hLogic, new DustCreator<MindLogic>() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public MindLogic create(Object key, Object... hints) {
+					Map<String, DustHandle> modules = DustUtils.simpleGet(machineData, MACHINE_MODULES);
+
+					for (DustHandle hModule : modules.values()) {
+						String cName = DustUtils.simpleGet(resolveHandleToIdea(data, hModule, false), LOGIC_CLASSNAME, hLogic);
+						if (null != cName) {
+							try {
+								return (MindLogic) Class.forName(cName).newInstance();
+							} catch (Throwable e) {
+								DustException.swallow(e, "creating logic", cName);
 							}
-							return null;
 						}
-					});
-//					binLogic = access(MIND_TAG_ACCESS_GET, null, machineData, LOGIC_BINARY, hLogic);
-					listener.put(AGENT_BINARY, binLogic);
-				}
-
-				if ( null != binLogic ) 
-				{
-					Object hSelf = data.get(AGENT_SELF);
-					Object hParam = data.get(AGENT_PARAM);
-					try {
-						if (firstCall) {
-							binLogic.logicProcess(MIND_TAG_ACTION_INIT);
-						}
-						binLogic.logicProcess(MIND_TAG_ACTION_PROCESS);
-					} catch (Exception e) {
-						DustException.wrap(e, "While calling", binLogic, listener, hMessage);
-					} finally {
-						data.put(AGENT_SELF, hSelf);
-						data.put(AGENT_PARAM, hParam);
 					}
+					return null;
 				}
+			});
+
+			listener.put(AGENT_BINARY, binLogic);
+		}
+
+		if (null != binLogic) {
+			Object hSelf = data.get(AGENT_SELF);
+			Object hParam = data.get(AGENT_PARAM);
+			try {
+				data.put(AGENT_SELF, hListener);
+				data.put(AGENT_PARAM, hMessage);
+				if (firstCall) {
+					binLogic.logicProcess(MIND_TAG_ACTION_INIT);
+				}
+				ret = binLogic.logicProcess(MIND_TAG_ACTION_PROCESS);
+			} catch (Throwable e) {
+				DustException.wrap(e, "While calling", binLogic, listener, hMessage);
+			} finally {
+				data.put(AGENT_SELF, hSelf);
+				data.put(AGENT_PARAM, hParam);
 			}
 		}
 
@@ -340,10 +435,6 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		return (null == m) ? null : DustUtils.safeGet(m, hItem, (createIfMissing ? MAP_CREATOR : null));
 	}
 
-	private void doVisit(Object val, DustHandle hLastItem, Object lastKey, Object curr) {
-		// TODO visit
-	}
-
 	@Override
 	public void broadcast(MindHandle event, Object... params) {
 		Dust.log(event, params);
@@ -351,7 +442,17 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
-		return null;
+		MindHandle ret = null;
+
+		if (null == action) {
+			if (launched) {
+				DustException.wrap(null, "Machine already launched");
+			} else {
+				launched = true;
+				ret = DustUtilsEnumTranslator.getHandle(THREADS.get().go(true));
+			}
+		}
+		return ret;
 	}
 
 }

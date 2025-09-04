@@ -4,12 +4,15 @@ import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.utils.DustUtilsConsts;
+import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
 public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustUtilsConsts {
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
-		Dust.log(null, "Now would generate sources");
-		return null;
+		MindAction a = DustUtilsEnumTranslator.getEnum(action, null);
+
+		Dust.log(null, a, "JavaGen called", Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MISC_ATT_COUNT));
+		return MIND_TAG_RESULT_ACCEPT;
 	}
 }

@@ -59,6 +59,12 @@
 		"6": {
 			"misc:5#ideaToken": "extId"
 		},
+		"7": {
+			"misc:5#ideaToken": "target"
+		},
+		"8": {
+			"misc:5#ideaToken": "count"
+		},
 		"": {
 			"misc:5#ideaToken": ""
 		}

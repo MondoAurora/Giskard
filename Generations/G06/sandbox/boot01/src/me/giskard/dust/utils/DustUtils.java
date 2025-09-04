@@ -2,6 +2,7 @@ package me.giskard.dust.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
@@ -164,6 +165,12 @@ public class DustUtils implements DustUtilsConsts {
 
 	static {
 		sdfTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
+
+
+
+	public static boolean isEmpty(Collection coll) {
+		return (null == coll) || coll.isEmpty();
 	}
 
 

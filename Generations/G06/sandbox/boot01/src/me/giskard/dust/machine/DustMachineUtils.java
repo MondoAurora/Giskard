@@ -37,6 +37,20 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		}
 	}
 
+	public static boolean isContinue(MindResult res) {
+		if ( null == res ) {
+			return false;
+		}
+		
+		switch (res) {
+		case Read:
+		case ReadAccept:
+			return true;
+		default:
+			return false;
+		}
+	}
+
 	public static MindCollType getCollType(Object coll) {
 		MindCollType ret = (null == coll) ? MindCollType.One
 				: (coll instanceof ArrayList) ? MindCollType.Arr

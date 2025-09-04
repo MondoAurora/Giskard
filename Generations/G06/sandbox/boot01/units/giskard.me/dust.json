@@ -49,6 +49,21 @@
 		},
 		"0": {
 			"misc:5#ideaToken": "persId"
+		},
+		"1": {
+			"misc:5#ideaToken": "threads"
+		},
+		"2": {
+			"misc:5#ideaToken": "dialogs"
+		},
+		"3": {
+			"misc:5#ideaToken": "threadDialog"
+		},
+		"4": {
+			"misc:5#ideaToken": "self"
+		},
+		"5": {
+			"misc:5#ideaToken": "param"
 		}
 	}
 ]
