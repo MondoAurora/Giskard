@@ -85,9 +85,21 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
 		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
 
-		hModuleUnit = new DustHandle("giskard.me/test01.0");
-		DustMachineUtils.storeHandle(hModuleUnit, units, dialogIdeas);
+		Map<MindHandle, Object> data;
+		Map m;
+		ArrayList a;
 
+		hModuleUnit = new DustHandle("giskard.me/test01.0");
+		data = DustMachineUtils.storeHandle(hModuleUnit, units, dialogIdeas);
+		Map unitRefs = m = new HashMap();
+
+		m.put("giskard", "giskard.me/giskard.me.0");
+		m.put("mind", "giskard.me/mind.0");
+		m.put("misc", "giskard.me/misc.0");
+		m.put("dust", "giskard.me/dust.0");
+		m.put("dustjava", "giskard.me/dustjava.0");
+		data.put(MISC_CONN_REQUIRED, m);
+		
 		hMachine = new DustHandle(hModuleUnit, null);
 		hModule = new DustHandle(hModuleUnit, null);
 
@@ -95,10 +107,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustHandle hUnitLoaderLogic = new DustHandle(hModuleUnit, null);
 		DustHandle hUnitLoaderFactory = new DustHandle(hModuleUnit, null);
 
-		Map<MindHandle, Object> data;
 		Map<MindHandle, Object> machineData;
-		Map m;
-		ArrayList a;
 
 		machineData = data = DustMachineUtils.storeHandle(hMachine, units, dialogIdeas);
 		m = new HashMap();
@@ -121,6 +130,8 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		data = DustMachineUtils.storeHandle(hUnitLoader, units, dialogIdeas);
 		data.put(AGENT_BINARY, new DustMachineLogicFormatterJson());
 		data.put(AGENT_LOGIC, hUnitLoaderLogic);
+		
+		DustMachineLogic.getData().put(AGENT_UNITREFS, unitRefs);
 
 		return machine;
 	}

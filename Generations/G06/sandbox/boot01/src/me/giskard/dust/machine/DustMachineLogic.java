@@ -54,7 +54,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 			Map call = nextArr.get(0);
 
-			MindHandle ret = doCall(dialogData, (DustHandle) call.get(AGENT_PARAM), (DustHandle) call.get(AGENT_SELF));
+			MindHandle ret = doCall(dialogData, call);
 
 			MindResult r = DustUtilsEnumTranslator.getEnum(ret, MindResult.Reject);
 
@@ -136,6 +136,10 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			if (-1 != sep) {
 				k = id.substring(sep + 1);
 				id = id.substring(0, sep);
+
+				String str = DustUtils.simpleGet(data, AGENT_UNITREFS, id);
+
+				id = str;
 			}
 
 			ret = DustUtils.safeGet(units, id, new DustCreator<DustHandle>() {
@@ -375,7 +379,9 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		access(MindAccess.Insert, call, data, MIND_DIALOG_NEXT, 0);
 	}
 
-	public MindHandle doCall(Map data, DustHandle hMessage, DustHandle hListener) {
+	public MindHandle doCall(Map data, Map call) {
+		DustHandle hMessage = (DustHandle) call.get(AGENT_PARAM);
+		DustHandle hListener = (DustHandle) call.get(AGENT_SELF);
 		MindHandle ret = null;
 
 		Map listener = resolveHandleToIdea(data, hListener, false);
@@ -394,12 +400,19 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 					Map<String, DustHandle> modules = DustUtils.simpleGet(machineData, MACHINE_MODULES);
 
 					for (DustHandle hModule : modules.values()) {
-						String cName = DustUtils.simpleGet(resolveHandleToIdea(data, hModule, false), LOGIC_CLASSNAME, hLogic);
+						Map moduleIdea = resolveHandleToIdea(data, hModule, false);
+						String cName = DustUtils.simpleGet(moduleIdea, LOGIC_CLASSNAME, hLogic);
 						if (null != cName) {
+							Object ur = data.get(AGENT_UNITREFS);
 							try {
+								Object urefs = moduleIdea.get(MISC_CONN_REQUIRED);
+								listener.put(AGENT_UNITREFS, urefs);
+								data.put(AGENT_UNITREFS, urefs);
 								return (MindLogic) Class.forName(cName).newInstance();
 							} catch (Throwable e) {
 								DustException.swallow(e, "creating logic", cName);
+							} finally {
+								data.put(AGENT_UNITREFS, ur);
 							}
 						}
 					}
@@ -413,9 +426,11 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		if (null != binLogic) {
 			Object hSelf = data.get(AGENT_SELF);
 			Object hParam = data.get(AGENT_PARAM);
+			Object ur = data.get(AGENT_UNITREFS);
 			try {
 				data.put(AGENT_SELF, hListener);
 				data.put(AGENT_PARAM, hMessage);
+				data.put(AGENT_UNITREFS, listener.get(AGENT_UNITREFS));
 				if (firstCall) {
 					binLogic.logicProcess(MIND_TAG_ACTION_INIT);
 				}
@@ -425,6 +440,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			} finally {
 				data.put(AGENT_SELF, hSelf);
 				data.put(AGENT_PARAM, hParam);
+				data.put(AGENT_UNITREFS, ur);
 			}
 		}
 

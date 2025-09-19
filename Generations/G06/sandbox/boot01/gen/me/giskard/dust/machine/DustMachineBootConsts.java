@@ -54,6 +54,8 @@ public interface DustMachineBootConsts extends DustConsts {
 	DustHandle LOGIC_BINARY = new DustHandle(DUST, "8");
 	DustHandle AGENT_BINARY = new DustHandle(DUST, "9");
 
+	DustHandle AGENT_UNITREFS = new DustHandle(DUST, "10");
+
 	DustHandle DUSTJAVA = new DustHandle("giskard.me/dustjava.0");
 	DustHandle LOGIC_CLASSNAME = new DustHandle(DUSTJAVA, "0");
 	DustHandle MODULE_CLASSLOADER = new DustHandle(DUSTJAVA, "1");
