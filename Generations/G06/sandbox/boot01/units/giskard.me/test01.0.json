@@ -13,13 +13,15 @@
 		"mind:0#unitAuthor": "->giskard:",
 		"misc:0#verMajor": 1,
 		"misc:1#verMinor": 0,
-		"misc:2#verCommit": 1,
+		"misc:2#verCommit": "0",
 		"misc:3#verDate": "20250722T155624Z",
-		"misc:6#extId": "dustjava",
+		"misc:6#extId": "test01",
 		"misc:4#connRequired": {
 			"giskard": "->giskard:",
+			"mind": "->mind:",
 			"misc": "->misc:",
-			"mind": "->mind:"
+			"dust": "->dust:",
+			"dustjava": "->dustjava:"
 		}
 	},
 	{
@@ -28,7 +30,7 @@
 			"misc:6#extId": "giskard.me",
 			"misc:0#verMajor": 1,
 			"misc:1#verMinor": 0,
-			"misc:2#verCommit": 1,
+			"misc:2#verCommit": "0",
 			"misc:3#verDate": "20250722T155624Z"
 		},
 		"mind:": {
@@ -36,7 +38,7 @@
 			"misc:6#extId": "mind",
 			"misc:0#verMajor": 1,
 			"misc:1#verMinor": 0,
-			"misc:2#verCommit": 1,
+			"misc:2#verCommit": "0",
 			"misc:3#verDate": "20250722T155624Z"
 		},
 		"misc:": {
@@ -44,7 +46,23 @@
 			"misc:6#extId": "misc",
 			"misc:0#verMajor": 1,
 			"misc:1#verMinor": 0,
-			"misc:2#verCommit": 1,
+			"misc:2#verCommit": "0",
+			"misc:3#verDate": "20250722T155624Z"
+		},
+		"dust:": {
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "dust",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": "0",
+			"misc:3#verDate": "20250722T155624Z"
+		},
+		"dustjava:": {
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "dustjava",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": "0",
 			"misc:3#verDate": "20250722T155624Z"
 		}
 	}

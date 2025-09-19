@@ -1,7 +1,10 @@
 package me.giskard.dust.machine;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import me.giskard.dust.utils.DustUtils;
 
@@ -43,5 +46,19 @@ public interface DustMachineConstsInt extends DustMachineConsts {
 	
 	public interface UnitLoader {
 		void optLoadUnit(String key) throws Exception;
+	}
+	
+	class DustIdea extends HashMap<MindHandle, Object> {
+		private static final long serialVersionUID = 1L;
+		private static final Set<DustIdea> SERIALIZING = new HashSet<>();
+		
+		@Override
+		public String toString() {
+			try {
+				return SERIALIZING.add(this) ? super.toString() : "{***}";				
+			} finally {
+				SERIALIZING.remove(this);
+			}
+		}
 	}
 }

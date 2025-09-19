@@ -12,8 +12,8 @@ import me.giskard.dust.utils.DustUtilsConsts;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootConsts, DustUtilsConsts {
 
-	public static String buildUnitKey(Object... path) {
-		return DustUtils.sbAppend(null, "/", true, path).toString();
+	public static String buildUnitKey(Object author, Object unitId, Object commitId) {
+		return author + "/" + unitId + "." + commitId;
 	}
 
 	public static boolean isIdRemote(String kIdea) {
@@ -69,7 +69,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	static Map<MindHandle, Object> storeHandle(DustHandle h, Map dialogIdeas) {
-		Map<MindHandle, Object> data = new HashMap<>();
+		Map<MindHandle, Object> data = new DustIdea();
 		data.put(IDEA_HANDLE, h);
 
 		if (h == h.unit) {
@@ -99,18 +99,13 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
-		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
-		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitIdeas, h.unit, UNIT_HANDLES);
 		String tkey = DUST_SEP_TOKEN + h.id;
-
 		DustHandle hToken = new DustHandle(h.unit, tkey);
-		Map<MindHandle, Object> dToken = new HashMap<>();
-		dToken.put(IDEA_HANDLE, hToken);
+
+		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
+		
 		dToken.put(MISC_TARGET, h);
 		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
-
-		unitIdeas.put(hToken, dToken);
-		unitHandles.put(tkey, hToken);
 
 		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);
 		tokenMap = DustUtils.safeGet(tokenMap, h.unit, MAP_CREATOR);

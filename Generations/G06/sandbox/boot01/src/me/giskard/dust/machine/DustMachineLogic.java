@@ -57,8 +57,8 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			MindHandle ret = doCall(dialogData, (DustHandle) call.get(AGENT_PARAM), (DustHandle) call.get(AGENT_SELF));
 
 			MindResult r = DustUtilsEnumTranslator.getEnum(ret, MindResult.Reject);
-			
-			if ( !DustMachineUtils.isContinue(r) ) {
+
+			if (!DustMachineUtils.isContinue(r)) {
 				nextArr.remove(call);
 			}
 
@@ -111,7 +111,8 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			if (null == mt) {
 				mt = new MachineThread(dialogData);
 				THREADS.set(mt);
-				access(MindAccess.Insert, mt.threadData, machineData, MACHINE_THREADS);
+				((Set) machineData.get(MACHINE_THREADS)).add(mt.threadData);
+//				access(MindAccess.Insert, mt.threadData, machineData, MACHINE_THREADS);
 			} else {
 				mt.setDialogData(dialogData);
 			}
@@ -165,10 +166,9 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		Map<MindHandle, Object> unitData = DustUtils.simpleGet(dialogIdeas, unitHandle, unitHandle);
 		Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
 
-		if ("?".equals(id)) {
+		if (DustUtils.isEmpty(id)) {
 			id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
 		}
-
 		ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
 
 			@Override
@@ -212,6 +212,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 		boolean setLastAtt = true;
 		DustHandle hLastAtt = null;
+		@SuppressWarnings("unused")
 		Map kAtt = null;
 
 		for (Object p : path) {
@@ -269,20 +270,21 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 					curr = al.get(idx);
 				}
 			} else if (curr instanceof Map) {
-				curr = DustUtils.isEqual(KEY_SIZE, p) ? ((Map) curr).size() : ((Map) curr).get(p);
+				curr = DustUtils.isEqual(KEY_SIZE, p) ? ((Map) curr).size()
+						: DustUtils.isEqual(MIND_IDEA_ATTS, p) ? new ArrayList(((Map) curr).keySet()) : ((Map) curr).get(p);
 			} else {
 				curr = null;
 			}
 
-			if ((null == curr) && createIfMissing && (null != hLastAtt)) {
-				DustHandle factoryMsg = DustUtils.simpleGet(machineData, MEMBER_FACTORIES, hLastAtt);
-				if (null != factoryMsg) {
-					// need local execution
-//					curr = doCommit(data, factoryMsg);
-				} else {
-					Dust.log(null, "Would create member for att def", kAtt);
-				}
-			}
+//			if ((null == curr) && createIfMissing && (null != hLastAtt)) {
+//				DustHandle factoryMsg = DustUtils.simpleGet(machineData, MEMBER_FACTORIES, hLastAtt);
+//				if (null != factoryMsg) {
+//					// need local execution
+////					curr = doCommit(data, factoryMsg);
+//				} else {
+//					Dust.log(null, "Would create member for att def", kAtt);
+//				}
+//			}
 		}
 
 		switch (access) {

@@ -75,8 +75,9 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 							: DustUtils.simpleGet(content, author.substring(2), LOAD_TOKEN_EXT_ID);
 
 					String uid = DustUtils.simpleGet(ud, LOAD_TOKEN_EXT_ID);
+					String cid = DustUtils.simpleGet(ud, LOAD_TOKEN_COMMIT_ID);
 
-					String uKey = DustMachineUtils.buildUnitKey(author, uid);
+					String uKey = DustMachineUtils.buildUnitKey(author, uid, cid);
 					Dust.lookup(null, uKey);
 //					optLoadUnit(uKey);
 					refs.put(ure.getKey(), uKey);

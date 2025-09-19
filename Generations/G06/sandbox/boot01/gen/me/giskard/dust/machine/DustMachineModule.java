@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import me.giskard.dust.Dust;
 import me.giskard.dust.forge.DustForgeLogicJavaGen;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
+import me.giskard.dust.machine.DustMachineConstsInt.DustIdea;
 import me.giskard.dust.narrative.DustNarrativeLogicGraphWalker;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
@@ -25,10 +26,10 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 	public static Object dustMachineInit() throws Exception {
 		Dust.broadcast(null, "Hello world from Sandbox module");
 
-		initData = new HashMap();
+		initData = new DustIdea();
 
 		Map units = new TreeMap();
-		Map dialogIdeas = new HashMap();
+		Map dialogIdeas = new DustIdea();
 		Map vocabulary = new TreeMap();
 
 		initData.put(MACHINE_UNITS, units);
@@ -40,7 +41,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		Map<MindHandle, Object> unitData;
 
 		unitData = DustMachineUtils.storeHandle(MISC, units, dialogIdeas);
-		unitData.put(UNIT_NEXT_ID, 7L);
+		unitData.put(UNIT_NEXT_ID, 100L);
 		DustMachineUtils.storeHandle(MISC_TARGET, units, dialogIdeas);
 		DustMachineUtils.storeHandle(MISC_PARENT, units, dialogIdeas);
 		DustMachineUtils.storeHandle(MISC_CONN_REQUIRED, units, dialogIdeas);
@@ -77,21 +78,22 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustMachineUtils.storeHandle(AGENT_PARAM, units, dialogIdeas);
 
 		unitData = DustMachineUtils.storeHandle(DUSTJAVA, units, dialogIdeas);
+		unitData.put(UNIT_NEXT_ID, 100L);
 		DustMachineUtils.storeHandle(LOGIC_CLASSNAME, units, dialogIdeas);
 		DustMachineUtils.storeHandle(MODULE_CLASSLOADER, units, dialogIdeas);
 
 		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
 		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
 
-		hModuleUnit = new DustHandle("giskard.me/test01");
+		hModuleUnit = new DustHandle("giskard.me/test01.0");
 		DustMachineUtils.storeHandle(hModuleUnit, units, dialogIdeas);
 
-		hMachine = new DustHandle(hModuleUnit, "?");
-		hModule = new DustHandle(hModuleUnit, "?");
+		hMachine = new DustHandle(hModuleUnit, null);
+		hModule = new DustHandle(hModuleUnit, null);
 
-		DustHandle hUnitLoader = new DustHandle(hModuleUnit, "?");
-		DustHandle hUnitLoaderLogic = new DustHandle(hModuleUnit, "?");
-		DustHandle hUnitLoaderFactory = new DustHandle(hModuleUnit, "?");
+		DustHandle hUnitLoader = new DustHandle(hModuleUnit, null);
+		DustHandle hUnitLoaderLogic = new DustHandle(hModuleUnit, null);
+		DustHandle hUnitLoaderFactory = new DustHandle(hModuleUnit, null);
 
 		Map<MindHandle, Object> data;
 		Map<MindHandle, Object> machineData;
@@ -138,26 +140,26 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustUtilsEnumTranslator.register(MindResult.class, MIND_TAG_RESULT_REJECT, MIND_TAG_RESULT_PASS, MIND_TAG_RESULT_READ, MIND_TAG_RESULT_READACCEPT,
 				MIND_TAG_RESULT_ACCEPT);
 
-		Dust.lookup(null, "giskard.me/test01");
-		Dust.lookup(null, "giskard.me/dust:0");
+//		Dust.lookup(null, "giskard.me/test01");
+//		Dust.lookup(null, "giskard.me/dust:0");
 
 		Dust.access(MIND_TAG_ACCESS_SET, hModule, hMachine, MACHINE_MODULES, "");
 
 		Dust.access(MIND_TAG_ACCESS_SET, DustNarrativeLogicGraphWalker.class.getName(), hModule, LOGIC_CLASSNAME, MIND_LOGIC_GRAPHWALKER);
 
-		MindHandle hJavaGenLogic = Dust.lookup(hModuleUnit, "?");
+		MindHandle hJavaGenLogic = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicJavaGen.class.getName(), hModule, LOGIC_CLASSNAME, hJavaGenLogic);
 
-		MindHandle hJavaGen = Dust.lookup(hModuleUnit, "?");
+		MindHandle hJavaGen = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenLogic, hJavaGen, AGENT_LOGIC);
 
-		MindHandle hJavaGenParams = Dust.lookup(hModuleUnit, "?");
+		MindHandle hJavaGenParams = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hJavaGen, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
 
-		MindHandle hUnitWalkerAgent = Dust.lookup(hModuleUnit, "?");
+		MindHandle hUnitWalkerAgent = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, MIND_LOGIC_GRAPHWALKER, hUnitWalkerAgent, AGENT_LOGIC);
 
-		MindHandle hUnitWalkerParams = Dust.lookup(hModuleUnit, "?");
+		MindHandle hUnitWalkerParams = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hUnitWalkerAgent, hUnitWalkerParams, IDEA_LISTENERS, KEY_ADD);
 		Dust.access(MIND_TAG_ACCESS_SET, hMachine, hUnitWalkerParams, MIND_VISIT_IDEA);
 		Dust.access(MIND_TAG_ACCESS_SET, MACHINE_UNITS, hUnitWalkerParams, MIND_VISIT_ATT);
