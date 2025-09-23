@@ -6,7 +6,6 @@ import java.util.Map;
 
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts.DustCreator;
-import me.giskard.dust.utils.DustUtilsConsts.DustCreatorSimple;
 
 @SuppressWarnings("rawtypes")
 public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBootConsts {

@@ -78,6 +78,8 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 			Object unit = DustUtils.simpleGet(unitIdeas, hUnit);
 			unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
 			unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
+		} else {
+			((Map)DustUtils.simpleGet(machineIdea, MACHINE_UNITS)).put(h.getId(), h);
 		}
 
 		Map<MindHandle, Object> data = new DustIdea(h);
