@@ -38,10 +38,10 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	public static boolean isContinue(MindResult res) {
-		if ( null == res ) {
+		if (null == res) {
 			return false;
 		}
-		
+
 		switch (res) {
 		case Read:
 		case ReadAccept:
@@ -68,32 +68,21 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return ret;
 	}
 
-	static Map<MindHandle, Object> storeHandle(DustHandle h, Map dialogIdeas) {
-		Map<MindHandle, Object> data = new DustIdea();
-		data.put(IDEA_HANDLE, h);
+	static Map<MindHandle, Object> storeHandle(DustHandle h, Map machineIdea) {
+		DustHandle hUnit = h.isUnit() ? h : h.unit;
+		
+		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(machineIdea, UNIT_IDEAS);
+		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(machineIdea, UNIT_HANDLES);
 
-		if (h == h.unit) {
-
-			HashMap<String, MindHandle> unitHandles = new HashMap();
-			data.put(UNIT_HANDLES, unitHandles);
-			unitHandles.put("", h);
-
-			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = new HashMap();
-			unitIdeas.put(h, data);
-
-			dialogIdeas.put(h, unitIdeas);
-		} else {
-			Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(dialogIdeas, h.unit);
-			HashMap<String, MindHandle> unitData = DustUtils.simpleGet(unitIdeas, h.unit);
-			HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, UNIT_HANDLES);
-
-			if ("?".equals(h.id)) {
-				h.id = DustMachineUtils.nextId(unitData, UNIT_NEXT_ID);
-			}
-
-			unitIdeas.put(h, data);
-			unitHandles.put(h.id, h);
+		if (!h.isUnit()) {
+			Object unit = DustUtils.simpleGet(unitIdeas, hUnit);
+			unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
+			unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
 		}
+
+		Map<MindHandle, Object> data = new DustIdea(h);
+		unitIdeas.put(h, data);
+		unitHandles.put(h.id, h);
 
 		return data;
 	}
@@ -103,7 +92,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		DustHandle hToken = new DustHandle(h.unit, tkey);
 
 		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
-		
+
 		dToken.put(MISC_TARGET, h);
 		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
 

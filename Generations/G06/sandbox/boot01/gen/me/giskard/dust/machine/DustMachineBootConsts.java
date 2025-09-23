@@ -23,7 +23,7 @@ public interface DustMachineBootConsts extends DustConsts {
 	DustHandle UNIT_HANDLES = new DustHandle(MIND, "6");
 	DustHandle UNIT_IDEAS = new DustHandle(MIND, "7");
 	
-	DustHandle DIALOG_IDEAS = new DustHandle(MIND, "8");
+//	DustHandle DIALOG_IDEAS = new DustHandle(MIND, "8");
 	DustHandle DIALOG_VOCABULARY = new DustHandle(MIND, "9");
 
 	DustHandle ACTION_INIT = new DustHandle(MIND, "30");
@@ -55,6 +55,9 @@ public interface DustMachineBootConsts extends DustConsts {
 	DustHandle AGENT_BINARY = new DustHandle(DUST, "9");
 
 	DustHandle AGENT_UNITREFS = new DustHandle(DUST, "10");
+
+	DustHandle RUNTIME_MACHINE = new DustHandle("/machine.0");
+	DustHandle RUNTIME_MAINDIALOG = new DustHandle("/maindialog.0");
 
 	DustHandle DUSTJAVA = new DustHandle("giskard.me/dustjava.0");
 	DustHandle LOGIC_CLASSNAME = new DustHandle(DUSTJAVA, "0");
