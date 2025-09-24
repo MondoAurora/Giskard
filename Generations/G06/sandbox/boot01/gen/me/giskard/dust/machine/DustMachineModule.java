@@ -166,7 +166,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 
 		MindHandle hUnitWalkerParams = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hUnitWalkerAgent, hUnitWalkerParams, IDEA_LISTENERS, KEY_ADD);
-		Dust.access(MIND_TAG_ACCESS_SET, RUNTIME_MACHINE, hUnitWalkerParams, MIND_VISIT_IDEA);
+		Dust.access(MIND_TAG_ACCESS_SET, RUNTIME_MACHINE, hUnitWalkerParams, MIND_VISIT_HANDLE);
 		Dust.access(MIND_TAG_ACCESS_SET, MACHINE_UNITS, hUnitWalkerParams, MIND_VISIT_ATT);
 		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenParams, hUnitWalkerAgent, MISC_ATT_TARGET);
 		Dust.access(MIND_TAG_ACCESS_SET, 10L, hUnitWalkerParams, MISC_ATT_COUNT);

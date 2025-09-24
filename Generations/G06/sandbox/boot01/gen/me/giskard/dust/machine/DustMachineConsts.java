@@ -70,7 +70,7 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_RESULT_ACCEPT = Dust.lookup(null, "mind:45");
 
 	
-	MindHandle MIND_VISIT_IDEA = Dust.lookup(null, "mind:46");
+	MindHandle MIND_VISIT_HANDLE = Dust.lookup(null, "mind:46");
 	MindHandle MIND_VISIT_ATT = Dust.lookup(null, "mind:47");
 	MindHandle MIND_VISIT_KEY = Dust.lookup(null, "mind:48");
 	MindHandle MIND_VISIT_VALUE = Dust.lookup(null, "mind:49");
@@ -91,6 +91,8 @@ public interface DustMachineConsts extends DustConsts {
 
 	MindHandle MISC_ATT_TARGET = Dust.lookup(null, "misc:7");
 	MindHandle MISC_ATT_COUNT = Dust.lookup(null, "misc:9");
+	MindHandle MISC_STACK = Dust.lookup(null, "misc:10");
+	MindHandle MISC_SEEN = Dust.lookup(null, "misc:11");
 	
 	/**** DUST ****/
 

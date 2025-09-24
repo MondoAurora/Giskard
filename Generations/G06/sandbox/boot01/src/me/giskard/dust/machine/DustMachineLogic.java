@@ -309,6 +309,23 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 			break;
 		case Delete:
+			if (curr != null) {
+				switch (collType) {
+				case Arr:
+					((ArrayList) prevColl).remove((int) lastKey);
+					break;
+				case Map:
+					((Map) prevColl).remove(lastKey);
+					break;
+				case One:
+					break;
+				case Set:
+					((Set) prevColl).remove(curr);
+					break;
+				}
+			}
+			ret = curr;
+
 			break;
 		case Get:
 			ret = (null == curr) ? val : curr;
@@ -321,13 +338,13 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 					break;
 				case Map:
 					Set s = (curr instanceof Set) ? (Set) curr : new HashSet();
-					s.add(val);
+					ret = s.add(val);
 					((Map) prevColl).put(lastKey, s);
 					break;
 				case One:
 					break;
 				case Set:
-					((Set) prevColl).add(curr);
+					ret = ((Set) prevColl).add(curr);
 					break;
 				}
 			}
