@@ -86,13 +86,18 @@ public interface DustMachineConsts extends DustConsts {
 
 	MindHandle MIND_LOGIC_GRAPHWALKER = Dust.lookup(null, "mind:55");
 
-	
+	MindHandle MIND_TAG_SEARCH = Dust.lookup(null, "mind:56");
+	MindHandle MIND_TAG_SEARCH_BREADTHFIRST = Dust.lookup(null, "mind:57");
+	MindHandle MIND_TAG_SEARCH_DEPTHFIRST = Dust.lookup(null, "mind:58");
+
 	/**** MISC ****/
 
 	MindHandle MISC_ATT_TARGET = Dust.lookup(null, "misc:7");
 	MindHandle MISC_ATT_COUNT = Dust.lookup(null, "misc:9");
 	MindHandle MISC_STACK = Dust.lookup(null, "misc:10");
 	MindHandle MISC_SEEN = Dust.lookup(null, "misc:11");
+	MindHandle MISC_DEPTH = Dust.lookup(null, "misc:12");
+	MindHandle MISC_QUEUE = Dust.lookup(null, "misc:13");
 	
 	/**** DUST ****/
 

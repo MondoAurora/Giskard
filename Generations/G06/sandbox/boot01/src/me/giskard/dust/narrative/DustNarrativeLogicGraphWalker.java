@@ -1,5 +1,6 @@
 package me.giskard.dust.narrative;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -7,20 +8,29 @@ import java.util.Map;
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConsts;
+import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, DustNarrativeConsts, DustMachineConsts, DustUtilsConsts {
 
 	private static final Object END = new Object();
 
 	class WalkIterator {
+		MindHandle h;
 		Object[] items;
 		int idx;
 
-		WalkIterator(Collection src) {
-			items = src.toArray();
+		WalkIterator(Object src) {
+			if (src instanceof Collection) {
+				items = ((Collection) src).toArray();
+			} else if (src instanceof Map) {
+				items = ((Map) src).entrySet().toArray();
+			} else if (src instanceof MindHandle) {
+				h = (MindHandle) src;
+				items = ((Collection) Dust.access(MIND_TAG_ACCESS_PEEK, Collections.EMPTY_LIST, h, MIND_IDEA_ATTS)).toArray();
+			}
 		}
 
 		WalkIterator(Map map) {
@@ -28,24 +38,28 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 		}
 
 		public Object next() {
-			return (idx < items.length) ? items[idx++] : END;
+			Object ret = END;
+
+			if (idx < items.length) {
+				ret = items[idx++];
+				if (null != h) {
+					ret = Dust.access(MIND_TAG_ACCESS_PEEK, null, h, ret);
+				}
+			}
+
+			return ret;
 		}
-	}
 
-	class WalkIteratorIdea extends WalkIterator {
-		MindHandle h;
-
-		WalkIteratorIdea(MindHandle h) {
-			super((Collection) Dust.access(MIND_TAG_ACCESS_PEEK, Collections.EMPTY_LIST, h, MIND_IDEA_ATTS));
-
-			this.h = h;
+		Object getHandle() {
+			return h;
 		}
 
-		@Override
-		public Object next() {
-			Object key = super.next();
+		Object getKeyField() {
+			return (null == h) ? MIND_VISIT_KEY : MIND_VISIT_ATT;
+		}
 
-			return (END == key) ? key : Dust.access(MIND_TAG_ACCESS_PEEK, null, h, key);
+		Object getCurrentKey() {
+			return (null == h) ? idx - 1 : items[idx - 1];
 		}
 	}
 
@@ -53,76 +67,138 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 	public MindHandle logicProcess(MindHandle action) throws Exception {
 		MindAction a = DustUtilsEnumTranslator.getEnum(action, null);
 		MindHandle ret = MIND_TAG_RESULT_READ;
-		WalkIterator wi;
+		WalkIterator wi = null;
 
 		switch (a) {
 		case Init:
-			MindHandle hItem = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
-			MindHandle hAtt = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_ATT);
-
-			Map initVal = Dust.access(MIND_TAG_ACCESS_PEEK, null, hItem, hAtt);
-
-			wi = new WalkIterator(initVal);
-
-			Dust.access(MIND_TAG_ACCESS_SET, wi, null, DUST_PARAM, MIND_VISIT_VALUE);
-
-			Dust.log(null, a, "Initialising walk", wi.items);
 			break;
 		case Begin:
 			break;
 		case Process:
-			wi = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
-			Object s = wi.next();
 
-			Object val;
-			Object key;
-			if (s instanceof Map.Entry) {
-				Map.Entry e = (Map.Entry) s;
-				val = e.getValue();
-				key = e.getKey();
-			} else {
-				val = s;
-				key = wi.idx - 1;
+			Collection queue = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_SELF, MISC_QUEUE);
+
+			if (null == queue) {
+				MindHandle hItem = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
+				MindHandle hAtt = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_ATT);
+
+				Object initVal = Dust.access(MIND_TAG_ACCESS_PEEK, null, hItem, hAtt);
+
+				if (initVal instanceof Collection) {
+					queue = new ArrayList((Collection) initVal);
+				} else if (initVal instanceof Map) {
+					queue = new ArrayList(((Map) initVal).values());
+				} else if (initVal instanceof MindHandle) {
+					queue = new ArrayList();
+					queue.add(initVal);
+				}
+
+				if (DustUtils.isEmpty(queue)) {
+					return MIND_TAG_RESULT_PASS;
+				} else {
+					Dust.access(MIND_TAG_ACCESS_SET, queue, null, DUST_SELF, MISC_QUEUE);
+					Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_SELF, MISC_ATT_TARGET);
+					return ret;
+				}
 			}
 
-			if (END == s) {
-				int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_STACK, KEY_SIZE);
+			Object key;
+			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
+			WalkIterator newIt = null;
 
-				if (0 == depth) {
-					ret = MIND_TAG_RESULT_ACCEPT;
-					Dust.access(MIND_TAG_ACCESS_RESET, null, null, DUST_PARAM, MISC_SEEN);
-				} else {
-					wi = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_PARAM, MISC_STACK, 0);
-					Dust.access(MIND_TAG_ACCESS_SET, wi, null, DUST_PARAM, MIND_VISIT_VALUE);
-					Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_SELF, MISC_ATT_TARGET);
-				}
-			} else {
-				Dust.log(null, a, "Visiting", key, val);
-
-				WalkIterator newIt = null;
-
-				if (val instanceof Map) {
-					newIt = new WalkIterator((Map) val);
-				} else if (val instanceof Collection) {
-					newIt = new WalkIterator((Collection) val);
-				} else if (val instanceof MindHandle) {
-					boolean newHandle = Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_PARAM, MISC_SEEN);
-					if (newHandle) {
-						newIt = new WalkIteratorIdea((MindHandle) val);
+			if (val instanceof MindHandle) {
+				boolean newHandle = Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_SELF, MISC_SEEN);
+				if (newHandle) {
+					boolean dfs = Dust.access(MIND_TAG_ACCESS_CHECK, MIND_TAG_SEARCH_DEPTHFIRST, null, DUST_SELF, MIND_TAG_SEARCH);
+					if (dfs) {
+						newIt = new WalkIterator(val);
 						Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_ATT);
+					} else {
+						Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_SELF, MISC_QUEUE, KEY_ADD);
 					}
 				}
+			}
 
-				if (null == newIt) {
-					Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
-					Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_KEY);
-					Dust.access(MIND_TAG_ACCESS_COMMIT, null, null, DUST_SELF, MISC_ATT_TARGET);
+			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_KEY);
+			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
+
+			wi = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
+
+			if (null == newIt) {
+
+				if (null == wi) {
+					MindHandle hItem = null;
+					boolean repeat;
+					do {
+						hItem = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_SELF, MISC_QUEUE, 0);
+						repeat = (null != hItem) && !(boolean) Dust.access(MIND_TAG_ACCESS_INSERT, hItem, null, DUST_SELF, MISC_SEEN);
+					} while (repeat);
+
+					if (null == hItem) {
+						if (null == Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE)) {
+							ret = MIND_TAG_RESULT_ACCEPT;
+						} else {
+							Dust.access(MIND_TAG_ACCESS_RESET, null, null, DUST_PARAM, MISC_SEEN);
+							Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_SELF, MISC_ATT_TARGET);
+						}
+						
+						return ret;
+					} else {
+						newIt = new WalkIterator(hItem);
+						Dust.access(MIND_TAG_ACCESS_SET, hItem, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_ATT);
+					}
 				} else {
-					Dust.access(MIND_TAG_ACCESS_INSERT, wi, null, DUST_PARAM, MISC_STACK, 0);
-					Dust.access(MIND_TAG_ACCESS_SET, newIt, null, DUST_PARAM, MIND_VISIT_VALUE);
-					Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_SELF, MISC_ATT_TARGET);
+
+					Object s = wi.next();
+
+					Object h = wi.getHandle();
+					if (null != h) {
+						Dust.access(MIND_TAG_ACCESS_SET, h, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
+					}
+
+					if (END == s) {
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
+						wi = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_PARAM, MISC_STACK, 0);
+						Dust.access(MIND_TAG_ACCESS_SET, wi, null, DUST_PARAM, MIND_VISIT_VALUE);
+						Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_SELF, MISC_ATT_TARGET);
+						int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_STACK, KEY_SIZE);
+						Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_SELF, MISC_ATT_TARGET, MISC_DEPTH);
+
+						return ret;
+					} else {
+						if (s instanceof Map.Entry) {
+							Map.Entry e = (Map.Entry) s;
+							val = e.getValue();
+							key = e.getKey();
+						} else {
+							val = s;
+							key = wi.getCurrentKey();
+						}
+						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
+
+						if ((val instanceof Map) || (val instanceof Collection)) {
+							newIt = new WalkIterator(val);
+						}
+					}
 				}
 			}
+
+			if (null == newIt) {
+				Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
+				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_PROCESS, null, DUST_SELF, MISC_ATT_TARGET);
+			} else {
+				if (null != wi) {
+					Dust.access(MIND_TAG_ACCESS_INSERT, wi, null, DUST_PARAM, MISC_STACK, 0);
+				}
+				Dust.access(MIND_TAG_ACCESS_SET, newIt, null, DUST_PARAM, MIND_VISIT_VALUE);
+				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_SELF, MISC_ATT_TARGET);
+			}
+
+			int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_STACK, KEY_SIZE);
+			Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_SELF, MISC_ATT_TARGET, MISC_DEPTH);
+
 			break;
 		case End:
 			break;

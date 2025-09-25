@@ -41,7 +41,7 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 			if (!DustUtils.isEmpty(token)) {
 				token = DUST_SEP_TOKEN + token;
 			}
-			return DustUtils.sbAppend(null, "", true, "[", ((this == unit) ? "" : unit.id), "::", id, token, "]").toString();
+			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
 		}
 
 		static Map CURR_VOC = Collections.EMPTY_MAP;

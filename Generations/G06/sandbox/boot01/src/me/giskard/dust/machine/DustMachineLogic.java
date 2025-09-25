@@ -36,7 +36,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			}
 
 			for (Object i : init) {
-				access(MindAccess.Commit, null, i);
+				access(MindAccess.Commit, MIND_TAG_ACTION_PROCESS, i);
 			}
 
 			return true;
@@ -302,7 +302,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 				ret = MIND_TAG_RESULT_PASS;
 			} else {
 				for (DustHandle l : listeners) {
-					registerCall(data, hMessage, l);
+					registerCall(data, hMessage, l, (MindHandle) val);
 				}
 				ret = MIND_TAG_RESULT_READ;
 			}
@@ -360,6 +360,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			}
 			break;
 		case Set:
+			ret = curr;
 			if ((null != lastKey) && (null != prevColl)) {
 //				Dust.log(null, "       ", access, hLastItem, lastKey, val);
 				switch (collType) {
@@ -374,7 +375,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 				case One:
 					break;
 				case Set:
-					((Set) prevColl).add(curr);
+					((Set) prevColl).add(val);
 					break;
 				}
 			}
@@ -385,10 +386,11 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		return (RetType) ret;
 	}
 
-	public void registerCall(Map data, DustHandle hMessage, DustHandle hListener) {
+	public void registerCall(Map data, DustHandle hMessage, DustHandle hListener, MindHandle action) {
 		Map call = new HashMap();
 		call.put(AGENT_SELF, hListener);
 		call.put(AGENT_PARAM, hMessage);
+		call.put(MIND_TAG_ACTION, action);
 
 		access(MindAccess.Insert, call, data, MIND_DIALOG_NEXT, 0);
 	}
@@ -448,7 +450,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 				if (firstCall) {
 					binLogic.logicProcess(MIND_TAG_ACTION_INIT);
 				}
-				ret = binLogic.logicProcess(MIND_TAG_ACTION_PROCESS);
+				ret = binLogic.logicProcess((MindHandle) call.getOrDefault(MIND_TAG_ACTION, MIND_TAG_ACTION_PROCESS));
 			} catch (Throwable e) {
 				DustException.wrap(e, "While calling", binLogic, listener, hMessage);
 			} finally {
