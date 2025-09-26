@@ -26,6 +26,8 @@ public interface DustMachineConsts extends DustConsts {
 	};
 	
 	/**** MIND ****/
+	
+	MindHandle MIND_IDEA_HANDLE = Dust.lookup(null, "mind:2");
 
 	MindHandle MIND_TAG_ACCESS = Dust.lookup(null, "mind:10");
 	MindHandle MIND_TAG_ACCESS_CHECK = Dust.lookup(null, "mind:11");
@@ -98,6 +100,7 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MISC_SEEN = Dust.lookup(null, "misc:11");
 	MindHandle MISC_DEPTH = Dust.lookup(null, "misc:12");
 	MindHandle MISC_QUEUE = Dust.lookup(null, "misc:13");
+	MindHandle MISC_PAYLOAD = Dust.lookup(null, "misc:14");
 	
 	/**** DUST ****/
 

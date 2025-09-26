@@ -3,6 +3,7 @@ package me.giskard.dust.narrative;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.dust.Dust;
@@ -31,10 +32,6 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 				h = (MindHandle) src;
 				items = ((Collection) Dust.access(MIND_TAG_ACCESS_PEEK, Collections.EMPTY_LIST, h, MIND_IDEA_ATTS)).toArray();
 			}
-		}
-
-		WalkIterator(Map map) {
-			items = map.entrySet().toArray();
 		}
 
 		public Object next() {
@@ -107,8 +104,9 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 			WalkIterator newIt = null;
 
 			if (val instanceof MindHandle) {
-				boolean newHandle = Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_SELF, MISC_SEEN);
-				if (newHandle) {
+				boolean seen = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_SELF, MISC_SEEN);
+				boolean queued = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_SELF, MISC_QUEUE);
+				if (!seen && !queued) {
 					boolean dfs = Dust.access(MIND_TAG_ACCESS_CHECK, MIND_TAG_SEARCH_DEPTHFIRST, null, DUST_SELF, MIND_TAG_SEARCH);
 					if (dfs) {
 						newIt = new WalkIterator(val);
@@ -177,6 +175,13 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 							key = wi.getCurrentKey();
 						}
 						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
+						
+						if ( val instanceof HashMap ) {
+							Object ih = ((Map)val).get(MIND_IDEA_HANDLE);
+							if ( null != ih ) {
+								val = ih;
+							}
+						}
 
 						if ((val instanceof Map) || (val instanceof Collection)) {
 							newIt = new WalkIterator(val);

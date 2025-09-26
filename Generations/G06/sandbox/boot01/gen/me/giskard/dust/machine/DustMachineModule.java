@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.forge.DustForgeLogicCollectJson;
 import me.giskard.dust.forge.DustForgeLogicJavaGen;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
 import me.giskard.dust.machine.DustMachineConstsInt.DustIdea;
@@ -158,8 +159,15 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		MindHandle hJavaGen = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenLogic, hJavaGen, AGENT_LOGIC);
 
+		MindHandle hCollectLogic = Dust.lookup(hModuleUnit, null);
+		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicCollectJson.class.getName(), hModuleUnit, LOGIC_CLASSNAME, hCollectLogic);
+
+		MindHandle hCollect = Dust.lookup(hModuleUnit, null);
+		Dust.access(MIND_TAG_ACCESS_SET, hCollectLogic, hCollect, AGENT_LOGIC);
+
 		MindHandle hJavaGenParams = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hJavaGen, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
+		Dust.access(MIND_TAG_ACCESS_INSERT, hCollect, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
 
 		MindHandle hUnitWalkerAgent = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, MIND_LOGIC_GRAPHWALKER, hUnitWalkerAgent, AGENT_LOGIC);

@@ -6,7 +6,7 @@ import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
-public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustUtilsConsts {
+public class DustForgeLogicDumpLog implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustUtilsConsts {
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
