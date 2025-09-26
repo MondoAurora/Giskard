@@ -1,5 +1,6 @@
 package me.giskard.dust.machine;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 //	private static DustHandle hMachine;
 //	private static DustHandle hModule;
 	private static DustHandle hModuleUnit;
+	private static Map vocabulary;
 
 	public static Object dustMachineInit() throws Exception {
 		Dust.broadcast(null, "Hello world from Sandbox module");
@@ -31,7 +33,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 
 		Map units = new TreeMap();
 //		Map dialogIdeas = new DustIdea();
-		Map vocabulary = new TreeMap();
+		vocabulary = new TreeMap();
 
 		machineIdea.put(MACHINE_UNITS, units);
 //		machineData.put(DIALOG_IDEAS, dialogIdeas);
@@ -91,11 +93,11 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		ArrayList a;
 
 		hModuleUnit = new DustHandle("giskard.me/test01.0");
-		
+
 		DustHandle hUnitLoader = new DustHandle(hModuleUnit, null);
 		DustHandle hUnitLoaderLogic = new DustHandle(hModuleUnit, null);
 		DustHandle hUnitLoaderFactory = new DustHandle(hModuleUnit, null);
-	
+
 		m = new HashMap();
 		m.put(MACHINE_UNITS, hUnitLoaderFactory);
 		machineIdea.put(MEMBER_FACTORIES, m);
@@ -103,7 +105,6 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		MindDialog machine = new DustMachineLogic(machineIdea);
 		machineIdea.put(AGENT_BINARY, machine);
 
-		
 		data = DustMachineUtils.storeHandle(hModuleUnit, machineIdea);
 		Map unitRefs = m = new HashMap();
 
@@ -147,8 +148,16 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustUtilsEnumTranslator.register(MindResult.class, MIND_TAG_RESULT_REJECT, MIND_TAG_RESULT_PASS, MIND_TAG_RESULT_READ, MIND_TAG_RESULT_READACCEPT,
 				MIND_TAG_RESULT_ACCEPT);
 
+		Class<DustMachineConsts> handleContainer = DustMachineConsts.class;
+		for (Field f : handleContainer.getDeclaredFields()) {
+			if (MindHandle.class.isAssignableFrom(f.getType())) {
+				String n = f.getName();
+				MindHandle h = (MindHandle) f.get(null);
 
-		
+				DustMachineUtils.storeToken((DustHandle) h, machineIdea, vocabulary, LANG_ID, n);
+			}
+		}
+
 		Dust.access(MIND_TAG_ACCESS_SET, hModuleUnit, RUNTIME_MACHINE, MACHINE_MODULES, hModuleUnit.getId());
 
 		Dust.access(MIND_TAG_ACCESS_SET, DustNarrativeLogicGraphWalker.class.getName(), hModuleUnit, LOGIC_CLASSNAME, MIND_LOGIC_GRAPHWALKER);

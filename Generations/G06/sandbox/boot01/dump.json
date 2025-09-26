@@ -1,8 +1,8 @@
 {
 	"<::/machine.0>": {
-		"<giskard.me/dust.0::1#threads>": {
-			"<giskard.me/dust.0::3#threadDialog>": "<::/maindialog.0>",
-			"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogic@8efb846"
+		"<giskard.me/dust.0::1#DUST_THREADS>": {
+			"<giskard.me/dust.0::3#DUST_THREADDIALOG>": "<::/maindialog.0>",
+			"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogic@3ab39c39"
 		},
 		"<giskard.me/dust.0::6>": {
 			"giskard.me/dust.0": "<::giskard.me/dust.0>",
@@ -16,12 +16,12 @@
 			"giskard.me/test01.0": "<::giskard.me/test01.0>"
 		},
 		"<giskard.me/dust.0::8>": {
-			"<giskard.me/mind.0::55>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker@77a567e1",
-			"<giskard.me/test01.0::0>": "me.giskard.dust.forge.DustForgeLogicJavaGen@bebdb06",
-			"<giskard.me/test01.0::2>": "me.giskard.dust.forge.DustForgeLogicCollectJson@7591083d"
+			"<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker@396a51ab",
+			"<giskard.me/test01.0::0>": "me.giskard.dust.forge.DustForgeLogicJavaGen@7f9a81e8",
+			"<giskard.me/test01.0::2>": "me.giskard.dust.forge.DustForgeLogicCollectJson@51081592"
 		},
-		"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogic@8efb846",
-		"<giskard.me/mind.0::2>": "<::/machine.0>",
+		"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogic@3ab39c39",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::/machine.0>",
 		"<giskard.me/mind.0::5>": {
 			"<giskard.me/dust.0::6>": "<giskard.me/test01.0::>"
 		},
@@ -42,62 +42,86 @@
 			"<::giskard.me/test01.0>": "<::giskard.me/test01.0>"
 		},
 		"<giskard.me/mind.0::9>": {
+			"<::giskard.me/mind.0>": "MIND_IDEA_HANDLE",
 			"<giskard.me/dust.0::#0#persId>": "persId",
+			"<giskard.me/dust.0::#1#DUST_THREADS>": "DUST_THREADS",
 			"<giskard.me/dust.0::#1#threads>": "threads",
+			"<giskard.me/dust.0::#2#DUST_DIALOGS>": "DUST_DIALOGS",
 			"<giskard.me/dust.0::#2#dialogs>": "dialogs",
+			"<giskard.me/dust.0::#3#DUST_THREADDIALOG>": "DUST_THREADDIALOG",
 			"<giskard.me/dust.0::#3#threadDialog>": "threadDialog",
+			"<giskard.me/dust.0::#4#DUST_SELF>": "DUST_SELF",
 			"<giskard.me/dust.0::#4#self>": "self",
+			"<giskard.me/dust.0::#5#DUST_PARAM>": "DUST_PARAM",
 			"<giskard.me/dust.0::#5#param>": "param",
 			"<giskard.me/dust.0::0#persId>": "persId",
-			"<giskard.me/dust.0::1#threads>": "threads",
-			"<giskard.me/dust.0::2#dialogs>": "dialogs",
-			"<giskard.me/dust.0::3#threadDialog>": "threadDialog",
-			"<giskard.me/dust.0::4#self>": "self",
-			"<giskard.me/dust.0::5#param>": "param",
+			"<giskard.me/dust.0::1#DUST_THREADS>": "DUST_THREADS",
+			"<giskard.me/dust.0::2#DUST_DIALOGS>": "DUST_DIALOGS",
+			"<giskard.me/dust.0::3#DUST_THREADDIALOG>": "DUST_THREADDIALOG",
+			"<giskard.me/dust.0::4#DUST_SELF>": "DUST_SELF",
+			"<giskard.me/dust.0::5#DUST_PARAM>": "DUST_PARAM",
+			"<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>": "DUSTJAVA_ATT_ITERATOR",
+			"<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>": "DUSTJAVA_ATT_ITERATOR",
 			"<giskard.me/giskard.me.0::#0#firstCommit>": "firstCommit",
 			"<giskard.me/giskard.me.0::0#firstCommit>": "firstCommit",
-			"<giskard.me/mind.0::#0#unitAuthor>": "unitAuthor",
-			"<giskard.me/mind.0::#1#nextId>": "nextId",
-			"<giskard.me/mind.0::#14#set>": "set",
-			"<giskard.me/mind.0::0#unitAuthor>": "unitAuthor",
-			"<giskard.me/mind.0::1#nextId>": "nextId",
-			"<giskard.me/mind.0::14#set>": "set",
 			"<giskard.me/misc.0::#0#verMajor>": "verMajor",
 			"<giskard.me/misc.0::#1#verMinor>": "verMinor",
+			"<giskard.me/misc.0::#10#MISC_STACK>": "MISC_STACK",
+			"<giskard.me/misc.0::#11#MISC_SEEN>": "MISC_SEEN",
+			"<giskard.me/misc.0::#12#MISC_DEPTH>": "MISC_DEPTH",
+			"<giskard.me/misc.0::#13#MISC_QUEUE>": "MISC_QUEUE",
+			"<giskard.me/misc.0::#14#MISC_PAYLOAD>": "MISC_PAYLOAD",
 			"<giskard.me/misc.0::#2#verCommit>": "verCommit",
 			"<giskard.me/misc.0::#3#verDate>": "verDate",
 			"<giskard.me/misc.0::#4#connRequired>": "connRequired",
 			"<giskard.me/misc.0::#5#ideaToken>": "ideaToken",
 			"<giskard.me/misc.0::#6#extId>": "extId",
+			"<giskard.me/misc.0::#7#MISC_ATT_TARGET>": "MISC_ATT_TARGET",
 			"<giskard.me/misc.0::#7#target>": "target",
 			"<giskard.me/misc.0::#8#parent>": "parent",
+			"<giskard.me/misc.0::#9#MISC_ATT_COUNT>": "MISC_ATT_COUNT",
 			"<giskard.me/misc.0::#9#count>": "count",
 			"<giskard.me/misc.0::0#verMajor>": "verMajor",
 			"<giskard.me/misc.0::1#verMinor>": "verMinor",
+			"<giskard.me/misc.0::10#MISC_STACK>": "MISC_STACK",
+			"<giskard.me/misc.0::11#MISC_SEEN>": "MISC_SEEN",
+			"<giskard.me/misc.0::12#MISC_DEPTH>": "MISC_DEPTH",
+			"<giskard.me/misc.0::13#MISC_QUEUE>": "MISC_QUEUE",
+			"<giskard.me/misc.0::14#MISC_PAYLOAD>": "MISC_PAYLOAD",
 			"<giskard.me/misc.0::2#verCommit>": "verCommit",
 			"<giskard.me/misc.0::3#verDate>": "verDate",
 			"<giskard.me/misc.0::4#connRequired>": "connRequired",
 			"<giskard.me/misc.0::5#ideaToken>": "ideaToken",
 			"<giskard.me/misc.0::6#extId>": "extId",
-			"<giskard.me/misc.0::7#target>": "target",
+			"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "MISC_ATT_TARGET",
 			"<giskard.me/misc.0::8#parent>": "parent",
-			"<giskard.me/misc.0::9#count>": "count",
+			"<giskard.me/misc.0::9#MISC_ATT_COUNT>": "MISC_ATT_COUNT",
+			"DUSTJAVA_ATT_ITERATOR": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
+			"DUST_DIALOGS": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
+			"DUST_PARAM": "<giskard.me/dust.0::#5#DUST_PARAM>",
+			"DUST_SELF": "<giskard.me/dust.0::#4#DUST_SELF>",
+			"DUST_THREADDIALOG": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
+			"DUST_THREADS": "<giskard.me/dust.0::#1#DUST_THREADS>",
+			"MISC_ATT_COUNT": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
+			"MISC_ATT_TARGET": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
+			"MISC_DEPTH": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"MISC_PAYLOAD": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
+			"MISC_QUEUE": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"MISC_SEEN": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"MISC_STACK": "<giskard.me/misc.0::#10#MISC_STACK>",
 			"connRequired": "<giskard.me/misc.0::#4#connRequired>",
 			"count": "<giskard.me/misc.0::#9#count>",
 			"dialogs": "<giskard.me/dust.0::#2#dialogs>",
 			"extId": "<giskard.me/misc.0::#6#extId>",
 			"firstCommit": "<giskard.me/giskard.me.0::#0#firstCommit>",
 			"ideaToken": "<giskard.me/misc.0::#5#ideaToken>",
-			"nextId": "<giskard.me/mind.0::#1#nextId>",
 			"param": "<giskard.me/dust.0::#5#param>",
 			"parent": "<giskard.me/misc.0::#8#parent>",
 			"persId": "<giskard.me/dust.0::#0#persId>",
 			"self": "<giskard.me/dust.0::#4#self>",
-			"set": "<giskard.me/mind.0::#14#set>",
 			"target": "<giskard.me/misc.0::#7#target>",
 			"threadDialog": "<giskard.me/dust.0::#3#threadDialog>",
 			"threads": "<giskard.me/dust.0::#1#threads>",
-			"unitAuthor": "<giskard.me/mind.0::#0#unitAuthor>",
 			"verCommit": "<giskard.me/misc.0::#2#verCommit>",
 			"verDate": "<giskard.me/misc.0::#3#verDate>",
 			"verMajor": "<giskard.me/misc.0::#0#verMajor>",
@@ -107,21 +131,21 @@
 	"<::giskard.me/dust.0>": {
 		"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/dust.0.json",
 		"<giskard.me/mind.0::1#nextId>": "101",
-		"<giskard.me/mind.0::2>": "<::giskard.me/dust.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/dust.0>",
 		"<giskard.me/mind.0::6>": {
 			"#0": "<giskard.me/dust.0::#0#persId>",
-			"#1": "<giskard.me/dust.0::#1#threads>",
-			"#2": "<giskard.me/dust.0::#2#dialogs>",
-			"#3": "<giskard.me/dust.0::#3#threadDialog>",
-			"#4": "<giskard.me/dust.0::#4#self>",
-			"#5": "<giskard.me/dust.0::#5#param>",
+			"#1": "<giskard.me/dust.0::#1#DUST_THREADS>",
+			"#2": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
+			"#3": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
+			"#4": "<giskard.me/dust.0::#4#DUST_SELF>",
+			"#5": "<giskard.me/dust.0::#5#DUST_PARAM>",
 			"0": "<giskard.me/dust.0::0#persId>",
-			"1": "<giskard.me/dust.0::1#threads>",
+			"1": "<giskard.me/dust.0::1#DUST_THREADS>",
 			"100": "<giskard.me/dust.0::100>",
-			"2": "<giskard.me/dust.0::2#dialogs>",
-			"3": "<giskard.me/dust.0::3#threadDialog>",
-			"4": "<giskard.me/dust.0::4#self>",
-			"5": "<giskard.me/dust.0::5#param>",
+			"2": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"3": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"4": "<giskard.me/dust.0::4#DUST_SELF>",
+			"5": "<giskard.me/dust.0::5#DUST_PARAM>",
 			"6": "<giskard.me/dust.0::6>",
 			"7": "<giskard.me/dust.0::7>",
 			"8": "<giskard.me/dust.0::8>",
@@ -129,18 +153,23 @@
 		},
 		"<giskard.me/mind.0::7>": {
 			"<giskard.me/dust.0::#0#persId>": "<giskard.me/dust.0::#0#persId>",
+			"<giskard.me/dust.0::#1#DUST_THREADS>": "<giskard.me/dust.0::#1#DUST_THREADS>",
 			"<giskard.me/dust.0::#1#threads>": "<giskard.me/dust.0::#1#threads>",
+			"<giskard.me/dust.0::#2#DUST_DIALOGS>": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
 			"<giskard.me/dust.0::#2#dialogs>": "<giskard.me/dust.0::#2#dialogs>",
+			"<giskard.me/dust.0::#3#DUST_THREADDIALOG>": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
 			"<giskard.me/dust.0::#3#threadDialog>": "<giskard.me/dust.0::#3#threadDialog>",
+			"<giskard.me/dust.0::#4#DUST_SELF>": "<giskard.me/dust.0::#4#DUST_SELF>",
 			"<giskard.me/dust.0::#4#self>": "<giskard.me/dust.0::#4#self>",
+			"<giskard.me/dust.0::#5#DUST_PARAM>": "<giskard.me/dust.0::#5#DUST_PARAM>",
 			"<giskard.me/dust.0::#5#param>": "<giskard.me/dust.0::#5#param>",
 			"<giskard.me/dust.0::0#persId>": "<giskard.me/dust.0::0#persId>",
-			"<giskard.me/dust.0::1#threads>": "<giskard.me/dust.0::1#threads>",
+			"<giskard.me/dust.0::1#DUST_THREADS>": "<giskard.me/dust.0::1#DUST_THREADS>",
 			"<giskard.me/dust.0::100>": "<giskard.me/dust.0::100>",
-			"<giskard.me/dust.0::2#dialogs>": "<giskard.me/dust.0::2#dialogs>",
-			"<giskard.me/dust.0::3#threadDialog>": "<giskard.me/dust.0::3#threadDialog>",
-			"<giskard.me/dust.0::4#self>": "<giskard.me/dust.0::4#self>",
-			"<giskard.me/dust.0::5#param>": "<giskard.me/dust.0::5#param>",
+			"<giskard.me/dust.0::2#DUST_DIALOGS>": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"<giskard.me/dust.0::3#DUST_THREADDIALOG>": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"<giskard.me/dust.0::4#DUST_SELF>": "<giskard.me/dust.0::4#DUST_SELF>",
+			"<giskard.me/dust.0::5#DUST_PARAM>": "<giskard.me/dust.0::5#DUST_PARAM>",
 			"<giskard.me/dust.0::6>": "<giskard.me/dust.0::6>",
 			"<giskard.me/dust.0::7>": "<giskard.me/dust.0::7>",
 			"<giskard.me/dust.0::8>": "<giskard.me/dust.0::8>",
@@ -150,24 +179,26 @@
 	"<::giskard.me/dustjava.0>": {
 		"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/dustjava.0.json",
 		"<giskard.me/mind.0::1#nextId>": "101",
-		"<giskard.me/mind.0::2>": "<::giskard.me/dustjava.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/dustjava.0>",
 		"<giskard.me/mind.0::6>": {
+			"#2": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
 			"0": "<giskard.me/dustjava.0::0>",
 			"1": "<giskard.me/dustjava.0::1>",
 			"100": "<giskard.me/dustjava.0::100>",
-			"2": "<giskard.me/dustjava.0::2>"
+			"2": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>"
 		},
 		"<giskard.me/mind.0::7>": {
+			"<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
 			"<giskard.me/dustjava.0::0>": "<giskard.me/dustjava.0::0>",
 			"<giskard.me/dustjava.0::100>": "<giskard.me/dustjava.0::100>",
 			"<giskard.me/dustjava.0::1>": "<giskard.me/dustjava.0::1>",
-			"<giskard.me/dustjava.0::2>": "<giskard.me/dustjava.0::2>"
+			"<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>"
 		}
 	},
 	"<::giskard.me/giskard.me.0>": {
 		"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/giskard.me.0.json",
 		"<giskard.me/mind.0::1#nextId>": "1",
-		"<giskard.me/mind.0::2>": "<::giskard.me/giskard.me.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/giskard.me.0>",
 		"<giskard.me/mind.0::6>": {
 			"#0": "<giskard.me/giskard.me.0::#0#firstCommit>",
 			"0": "<giskard.me/giskard.me.0::0#firstCommit>"
@@ -180,150 +211,211 @@
 	"<::giskard.me/mind.0>": {
 		"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/mind.0.json",
 		"<giskard.me/mind.0::1#nextId>": "103",
-		"<giskard.me/mind.0::2>": "<::giskard.me/mind.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/mind.0>",
 		"<giskard.me/mind.0::6>": {
 			"#0": "<giskard.me/mind.0::#0#unitAuthor>",
 			"#1": "<giskard.me/mind.0::#1#nextId>",
-			"#14": "<giskard.me/mind.0::#14#set>",
+			"#10": "<giskard.me/mind.0::#10#MIND_TAG_ACCESS>",
+			"#11": "<giskard.me/mind.0::#11#MIND_TAG_ACCESS_CHECK>",
+			"#12": "<giskard.me/mind.0::#12#MIND_TAG_ACCESS_PEEK>",
+			"#13": "<giskard.me/mind.0::#13#MIND_TAG_ACCESS_GET>",
+			"#14": "<giskard.me/mind.0::#14#MIND_TAG_ACCESS_SET>",
+			"#15": "<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>",
+			"#16": "<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>",
+			"#17": "<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>",
+			"#18": "<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>",
+			"#19": "<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>",
+			"#2": "<giskard.me/mind.0::#2#MIND_IDEA_HANDLE>",
+			"#20": "<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>",
+			"#21": "<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>",
+			"#22": "<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>",
+			"#23": "<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>",
+			"#24": "<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>",
+			"#25": "<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>",
+			"#26": "<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>",
+			"#27": "<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>",
+			"#28": "<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>",
+			"#29": "<giskard.me/mind.0::#29#MIND_TAG_ACTION>",
+			"#30": "<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>",
+			"#31": "<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>",
+			"#32": "<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>",
+			"#33": "<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>",
+			"#34": "<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>",
+			"#35": "<giskard.me/mind.0::#35#MIND_TAG_STATUS>",
+			"#36": "<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>",
+			"#37": "<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>",
+			"#38": "<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>",
+			"#39": "<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>",
+			"#40": "<giskard.me/mind.0::#40#MIND_TAG_RESULT>",
+			"#41": "<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>",
+			"#42": "<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>",
+			"#43": "<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>",
+			"#44": "<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>",
+			"#45": "<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>",
+			"#46": "<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>",
+			"#47": "<giskard.me/mind.0::#47#MIND_VISIT_ATT>",
+			"#48": "<giskard.me/mind.0::#48#MIND_VISIT_KEY>",
+			"#49": "<giskard.me/mind.0::#49#MIND_VISIT_VALUE>",
+			"#50": "<giskard.me/mind.0::#50#MIND_CALL_STACK>",
+			"#51": "<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>",
+			"#52": "<giskard.me/mind.0::#52#MIND_DIALOG_INIT>",
+			"#53": "<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>",
+			"#54": "<giskard.me/mind.0::#54#MIND_IDEA_ATTS>",
+			"#55": "<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>",
+			"#56": "<giskard.me/mind.0::#56#MIND_TAG_SEARCH>",
+			"#57": "<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"#58": "<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>",
 			"0": "<giskard.me/mind.0::0#unitAuthor>",
 			"1": "<giskard.me/mind.0::1#nextId>",
-			"10": "<giskard.me/mind.0::10>",
+			"10": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>",
 			"100": "<giskard.me/mind.0::100>",
 			"101": "<giskard.me/mind.0::101>",
 			"102": "<giskard.me/mind.0::102>",
-			"11": "<giskard.me/mind.0::11>",
-			"12": "<giskard.me/mind.0::12>",
-			"13": "<giskard.me/mind.0::13>",
-			"14": "<giskard.me/mind.0::14#set>",
-			"15": "<giskard.me/mind.0::15>",
-			"16": "<giskard.me/mind.0::16>",
-			"17": "<giskard.me/mind.0::17>",
-			"18": "<giskard.me/mind.0::18>",
-			"19": "<giskard.me/mind.0::19>",
-			"2": "<giskard.me/mind.0::2>",
-			"20": "<giskard.me/mind.0::20>",
-			"21": "<giskard.me/mind.0::21>",
-			"22": "<giskard.me/mind.0::22>",
-			"23": "<giskard.me/mind.0::23>",
-			"24": "<giskard.me/mind.0::24>",
-			"25": "<giskard.me/mind.0::25>",
-			"26": "<giskard.me/mind.0::26>",
-			"27": "<giskard.me/mind.0::27>",
-			"28": "<giskard.me/mind.0::28>",
-			"29": "<giskard.me/mind.0::29>",
+			"11": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>",
+			"12": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>",
+			"13": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>",
+			"14": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>",
+			"15": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>",
+			"16": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>",
+			"17": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>",
+			"18": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>",
+			"19": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>",
+			"2": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>",
+			"20": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>",
+			"21": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>",
+			"22": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>",
+			"23": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>",
+			"24": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>",
+			"25": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>",
+			"26": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>",
+			"27": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>",
+			"28": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>",
+			"29": "<giskard.me/mind.0::29#MIND_TAG_ACTION>",
 			"3": "<giskard.me/mind.0::3>",
-			"30": "<giskard.me/mind.0::30>",
-			"31": "<giskard.me/mind.0::31>",
-			"32": "<giskard.me/mind.0::32>",
-			"33": "<giskard.me/mind.0::33>",
-			"34": "<giskard.me/mind.0::34>",
-			"35": "<giskard.me/mind.0::35>",
-			"36": "<giskard.me/mind.0::36>",
-			"37": "<giskard.me/mind.0::37>",
-			"38": "<giskard.me/mind.0::38>",
-			"39": "<giskard.me/mind.0::39>",
+			"30": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>",
+			"31": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>",
+			"32": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>",
+			"33": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>",
+			"34": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>",
+			"35": "<giskard.me/mind.0::35#MIND_TAG_STATUS>",
+			"36": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>",
+			"37": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>",
+			"38": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>",
+			"39": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>",
 			"4": "<giskard.me/mind.0::4>",
-			"40": "<giskard.me/mind.0::40>",
-			"41": "<giskard.me/mind.0::41>",
-			"42": "<giskard.me/mind.0::42>",
-			"43": "<giskard.me/mind.0::43>",
-			"44": "<giskard.me/mind.0::44>",
-			"45": "<giskard.me/mind.0::45>",
-			"46": "<giskard.me/mind.0::46>",
-			"47": "<giskard.me/mind.0::47>",
-			"48": "<giskard.me/mind.0::48>",
-			"49": "<giskard.me/mind.0::49>",
+			"40": "<giskard.me/mind.0::40#MIND_TAG_RESULT>",
+			"41": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>",
+			"42": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>",
+			"43": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>",
+			"44": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>",
+			"45": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>",
+			"46": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"47": "<giskard.me/mind.0::47#MIND_VISIT_ATT>",
+			"48": "<giskard.me/mind.0::48#MIND_VISIT_KEY>",
+			"49": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>",
 			"5": "<giskard.me/mind.0::5>",
-			"50": "<giskard.me/mind.0::50>",
-			"51": "<giskard.me/mind.0::51>",
-			"52": "<giskard.me/mind.0::52>",
-			"53": "<giskard.me/mind.0::53>",
-			"54": "<giskard.me/mind.0::54>",
-			"55": "<giskard.me/mind.0::55>",
-			"56": "<giskard.me/mind.0::56>",
-			"57": "<giskard.me/mind.0::57>",
-			"58": "<giskard.me/mind.0::58>",
+			"50": "<giskard.me/mind.0::50#MIND_CALL_STACK>",
+			"51": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>",
+			"52": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>",
+			"53": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>",
+			"54": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>",
+			"55": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+			"56": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>",
+			"57": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"58": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>",
 			"6": "<giskard.me/mind.0::6>",
 			"9": "<giskard.me/mind.0::9>"
 		},
 		"<giskard.me/mind.0::7>": {
-			"<giskard.me/mind.0::2>": "<giskard.me/mind.0::2>"
+			"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>"
 		}
 	},
 	"<::giskard.me/misc.0>": {
 		"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/misc.0.json",
 		"<giskard.me/mind.0::1#nextId>": "103",
-		"<giskard.me/mind.0::2>": "<::giskard.me/misc.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/misc.0>",
 		"<giskard.me/mind.0::6>": {
 			"#0": "<giskard.me/misc.0::#0#verMajor>",
 			"#1": "<giskard.me/misc.0::#1#verMinor>",
+			"#10": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"#11": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"#12": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"#13": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"#14": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
 			"#2": "<giskard.me/misc.0::#2#verCommit>",
 			"#3": "<giskard.me/misc.0::#3#verDate>",
 			"#4": "<giskard.me/misc.0::#4#connRequired>",
 			"#5": "<giskard.me/misc.0::#5#ideaToken>",
 			"#6": "<giskard.me/misc.0::#6#extId>",
-			"#7": "<giskard.me/misc.0::#7#target>",
+			"#7": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
 			"#8": "<giskard.me/misc.0::#8#parent>",
-			"#9": "<giskard.me/misc.0::#9#count>",
+			"#9": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
 			"0": "<giskard.me/misc.0::0#verMajor>",
 			"1": "<giskard.me/misc.0::1#verMinor>",
-			"10": "<giskard.me/misc.0::10>",
+			"10": "<giskard.me/misc.0::10#MISC_STACK>",
 			"100": "<giskard.me/misc.0::100>",
 			"101": "<giskard.me/misc.0::101>",
 			"102": "<giskard.me/misc.0::102>",
-			"11": "<giskard.me/misc.0::11>",
-			"12": "<giskard.me/misc.0::12>",
-			"13": "<giskard.me/misc.0::13>",
-			"14": "<giskard.me/misc.0::14>",
+			"11": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"12": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"13": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"14": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
 			"2": "<giskard.me/misc.0::2#verCommit>",
 			"3": "<giskard.me/misc.0::3#verDate>",
 			"4": "<giskard.me/misc.0::4#connRequired>",
 			"5": "<giskard.me/misc.0::5#ideaToken>",
 			"6": "<giskard.me/misc.0::6#extId>",
-			"7": "<giskard.me/misc.0::7#target>",
+			"7": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
 			"8": "<giskard.me/misc.0::8#parent>",
-			"9": "<giskard.me/misc.0::9#count>"
+			"9": "<giskard.me/misc.0::9#MISC_ATT_COUNT>"
 		},
 		"<giskard.me/mind.0::7>": {
 			"<giskard.me/misc.0::#0#verMajor>": "<giskard.me/misc.0::#0#verMajor>",
 			"<giskard.me/misc.0::#1#verMinor>": "<giskard.me/misc.0::#1#verMinor>",
+			"<giskard.me/misc.0::#10#MISC_STACK>": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"<giskard.me/misc.0::#11#MISC_SEEN>": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"<giskard.me/misc.0::#12#MISC_DEPTH>": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"<giskard.me/misc.0::#13#MISC_QUEUE>": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"<giskard.me/misc.0::#14#MISC_PAYLOAD>": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
 			"<giskard.me/misc.0::#2#verCommit>": "<giskard.me/misc.0::#2#verCommit>",
 			"<giskard.me/misc.0::#3#verDate>": "<giskard.me/misc.0::#3#verDate>",
 			"<giskard.me/misc.0::#4#connRequired>": "<giskard.me/misc.0::#4#connRequired>",
 			"<giskard.me/misc.0::#5#ideaToken>": "<giskard.me/misc.0::#5#ideaToken>",
 			"<giskard.me/misc.0::#6#extId>": "<giskard.me/misc.0::#6#extId>",
+			"<giskard.me/misc.0::#7#MISC_ATT_TARGET>": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
 			"<giskard.me/misc.0::#7#target>": "<giskard.me/misc.0::#7#target>",
 			"<giskard.me/misc.0::#8#parent>": "<giskard.me/misc.0::#8#parent>",
+			"<giskard.me/misc.0::#9#MISC_ATT_COUNT>": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
 			"<giskard.me/misc.0::#9#count>": "<giskard.me/misc.0::#9#count>",
 			"<giskard.me/misc.0::0#verMajor>": "<giskard.me/misc.0::0#verMajor>",
 			"<giskard.me/misc.0::1#verMinor>": "<giskard.me/misc.0::1#verMinor>",
+			"<giskard.me/misc.0::10#MISC_STACK>": "<giskard.me/misc.0::10#MISC_STACK>",
 			"<giskard.me/misc.0::100>": "<giskard.me/misc.0::100>",
 			"<giskard.me/misc.0::101>": "<giskard.me/misc.0::101>",
 			"<giskard.me/misc.0::102>": "<giskard.me/misc.0::102>",
-			"<giskard.me/misc.0::10>": "<giskard.me/misc.0::10>",
-			"<giskard.me/misc.0::11>": "<giskard.me/misc.0::11>",
-			"<giskard.me/misc.0::12>": "<giskard.me/misc.0::12>",
-			"<giskard.me/misc.0::13>": "<giskard.me/misc.0::13>",
-			"<giskard.me/misc.0::14>": "<giskard.me/misc.0::14>",
+			"<giskard.me/misc.0::11#MISC_SEEN>": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"<giskard.me/misc.0::12#MISC_DEPTH>": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"<giskard.me/misc.0::13#MISC_QUEUE>": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"<giskard.me/misc.0::14#MISC_PAYLOAD>": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
 			"<giskard.me/misc.0::2#verCommit>": "<giskard.me/misc.0::2#verCommit>",
 			"<giskard.me/misc.0::3#verDate>": "<giskard.me/misc.0::3#verDate>",
 			"<giskard.me/misc.0::4#connRequired>": "<giskard.me/misc.0::4#connRequired>",
 			"<giskard.me/misc.0::5#ideaToken>": "<giskard.me/misc.0::5#ideaToken>",
 			"<giskard.me/misc.0::6#extId>": "<giskard.me/misc.0::6#extId>",
-			"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::7#target>",
+			"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
 			"<giskard.me/misc.0::8#parent>": "<giskard.me/misc.0::8#parent>",
-			"<giskard.me/misc.0::9#count>": "<giskard.me/misc.0::9#count>"
+			"<giskard.me/misc.0::9#MISC_ATT_COUNT>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>"
 		}
 	},
 	"<::giskard.me/test01.0>": {
 		"<giskard.me/dustjava.0::0>": {
-			"<giskard.me/mind.0::55>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker",
+			"<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker",
 			"<giskard.me/test01.0::0>": "me.giskard.dust.forge.DustForgeLogicJavaGen",
 			"<giskard.me/test01.0::2>": "me.giskard.dust.forge.DustForgeLogicCollectJson",
 			"<giskard.me/test01.0::>": "me.giskard.dust.machine.DustMachineLogicFormatterJson"
 		},
 		"<giskard.me/mind.0::1#nextId>": "7",
-		"<giskard.me/mind.0::2>": "<::giskard.me/test01.0>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<::giskard.me/test01.0>",
 		"<giskard.me/mind.0::6>": {
 			"": "<giskard.me/test01.0::>",
 			"0": "<giskard.me/test01.0::0>",
@@ -353,46 +445,71 @@
 		}
 	},
 	"<giskard.me/dust.0::#0#persId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#0#persId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#0#persId>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#persId",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::0#persId>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::0#persId>"
+	},
+	"<giskard.me/dust.0::#1#DUST_THREADS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#1#DUST_THREADS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUST_THREADS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::1#DUST_THREADS>"
 	},
 	"<giskard.me/dust.0::#1#threads>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#1#threads>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#1#threads>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#threads",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::1#threads>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::1#DUST_THREADS>"
+	},
+	"<giskard.me/dust.0::#2#DUST_DIALOGS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUST_DIALOGS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::2#DUST_DIALOGS>"
 	},
 	"<giskard.me/dust.0::#2#dialogs>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#2#dialogs>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#2#dialogs>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#dialogs",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::2#dialogs>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::2#DUST_DIALOGS>"
+	},
+	"<giskard.me/dust.0::#3#DUST_THREADDIALOG>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUST_THREADDIALOG",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::3#DUST_THREADDIALOG>"
 	},
 	"<giskard.me/dust.0::#3#threadDialog>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#3#threadDialog>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#3#threadDialog>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#threadDialog",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::3#threadDialog>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::3#DUST_THREADDIALOG>"
+	},
+	"<giskard.me/dust.0::#4#DUST_SELF>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#4#DUST_SELF>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUST_SELF",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::4#DUST_SELF>"
 	},
 	"<giskard.me/dust.0::#4#self>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#4#self>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#4#self>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#self",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::4#self>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::4#DUST_SELF>"
+	},
+	"<giskard.me/dust.0::#5#DUST_PARAM>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#5#DUST_PARAM>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUST_PARAM",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::5#DUST_PARAM>"
 	},
 	"<giskard.me/dust.0::#5#param>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::#5#param>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::#5#param>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#param",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/dust.0::5#param>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dust.0::5#DUST_PARAM>"
 	},
 	"<giskard.me/dust.0::0#persId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::0#persId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::0#persId>",
 		"<giskard.me/misc.0::5#ideaToken>": "persId"
 	},
-	"<giskard.me/dust.0::1#threads>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::1#threads>",
+	"<giskard.me/dust.0::1#DUST_THREADS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::1#DUST_THREADS>",
 		"<giskard.me/misc.0::5#ideaToken>": "threads"
 	},
 	"<giskard.me/dust.0::100>": {
 		"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::100>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::100>",
 		"<giskard.me/misc.0::0#verMajor>": "1",
 		"<giskard.me/misc.0::1#verMinor>": "0",
 		"<giskard.me/misc.0::2#verCommit>": "0",
@@ -404,40 +521,45 @@
 		},
 		"<giskard.me/misc.0::6#extId>": "dust"
 	},
-	"<giskard.me/dust.0::2#dialogs>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::2#dialogs>",
+	"<giskard.me/dust.0::2#DUST_DIALOGS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::2#DUST_DIALOGS>",
 		"<giskard.me/misc.0::5#ideaToken>": "dialogs"
 	},
-	"<giskard.me/dust.0::3#threadDialog>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::3#threadDialog>",
+	"<giskard.me/dust.0::3#DUST_THREADDIALOG>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
 		"<giskard.me/misc.0::5#ideaToken>": "threadDialog"
 	},
-	"<giskard.me/dust.0::4#self>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::4#self>",
+	"<giskard.me/dust.0::4#DUST_SELF>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::4#DUST_SELF>",
 		"<giskard.me/misc.0::5#ideaToken>": "self"
 	},
-	"<giskard.me/dust.0::5#param>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::5#param>",
+	"<giskard.me/dust.0::5#DUST_PARAM>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::5#DUST_PARAM>",
 		"<giskard.me/misc.0::5#ideaToken>": "param"
 	},
 	"<giskard.me/dust.0::6>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::6>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::6>"
 	},
 	"<giskard.me/dust.0::7>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::7>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::7>"
 	},
 	"<giskard.me/dust.0::8>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::8>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::8>"
 	},
 	"<giskard.me/dust.0::9>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dust.0::9>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dust.0::9>"
+	},
+	"<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#DUSTJAVA_ATT_ITERATOR",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>"
 	},
 	"<giskard.me/dustjava.0::0>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dustjava.0::0>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dustjava.0::0>"
 	},
 	"<giskard.me/dustjava.0::100>": {
 		"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
-		"<giskard.me/mind.0::2>": "<giskard.me/dustjava.0::100>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dustjava.0::100>",
 		"<giskard.me/misc.0::0#verMajor>": "1",
 		"<giskard.me/misc.0::1#verMinor>": "0",
 		"<giskard.me/misc.0::2#verCommit>": "0",
@@ -450,19 +572,19 @@
 		"<giskard.me/misc.0::6#extId>": "dustjava"
 	},
 	"<giskard.me/dustjava.0::1>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dustjava.0::1>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dustjava.0::1>"
 	},
-	"<giskard.me/dustjava.0::2>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/dustjava.0::2>"
+	"<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>"
 	},
 	"<giskard.me/giskard.me.0::#0#firstCommit>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/giskard.me.0::#0#firstCommit>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/giskard.me.0::#0#firstCommit>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#firstCommit",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/giskard.me.0::0#firstCommit>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/giskard.me.0::0#firstCommit>"
 	},
 	"<giskard.me/giskard.me.0::0#firstCommit>": {
 		"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
-		"<giskard.me/mind.0::2>": "<giskard.me/giskard.me.0::0#firstCommit>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/giskard.me.0::0#firstCommit>",
 		"<giskard.me/misc.0::0#verMajor>": "1",
 		"<giskard.me/misc.0::1#verMinor>": "0",
 		"<giskard.me/misc.0::2#verCommit>": "0",
@@ -475,34 +597,282 @@
 		"<giskard.me/misc.0::6#extId>": "giskard.me"
 	},
 	"<giskard.me/mind.0::#0#unitAuthor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::#0#unitAuthor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#0#unitAuthor>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#unitAuthor",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/mind.0::0#unitAuthor>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::0#unitAuthor>"
 	},
 	"<giskard.me/mind.0::#1#nextId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::#1#nextId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#1#nextId>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#nextId",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/mind.0::1#nextId>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::1#nextId>"
 	},
-	"<giskard.me/mind.0::#14#set>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::#14#set>",
-		"<giskard.me/misc.0::6>": "iso:639-1:en#set",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/mind.0::14#set>"
+	"<giskard.me/mind.0::#10#MIND_TAG_ACCESS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#10#MIND_TAG_ACCESS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>"
+	},
+	"<giskard.me/mind.0::#11#MIND_TAG_ACCESS_CHECK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#11#MIND_TAG_ACCESS_CHECK>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_CHECK",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>"
+	},
+	"<giskard.me/mind.0::#12#MIND_TAG_ACCESS_PEEK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#12#MIND_TAG_ACCESS_PEEK>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_PEEK",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>"
+	},
+	"<giskard.me/mind.0::#13#MIND_TAG_ACCESS_GET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#13#MIND_TAG_ACCESS_GET>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_GET",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>"
+	},
+	"<giskard.me/mind.0::#14#MIND_TAG_ACCESS_SET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#14#MIND_TAG_ACCESS_SET>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_SET",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>"
+	},
+	"<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_INSERT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>"
+	},
+	"<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_DELETE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>"
+	},
+	"<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_RESET",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>"
+	},
+	"<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACCESS_COMMIT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>"
+	},
+	"<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_VALTYPE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>"
+	},
+	"<giskard.me/mind.0::#2#MIND_IDEA_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#2#MIND_IDEA_HANDLE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_IDEA_HANDLE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>"
+	},
+	"<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_VALTYPE_INT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>"
+	},
+	"<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_VALTYPE_REAL",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>"
+	},
+	"<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_VALTYPE_HANDLE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>"
+	},
+	"<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_VALTYPE_BIN",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>"
+	},
+	"<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>"
+	},
+	"<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE_ONE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>"
+	},
+	"<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE_SET",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>"
+	},
+	"<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE_ARR",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>"
+	},
+	"<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE_MAP",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>"
+	},
+	"<giskard.me/mind.0::#29#MIND_TAG_ACTION>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#29#MIND_TAG_ACTION>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::29#MIND_TAG_ACTION>"
+	},
+	"<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION_INIT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>"
+	},
+	"<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION_BEGIN",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>"
+	},
+	"<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION_PROCESS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>"
+	},
+	"<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION_END",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>"
+	},
+	"<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_ACTION_RELEASE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>"
+	},
+	"<giskard.me/mind.0::#35#MIND_TAG_STATUS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#35#MIND_TAG_STATUS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_STATUS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::35#MIND_TAG_STATUS>"
+	},
+	"<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_STATUS_IDLE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>"
+	},
+	"<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_STATUS_PROCESSING",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>"
+	},
+	"<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_STATUS_WAITING",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>"
+	},
+	"<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_STATUS_ERROR",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>"
+	},
+	"<giskard.me/mind.0::#40#MIND_TAG_RESULT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#40#MIND_TAG_RESULT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::40#MIND_TAG_RESULT>"
+	},
+	"<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT_REJECT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>"
+	},
+	"<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT_PASS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>"
+	},
+	"<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT_READ",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>"
+	},
+	"<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT_READACCEPT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>"
+	},
+	"<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_RESULT_ACCEPT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>"
+	},
+	"<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_VISIT_HANDLE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>"
+	},
+	"<giskard.me/mind.0::#47#MIND_VISIT_ATT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#47#MIND_VISIT_ATT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_VISIT_ATT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::47#MIND_VISIT_ATT>"
+	},
+	"<giskard.me/mind.0::#48#MIND_VISIT_KEY>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#48#MIND_VISIT_KEY>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_VISIT_KEY",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::48#MIND_VISIT_KEY>"
+	},
+	"<giskard.me/mind.0::#49#MIND_VISIT_VALUE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#49#MIND_VISIT_VALUE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_VISIT_VALUE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>"
+	},
+	"<giskard.me/mind.0::#50#MIND_CALL_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#50#MIND_CALL_STACK>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_CALL_STACK",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::50#MIND_CALL_STACK>"
+	},
+	"<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_COLLTYPE_STACK",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>"
+	},
+	"<giskard.me/mind.0::#52#MIND_DIALOG_INIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#52#MIND_DIALOG_INIT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_DIALOG_INIT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>"
+	},
+	"<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_DIALOG_NEXT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>"
+	},
+	"<giskard.me/mind.0::#54#MIND_IDEA_ATTS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#54#MIND_IDEA_ATTS>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_IDEA_ATTS",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>"
+	},
+	"<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_LOGIC_GRAPHWALKER",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>"
+	},
+	"<giskard.me/mind.0::#56#MIND_TAG_SEARCH>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#56#MIND_TAG_SEARCH>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_SEARCH",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>"
+	},
+	"<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_SEARCH_BREADTHFIRST",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>"
+	},
+	"<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MIND_TAG_SEARCH_DEPTHFIRST",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>"
 	},
 	"<giskard.me/mind.0::0#unitAuthor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::0#unitAuthor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::0#unitAuthor>",
 		"<giskard.me/misc.0::5#ideaToken>": "unitAuthor"
 	},
 	"<giskard.me/mind.0::1#nextId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::1#nextId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::1#nextId>",
 		"<giskard.me/misc.0::5#ideaToken>": "nextId"
 	},
+	"<giskard.me/mind.0::10#MIND_TAG_ACCESS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>"
+	},
 	"<giskard.me/mind.0::100>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::100>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::100>"
 	},
 	"<giskard.me/mind.0::101>": {
 		"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::101>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::101>",
 		"<giskard.me/misc.0::0#verMajor>": "1",
 		"<giskard.me/misc.0::1#verMinor>": "0",
 		"<giskard.me/misc.0::2#verCommit>": "0",
@@ -514,239 +884,274 @@
 		"<giskard.me/misc.0::6#extId>": "mind"
 	},
 	"<giskard.me/mind.0::102>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::102>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::102>",
 		"<giskard.me/misc.0::5#ideaToken>": ""
 	},
-	"<giskard.me/mind.0::10>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::10>"
+	"<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>"
 	},
-	"<giskard.me/mind.0::11>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::11>"
+	"<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>"
 	},
-	"<giskard.me/mind.0::12>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::12>"
+	"<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>"
 	},
-	"<giskard.me/mind.0::13>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::13>"
-	},
-	"<giskard.me/mind.0::14#set>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::14#set>",
+	"<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>",
 		"<giskard.me/misc.0::5#ideaToken>": "set"
 	},
-	"<giskard.me/mind.0::15>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::15>"
+	"<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>"
 	},
-	"<giskard.me/mind.0::16>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::16>"
+	"<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>"
 	},
-	"<giskard.me/mind.0::17>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::17>"
+	"<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>"
 	},
-	"<giskard.me/mind.0::18>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::18>"
+	"<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>"
 	},
-	"<giskard.me/mind.0::19>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::19>"
+	"<giskard.me/mind.0::19#MIND_TAG_VALTYPE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>"
 	},
-	"<giskard.me/mind.0::20>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::20>"
+	"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>"
 	},
-	"<giskard.me/mind.0::21>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::21>"
+	"<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>"
 	},
-	"<giskard.me/mind.0::22>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::22>"
+	"<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>"
 	},
-	"<giskard.me/mind.0::23>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::23>"
+	"<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>"
 	},
-	"<giskard.me/mind.0::24>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::24>"
+	"<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>"
 	},
-	"<giskard.me/mind.0::25>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::25>"
+	"<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>"
 	},
-	"<giskard.me/mind.0::26>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::26>"
+	"<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>"
 	},
-	"<giskard.me/mind.0::27>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::27>"
+	"<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>"
 	},
-	"<giskard.me/mind.0::28>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::28>"
+	"<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>"
 	},
-	"<giskard.me/mind.0::29>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::29>"
+	"<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>"
 	},
-	"<giskard.me/mind.0::2>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::2>"
+	"<giskard.me/mind.0::29#MIND_TAG_ACTION>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::29#MIND_TAG_ACTION>"
 	},
-	"<giskard.me/mind.0::30>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::30>"
+	"<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>"
 	},
-	"<giskard.me/mind.0::31>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::31>"
+	"<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>"
 	},
-	"<giskard.me/mind.0::32>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::32>"
+	"<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>"
 	},
-	"<giskard.me/mind.0::33>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::33>"
+	"<giskard.me/mind.0::33#MIND_TAG_ACTION_END>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>"
 	},
-	"<giskard.me/mind.0::34>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::34>"
+	"<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>"
 	},
-	"<giskard.me/mind.0::35>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::35>"
+	"<giskard.me/mind.0::35#MIND_TAG_STATUS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::35#MIND_TAG_STATUS>"
 	},
-	"<giskard.me/mind.0::36>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::36>"
+	"<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>"
 	},
-	"<giskard.me/mind.0::37>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::37>"
+	"<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>"
 	},
-	"<giskard.me/mind.0::38>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::38>"
+	"<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>"
 	},
-	"<giskard.me/mind.0::39>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::39>"
+	"<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>"
 	},
 	"<giskard.me/mind.0::3>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::3>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::3>"
 	},
-	"<giskard.me/mind.0::40>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::40>"
+	"<giskard.me/mind.0::40#MIND_TAG_RESULT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::40#MIND_TAG_RESULT>"
 	},
-	"<giskard.me/mind.0::41>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::41>"
+	"<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>"
 	},
-	"<giskard.me/mind.0::42>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::42>"
+	"<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>"
 	},
-	"<giskard.me/mind.0::43>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::43>"
+	"<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>"
 	},
-	"<giskard.me/mind.0::44>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::44>"
+	"<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>"
 	},
-	"<giskard.me/mind.0::45>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::45>"
+	"<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>"
 	},
-	"<giskard.me/mind.0::46>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::46>"
+	"<giskard.me/mind.0::46#MIND_VISIT_HANDLE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>"
 	},
-	"<giskard.me/mind.0::47>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::47>"
+	"<giskard.me/mind.0::47#MIND_VISIT_ATT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::47#MIND_VISIT_ATT>"
 	},
-	"<giskard.me/mind.0::48>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::48>"
+	"<giskard.me/mind.0::48#MIND_VISIT_KEY>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::48#MIND_VISIT_KEY>"
 	},
-	"<giskard.me/mind.0::49>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::49>"
+	"<giskard.me/mind.0::49#MIND_VISIT_VALUE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>"
 	},
 	"<giskard.me/mind.0::4>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::4>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::4>"
 	},
-	"<giskard.me/mind.0::50>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::50>"
+	"<giskard.me/mind.0::50#MIND_CALL_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::50#MIND_CALL_STACK>"
 	},
-	"<giskard.me/mind.0::51>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::51>"
+	"<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>"
 	},
-	"<giskard.me/mind.0::52>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::52>"
+	"<giskard.me/mind.0::52#MIND_DIALOG_INIT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>"
 	},
-	"<giskard.me/mind.0::53>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::53>"
+	"<giskard.me/mind.0::53#MIND_DIALOG_NEXT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>"
 	},
-	"<giskard.me/mind.0::54>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::54>"
+	"<giskard.me/mind.0::54#MIND_IDEA_ATTS>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>"
 	},
-	"<giskard.me/mind.0::55>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::55>"
+	"<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>"
 	},
-	"<giskard.me/mind.0::56>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::56>"
+	"<giskard.me/mind.0::56#MIND_TAG_SEARCH>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>"
 	},
-	"<giskard.me/mind.0::57>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::57>"
+	"<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>"
 	},
-	"<giskard.me/mind.0::58>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::58>"
+	"<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>"
 	},
 	"<giskard.me/mind.0::5>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::5>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::5>"
 	},
 	"<giskard.me/mind.0::6>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::6>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::6>"
 	},
 	"<giskard.me/mind.0::9>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/mind.0::9>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/mind.0::9>"
 	},
 	"<giskard.me/misc.0::#0#verMajor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#0#verMajor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#0#verMajor>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#verMajor",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::0#verMajor>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::0#verMajor>"
 	},
 	"<giskard.me/misc.0::#1#verMinor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#1#verMinor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#1#verMinor>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#verMinor",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::1#verMinor>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::1#verMinor>"
+	},
+	"<giskard.me/misc.0::#10#MISC_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#10#MISC_STACK>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_STACK",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::10#MISC_STACK>"
+	},
+	"<giskard.me/misc.0::#11#MISC_SEEN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#11#MISC_SEEN>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_SEEN",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::11#MISC_SEEN>"
+	},
+	"<giskard.me/misc.0::#12#MISC_DEPTH>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_DEPTH",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::12#MISC_DEPTH>"
+	},
+	"<giskard.me/misc.0::#13#MISC_QUEUE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_QUEUE",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::13#MISC_QUEUE>"
+	},
+	"<giskard.me/misc.0::#14#MISC_PAYLOAD>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_PAYLOAD",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::14#MISC_PAYLOAD>"
 	},
 	"<giskard.me/misc.0::#2#verCommit>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#2#verCommit>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#2#verCommit>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#verCommit",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::2#verCommit>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::2#verCommit>"
 	},
 	"<giskard.me/misc.0::#3#verDate>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#3#verDate>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#3#verDate>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#verDate",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::3#verDate>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::3#verDate>"
 	},
 	"<giskard.me/misc.0::#4#connRequired>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#4#connRequired>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#4#connRequired>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#connRequired",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::4#connRequired>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::4#connRequired>"
 	},
 	"<giskard.me/misc.0::#5#ideaToken>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#5#ideaToken>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#5#ideaToken>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#ideaToken",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::5#ideaToken>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::5#ideaToken>"
 	},
 	"<giskard.me/misc.0::#6#extId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#6#extId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#6#extId>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#extId",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::6#extId>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::6#extId>"
+	},
+	"<giskard.me/misc.0::#7#MISC_ATT_TARGET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_ATT_TARGET",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::7#MISC_ATT_TARGET>"
 	},
 	"<giskard.me/misc.0::#7#target>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#7#target>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#7#target>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#target",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::7#target>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::7#MISC_ATT_TARGET>"
 	},
 	"<giskard.me/misc.0::#8#parent>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#8#parent>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#8#parent>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#parent",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::8#parent>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::8#parent>"
+	},
+	"<giskard.me/misc.0::#9#MISC_ATT_COUNT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
+		"<giskard.me/misc.0::6>": "iso:639-1:en#MISC_ATT_COUNT",
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>"
 	},
 	"<giskard.me/misc.0::#9#count>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::#9#count>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::#9#count>",
 		"<giskard.me/misc.0::6>": "iso:639-1:en#count",
-		"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::9#count>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>"
 	},
 	"<giskard.me/misc.0::0#verMajor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::0#verMajor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::0#verMajor>",
 		"<giskard.me/misc.0::5#ideaToken>": "verMajor"
 	},
 	"<giskard.me/misc.0::1#verMinor>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::1#verMinor>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::1#verMinor>",
 		"<giskard.me/misc.0::5#ideaToken>": "verMinor"
 	},
+	"<giskard.me/misc.0::10#MISC_STACK>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::10#MISC_STACK>"
+	},
 	"<giskard.me/misc.0::100>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::100>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::100>"
 	},
 	"<giskard.me/misc.0::101>": {
 		"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::101>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::101>",
 		"<giskard.me/misc.0::0#verMajor>": "1",
 		"<giskard.me/misc.0::1#verMinor>": "0",
 		"<giskard.me/misc.0::2#verCommit>": "0",
@@ -758,58 +1163,55 @@
 		"<giskard.me/misc.0::6#extId>": "misc"
 	},
 	"<giskard.me/misc.0::102>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::102>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::102>",
 		"<giskard.me/misc.0::5#ideaToken>": ""
 	},
-	"<giskard.me/misc.0::10>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::10>"
+	"<giskard.me/misc.0::11#MISC_SEEN>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::11#MISC_SEEN>"
 	},
-	"<giskard.me/misc.0::11>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::11>"
+	"<giskard.me/misc.0::12#MISC_DEPTH>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::12#MISC_DEPTH>"
 	},
-	"<giskard.me/misc.0::12>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::12>"
+	"<giskard.me/misc.0::13#MISC_QUEUE>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::13#MISC_QUEUE>"
 	},
-	"<giskard.me/misc.0::13>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::13>"
-	},
-	"<giskard.me/misc.0::14>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::14>"
+	"<giskard.me/misc.0::14#MISC_PAYLOAD>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::14#MISC_PAYLOAD>"
 	},
 	"<giskard.me/misc.0::2#verCommit>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::2#verCommit>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::2#verCommit>",
 		"<giskard.me/misc.0::5#ideaToken>": "verCommit"
 	},
 	"<giskard.me/misc.0::3#verDate>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::3#verDate>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::3#verDate>",
 		"<giskard.me/misc.0::5#ideaToken>": "verDate"
 	},
 	"<giskard.me/misc.0::4#connRequired>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::4#connRequired>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::4#connRequired>",
 		"<giskard.me/misc.0::5#ideaToken>": "connRequired"
 	},
 	"<giskard.me/misc.0::5#ideaToken>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::5#ideaToken>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::5#ideaToken>",
 		"<giskard.me/misc.0::5#ideaToken>": "ideaToken"
 	},
 	"<giskard.me/misc.0::6#extId>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::6#extId>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::6#extId>",
 		"<giskard.me/misc.0::5#ideaToken>": "extId"
 	},
-	"<giskard.me/misc.0::7#target>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::7#target>",
+	"<giskard.me/misc.0::7#MISC_ATT_TARGET>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
 		"<giskard.me/misc.0::5#ideaToken>": "target"
 	},
 	"<giskard.me/misc.0::8#parent>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::8#parent>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::8#parent>",
 		"<giskard.me/misc.0::5#ideaToken>": "parent"
 	},
-	"<giskard.me/misc.0::9#count>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/misc.0::9#count>",
+	"<giskard.me/misc.0::9#MISC_ATT_COUNT>": {
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
 		"<giskard.me/misc.0::5#ideaToken>": "count"
 	},
 	"<giskard.me/test01.0::0>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::0>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::0>"
 	},
 	"<giskard.me/test01.0::1>": {
 		"<giskard.me/dust.0::10>": {
@@ -819,12 +1221,12 @@
 			"mind": "giskard.me/mind.0",
 			"misc": "giskard.me/misc.0"
 		},
-		"<giskard.me/dust.0::9>": "me.giskard.dust.forge.DustForgeLogicJavaGen@bebdb06",
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::1>",
+		"<giskard.me/dust.0::9>": "me.giskard.dust.forge.DustForgeLogicJavaGen@7f9a81e8",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::1>",
 		"<giskard.me/mind.0::4>": "<giskard.me/test01.0::0>"
 	},
 	"<giskard.me/test01.0::2>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::2>"
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::2>"
 	},
 	"<giskard.me/test01.0::3>": {
 		"<giskard.me/dust.0::10>": {
@@ -834,154 +1236,211 @@
 			"mind": "giskard.me/mind.0",
 			"misc": "giskard.me/misc.0"
 		},
-		"<giskard.me/dust.0::9>": "me.giskard.dust.forge.DustForgeLogicCollectJson@7591083d",
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::3>",
+		"<giskard.me/dust.0::9>": "me.giskard.dust.forge.DustForgeLogicCollectJson@51081592",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::3>",
 		"<giskard.me/mind.0::4>": "<giskard.me/test01.0::2>"
 	},
 	"<giskard.me/test01.0::4>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::4>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::4>",
 		"<giskard.me/mind.0::3>": {
 			"0": "<giskard.me/test01.0::1>",
 			"1": "<giskard.me/test01.0::3>"
 		},
-		"<giskard.me/mind.0::46>": "<giskard.me/test01.0::4>",
-		"<giskard.me/mind.0::47>": "<giskard.me/mind.0::2>",
-		"<giskard.me/misc.0::12>": "0",
-		"<giskard.me/misc.0::14>": {
+		"<giskard.me/mind.0::46#MIND_VISIT_HANDLE>": "<giskard.me/test01.0::4>",
+		"<giskard.me/mind.0::47#MIND_VISIT_ATT>": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+		"<giskard.me/misc.0::12#MISC_DEPTH>": "0",
+		"<giskard.me/misc.0::14#MISC_PAYLOAD>": {
 			"": "<giskard.me/test01.0::>",
 			"#0": "<giskard.me/misc.0::#0#verMajor>",
 			"#1": "<giskard.me/misc.0::#1#verMinor>",
-			"#14": "<giskard.me/mind.0::#14#set>",
+			"#10": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"#11": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"#12": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"#13": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"#14": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
+			"#15": "<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>",
+			"#16": "<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>",
+			"#17": "<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>",
+			"#18": "<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>",
+			"#19": "<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>",
 			"#2": "<giskard.me/misc.0::#2#verCommit>",
+			"#20": "<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>",
+			"#21": "<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>",
+			"#22": "<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>",
+			"#23": "<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>",
+			"#24": "<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>",
+			"#25": "<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>",
+			"#26": "<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>",
+			"#27": "<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>",
+			"#28": "<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>",
+			"#29": "<giskard.me/mind.0::#29#MIND_TAG_ACTION>",
 			"#3": "<giskard.me/misc.0::#3#verDate>",
+			"#30": "<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>",
+			"#31": "<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>",
+			"#32": "<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>",
+			"#33": "<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>",
+			"#34": "<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>",
+			"#35": "<giskard.me/mind.0::#35#MIND_TAG_STATUS>",
+			"#36": "<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>",
+			"#37": "<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>",
+			"#38": "<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>",
+			"#39": "<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>",
 			"#4": "<giskard.me/misc.0::#4#connRequired>",
+			"#40": "<giskard.me/mind.0::#40#MIND_TAG_RESULT>",
+			"#41": "<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>",
+			"#42": "<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>",
+			"#43": "<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>",
+			"#44": "<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>",
+			"#45": "<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>",
+			"#46": "<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>",
+			"#47": "<giskard.me/mind.0::#47#MIND_VISIT_ATT>",
+			"#48": "<giskard.me/mind.0::#48#MIND_VISIT_KEY>",
+			"#49": "<giskard.me/mind.0::#49#MIND_VISIT_VALUE>",
 			"#5": "<giskard.me/misc.0::#5#ideaToken>",
+			"#50": "<giskard.me/mind.0::#50#MIND_CALL_STACK>",
+			"#51": "<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>",
+			"#52": "<giskard.me/mind.0::#52#MIND_DIALOG_INIT>",
+			"#53": "<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>",
+			"#54": "<giskard.me/mind.0::#54#MIND_IDEA_ATTS>",
+			"#55": "<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>",
+			"#56": "<giskard.me/mind.0::#56#MIND_TAG_SEARCH>",
+			"#57": "<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"#58": "<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>",
 			"#6": "<giskard.me/misc.0::#6#extId>",
-			"#7": "<giskard.me/misc.0::#7#target>",
+			"#7": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
 			"#8": "<giskard.me/misc.0::#8#parent>",
-			"#9": "<giskard.me/misc.0::#9#count>",
-			"0": "<giskard.me/test01.0::5>",
+			"#9": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
+			"0": "<giskard.me/test01.0::0>",
 			"1": "<giskard.me/test01.0::1>",
-			"10": "<giskard.me/misc.0::10>",
+			"10": "<giskard.me/misc.0::10#MISC_STACK>",
 			"100": "<giskard.me/misc.0::100>",
 			"101": "<giskard.me/misc.0::101>",
 			"102": "<giskard.me/misc.0::102>",
-			"11": "<giskard.me/misc.0::11>",
-			"12": "<giskard.me/misc.0::12>",
-			"13": "<giskard.me/misc.0::13>",
-			"14": "<giskard.me/misc.0::14>",
-			"15": "<giskard.me/mind.0::15>",
-			"16": "<giskard.me/mind.0::16>",
-			"17": "<giskard.me/mind.0::17>",
-			"18": "<giskard.me/mind.0::18>",
-			"19": "<giskard.me/mind.0::19>",
+			"11": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"12": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"13": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"14": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
+			"15": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>",
+			"16": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>",
+			"17": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>",
+			"18": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>",
+			"19": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>",
 			"2": "<giskard.me/test01.0::2>",
-			"20": "<giskard.me/mind.0::20>",
-			"21": "<giskard.me/mind.0::21>",
-			"22": "<giskard.me/mind.0::22>",
-			"23": "<giskard.me/mind.0::23>",
-			"24": "<giskard.me/mind.0::24>",
-			"25": "<giskard.me/mind.0::25>",
-			"26": "<giskard.me/mind.0::26>",
-			"27": "<giskard.me/mind.0::27>",
-			"28": "<giskard.me/mind.0::28>",
-			"29": "<giskard.me/mind.0::29>",
+			"20": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>",
+			"21": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>",
+			"22": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>",
+			"23": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>",
+			"24": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>",
+			"25": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>",
+			"26": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>",
+			"27": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>",
+			"28": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>",
+			"29": "<giskard.me/mind.0::29#MIND_TAG_ACTION>",
 			"3": "<giskard.me/test01.0::3>",
-			"30": "<giskard.me/mind.0::30>",
-			"31": "<giskard.me/mind.0::31>",
-			"32": "<giskard.me/mind.0::32>",
-			"33": "<giskard.me/mind.0::33>",
-			"34": "<giskard.me/mind.0::34>",
-			"35": "<giskard.me/mind.0::35>",
-			"36": "<giskard.me/mind.0::36>",
-			"37": "<giskard.me/mind.0::37>",
-			"38": "<giskard.me/mind.0::38>",
-			"39": "<giskard.me/mind.0::39>",
+			"30": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>",
+			"31": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>",
+			"32": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>",
+			"33": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>",
+			"34": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>",
+			"35": "<giskard.me/mind.0::35#MIND_TAG_STATUS>",
+			"36": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>",
+			"37": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>",
+			"38": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>",
+			"39": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>",
 			"4": "<giskard.me/test01.0::4>",
-			"40": "<giskard.me/mind.0::40>",
-			"41": "<giskard.me/mind.0::41>",
-			"42": "<giskard.me/mind.0::42>",
-			"43": "<giskard.me/mind.0::43>",
-			"44": "<giskard.me/mind.0::44>",
-			"45": "<giskard.me/mind.0::45>",
-			"46": "<giskard.me/mind.0::46>",
-			"47": "<giskard.me/mind.0::47>",
-			"48": "<giskard.me/mind.0::48>",
-			"49": "<giskard.me/mind.0::49>",
+			"40": "<giskard.me/mind.0::40#MIND_TAG_RESULT>",
+			"41": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>",
+			"42": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>",
+			"43": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>",
+			"44": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>",
+			"45": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>",
+			"46": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"47": "<giskard.me/mind.0::47#MIND_VISIT_ATT>",
+			"48": "<giskard.me/mind.0::48#MIND_VISIT_KEY>",
+			"49": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>",
 			"5": "<giskard.me/test01.0::5>",
-			"50": "<giskard.me/mind.0::50>",
-			"51": "<giskard.me/mind.0::51>",
-			"52": "<giskard.me/mind.0::52>",
-			"53": "<giskard.me/mind.0::53>",
-			"54": "<giskard.me/mind.0::54>",
-			"55": "<giskard.me/mind.0::55>",
-			"56": "<giskard.me/mind.0::56>",
-			"57": "<giskard.me/mind.0::57>",
-			"58": "<giskard.me/mind.0::58>",
+			"50": "<giskard.me/mind.0::50#MIND_CALL_STACK>",
+			"51": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>",
+			"52": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>",
+			"53": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>",
+			"54": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>",
+			"55": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+			"56": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>",
+			"57": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"58": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>",
 			"6": "<giskard.me/test01.0::6>",
-			"7": "<giskard.me/misc.0::7#target>",
+			"7": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
 			"8": "<giskard.me/misc.0::8#parent>",
-			"9": "<giskard.me/misc.0::9#count>",
+			"9": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
 			"<giskard.me/dust.0::#0#persId>": "<giskard.me/dust.0::#0#persId>",
+			"<giskard.me/dust.0::#1#DUST_THREADS>": "<giskard.me/dust.0::#1#DUST_THREADS>",
 			"<giskard.me/dust.0::#1#threads>": "<giskard.me/dust.0::#1#threads>",
+			"<giskard.me/dust.0::#2#DUST_DIALOGS>": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
 			"<giskard.me/dust.0::#2#dialogs>": "<giskard.me/dust.0::#2#dialogs>",
+			"<giskard.me/dust.0::#3#DUST_THREADDIALOG>": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
 			"<giskard.me/dust.0::#3#threadDialog>": "<giskard.me/dust.0::#3#threadDialog>",
+			"<giskard.me/dust.0::#4#DUST_SELF>": "<giskard.me/dust.0::#4#DUST_SELF>",
 			"<giskard.me/dust.0::#4#self>": "<giskard.me/dust.0::#4#self>",
+			"<giskard.me/dust.0::#5#DUST_PARAM>": "<giskard.me/dust.0::#5#DUST_PARAM>",
 			"<giskard.me/dust.0::#5#param>": "<giskard.me/dust.0::#5#param>",
 			"<giskard.me/dust.0::0#persId>": "/Users/lkedves/work/git/Giskard/Generations/G06/sandbox/boot01/units/giskard.me/misc.0.json",
-			"<giskard.me/dust.0::1#threads>": "<giskard.me/dust.0::1#threads>",
+			"<giskard.me/dust.0::1#DUST_THREADS>": "<giskard.me/dust.0::1#DUST_THREADS>",
 			"<giskard.me/dust.0::100>": "<giskard.me/dust.0::100>",
-			"<giskard.me/dust.0::2#dialogs>": "<giskard.me/dust.0::2#dialogs>",
-			"<giskard.me/dust.0::3#threadDialog>": "<giskard.me/dust.0::3#threadDialog>",
-			"<giskard.me/dust.0::4#self>": "<giskard.me/dust.0::4#self>",
-			"<giskard.me/dust.0::5#param>": "<giskard.me/dust.0::5#param>",
+			"<giskard.me/dust.0::2#DUST_DIALOGS>": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"<giskard.me/dust.0::3#DUST_THREADDIALOG>": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"<giskard.me/dust.0::4#DUST_SELF>": "<giskard.me/dust.0::4#DUST_SELF>",
+			"<giskard.me/dust.0::5#DUST_PARAM>": "<giskard.me/dust.0::5#DUST_PARAM>",
 			"<giskard.me/dust.0::6>": "<giskard.me/dust.0::6>",
 			"<giskard.me/dust.0::7>": "<giskard.me/dust.0::7>",
 			"<giskard.me/dust.0::8>": "<giskard.me/dust.0::8>",
-			"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogicFormatterJson@7a4f0f29",
+			"<giskard.me/dust.0::9>": "<giskard.me/dust.0::9>",
+			"<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
 			"<giskard.me/dustjava.0::0>": "<giskard.me/dustjava.0::0>",
 			"<giskard.me/dustjava.0::100>": "<giskard.me/dustjava.0::100>",
 			"<giskard.me/dustjava.0::1>": "<giskard.me/dustjava.0::1>",
-			"<giskard.me/dustjava.0::2>": "<giskard.me/dustjava.0::2>",
+			"<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>",
 			"<giskard.me/giskard.me.0::#0#firstCommit>": "<giskard.me/giskard.me.0::#0#firstCommit>",
 			"<giskard.me/giskard.me.0::0#firstCommit>": "<giskard.me/giskard.me.0::0#firstCommit>",
 			"<giskard.me/mind.0::0#unitAuthor>": "<::giskard.me/giskard.me.0>",
 			"<giskard.me/mind.0::1#nextId>": "7",
-			"<giskard.me/mind.0::2>": "<giskard.me/test01.0::>",
-			"<giskard.me/mind.0::46>": "<::/machine.0>",
-			"<giskard.me/mind.0::47>": "<giskard.me/dust.0::6>",
-			"<giskard.me/mind.0::49>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker$WalkIterator@2077d4de",
-			"<giskard.me/mind.0::4>": "<giskard.me/test01.0::>",
-			"<giskard.me/mind.0::55>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker",
+			"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
+			"<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker",
 			"<giskard.me/misc.0::#0#verMajor>": "<giskard.me/misc.0::#0#verMajor>",
 			"<giskard.me/misc.0::#1#verMinor>": "<giskard.me/misc.0::#1#verMinor>",
+			"<giskard.me/misc.0::#10#MISC_STACK>": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"<giskard.me/misc.0::#11#MISC_SEEN>": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"<giskard.me/misc.0::#12#MISC_DEPTH>": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"<giskard.me/misc.0::#13#MISC_QUEUE>": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"<giskard.me/misc.0::#14#MISC_PAYLOAD>": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
 			"<giskard.me/misc.0::#2#verCommit>": "<giskard.me/misc.0::#2#verCommit>",
 			"<giskard.me/misc.0::#3#verDate>": "<giskard.me/misc.0::#3#verDate>",
 			"<giskard.me/misc.0::#4#connRequired>": "<giskard.me/misc.0::#4#connRequired>",
 			"<giskard.me/misc.0::#5#ideaToken>": "<giskard.me/misc.0::#5#ideaToken>",
 			"<giskard.me/misc.0::#6#extId>": "<giskard.me/misc.0::#6#extId>",
+			"<giskard.me/misc.0::#7#MISC_ATT_TARGET>": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
 			"<giskard.me/misc.0::#7#target>": "<giskard.me/misc.0::#7#target>",
 			"<giskard.me/misc.0::#8#parent>": "<giskard.me/misc.0::#8#parent>",
+			"<giskard.me/misc.0::#9#MISC_ATT_COUNT>": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
 			"<giskard.me/misc.0::#9#count>": "<giskard.me/misc.0::#9#count>",
 			"<giskard.me/misc.0::0#verMajor>": "1",
 			"<giskard.me/misc.0::1#verMinor>": "0",
+			"<giskard.me/misc.0::10#MISC_STACK>": "<giskard.me/misc.0::10#MISC_STACK>",
 			"<giskard.me/misc.0::100>": "<giskard.me/misc.0::100>",
 			"<giskard.me/misc.0::101>": "<giskard.me/misc.0::101>",
 			"<giskard.me/misc.0::102>": "<giskard.me/misc.0::102>",
-			"<giskard.me/misc.0::10>": "<giskard.me/misc.0::10>",
-			"<giskard.me/misc.0::11>": "<giskard.me/misc.0::11>",
-			"<giskard.me/misc.0::12>": "<giskard.me/misc.0::12>",
-			"<giskard.me/misc.0::13>": "<giskard.me/misc.0::13>",
-			"<giskard.me/misc.0::14>": "<giskard.me/misc.0::14>",
+			"<giskard.me/misc.0::11#MISC_SEEN>": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"<giskard.me/misc.0::12#MISC_DEPTH>": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"<giskard.me/misc.0::13#MISC_QUEUE>": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"<giskard.me/misc.0::14#MISC_PAYLOAD>": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
 			"<giskard.me/misc.0::2#verCommit>": "0",
 			"<giskard.me/misc.0::3#verDate>": "20250722T155624Z",
 			"<giskard.me/misc.0::4#connRequired>": "<giskard.me/misc.0::4#connRequired>",
 			"<giskard.me/misc.0::5#ideaToken>": "count",
 			"<giskard.me/misc.0::6#extId>": "misc",
 			"<giskard.me/misc.0::6>": "iso:639-1:en#count",
-			"<giskard.me/misc.0::7#target>": "<giskard.me/misc.0::9#count>",
+			"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
 			"<giskard.me/misc.0::8#parent>": "<giskard.me/misc.0::8#parent>",
-			"<giskard.me/misc.0::9#count>": "10",
+			"<giskard.me/misc.0::9#MISC_ATT_COUNT>": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
 			"<giskard.me/test01.0::0>": "<giskard.me/test01.0::0>",
 			"<giskard.me/test01.0::1>": "<giskard.me/test01.0::1>",
 			"<giskard.me/test01.0::2>": "<giskard.me/test01.0::2>",
@@ -992,11 +1451,11 @@
 			"<giskard.me/test01.0::>": "<giskard.me/test01.0::>",
 			"dust": "giskard.me/dust.0",
 			"dustjava": "giskard.me/dustjava.0",
-			"giskard": "giskard.me/giskard.me.0",
-			"mind": "giskard.me/mind.0",
-			"misc": "giskard.me/misc.0"
+			"giskard": "<::giskard.me/giskard.me.0>",
+			"mind": "<::giskard.me/mind.0>",
+			"misc": "<::giskard.me/misc.0>"
 		},
-		"<giskard.me/misc.0::9#count>": "2"
+		"<giskard.me/misc.0::9#MISC_ATT_COUNT>": "2"
 	},
 	"<giskard.me/test01.0::5>": {
 		"<giskard.me/dust.0::10>": {
@@ -1006,466 +1465,515 @@
 			"mind": "giskard.me/mind.0",
 			"misc": "giskard.me/misc.0"
 		},
-		"<giskard.me/dust.0::9>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker@77a567e1",
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::5>",
-		"<giskard.me/mind.0::4>": "<giskard.me/mind.0::55>",
-		"<giskard.me/misc.0::11>": {
-			"0": "<giskard.me/mind.0::14#set>",
-			"1": "<giskard.me/mind.0::30>",
-			"10": "<giskard.me/dust.0::#2#dialogs>",
-			"100": "<giskard.me/test01.0::1>",
-			"101": "<giskard.me/test01.0::>",
-			"102": "<giskard.me/dust.0::100>",
-			"103": "<giskard.me/dust.0::7>",
-			"104": "<giskard.me/dustjava.0::100>",
-			"105": "<giskard.me/dust.0::#1#threads>",
-			"106": "<giskard.me/misc.0::5#ideaToken>",
-			"107": "<giskard.me/dust.0::4#self>",
-			"108": "<giskard.me/dust.0::9>",
-			"109": "<giskard.me/mind.0::24>",
-			"11": "<giskard.me/misc.0::8#parent>",
-			"110": "<giskard.me/giskard.me.0::#0#firstCommit>",
-			"111": "<giskard.me/mind.0::43>",
-			"112": "<giskard.me/test01.0::3>",
-			"113": "<giskard.me/mind.0::16>",
-			"114": "<giskard.me/misc.0::12>",
-			"115": "<giskard.me/mind.0::2>",
-			"116": "<giskard.me/misc.0::13>",
-			"117": "<giskard.me/mind.0::13>",
-			"118": "<giskard.me/mind.0::48>",
-			"119": "<giskard.me/test01.0::0>",
-			"12": "<giskard.me/mind.0::19>",
-			"120": "<giskard.me/mind.0::101>",
-			"121": "<giskard.me/misc.0::102>",
-			"122": "<giskard.me/mind.0::4>",
-			"123": "<giskard.me/dust.0::1#threads>",
-			"124": "<giskard.me/dustjava.0::0>",
-			"125": "<giskard.me/mind.0::3>",
-			"126": "<giskard.me/mind.0::23>",
-			"127": "<giskard.me/test01.0::5>",
-			"128": "<giskard.me/misc.0::100>",
-			"13": "<giskard.me/mind.0::#0#unitAuthor>",
-			"14": "<giskard.me/misc.0::2#verCommit>",
-			"15": "<giskard.me/mind.0::34>",
-			"16": "<giskard.me/test01.0::2>",
-			"17": "<giskard.me/misc.0::10>",
-			"18": "<giskard.me/dustjava.0::1>",
-			"19": "<giskard.me/mind.0::102>",
-			"2": "<giskard.me/mind.0::41>",
-			"20": "<giskard.me/misc.0::#2#verCommit>",
-			"21": "<giskard.me/dust.0::#5#param>",
-			"22": "<giskard.me/mind.0::5>",
-			"23": "<giskard.me/mind.0::29>",
-			"24": "<giskard.me/mind.0::12>",
-			"25": "<giskard.me/mind.0::18>",
-			"26": "<giskard.me/misc.0::#0#verMajor>",
-			"27": "<giskard.me/mind.0::27>",
-			"28": "<giskard.me/mind.0::56>",
-			"29": "<giskard.me/dust.0::0#persId>",
-			"3": "<giskard.me/mind.0::38>",
-			"30": "<::giskard.me/misc.0>",
-			"31": "<giskard.me/mind.0::33>",
-			"32": "<giskard.me/mind.0::15>",
-			"33": "<giskard.me/test01.0::4>",
-			"34": "<giskard.me/mind.0::58>",
-			"35": "<giskard.me/dust.0::2#dialogs>",
-			"36": "<giskard.me/mind.0::35>",
-			"37": "<giskard.me/misc.0::1#verMinor>",
-			"38": "<giskard.me/misc.0::4#connRequired>",
-			"39": "<giskard.me/test01.0::6>",
-			"4": "<giskard.me/mind.0::25>",
-			"40": "<giskard.me/misc.0::#4#connRequired>",
-			"41": "<giskard.me/dustjava.0::2>",
-			"42": "<giskard.me/misc.0::7#target>",
-			"43": "<giskard.me/mind.0::40>",
-			"44": "<giskard.me/misc.0::11>",
-			"45": "<giskard.me/mind.0::31>",
-			"46": "<giskard.me/misc.0::9#count>",
-			"47": "<giskard.me/mind.0::10>",
-			"48": "<giskard.me/mind.0::46>",
-			"49": "<giskard.me/mind.0::37>",
-			"5": "<giskard.me/mind.0::1#nextId>",
-			"50": "<giskard.me/mind.0::39>",
-			"51": "<giskard.me/dust.0::#0#persId>",
-			"52": "<giskard.me/mind.0::21>",
-			"53": "<giskard.me/mind.0::32>",
-			"54": "<giskard.me/mind.0::17>",
-			"55": "<giskard.me/test01.0::>",
-			"56": "<giskard.me/mind.0::52>",
-			"57": "<giskard.me/mind.0::54>",
-			"58": "<giskard.me/dust.0::3#threadDialog>",
-			"59": "<giskard.me/misc.0::14>",
-			"6": "<giskard.me/misc.0::3#verDate>",
-			"60": "<giskard.me/dust.0::5#param>",
-			"61": "<giskard.me/mind.0::6>",
-			"62": "<giskard.me/misc.0::101>",
-			"63": "<::giskard.me/mind.0>",
-			"64": "<giskard.me/dust.0::#4#self>",
-			"65": "<giskard.me/misc.0::#3#verDate>",
-			"66": "<giskard.me/misc.0::#6#extId>",
-			"67": "<giskard.me/mind.0::47>",
-			"68": "<giskard.me/mind.0::#14#set>",
-			"69": "<giskard.me/misc.0::#1#verMinor>",
-			"7": "<giskard.me/mind.0::0#unitAuthor>",
-			"70": "<giskard.me/mind.0::100>",
-			"71": "<giskard.me/mind.0::45>",
-			"72": "<::giskard.me/dust.0>",
-			"73": "<giskard.me/mind.0::#1#nextId>",
-			"74": "<giskard.me/misc.0::6#extId>",
-			"75": "<giskard.me/misc.0::#8#parent>",
-			"76": "<giskard.me/mind.0::36>",
-			"77": "<::giskard.me/giskard.me.0>",
-			"78": "<giskard.me/mind.0::11>",
-			"79": "<giskard.me/mind.0::20>",
-			"8": "<giskard.me/misc.0::#7#target>",
-			"80": "<::giskard.me/test01.0>",
-			"81": "<giskard.me/mind.0::26>",
-			"82": "<giskard.me/mind.0::53>",
-			"83": "<giskard.me/mind.0::57>",
-			"84": "<giskard.me/dust.0::8>",
-			"85": "<giskard.me/mind.0::9>",
-			"86": "<giskard.me/misc.0::#9#count>",
-			"87": "<giskard.me/misc.0::0#verMajor>",
-			"88": "<giskard.me/giskard.me.0::0#firstCommit>",
-			"89": "<giskard.me/mind.0::55>",
-			"9": "<giskard.me/misc.0::#5#ideaToken>",
-			"90": "<::giskard.me/dustjava.0>",
-			"91": "<giskard.me/mind.0::51>",
-			"92": "<giskard.me/mind.0::42>",
-			"93": "<giskard.me/mind.0::50>",
-			"94": "<giskard.me/mind.0::44>",
-			"95": "<giskard.me/mind.0::22>",
-			"96": "<giskard.me/mind.0::49>",
-			"97": "<giskard.me/mind.0::28>",
-			"98": "<giskard.me/dust.0::6>",
-			"99": "<giskard.me/dust.0::#3#threadDialog>"
+		"<giskard.me/dust.0::9>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker@396a51ab",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::5>",
+		"<giskard.me/mind.0::4>": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+		"<giskard.me/misc.0::11#MISC_SEEN>": {
+			"0": "<giskard.me/mind.0::9>",
+			"1": "<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>",
+			"10": "<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>",
+			"100": "<giskard.me/dust.0::6>",
+			"101": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>",
+			"102": "<giskard.me/dust.0::#1#DUST_THREADS>",
+			"103": "<giskard.me/mind.0::47#MIND_VISIT_ATT>",
+			"104": "<giskard.me/mind.0::#13#MIND_TAG_ACCESS_GET>",
+			"105": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"106": "<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>",
+			"107": "<giskard.me/mind.0::50#MIND_CALL_STACK>",
+			"108": "<giskard.me/misc.0::#8#parent>",
+			"109": "<giskard.me/dust.0::4#DUST_SELF>",
+			"11": "<giskard.me/dust.0::5#DUST_PARAM>",
+			"110": "<::giskard.me/misc.0>",
+			"111": "<giskard.me/mind.0::#48#MIND_VISIT_KEY>",
+			"112": "<giskard.me/mind.0::#35#MIND_TAG_STATUS>",
+			"113": "<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>",
+			"114": "<giskard.me/dust.0::0#persId>",
+			"115": "<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>",
+			"116": "<giskard.me/misc.0::2#verCommit>",
+			"117": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"118": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
+			"119": "<giskard.me/mind.0::100>",
+			"12": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>",
+			"120": "<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>",
+			"121": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>",
+			"122": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"123": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"124": "<giskard.me/mind.0::#54#MIND_IDEA_ATTS>",
+			"125": "<giskard.me/dust.0::#2#dialogs>",
+			"126": "<giskard.me/dust.0::#4#self>",
+			"127": "<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>",
+			"128": "<giskard.me/mind.0::#14#MIND_TAG_ACCESS_SET>",
+			"129": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
+			"13": "<giskard.me/mind.0::#1#nextId>",
+			"130": "<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>",
+			"131": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"132": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>",
+			"133": "<giskard.me/test01.0::>",
+			"134": "<giskard.me/mind.0::#52#MIND_DIALOG_INIT>",
+			"135": "<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>",
+			"136": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>",
+			"137": "<giskard.me/dust.0::9>",
+			"138": "<giskard.me/misc.0::0#verMajor>",
+			"139": "<giskard.me/misc.0::3#verDate>",
+			"14": "<giskard.me/dust.0::#5#param>",
+			"140": "<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>",
+			"141": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>",
+			"142": "<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>",
+			"143": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
+			"144": "<giskard.me/dust.0::#1#threads>",
+			"145": "<giskard.me/misc.0::4#connRequired>",
+			"146": "<giskard.me/misc.0::10#MISC_STACK>",
+			"147": "<giskard.me/mind.0::40#MIND_TAG_RESULT>",
+			"148": "<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>",
+			"149": "<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>",
+			"15": "<giskard.me/misc.0::102>",
+			"150": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>",
+			"151": "<giskard.me/misc.0::6#extId>",
+			"152": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
+			"153": "<giskard.me/test01.0::4>",
+			"154": "<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>",
+			"155": "<giskard.me/mind.0::102>",
+			"156": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>",
+			"157": "<giskard.me/mind.0::4>",
+			"158": "<giskard.me/mind.0::#0#unitAuthor>",
+			"159": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>",
+			"16": "<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>",
+			"160": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
+			"161": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>",
+			"162": "<giskard.me/misc.0::#0#verMajor>",
+			"163": "<giskard.me/dust.0::#4#DUST_SELF>",
+			"164": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>",
+			"165": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
+			"166": "<giskard.me/misc.0::#5#ideaToken>",
+			"167": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"168": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>",
+			"169": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>",
+			"17": "<giskard.me/misc.0::#1#verMinor>",
+			"170": "<giskard.me/mind.0::#50#MIND_CALL_STACK>",
+			"171": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>",
+			"172": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>",
+			"173": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"174": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>",
+			"175": "<giskard.me/mind.0::#10#MIND_TAG_ACCESS>",
+			"176": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>",
+			"177": "<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>",
+			"178": "<giskard.me/mind.0::101>",
+			"179": "<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>",
+			"18": "<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>",
+			"180": "<giskard.me/dust.0::8>",
+			"181": "<giskard.me/mind.0::0#unitAuthor>",
+			"182": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>",
+			"183": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>",
+			"184": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>",
+			"185": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>",
+			"186": "<giskard.me/misc.0::#4#connRequired>",
+			"19": "<giskard.me/dust.0::#5#DUST_PARAM>",
+			"2": "<giskard.me/mind.0::35#MIND_TAG_STATUS>",
+			"20": "<giskard.me/mind.0::29#MIND_TAG_ACTION>",
+			"21": "<giskard.me/misc.0::8#parent>",
+			"22": "<giskard.me/mind.0::#47#MIND_VISIT_ATT>",
+			"23": "<::giskard.me/dust.0>",
+			"24": "<giskard.me/dust.0::100>",
+			"25": "<giskard.me/test01.0::5>",
+			"26": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>",
+			"27": "<::giskard.me/dustjava.0>",
+			"28": "<giskard.me/dust.0::1#DUST_THREADS>",
+			"29": "<giskard.me/mind.0::#11#MIND_TAG_ACCESS_CHECK>",
+			"3": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>",
+			"30": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>",
+			"31": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>",
+			"32": "<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>",
+			"33": "<giskard.me/mind.0::6>",
+			"34": "<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>",
+			"35": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>",
+			"36": "<::giskard.me/mind.0>",
+			"37": "<giskard.me/giskard.me.0::#0#firstCommit>",
+			"38": "<giskard.me/test01.0::6>",
+			"39": "<giskard.me/dustjava.0::1>",
+			"4": "<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>",
+			"40": "<giskard.me/misc.0::101>",
+			"41": "<giskard.me/mind.0::1#nextId>",
+			"42": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>",
+			"43": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"44": "<giskard.me/misc.0::5#ideaToken>",
+			"45": "<giskard.me/misc.0::#7#target>",
+			"46": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>",
+			"47": "<giskard.me/mind.0::3>",
+			"48": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>",
+			"49": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"5": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
+			"50": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>",
+			"51": "<giskard.me/mind.0::5>",
+			"52": "<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>",
+			"53": "<giskard.me/misc.0::#6#extId>",
+			"54": "<giskard.me/dustjava.0::100>",
+			"55": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>",
+			"56": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>",
+			"57": "<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>",
+			"58": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>",
+			"59": "<giskard.me/misc.0::1#verMinor>",
+			"6": "<giskard.me/mind.0::#29#MIND_TAG_ACTION>",
+			"60": "<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>",
+			"61": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>",
+			"62": "<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>",
+			"63": "<giskard.me/mind.0::#40#MIND_TAG_RESULT>",
+			"64": "<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>",
+			"65": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>",
+			"66": "<giskard.me/mind.0::#49#MIND_VISIT_VALUE>",
+			"67": "<giskard.me/test01.0::>",
+			"68": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>",
+			"69": "<giskard.me/misc.0::#3#verDate>",
+			"7": "<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>",
+			"70": "<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>",
+			"71": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"72": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>",
+			"73": "<giskard.me/mind.0::#2#MIND_IDEA_HANDLE>",
+			"74": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"75": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>",
+			"76": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>",
+			"77": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>",
+			"78": "<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>",
+			"79": "<giskard.me/misc.0::100>",
+			"8": "<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>",
+			"80": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
+			"81": "<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>",
+			"82": "<giskard.me/dust.0::#0#persId>",
+			"83": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
+			"84": "<giskard.me/mind.0::#12#MIND_TAG_ACCESS_PEEK>",
+			"85": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+			"86": "<giskard.me/dustjava.0::0>",
+			"87": "<giskard.me/dust.0::#3#threadDialog>",
+			"88": "<::giskard.me/giskard.me.0>",
+			"89": "<giskard.me/mind.0::48#MIND_VISIT_KEY>",
+			"9": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>",
+			"90": "<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>",
+			"91": "<::giskard.me/test01.0>",
+			"92": "<giskard.me/giskard.me.0::0#firstCommit>",
+			"93": "<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"94": "<giskard.me/misc.0::#9#count>",
+			"95": "<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>",
+			"96": "<giskard.me/dust.0::7>",
+			"97": "<giskard.me/misc.0::#2#verCommit>",
+			"98": "<giskard.me/mind.0::#56#MIND_TAG_SEARCH>",
+			"99": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>"
 		},
-		"<giskard.me/misc.0::13>": {
-			"0": "<giskard.me/test01.0::>",
-			"1": "<giskard.me/test01.0::0>",
-			"10": "<giskard.me/dust.0::#3#threadDialog>",
-			"100": "<giskard.me/mind.0::35>",
-			"101": "<giskard.me/mind.0::36>",
-			"102": "<giskard.me/mind.0::37>",
-			"103": "<giskard.me/mind.0::38>",
-			"104": "<giskard.me/mind.0::39>",
-			"105": "<giskard.me/mind.0::0#unitAuthor>",
-			"106": "<giskard.me/mind.0::#0#unitAuthor>",
-			"107": "<giskard.me/mind.0::1#nextId>",
-			"108": "<giskard.me/mind.0::#1#nextId>",
-			"109": "<giskard.me/mind.0::100>",
-			"11": "<giskard.me/dust.0::5#param>",
-			"110": "<::giskard.me/giskard.me.0>",
-			"111": "<::giskard.me/misc.0>",
-			"112": "<::giskard.me/giskard.me.0>",
-			"113": "<giskard.me/mind.0::101>",
-			"114": "<giskard.me/mind.0::102>",
-			"115": "<giskard.me/mind.0::40>",
-			"116": "<giskard.me/mind.0::41>",
-			"117": "<giskard.me/mind.0::42>",
-			"118": "<giskard.me/mind.0::43>",
-			"119": "<giskard.me/misc.0::1#verMinor>",
-			"12": "<giskard.me/dust.0::#5#param>",
-			"120": "<giskard.me/misc.0::6#extId>",
-			"121": "<giskard.me/misc.0::8#parent>",
-			"122": "<giskard.me/misc.0::#8#parent>",
-			"123": "<giskard.me/misc.0::4#connRequired>",
-			"124": "<giskard.me/misc.0::3#verDate>",
-			"125": "<giskard.me/misc.0::4#connRequired>",
-			"126": "<giskard.me/misc.0::#4#connRequired>",
-			"127": "<giskard.me/misc.0::5#ideaToken>",
-			"128": "<giskard.me/misc.0::7#target>",
-			"129": "<giskard.me/misc.0::#7#target>",
-			"13": "<giskard.me/dust.0::0#persId>",
-			"130": "<giskard.me/misc.0::5#ideaToken>",
-			"131": "<giskard.me/misc.0::#5#ideaToken>",
-			"132": "<giskard.me/misc.0::7#target>",
-			"133": "<giskard.me/misc.0::8#parent>",
-			"134": "<giskard.me/misc.0::2#verCommit>",
-			"135": "<giskard.me/misc.0::11>",
-			"136": "<giskard.me/misc.0::9#count>",
-			"137": "<giskard.me/misc.0::10>",
-			"138": "<giskard.me/misc.0::12>",
-			"139": "<giskard.me/misc.0::2#verCommit>",
-			"14": "<giskard.me/dust.0::#0#persId>",
-			"140": "<giskard.me/misc.0::#2#verCommit>",
-			"141": "<giskard.me/misc.0::0#verMajor>",
-			"142": "<giskard.me/misc.0::#0#verMajor>",
-			"143": "<giskard.me/misc.0::13>",
-			"144": "<giskard.me/misc.0::9#count>",
-			"145": "<giskard.me/misc.0::#9#count>",
-			"146": "<giskard.me/misc.0::0#verMajor>",
-			"147": "<giskard.me/misc.0::14>",
-			"148": "<giskard.me/misc.0::102>",
-			"149": "<::giskard.me/giskard.me.0>",
-			"15": "<::giskard.me/giskard.me.0>",
-			"150": "<::giskard.me/mind.0>",
-			"151": "<::giskard.me/giskard.me.0>",
-			"152": "<giskard.me/misc.0::101>",
-			"153": "<giskard.me/misc.0::100>",
-			"154": "<giskard.me/misc.0::3#verDate>",
-			"155": "<giskard.me/misc.0::#3#verDate>",
-			"156": "<giskard.me/misc.0::6#extId>",
-			"157": "<giskard.me/misc.0::#6#extId>",
-			"158": "<giskard.me/misc.0::1#verMinor>",
-			"159": "<giskard.me/misc.0::#1#verMinor>",
-			"16": "<::giskard.me/mind.0>",
-			"160": "<giskard.me/test01.0::0>",
-			"161": "<giskard.me/test01.0::1>",
-			"162": "<giskard.me/test01.0::>",
-			"163": "<giskard.me/test01.0::>",
-			"164": "<giskard.me/test01.0::0>",
-			"165": "<::/machine.0>",
-			"166": "<giskard.me/test01.0::5>",
-			"167": "<giskard.me/test01.0::6>",
-			"168": "<giskard.me/dust.0::6>",
-			"169": "<giskard.me/test01.0::2>",
-			"17": "<::giskard.me/misc.0>",
-			"170": "<giskard.me/test01.0::2>",
-			"171": "<giskard.me/test01.0::3>",
-			"172": "<giskard.me/test01.0::4>",
-			"173": "<giskard.me/test01.0::1>",
-			"174": "<giskard.me/test01.0::3>",
-			"175": "<giskard.me/test01.0::4>",
-			"176": "<giskard.me/mind.0::2>",
-			"177": "<giskard.me/test01.0::>",
-			"178": "<giskard.me/test01.0::>",
-			"179": "<giskard.me/test01.0::4>",
-			"18": "<::giskard.me/giskard.me.0>",
-			"180": "<giskard.me/mind.0::14#set>",
-			"181": "<giskard.me/mind.0::30>",
-			"182": "<giskard.me/mind.0::41>",
-			"183": "<giskard.me/mind.0::38>",
-			"184": "<giskard.me/mind.0::25>",
-			"185": "<giskard.me/mind.0::1#nextId>",
-			"186": "<giskard.me/misc.0::3#verDate>",
-			"187": "<giskard.me/mind.0::0#unitAuthor>",
-			"188": "<giskard.me/misc.0::#7#target>",
-			"189": "<giskard.me/misc.0::#5#ideaToken>",
-			"19": "<giskard.me/dust.0::100>",
-			"190": "<giskard.me/dust.0::#2#dialogs>",
-			"191": "<giskard.me/misc.0::8#parent>",
-			"192": "<giskard.me/mind.0::19>",
-			"193": "<giskard.me/mind.0::#0#unitAuthor>",
-			"194": "<giskard.me/misc.0::2#verCommit>",
-			"195": "<giskard.me/mind.0::34>",
-			"196": "<giskard.me/test01.0::2>",
-			"197": "<giskard.me/misc.0::10>",
-			"198": "<giskard.me/dustjava.0::1>",
-			"199": "<giskard.me/mind.0::102>",
-			"2": "<giskard.me/test01.0::1>",
-			"20": "<giskard.me/dust.0::7>",
-			"200": "<giskard.me/misc.0::#2#verCommit>",
-			"201": "<giskard.me/dust.0::#5#param>",
-			"202": "<giskard.me/mind.0::5>",
-			"203": "<giskard.me/mind.0::29>",
-			"204": "<giskard.me/mind.0::12>",
-			"205": "<giskard.me/mind.0::18>",
-			"206": "<giskard.me/misc.0::#0#verMajor>",
-			"207": "<giskard.me/mind.0::27>",
-			"208": "<giskard.me/mind.0::56>",
-			"209": "<giskard.me/dust.0::0#persId>",
-			"21": "<giskard.me/dust.0::8>",
-			"210": "<::giskard.me/misc.0>",
-			"211": "<giskard.me/mind.0::33>",
-			"212": "<giskard.me/mind.0::15>",
-			"213": "<giskard.me/test01.0::4>",
-			"214": "<giskard.me/mind.0::58>",
-			"215": "<giskard.me/dust.0::2#dialogs>",
-			"216": "<giskard.me/mind.0::35>",
-			"217": "<giskard.me/misc.0::1#verMinor>",
-			"218": "<giskard.me/misc.0::4#connRequired>",
-			"219": "<giskard.me/test01.0::6>",
-			"22": "<giskard.me/dust.0::1#threads>",
-			"220": "<giskard.me/misc.0::#4#connRequired>",
-			"221": "<giskard.me/dustjava.0::2>",
-			"222": "<giskard.me/misc.0::7#target>",
-			"223": "<giskard.me/mind.0::40>",
-			"224": "<giskard.me/misc.0::11>",
-			"225": "<giskard.me/mind.0::31>",
-			"226": "<giskard.me/misc.0::9#count>",
-			"227": "<giskard.me/mind.0::10>",
-			"228": "<giskard.me/mind.0::46>",
-			"229": "<giskard.me/mind.0::37>",
-			"23": "<giskard.me/dust.0::#1#threads>",
-			"230": "<giskard.me/mind.0::39>",
-			"231": "<giskard.me/dust.0::#0#persId>",
-			"232": "<giskard.me/mind.0::21>",
-			"233": "<giskard.me/mind.0::32>",
-			"234": "<giskard.me/mind.0::17>",
-			"235": "<giskard.me/test01.0::>",
-			"236": "<giskard.me/mind.0::52>",
-			"237": "<giskard.me/mind.0::54>",
-			"238": "<giskard.me/dust.0::3#threadDialog>",
-			"239": "<giskard.me/misc.0::14>",
-			"24": "<giskard.me/dust.0::3#threadDialog>",
-			"240": "<giskard.me/dust.0::5#param>",
-			"241": "<giskard.me/mind.0::6>",
-			"242": "<giskard.me/misc.0::101>",
-			"243": "<::giskard.me/mind.0>",
-			"244": "<giskard.me/dust.0::#4#self>",
-			"245": "<giskard.me/misc.0::#3#verDate>",
-			"246": "<giskard.me/misc.0::#6#extId>",
-			"247": "<giskard.me/mind.0::47>",
-			"248": "<giskard.me/mind.0::#14#set>",
-			"249": "<giskard.me/misc.0::#1#verMinor>",
-			"25": "<giskard.me/dust.0::4#self>",
-			"250": "<giskard.me/mind.0::100>",
-			"251": "<giskard.me/mind.0::45>",
-			"252": "<::giskard.me/dust.0>",
-			"253": "<giskard.me/mind.0::#1#nextId>",
-			"254": "<giskard.me/misc.0::6#extId>",
-			"255": "<giskard.me/misc.0::#8#parent>",
-			"256": "<giskard.me/mind.0::36>",
-			"257": "<::giskard.me/giskard.me.0>",
-			"258": "<giskard.me/mind.0::11>",
-			"259": "<giskard.me/mind.0::20>",
-			"26": "<giskard.me/dust.0::2#dialogs>",
-			"260": "<::giskard.me/test01.0>",
-			"261": "<giskard.me/mind.0::26>",
-			"262": "<giskard.me/mind.0::53>",
-			"263": "<giskard.me/mind.0::57>",
-			"264": "<giskard.me/dust.0::8>",
-			"265": "<giskard.me/mind.0::9>",
-			"266": "<giskard.me/misc.0::#9#count>",
-			"267": "<giskard.me/misc.0::0#verMajor>",
-			"268": "<giskard.me/giskard.me.0::0#firstCommit>",
-			"269": "<giskard.me/mind.0::55>",
-			"27": "<giskard.me/dust.0::#2#dialogs>",
-			"270": "<::giskard.me/dustjava.0>",
-			"271": "<giskard.me/mind.0::51>",
-			"272": "<giskard.me/mind.0::42>",
-			"273": "<giskard.me/mind.0::50>",
-			"274": "<giskard.me/mind.0::44>",
-			"275": "<giskard.me/mind.0::22>",
-			"276": "<giskard.me/mind.0::49>",
-			"277": "<giskard.me/mind.0::28>",
-			"278": "<giskard.me/dust.0::6>",
-			"279": "<giskard.me/dust.0::#3#threadDialog>",
-			"28": "<giskard.me/dust.0::0#persId>",
-			"280": "<giskard.me/test01.0::1>",
-			"281": "<giskard.me/test01.0::>",
-			"282": "<giskard.me/dust.0::100>",
-			"283": "<giskard.me/dust.0::7>",
-			"284": "<giskard.me/dustjava.0::100>",
-			"285": "<giskard.me/dust.0::#1#threads>",
-			"286": "<giskard.me/misc.0::5#ideaToken>",
-			"287": "<giskard.me/dust.0::4#self>",
-			"288": "<giskard.me/dust.0::9>",
-			"289": "<giskard.me/mind.0::24>",
-			"29": "<giskard.me/dust.0::9>",
-			"290": "<giskard.me/giskard.me.0::#0#firstCommit>",
-			"291": "<giskard.me/mind.0::43>",
-			"292": "<giskard.me/test01.0::3>",
-			"293": "<giskard.me/mind.0::16>",
-			"294": "<giskard.me/misc.0::12>",
-			"295": "<giskard.me/mind.0::2>",
-			"296": "<giskard.me/misc.0::13>",
-			"297": "<giskard.me/mind.0::13>",
-			"298": "<giskard.me/mind.0::48>",
-			"299": "<giskard.me/test01.0::0>",
-			"3": "<giskard.me/test01.0::2>",
-			"30": "<giskard.me/dust.0::5#param>",
-			"300": "<giskard.me/mind.0::101>",
-			"301": "<giskard.me/misc.0::102>",
-			"302": "<giskard.me/mind.0::4>",
-			"303": "<giskard.me/dust.0::1#threads>",
-			"304": "<giskard.me/dustjava.0::0>",
-			"305": "<giskard.me/mind.0::3>",
-			"306": "<giskard.me/mind.0::23>",
-			"307": "<giskard.me/test01.0::5>",
-			"308": "<giskard.me/misc.0::100>",
-			"31": "<giskard.me/dust.0::1#threads>",
-			"32": "<giskard.me/dust.0::4#self>",
-			"33": "<giskard.me/dust.0::#4#self>",
-			"34": "<giskard.me/dust.0::2#dialogs>",
-			"35": "<giskard.me/dust.0::6>",
-			"36": "<giskard.me/dustjava.0::2>",
-			"37": "<::giskard.me/giskard.me.0>",
-			"38": "<::giskard.me/mind.0>",
-			"39": "<::giskard.me/misc.0>",
-			"4": "<giskard.me/test01.0::3>",
-			"40": "<::giskard.me/giskard.me.0>",
-			"41": "<giskard.me/dustjava.0::100>",
-			"42": "<giskard.me/dustjava.0::0>",
-			"43": "<giskard.me/dustjava.0::1>",
-			"44": "<::giskard.me/mind.0>",
-			"45": "<::giskard.me/misc.0>",
-			"46": "<::giskard.me/giskard.me.0>",
-			"47": "<giskard.me/giskard.me.0::0#firstCommit>",
-			"48": "<giskard.me/giskard.me.0::0#firstCommit>",
-			"49": "<giskard.me/giskard.me.0::#0#firstCommit>",
-			"5": "<giskard.me/test01.0::4>",
-			"50": "<giskard.me/mind.0::2>",
-			"51": "<giskard.me/mind.0::44>",
-			"52": "<giskard.me/mind.0::45>",
-			"53": "<giskard.me/mind.0::46>",
-			"54": "<giskard.me/mind.0::47>",
-			"55": "<giskard.me/mind.0::48>",
-			"56": "<giskard.me/mind.0::49>",
-			"57": "<giskard.me/mind.0::14#set>",
-			"58": "<giskard.me/mind.0::#14#set>",
-			"59": "<giskard.me/mind.0::50>",
-			"6": "<giskard.me/test01.0::5>",
-			"60": "<giskard.me/mind.0::51>",
-			"61": "<giskard.me/mind.0::52>",
-			"62": "<giskard.me/mind.0::53>",
-			"63": "<giskard.me/mind.0::10>",
-			"64": "<giskard.me/mind.0::54>",
-			"65": "<giskard.me/mind.0::11>",
-			"66": "<giskard.me/mind.0::55>",
-			"67": "<giskard.me/mind.0::12>",
-			"68": "<giskard.me/mind.0::56>",
-			"69": "<giskard.me/mind.0::13>",
-			"7": "<giskard.me/test01.0::6>",
-			"70": "<giskard.me/mind.0::57>",
-			"71": "<giskard.me/mind.0::14#set>",
-			"72": "<giskard.me/mind.0::58>",
-			"73": "<giskard.me/mind.0::15>",
-			"74": "<giskard.me/mind.0::16>",
-			"75": "<giskard.me/mind.0::17>",
-			"76": "<giskard.me/mind.0::18>",
-			"77": "<giskard.me/mind.0::19>",
-			"78": "<giskard.me/mind.0::0#unitAuthor>",
-			"79": "<giskard.me/mind.0::1#nextId>",
-			"8": "<::giskard.me/test01.0>",
-			"80": "<giskard.me/mind.0::3>",
-			"81": "<giskard.me/mind.0::4>",
-			"82": "<giskard.me/mind.0::5>",
-			"83": "<giskard.me/mind.0::6>",
-			"84": "<giskard.me/mind.0::9>",
-			"85": "<giskard.me/mind.0::20>",
-			"86": "<giskard.me/mind.0::21>",
-			"87": "<giskard.me/mind.0::22>",
-			"88": "<giskard.me/mind.0::23>",
-			"89": "<giskard.me/mind.0::24>",
-			"9": "<giskard.me/dust.0::3#threadDialog>",
-			"90": "<giskard.me/mind.0::25>",
-			"91": "<giskard.me/mind.0::26>",
-			"92": "<giskard.me/mind.0::27>",
-			"93": "<giskard.me/mind.0::28>",
-			"94": "<giskard.me/mind.0::29>",
-			"95": "<giskard.me/mind.0::30>",
-			"96": "<giskard.me/mind.0::31>",
-			"97": "<giskard.me/mind.0::32>",
-			"98": "<giskard.me/mind.0::33>",
-			"99": "<giskard.me/mind.0::34>"
+		"<giskard.me/misc.0::13#MISC_QUEUE>": {
+			"0": "<giskard.me/test01.0::0>",
+			"1": "<giskard.me/test01.0::3>",
+			"10": "<giskard.me/test01.0::5>",
+			"100": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>",
+			"101": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>",
+			"102": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>",
+			"103": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>",
+			"104": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>",
+			"105": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>",
+			"106": "<giskard.me/mind.0::29#MIND_TAG_ACTION>",
+			"107": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>",
+			"108": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>",
+			"109": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>",
+			"11": "<giskard.me/test01.0::6>",
+			"110": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>",
+			"111": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>",
+			"112": "<giskard.me/mind.0::35#MIND_TAG_STATUS>",
+			"113": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>",
+			"114": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>",
+			"115": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>",
+			"116": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>",
+			"117": "<giskard.me/mind.0::#0#unitAuthor>",
+			"118": "<giskard.me/mind.0::0#unitAuthor>",
+			"119": "<giskard.me/mind.0::#1#nextId>",
+			"12": "<giskard.me/dust.0::#2#DUST_DIALOGS>",
+			"120": "<giskard.me/mind.0::1#nextId>",
+			"121": "<giskard.me/mind.0::#2#MIND_IDEA_HANDLE>",
+			"122": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>",
+			"123": "<giskard.me/mind.0::40#MIND_TAG_RESULT>",
+			"124": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>",
+			"125": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>",
+			"126": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>",
+			"127": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>",
+			"128": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>",
+			"129": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"13": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"130": "<giskard.me/mind.0::#10#MIND_TAG_ACCESS>",
+			"131": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>",
+			"132": "<giskard.me/mind.0::47#MIND_VISIT_ATT>",
+			"133": "<giskard.me/mind.0::#11#MIND_TAG_ACCESS_CHECK>",
+			"134": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>",
+			"135": "<giskard.me/mind.0::48#MIND_VISIT_KEY>",
+			"136": "<giskard.me/mind.0::#12#MIND_TAG_ACCESS_PEEK>",
+			"137": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>",
+			"138": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>",
+			"139": "<giskard.me/mind.0::#13#MIND_TAG_ACCESS_GET>",
+			"14": "<giskard.me/dust.0::7>",
+			"140": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>",
+			"141": "<giskard.me/mind.0::#14#MIND_TAG_ACCESS_SET>",
+			"142": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>",
+			"143": "<giskard.me/mind.0::#15#MIND_TAG_ACCESS_INSERT>",
+			"144": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>",
+			"145": "<giskard.me/mind.0::#16#MIND_TAG_ACCESS_DELETE>",
+			"146": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>",
+			"147": "<giskard.me/mind.0::#17#MIND_TAG_ACCESS_RESET>",
+			"148": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>",
+			"149": "<giskard.me/mind.0::#18#MIND_TAG_ACCESS_COMMIT>",
+			"15": "<giskard.me/dust.0::#5#DUST_PARAM>",
+			"150": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>",
+			"151": "<giskard.me/mind.0::#19#MIND_TAG_VALTYPE>",
+			"152": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>",
+			"153": "<giskard.me/mind.0::50#MIND_CALL_STACK>",
+			"154": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>",
+			"155": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>",
+			"156": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>",
+			"157": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>",
+			"158": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+			"159": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>",
+			"16": "<giskard.me/dust.0::5#DUST_PARAM>",
+			"160": "<giskard.me/mind.0::#20#MIND_TAG_VALTYPE_INT>",
+			"161": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>",
+			"162": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"163": "<giskard.me/mind.0::#21#MIND_TAG_VALTYPE_REAL>",
+			"164": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>",
+			"165": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>",
+			"166": "<giskard.me/mind.0::#22#MIND_TAG_VALTYPE_HANDLE>",
+			"167": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>",
+			"168": "<giskard.me/mind.0::#23#MIND_TAG_VALTYPE_BIN>",
+			"169": "<giskard.me/mind.0::23#MIND_TAG_VALTYPE_BIN>",
+			"17": "<giskard.me/dust.0::#0#persId>",
+			"170": "<giskard.me/mind.0::#24#MIND_TAG_COLLTYPE>",
+			"171": "<giskard.me/mind.0::24#MIND_TAG_COLLTYPE>",
+			"172": "<giskard.me/mind.0::#25#MIND_TAG_COLLTYPE_ONE>",
+			"173": "<giskard.me/mind.0::25#MIND_TAG_COLLTYPE_ONE>",
+			"174": "<giskard.me/mind.0::#26#MIND_TAG_COLLTYPE_SET>",
+			"175": "<giskard.me/mind.0::26#MIND_TAG_COLLTYPE_SET>",
+			"176": "<giskard.me/mind.0::#27#MIND_TAG_COLLTYPE_ARR>",
+			"177": "<giskard.me/mind.0::27#MIND_TAG_COLLTYPE_ARR>",
+			"178": "<giskard.me/mind.0::#28#MIND_TAG_COLLTYPE_MAP>",
+			"179": "<giskard.me/mind.0::28#MIND_TAG_COLLTYPE_MAP>",
+			"18": "<giskard.me/dust.0::0#persId>",
+			"180": "<giskard.me/mind.0::#29#MIND_TAG_ACTION>",
+			"181": "<giskard.me/mind.0::29#MIND_TAG_ACTION>",
+			"182": "<giskard.me/mind.0::#30#MIND_TAG_ACTION_INIT>",
+			"183": "<giskard.me/mind.0::30#MIND_TAG_ACTION_INIT>",
+			"184": "<giskard.me/mind.0::#31#MIND_TAG_ACTION_BEGIN>",
+			"185": "<giskard.me/mind.0::31#MIND_TAG_ACTION_BEGIN>",
+			"186": "<giskard.me/mind.0::#32#MIND_TAG_ACTION_PROCESS>",
+			"187": "<giskard.me/mind.0::32#MIND_TAG_ACTION_PROCESS>",
+			"188": "<giskard.me/mind.0::#33#MIND_TAG_ACTION_END>",
+			"189": "<giskard.me/mind.0::33#MIND_TAG_ACTION_END>",
+			"19": "<::giskard.me/giskard.me.0>",
+			"190": "<giskard.me/mind.0::#34#MIND_TAG_ACTION_RELEASE>",
+			"191": "<giskard.me/mind.0::34#MIND_TAG_ACTION_RELEASE>",
+			"192": "<giskard.me/mind.0::#35#MIND_TAG_STATUS>",
+			"193": "<giskard.me/mind.0::35#MIND_TAG_STATUS>",
+			"194": "<giskard.me/mind.0::#36#MIND_TAG_STATUS_IDLE>",
+			"195": "<giskard.me/mind.0::36#MIND_TAG_STATUS_IDLE>",
+			"196": "<giskard.me/mind.0::#37#MIND_TAG_STATUS_PROCESSING>",
+			"197": "<giskard.me/mind.0::37#MIND_TAG_STATUS_PROCESSING>",
+			"198": "<giskard.me/mind.0::#38#MIND_TAG_STATUS_WAITING>",
+			"199": "<giskard.me/mind.0::38#MIND_TAG_STATUS_WAITING>",
+			"2": "<giskard.me/test01.0::2>",
+			"20": "<::giskard.me/mind.0>",
+			"200": "<giskard.me/mind.0::#39#MIND_TAG_STATUS_ERROR>",
+			"201": "<giskard.me/mind.0::39#MIND_TAG_STATUS_ERROR>",
+			"202": "<giskard.me/mind.0::#40#MIND_TAG_RESULT>",
+			"203": "<giskard.me/mind.0::40#MIND_TAG_RESULT>",
+			"204": "<giskard.me/mind.0::#41#MIND_TAG_RESULT_REJECT>",
+			"205": "<giskard.me/mind.0::41#MIND_TAG_RESULT_REJECT>",
+			"206": "<giskard.me/mind.0::#42#MIND_TAG_RESULT_PASS>",
+			"207": "<giskard.me/mind.0::42#MIND_TAG_RESULT_PASS>",
+			"208": "<giskard.me/mind.0::#43#MIND_TAG_RESULT_READ>",
+			"209": "<giskard.me/mind.0::43#MIND_TAG_RESULT_READ>",
+			"21": "<::giskard.me/misc.0>",
+			"210": "<giskard.me/mind.0::#44#MIND_TAG_RESULT_READACCEPT>",
+			"211": "<giskard.me/mind.0::44#MIND_TAG_RESULT_READACCEPT>",
+			"212": "<giskard.me/mind.0::#45#MIND_TAG_RESULT_ACCEPT>",
+			"213": "<giskard.me/mind.0::45#MIND_TAG_RESULT_ACCEPT>",
+			"214": "<giskard.me/mind.0::#46#MIND_VISIT_HANDLE>",
+			"215": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"216": "<giskard.me/mind.0::#47#MIND_VISIT_ATT>",
+			"217": "<giskard.me/mind.0::47#MIND_VISIT_ATT>",
+			"218": "<giskard.me/mind.0::#48#MIND_VISIT_KEY>",
+			"219": "<giskard.me/mind.0::48#MIND_VISIT_KEY>",
+			"22": "<giskard.me/dust.0::100>",
+			"220": "<giskard.me/mind.0::#49#MIND_VISIT_VALUE>",
+			"221": "<giskard.me/mind.0::49#MIND_VISIT_VALUE>",
+			"222": "<giskard.me/mind.0::100>",
+			"223": "<::giskard.me/giskard.me.0>",
+			"224": "<::giskard.me/misc.0>",
+			"225": "<giskard.me/mind.0::101>",
+			"226": "<::giskard.me/giskard.me.0>",
+			"227": "<giskard.me/mind.0::102>",
+			"228": "<giskard.me/mind.0::#50#MIND_CALL_STACK>",
+			"229": "<giskard.me/mind.0::50#MIND_CALL_STACK>",
+			"23": "<::giskard.me/giskard.me.0>",
+			"230": "<giskard.me/mind.0::#51#MIND_TAG_COLLTYPE_STACK>",
+			"231": "<giskard.me/mind.0::51#MIND_TAG_COLLTYPE_STACK>",
+			"232": "<giskard.me/misc.0::#2#verCommit>",
+			"233": "<giskard.me/misc.0::2#verCommit>",
+			"234": "<giskard.me/misc.0::#6#extId>",
+			"235": "<giskard.me/misc.0::6#extId>",
+			"236": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"237": "<giskard.me/misc.0::1#verMinor>",
+			"238": "<giskard.me/misc.0::0#verMajor>",
+			"239": "<giskard.me/misc.0::3#verDate>",
+			"24": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"240": "<giskard.me/misc.0::#13#MISC_QUEUE>",
+			"241": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"242": "<giskard.me/misc.0::#14#MISC_PAYLOAD>",
+			"243": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
+			"244": "<giskard.me/misc.0::#3#verDate>",
+			"245": "<giskard.me/misc.0::3#verDate>",
+			"246": "<giskard.me/misc.0::#8#parent>",
+			"247": "<giskard.me/misc.0::8#parent>",
+			"248": "<giskard.me/misc.0::4#connRequired>",
+			"249": "<giskard.me/misc.0::10#MISC_STACK>",
+			"25": "<giskard.me/dust.0::#3#DUST_THREADDIALOG>",
+			"250": "<giskard.me/misc.0::102>",
+			"251": "<giskard.me/misc.0::6#extId>",
+			"252": "<giskard.me/misc.0::#9#MISC_ATT_COUNT>",
+			"253": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
+			"254": "<giskard.me/misc.0::100>",
+			"255": "<giskard.me/misc.0::#1#verMinor>",
+			"256": "<giskard.me/misc.0::1#verMinor>",
+			"257": "<giskard.me/misc.0::14#MISC_PAYLOAD>",
+			"258": "<giskard.me/misc.0::8#parent>",
+			"259": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
+			"26": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"260": "<giskard.me/misc.0::2#verCommit>",
+			"261": "<giskard.me/misc.0::#0#verMajor>",
+			"262": "<giskard.me/misc.0::0#verMajor>",
+			"263": "<giskard.me/misc.0::#7#MISC_ATT_TARGET>",
+			"264": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
+			"265": "<giskard.me/misc.0::#5#ideaToken>",
+			"266": "<giskard.me/misc.0::5#ideaToken>",
+			"267": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
+			"268": "<giskard.me/misc.0::#10#MISC_STACK>",
+			"269": "<giskard.me/misc.0::10#MISC_STACK>",
+			"27": "<giskard.me/dust.0::1#DUST_THREADS>",
+			"270": "<giskard.me/misc.0::13#MISC_QUEUE>",
+			"271": "<giskard.me/misc.0::#12#MISC_DEPTH>",
+			"272": "<giskard.me/misc.0::12#MISC_DEPTH>",
+			"273": "<::giskard.me/giskard.me.0>",
+			"274": "<::giskard.me/mind.0>",
+			"275": "<giskard.me/misc.0::101>",
+			"276": "<::giskard.me/giskard.me.0>",
+			"277": "<giskard.me/misc.0::#11#MISC_SEEN>",
+			"278": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"279": "<giskard.me/misc.0::5#ideaToken>",
+			"28": "<giskard.me/dust.0::9>",
+			"280": "<giskard.me/misc.0::#7#target>",
+			"281": "<giskard.me/misc.0::7#MISC_ATT_TARGET>",
+			"282": "<giskard.me/misc.0::11#MISC_SEEN>",
+			"283": "<giskard.me/misc.0::#9#count>",
+			"284": "<giskard.me/misc.0::9#MISC_ATT_COUNT>",
+			"285": "<giskard.me/misc.0::#4#connRequired>",
+			"286": "<giskard.me/misc.0::4#connRequired>",
+			"287": "<giskard.me/test01.0::4>",
+			"288": "<giskard.me/test01.0::1>",
+			"289": "<giskard.me/test01.0::3>",
+			"29": "<giskard.me/dust.0::6>",
+			"290": "<giskard.me/test01.0::4>",
+			"291": "<giskard.me/mind.0::46#MIND_VISIT_HANDLE>",
+			"292": "<giskard.me/test01.0::>",
+			"293": "<giskard.me/test01.0::>",
+			"294": "<giskard.me/test01.0::6>",
+			"295": "<giskard.me/test01.0::5>",
+			"296": "<::/machine.0>",
+			"297": "<giskard.me/dust.0::6>",
+			"298": "<giskard.me/test01.0::>",
+			"299": "<giskard.me/test01.0::>",
+			"3": "<giskard.me/test01.0::1>",
+			"30": "<giskard.me/dust.0::#4#DUST_SELF>",
+			"31": "<giskard.me/dust.0::4#DUST_SELF>",
+			"32": "<giskard.me/dust.0::#1#DUST_THREADS>",
+			"33": "<giskard.me/dust.0::1#DUST_THREADS>",
+			"34": "<giskard.me/dust.0::#3#threadDialog>",
+			"35": "<giskard.me/dust.0::3#DUST_THREADDIALOG>",
+			"36": "<giskard.me/dust.0::#1#threads>",
+			"37": "<giskard.me/dust.0::1#DUST_THREADS>",
+			"38": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"39": "<giskard.me/dust.0::5#DUST_PARAM>",
+			"4": "<giskard.me/test01.0::>",
+			"40": "<giskard.me/dust.0::8>",
+			"41": "<giskard.me/dust.0::#2#dialogs>",
+			"42": "<giskard.me/dust.0::2#DUST_DIALOGS>",
+			"43": "<giskard.me/dust.0::#4#self>",
+			"44": "<giskard.me/dust.0::4#DUST_SELF>",
+			"45": "<giskard.me/dust.0::4#DUST_SELF>",
+			"46": "<giskard.me/dust.0::#5#param>",
+			"47": "<giskard.me/dust.0::5#DUST_PARAM>",
+			"48": "<giskard.me/dust.0::0#persId>",
+			"49": "<::giskard.me/giskard.me.0>",
+			"5": "<giskard.me/test01.0::0>",
+			"50": "<::giskard.me/mind.0>",
+			"51": "<::giskard.me/misc.0>",
+			"52": "<giskard.me/dustjava.0::100>",
+			"53": "<::giskard.me/giskard.me.0>",
+			"54": "<giskard.me/dustjava.0::1>",
+			"55": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>",
+			"56": "<giskard.me/dustjava.0::#2#DUSTJAVA_ATT_ITERATOR>",
+			"57": "<giskard.me/dustjava.0::2#DUSTJAVA_ATT_ITERATOR>",
+			"58": "<giskard.me/dustjava.0::0>",
+			"59": "<giskard.me/giskard.me.0::#0#firstCommit>",
+			"6": "<giskard.me/test01.0::1>",
+			"60": "<giskard.me/giskard.me.0::0#firstCommit>",
+			"61": "<::giskard.me/mind.0>",
+			"62": "<::giskard.me/misc.0>",
+			"63": "<giskard.me/giskard.me.0::0#firstCommit>",
+			"64": "<::giskard.me/giskard.me.0>",
+			"65": "<giskard.me/mind.0::2#MIND_IDEA_HANDLE>",
+			"66": "<giskard.me/mind.0::#52#MIND_DIALOG_INIT>",
+			"67": "<giskard.me/mind.0::52#MIND_DIALOG_INIT>",
+			"68": "<giskard.me/mind.0::#53#MIND_DIALOG_NEXT>",
+			"69": "<giskard.me/mind.0::53#MIND_DIALOG_NEXT>",
+			"7": "<giskard.me/test01.0::2>",
+			"70": "<giskard.me/mind.0::#54#MIND_IDEA_ATTS>",
+			"71": "<giskard.me/mind.0::54#MIND_IDEA_ATTS>",
+			"72": "<giskard.me/mind.0::#55#MIND_LOGIC_GRAPHWALKER>",
+			"73": "<giskard.me/mind.0::55#MIND_LOGIC_GRAPHWALKER>",
+			"74": "<giskard.me/mind.0::#56#MIND_TAG_SEARCH>",
+			"75": "<giskard.me/mind.0::56#MIND_TAG_SEARCH>",
+			"76": "<giskard.me/mind.0::#57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"77": "<giskard.me/mind.0::57#MIND_TAG_SEARCH_BREADTHFIRST>",
+			"78": "<giskard.me/mind.0::#58#MIND_TAG_SEARCH_DEPTHFIRST>",
+			"79": "<giskard.me/mind.0::58#MIND_TAG_SEARCH_DEPTHFIRST>",
+			"8": "<giskard.me/test01.0::3>",
+			"80": "<giskard.me/mind.0::10#MIND_TAG_ACCESS>",
+			"81": "<giskard.me/mind.0::11#MIND_TAG_ACCESS_CHECK>",
+			"82": "<giskard.me/mind.0::12#MIND_TAG_ACCESS_PEEK>",
+			"83": "<giskard.me/mind.0::13#MIND_TAG_ACCESS_GET>",
+			"84": "<giskard.me/mind.0::14#MIND_TAG_ACCESS_SET>",
+			"85": "<giskard.me/mind.0::15#MIND_TAG_ACCESS_INSERT>",
+			"86": "<giskard.me/mind.0::16#MIND_TAG_ACCESS_DELETE>",
+			"87": "<giskard.me/mind.0::17#MIND_TAG_ACCESS_RESET>",
+			"88": "<giskard.me/mind.0::18#MIND_TAG_ACCESS_COMMIT>",
+			"89": "<giskard.me/mind.0::19#MIND_TAG_VALTYPE>",
+			"9": "<giskard.me/test01.0::4>",
+			"90": "<giskard.me/mind.0::0#unitAuthor>",
+			"91": "<giskard.me/mind.0::1#nextId>",
+			"92": "<giskard.me/mind.0::3>",
+			"93": "<giskard.me/mind.0::4>",
+			"94": "<giskard.me/mind.0::5>",
+			"95": "<giskard.me/mind.0::6>",
+			"96": "<giskard.me/mind.0::9>",
+			"97": "<giskard.me/mind.0::20#MIND_TAG_VALTYPE_INT>",
+			"98": "<giskard.me/mind.0::21#MIND_TAG_VALTYPE_REAL>",
+			"99": "<giskard.me/mind.0::22#MIND_TAG_VALTYPE_HANDLE>"
 		},
-		"<giskard.me/misc.0::7#target>": "<giskard.me/test01.0::4>"
+		"<giskard.me/misc.0::7#MISC_ATT_TARGET>": "<giskard.me/test01.0::4>"
 	},
 	"<giskard.me/test01.0::6>": {
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::6>",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::6>",
 		"<giskard.me/mind.0::3>": {
 			"0": "<giskard.me/test01.0::5>"
 		},
-		"<giskard.me/mind.0::46>": "<::/machine.0>",
-		"<giskard.me/mind.0::47>": "<giskard.me/dust.0::6>",
-		"<giskard.me/mind.0::49>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker$WalkIterator@2077d4de",
-		"<giskard.me/misc.0::9#count>": "10"
+		"<giskard.me/mind.0::46#MIND_VISIT_HANDLE>": "<::/machine.0>",
+		"<giskard.me/mind.0::47#MIND_VISIT_ATT>": "<giskard.me/dust.0::6>",
+		"<giskard.me/mind.0::49#MIND_VISIT_VALUE>": "me.giskard.dust.narrative.DustNarrativeLogicGraphWalker$WalkIterator@51efea79",
+		"<giskard.me/misc.0::9#MISC_ATT_COUNT>": "10"
 	},
 	"<giskard.me/test01.0::>": {
-		"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogicFormatterJson@7a4f0f29",
-		"<giskard.me/mind.0::2>": "<giskard.me/test01.0::>",
+		"<giskard.me/dust.0::9>": "me.giskard.dust.machine.DustMachineLogicFormatterJson@6d00a15d",
+		"<giskard.me/mind.0::2#MIND_IDEA_HANDLE>": "<giskard.me/test01.0::>",
 		"<giskard.me/mind.0::3>": {
 			"0": "<giskard.me/test01.0::>"
 		},
