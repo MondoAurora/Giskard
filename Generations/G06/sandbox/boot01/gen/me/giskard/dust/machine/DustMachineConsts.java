@@ -92,6 +92,8 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MIND_TAG_SEARCH_BREADTHFIRST = Dust.lookup(null, "mind:57");
 	MindHandle MIND_TAG_SEARCH_DEPTHFIRST = Dust.lookup(null, "mind:58");
 
+	MindHandle MIND_IDEA_PRIMARYASPECT = Dust.lookup(null, "mind:59");
+
 	/**** MISC ****/
 
 	MindHandle MISC_ATT_TARGET = Dust.lookup(null, "misc:7");
@@ -100,7 +102,7 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle MISC_SEEN = Dust.lookup(null, "misc:11");
 	MindHandle MISC_DEPTH = Dust.lookup(null, "misc:12");
 	MindHandle MISC_QUEUE = Dust.lookup(null, "misc:13");
-	MindHandle MISC_PAYLOAD = Dust.lookup(null, "misc:14");
+//	MindHandle MISC_PAYLOAD = Dust.lookup(null, "misc:14");
 	
 	/**** DUST ****/
 
@@ -109,8 +111,14 @@ public interface DustMachineConsts extends DustConsts {
 	MindHandle DUST_THREADDIALOG = Dust.lookup(null, "dust:3");
 	MindHandle DUST_SELF = Dust.lookup(null, "dust:4");
 	MindHandle DUST_PARAM = Dust.lookup(null, "dust:5");
+	MindHandle DUST_BOOTTOKEN = Dust.lookup(null, "dust:11");
 	
 	/**** DUSTJAVA ****/
 
 	MindHandle DUSTJAVA_ATT_ITERATOR = Dust.lookup(null, "dustjava:2");
+	
+	/**** TEXT ****/
+
+	MindHandle TEXT_ATT_LANG = Dust.lookup(null, "text:0");
+//	MindHandle TEXT_TAG_TOKEN = Dust.lookup(null, "text:1");
 }

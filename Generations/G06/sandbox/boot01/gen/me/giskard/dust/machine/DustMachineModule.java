@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.forge.DustForgeConsts;
 import me.giskard.dust.forge.DustForgeLogicCollectJson;
 import me.giskard.dust.forge.DustForgeLogicJavaGen;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
@@ -17,7 +18,7 @@ import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class DustMachineModule implements DustMachineBootConsts, DustMachineConsts, DustUtilsConsts {
+public class DustMachineModule implements DustMachineBootConsts, DustMachineConsts, DustUtilsConsts, DustForgeConsts {
 
 	private static Map machineIdea;
 
@@ -54,12 +55,13 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 
 		DustMachineUtils.storeHandle(IDEA_HANDLE, machineIdea);
 		DustMachineUtils.storeHandle(IDEA_LISTENERS, machineIdea);
+		DustMachineUtils.storeHandle(IDEA_PRIMARYASPECT, machineIdea);
 		DustMachineUtils.storeHandle(AGENT_LOGIC, machineIdea);
 		DustMachineUtils.storeHandle(MEMBER_FACTORIES, machineIdea);
 
 		DustMachineUtils.storeHandle(UNIT_HANDLES, machineIdea);
 		DustMachineUtils.storeHandle(UNIT_NEXT_ID, machineIdea);
-//		DustMachineUtils.storeHandle(DIALOG_IDEAS, machineIdea);
+		DustMachineUtils.storeHandle(UNIT_IDEAS, machineIdea);
 		DustMachineUtils.storeHandle(DIALOG_VOCABULARY, machineIdea);
 
 		DustMachineUtils.storeHandle(ACTION_INIT, machineIdea);
@@ -84,6 +86,10 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		unitData.put(UNIT_NEXT_ID, 100L);
 		DustMachineUtils.storeHandle(LOGIC_CLASSNAME, machineIdea);
 		DustMachineUtils.storeHandle(MODULE_CLASSLOADER, machineIdea);
+
+		unitData = DustMachineUtils.storeHandle(TEXT, machineIdea);
+		unitData.put(UNIT_NEXT_ID, 100L);
+		DustMachineUtils.storeHandle(TEXT_TOKEN, machineIdea);
 
 		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
 		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
@@ -113,6 +119,8 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		m.put("misc", "giskard.me/misc.0");
 		m.put("dust", "giskard.me/dust.0");
 		m.put("dustjava", "giskard.me/dustjava.0");
+		m.put("text", "giskard.me/text.0");
+		m.put("forge", "giskard.me/forge.0");
 		data.put(MISC_CONN_REQUIRED, m);
 
 		m = new HashMap();
@@ -148,13 +156,23 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustUtilsEnumTranslator.register(MindResult.class, MIND_TAG_RESULT_REJECT, MIND_TAG_RESULT_PASS, MIND_TAG_RESULT_READ, MIND_TAG_RESULT_READACCEPT,
 				MIND_TAG_RESULT_ACCEPT);
 
-		Class<DustMachineConsts> handleContainer = DustMachineConsts.class;
+		Class handleContainer = DustMachineConsts.class;
 		for (Field f : handleContainer.getDeclaredFields()) {
 			if (MindHandle.class.isAssignableFrom(f.getType())) {
 				String n = f.getName();
 				MindHandle h = (MindHandle) f.get(null);
 
 				DustMachineUtils.storeToken((DustHandle) h, machineIdea, vocabulary, LANG_ID, n);
+			}
+		}
+
+		Class bootContainer = DustMachineBootConsts.class;
+		for (Field f : bootContainer.getFields()) {
+			if (MindHandle.class.isAssignableFrom(f.getType())) {
+				String n = f.getName();
+				MindHandle h = (MindHandle) f.get(null);
+				
+				Dust.access(MIND_TAG_ACCESS_SET, n, h, DUST_BOOTTOKEN);
 			}
 		}
 
@@ -177,6 +195,11 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		MindHandle hJavaGenParams = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hJavaGen, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
 		Dust.access(MIND_TAG_ACCESS_INSERT, hCollect, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
+		Dust.access(MIND_TAG_ACCESS_SET, LANG_ID, hJavaGenParams, TEXT_ATT_LANG);
+		Dust.access(MIND_TAG_ACCESS_SET, "gen", hJavaGenParams, FORGE_SRC_PATH);
+		Dust.access(MIND_TAG_ACCESS_SET, DustMachineBootConsts.class.getPackageName(), hJavaGenParams, FORGE_GEN_PACKAGE);
+		Dust.access(MIND_TAG_ACCESS_SET, "DustGenBoot", hJavaGenParams, FORGE_BOOT_CLASSNAME);
+		
 
 		MindHandle hUnitWalkerAgent = Dust.lookup(hModuleUnit, null);
 		Dust.access(MIND_TAG_ACCESS_SET, MIND_LOGIC_GRAPHWALKER, hUnitWalkerAgent, AGENT_LOGIC);

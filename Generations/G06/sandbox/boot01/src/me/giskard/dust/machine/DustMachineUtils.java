@@ -70,7 +70,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 	static Map<MindHandle, Object> storeHandle(DustHandle h, Map machineIdea) {
 		DustHandle hUnit = h.isUnit() ? h : h.unit;
-		
+
 		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(machineIdea, UNIT_IDEAS);
 		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(machineIdea, UNIT_HANDLES);
 
@@ -79,12 +79,17 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 			unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
 			unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
 		} else {
-			((Map)DustUtils.simpleGet(machineIdea, MACHINE_UNITS)).put(h.getId(), h);
+			((Map) DustUtils.simpleGet(machineIdea, MACHINE_UNITS)).put(h.getId(), h);
 		}
 
-		Map<MindHandle, Object> data = new DustIdea(h);
-		unitIdeas.put(h, data);
-		unitHandles.put(h.id, h);
+		Map<MindHandle, Object> data = unitIdeas.get(h);
+		if (null == data) {
+			data = new DustIdea(h);
+			unitIdeas.put(h, data);
+			unitHandles.put(h.id, h);
+		} else {
+			Dust.log(null, "hmm");
+		}
 
 		return data;
 	}
@@ -96,6 +101,8 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
 
 		dToken.put(MISC_TARGET, h);
+		dToken.put(IDEA_PRIMARYASPECT, TEXT_TOKEN);
+		dToken.put(MISC_PAYLOAD, token);
 		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
 
 		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);

@@ -13,6 +13,7 @@ public interface DustConsts {
 	String DUST_EXT_JSON = ".json";
 	String DUST_EXT_CSV = ".csv";
 	String DUST_EXT_XML = ".xml";
+	String DUST_EXT_JAVA = ".java";
 
 	String DUST_SEP = "_";
 	String DUST_SEP_ID = ":";

@@ -64,6 +64,9 @@
 		},
 		"5": {
 			"misc:5#ideaToken": "param"
+		},
+		"6": {
+			"misc:5#ideaToken": "boottoken"
 		}
 	}
 ]

@@ -41,6 +41,7 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 			if (!DustUtils.isEmpty(token)) {
 				token = DUST_SEP_TOKEN + token;
 			}
+			token = "";
 			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
 		}
 

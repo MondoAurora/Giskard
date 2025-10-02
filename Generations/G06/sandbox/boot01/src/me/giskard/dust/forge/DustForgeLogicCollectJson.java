@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
+import me.giskard.dust.machine.DustMachineBootConsts;
 import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
@@ -12,7 +13,7 @@ import me.giskard.dust.utils.DustUtilsEnumTranslator;
 import me.giskard.dust.utils.DustUtilsJson;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustForgeLogicCollectJson implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustUtilsConsts {
+public class DustForgeLogicCollectJson implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {

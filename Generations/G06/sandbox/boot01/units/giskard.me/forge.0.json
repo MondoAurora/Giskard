@@ -15,16 +15,26 @@
 		"misc:1#verMinor": 0,
 		"misc:2#verCommit": "0",
 		"misc:3#verDate": "20250722T155624Z",
-		"misc:6#extId": "mind",
+		"misc:6#extId": "forge",
 		"misc:4#connRequired": {
 			"giskard": "->giskard:",
-			"misc": "->misc:"
+			"misc": "->misc:",
+			"text": "->text:",
+			"mind": "->mind:"
 		}
 	},
 	{
 		"giskard:": {
 			"mind:0#unitAuthor": "->giskard:",
 			"misc:6#extId": "giskard.me",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": "0",
+			"misc:3#verDate": "20250722T155624Z"
+		},
+		"mind:": {
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "mind",
 			"misc:0#verMajor": 1,
 			"misc:1#verMinor": 0,
 			"misc:2#verCommit": "0",
@@ -38,14 +48,13 @@
 			"misc:2#verCommit": "0",
 			"misc:3#verDate": "20250722T155624Z"
 		},
-		"0": {
-			"misc:5#ideaToken": "unitAuthor"
-		},
-		"1": {
-			"misc:5#ideaToken": "nextId"
-		},
-		"14": {
-			"misc:5#ideaToken": "set"
+		"text:": {
+			"mind:0#unitAuthor": "->giskard:",
+			"misc:6#extId": "text",
+			"misc:0#verMajor": 1,
+			"misc:1#verMinor": 0,
+			"misc:2#verCommit": "0",
+			"misc:3#verDate": "20250722T155624Z"
 		}
 	}
 ]
