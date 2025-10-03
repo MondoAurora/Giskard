@@ -1,6 +1,7 @@
 package me.giskard.dust;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public interface DustConsts {
 	String DUST_CHARSET_UTF8 = StandardCharsets.UTF_8.name();// "UTF-8";
@@ -27,6 +28,10 @@ public interface DustConsts {
 	
 	interface MindLogic {
 		MindHandle logicProcess(MindHandle action) throws Exception;
+	}
+
+	public abstract class MindIdea extends HashMap<MindHandle, Object> {
+		private static final long serialVersionUID = 1L;
 	}
 
 	public abstract class MindDialog implements MindLogic {

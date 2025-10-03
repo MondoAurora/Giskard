@@ -173,5 +173,9 @@ public class DustUtils implements DustUtilsConsts {
 		return (null == coll) || coll.isEmpty();
 	}
 
+	public static void addBothRefs(Map m, Object from, Object to) {
+		m.put(from, to);
+		m.put(to, from);
+	}
 
 }

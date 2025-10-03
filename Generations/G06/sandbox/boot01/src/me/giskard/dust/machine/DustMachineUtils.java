@@ -96,7 +96,14 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
 		String tkey = DUST_SEP_TOKEN + h.id;
-		DustHandle hToken = new DustHandle(h.unit, tkey);
+		DustHandle hToken;
+		
+//		hToken = (DustHandle) resolveHandle(null, h.getUnit().getId(), tkey);
+//		if ( null == hToken ) {
+//			hToken = new DustHandle(h.unit, tkey);
+//		}
+				
+		hToken = new DustHandle(h.unit, tkey);
 
 		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
 

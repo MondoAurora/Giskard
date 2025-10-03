@@ -1,11 +1,13 @@
 package me.giskard.dust.machine;
 
-import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
 
-public interface DustMachineBootConsts extends DustGenBoot {
-//public interface DustMachineBootConsts extends DustConsts {
+//public interface DustMachineBootConsts extends DustGenBoot {
+public interface DustMachineBootConsts extends DustGenBootSave {
 	
+	
+//public interface DustMachineBootConsts extends DustConsts {
+//	
 //	String LANG_ID = "iso:639-1:en";
 //
 //
@@ -68,6 +70,7 @@ public interface DustMachineBootConsts extends DustGenBoot {
 //	DustHandle TEXT_TOKEN = new DustHandle(TEXT, "1");
 //
 //	DustHandle RUNTIME_MACHINE = new DustHandle("/machine.0");
+	
 	DustHandle RUNTIME_MAINDIALOG = new DustHandle("/maindialog.0");
 
 	

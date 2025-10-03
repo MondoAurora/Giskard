@@ -3,18 +3,18 @@ package me.giskard.dust.narrative;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
+import me.giskard.dust.machine.DustMachineBootConsts;
 import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, DustNarrativeConsts, DustMachineConsts, DustUtilsConsts {
+public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, DustNarrativeConsts, DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
 
 	private static final Object END = new Object();
 
@@ -176,7 +176,11 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 						}
 						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
 						
-						if ( val instanceof HashMap ) {
+						if ( key == UNIT_IDEAS ) {
+							Dust.log(null, "handling ideas", h, val);
+						}
+						
+						if ( val instanceof MindIdea ) {
 							Object ih = ((Map)val).get(MIND_IDEA_HANDLE);
 							if ( null != ih ) {
 								val = ih;

@@ -52,7 +52,7 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 		void optLoadUnit(String key) throws Exception;
 	}
 
-	class DustIdea extends HashMap<MindHandle, Object> {
+	class DustIdea extends MindIdea {
 		private static final long serialVersionUID = 1L;
 //		private static final Set<DustIdea> SERIALIZING = new HashSet<>();
 
