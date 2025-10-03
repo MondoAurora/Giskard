@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import me.giskard.dust.Dust;
+import me.giskard.dust.DustException;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 
@@ -27,7 +28,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	public static boolean isCreator(MindAccess acc) {
-		switch (acc) {
+		switch ( acc ) {
 		case Get:
 		case Insert:
 		case Set:
@@ -38,11 +39,11 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	public static boolean isContinue(MindResult res) {
-		if (null == res) {
+		if ( null == res ) {
 			return false;
 		}
 
-		switch (res) {
+		switch ( res ) {
 		case Read:
 		case ReadAccept:
 			return true;
@@ -53,15 +54,14 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 	public static MindCollType getCollType(Object coll) {
 		MindCollType ret = (null == coll) ? MindCollType.One
-				: (coll instanceof ArrayList) ? MindCollType.Arr
-						: (coll instanceof Map) ? MindCollType.Map : (coll instanceof Set) ? MindCollType.Set : MindCollType.One;
+				: (coll instanceof ArrayList) ? MindCollType.Arr : (coll instanceof Map) ? MindCollType.Map : (coll instanceof Set) ? MindCollType.Set : MindCollType.One;
 
 		return ret;
 	}
 
 	public static Map<MindHandle, Object> storeHandle(DustHandle h, Map units, Map dialogIdeas) {
 		Map<MindHandle, Object> ret = storeHandle(h, dialogIdeas);
-		if (h == h.unit) {
+		if ( h == h.unit ) {
 			units.put(h.id, h);
 		}
 
@@ -74,7 +74,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(machineIdea, UNIT_IDEAS);
 		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(machineIdea, UNIT_HANDLES);
 
-		if (!h.isUnit()) {
+		if ( !h.isUnit() ) {
 			Object unit = DustUtils.simpleGet(unitIdeas, hUnit);
 			unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
 			unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
@@ -83,7 +83,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		}
 
 		Map<MindHandle, Object> data = unitIdeas.get(h);
-		if (null == data) {
+		if ( null == data ) {
 			data = new DustIdea(h);
 			unitIdeas.put(h, data);
 			unitHandles.put(h.id, h);
@@ -96,13 +96,22 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 	static void storeToken(DustHandle h, Map dialogIdeas, Map vocabulary, String lang, String token) {
 		String tkey = DUST_SEP_TOKEN + h.id;
-		DustHandle hToken;
-		
-//		hToken = (DustHandle) resolveHandle(null, h.getUnit().getId(), tkey);
-//		if ( null == hToken ) {
-//			hToken = new DustHandle(h.unit, tkey);
-//		}
-				
+
+		DustHandle hUnit = h.getUnit();
+
+		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);
+		tokenMap = DustUtils.safeGet(tokenMap, hUnit, MAP_CREATOR);
+		DustHandle hToken = (DustHandle) tokenMap.get(token);
+
+		if ( null != hToken ) {
+			String oldId = hToken.getId();
+			if ( (hUnit == hToken.getUnit()) && DustUtils.isEqual(tkey, oldId) ) {
+				return; // tried to register the same target, OK
+			} else {
+				DustException.wrap(null, "Token conflict (token, unit, lang, old, new)", token, hUnit, lang, oldId, tkey);
+			}
+		}
+
 		hToken = new DustHandle(h.unit, tkey);
 
 		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
@@ -112,8 +121,6 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		dToken.put(MISC_PAYLOAD, token);
 		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
 
-		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);
-		tokenMap = DustUtils.safeGet(tokenMap, h.unit, MAP_CREATOR);
 		tokenMap.put(token, hToken);
 		tokenMap.put(hToken, token);
 		tokenMap.put(h, token);
@@ -124,7 +131,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		String k = DustUtils.getPrefix(t, DUST_SEP_TOKEN);
 
 		int sep = t.indexOf(DUST_SEP_ID);
-		if (-1 != sep) {
+		if ( -1 != sep ) {
 			ur = unitRefMap.get(t.substring(0, sep));
 			k = t.substring(sep + DUST_SEP_ID.length());
 		}
