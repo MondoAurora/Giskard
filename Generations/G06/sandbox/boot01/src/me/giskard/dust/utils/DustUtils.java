@@ -42,6 +42,10 @@ public class DustUtils implements DustUtilsConsts {
 		}
 	}
 	
+	public static String toSafeString(String str) {
+		return str.replace(DUST_SEP_ID, DUST_SEP).replace(DUST_SEP_TOKEN, DUST_SEP);
+	}
+	
 	public static String getPrefix(String strSrc, String pfSep) {
 		int sep = strSrc.lastIndexOf(pfSep);
 		return (-1 == sep) ? strSrc : strSrc.substring(0, sep);

@@ -33,8 +33,13 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 
 		try {
 			if (!queue.containsKey(key)) {
+				File f = new File("units/" + key + DUST_EXT_JSON);				
+				if ( !f.isFile() ) {
+//					Dust.log(null, "No stored file for unit", key, f.getCanonicalPath());
+					return;
+				}
+
 				Dust.log(null, "Queueing", key);
-				File f = new File("units/" + key + DUST_EXT_JSON);
 				ArrayList<Object> j = DustUtilsJson.readJson(f);
 				queue.put(key, j);
 

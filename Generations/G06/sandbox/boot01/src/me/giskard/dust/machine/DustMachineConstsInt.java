@@ -1,8 +1,6 @@
 package me.giskard.dust.machine;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts.DustCreator;
@@ -34,18 +32,22 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 		public boolean isUnit() {
 			return this == unit;
 		}
+		
+		public String getResUnitId(String lang) {
+			return getUnit().id + DUST_SEP + DustUtils.toSafeString(lang);
+		}
 
 		@Override
 		public String toString() {
-			String token = DustUtils.simpleGet(CURR_VOC, unit, this);
-			if (!DustUtils.isEmpty(token)) {
-				token = DUST_SEP_TOKEN + token;
-			}
-			token = "";
+			String token = "";
+//			token = DustUtils.simpleGet(CURR_VOC, unit, this);
+//			if (!DustUtils.isEmpty(token)) {
+//				token = DUST_SEP_TOKEN + token;
+//			}
 			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
 		}
 
-		static Map CURR_VOC = Collections.EMPTY_MAP;
+//		static Map CURR_VOC = Collections.EMPTY_MAP;
 	}
 
 	public interface UnitLoader {

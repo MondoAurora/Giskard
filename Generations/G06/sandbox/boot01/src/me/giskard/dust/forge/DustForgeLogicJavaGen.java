@@ -8,6 +8,7 @@ import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineBootConsts;
 import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
+import me.giskard.dust.machine.DustMachineUtils;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
@@ -39,6 +40,7 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 //			log = true;
 			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
 			DustHandle handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
+			String lang = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, TEXT_ATT_LANG);
 
 			if (DUST_BOOTTOKEN == att) {
 				String token = (String) val;
@@ -52,7 +54,6 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 					if (null == pw) {
 						pw = initWriter(FORGE_BOOT_WRITER, FORGE_BOOT_CLASSNAME, DustConsts.class, DustHandle.class);
 
-						String lang = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, TEXT_ATT_LANG);
 						pw.println("  String LANG_ID = \"" + lang + "\";");
 						pw.println();
 
@@ -71,7 +72,15 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 				}
 			} else if (MIND_IDEA_PRIMARYASPECT == att) {
 				if (TEXT_TOKEN == val) {
-					String token = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_PAYLOAD);
+					String token = DustMachineUtils.getTokenStr(handle, lang);
+//					String t2 = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_PAYLOAD);
+//					
+//					if ( !DustUtils.isEqual(token, t2) ) {
+//						Dust.log(null, "Token mismatch", handle, token, t2);
+//						break;
+//					} else {
+//						Dust.log(null, "Token OK", handle, token);
+//					}
 					boolean newToken = Dust.access(MIND_TAG_ACCESS_INSERT, token, null, DUST_SELF, MISC_SEEN);
 					if (newToken) {
 						DustHandle target = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_ATT_TARGET);

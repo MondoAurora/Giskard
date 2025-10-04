@@ -2,8 +2,8 @@ package me.giskard.dust.machine;
 
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
 
-//public interface DustMachineBootConsts extends DustGenBoot {
-public interface DustMachineBootConsts extends DustGenBootSave {
+public interface DustMachineBootConsts extends DustGenBoot {
+//public interface DustMachineBootConsts extends DustGenBootSave {
 	
 	
 //public interface DustMachineBootConsts extends DustConsts {

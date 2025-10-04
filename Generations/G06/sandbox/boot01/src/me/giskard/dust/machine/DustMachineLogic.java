@@ -136,14 +136,16 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 				String str = DustUtils.simpleGet(data, AGENT_UNITREFS, id);
 
-				id = str;
+				if (!DustUtils.isEmpty(str)) {
+					id = str;
+				}
 			}
 
 			ret = DustUtils.safeGet(units, id, new DustCreator<DustHandle>() {
 				@Override
 				public DustHandle create(Object key, Object... hints) {
 					DustHandle ret = new DustHandle((String) key);
-					DustMachineUtils.storeHandle(ret, machineIdea);
+					DustMachineUtils.safeGetIdea(ret, machineIdea);
 					return ret;
 				}
 			});
@@ -175,15 +177,15 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 			@Override
 			public DustHandle create(Object key, Object... hints) {
 				DustHandle ret = new DustHandle((MindHandle) hints[0], (String) key);
-				DustMachineUtils.storeHandle(ret, machineIdea);
+				DustMachineUtils.safeGetIdea(ret, machineIdea);
 				return ret;
 			}
 		}, unitHandle);
 
 		if (!DustUtils.isEmpty(token)) {
 
-			Map vocabulary = DustUtils.simpleGet(machineIdea, DIALOG_VOCABULARY);
-			DustMachineUtils.storeToken((DustHandle) ret, machineIdea, vocabulary, lang, token);
+//			Map vocabulary = DustUtils.simpleGet(machineIdea, DIALOG_VOCABULARY);
+			DustMachineUtils.storeToken((DustHandle) ret, machineIdea, lang, token);
 		}
 
 		return ret;
