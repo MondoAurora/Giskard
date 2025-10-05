@@ -10,13 +10,13 @@
 		]
 	},
 	{
-		"mind:0#unitAuthor": "->giskard:",
-		"misc:0#verMajor": 1,
-		"misc:1#verMinor": 0,
-		"misc:2#verCommit": "0",
-		"misc:3#verDate": "20250722T155624Z",
-		"misc:6#extId": "forge",
-		"misc:4#connRequired": {
+		"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+		"misc:0#MISC_VER_MAJOR": 1,
+		"misc:1#MISC_VER_MINOR": 0,
+		"misc:2#MISC_VER_COMMIT": "0",
+		"misc:3#MISC_EVENT_DATE": "20250722T155624Z",
+		"misc:6#MISC_GEN_EXTID": "forge",
+		"misc:4#MISC_CONN_REQUIRED": {
 			"giskard": "->giskard:",
 			"misc": "->misc:",
 			"text": "->text:",
@@ -25,36 +25,36 @@
 	},
 	{
 		"giskard:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "giskard.me",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "giskard.me",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		},
 		"mind:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "mind",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "mind",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		},
 		"misc:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "misc",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "misc",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		},
 		"text:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "text",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "text",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		}
 	}
 ]

@@ -10,63 +10,45 @@
 		]
 	},
 	{
-		"mind:0#unitAuthor": "->giskard:",
-		"misc:0#verMajor": 1,
-		"misc:1#verMinor": 0,
-		"misc:2#verCommit": "0",
-		"misc:3#verDate": "20250722T155624Z",
-		"misc:6#extId": "misc",
-		"misc:4#connRequired": {
+		"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+		"misc:0#MISC_VER_MAJOR": 1,
+		"misc:1#MISC_VER_MINOR": 0,
+		"misc:2#MISC_VER_COMMIT": "0",
+		"misc:3#MISC_EVENT_DATE": "20250722T155624Z",
+		"misc:6#MISC_GEN_EXTID": "misc",
+		"misc:4#MISC_CONN_REQUIRED": {
 			"giskard": "->giskard:",
 			"mind": "->mind:"
 		}
 	},
 	{
 		"giskard:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "giskard.me",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "giskard.me",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		},
 		"mind:": {
-			"mind:0#unitAuthor": "->giskard:",
-			"misc:6#extId": "mind",
-			"misc:0#verMajor": 1,
-			"misc:1#verMinor": 0,
-			"misc:2#verCommit": "0",
-			"misc:3#verDate": "20250722T155624Z"
+			"mind:0#MIND_UNIT_AUTHOR": "->giskard:",
+			"misc:6#MISC_GEN_EXTID": "mind",
+			"misc:0#MISC_VER_MAJOR": 1,
+			"misc:1#MISC_VER_MINOR": 0,
+			"misc:2#MISC_VER_COMMIT": "0",
+			"misc:3#MISC_EVENT_DATE": "20250722T155624Z"
 		},
 		"0": {
-			"misc:5#ideaToken": "verMajor"
+			"misc:5#MISC_GEN_TOKEN": "MISC_VER_MAJOR"
 		},
 		"1": {
-			"misc:5#ideaToken": "verMinor"
+			"misc:5#MISC_GEN_TOKEN": "MISC_VER_MINOR"
 		},
 		"2": {
-			"misc:5#ideaToken": "verCommit"
+			"misc:5#MISC_GEN_TOKEN": "MISC_VER_COMMIT"
 		},
 		"3": {
-			"misc:5#ideaToken": "verDate"
-		},
-		"4": {
-			"misc:5#ideaToken": "connRequired"
-		},
-		"5": {
-			"misc:5#ideaToken": "ideaToken"
-		},
-		"6": {
-			"misc:5#ideaToken": "extId"
-		},
-		"7": {
-			"misc:5#ideaToken": "target"
-		},
-		"8": {
-			"misc:5#ideaToken": "parent"
-		},
-		"9": {
-			"misc:5#ideaToken": "count"
+			"misc:5#MISC_GEN_TOKEN": "MISC_EVENT_DATE"
 		}
 	}
 ]

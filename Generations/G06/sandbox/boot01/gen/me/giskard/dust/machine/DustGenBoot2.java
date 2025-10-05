@@ -5,7 +5,7 @@ package me.giskard.dust.machine;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
 
-public interface DustGenBoot extends DustConsts {
+public interface DustGenBoot2 extends DustConsts {
 
   String LANG_ID = "iso:639-1:en";
 

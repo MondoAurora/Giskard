@@ -5,7 +5,7 @@ package me.giskard.dust.machine;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.Dust;
 
-public interface DustGenConsts extends DustConsts {
+public interface DustGenConsts2 extends DustConsts {
 
 	MindHandle DUST_BOOTTOKEN = Dust.lookup(null, "dust:11");
 	MindHandle DUST_UNITREFS = Dust.lookup(null, "dust:10");

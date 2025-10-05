@@ -53,14 +53,14 @@ public class DustUtilsJson implements DustUtilsConsts {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static boolean cloneWithJson(Map source, Map target, String keySource, String keyTarget) {
+	public static boolean cloneWithJson(Map source, Map MISC_GEN_TARGET, String keySource, String keyMISC_GEN_TARGET) {
 		Object ob = source.get(keySource);
 		if ( null == ob ) {
 			return false;
 		}
 		String rs= JSONObject.toJSONString((Map) ob);
 		Object clone = JSONValue.parse(rs);
-		target.put(keyTarget, clone);
+		MISC_GEN_TARGET.put(keyMISC_GEN_TARGET, clone);
 		return true;
 	}
 

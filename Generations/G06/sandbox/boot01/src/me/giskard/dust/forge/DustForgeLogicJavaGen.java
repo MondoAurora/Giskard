@@ -71,7 +71,7 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 
 				}
 			} else if (MIND_IDEA_PRIMARYASPECT == att) {
-				if (TEXT_TOKEN == val) {
+				if (TEXT_TAG_TOKEN == val) {
 					String token = DustMachineUtils.getTokenStr(handle, lang);
 //					String t2 = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_PAYLOAD);
 //					
@@ -98,7 +98,7 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 					} else {
 						Dust.log(null, "Repeated token", token);
 					}
-//					Dust.log(null, "Store lookup handle", token, target);
+//					Dust.log(null, "Store lookup handle", token, MISC_GEN_TARGET);
 				}
 			}
 			break;

@@ -20,7 +20,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return kIdea.contains(DUST_SEP_ID);
 	}
 
-	public static String nextId(Map ideaData, MindHandle key) {
+	public static String nMISC_GEN_EXTID(Map ideaData, MindHandle key) {
 		Long l = (Long) ideaData.getOrDefault(key, 0L);
 		ideaData.put(key, l + 1);
 		return l.toString();
@@ -103,7 +103,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 		Map<MindHandle, Object> dToken = safeGetIdea(hToken, dialogIdeas);
 		dToken.put(MISC_GEN_TARGET, h);
-		dToken.put(MIND_IDEA_PRIMARYASPECT, TEXT_TOKEN);
+		dToken.put(MIND_IDEA_PRIMARYASPECT, TEXT_TAG_TOKEN);
 
 		String resUnit = hUnit.getResUnitId(lang);
 		DustHandle hResUnit = (DustHandle) Dust.lookup(null, resUnit);

@@ -23,7 +23,6 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 	private static Map machineIdea;
 
 	private static DustHandle hModuleUnit;
-//	private static Map vocabulary;
 
 	public static Object dustMachineInit() throws Exception {
 		Dust.broadcast(null, "Hello world from Sandbox module");
@@ -31,12 +30,8 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		machineIdea = new DustIdea(RUNTIME_MACHINE);
 
 		Map units = new TreeMap();
-//		vocabulary = new TreeMap();
 
 		machineIdea.put(DUST_MACHINE_UNITS, units);
-//		machineIdea.put(DIALOG_VOCABULARY, vocabulary);
-
-//		DustHandle.CURR_VOC = DustUtils.safeGet(vocabulary, LANG_ID, MAP_CREATOR);
 
 		Map<MindHandle, Object> unitData;
 
@@ -58,7 +53,6 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustMachineUtils.safeGetIdea(MIND_UNIT_HANDLES, machineIdea);
 		DustMachineUtils.safeGetIdea(MIND_UNIT_NEXT_ID, machineIdea);
 		DustMachineUtils.safeGetIdea(MIND_UNIT_IDEAS, machineIdea);
-//		DustMachineUtils.storeHandle(DIALOG_VOCABULARY, machineIdea);
 
 		DustMachineUtils.safeGetIdea(MIND_TAG_ACTION_INIT, machineIdea);
 		DustMachineUtils.safeGetIdea(MIND_TAG_ACCESS_PEEK, machineIdea);
@@ -79,14 +73,14 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustMachineUtils.safeGetIdea(DUST_AGENT_PARAM, machineIdea);
 		DustMachineUtils.safeGetIdea(DUST_AGENT_UNITREFS, machineIdea);
 
-		unitData = DustMachineUtils.safeGetIdea(DUSTJAVA, machineIdea);
+		unitData = DustMachineUtils.safeGetIdea(JAVA, machineIdea);
 		unitData.put(MIND_UNIT_NEXT_ID, 100L);
 		DustMachineUtils.safeGetIdea(JAVA_LOGIC_CLASSNAME, machineIdea);
 		DustMachineUtils.safeGetIdea(JAVA_MODULE_CLASSLOADER, machineIdea);
 
 		unitData = DustMachineUtils.safeGetIdea(TEXT, machineIdea);
 		unitData.put(MIND_UNIT_NEXT_ID, 100L);
-		DustMachineUtils.safeGetIdea(TEXT_TOKEN, machineIdea);
+		DustMachineUtils.safeGetIdea(TEXT_TAG_TOKEN, machineIdea);
 
 		DustUtilsEnumTranslator.setEnum(MIND_TAG_ACCESS_SET, MindAccess.Set);
 		DustUtilsEnumTranslator.setEnum(MIND_TAG_ACCESS_PEEK, MindAccess.Peek);
@@ -208,8 +202,6 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		Dust.access(MIND_TAG_ACCESS_SET, DUST_MACHINE_UNITS, hUnitWalkerParams, MIND_VISIT_ATT);
 		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenParams, hUnitWalkerAgent, MISC_GEN_TARGET);
 		Dust.access(MIND_TAG_ACCESS_SET, 10L, hUnitWalkerParams, MISC_PROC_COUNT);
-
-//		Dust.access(MIND_TAG_ACCESS_COMMIT, null, hUnitWalkerParams);
 
 		Dust.access(MIND_TAG_ACCESS_INSERT, hUnitWalkerParams, DustMachineLogic.getData(), MIND_DIALOG_INIT, KEY_ADD);
 
