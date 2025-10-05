@@ -73,11 +73,11 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 			break;
 		case Process:
 
-			Collection queue = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_SELF, MISC_QUEUE);
+			Collection queue = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_SELF, MISC_PROC_QUEUE);
 
 			if (null == queue) {
-				MindHandle hItem = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
-				MindHandle hAtt = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_ATT);
+				MindHandle hItem = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE);
+				MindHandle hAtt = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_ATT);
 
 				Object initVal = Dust.access(MIND_TAG_ACCESS_PEEK, null, hItem, hAtt);
 
@@ -93,35 +93,35 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 				if (DustUtils.isEmpty(queue)) {
 					return MIND_TAG_RESULT_PASS;
 				} else {
-					Dust.access(MIND_TAG_ACCESS_SET, queue, null, DUST_SELF, MISC_QUEUE);
-					Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_SELF, MISC_ATT_TARGET);
+					Dust.access(MIND_TAG_ACCESS_SET, queue, null, DUST_AGENT_SELF, MISC_PROC_QUEUE);
+					Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_AGENT_SELF, MISC_GEN_TARGET);
 					return ret;
 				}
 			}
 
 			Object key;
-			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
+			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_VALUE);
 			WalkIterator newIt = null;
 
 			if (val instanceof MindHandle) {
-				boolean seen = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_SELF, MISC_SEEN);
-				boolean queued = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_SELF, MISC_QUEUE);
+				boolean seen = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
+				boolean queued = Dust.access(MIND_TAG_ACCESS_CHECK, val, null, DUST_AGENT_SELF, MISC_PROC_QUEUE);
 				if (!seen && !queued) {
-					boolean dfs = Dust.access(MIND_TAG_ACCESS_CHECK, MIND_TAG_SEARCH_DEPTHFIRST, null, DUST_SELF, MIND_TAG_SEARCH);
+					boolean dfs = Dust.access(MIND_TAG_ACCESS_CHECK, MIND_TAG_SEARCH_DEPTHFIRST, null, DUST_AGENT_SELF, MIND_TAG_SEARCH);
 					if (dfs) {
 						newIt = new WalkIterator(val);
-						Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
-						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_ATT);
+						Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_HANDLE);
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_ATT);
 					} else {
-						Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_SELF, MISC_QUEUE, KEY_ADD);
+						Dust.access(MIND_TAG_ACCESS_INSERT, val, null, DUST_AGENT_SELF, MISC_PROC_QUEUE, KEY_ADD);
 					}
 				}
 			}
 
-			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_KEY);
-			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
+			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_KEY);
+			Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_VALUE);
 
-			wi = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
+			wi = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
 
 			if (null == newIt) {
 
@@ -129,23 +129,23 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 					MindHandle hItem = null;
 					boolean repeat;
 					do {
-						hItem = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_SELF, MISC_QUEUE, 0);
-						repeat = (null != hItem) && !(boolean) Dust.access(MIND_TAG_ACCESS_INSERT, hItem, null, DUST_SELF, MISC_SEEN);
+						hItem = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_SELF, MISC_PROC_QUEUE, 0);
+						repeat = (null != hItem) && !(boolean) Dust.access(MIND_TAG_ACCESS_INSERT, hItem, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
 					} while (repeat);
 
 					if (null == hItem) {
-						if (null == Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE)) {
+						if (null == Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_HANDLE)) {
 							ret = MIND_TAG_RESULT_ACCEPT;
 						} else {
-							Dust.access(MIND_TAG_ACCESS_RESET, null, null, DUST_PARAM, MISC_SEEN);
-							Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_SELF, MISC_ATT_TARGET);
+							Dust.access(MIND_TAG_ACCESS_RESET, null, null, DUST_AGENT_PARAM, MISC_PROC_SEEN);
+							Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_AGENT_SELF, MISC_GEN_TARGET);
 						}
 						
 						return ret;
 					} else {
 						newIt = new WalkIterator(hItem);
-						Dust.access(MIND_TAG_ACCESS_SET, hItem, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
-						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_ATT);
+						Dust.access(MIND_TAG_ACCESS_SET, hItem, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_HANDLE);
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_ATT);
 					}
 				} else {
 
@@ -153,16 +153,16 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 
 					Object h = wi.getHandle();
 					if (null != h) {
-						Dust.access(MIND_TAG_ACCESS_SET, h, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_HANDLE);
+						Dust.access(MIND_TAG_ACCESS_SET, h, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_HANDLE);
 					}
 
 					if (END == s) {
-						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
-						wi = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_PARAM, MISC_STACK, 0);
-						Dust.access(MIND_TAG_ACCESS_SET, wi, null, DUST_PARAM, MIND_VISIT_VALUE);
-						Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_SELF, MISC_ATT_TARGET);
-						int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_STACK, KEY_SIZE);
-						Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_SELF, MISC_ATT_TARGET, MISC_DEPTH);
+						Dust.access(MIND_TAG_ACCESS_SET, null, null, DUST_AGENT_SELF, MISC_GEN_TARGET, wi.getKeyField());
+						wi = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_PARAM, MISC_PROC_STACK, 0);
+						Dust.access(MIND_TAG_ACCESS_SET, wi, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
+						Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_END, null, DUST_AGENT_SELF, MISC_GEN_TARGET);
+						int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_AGENT_PARAM, MISC_PROC_STACK, KEY_SIZE);
+						Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MISC_PROC_DEPTH);
 
 						return ret;
 					} else {
@@ -174,9 +174,9 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 							val = s;
 							key = wi.getCurrentKey();
 						}
-						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_SELF, MISC_ATT_TARGET, wi.getKeyField());
+						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_AGENT_SELF, MISC_GEN_TARGET, wi.getKeyField());
 						
-						if ( key == UNIT_IDEAS ) {
+						if ( key == MIND_UNIT_IDEAS ) {
 							Dust.log(null, "handling ideas", h, val);
 						}
 						
@@ -195,18 +195,18 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 			}
 
 			if (null == newIt) {
-				Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_SELF, MISC_ATT_TARGET, MIND_VISIT_VALUE);
-				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_PROCESS, null, DUST_SELF, MISC_ATT_TARGET);
+				Dust.access(MIND_TAG_ACCESS_SET, val, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MIND_VISIT_VALUE);
+				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_PROCESS, null, DUST_AGENT_SELF, MISC_GEN_TARGET);
 			} else {
 				if (null != wi) {
-					Dust.access(MIND_TAG_ACCESS_INSERT, wi, null, DUST_PARAM, MISC_STACK, 0);
+					Dust.access(MIND_TAG_ACCESS_INSERT, wi, null, DUST_AGENT_PARAM, MISC_PROC_STACK, 0);
 				}
-				Dust.access(MIND_TAG_ACCESS_SET, newIt, null, DUST_PARAM, MIND_VISIT_VALUE);
-				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_SELF, MISC_ATT_TARGET);
+				Dust.access(MIND_TAG_ACCESS_SET, newIt, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
+				Dust.access(MIND_TAG_ACCESS_COMMIT, MIND_TAG_ACTION_BEGIN, null, DUST_AGENT_SELF, MISC_GEN_TARGET);
 			}
 
-			int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_STACK, KEY_SIZE);
-			Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_SELF, MISC_ATT_TARGET, MISC_DEPTH);
+			int depth = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_AGENT_PARAM, MISC_PROC_STACK, KEY_SIZE);
+			Dust.access(MIND_TAG_ACCESS_SET, depth, null, DUST_AGENT_SELF, MISC_GEN_TARGET, MISC_PROC_DEPTH);
 
 			break;
 		case End:

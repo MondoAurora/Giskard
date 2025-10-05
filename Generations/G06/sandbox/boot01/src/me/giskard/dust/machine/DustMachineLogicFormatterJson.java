@@ -52,9 +52,9 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 				refs.put(token, key);
 
 				MindHandle unitHandle = Dust.lookup(null, key);
-				Dust.access(ACCESS_SET, f.getAbsolutePath(), unitHandle, PERS_ID);
+				Dust.access(MIND_TAG_ACCESS_SET, f.getAbsolutePath(), unitHandle, DUST_PERS_ID);
 				
-				meta.put(IDEA_HANDLE, unitHandle);
+				meta.put(MIND_IDEA_HANDLE, unitHandle);
 
 				Map<String, Object> content = DustUtils.simpleGet(j, 2);
 				for (Map.Entry<String, Object> ec : content.entrySet()) {
@@ -95,7 +95,7 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 					ArrayList<Object> qData = eq.getValue();
 
 					Map<String, String> unitMap = DustUtils.simpleGet(qData, 0, LOAD_TOKEN_UNITMAP);
-					DustHandle unitHandle = DustUtils.simpleGet(qData, 0, IDEA_HANDLE);
+					DustHandle unitHandle = DustUtils.simpleGet(qData, 0, MIND_IDEA_HANDLE);
 
 					Dust.log(null, "Load unit", qKey, unitMap, qData);
 					optLoadIdea(unitMap, qKey, unitHandle, "", DustUtils.simpleGet(qData, 1));
@@ -134,7 +134,7 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 				Dust.log(null, "ERROR - missing referred handle for key", t);
 			} else {
 				v = loadValue(unitMap, unit, hVal, v);
-				Dust.access(ACCESS_SET, v, hItem, hVal);
+				Dust.access(MIND_TAG_ACCESS_SET, v, hItem, hVal);
 			}
 		}
 	}

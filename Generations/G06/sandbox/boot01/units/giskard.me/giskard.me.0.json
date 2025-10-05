@@ -38,8 +38,6 @@
 			"misc:2#verCommit": "0",
 			"misc:3#verDate": "20250722T155624Z"
 		},
-		"0": {
-			"misc:5#ideaToken": "firstCommit"
-		}
+		"0": {}
 	}
 ]

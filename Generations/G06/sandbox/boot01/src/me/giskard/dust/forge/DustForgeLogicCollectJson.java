@@ -18,20 +18,20 @@ public class DustForgeLogicCollectJson implements DustConsts.MindLogic, DustForg
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
 		MindAction a = DustUtilsEnumTranslator.getEnum(action, null);
-		Object handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
-		Map data = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MISC_PAYLOAD);
+		Object handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE);
+		Map data = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MISC_GEN_PAYLOAD);
 
 		switch (a) {
 		case Begin:
 			if (null == handle) {
-				Dust.access(MIND_TAG_ACCESS_SET, new TreeMap(), null, DUST_PARAM, MISC_PAYLOAD);
+				Dust.access(MIND_TAG_ACCESS_SET, new TreeMap(), null, DUST_AGENT_PARAM, MISC_GEN_PAYLOAD);
 			}
 			break;
 		case Process:
 
-			Object att = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_ATT);
-			Object key = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_KEY);
-			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
+			Object att = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_ATT);
+			Object key = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_KEY);
+			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
 
 			if (null != val) {
 				Map m = DustUtils.safeGet(data, handle.toString(), SORTEDMAP_CREATOR);

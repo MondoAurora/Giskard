@@ -19,11 +19,11 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
 		MindAction a = DustUtilsEnumTranslator.getEnum(action, null);
-		Integer count = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_PARAM, MISC_ATT_COUNT);
+		Integer count = Dust.access(MIND_TAG_ACCESS_PEEK, 0, null, DUST_AGENT_PARAM, MISC_PROC_COUNT);
 		boolean last = false;
 		boolean log = false;
 
-		Object att = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_ATT);
+		Object att = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_ATT);
 
 		switch (a) {
 		case Init:
@@ -34,22 +34,22 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 			break;
 		case End:
 			--count;
-			last = null == Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
+			last = null == Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE);
 			break;
 		case Process:
 //			log = true;
-			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE);
-			DustHandle handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE);
-			String lang = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, TEXT_ATT_LANG);
+			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
+			DustHandle handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE);
+			String lang = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, TEXT_ATT_LANG);
 
 			if (DUST_BOOTTOKEN == att) {
 				String token = (String) val;
 
-				Object collision = Dust.access(MIND_TAG_ACCESS_SET, handle, null, DUST_PARAM, FORGE_BOOT_TOKENS, token);
+				Object collision = Dust.access(MIND_TAG_ACCESS_SET, handle, null, DUST_AGENT_PARAM, FORGE_BOOT_TOKENS, token);
 				if ((null != collision) && (handle != collision)) {
 					Dust.log(null, "Boot token collision for token", token, handle, collision);
 				} else {
-					PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, FORGE_BOOT_WRITER);
+					PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_BOOT_WRITER);
 
 					if (null == pw) {
 						pw = initWriter(FORGE_BOOT_WRITER, FORGE_BOOT_CLASSNAME, DustConsts.class, DustHandle.class);
@@ -81,9 +81,9 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 //					} else {
 //						Dust.log(null, "Token OK", handle, token);
 //					}
-					boolean newToken = Dust.access(MIND_TAG_ACCESS_INSERT, token, null, DUST_SELF, MISC_SEEN);
+					boolean newToken = Dust.access(MIND_TAG_ACCESS_INSERT, token, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
 					if (newToken) {
-						DustHandle target = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_ATT_TARGET);
+						DustHandle target = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_GEN_TARGET);
 
 						PrintWriter pw = getWriter(FORGE_MODULE_WRITER, FORGE_MODULE_CLASSNAME, DustConsts.class, Dust.class);
 
@@ -104,14 +104,14 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 			break;
 		}
 
-		Dust.access(MIND_TAG_ACCESS_SET, count, null, DUST_PARAM, MISC_ATT_COUNT);
+		Dust.access(MIND_TAG_ACCESS_SET, count, null, DUST_AGENT_PARAM, MISC_PROC_COUNT);
 
 		if (log) {
-			Dust.log(null, a, "JavaGen processing", "local count: " + count, "language: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, TEXT_ATT_LANG),
-					"walk depth: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MISC_DEPTH),
-					"handle: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_HANDLE), "att: " + att,
-					"key: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_KEY),
-					"value: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, MIND_VISIT_VALUE));
+			Dust.log(null, a, "JavaGen processing", "local count: " + count, "language: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, TEXT_ATT_LANG),
+					"walk depth: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MISC_PROC_DEPTH),
+					"handle: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE), "att: " + att,
+					"key: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_KEY),
+					"value: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE));
 		}
 
 		if (last) {
@@ -125,34 +125,34 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 	}
 
 	public void optCloseWriter(MindHandle hWriter) {
-		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, hWriter);
+		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hWriter);
 		if (null != pw) {
 			pw.print("}");
 			pw.flush();
 			pw.close();
-			Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_PARAM, hWriter);
+			Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_PARAM, hWriter);
 		}
 	}
 
 	public PrintWriter getWriter(MindHandle hWriter, MindHandle hClassAtt, Class<?>... importClasses) throws Exception {
-		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, hWriter);
+		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hWriter);
 
 		return (null == pw) ? initWriter(hWriter, hClassAtt, importClasses) : pw;
 	}
 
 	public PrintWriter initWriter(MindHandle hWriter, MindHandle hClassAtt, Class<?>... importClasses) throws Exception {
 		PrintWriter pw;
-		String srcRoot = Dust.access(MIND_TAG_ACCESS_PEEK, ".", null, DUST_PARAM, FORGE_SRC_PATH);
-		String pkg = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, FORGE_GEN_PACKAGE);
+		String srcRoot = Dust.access(MIND_TAG_ACCESS_PEEK, ".", null, DUST_AGENT_PARAM, FORGE_SRC_PATH);
+		String pkg = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_GEN_PACKAGE);
 
 		File f = new File(srcRoot + File.separatorChar + pkg.replace('.', File.separatorChar));
 
 		DustUtilsFile.ensureDir(f);
 
-		String genClass = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, hClassAtt);
+		String genClass = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hClassAtt);
 
 		pw = new PrintWriter(new File(f, genClass + DUST_EXT_JAVA));
-		Dust.access(MIND_TAG_ACCESS_SET, pw, null, DUST_PARAM, hWriter);
+		Dust.access(MIND_TAG_ACCESS_SET, pw, null, DUST_AGENT_PARAM, hWriter);
 
 		pw.println("package " + pkg + ";");
 		pw.println();
@@ -171,11 +171,11 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 	}
 
 	String optStoreUnitToken(DustHandle handle, PrintWriter pw) {
-		String unitToken = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_PARAM, FORGE_BOOT_UNITS, handle);
+		String unitToken = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_BOOT_UNITS, handle);
 
 		if (null == unitToken) {
 			unitToken = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, DUST_BOOTTOKEN);
-			Dust.access(MIND_TAG_ACCESS_SET, unitToken, null, DUST_PARAM, FORGE_BOOT_UNITS, handle);
+			Dust.access(MIND_TAG_ACCESS_SET, unitToken, null, DUST_AGENT_PARAM, FORGE_BOOT_UNITS, handle);
 			pw.println("\tDustHandle " + unitToken + " = new DustHandle(\"" + handle.getId() + "\");");
 		}
 

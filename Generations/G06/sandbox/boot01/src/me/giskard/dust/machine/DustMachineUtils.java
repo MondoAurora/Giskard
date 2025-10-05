@@ -62,15 +62,15 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	static Map<MindHandle, Object> safeGetIdea(DustHandle h, Map machineIdea) {
 		DustHandle hUnit = h.isUnit() ? h : h.unit;
 
-		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(machineIdea, UNIT_IDEAS);
-		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(machineIdea, UNIT_HANDLES);
+		Map<MindHandle, Map<MindHandle, Object>> unitIdeas = DustUtils.simpleGet(machineIdea, MIND_UNIT_IDEAS);
+		HashMap<String, MindHandle> unitHandles = DustUtils.simpleGet(machineIdea, MIND_UNIT_HANDLES);
 
 		if (!h.isUnit()) {
 			Object unit = DustUtils.simpleGet(unitIdeas, hUnit);
-			unitIdeas = DustUtils.simpleGet(unit, UNIT_IDEAS);
-			unitHandles = DustUtils.simpleGet(unit, UNIT_HANDLES);
+			unitIdeas = DustUtils.simpleGet(unit, MIND_UNIT_IDEAS);
+			unitHandles = DustUtils.simpleGet(unit, MIND_UNIT_HANDLES);
 		} else {
-			((Map) DustUtils.simpleGet(machineIdea, MACHINE_UNITS)).put(h.getId(), h);
+			((Map) DustUtils.simpleGet(machineIdea, DUST_MACHINE_UNITS)).put(h.getId(), h);
 		}
 
 		Map<MindHandle, Object> data = unitIdeas.get(h);
@@ -90,7 +90,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		MindHandle hResUnit = Dust.lookup(null, resUnit);
 		DustHandle hResToken = (DustHandle) Dust.lookup(hResUnit, h.toString());
 
-		String ret = Dust.access(ACCESS_PEEK, "???", hResToken, MISC_PAYLOAD);
+		String ret = Dust.access(MIND_TAG_ACCESS_PEEK, "???", hResToken, MISC_GEN_PAYLOAD);
 
 		return ret;
 	}
@@ -102,49 +102,21 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		DustHandle hToken = (DustHandle) Dust.lookup(hUnit, tkey);
 
 		Map<MindHandle, Object> dToken = safeGetIdea(hToken, dialogIdeas);
-		dToken.put(MISC_TARGET, h);
-		dToken.put(IDEA_PRIMARYASPECT, TEXT_TOKEN);
-//		dToken.put(MISC_PAYLOAD, token); // TODO remove this
+		dToken.put(MISC_GEN_TARGET, h);
+		dToken.put(MIND_IDEA_PRIMARYASPECT, TEXT_TOKEN);
 
 		String resUnit = hUnit.getResUnitId(lang);
 		DustHandle hResUnit = (DustHandle) Dust.lookup(null, resUnit);
 		DustHandle hResToken = (DustHandle) Dust.lookup(hResUnit, token);
 
 		Map<MindHandle, Object> dRes = safeGetIdea(hResToken, dialogIdeas);
-		dRes.put(MISC_TARGET, h);
-//		dRes.put(IDEA_PRIMARYASPECT, TEXT_TOKEN);
-		dRes.put(MISC_PAYLOAD, token);
+		dRes.put(MISC_GEN_TARGET, h);
+		dRes.put(MISC_GEN_PAYLOAD, token);
 
 		Map tokenMap = safeGetIdea(hResUnit, dialogIdeas);
-		tokenMap = DustUtils.safeGet(tokenMap, UNIT_HANDLES, MAP_CREATOR);
-		tokenMap.put(h.toString(), hResToken);
+		tokenMap = DustUtils.safeGet(tokenMap, MIND_UNIT_HANDLES, MAP_CREATOR);
+//		tokenMap.put(h.toString(), hResToken);
 		tokenMap.put(hToken.toString(), hResToken);
-		
-//		Map tokenMap = DustUtils.safeGet(vocabulary, lang, MAP_CREATOR);
-//		tokenMap = DustUtils.safeGet(tokenMap, hUnit, MAP_CREATOR);
-//		 hToken = (DustHandle) tokenMap.get(token);
-
-//		if (null != hToken) {
-//			String oldId = hToken.getId();
-//			if ((hUnit == hToken.getUnit()) && DustUtils.isEqual(tkey, oldId)) {
-//				return; // tried to register the same target, OK
-//			} else {
-//				DustException.wrap(null, "Token conflict (token, unit, lang, old, new)", token, hUnit, lang, oldId, tkey);
-//			}
-//		}
-//
-//		hToken = new DustHandle(h.unit, tkey);
-//
-//		Map<MindHandle, Object> dToken = storeHandle(hToken, dialogIdeas);
-//
-//		dToken.put(MISC_TARGET, h);
-//		dToken.put(IDEA_PRIMARYASPECT, TEXT_TOKEN);
-//		dToken.put(MISC_PAYLOAD, token);
-//		dToken.put(MISC_EXTID, lang + DUST_SEP_TOKEN + token);
-
-//		tokenMap.put(token, hToken);
-//		tokenMap.put(hToken, token);
-//		tokenMap.put(h, token);
 	}
 
 	public static MindHandle resolveHandle(Map<String, String> unitRefMap, String unit, String t) {

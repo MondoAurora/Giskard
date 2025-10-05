@@ -33,7 +33,7 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		Map units = new TreeMap();
 //		vocabulary = new TreeMap();
 
-		machineIdea.put(MACHINE_UNITS, units);
+		machineIdea.put(DUST_MACHINE_UNITS, units);
 //		machineIdea.put(DIALOG_VOCABULARY, vocabulary);
 
 //		DustHandle.CURR_VOC = DustUtils.safeGet(vocabulary, LANG_ID, MAP_CREATOR);
@@ -41,55 +41,55 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		Map<MindHandle, Object> unitData;
 
 		unitData = DustMachineUtils.safeGetIdea(MISC, machineIdea);
-		unitData.put(UNIT_NEXT_ID, 100L);
-		DustMachineUtils.safeGetIdea(MISC_TARGET, machineIdea);
-		DustMachineUtils.safeGetIdea(MISC_PARENT, machineIdea);
+		unitData.put(MIND_UNIT_NEXT_ID, 100L);
+		DustMachineUtils.safeGetIdea(MISC_GEN_TARGET, machineIdea);
+		DustMachineUtils.safeGetIdea(MISC_GEN_PARENT, machineIdea);
 		DustMachineUtils.safeGetIdea(MISC_CONN_REQUIRED, machineIdea);
 
 		unitData = DustMachineUtils.safeGetIdea(MIND, machineIdea);
-		unitData.put(UNIT_NEXT_ID, 100L);
+		unitData.put(MIND_UNIT_NEXT_ID, 100L);
 
-		DustMachineUtils.safeGetIdea(IDEA_HANDLE, machineIdea);
-		DustMachineUtils.safeGetIdea(IDEA_LISTENERS, machineIdea);
-		DustMachineUtils.safeGetIdea(IDEA_PRIMARYASPECT, machineIdea);
-		DustMachineUtils.safeGetIdea(AGENT_LOGIC, machineIdea);
-		DustMachineUtils.safeGetIdea(MEMBER_FACTORIES, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_IDEA_HANDLE, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_IDEA_LISTENERS, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_IDEA_PRIMARYASPECT, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_AGENT_LOGIC, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_MEMBER_FACTORIES, machineIdea);
 
-		DustMachineUtils.safeGetIdea(UNIT_HANDLES, machineIdea);
-		DustMachineUtils.safeGetIdea(UNIT_NEXT_ID, machineIdea);
-		DustMachineUtils.safeGetIdea(UNIT_IDEAS, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_UNIT_HANDLES, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_UNIT_NEXT_ID, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_UNIT_IDEAS, machineIdea);
 //		DustMachineUtils.storeHandle(DIALOG_VOCABULARY, machineIdea);
 
-		DustMachineUtils.safeGetIdea(ACTION_INIT, machineIdea);
-		DustMachineUtils.safeGetIdea(ACCESS_PEEK, machineIdea);
-		DustMachineUtils.safeGetIdea(ACCESS_SET, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_TAG_ACTION_INIT, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_TAG_ACCESS_PEEK, machineIdea);
+		DustMachineUtils.safeGetIdea(MIND_TAG_ACCESS_SET, machineIdea);
 
 		unitData = DustMachineUtils.safeGetIdea(DUST, machineIdea);
-		unitData.put(UNIT_NEXT_ID, 100L);
-		DustMachineUtils.safeGetIdea(PERS_ID, machineIdea);
-		DustMachineUtils.safeGetIdea(MACHINE_THREADS, machineIdea);
-		DustMachineUtils.safeGetIdea(MACHINE_DIALOGS, machineIdea);
-		DustMachineUtils.safeGetIdea(THREAD_DIALOG, machineIdea);
-		DustMachineUtils.safeGetIdea(MACHINE_UNITS, machineIdea);
-		DustMachineUtils.safeGetIdea(MACHINE_MODULES, machineIdea);
-		DustMachineUtils.safeGetIdea(LOGIC_BINARY, machineIdea);
+		unitData.put(MIND_UNIT_NEXT_ID, 100L);
+		DustMachineUtils.safeGetIdea(DUST_PERS_ID, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_MACHINE_THREADS, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_MACHINE_DIALOGS, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_THREAD_DIALOG, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_MACHINE_UNITS, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_MACHINE_MODULES, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_LOGIC_BINARY, machineIdea);
 
-		DustMachineUtils.safeGetIdea(AGENT_BINARY, machineIdea);
-		DustMachineUtils.safeGetIdea(AGENT_SELF, machineIdea);
-		DustMachineUtils.safeGetIdea(AGENT_PARAM, machineIdea);
-		DustMachineUtils.safeGetIdea(AGENT_UNITREFS, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_AGENT_BINARY, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_AGENT_SELF, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_AGENT_PARAM, machineIdea);
+		DustMachineUtils.safeGetIdea(DUST_AGENT_UNITREFS, machineIdea);
 
 		unitData = DustMachineUtils.safeGetIdea(DUSTJAVA, machineIdea);
-		unitData.put(UNIT_NEXT_ID, 100L);
-		DustMachineUtils.safeGetIdea(LOGIC_CLASSNAME, machineIdea);
-		DustMachineUtils.safeGetIdea(MODULE_CLASSLOADER, machineIdea);
+		unitData.put(MIND_UNIT_NEXT_ID, 100L);
+		DustMachineUtils.safeGetIdea(JAVA_LOGIC_CLASSNAME, machineIdea);
+		DustMachineUtils.safeGetIdea(JAVA_MODULE_CLASSLOADER, machineIdea);
 
 		unitData = DustMachineUtils.safeGetIdea(TEXT, machineIdea);
-		unitData.put(UNIT_NEXT_ID, 100L);
+		unitData.put(MIND_UNIT_NEXT_ID, 100L);
 		DustMachineUtils.safeGetIdea(TEXT_TOKEN, machineIdea);
 
-		DustUtilsEnumTranslator.setEnum(ACCESS_SET, MindAccess.Set);
-		DustUtilsEnumTranslator.setEnum(ACCESS_PEEK, MindAccess.Peek);
+		DustUtilsEnumTranslator.setEnum(MIND_TAG_ACCESS_SET, MindAccess.Set);
+		DustUtilsEnumTranslator.setEnum(MIND_TAG_ACCESS_PEEK, MindAccess.Peek);
 
 		Map<MindHandle, Object> data;
 		Map m;
@@ -102,11 +102,11 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		DustHandle hUnitLoaderFactory = new DustHandle(hModuleUnit, null);
 
 		m = new HashMap();
-		m.put(MACHINE_UNITS, hUnitLoaderFactory);
-		machineIdea.put(MEMBER_FACTORIES, m);
+		m.put(DUST_MACHINE_UNITS, hUnitLoaderFactory);
+		machineIdea.put(MIND_MEMBER_FACTORIES, m);
 
 		MindDialog machine = new DustMachineLogic(machineIdea);
-		machineIdea.put(AGENT_BINARY, machine);
+		machineIdea.put(DUST_AGENT_BINARY, machine);
 
 		data = DustMachineUtils.safeGetIdea(hModuleUnit, machineIdea);
 		Map unitRefs = m = new HashMap();
@@ -122,18 +122,18 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 
 		m = new HashMap();
 		m.put(hUnitLoaderLogic, DustMachineLogicFormatterJson.class.getName());
-		data.put(LOGIC_CLASSNAME, m);
+		data.put(JAVA_LOGIC_CLASSNAME, m);
 
 		data = DustMachineUtils.safeGetIdea(hUnitLoaderFactory, machineIdea);
 		a = new ArrayList();
 		a.add(hUnitLoader);
-		data.put(IDEA_LISTENERS, a);
+		data.put(MIND_IDEA_LISTENERS, a);
 
 		data = DustMachineUtils.safeGetIdea(hUnitLoader, machineIdea);
-		data.put(AGENT_BINARY, new DustMachineLogicFormatterJson());
-		data.put(AGENT_LOGIC, hUnitLoaderLogic);
+		data.put(DUST_AGENT_BINARY, new DustMachineLogicFormatterJson());
+		data.put(MIND_AGENT_LOGIC, hUnitLoaderLogic);
 
-		DustMachineLogic.getData().put(AGENT_UNITREFS, unitRefs);
+		DustMachineLogic.getData().put(DUST_AGENT_UNITREFS, unitRefs);
 
 		return machine;
 	}
@@ -173,24 +173,24 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 			}
 		}
 
-		Dust.access(MIND_TAG_ACCESS_SET, hModuleUnit, RUNTIME_MACHINE, MACHINE_MODULES, hModuleUnit.getId());
+		Dust.access(MIND_TAG_ACCESS_SET, hModuleUnit, RUNTIME_MACHINE, DUST_MACHINE_MODULES, hModuleUnit.getId());
 
-		Dust.access(MIND_TAG_ACCESS_SET, DustNarrativeLogicGraphWalker.class.getName(), hModuleUnit, LOGIC_CLASSNAME, MIND_LOGIC_GRAPHWALKER);
+		Dust.access(MIND_TAG_ACCESS_SET, DustNarrativeLogicGraphWalker.class.getName(), hModuleUnit, JAVA_LOGIC_CLASSNAME, MIND_LOGIC_GRAPHWALKER);
 
 		MindHandle hJavaGenLogic = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicJavaGen.class.getName(), hModuleUnit, LOGIC_CLASSNAME, hJavaGenLogic);
+		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicJavaGen.class.getName(), hModuleUnit, JAVA_LOGIC_CLASSNAME, hJavaGenLogic);
 
 		MindHandle hJavaGen = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenLogic, hJavaGen, AGENT_LOGIC);
+		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenLogic, hJavaGen, MIND_AGENT_LOGIC);
 
 		MindHandle hCollectLogic = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicCollectJson.class.getName(), hModuleUnit, LOGIC_CLASSNAME, hCollectLogic);
+		Dust.access(MIND_TAG_ACCESS_SET, DustForgeLogicCollectJson.class.getName(), hModuleUnit, JAVA_LOGIC_CLASSNAME, hCollectLogic);
 
 		MindHandle hCollect = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_SET, hCollectLogic, hCollect, AGENT_LOGIC);
+		Dust.access(MIND_TAG_ACCESS_SET, hCollectLogic, hCollect, MIND_AGENT_LOGIC);
 
 		MindHandle hJavaGenParams = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_INSERT, hJavaGen, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
+		Dust.access(MIND_TAG_ACCESS_INSERT, hJavaGen, hJavaGenParams, MIND_IDEA_LISTENERS, KEY_ADD);
 //		Dust.access(MIND_TAG_ACCESS_INSERT, hCollect, hJavaGenParams, IDEA_LISTENERS, KEY_ADD);
 		Dust.access(MIND_TAG_ACCESS_SET, LANG_ID, hJavaGenParams, TEXT_ATT_LANG);
 		Dust.access(MIND_TAG_ACCESS_SET, "gen", hJavaGenParams, FORGE_SRC_PATH);
@@ -200,14 +200,14 @@ public class DustMachineModule implements DustMachineBootConsts, DustMachineCons
 		
 
 		MindHandle hUnitWalkerAgent = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_SET, MIND_LOGIC_GRAPHWALKER, hUnitWalkerAgent, AGENT_LOGIC);
+		Dust.access(MIND_TAG_ACCESS_SET, MIND_LOGIC_GRAPHWALKER, hUnitWalkerAgent, MIND_AGENT_LOGIC);
 
 		MindHandle hUnitWalkerParams = Dust.lookup(hModuleUnit, null);
-		Dust.access(MIND_TAG_ACCESS_INSERT, hUnitWalkerAgent, hUnitWalkerParams, IDEA_LISTENERS, KEY_ADD);
+		Dust.access(MIND_TAG_ACCESS_INSERT, hUnitWalkerAgent, hUnitWalkerParams, MIND_IDEA_LISTENERS, KEY_ADD);
 		Dust.access(MIND_TAG_ACCESS_SET, RUNTIME_MACHINE, hUnitWalkerParams, MIND_VISIT_HANDLE);
-		Dust.access(MIND_TAG_ACCESS_SET, MACHINE_UNITS, hUnitWalkerParams, MIND_VISIT_ATT);
-		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenParams, hUnitWalkerAgent, MISC_ATT_TARGET);
-		Dust.access(MIND_TAG_ACCESS_SET, 10L, hUnitWalkerParams, MISC_ATT_COUNT);
+		Dust.access(MIND_TAG_ACCESS_SET, DUST_MACHINE_UNITS, hUnitWalkerParams, MIND_VISIT_ATT);
+		Dust.access(MIND_TAG_ACCESS_SET, hJavaGenParams, hUnitWalkerAgent, MISC_GEN_TARGET);
+		Dust.access(MIND_TAG_ACCESS_SET, 10L, hUnitWalkerParams, MISC_PROC_COUNT);
 
 //		Dust.access(MIND_TAG_ACCESS_COMMIT, null, hUnitWalkerParams);
 

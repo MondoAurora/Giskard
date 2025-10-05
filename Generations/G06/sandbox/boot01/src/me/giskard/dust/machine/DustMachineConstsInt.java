@@ -59,11 +59,11 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 //		private static final Set<DustIdea> SERIALIZING = new HashSet<>();
 
 		public DustIdea(DustHandle h) {
-			put(IDEA_HANDLE, h);
+			put(MIND_IDEA_HANDLE, h);
 
 			if (h.isUnit()) {
-				put(UNIT_HANDLES, new HashMap());
-				put(UNIT_IDEAS, new HashMap());
+				put(MIND_UNIT_HANDLES, new HashMap());
+				put(MIND_UNIT_IDEAS, new HashMap());
 			}
 		}
 
