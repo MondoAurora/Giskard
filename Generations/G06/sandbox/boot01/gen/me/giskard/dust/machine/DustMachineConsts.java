@@ -1,7 +1,6 @@
 package me.giskard.dust.machine;
 
 public interface DustMachineConsts extends DustGenConsts {
-//public interface DustMachineConsts extends DustGenConsts2 {
 	
 	enum MindValType {
 		Int, Real, Handle, Bin,

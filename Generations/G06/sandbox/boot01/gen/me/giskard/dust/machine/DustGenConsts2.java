@@ -56,6 +56,7 @@ public interface DustGenConsts2 extends DustConsts {
 	MindHandle MIND_TAG_SEARCH_DEPTHFIRST = Dust.lookup(null, "mind:58");
 	MindHandle MIND_TAG_STATUS_ERROR = Dust.lookup(null, "mind:39");
 	MindHandle MIND_TAG_ACCESS_CHECK = Dust.lookup(null, "mind:11");
+	MindHandle MISC_TAG_VERBOSE = Dust.lookup(null, "misc:15");
 	MindHandle MISC_VER_MAJOR = Dust.lookup(null, "misc:0");
 	MindHandle MISC_PROC_DEPTH = Dust.lookup(null, "misc:12");
 	MindHandle MISC_EVENT_DATE = Dust.lookup(null, "misc:3");

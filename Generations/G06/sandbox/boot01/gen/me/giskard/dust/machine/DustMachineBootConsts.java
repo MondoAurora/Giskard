@@ -1,12 +1,6 @@
 package me.giskard.dust.machine;
 
-import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
-
 public interface DustMachineBootConsts extends DustGenBoot {
-//public interface DustMachineBootConsts extends DustGenBoot2 {
-	
-	DustHandle RUNTIME_MAINDIALOG = new DustHandle("/maindialog.0");
-
 	
 	String LOAD_TOKEN_LANG = "lang";
 	String LOAD_TOKEN_UNITMAP = "unitMap";

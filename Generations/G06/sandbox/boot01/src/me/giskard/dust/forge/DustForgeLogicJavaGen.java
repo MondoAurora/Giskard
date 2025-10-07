@@ -72,6 +72,12 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 				}
 			} else if (MIND_IDEA_PRIMARYASPECT == att) {
 				if (TEXT_TAG_TOKEN == val) {
+					String bt = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_GEN_TARGET, DUST_BOOTTOKEN);
+					
+					if ( !DustUtils.isEmpty(bt)) {
+						break;
+					}
+					
 					String token = DustMachineUtils.getTokenStr(handle, lang);
 //					String t2 = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_PAYLOAD);
 //					
@@ -89,9 +95,16 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 
 						DustHandle hUnit = target.getUnit();
 						String strUnit = hUnit.getId();
-						String unitRef = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_UNITREFS, strUnit);
+						String unitRef = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_UNITREFS, strUnit);
 
 						String lookupStr = unitRef + DUST_SEP_ID + target.getId();
+						
+						if ( lookupStr.contains("giskard.me")) {
+							Dust.log(null, "Invalid lookup string", lookupStr);
+							break;
+						}
+						
+
 
 						pw.println("\tMindHandle " + token + " = Dust.lookup(null, \"" + lookupStr + "\");");
 						pw.flush();

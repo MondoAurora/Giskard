@@ -7,6 +7,7 @@ import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineBootConsts;
 import me.giskard.dust.machine.DustMachineConsts;
+import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
@@ -52,12 +53,20 @@ public class DustForgeLogicCollectJson implements DustConsts.MindLogic, DustForg
 
 				m.put(key, val.toString());
 			}
-			
+
 			break;
 		case End:
 			if (null == handle) {
 				Dust.log(null, a, "Collection complete", data);
-				DustUtilsJson.writeJson("dump.json", data);
+				try {
+					boolean verbose = Dust.access(MIND_TAG_ACCESS_PEEK, false, null, DUST_AGENT_SELF, MIND_IDEA_TAGS, MISC_TAG_VERBOSE);
+					if ( verbose ) {
+						DustHandle.LANG = LANG_ID;
+					}
+					DustUtilsJson.writeJson("dump.json", data);
+				} finally {
+					DustHandle.LANG = null;
+				}
 			}
 			break;
 		default:

@@ -9,6 +9,7 @@ public interface DustGenBoot2 extends DustConsts {
 
   String LANG_ID = "iso:639-1:en";
 
+	DustHandle RUNTIME_MAINDIALOG = new DustHandle("/maindialog.0");
 	DustHandle DUST = new DustHandle("giskard.me/dust.0");
 	DustHandle JAVA = new DustHandle("giskard.me/dustjava.0");
 	DustHandle MIND = new DustHandle("giskard.me/mind.0");
@@ -36,6 +37,7 @@ public interface DustGenBoot2 extends DustConsts {
 	DustHandle MIND_UNIT_NEXT_ID = new DustHandle(MIND, "1");
 	DustHandle MIND_TAG_ACCESS_PEEK = new DustHandle(MIND, "12");
 	DustHandle MIND_IDEA_HANDLE = new DustHandle(MIND, "2");
+	DustHandle MIND_IDEA_TAGS = new DustHandle(MIND, "8");
 	DustHandle MIND_UNIT_HANDLES = new DustHandle(MIND, "6");
 	DustHandle MIND_UNIT_AUTHOR = new DustHandle(MIND, "0");
 	DustHandle MIND_IDEA_LISTENERS = new DustHandle(MIND, "3");

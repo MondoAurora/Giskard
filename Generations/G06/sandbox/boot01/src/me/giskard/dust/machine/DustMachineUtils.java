@@ -95,7 +95,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return ret;
 	}
 
-	static void storeToken(DustHandle h, Map dialogIdeas, String lang, String token) {
+	static void storeToken(DustHandle h, Map dialogIdeas, String lang, String token) {		
 		String tkey = DUST_SEP_TOKEN + h.id;
 
 		DustHandle hUnit = h.getUnit();

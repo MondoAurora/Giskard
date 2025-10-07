@@ -100,7 +100,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		machineData.put(DUST_MACHINE_THREADS, new HashSet());
 		machineData.put(DUST_MACHINE_MODULES, new HashMap());
 
-		attachThread(new DustIdea(RUNTIME_MAINDIALOG));
+		attachThread(DustMachineUtils.safeGetIdea(RUNTIME_MAINDIALOG, machineData));
 	}
 
 	void attachThread(Map dialogData) {
@@ -171,7 +171,18 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 		if (DustUtils.isEmpty(id)) {
 			id = DustMachineUtils.nMISC_GEN_EXTID(unitData, MIND_UNIT_NEXT_ID);
+		} else {
+			try {
+				Long iid = Long.parseLong(id) + 1;
+				Long l = (Long) unitData.getOrDefault(MIND_UNIT_NEXT_ID, 0L);
+				if (l < iid) {
+					unitData.put(MIND_UNIT_NEXT_ID, iid + 1);
+				}
+			} catch (Throwable t) {
+//				DustException.swallow(t, "failed to convert id to integer", id);
+			}
 		}
+		
 		ret = DustUtils.safeGet(unitHandles, id, new DustCreator<DustHandle>() {
 
 			@Override
@@ -183,8 +194,10 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		}, unitHandle);
 
 		if (!DustUtils.isEmpty(token)) {
+			if ( ((DustHandle) ret).getId().contains("giskard.me")) {
+				Dust.log(null, "hopp");
+			}
 
-//			Map vocabulary = DustUtils.simpleGet(machineIdea, DIALOG_VOCABULARY);
 			DustMachineUtils.storeToken((DustHandle) ret, machineIdea, lang, token);
 		}
 

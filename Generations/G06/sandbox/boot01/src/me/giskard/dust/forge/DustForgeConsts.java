@@ -9,6 +9,7 @@ public interface DustForgeConsts extends DustConsts {
 	MindHandle FORGE_GEN_PACKAGE = Dust.lookup(null, "forge:1");
 	MindHandle FORGE_BOOT_CLASSNAME = Dust.lookup(null, "forge:2");
 	MindHandle FORGE_MODULE_CLASSNAME = Dust.lookup(null, "forge:3");
+	MindHandle FORGE_GEN_PATH = Dust.lookup(null, "forge:4");
 	
 	MindHandle FORGE_BOOT_TOKENS = Dust.lookup(null, "forge:10");
 	MindHandle FORGE_BOOT_UNITS = Dust.lookup(null, "forge:11");

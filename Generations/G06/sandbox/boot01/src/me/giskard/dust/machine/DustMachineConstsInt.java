@@ -7,7 +7,9 @@ import me.giskard.dust.utils.DustUtilsConsts.DustCreator;
 
 @SuppressWarnings("rawtypes")
 public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBootConsts {
-	public class DustHandle extends MindHandle {
+	public class DustHandle extends MindHandle implements Comparable<DustHandle> {
+		public static String LANG = null;
+
 		DustHandle unit;
 		String id;
 
@@ -21,6 +23,12 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 			this.id = id;
 		}
 
+		@Override
+		public int compareTo(DustHandle o) {
+			int ret = isUnit() ? 0 : DustUtils.safeCompare(getUnit(), o.getUnit());
+			return (0 == ret) ? DustUtils.safeCompare(getId(), o.getId()) : ret;
+		}
+
 		public String getId() {
 			return id;
 		}
@@ -32,22 +40,20 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 		public boolean isUnit() {
 			return this == unit;
 		}
-		
+
 		public String getResUnitId(String lang) {
 			return getUnit().id + DUST_SEP + DustUtils.toSafeString(lang);
 		}
 
 		@Override
 		public String toString() {
-			String token = "";
-//			token = DustUtils.simpleGet(CURR_VOC, unit, this);
-//			if (!DustUtils.isEmpty(token)) {
-//				token = DUST_SEP_TOKEN + token;
-//			}
-			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
+			String token = (DustUtils.isEmpty(LANG)) ? "" : DustMachineUtils.getTokenStr(this, LANG);
+			if (!DustUtils.isEmpty(token)) {
+				token = DUST_SEP_TOKEN + token;
+			}
+			return DustUtils.sbAppend(null, "", true, ((this == unit) ? "" : unit.id), "::", id, token).toString();
+//			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
 		}
-
-//		static Map CURR_VOC = Collections.EMPTY_MAP;
 	}
 
 	public interface UnitLoader {

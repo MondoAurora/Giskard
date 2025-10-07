@@ -98,7 +98,8 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 					DustHandle unitHandle = DustUtils.simpleGet(qData, 0, MIND_IDEA_HANDLE);
 
 					Dust.log(null, "Load unit", qKey, unitMap, qData);
-					optLoadIdea(unitMap, qKey, unitHandle, "", DustUtils.simpleGet(qData, 1));
+					optLoadIdea(unitMap, qKey, null, unitHandle.getId(), DustUtils.simpleGet(qData, 1));
+//					optLoadIdea(unitMap, qKey, unitHandle, "", DustUtils.simpleGet(qData, 1));
 
 					Map<String, Map<String, Object>> content = DustUtils.simpleGet(qData, 2);
 					for (Map.Entry<String, Map<String, Object>> ec : content.entrySet()) {
@@ -118,7 +119,7 @@ public class DustMachineLogicFormatterJson implements DustConsts.MindLogic, Dust
 	}
 
 	private void optLoadIdea(Map<String, String> unitMap, String unit, DustHandle unitHandle, String itemId, Map<String, Object> input) {
-		Dust.log(null, "   Load item", unitHandle.getId(), itemId, input);
+		Dust.log(null, "   Load item", DustUtils.toString(unitHandle), itemId, input);
 
 		MindHandle hItem = Dust.lookup(unitHandle, itemId);
 
