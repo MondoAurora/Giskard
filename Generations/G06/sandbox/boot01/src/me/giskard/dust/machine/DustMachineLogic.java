@@ -432,7 +432,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 
 					for (DustHandle hModule : modules.values()) {
 						Map moduleIdea = resolveHandleToIdea(data, hModule, false);
-						String cName = DustUtils.simpleGet(moduleIdea, JAVA_LOGIC_CLASSNAME, hLogic);
+						String cName = DustUtils.simpleGet(moduleIdea, JAVA_CLASSNAME, hLogic);
 						if (null != cName) {
 							Object ur = data.get(DUST_AGENT_UNITREFS);
 							try {

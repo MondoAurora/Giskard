@@ -51,8 +51,8 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 			if (!DustUtils.isEmpty(token)) {
 				token = DUST_SEP_TOKEN + token;
 			}
-			return DustUtils.sbAppend(null, "", true, ((this == unit) ? "" : unit.id), "::", id, token).toString();
-//			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
+//			return DustUtils.sbAppend(null, "", true, ((this == unit) ? "" : unit.id), "::", id, token).toString();
+			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
 		}
 	}
 
@@ -71,6 +71,14 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 				put(MIND_UNIT_HANDLES, new HashMap());
 				put(MIND_UNIT_IDEAS, new HashMap());
 			}
+		}
+		
+		@Override
+		public Object put(MindHandle key, Object value) {
+//			if ( (MIND_UNIT_HANDLES == key) && !(value instanceof Map) ) {
+//				Dust.log(null, "hopp");
+//			}
+			return super.put(key, value);
 		}
 
 //		@Override

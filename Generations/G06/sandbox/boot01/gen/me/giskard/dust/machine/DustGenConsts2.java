@@ -1,6 +1,6 @@
 package me.giskard.dust.machine;
 
-// Generated 20251005T130451Z
+// Generated 20251008T024425Z
 
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.Dust;
@@ -8,7 +8,6 @@ import me.giskard.dust.Dust;
 public interface DustGenConsts2 extends DustConsts {
 
 	MindHandle DUST_BOOTTOKEN = Dust.lookup(null, "dust:11");
-	MindHandle DUST_UNITREFS = Dust.lookup(null, "dust:10");
 	MindHandle JAVA_ATT_ITERATOR = Dust.lookup(null, "dustjava:2");
 	MindHandle MIND_TAG_STATUS = Dust.lookup(null, "mind:35");
 	MindHandle MIND_TAG_COLLTYPE = Dust.lookup(null, "mind:24");
@@ -61,9 +60,7 @@ public interface DustGenConsts2 extends DustConsts {
 	MindHandle MISC_PROC_DEPTH = Dust.lookup(null, "misc:12");
 	MindHandle MISC_EVENT_DATE = Dust.lookup(null, "misc:3");
 	MindHandle MISC_PROC_COUNT = Dust.lookup(null, "misc:9");
-	MindHandle MISC_GEN_EXTID = Dust.lookup(null, "misc:6");
 	MindHandle MISC_VER_MINOR = Dust.lookup(null, "misc:1");
-	MindHandle MISC_GEN_TOKEN = Dust.lookup(null, "misc:5");
 	MindHandle MISC_PROC_SEEN = Dust.lookup(null, "misc:11");
 	MindHandle MISC_PROC_STACK = Dust.lookup(null, "misc:10");
 	MindHandle MISC_PROC_QUEUE = Dust.lookup(null, "misc:13");

@@ -20,6 +20,10 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return kIdea.contains(DUST_SEP_ID);
 	}
 
+	public static String nextId(Map ideaData) {
+		return nextId(ideaData, MIND_UNIT_NEXT_ID);
+	}
+
 	public static String nextId(Map ideaData, MindHandle key) {
 		Long l = (Long) ideaData.getOrDefault(key, 0L);
 		ideaData.put(key, l + 1);

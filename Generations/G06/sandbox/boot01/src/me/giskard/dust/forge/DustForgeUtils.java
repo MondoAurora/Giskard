@@ -17,7 +17,7 @@ public class DustForgeUtils implements DustForgeConsts, DustMachineConsts, DustM
 		String cn = handleContainer.getName();
 
 		MindHandle classTag = Dust.lookup(FORGE, "JavaClass$" + cn);
-		Dust.access(MIND_TAG_ACCESS_SET, cn, classTag, JAVA_LOGIC_CLASSNAME);
+		Dust.access(MIND_TAG_ACCESS_SET, cn, classTag, JAVA_CLASSNAME);
 
 		for (Field f : handleContainer.getFields()) {
 			Object o = f.get(null);

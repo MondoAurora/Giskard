@@ -16,7 +16,7 @@ import me.giskard.dust.utils.DustUtilsConsts;
 import me.giskard.dust.utils.DustUtilsEnumTranslator;
 import me.giskard.dust.utils.DustUtilsFile;
 
-public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
+public class DustForgeLogicGenJavaToken implements DustConsts.MindLogic, DustForgeConsts, DustMachineConsts, DustMachineBootConsts, DustUtilsConsts {
 
 	@Override
 	public MindHandle logicProcess(MindHandle action) throws Exception {
@@ -129,7 +129,7 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 	}
 
 	public PrintWriter getWriter(MindHandle hClassAtt, boolean bootClass, String lang) throws Exception {
-		String cn = Dust.access(MIND_TAG_ACCESS_PEEK, null, hClassAtt, JAVA_LOGIC_CLASSNAME);
+		String cn = Dust.access(MIND_TAG_ACCESS_PEEK, null, hClassAtt, JAVA_CLASSNAME);
 
 		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS, cn);
 

@@ -1,6 +1,6 @@
 package me.giskard.dust.machine;
 
-// Generated 20251005T130451Z
+// Generated 20251008T094003Z
 
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
@@ -9,12 +9,12 @@ public interface DustGenBoot2 extends DustConsts {
 
   String LANG_ID = "iso:639-1:en";
 
-	DustHandle RUNTIME_MAINDIALOG = new DustHandle("/maindialog.0");
 	DustHandle DUST = new DustHandle("giskard.me/dust.0");
 	DustHandle JAVA = new DustHandle("giskard.me/dustjava.0");
 	DustHandle MIND = new DustHandle("giskard.me/mind.0");
 	DustHandle MISC = new DustHandle("giskard.me/misc.0");
 	DustHandle TEXT = new DustHandle("giskard.me/text.0");
+	DustHandle FORGE = new DustHandle("giskard.me/forge.0");
 	DustHandle DUST_MACHINE_UNITS = new DustHandle(DUST, "6");
 	DustHandle DUST_MACHINE_DIALOGS = new DustHandle(DUST, "2");
 	DustHandle DUST_THREAD_DIALOG = new DustHandle(DUST, "3");
@@ -48,5 +48,4 @@ public interface DustGenBoot2 extends DustConsts {
 	DustHandle MISC_GEN_TOKEN = new DustHandle(MISC, "5");
 	DustHandle MISC_GEN_EXTID = new DustHandle(MISC, "6");
 	DustHandle TEXT_TAG_TOKEN = new DustHandle(TEXT, "1");
-	DustHandle RUNTIME_MACHINE = new DustHandle("/machine.0");
 }
