@@ -20,7 +20,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 		return kIdea.contains(DUST_SEP_ID);
 	}
 
-	public static String nMISC_GEN_EXTID(Map ideaData, MindHandle key) {
+	public static String nextId(Map ideaData, MindHandle key) {
 		Long l = (Long) ideaData.getOrDefault(key, 0L);
 		ideaData.put(key, l + 1);
 		return l.toString();
@@ -86,16 +86,23 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 	}
 
 	public static String getTokenStr(MindHandle h, String lang) {
-		String resUnit = ((DustHandle)h).getResUnitId(lang);
+		String resUnit = ((DustHandle) h).getResUnitId(lang);
 		MindHandle hResUnit = Dust.lookup(null, resUnit);
-		DustHandle hResToken = (DustHandle) Dust.lookup(hResUnit, h.toString());
+		String id;
+
+		if (((DustHandle) h).isUnit()) {
+			id = h.toString();
+		} else {
+			id = h.toString();
+		}
+		DustHandle hResToken = (DustHandle) Dust.lookup(hResUnit, id);
 
 		String ret = Dust.access(MIND_TAG_ACCESS_PEEK, "???", hResToken, MISC_GEN_PAYLOAD);
 
 		return ret;
 	}
 
-	static void storeToken(DustHandle h, Map dialogIdeas, String lang, String token) {		
+	public static void storeToken(DustHandle h, Map dialogIdeas, String lang, String token) {
 		String tkey = DUST_SEP_TOKEN + h.id;
 
 		DustHandle hUnit = h.getUnit();
@@ -115,7 +122,7 @@ public class DustMachineUtils implements DustMachineConstsInt, DustMachineBootCo
 
 		Map tokenMap = safeGetIdea(hResUnit, dialogIdeas);
 		tokenMap = DustUtils.safeGet(tokenMap, MIND_UNIT_HANDLES, MAP_CREATOR);
-//		tokenMap.put(h.toString(), hResToken);
+		tokenMap.put(h.toString(), hResToken);
 		tokenMap.put(hToken.toString(), hResToken);
 	}
 

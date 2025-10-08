@@ -2,9 +2,11 @@ package me.giskard.dust.forge;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
+import me.giskard.dust.DustException;
 import me.giskard.dust.machine.DustMachineBootConsts;
 import me.giskard.dust.machine.DustMachineConsts;
 import me.giskard.dust.machine.DustMachineConstsInt.DustHandle;
@@ -40,78 +42,51 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 //			log = true;
 			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
 			DustHandle handle = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE);
+			DustHandle target = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_GEN_TARGET);
 			String lang = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, TEXT_ATT_LANG);
 
-			if (DUST_BOOTTOKEN == att) {
-				String token = (String) val;
+			if ((MIND_IDEA_PRIMARYASPECT == att) && (TEXT_TAG_TOKEN == val)) {
+				String token = DustMachineUtils.getTokenStr(handle, lang);
 
-				Object collision = Dust.access(MIND_TAG_ACCESS_SET, handle, null, DUST_AGENT_PARAM, FORGE_BOOT_TOKENS, token);
-				if ((null != collision) && (handle != collision)) {
-					Dust.log(null, "Boot token collision for token", token, handle, collision);
-				} else {
-					PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_BOOT_WRITER);
+				boolean newToken = Dust.access(MIND_TAG_ACCESS_INSERT, token, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
+				if (newToken) {
 
-					if (null == pw) {
-						pw = initWriter(FORGE_BOOT_WRITER, FORGE_BOOT_CLASSNAME, DustConsts.class, DustHandle.class);
+					DustHandle classTag = Dust.access(MIND_TAG_ACCESS_PEEK, null, target, MIND_IDEA_TAGS, FORGE_TAG_CLASS);
+					DustHandle bootTag = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_BOOT_TAG);
 
-						pw.println("  String LANG_ID = \"" + lang + "\";");
-						pw.println();
+					boolean bt = (classTag == bootTag);
 
-						pw.flush();
-					}
+					PrintWriter pw = getWriter(classTag, bt, lang);
 
-					if (handle.isUnit()) {
-						optStoreUnitToken(handle, pw);
+					String codeLine = null;
+
+					if (bt) {
+						if (target.isUnit()) {
+							optStoreUnitToken(target, lang, pw);
+						} else {
+							String unitToken = optStoreUnitToken(target.getUnit(), lang, pw);
+							codeLine = "\tDustHandle " + token + " = new DustHandle(" + unitToken + ", \"" + target.getId() + "\");";
+						}
 					} else {
-						String unitToken = optStoreUnitToken(handle.getUnit(), pw);
-						pw.println("\tDustHandle " + token + " = new DustHandle(" + unitToken + ", \"" + handle.getId() + "\");");
-					}
-
-					pw.flush();
-
-				}
-			} else if (MIND_IDEA_PRIMARYASPECT == att) {
-				if (TEXT_TAG_TOKEN == val) {
-					String bt = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_GEN_TARGET, DUST_BOOTTOKEN);
-					
-					if ( !DustUtils.isEmpty(bt)) {
-						break;
-					}
-					
-					String token = DustMachineUtils.getTokenStr(handle, lang);
-//					String t2 = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_PAYLOAD);
-//					
-//					if ( !DustUtils.isEqual(token, t2) ) {
-//						Dust.log(null, "Token mismatch", handle, token, t2);
-//						break;
-//					} else {
-//						Dust.log(null, "Token OK", handle, token);
-//					}
-					boolean newToken = Dust.access(MIND_TAG_ACCESS_INSERT, token, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
-					if (newToken) {
-						DustHandle target = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, MISC_GEN_TARGET);
-
-						PrintWriter pw = getWriter(FORGE_MODULE_WRITER, FORGE_MODULE_CLASSNAME, DustConsts.class, Dust.class);
-
 						DustHandle hUnit = target.getUnit();
 						String strUnit = hUnit.getId();
 						String unitRef = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_UNITREFS, strUnit);
+						String lookupStr = target.isUnit() ? target.getId() : unitRef + DUST_SEP_ID + target.getId();
 
-						String lookupStr = unitRef + DUST_SEP_ID + target.getId();
-						
-						if ( lookupStr.contains("giskard.me")) {
+						if (lookupStr.contains("giskard.me")) {
 							Dust.log(null, "Invalid lookup string", lookupStr);
 							break;
 						}
-						
 
-
-						pw.println("\tMindHandle " + token + " = Dust.lookup(null, \"" + lookupStr + "\");");
-						pw.flush();
-					} else {
-						Dust.log(null, "Repeated token", token);
+						codeLine = "\tMindHandle " + token + " = Dust.lookup(null, \"" + lookupStr + "\");";
 					}
-//					Dust.log(null, "Store lookup handle", token, MISC_GEN_TARGET);
+
+					if (!DustUtils.isEmpty(codeLine)) {
+						pw.println(codeLine);
+						pw.flush();
+					}
+				} else {
+					Dust.log(null, "Repeated token", token);
 				}
 			}
 			break;
@@ -120,7 +95,8 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 		Dust.access(MIND_TAG_ACCESS_SET, count, null, DUST_AGENT_PARAM, MISC_PROC_COUNT);
 
 		if (log) {
-			Dust.log(null, a, "JavaGen processing", "local count: " + count, "language: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, TEXT_ATT_LANG),
+			Dust.log(null, a, "JavaGen processing", "local count: " + count,
+					"language: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, TEXT_ATT_LANG),
 					"walk depth: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MISC_PROC_DEPTH),
 					"handle: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_HANDLE), "att: " + att,
 					"key: " + Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_KEY),
@@ -130,64 +106,80 @@ public class DustForgeLogicJavaGen implements DustConsts.MindLogic, DustForgeCon
 		if (last) {
 			Dust.log(null, a, "JavaGen processing complete", count);
 
-			optCloseWriter(FORGE_BOOT_WRITER);
-			optCloseWriter(FORGE_MODULE_WRITER);
+			Map<String, PrintWriter> writers = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS);
+
+			if (null != writers) {
+				for (Map.Entry<String, PrintWriter> we : writers.entrySet()) {
+					PrintWriter pw = we.getValue();
+
+					try {
+						pw.print("}");
+						pw.flush();
+						pw.close();
+					} catch (Throwable t) {
+						DustException.swallow(t, "Failed to close class writer", we.getKey());
+					}
+				}
+
+				Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS);
+			}
 		}
 
 		return MIND_TAG_RESULT_ACCEPT;
 	}
 
-	public void optCloseWriter(MindHandle hWriter) {
-		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hWriter);
-		if (null != pw) {
-			pw.print("}");
+	public PrintWriter getWriter(MindHandle hClassAtt, boolean bootClass, String lang) throws Exception {
+		String cn = Dust.access(MIND_TAG_ACCESS_PEEK, null, hClassAtt, JAVA_LOGIC_CLASSNAME);
+
+		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS, cn);
+
+		if (null == pw) {
+			String srcRoot = Dust.access(MIND_TAG_ACCESS_PEEK, ".", null, DUST_AGENT_PARAM, FORGE_SRC_PATH);
+
+			int lidx = cn.lastIndexOf(".");
+
+			String pkg = cn.substring(0, lidx);
+
+			File f = new File(srcRoot + File.separatorChar + pkg.replace('.', File.separatorChar));
+
+			DustUtilsFile.ensureDir(f);
+
+			String genClass = cn.substring(lidx + 1);
+
+			pw = new PrintWriter(new File(f, genClass + DUST_EXT_JAVA));
+			Dust.access(MIND_TAG_ACCESS_SET, pw, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS, cn);
+
+			pw.println("package " + pkg + ";");
+			pw.println();
+			pw.println("// Generated " + DustUtils.strTime());
+			pw.println();
+
+			Class<?>[] importClasses = bootClass ? new Class[] { DustConsts.class, DustHandle.class } : new Class[] { DustConsts.class, Dust.class };
+
+			for (Class<?> ic : importClasses) {
+				pw.println("import " + ic.getName().replace('$', '.') + ";");
+			}
+
+			pw.println();
+			pw.println("public interface " + genClass + " extends DustConsts {");
+			pw.println();
+
+			if (bootClass) {
+				pw.println("  String LANG_ID = \"" + lang + "\";");
+				pw.println();
+			}
+
 			pw.flush();
-			pw.close();
-			Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_PARAM, hWriter);
 		}
-	}
-
-	public PrintWriter getWriter(MindHandle hWriter, MindHandle hClassAtt, Class<?>... importClasses) throws Exception {
-		PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hWriter);
-
-		return (null == pw) ? initWriter(hWriter, hClassAtt, importClasses) : pw;
-	}
-
-	public PrintWriter initWriter(MindHandle hWriter, MindHandle hClassAtt, Class<?>... importClasses) throws Exception {
-		PrintWriter pw;
-		String srcRoot = Dust.access(MIND_TAG_ACCESS_PEEK, ".", null, DUST_AGENT_PARAM, FORGE_SRC_PATH);
-		String pkg = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_GEN_PACKAGE);
-
-		File f = new File(srcRoot + File.separatorChar + pkg.replace('.', File.separatorChar));
-
-		DustUtilsFile.ensureDir(f);
-
-		String genClass = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, hClassAtt);
-
-		pw = new PrintWriter(new File(f, genClass + DUST_EXT_JAVA));
-		Dust.access(MIND_TAG_ACCESS_SET, pw, null, DUST_AGENT_PARAM, hWriter);
-
-		pw.println("package " + pkg + ";");
-		pw.println();
-		pw.println("// Generated " + DustUtils.strTime());
-		pw.println();
-
-		for (Class<?> ic : importClasses) {
-			pw.println("import " + ic.getName().replace('$', '.') + ";");
-		}
-
-		pw.println();
-		pw.println("public interface " + genClass + " extends DustConsts {");
-		pw.println();
 
 		return pw;
 	}
 
-	String optStoreUnitToken(DustHandle handle, PrintWriter pw) {
+	String optStoreUnitToken(DustHandle handle, String lang, PrintWriter pw) {
 		String unitToken = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_BOOT_UNITS, handle);
 
 		if (null == unitToken) {
-			unitToken = Dust.access(MIND_TAG_ACCESS_PEEK, null, handle, DUST_BOOTTOKEN);
+			unitToken = DustMachineUtils.getTokenStr(handle, lang);
 			Dust.access(MIND_TAG_ACCESS_SET, unitToken, null, DUST_AGENT_PARAM, FORGE_BOOT_UNITS, handle);
 			pw.println("\tDustHandle " + unitToken + " = new DustHandle(\"" + handle.getId() + "\");");
 		}

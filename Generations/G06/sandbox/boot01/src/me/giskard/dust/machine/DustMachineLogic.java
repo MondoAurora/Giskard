@@ -170,7 +170,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 		Map<String, MindHandle> unitHandles = DustUtils.simpleGet(unitData, MIND_UNIT_HANDLES);
 
 		if (DustUtils.isEmpty(id)) {
-			id = DustMachineUtils.nMISC_GEN_EXTID(unitData, MIND_UNIT_NEXT_ID);
+			id = DustMachineUtils.nextId(unitData, MIND_UNIT_NEXT_ID);
 		} else {
 			try {
 				Long iid = Long.parseLong(id) + 1;
