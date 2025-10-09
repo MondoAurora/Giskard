@@ -33,24 +33,18 @@ public class DustForgeLogicCollectJson implements DustConsts.MindLogic, DustForg
 			Object key = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_KEY);
 			Object val = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, MIND_VISIT_VALUE);
 
-			if (null != val) {
-				Map m = DustUtils.safeGet(data, handle.toString(), SORTEDMAP_CREATOR);
+			if ((null != val) && (MISC_PROC_SEEN != att) && (MISC_PROC_QUEUE != att) && !(val instanceof MindLogic)) {
+				Map m = DustUtils.safeGet(data, handle, SORTEDMAP_CREATOR);
 				if (null != key) {
-					Object currVal = DustUtils.safeGet(m, att.toString(), SORTEDMAP_CREATOR);
+					Object currVal = DustUtils.safeGet(m, att, MAP_CREATOR);
 					if (currVal instanceof Map) {
 						m = (Map) currVal;
-//					} else {
-//						Map newMap = new TreeMap();
-//						newMap.put("", currVal);
-//						m.put(att.toString(), newMap);
-//						m = newMap;
 					}
-					key = key.toString();
 				} else {
-					key = att.toString();
+					key = att;
 				}
 
-				m.put(key, val.toString());
+				m.put(key, val);
 			}
 
 			break;

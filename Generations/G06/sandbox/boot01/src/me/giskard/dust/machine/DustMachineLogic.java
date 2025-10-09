@@ -287,7 +287,7 @@ public class DustMachineLogic extends DustConsts.MindDialog implements DustMachi
 				}
 			} else if (curr instanceof Map) {
 				curr = DustUtils.isEqual(KEY_SIZE, p) ? ((Map) curr).size()
-						: DustUtils.isEqual(MIND_IDEA_ATTS, p) ? new ArrayList(((Map) curr).keySet()) : ((Map) curr).get(p);
+						: DustUtils.isEqual(MISC_MAP_KEYS, p) ? new ArrayList(((Map) curr).keySet()) : ((Map) curr).get(p);
 			} else {
 				curr = null;
 			}

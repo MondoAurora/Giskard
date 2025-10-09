@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.json.simple.JSONAware;
+
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
 import me.giskard.dust.machine.DustMachineBootConsts;
@@ -18,7 +20,7 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 
 	private static final Object END = new Object();
 
-	class WalkIterator {
+	class WalkIterator implements JSONAware {
 		MindHandle h;
 		Object[] items;
 		int idx;
@@ -30,7 +32,7 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 				items = ((Map) src).entrySet().toArray();
 			} else if (src instanceof MindHandle) {
 				h = (MindHandle) src;
-				items = ((Collection) Dust.access(MIND_TAG_ACCESS_PEEK, Collections.EMPTY_LIST, h, MIND_IDEA_ATTS)).toArray();
+				items = ((Collection) Dust.access(MIND_TAG_ACCESS_PEEK, Collections.EMPTY_LIST, h, MISC_MAP_KEYS)).toArray();
 			}
 		}
 
@@ -57,6 +59,11 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 
 		Object getCurrentKey() {
 			return (null == h) ? idx - 1 : items[idx - 1];
+		}
+		
+		@Override
+		public String toJSONString() {
+			return "\"Walk iterator\"";
 		}
 	}
 
@@ -131,6 +138,9 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 					do {
 						hItem = Dust.access(MIND_TAG_ACCESS_DELETE, null, null, DUST_AGENT_SELF, MISC_PROC_QUEUE, 0);
 						repeat = (null != hItem) && !(boolean) Dust.access(MIND_TAG_ACCESS_INSERT, hItem, null, DUST_AGENT_SELF, MISC_PROC_SEEN);
+						if ((RUNTIME_MAINDIALOG == hItem) || (RUNTIME_MACHINE == hItem)) {
+							repeat = true;
+						}
 					} while (repeat);
 
 					if (null == hItem) {
@@ -175,10 +185,6 @@ public class DustNarrativeLogicGraphWalker implements DustConsts.MindLogic, Dust
 							key = wi.getCurrentKey();
 						}
 						Dust.access(MIND_TAG_ACCESS_SET, key, null, DUST_AGENT_SELF, MISC_GEN_TARGET, wi.getKeyField());
-						
-						if ( key == MIND_UNIT_IDEAS ) {
-							Dust.log(null, "handling ideas", h, val);
-						}
 						
 						if ( val instanceof MindIdea ) {
 							Object ih = ((Map)val).get(MIND_IDEA_HANDLE);

@@ -8,6 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/G06_sandbox_extLib"/>
-	<classpathentry kind="lib" path="/G06_sandbox_extLib/lib/json/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/G06_sandbox_extLib/lib/json/json-simple-1.1.1.jar" sourcepath="/G06_sandbox_extLib/lib/json/json-simple-1.1.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

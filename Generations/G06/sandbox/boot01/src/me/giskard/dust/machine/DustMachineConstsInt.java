@@ -2,12 +2,15 @@ package me.giskard.dust.machine;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
+
 import me.giskard.dust.utils.DustUtils;
 import me.giskard.dust.utils.DustUtilsConsts.DustCreator;
 
 @SuppressWarnings("rawtypes")
 public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBootConsts {
-	public class DustHandle extends MindHandle implements Comparable<DustHandle> {
+	public class DustHandle extends MindHandle implements Comparable<DustHandle>, JSONAware {
 		public static String LANG = null;
 
 		DustHandle unit;
@@ -25,6 +28,9 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 
 		@Override
 		public int compareTo(DustHandle o) {
+			if ( isUnit() ^ o.isUnit() ) {
+				return isUnit() ? -1 : 1;
+			}
 			int ret = isUnit() ? 0 : DustUtils.safeCompare(getUnit(), o.getUnit());
 			return (0 == ret) ? DustUtils.safeCompare(getId(), o.getId()) : ret;
 		}
@@ -53,6 +59,11 @@ public interface DustMachineConstsInt extends DustMachineConsts, DustMachineBoot
 			}
 //			return DustUtils.sbAppend(null, "", true, ((this == unit) ? "" : unit.id), "::", id, token).toString();
 			return DustUtils.sbAppend(null, "", true, "<", ((this == unit) ? "" : unit.id), "::", id, token, ">").toString();
+		}
+		
+		@Override
+		public String toJSONString() {
+			return "\"" + JSONObject.escape(toString()) + "\"";
 		}
 	}
 

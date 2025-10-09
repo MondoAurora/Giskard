@@ -2,7 +2,7 @@ package me.giskard.dust.forge;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.Map;
+import java.util.Collection;
 
 import me.giskard.dust.Dust;
 import me.giskard.dust.DustConsts;
@@ -106,18 +106,18 @@ public class DustForgeLogicGenJavaToken implements DustConsts.MindLogic, DustFor
 		if (last) {
 			Dust.log(null, a, "JavaGen processing complete", count);
 
-			Map<String, PrintWriter> writers = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS);
+			Collection<Object> writers = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS, MISC_MAP_KEYS);
 
 			if (null != writers) {
-				for (Map.Entry<String, PrintWriter> we : writers.entrySet()) {
-					PrintWriter pw = we.getValue();
+				for (Object wk : writers) {
+					PrintWriter pw = Dust.access(MIND_TAG_ACCESS_PEEK, null, null, DUST_AGENT_PARAM, FORGE_CLASS_WRITERS, wk);
 
 					try {
 						pw.print("}");
 						pw.flush();
 						pw.close();
 					} catch (Throwable t) {
-						DustException.swallow(t, "Failed to close class writer", we.getKey());
+						DustException.swallow(t, "Failed to close class writer", wk);
 					}
 				}
 
